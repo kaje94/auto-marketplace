@@ -7,3 +7,13 @@ body {
   background: linear-gradient(to bottom, transparent, hsl(var(--b1)))
     hsl(var(--b2));
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: hsl(var(--nc));
+  
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--nf));
+}

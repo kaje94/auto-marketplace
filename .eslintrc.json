@@ -1,3 +1,12 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"]
+  "plugins": ["prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:tailwindcss/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": ["warn", { "tabWidth": 4, "printWidth": 150 }]
+  }
 }

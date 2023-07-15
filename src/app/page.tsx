@@ -1,115 +1,145 @@
+import clsx from "clsx";
 import Image from "next/image";
+import { righteousFont } from "./fonts";
+import { SearchIcon, ZapIcon, TagIcon, NotificationIcon, DropletIcon } from "@/icons";
+import { Input, Footer, TextArea, NavBar } from "./_components";
+import Link from "next/link";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+const HeroSearchBox = () => (
+    <div className="join mb-8 mt-5 flex justify-center shadow-xl md:mb-16 xl:mb-28 2xl:mb-36">
+        <input className="join-item input-bordered input rounded-r-none" placeholder="Search..." />
+        <select className="join-item select-bordered select hidden rounded-none sm:block">
+            <option disabled selected>
+                Type
+            </option>
+            <option>Car</option>
+            <option>Van</option>
+            <option>SUV</option>
+        </select>
+        <Link href="/listing">
+            <button className="join-item btn-primary btn rounded-l-none">
+                <SearchIcon />
+                <span className="ml-2 hidden lg:block">Search</span>
+            </button>
+        </Link>
+    </div>
+);
+
+const FeatureItem = ({
+    title,
+    description,
+    alignRight,
+    icon,
+}: {
+    title: string;
+    description: string;
+    alignRight?: boolean;
+    icon: React.ReactElement;
+}) => (
+    <div>
+        <div className={clsx("flex items-center justify-center text-base-content lg:justify-start", alignRight && "lg:flex-row-reverse")}>
+            {icon} <h5 className="mx-2 text-center font-medium lg:text-left">{title}</h5>
         </div>
-      </div>
+        <p className={clsx("mt-2 text-center leading-relaxed opacity-70 xl:leading-loose", alignRight ? "lg:text-right" : "lg:text-left")}>
+            {description}
+        </p>
+    </div>
+);
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <button className="btn">Button</button>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+export default async function Home() {
+    return (
+        <main>
+            <section className="relative h-screen hero-bg ">
+                <div className="container mx-auto w-full p-4 xl:p-7 2xl:p-8">
+                    <NavBar />
+                </div>
+                <div className="container relative z-10 mx-auto  flex h-4/6 flex-col items-center justify-center gap-2 p-4 xl:p-7 2xl:p-8">
+                    <h1 className={clsx(righteousFont.className, "text-center text-7xl text-white md:text-8xl xl:text-9xl")}>Drive Your Dreams</h1>
+                    <h4 className="text-center text-lg text-white opacity-70 lg:text-xl">
+                        Start Your Journey: Discover Your Dream Vehicle or Sell Your Car with Ease
+                    </h4>
+                    <HeroSearchBox />
+                </div>
+                <Image
+                    src="/cover-image.jpg"
+                    height={450}
+                    width={1246}
+                    quality={100}
+                    alt="cover-image"
+                    className="absolute inset-x-0 bottom-0 m-auto w-full md:w-10/12 lg:w-11/12 xl:max-w-7xl"
+                    priority
+                />
+            </section>
+            <section className="bg-white py-12 md:py-20">
+                <div className="container mx-auto w-full max-w-7xl">
+                    <h3 className={clsx(righteousFont.className, "mb-6 text-center text-4xl")}>Why Choose Us?</h3>
+                    <div className="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:p-7 2xl:p-8">
+                        <Image
+                            src="/features-1.jpg"
+                            height={437}
+                            width={642}
+                            alt="feature-1-image"
+                            className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"
+                        />
+                        <div className="flex flex-col justify-center gap-8">
+                            <FeatureItem
+                                title="Personalized Advert Alerts"
+                                description="Stay effortlessly informed about car advertisements that match your interests. Customize your preferences and receive personalized alerts,
+                                ensuring you're always updated on relevant listings."
+                                icon={<NotificationIcon />}
+                            />
+                            <FeatureItem
+                                title="Confidence in Every Detail"
+                                description="Rest assured that every vehicle listing on our platform undergoes a thorough verification process, providing you with accurate and reliable information about the condition, history, and specifications of each car."
+                                icon={<ZapIcon />}
+                            />
+                        </div>
+                        <div className="flex flex-col justify-center gap-8">
+                            <FeatureItem
+                                title="Simplify Your Car Buying Experience"
+                                description="We believe in keeping things simple and transparent. Our user-friendly interface and intuitive search tools make it easy for you to navigate, compare, and make informed decisions, saving you time and effort in your car buying journey"
+                                alignRight
+                                icon={<DropletIcon />}
+                            />
+                            <FeatureItem
+                                title="Enjoy the Benefits Without Any Fees"
+                                description="We provide our services at no cost to you. You can access our wide selection, verified listings, and user-friendly platform without incurring any fees, making it even more convenient for you to find your dream car."
+                                alignRight
+                                icon={<TagIcon />}
+                            />
+                        </div>
+                        <Image
+                            src="/features-2.jpg"
+                            height={437}
+                            width={642}
+                            alt="feature-1-image"
+                            className="hidden w-full rounded-lg bg-[#7c7262] object-cover lg:block"
+                        />
+                    </div>
+                </div>
+            </section>
+            <section className="relative bg-base-200 py-12 md:py-20">
+                <div className="container mx-auto w-full max-w-xl">
+                    <h3 className={clsx(righteousFont.className, "mb-6 text-center text-4xl")}>Contact Us</h3>
+                    <div className="mb-4 flex flex-col gap-1 p-4">
+                        <Input placeholder="Name" label="Name" />
+                        <Input placeholder="user@email.com" label="Email" />
+                        <TextArea placeholder="Your message..." label="Message" />
+                        <button className="btn mt-6 w-full">Submit</button>
+                    </div>
+                </div>
+                {["left-10 top-10", "right-10 top-10", "bottom-10 right-10", "bottom-10 left-10"].map((position) => (
+                    <Image
+                        key={position}
+                        src="/contact-us-illustration-1.png"
+                        height={100}
+                        width={100}
+                        alt="contact-us-illustration"
+                        className={clsx("absolute hidden lg:block", position)}
+                    />
+                ))}
+            </section>
+            <Footer />
+        </main>
+    );
 }
