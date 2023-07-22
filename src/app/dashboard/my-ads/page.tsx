@@ -1,19 +1,10 @@
+import { BreadCrumbs } from "@/app/_components";
 import { MyAdItem } from "./_components";
 
 const MyAds = () => {
     return (
         <>
-            <div className="breadcrumbs text-sm">
-                <ul>
-                    <li>
-                        <a>Home</a>
-                    </li>
-                    <li>
-                        <a>Dashboard</a>
-                    </li>
-                    <li>My Adverts</li>
-                </ul>
-            </div>
+            <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="My Adverts" />
             <div className="grid gap-1 xl:gap-2">
                 <MyAdItem
                     title="Totyota Corrola 2013"

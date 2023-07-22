@@ -1,7 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import clsx from "clsx";
 
 interface Props {
     title: string;
@@ -21,7 +20,8 @@ export const ListingItem: FC<Props> = ({ title, price, description, tags = [], i
             <Image
                 src={imageUrl}
                 alt="Car"
-                className={clsx("aspect-video w-full transition-transform duration-300 ease-linear zoomable-image", `bg-[${imageColor}]`)}
+                className={"aspect-video w-full transition-transform duration-300 ease-linear zoomable-image"}
+                style={{ background: imageColor }}
                 width={100}
                 height={100}
             />

@@ -6,3 +6,7 @@ export { TextArea } from "./TextArea";
 export { Pagination } from "./Pagination";
 export { ListingItem } from "./ListingItem";
 export { ErrorComponent } from "./ErrorComponent";
+export { BreadCrumbs } from "./BreadCrumbs";
+export { Checkbox } from "./Checkbox";
+export { MultiImageUpload } from "./MultiImageUpload";
+export { TagSelect } from "./TagSelect";

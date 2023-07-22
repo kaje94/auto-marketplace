@@ -4,19 +4,23 @@ import { PaginatedResponse, ListingItems } from "./types";
 
 const fetchRequest = async <TResponse>(url: string, config: RequestInit): Promise<TResponse> => {
     const response = await fetch(url, config);
-    return await response.json();
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error(response.statusText || "Failure when calling the endpoint");
+    }
 };
 
-const getConfigWithWith = (config: RequestInit = {}): RequestInit => {
+const getConfigWithAuth = (config: RequestInit = {}): RequestInit => {
     const Authorization = headers()?.get("authorization") || "";
     return { ...config, headers: { Authorization, ...config.headers } };
 };
 
 const fetchApi = {
     get: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, config),
-    protectedGet: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchApi.get<TResponse>(endpoint, getConfigWithWith(config)),
+    protectedGet: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchApi.get<TResponse>(endpoint, getConfigWithAuth(config)),
     protectedPost: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody) =>
-        fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, getConfigWithWith({ method: "POST", body })),
+        fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, getConfigWithAuth({ method: "POST", body })),
 };
 
 export const api = {

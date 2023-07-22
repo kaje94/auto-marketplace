@@ -24,12 +24,15 @@ const ItemDetailPage = () => {
 
     return (
         <>
-            <div className="mt-12 text-center text-3xl font-extrabold text-primary-content lg:text-5xl">Toyota Supra 2009</div>
-            <div className="text-secondary-content-content lg:text-md mt-2 text-center text-sm font-light">
-                Posted 2 days ago, Location: Colombo, Sri Lanka
+            <div className="mb-8 mt-14">
+                <div className={"text-center text-3xl font-extrabold text-primary-content lg:text-6xl"}>Toyota Supra 2009</div>
+                <div className="text-secondary-content-content lg:text-md mt-2 text-center text-sm font-light">
+                    Posted 2 days ago, Location: Colombo, Sri Lanka
+                </div>
             </div>
 
-            <div className="breadcrumbs mb-1 mt-6 text-sm">
+            {/** TODO: use breadcrumb component instead */}
+            <div className="breadcrumbs mb-1 text-sm">
                 <ul>
                     <li>
                         <a>Search</a>
@@ -43,24 +46,25 @@ const ItemDetailPage = () => {
                     <li>Toyota Supra 2009</li>
                 </ul>
             </div>
+
             <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
                 <div className="col-span-8 flex flex-col gap-4 lg:col-span-5 xl:gap-7 2xl:gap-8">
-                    <div className="card  bg-base-100 shadow-md">
+                    <div className="card  bg-base-100 shadow">
                         <Carousel />
                     </div>
-                    <div className="stat card  bg-base-100 p-3  shadow-md lg:p-5 xl:p-6">
+                    <div className="stat card  bg-base-100 p-3  shadow lg:p-5 xl:p-6">
                         <div className="stat-title">Description</div>
                         <div className="divider" />
                         <p className="mt-2 w-full whitespace-pre-line text-sm font-medium">{description}</p>
                     </div>
                 </div>
                 <div className="col-span-8 flex flex-col gap-4 lg:col-span-3 xl:gap-7 2xl:gap-8">
-                    <div className="stat card place-items-center bg-base-100 shadow-md">
+                    <div className="stat card place-items-center bg-base-100 shadow">
                         <div className="stat-title">Price</div>
                         <div className="mt-2 text-center text-3xl font-extrabold">LKR 255,400,000</div>
                         <span className="badge mt-2">Negotiable</span>
                     </div>
-                    <div className="stat card place-items-center bg-base-100 shadow-md">
+                    <div className="stat card place-items-center bg-base-100 shadow">
                         <div className="stat-title">Key Specifications</div>
 
                         <div className="mt-2 grid w-full gap-2 lg:grid-cols-2">
@@ -97,7 +101,7 @@ const ItemDetailPage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="stat card place-items-center bg-base-100 shadow-md">
+                    <div className="stat card place-items-center bg-base-100 shadow">
                         <div className="stat-title">Features</div>
                         <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                             {FEATUES.map((item) => (
@@ -107,7 +111,7 @@ const ItemDetailPage = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="stat card place-items-center bg-base-100 shadow-md">
+                    <div className="stat card place-items-center bg-base-100 shadow">
                         <div className="stat-title">Seller</div>
                         <div className="avatar my-4">
                             <div className="w-20 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
@@ -168,6 +172,8 @@ const ItemDetailPage = () => {
       whose shoes does he choose If a dog chews shoes whose shoes does he
       choose If a dog chews shoes whose shoes does he choose?"
                     tags={["Colombo", "Used", "23,000 km"]}
+                    imageUrl="https://cdn.britannica.com/93/97093-050-23ACD82B/Prius-Toyota-1997.jpg"
+                    imageColor="#2596be"
                 />
                 <ListingItem
                     title="Totyota Corrola 2013"
@@ -176,6 +182,8 @@ const ItemDetailPage = () => {
       whose shoes does he choose If a dog chews shoes whose shoes does he
       choose If a dog chews shoes whose shoes does he choose?"
                     tags={["Colombo", "Used", "23,000 km"]}
+                    imageUrl="https://cdn.britannica.com/93/97093-050-23ACD82B/Prius-Toyota-1997.jpg"
+                    imageColor="#2596be"
                 />
                 <ListingItem
                     title="Totyota Corrola 2013"
@@ -184,6 +192,8 @@ const ItemDetailPage = () => {
       whose shoes does he choose If a dog chews shoes whose shoes does he
       choose If a dog chews shoes whose shoes does he choose?"
                     tags={["Colombo", "Used", "23,000 km"]}
+                    imageUrl="https://cdn.britannica.com/93/97093-050-23ACD82B/Prius-Toyota-1997.jpg"
+                    imageColor="#2596be"
                 />
                 <ListingItem
                     title="Totyota Corrola 2013"
@@ -192,6 +202,8 @@ const ItemDetailPage = () => {
       whose shoes does he choose If a dog chews shoes whose shoes does he
       choose If a dog chews shoes whose shoes does he choose?"
                     tags={["Colombo", "Used", "23,000 km"]}
+                    imageUrl="https://cdn.britannica.com/93/97093-050-23ACD82B/Prius-Toyota-1997.jpg"
+                    imageColor="#2596be"
                 />
             </div>
         </>

@@ -9,6 +9,7 @@ body {
 }
 
 ::-webkit-scrollbar {
+  height: 5px;
   width: 10px;
   background-color: hsl(var(--nc));
   

@@ -1,9 +1,8 @@
+// import { RedirectType } from "next/dist/client/components/redirect";
+import { redirect } from "next/navigation";
+
 const Dashboard = () => {
-    return (
-        <>
-            <div>Dashboard, show some stats</div>
-        </>
-    );
+    return redirect("/dashboard/my-ads");
 };
 
 export default Dashboard;

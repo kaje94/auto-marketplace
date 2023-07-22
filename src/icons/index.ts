@@ -19,3 +19,6 @@ export { TagIcon } from "./TagIcon";
 export { TrashIcon } from "./TrashIcon";
 export { TwitterIcon } from "./TwitterIcon";
 export { ZapIcon } from "./ZapIcon";
+export { CloseIcon } from "./CloseIcon";
+export { UserIcon } from "./UserIcon";
+export { LogoutIcon } from "./LogoutIcon";

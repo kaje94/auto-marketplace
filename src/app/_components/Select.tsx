@@ -27,7 +27,7 @@ export const Select: FC<Props> = ({
                     <span className="label-text">{label}</span>
                 </label>
             )}
-            <select className={clsx("select-bordered select", error && "select-error", selectClassName)} {...rest}>
+            <select className={clsx("select-bordered select font-normal", error && "select-error", selectClassName)} {...rest}>
                 <option disabled={!selectablePlaceholder} selected>
                     {placeholder}
                 </option>

@@ -3,17 +3,20 @@ import Link from "next/link";
 import { HomeIcon, RefreshIcon, ActivityIcon } from "@/icons";
 import { righteousFont } from "@/app/fonts";
 import clsx from "clsx";
+import { FC } from "react";
 
-export const ErrorComponent = ({
-    reset,
-    error,
-    title = "Oops, something went wrong",
-    subTitle = "But do not worry, you can either try refreshing this page or go back to our home page.",
-}: {
+interface Props {
     error?: Error;
     reset?: () => void;
     title?: string;
     subTitle?: string;
+}
+
+export const ErrorComponent: FC<Props> = ({
+    reset,
+    error,
+    title = "Oops, something went wrong",
+    subTitle = "But do not worry, you can either try refreshing this page or go back to our home page.",
 }) => {
     return (
         <section className="flex h-full items-center p-16 text-primary-content">
