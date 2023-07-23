@@ -1,4 +1,5 @@
 import { Select, Input } from "@/app/_components";
+import { SearchIcon } from "@/icons";
 import { FC } from "react";
 
 export const Filters: FC = () => {
@@ -6,7 +7,12 @@ export const Filters: FC = () => {
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <div className="card grid grid-cols-2 gap-2 bg-base-100 p-3 shadow-md lg:p-5 xl:p-6">
                 <div className="col-span-2">
-                    <Input placeholder="Search..." />
+                    <div className="relative ">
+                        <input type="text" placeholder="Search..." className="input-bordered input w-full bg-transparent text-sm" />
+                        <button className="btn absolute right-0 top-0 rounded-l-none border-none">
+                            <SearchIcon />
+                        </button>
+                    </div>
                 </div>
                 <div className="divider col-span-2 mt-6">Filters</div>
                 <div className="col-span-2">

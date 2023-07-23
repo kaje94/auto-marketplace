@@ -1,92 +1,27 @@
 import { Input, Select, BreadCrumbs, TextArea, Checkbox, TagSelect } from "@/app/_components";
-
-// vehicle details
-// vehicleImages
-// featureIds
-
-// other details
+import { ImageUpload } from "../_components";
 
 const TAGS = [
-    {
-        id: 8,
-        name: "4-WAY CAMERA",
-    },
-    {
-        id: 4,
-        name: "ADAPTIVE CRUISE CONTROL",
-    },
-    {
-        id: 14,
-        name: "AIR CONDITIONING",
-    },
-    {
-        id: 6,
-        name: "BREAK ASSIST",
-    },
-    {
-        id: 13,
-        name: "DUAL AIR CONDITIONING",
-    },
-    {
-        id: 11,
-        name: "ELECTRIC SEATS",
-    },
-    {
-        id: 18,
-        name: "HEATED SEATS",
-    },
-    {
-        id: 16,
-        name: "LANE ASSIST",
-    },
-    {
-        id: 15,
-        name: "MEMORY SEATS",
-    },
-    {
-        id: 17,
-        name: "PARK ASSIST",
-    },
-    {
-        id: 19,
-        name: "POWER MIRROR",
-    },
-    {
-        id: 2,
-        name: "POWER STEERING",
-    },
-    {
-        id: 3,
-        name: "POWER STEERING",
-    },
-    {
-        id: 20,
-        name: "POWER WINDOW",
-    },
-    {
-        id: 10,
-        name: "PUSH START",
-    },
-    {
-        id: 7,
-        name: "REVERSE CAMERA",
-    },
-    {
-        id: 1,
-        name: "SRS AIR BAGS",
-    },
-    {
-        id: 12,
-        name: "SUNROOF",
-    },
-    {
-        id: 5,
-        name: "TRACTION CONTROL",
-    },
-    {
-        id: 9,
-        name: "WINKER MIRRORS",
-    },
+    { id: 8, name: "4-WAY CAMERA" },
+    { id: 4, name: "ADAPTIVE CRUISE CONTROL" },
+    { id: 14, name: "AIR CONDITIONING" },
+    { id: 6, name: "BREAK ASSIST" },
+    { id: 13, name: "DUAL AIR CONDITIONING" },
+    { id: 11, name: "ELECTRIC SEATS" },
+    { id: 18, name: "HEATED SEATS" },
+    { id: 16, name: "LANE ASSIST" },
+    { id: 15, name: "MEMORY SEATS" },
+    { id: 17, name: "PARK ASSIST" },
+    { id: 19, name: "POWER MIRROR" },
+    { id: 2, name: "POWER STEERING" },
+    { id: 3, name: "POWER STEERING" },
+    { id: 20, name: "POWER WINDOW" },
+    { id: 10, name: "PUSH START" },
+    { id: 7, name: "REVERSE CAMERA" },
+    { id: 1, name: "SRS AIR BAGS" },
+    { id: 12, name: "SUNROOF" },
+    { id: 5, name: "TRACTION CONTROL" },
+    { id: 9, name: "WINKER MIRRORS" },
 ];
 
 const MyAds = () => {
@@ -158,6 +93,7 @@ const MyAds = () => {
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Images</div>
+                        <ImageUpload />
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Location Details</div>

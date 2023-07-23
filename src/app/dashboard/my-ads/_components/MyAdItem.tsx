@@ -57,13 +57,13 @@ export const MyAdItem: FC<Props> = ({ title, price, description, tags = [], stat
                 )}
                 {state === "expired" && (
                     <div className="w-full md:tooltip" data-tip="Renew expired advert">
-                        <button className="btn-outline btn-ghost btn-square btn w-full md:w-12">
+                        <button className="btn-ghost btn-outline btn-square btn w-full md:w-12">
                             <RefreshIcon />
                             <span className="ml-2 md:hidden">Renew</span>
                         </button>
                     </div>
                 )}
-                <div className="w-full md:tooltip" data-tip="Delet advert">
+                <div className="w-full md:tooltip" data-tip="Delete advert">
                     <button className="btn-outline btn-error btn-square btn w-full md:w-12">
                         <TrashIcon />
                         <span className="ml-2 md:hidden">Delete</span>

@@ -16,7 +16,7 @@ export const Thumb: React.FC<PropType> = (props) => {
             <button
                 onClick={onClick}
                 className={clsx(
-                    "m-0 block w-full cursor-pointer touch-manipulation overflow-hidden rounded bg-transparent p-0 transition-opacity duration-200 lg:rounded-[--rounded-box]",
+                    "m-0 block w-full cursor-pointer touch-manipulation overflow-hidden rounded bg-transparent p-0 transition-opacity duration-200 lg:rounded-box",
                     selected ? "opacity-100" : "opacity-20 hover:opacity-30"
                 )}
                 type="button"

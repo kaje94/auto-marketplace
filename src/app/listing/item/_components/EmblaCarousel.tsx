@@ -52,7 +52,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     return (
         <>
             <div className="embla p-3 lg:p-5 xl:p-6">
-                <div className="overflow-hidden rounded-[--rounded-box]" ref={emblaMainRef}>
+                <div className="rounded-box overflow-hidden" ref={emblaMainRef}>
                     <div className="-ml-1 flex h-auto touch-pan-y flex-row sm:-ml-2 lg:-ml-4">
                         {slides.map((index) => (
                             <div
@@ -66,7 +66,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 >
                                     <MaximizeIcon height={18} width={18} />
                                 </button>
-                                <div className="block aspect-square w-full overflow-hidden rounded-[--rounded-box] sm:aspect-video ">
+                                <div className="rounded-box block aspect-square w-full overflow-hidden sm:aspect-video ">
                                     <img
                                         className="aspect-square w-full object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
                                         src={imageByIndex(index)}

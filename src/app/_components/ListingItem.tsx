@@ -14,7 +14,7 @@ interface Props {
 export const ListingItem: FC<Props> = ({ title, price, description, tags = [], imageUrl, imageColor }) => (
     <Link
         href="/listing/item"
-        className="card w-full cursor-pointer overflow-hidden bg-base-100 shadow-md transition-shadow duration-300 zoom-inner-image hover:shadow-lg"
+        className="card w-full cursor-pointer overflow-hidden bg-base-100 shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg"
     >
         <figure className="relative">
             <Image
@@ -25,7 +25,7 @@ export const ListingItem: FC<Props> = ({ title, price, description, tags = [], i
                 width={100}
                 height={100}
             />
-            <div className="badge-primary badge badge-lg absolute bottom-5 duration-300 badge-hover-translucent">{price}</div>
+            <div className="badge badge-primary badge-lg absolute bottom-5 duration-300 badge-hover-translucent">{price}</div>
         </figure>
         <div className="card-body p-3 lg:p-5 xl:p-7">
             <h2 className="card-title flex">
@@ -34,7 +34,7 @@ export const ListingItem: FC<Props> = ({ title, price, description, tags = [], i
             <p className="line-clamp-2 overflow-hidden text-center text-sm">{description}</p>
             <div className="card-actions mt-1 justify-center ">
                 {tags.map((tag) => (
-                    <div key={tag} className="badge-outline badge badge-sm lg:badge-md ">
+                    <div key={tag} className="badge badge-outline badge-sm lg:badge-md ">
                         {tag}
                     </div>
                 ))}

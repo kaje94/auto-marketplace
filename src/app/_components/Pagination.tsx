@@ -6,7 +6,7 @@ export const Pagination: FC = () => {
             <div className="btn-group ">
                 <button className="btn">«</button>
                 <button className="btn">1</button>
-                <button className="btn-active btn">2</button>
+                <button className="btn-neutral btn">2</button>
                 <button className="btn">3</button>
                 <button className="btn">4</button>
                 <button className="btn">»</button>

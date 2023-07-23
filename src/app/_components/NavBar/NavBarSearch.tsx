@@ -28,7 +28,7 @@ export const NavBarSearch = () => {
                     placeholder="Search..."
                     className={clsx({
                         "input bg-transparent sm:block text-sm": true,
-                        "input-bordered border-primary text-white opacity-100": isFocused,
+                        "input-bordered border-base-300 text-base-200 opacity-100": isFocused,
                         "opacity-0": !isFocused,
                     })}
                     onBlur={() => setIsFocused(false)}
@@ -39,7 +39,7 @@ export const NavBarSearch = () => {
                 <button
                     className={clsx({
                         "btn absolute border-none right-0 top-0 rounded-l-none": true,
-                        "text-primary-content bg-primary hover:bg-secondary": isFocused,
+                        "text-secondary-content bg-base-300 hover:bg-base-100": isFocused,
                         "btn-ghost text-base-300 hover:text-accent bg-transparent": !isFocused,
                     })}
                     onClick={() => setIsFocused(true)}
@@ -49,14 +49,4 @@ export const NavBarSearch = () => {
             </div>
         </ClickAwayListener>
     );
-
-    // <input
-    //         className={clsx({
-    //             "input-bordered input join-item bg-transparent w-44 placeholder:text-sm ": true,
-    //             "border-secondary": isFocused,
-    //         })}
-    //         placeholder="Search..."
-    //         onFocus={() => setIsFocused(true)}
-    //         onBlur={() => setIsFocused(false)}
-    //     />
 };

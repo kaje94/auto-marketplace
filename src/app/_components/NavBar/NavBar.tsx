@@ -17,7 +17,7 @@ export const NavBar: FC<Props> = async ({ hideBackground }) => {
     return (
         <div
             className={clsx(
-                "navbar relative z-20 rounded-[--rounded-box] text-neutral-content shadow shadow-neutral",
+                "navbar rounded-box relative z-20 text-neutral-content shadow shadow-neutral",
                 hideBackground ? "bg-transparent" : "bg-neutral"
             )}
         >
@@ -25,7 +25,7 @@ export const NavBar: FC<Props> = async ({ hideBackground }) => {
                 <button className="btn-ghost btn text-xl normal-case">Car Sale</button>
             </Link>
             <div className="flex-1" />
-            <div className="flex flex-row items-center gap-0 pr-0 sm:gap-4 sm:pr-2">
+            <div className="flex flex-row items-center gap-0 pr-0 sm:gap-3 sm:pr-2">
                 <NavBarSearch />
                 <PostAddLink />
 
@@ -39,7 +39,7 @@ export const NavBar: FC<Props> = async ({ hideBackground }) => {
                             </label>
                             <ul
                                 tabIndex={0}
-                                className="dropdown-content menu rounded-box z-20 -mr-1 mt-3 w-52 rounded-tr-none bg-neutral p-2 text-neutral-content"
+                                className="dropdown-content menu rounded-box z-20 -mr-1 mt-3 w-52 rounded-tr-none bg-neutral p-2 text-neutral-content shadow-md shadow-black"
                             >
                                 <NavBarMenuLink link="/dashboard/profile" label="Profile" icon={<UserIcon height={18} />} />
                                 <NavBarMenuLink link="/dashboard/my-ads" label="My Adverts" icon={<AdvertIcon height={18} />} />

@@ -52,7 +52,7 @@ export const PostAddLink = () => {
             <button
                 className={clsx({
                     "btn text-xs capitalize sm:text-sm": true,
-                    "bg-base-300 text-primary-content cursor-default": active,
+                    "btn-link text-secondary cursor-default": active,
                     "btn-ghost text-base-300 hover:text-accent": !active,
                 })}
             >

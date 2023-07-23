@@ -22,3 +22,5 @@ export { ZapIcon } from "./ZapIcon";
 export { CloseIcon } from "./CloseIcon";
 export { UserIcon } from "./UserIcon";
 export { LogoutIcon } from "./LogoutIcon";
+export { PlusIcon } from "./PlusIcon";
+export { CheckIcon } from "./CheckIcon";
