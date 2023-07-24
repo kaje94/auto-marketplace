@@ -11,9 +11,11 @@ export const ImageUpload = () => {
     const [rootParent] = useAutoAnimate<HTMLDivElement>();
     const [files, setFiles] = useState<(File & { preview: string })[]>([]);
     const [thumbnailIndex, setThumbnailIndex] = useState(0);
-    const { getRootProps, getInputProps } = useDropzone({
+    const { getRootProps, getInputProps, open } = useDropzone({
         accept: { "image/*": [] },
         multiple: true,
+        noClick: true,
+        noKeyboard: true,
         onDrop: (acceptedFiles) => {
             setFiles((files) => [...files, ...acceptedFiles.map((file) => Object.assign(file, { preview: URL.createObjectURL(file) }))]);
         },
@@ -32,7 +34,7 @@ export const ImageUpload = () => {
     }, []);
 
     return (
-        <div className="mt-2 flex flex-wrap gap-2" ref={rootParent}>
+        <div className="mt-2 flex flex-wrap gap-2" ref={rootParent} {...getRootProps({})}>
             {files.map((file, index) => {
                 const isThumbnail = thumbnailIndex === index;
                 return (
@@ -78,15 +80,14 @@ export const ImageUpload = () => {
                     </div>
                 );
             })}
+
+            <input {...getInputProps()} />
             <div
-                {...getRootProps({
-                    className:
-                        "flex flex-col h-24 w-24 justify-center items-center p-2 border-2 border-dashed border-gray-300 rounded-box bg-gray-100 text-gray-400 outline-none transition border duration-150 cursor-pointer hover:bg-gray-200",
-                })}
+                onClick={open}
+                className="rounded-box flex h-24 w-24 cursor-pointer flex-col items-center justify-center border border-dashed border-gray-300 bg-gray-100 p-2 text-gray-400 duration-150 hover:bg-gray-200"
             >
-                <input {...getInputProps()} />
                 <PlusIcon className="h-10 w-10" />
-                {/* <p className="cursor-pointer text-center">Add Images</p> */}
+                <div className="text-center text-xs">Add Images</div>
             </div>
         </div>
     );
