@@ -1,3 +1,4 @@
+import { ReactQueryProvider } from "@/utils/query-provider";
 import { montserratFont } from "./fonts";
 import "./globals.css";
 
@@ -9,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={montserratFont.className}>{children}</body>
+            <body className={montserratFont.className}>
+                <ReactQueryProvider>{children}</ReactQueryProvider>
+            </body>
         </html>
     );
 }

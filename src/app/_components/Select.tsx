@@ -1,5 +1,6 @@
+import { AlertCircleIcon } from "@/icons";
 import clsx from "clsx";
-import { ComponentProps, FC } from "react";
+import { ComponentProps, forwardRef } from "react";
 
 interface Props extends ComponentProps<"select"> {
     label?: string;
@@ -8,38 +9,46 @@ interface Props extends ComponentProps<"select"> {
     error?: string;
     options?: { label: string; value: string }[];
     selectablePlaceholder?: boolean;
+    loading?: boolean;
 }
 
-export const Select: FC<Props> = ({
-    label,
-    error,
-    options = [],
-    selectClassName,
-    rootClassName,
-    placeholder = "Pick One",
-    selectablePlaceholder,
-    ...rest
-}) => {
+export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
+    const { label, error, options = [], selectClassName, rootClassName, placeholder = "Pick One", selectablePlaceholder, loading, ...rest } = props;
     return (
         <div className={clsx("form-control w-full", rootClassName)}>
             {label && (
                 <label className="label">
                     <span className="label-text">{label}</span>
+                    <span className="label-text-alt text-error">
+                        <div
+                            className={clsx({
+                                "duration-200 flex items-center": true,
+                                "tooltip-error tooltip opacity-100": error,
+                                "opacity-0": !error,
+                            })}
+                            data-tip={error}
+                        >
+                            <AlertCircleIcon className="h-4 w-4" />
+                        </div>
+                    </span>
                 </label>
             )}
-            <select className={clsx("select-bordered select font-normal", error && "select-error", selectClassName)} {...rest}>
-                <option disabled={!selectablePlaceholder} selected>
+            <select
+                disabled={loading}
+                ref={ref}
+                className={clsx("select-bordered select font-normal", error && "select-error", loading && "animate-pulse", selectClassName)}
+                {...rest}
+            >
+                <option disabled={!selectablePlaceholder} value={placeholder}>
                     {placeholder}
                 </option>
                 {options?.map((option) => (
-                    <option key={option.value}>{option.label}</option>
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
                 ))}
             </select>
-            {error && (
-                <label className="label">
-                    <span className="label-text-alt text-error">{error}</span>
-                </label>
-            )}
         </div>
     );
-};
+});
+Select.displayName = "Select";

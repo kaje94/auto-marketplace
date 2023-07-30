@@ -19,6 +19,10 @@ export const env = createEnv({
         IDENTITY_CLIENT_ID: z.string().min(1),
         IDENTITY_CLIENT_SECRET: z.string().min(1),
         API_BASE_URL: z.string().min(1),
+        S3_UPLOAD_KEY: z.string().min(1),
+        S3_UPLOAD_SECRET: z.string().min(1),
+        S3_UPLOAD_BUCKET: z.string().min(1),
+        S3_UPLOAD_REGION: z.string().min(1),
     },
 
     /**
@@ -41,6 +45,10 @@ export const env = createEnv({
         IDENTITY_CLIENT_ID: process.env.IDENTITY_CLIENT_ID,
         IDENTITY_CLIENT_SECRET: process.env.IDENTITY_CLIENT_SECRET,
         API_BASE_URL: process.env.API_BASE_URL,
+        S3_UPLOAD_KEY: process.env.S3_UPLOAD_KEY,
+        S3_UPLOAD_SECRET: process.env.S3_UPLOAD_SECRET,
+        S3_UPLOAD_BUCKET: process.env.S3_UPLOAD_BUCKET,
+        S3_UPLOAD_REGION: process.env.S3_UPLOAD_REGION,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

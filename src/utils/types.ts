@@ -1,24 +1,9 @@
-export type PaginatedResponse = {
-    pageNumber: number;
-    totalPages: number;
-    totalCount: number;
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
-};
+import { z } from "zod";
+import { CreateListingSchema, LocationSchema, PriceSchema, VehicleFeatureSchema, VehicleImageSchema, VehicleSchema } from "./schemas";
 
-type Price = {
-    amount: number;
-    currency: string;
-    isPriceNegotiable?: boolean;
-};
+type Price = z.infer<typeof PriceSchema>;
 
-type Location = {
-    street: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
-};
+type Location = z.infer<typeof LocationSchema>;
 
 type User = {
     id: string;
@@ -33,35 +18,7 @@ type User = {
     phoneConfirmed: boolean;
 };
 
-type VehicleImage = {
-    id: number;
-    name: string;
-    url: string;
-    color: string;
-    isThumbnail: boolean;
-};
-
-type VehicleFeature = {
-    id: number;
-    name: string;
-};
-
-type Vehicle = {
-    id: number;
-    type: string;
-    brand: string;
-    model: string;
-    trim: string;
-    yearOfManufacture: string;
-    yearOfRegistration: string;
-    millage: number;
-    condition: string; // todo: add enum
-    transmission: string; // todo: add enum
-    fuelType: string; // todo: add enum
-    engineCapacity: string;
-    vehicleImages: VehicleImage[];
-    features: VehicleFeature[];
-};
+type Vehicle = z.infer<typeof VehicleSchema>;
 
 type ListingItem = {
     id: string;
@@ -77,5 +34,19 @@ type ListingItem = {
     userId?: string;
     user?: User;
 };
+
+export type PaginatedResponse = {
+    pageNumber: number;
+    totalPages: number;
+    totalCount: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+};
+
+export type ImageFile = z.infer<typeof VehicleImageSchema>;
+
+export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;
+
+export type AddListingReq = z.infer<typeof CreateListingSchema>;
 
 export type ListingItems = { items: ListingItem[] };

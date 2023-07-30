@@ -14,6 +14,7 @@ interface Props {
 
 export const NavBar: FC<Props> = async ({ hideBackground }) => {
     const session = await getServerSession(authOptions);
+
     return (
         <div
             className={clsx(
@@ -30,7 +31,7 @@ export const NavBar: FC<Props> = async ({ hideBackground }) => {
                 <PostAddLink />
 
                 <div className="flex-none">
-                    {session ? (
+                    {session?.user ? (
                         <div className="dropdown-end dropdown">
                             <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">

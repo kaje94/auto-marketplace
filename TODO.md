@@ -1,9 +1,9 @@
 - [ ] mjs instead of js for root configs
 
-search
 
-input search:
+milage needs a measurement unit
 
-gear?
-fuel type?
-has lease
+// setting up s3
+https://next-s3-upload.codingvalue.com/setup
+
+compress image before uploading

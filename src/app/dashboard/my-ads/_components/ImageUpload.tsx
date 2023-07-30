@@ -1,94 +1,141 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, forwardRef } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { CheckIcon, PlusIcon, TrashIcon } from "@/icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import clsx from "clsx";
+import { ImageFile } from "@/utils/types";
 
-export const ImageUpload = () => {
+interface Props {
+    files?: ImageFile[];
+    setFiles?: (images: ImageFile[]) => void;
+    loading?: boolean;
+    loadingPlaceholderCount?: number;
+    error?: string;
+}
+
+export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, _formRef) => {
+    const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1 } = props;
     const [rootParent] = useAutoAnimate<HTMLDivElement>();
-    const [files, setFiles] = useState<(File & { preview: string })[]>([]);
-    const [thumbnailIndex, setThumbnailIndex] = useState(0);
     const { getRootProps, getInputProps, open } = useDropzone({
         accept: { "image/*": [] },
+        disabled: loading,
         multiple: true,
         noClick: true,
         noKeyboard: true,
         onDrop: (acceptedFiles) => {
-            setFiles((files) => [...files, ...acceptedFiles.map((file) => Object.assign(file, { preview: URL.createObjectURL(file) }))]);
+            const newFileList: ImageFile[] = [...files, ...acceptedFiles.map((file) => ({ file, preview: URL.createObjectURL(file) }))];
+            if (newFileList[0] && !newFileList.some((item) => item.isThumbnail)) {
+                newFileList[0].isThumbnail = true;
+            }
+            setFiles(newFileList);
         },
     });
 
     const removeImage = (indexToRemove: number) => {
         if (indexToRemove >= 0 && indexToRemove < files.length) {
-            setFiles([...files.slice(0, indexToRemove), ...files.slice(indexToRemove + 1)]);
+            const newFileList = [...files.slice(0, indexToRemove), ...files.slice(indexToRemove + 1)];
+            if (newFileList[0] && !newFileList.some((item) => item.isThumbnail)) {
+                newFileList[0].isThumbnail = true;
+            }
+            setFiles(newFileList);
         }
     };
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-        return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+        return () =>
+            files?.forEach((item) => {
+                if (item.preview) {
+                    URL.revokeObjectURL(item.preview);
+                }
+            });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <div className="mt-2 flex flex-wrap gap-2" ref={rootParent} {...getRootProps({})}>
-            {files.map((file, index) => {
-                const isThumbnail = thumbnailIndex === index;
-                return (
-                    <div className="rounded-box relative box-border inline-flex h-24 w-24 border-2" key={file.name}>
-                        <div className="rounded-box h-full w-full overflow-hidden">
-                            <Image
-                                src={file.preview}
-                                height={50}
-                                width={50}
-                                alt="Image-preview"
-                                className="box-border block h-full w-full overflow-hidden object-cover"
-                                // Revoke data uri after image is loaded
-                                onLoad={() => {
-                                    URL.revokeObjectURL(file.preview);
-                                }}
-                            />
-                        </div>
-                        <div className="absolute right-0 top-0 z-10 flex h-full w-full flex-row items-center justify-center bg-base-300 opacity-0 duration-200 hover:bg-opacity-20 hover:opacity-100">
-                            <div className="flex items-center justify-center gap-2">
-                                <button className="btn-error btn-square btn-sm btn" onClick={() => removeImage(index)}>
-                                    <TrashIcon />
-                                </button>
-
-                                <div
-                                    className="tooltip tooltip-bottom"
-                                    data-tip={
-                                        isThumbnail ? "This image will be the thumbnail for the advert" : "Use this as the thumbnail for the advert"
-                                    }
-                                >
+        <>
+            <div className="mt-2 flex flex-wrap gap-2" ref={rootParent} {...getRootProps({})}>
+                {files?.map((file, index) => {
+                    return (
+                        <div className="rounded-box relative box-border inline-flex h-24 w-24 border-2" key={`${index}-${file.name}`}>
+                            <div className="rounded-box h-full w-full overflow-hidden">
+                                <Image
+                                    src={file.preview ?? ""}
+                                    height={50}
+                                    width={50}
+                                    alt="Image-preview"
+                                    className="box-border block h-full w-full overflow-hidden object-cover"
+                                    // Revoke data uri after image is loaded
+                                    // onLoad={() => {
+                                    //     URL.revokeObjectURL(file.preview!);
+                                    // }}
+                                />
+                            </div>
+                            <div className="absolute right-0 top-0 z-10 flex h-full w-full flex-row items-center justify-center bg-base-300 opacity-0 duration-200 hover:bg-opacity-20 hover:opacity-100">
+                                <div className="flex items-center justify-center gap-2">
                                     <button
-                                        onClick={() => setThumbnailIndex(index)}
-                                        className={clsx({
-                                            "btn-info btn-sm btn btn-square": true,
-                                            "btn-outline": !isThumbnail,
-                                            "opacity-20": isThumbnail,
-                                        })}
+                                        className="btn-error btn-square btn-sm btn"
+                                        onClick={(event) => {
+                                            removeImage(index);
+                                            event.preventDefault();
+                                        }}
                                     >
-                                        <CheckIcon />
+                                        <TrashIcon />
                                     </button>
+
+                                    <div className="tooltip tooltip-bottom" data-tip={file.isThumbnail ? "Is Thumbnail" : "Set as Thumbnail"}>
+                                        <button
+                                            onClick={(event) => {
+                                                if (!file.isThumbnail) {
+                                                    setFiles(files.map((item, i) => ({ ...item, isThumbnail: index === i })));
+                                                }
+                                                event.preventDefault();
+                                            }}
+                                            className={clsx({
+                                                "btn-info btn-sm btn btn-square": true,
+                                                "btn-outline": !file.isThumbnail,
+                                                "opacity-20 cursor-default": file.isThumbnail,
+                                            })}
+                                        >
+                                            <CheckIcon />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
 
-            <input {...getInputProps()} />
-            <div
-                onClick={open}
-                className="rounded-box flex h-24 w-24 cursor-pointer flex-col items-center justify-center border border-dashed border-gray-300 bg-gray-100 p-2 text-gray-400 duration-150 hover:bg-gray-200"
-            >
-                <PlusIcon className="h-10 w-10" />
-                <div className="text-center text-xs">Add Images</div>
+                <input {...getInputProps()} />
+                {loading ? (
+                    <>
+                        {new Array(loadingPlaceholderCount).fill("").map((_, i) => (
+                            <div
+                                key={`${i}`}
+                                className="rounded-box flex h-24 w-24 animate-pulse cursor-progress flex-col items-center justify-center border border-dashed bg-base-200"
+                            />
+                        ))}
+                    </>
+                ) : (
+                    <div
+                        onClick={open}
+                        className={clsx({
+                            "rounded-box flex h-24 w-24 cursor-pointer flex-col items-center justify-center border border-dashed  bg-base-200 p-2 duration-150 hover:bg-base-300":
+                                true,
+                            "border-error text-error": error,
+                            "border-base-300 text-opacity-80 text-base-content": !error,
+                        })}
+                    >
+                        <PlusIcon className="h-10 w-10" />
+                        <div className="text-center text-xs">Add Images</div>
+                    </div>
+                )}
             </div>
-        </div>
+            {error && <div className="mt-2 text-xs text-error">{error}</div>}
+        </>
     );
-};
+});
+ImageUpload.displayName = "ImageUpload";

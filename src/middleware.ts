@@ -4,17 +4,17 @@ import { withAuth } from "next-auth/middleware";
 
 export default withAuth(
     async (request) => {
-        const token: any = await getToken({ req: request });
+        const token = await getToken({ req: request });
         const headers = new Headers(request.headers);
         if (token?.accessToken) {
-            headers.set("Authorization", `Bearer ${token.accessToken}`);
+            headers.set("tokenHeader", `Bearer ${token.accessToken}`);
         }
         const resp = NextResponse.next({ request: { headers } });
         return resp;
     },
     {
         callbacks: {
-            authorized: ({ token }) => !!token,
+            authorized: ({ token }) => !!(token as any).accessToken,
         },
     }
 );

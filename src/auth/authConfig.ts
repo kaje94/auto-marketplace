@@ -1,6 +1,14 @@
-import type { NextAuthOptions } from "next-auth";
+import type { DefaultSession, NextAuthOptions } from "next-auth";
 import DuendeIDS6Provider from "next-auth/providers/duende-identity-server6";
 import { env } from "@/env.mjs";
+
+declare module "next-auth" {
+    interface Session {
+        user: {
+            id: string;
+        } & DefaultSession["user"];
+    }
+}
 
 export const authOptions: NextAuthOptions = {
     // callbacks: {
@@ -34,12 +42,26 @@ export const authOptions: NextAuthOptions = {
     // ],
     callbacks: {
         session: ({ session, token }) => {
-            return { ...session, user: { ...session.user, id: token.sub } };
+            //   session.user.id = token.id;
+            //   session.accessToken = token.accessToken;
+            //   return session;
+
+            return { ...session, user: { ...session.user, id: token.sub }, accessToken: token.accessToken };
         },
-        jwt({ token, account }) {
+        jwt({ token, account, user }) {
+            if (user) {
+                token.id = user.id;
+            }
             if (account) {
                 token.accessToken = account.access_token;
             }
+            // if (account) {
+            //     return {
+            //         access_token: account.access_token,
+            //         expires_at: account.expires_at,
+            //         // refresh_token: account.refresh_token,
+            //     };
+            // }
             return token;
         },
     },

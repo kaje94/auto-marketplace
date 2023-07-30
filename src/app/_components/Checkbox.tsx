@@ -1,19 +1,28 @@
 "use client";
-import { ComponentProps, FC } from "react";
+import { ComponentProps, FC, forwardRef } from "react";
 import clsx from "clsx";
 
 interface Props extends ComponentProps<"input"> {
     label?: string;
-    inputClassNames?: string;
+    checkboxClassNames?: string;
+    loading?: boolean;
 }
 
-export const Checkbox: FC<Props> = ({ label, inputClassNames, ...rest }) => {
+export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
+    const { label, checkboxClassNames, loading, ...rest } = props;
     return (
         <div className="form-control">
-            <label className="label cursor-pointer">
+            <label className={clsx("label", !loading && "cursor-pointer")}>
                 <span className="label-text">{label}</span>
-                <input type="checkbox" className={clsx("checkbox", inputClassNames)} {...rest} />
+                <input
+                    ref={ref}
+                    disabled={loading}
+                    type="checkbox"
+                    className={clsx("checkbox", loading && "animate-pulse", checkboxClassNames)}
+                    {...rest}
+                />
             </label>
         </div>
     );
-};
+});
+Checkbox.displayName = "Checkbox";

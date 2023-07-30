@@ -1,28 +1,42 @@
 "use client";
-import { ComponentProps, FC } from "react";
+import { ComponentProps, forwardRef } from "react";
 import clsx from "clsx";
+import { AlertCircleIcon } from "@/icons";
 
 interface Props extends ComponentProps<"textarea"> {
     label?: string;
     textAreaClassNames?: string;
     error?: string;
+    loading?: boolean;
 }
 
-export const TextArea: FC<Props> = ({ label, error, textAreaClassNames, ...rest }) => {
+export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
+    const { label, error, textAreaClassNames, loading, ...rest } = props;
     return (
         <div className="form-control w-full">
             <label className="label">
                 <span className="label-text">{label}</span>
+                <span className="label-text-alt text-error">
+                    <div
+                        className={clsx({ "duration-200 flex items-center": true, "tooltip-error tooltip opacity-100": error, "opacity-0": !error })}
+                        data-tip={error}
+                    >
+                        <AlertCircleIcon className="h-4 w-4" />
+                    </div>
+                </span>
             </label>
             <textarea
-                className={clsx("textarea-bordered textarea textarea-md min-h-[140px] w-full", error && "textarea-error", textAreaClassNames)}
+                ref={ref}
+                className={clsx(
+                    "textarea-bordered textarea textarea-md min-h-[140px] w-full",
+                    error && "textarea-error",
+                    loading && "animate-pulse",
+                    textAreaClassNames
+                )}
+                disabled={loading}
                 {...rest}
             />
-            {error && (
-                <label className="label">
-                    <span className="label-text-alt text-error">{error}</span>
-                </label>
-            )}
         </div>
     );
-};
+});
+TextArea.displayName = "TextArea";

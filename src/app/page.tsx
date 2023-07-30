@@ -9,9 +9,7 @@ const HeroSearchBox = () => (
     <div className="join mb-8 mt-5 flex justify-center shadow-xl md:mb-16 xl:mb-28 2xl:mb-36">
         <input className="input-bordered input join-item rounded-r-none" placeholder="Search..." />
         <select className="select-bordered select join-item hidden rounded-none sm:block">
-            <option disabled selected>
-                Type
-            </option>
+            <option disabled>Type</option>
             <option>Car</option>
             <option>Van</option>
             <option>SUV</option>
