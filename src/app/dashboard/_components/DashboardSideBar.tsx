@@ -20,7 +20,7 @@ export const DashboardSideBar: FC = () => {
                 <li>
                     <Link
                         href="/dashboard/my-ads"
-                        className={clsx({ "px-4 py-3": true, active: ["/dashboard/my-ads", "/dashboard/my-ads/add"].includes(pathname) })}
+                        className={clsx({ "px-4 py-3": true, active: ["/dashboard/my-ads", "/dashboard/new-advert"].includes(pathname) })}
                     >
                         <AdvertIcon className="h-5 w-5" />
                         My Adverts

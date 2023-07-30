@@ -3,13 +3,13 @@ import { FC } from "react";
 
 type Props = {
     tags: { id: number; name: string }[];
-    selectedTags: number[];
-    onSelect: (item: number[]) => void;
+    selectedTags?: number[];
+    onSelect?: (item: number[]) => void;
     loading?: boolean;
     loadingPlaceholderCount?: number;
 };
 
-export const TagSelect: FC<Props> = ({ tags, selectedTags = [], loading, loadingPlaceholderCount = 10, onSelect }) => {
+export const TagSelect: FC<Props> = ({ tags, selectedTags = [], loading, loadingPlaceholderCount = 10, onSelect = () => {} }) => {
     const placeholderWidth = ["w-44", "w-24", "w-32", "w-40", "w-48", "w-28"];
     return (
         <div className="flex flex-wrap gap-1">

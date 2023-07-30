@@ -16,7 +16,7 @@ interface Props {
 
 export const AdvertForm: FC<Props> = (props) => {
     const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {} } = props;
-    const { handleSubmit, formState: { errors } = {}, register, control } = form as UseFormReturn<AddListingReq>;
+    const { handleSubmit, formState: { errors } = {}, register = () => {}, control } = form as UseFormReturn<AddListingReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -131,18 +131,21 @@ export const AdvertForm: FC<Props> = (props) => {
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Images</div>
-                        <Controller
-                            name="vehicle.vehicleImages"
-                            control={control}
-                            render={({ field, fieldState }) => (
-                                <ImageUpload
-                                    files={field.value}
-                                    setFiles={(images) => field.onChange(images)}
-                                    loading={isLoading}
-                                    error={fieldState.error?.message}
-                                />
-                            )}
-                        />
+                        {isLoading ? (
+                            <ImageUpload loading={isLoading} />
+                        ) : (
+                            <Controller
+                                name="vehicle.vehicleImages"
+                                control={control}
+                                render={({ field, fieldState }) => (
+                                    <ImageUpload
+                                        files={field.value}
+                                        setFiles={(images) => field.onChange(images)}
+                                        error={fieldState.error?.message}
+                                    />
+                                )}
+                            />
+                        )}
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Location Details</div>
@@ -193,13 +196,17 @@ export const AdvertForm: FC<Props> = (props) => {
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Features</div>
                         <span className="mt-2">
-                            <Controller
-                                name="vehicle.featureIds"
-                                control={control}
-                                render={({ field: { value = [], onChange } }) => (
-                                    <TagSelect tags={featureOptions} selectedTags={value} loading={isLoading} onSelect={onChange} />
-                                )}
-                            />
+                            {isLoading ? (
+                                <TagSelect tags={featureOptions} loading={isLoading} />
+                            ) : (
+                                <Controller
+                                    name="vehicle.featureIds"
+                                    control={control}
+                                    render={({ field: { value = [], onChange } }) => (
+                                        <TagSelect tags={featureOptions} selectedTags={value} onSelect={onChange} />
+                                    )}
+                                />
+                            )}
                         </span>
                     </div>
                 </div>

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { ListingStatusTypes } from "./types";
 
 export const PriceSchema = z.object({
     amount: z.preprocess(Number, z.number().min(1, "Price amount needs to be a positive number")),
@@ -23,7 +22,8 @@ export const VehicleImageSchema = z.object({
     color: z.string().min(1).optional(),
     isThumbnail: z.boolean().optional(),
     // locale file properties
-    file: z.instanceof(File).optional(),
+    // file: z.instanceof(File).optional(), // todo: fix since it throws an error saying File not found
+    file: z.any().optional(),
     preview: z.string().optional(),
 });
 
