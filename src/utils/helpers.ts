@@ -1,4 +1,5 @@
 import { FastAverageColor } from "fast-average-color";
+import { Vehicle, Location } from "./types";
 
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;
@@ -50,3 +51,19 @@ export const uploadToS3 = async (file: File, url: string, key: string, bucket: s
 
     return { url: resultUrl, color: color.hex };
 };
+
+export const getFormattedCurrency = (amount: number, currency: string) =>
+    new Intl.NumberFormat(undefined, {
+        style: "currency",
+        currency: currency,
+        minimumFractionDigits: 0,
+    }).format(amount);
+
+export const getListingTags = (location: Location, vehicle: Vehicle) => {
+    return [location.city, unCamelCase(vehicle.condition), `${vehicle.millage} km`];
+};
+
+export const unCamelCase = (str: string) =>
+    str.replace(/([A-Z])/g, " $1").replace(/^./, function (str) {
+        return str.toUpperCase();
+    });

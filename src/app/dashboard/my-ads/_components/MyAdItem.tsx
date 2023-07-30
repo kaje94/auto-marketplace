@@ -1,75 +1,121 @@
 import { FC } from "react";
 import Image from "next/image";
-import { TrashIcon, EyeIcon, RefreshIcon } from "@/icons";
+import { TrashIcon, EyeIcon, RefreshIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
+import Link from "next/link";
+import { ListingStatusTypes } from "@/utils/types";
+import { unCamelCase } from "@/utils/helpers";
+import { DeleteMyAdItem } from "./DeleteMyAdItem";
 
 interface Props {
-    title: string;
-    price: string;
-    description: string;
+    id?: number;
+    title?: string;
+    imageUrl?: string;
+    imageColor?: string;
+    price?: string;
+    description?: string;
     tags?: string[];
-    state?: "under-review" | "active" | "expired";
+    loading?: boolean;
+    status?: ListingStatusTypes;
 }
+export const MyAdItem: FC<Props> = (props) => {
+    const { title, price, description, tags = [], status = ListingStatusTypes.Posted, id, imageUrl, imageColor, loading = false } = props;
 
-export const MyAdItem: FC<Props> = ({ title, price, description, tags = [], state = "active" }) => (
-    <div className="card mb-3 grid grid-cols-12 gap-4 bg-base-100 p-2 shadow-md zoom-inner-image md:p-4 ">
-        <figure className={clsx("relative col-span-12 h-full overflow-hidden rounded-xl md:col-span-3", state === "expired" && "opacity-70")}>
-            <Image
-                src="https://cdn.britannica.com/93/97093-050-23ACD82B/Prius-Toyota-1997.jpg"
-                alt="my-ad"
-                className="aspect-video h-full w-full object-cover transition-transform duration-300 ease-linear zoomable-image"
-                width={100}
-                height={100}
-            />
-            <div className="badge badge-ghost badge-lg absolute bottom-5 duration-300 ">{price}</div>
-        </figure>
-        <div className={clsx("col-span-12 flex flex-col md:col-span-8", state === "expired" && "opacity-70")}>
-            <div className="text-lg font-semibold text-accent">{title}</div>
-            <div className="flex flex-wrap gap-1 py-1 md:py-2">
-                {tags.map((tag) => (
-                    <div key={tag} className="badge badge-outline lg:badge-md">
-                        {tag}
-                    </div>
-                ))}
-            </div>
+    const myAddItemContent = (
+        <>
+            <figure
+                className={clsx(
+                    "relative col-span-12 h-full overflow-hidden rounded-xl md:col-span-3",
+                    status === ListingStatusTypes.Expired && "opacity-70"
+                )}
+            >
+                {loading ? (
+                    <div className="aspect-video h-full w-full animate-pulse bg-base-300" />
+                ) : (
+                    <>
+                        <Image
+                            src={imageUrl ?? ""}
+                            alt="my-ad"
+                            className="zoomable-image aspect-video h-full w-full object-cover transition-transform duration-300 ease-linear"
+                            style={{ background: imageColor }}
+                            width={100}
+                            height={100}
+                        />
+                        <div className="badge badge-ghost badge-lg absolute bottom-5 duration-300 ">{price}</div>
+                    </>
+                )}
+            </figure>
 
-            <p className="line-clamp-2 flex-1 overflow-hidden text-sm">{description}</p>
-            <div className="text-sm italic text-neutral-400">Posted 2 days ago</div>
-        </div>
-        <div className="col-span-12 flex flex-col items-center p-0 md:col-span-1 md:p-2">
             <div
                 className={clsx({
-                    "badge badge-lg h-auto text-center capitalize absolute -top-2 -right-1": true,
-                    "badge-secondary": state === "active",
-                    "badge-ghost": state === "expired",
-                    "badge-primary": state === "under-review",
+                    "col-span-12 flex flex-col md:col-span-6 xl:col-span-7": true,
+                    "opacity-70": status === ListingStatusTypes.Expired,
                 })}
             >
-                {state}
+                {loading ? <span className="h-6 w-56 bg-base-200" /> : <span className="text-lg font-semibold text-accent">{title}</span>}
+                <div className="flex flex-wrap gap-1 py-1 md:py-2">
+                    {tags.map((tag) => (
+                        <div key={tag} className="badge badge-outline lg:badge-md">
+                            {tag}
+                        </div>
+                    ))}
+                </div>
+
+                {loading ? (
+                    <div className="h-12 bg-base-200" />
+                ) : (
+                    <p className="line-clamp-2 flex-1 overflow-hidden text-sm opacity-80">{description}</p>
+                )}
+                <div className="mt-2 text-sm italic text-neutral-400">Posted 2 days ago</div>
             </div>
-            <div className="flex w-full flex-1 flex-col items-end justify-end gap-2">
-                {state === "active" && (
-                    <div className="w-full md:tooltip" data-tip="View advert">
-                        <button className="btn-outline btn-square btn w-full md:w-12">
-                            <EyeIcon /> <span className="ml-2 md:hidden">View</span>
-                        </button>
+            <div className=" col-span-12 flex h-full  items-center md:col-span-3 xl:col-span-2">
+                <div className="rounded-box flex h-min w-full flex-1 flex-wrap items-center justify-center gap-1 border-2 p-2 md:flex-col md:gap-0">
+                    <div
+                        className={clsx({
+                            "badge badge-lg h-auto text-center capitalize p-2 text-sm font-bold md:w-full rounded-box": true,
+                            "badge-secondary": status === ListingStatusTypes.Posted && !loading,
+                            "badge-ghost": status === ListingStatusTypes.Expired,
+                            "badge-primary": status === ListingStatusTypes.UnderReview,
+                        })}
+                    >
+                        {loading ? "Loading..." : unCamelCase(status)}
                     </div>
-                )}
-                {state === "expired" && (
-                    <div className="w-full md:tooltip" data-tip="Renew expired advert">
-                        <button className="btn-ghost btn-outline btn-square btn w-full md:w-12">
-                            <RefreshIcon />
-                            <span className="ml-2 md:hidden">Renew</span>
-                        </button>
-                    </div>
-                )}
-                <div className="w-full md:tooltip" data-tip="Delete advert">
-                    <button className="btn-outline btn-error btn-square btn w-full md:w-12">
-                        <TrashIcon />
-                        <span className="ml-2 md:hidden">Delete</span>
-                    </button>
+                    <div className="divider my-0" />
+                    {status === ListingStatusTypes.Posted && (
+                        <>
+                            <button className="btn-ghost btn-sm btn md:w-full" disabled={loading}>
+                                <EditIcon /> <span className="ml-2">Edit</span>
+                            </button>
+                            <div className="divider my-0" />
+                        </>
+                    )}
+                    {status === ListingStatusTypes.Expired && (
+                        <>
+                            <button className="btn-ghost btn-sm btn md:w-full">
+                                <RefreshIcon />
+                                <span className="ml-2">Renew</span>
+                            </button>
+                            <div className="divider my-0" />
+                        </>
+                    )}
+                    <DeleteMyAdItem loading={loading} listingId={id} />
                 </div>
             </div>
-        </div>
-    </div>
-);
+        </>
+    );
+
+    if (loading) {
+        <div className="card mb-3 grid animate-ping grid-cols-12 gap-4 bg-base-100 p-2 shadow transition-shadow zoom-inner-image hover:shadow-md md:p-4">
+            {myAddItemContent}
+        </div>;
+    }
+
+    return (
+        <Link
+            className="card mb-3 grid cursor-pointer grid-cols-12 gap-4 bg-base-100 p-2 shadow transition-shadow zoom-inner-image hover:shadow-md md:p-4"
+            href={`/listing/item/${id}`}
+        >
+            {myAddItemContent}
+        </Link>
+    );
+};

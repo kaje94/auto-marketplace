@@ -1,6 +1,7 @@
 import { ListingItem, Pagination, Select } from "@/app/_components";
 import { Filters } from "./_components";
 import { api } from "@/utils/api";
+import { getFormattedCurrency, getListingTags } from "@/utils/helpers";
 
 const ListingPage = async () => {
     const listings = await api.getPostedListings();
@@ -37,28 +38,14 @@ const ListingPage = async () => {
                             <ListingItem
                                 key={item.id}
                                 title={item.title}
-                                price={new Intl.NumberFormat(undefined, {
-                                    style: "currency",
-                                    currency: item.price.currency,
-                                    minimumFractionDigits: 0,
-                                }).format(item.price.amount)}
+                                price={getFormattedCurrency(item.price.amount, item.price.currency)}
                                 description={item.description}
-                                tags={["Colombo", "Used", "23,000 km"]}
+                                tags={getListingTags(item.location, item.vehicle)}
                                 imageUrl={thumbnailImage?.url ?? ""}
                                 imageColor={thumbnailImage?.color ?? ""}
                             />
                         );
                     })}
-                    <ListingItem
-                        title="Totyota Corrola 2013"
-                        price="Rs. 3,400,000"
-                        description="If a dog chews shoes whose shoes does he choose If a dog chews shoes
-whose shoes does he choose If a dog chews shoes whose shoes does he
-choose If a dog chews shoes whose shoes does he choose?"
-                        tags={["Colombo", "Used", "23,000 km"]}
-                        imageUrl="https://cdn.britannica.com/93/97093-050-23ACD82B/Prius-Toyota-1997.jpg"
-                        imageColor="#2596be"
-                    />
                 </div>
                 <Pagination />
             </div>

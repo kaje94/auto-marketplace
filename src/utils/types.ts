@@ -1,9 +1,23 @@
 import { z } from "zod";
 import { CreateListingSchema, LocationSchema, PriceSchema, VehicleFeatureSchema, VehicleImageSchema, VehicleSchema } from "./schemas";
 
+export enum Errors {
+    Unauthorized = "Unauthorized",
+}
+
+export enum ListingStatusTypes {
+    UnderReview = "UnderReview",
+    Posted = "Posted",
+    Declined = "Declined",
+    Expired = "Expired",
+    Sold = "Sold",
+    TemporarilyUnlisted = "TemporarilyUnlisted",
+    PermanentlyRemoved = "PermanentlyRemoved",
+}
+
 type Price = z.infer<typeof PriceSchema>;
 
-type Location = z.infer<typeof LocationSchema>;
+export type Location = z.infer<typeof LocationSchema>;
 
 type User = {
     id: string;
@@ -18,16 +32,16 @@ type User = {
     phoneConfirmed: boolean;
 };
 
-type Vehicle = z.infer<typeof VehicleSchema>;
+export type Vehicle = z.infer<typeof VehicleSchema>;
 
 type ListingItem = {
-    id: string;
+    id: number;
     title: string;
     description: string;
     price: Price;
     location: Location;
     hasOnGoingLease: boolean;
-    status: string; // todo: get possible enum values
+    status: ListingStatusTypes;
     expiryDate: string;
     reviewComment?: string;
     vehicle: Vehicle;
@@ -43,6 +57,11 @@ export type PaginatedResponse = {
     hasNextPage: boolean;
 };
 
+export type PaginatedRequest = {
+    PageNumber?: number;
+    PageSize?: number;
+};
+
 export type ImageFile = z.infer<typeof VehicleImageSchema>;
 
 export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;
@@ -50,3 +69,5 @@ export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;
 export type AddListingReq = z.infer<typeof CreateListingSchema>;
 
 export type ListingItems = { items: ListingItem[] };
+
+export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };

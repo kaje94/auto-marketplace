@@ -1,9 +1,10 @@
 - [ ] mjs instead of js for root configs
-
-
-milage needs a measurement unit
+// await new Promise((resolve) => setTimeout(resolve, 10000));
 
 // setting up s3
 https://next-s3-upload.codingvalue.com/setup
 
-compress image before uploading
+// API changes
+createdAt field is missing in listing response
+milage needs a measurement unit
+decide which lists to take to backend

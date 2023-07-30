@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ListingStatusTypes } from "./types";
 
 export const PriceSchema = z.object({
     amount: z.preprocess(Number, z.number().min(1, "Price amount needs to be a positive number")),

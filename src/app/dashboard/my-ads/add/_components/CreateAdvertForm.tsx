@@ -58,7 +58,7 @@ export const CreateAdvertForm = (props: Props) => {
             console.log("requestBody", requestBody);
             return addAdvertAction(requestBody);
         },
-        { onSuccess: (id) => router.replace(`/listing/item/${id}`) }
+        { onSuccess: () => router.replace(`/dashboard/my-ads`) }
     );
 
     return <AdvertForm featureOptions={features} form={form} isMutating={isMutating} onMutate={addAdvertMutation} />;

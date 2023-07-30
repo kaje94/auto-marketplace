@@ -17,18 +17,9 @@ interface Props {
 export const AdvertForm: FC<Props> = (props) => {
     const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {} } = props;
     const { handleSubmit, formState: { errors } = {}, register, control } = form as UseFormReturn<AddListingReq>;
-    console.log("errors", errors);
+
     return (
-        <form
-            onSubmit={
-                handleSubmit
-                    ? handleSubmit((values) => {
-                          console.log("values 123", values);
-                          onMutate(values);
-                      })
-                    : undefined
-            }
-        >
+        <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
             <div className="grid gap-4 xl:grid-cols-2 xl:gap-7 2xl:gap-8">
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="stat card bg-base-100 p-4 shadow">

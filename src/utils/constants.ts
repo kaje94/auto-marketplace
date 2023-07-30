@@ -1,6 +1,4 @@
-export enum Errors {
-    Unauthorized = "Unauthorized",
-}
+import { Errors } from "./types";
 
 // todo: check & remove
 export const ErrorMessages = {
