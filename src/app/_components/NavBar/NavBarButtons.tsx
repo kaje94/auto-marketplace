@@ -51,7 +51,7 @@ export const PostAddLink = () => {
         <Link href="/dashboard/my-ads/add">
             <button
                 className={clsx({
-                    "btn text-xs capitalize sm:text-sm": true,
+                    "btn text-xs capitalize sm:text-sm px-0": true,
                     "btn-link text-secondary cursor-default": active,
                     "btn-ghost text-base-300 hover:text-accent": !active,
                 })}

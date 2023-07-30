@@ -26,7 +26,7 @@ export const NavBar: FC<Props> = async ({ hideBackground }) => {
                 <button className="btn-ghost btn text-xl normal-case">Car Sale</button>
             </Link>
             <div className="flex-1" />
-            <div className="flex flex-row items-center gap-0 pr-0 sm:gap-3 sm:pr-2">
+            <div className="flex flex-row items-center gap-3 pr-0 sm:gap-4 sm:pr-2 lg:gap-6">
                 <NavBarSearch />
                 <PostAddLink />
 
