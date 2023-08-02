@@ -4,14 +4,14 @@ import { TrashIcon, EyeIcon, RefreshIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Link from "next/link";
 import { ListingStatusTypes } from "@/utils/types";
-import { unCamelCase } from "@/utils/helpers";
+import { thumbHashToDataUrl, unCamelCase } from "@/utils/helpers";
 import { DeleteMyAdItem } from "./DeleteMyAdItem";
 
 interface Props {
     id?: number;
     title?: string;
     imageUrl?: string;
-    imageColor?: string;
+    imageHash?: string;
     price?: string;
     description?: string;
     tags?: string[];
@@ -19,8 +19,8 @@ interface Props {
     status?: ListingStatusTypes;
 }
 export const MyAdItem: FC<Props> = (props) => {
-    const { title, price, description, tags = [], status = ListingStatusTypes.Posted, id, imageUrl, imageColor, loading = false } = props;
-
+    const { title, price, description, tags = [], status = ListingStatusTypes.Posted, id, imageUrl, imageHash, loading = false } = props;
+    const thumbHashUrl = thumbHashToDataUrl(imageHash);
     const myAddItemContent = (
         <>
             <figure
@@ -35,11 +35,12 @@ export const MyAdItem: FC<Props> = (props) => {
                     <>
                         <Image
                             src={imageUrl ?? ""}
-                            alt="my-ad"
+                            alt={title ?? ""}
                             className="zoomable-image aspect-video h-full w-full object-cover transition-transform duration-300 ease-linear"
-                            style={{ background: imageColor }}
-                            width={100}
-                            height={100}
+                            height={300}
+                            width={450}
+                            placeholder={thumbHashUrl ? "blur" : "empty"}
+                            blurDataURL={thumbHashUrl}
                         />
                         <div className="badge badge-ghost badge-lg absolute bottom-5 duration-300 ">{price}</div>
                     </>
@@ -113,7 +114,7 @@ export const MyAdItem: FC<Props> = (props) => {
     return (
         <Link
             className="card mb-3 grid cursor-pointer grid-cols-12 gap-4 bg-base-100 p-2 shadow transition-shadow zoom-inner-image hover:shadow-md md:p-4"
-            href={`/listing/item/${id}`}
+            href={`/listing/${id}`}
         >
             {myAddItemContent}
         </Link>

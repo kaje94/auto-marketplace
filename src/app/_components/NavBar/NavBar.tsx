@@ -7,6 +7,7 @@ import { FC } from "react";
 import clsx from "clsx";
 import { NavBarSearch } from "./NavBarSearch";
 import { AdvertIcon, UserIcon } from "@/icons";
+import Image from "next/image";
 
 interface Props {
     hideBackground?: boolean;
@@ -23,7 +24,7 @@ export const NavBar: FC<Props> = async ({ hideBackground }) => {
             )}
         >
             <Link href="/">
-                <button className="btn-ghost btn text-xl normal-case">Car Sale</button>
+                <button className="btn-ghost btn px-0 text-xl normal-case sm:px-4">Car Sale</button>
             </Link>
             <div className="flex-1" />
             <div className="flex flex-row items-center gap-3 pr-0 sm:gap-4 sm:pr-2 lg:gap-6">
@@ -35,7 +36,12 @@ export const NavBar: FC<Props> = async ({ hideBackground }) => {
                         <div className="dropdown-end dropdown">
                             <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI8DK8HCuvWNyHHg8enmbmmf1ue4AeeF3GDw&usqp=CAU" />
+                                    <Image
+                                        src="https://lh3.googleusercontent.com/a/AAcHTtd7MmSI5uFKspCkopw4j4fnk64GQYhA2zL-EOKSdjTtNxk=s96-c-rg-br100"
+                                        height={40}
+                                        width={40}
+                                        alt="profile-image"
+                                    />
                                 </div>
                             </label>
                             <ul

@@ -9,7 +9,7 @@ import { ReactNode } from "react";
 export const NavBarLoginButton = () => {
     return (
         <button
-            className="btn-ghost btn-primary btn font-semibold capitalize text-secondary hover:text-accent"
+            className="btn-ghost btn-primary btn px-0 font-semibold capitalize text-secondary hover:text-accent sm:px-4"
             onClick={() => signIn("duende-identityserver6")}
         >
             Login

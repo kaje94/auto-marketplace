@@ -5,6 +5,20 @@ export const ErrorMessages = {
     [Errors.Unauthorized]: "User is Please Login to perform this action",
 };
 
+/*
+// todo: replace
+    Car,
+    Van,
+    Suv,
+    Jeep,
+    CrewCab,
+    DoubleCab,
+    Bus,
+    Lorry,
+    ThreeWheel,
+    Motorcycle,
+    Other
+*/
 export const VehicleTypes = [
     { label: "Car", value: "Car" },
     { label: "SUV", value: "SUV" },

@@ -107,8 +107,8 @@ export const AdvertForm: FC<Props> = (props) => {
                                 {...register("vehicle.fuelType")}
                             />
                             <Input
-                                placeholder="1200"
-                                label="Engine Capacity"
+                                placeholder="1500"
+                                label="Engine Capacity in CC"
                                 type="number"
                                 loading={isLoading}
                                 error={errors?.vehicle?.engineCapacity?.message}

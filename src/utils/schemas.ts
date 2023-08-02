@@ -6,6 +6,7 @@ export const PriceSchema = z.object({
     isPriceNegotiable: z.boolean().default(false),
 });
 
+// todo: set from user's values as default
 export const LocationSchema = z.object({
     street: z.string().min(1, "Street is required"),
     city: z.string().min(1, "City is required"),
@@ -35,7 +36,7 @@ export const VehicleFeatureSchema = z.object({
 const YearSchema = z.string().refine(
     (value) => {
         const numericValue = Number(value);
-        return numericValue >= 1960 && numericValue <= new Date().getFullYear();
+        return numericValue >= 1900 && numericValue <= new Date().getFullYear();
     },
     { message: `Year must be between 1960 and ${new Date().getFullYear()}` }
 );
@@ -43,22 +44,22 @@ const YearSchema = z.string().refine(
 export const VehicleSchema = z.object({
     id: z.number().optional(),
     type: z.string().min(1, "Type is required"), // todo: add enum
-    brand: z.string().min(1, "Brand is required"),
-    model: z.string().min(1, "Model is required"),
-    trim: z.string().min(1, "Trim is required"),
+    brand: z.string().min(1, "Brand is required"), // todo: get from api
+    model: z.string().min(1, "Model is required"), // todo: get from api
+    trim: z.string().min(1, "Trim is required"), // remove server side validation and make this optional!
     yearOfManufacture: YearSchema,
     yearOfRegistration: YearSchema,
     millage: z.preprocess(Number, z.number().min(1, "Milage needs to be a positive number")),
     condition: z.string().min(1, "Condition is required"), // todo: add enum
     transmission: z.string().min(1, "Transmission type is required"), // todo: add enum
     fuelType: z.string().min(1, "Fuel type is required"), // todo: add enum
-    engineCapacity: z.string().min(1, "Engine capacity is required"),
+    engineCapacity: z.preprocess(Number, z.number().min(1, "Engine capacity needs to be a positive number")),
     vehicleImages: z.array(VehicleImageSchema).min(1, "At least one image is required").max(10, "Cannot have more than 10 images"),
     features: z.array(VehicleFeatureSchema),
 });
 
 export const CreateListingSchema = z.object({
-    description: z.string().min(1, "Description is required"),
+    description: z.string().min(1, "Description is required").max(500, "Description cannot have more than 500 characters"),
     price: PriceSchema,
     hasOnGoingLease: z.boolean().default(false),
     location: LocationSchema,

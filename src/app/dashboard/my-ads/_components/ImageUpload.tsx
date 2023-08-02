@@ -4,7 +4,6 @@ import { useEffect, forwardRef } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { CheckIcon, PlusIcon, TrashIcon } from "@/icons";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import clsx from "clsx";
 import { ImageFile } from "@/utils/types";
 
@@ -18,7 +17,6 @@ interface Props {
 
 export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, _formRef) => {
     const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1 } = props;
-    const [rootParent] = useAutoAnimate<HTMLDivElement>();
     const { getRootProps, getInputProps, open } = useDropzone({
         accept: { "image/*": [] },
         disabled: loading,
@@ -57,15 +55,16 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, _formRef)
 
     return (
         <>
-            <div className="mt-2 flex flex-wrap gap-2" ref={rootParent} {...getRootProps({})}>
+            <div className="mt-2 flex flex-wrap gap-2" {...getRootProps({})}>
                 {files?.map((file, index) => {
                     return (
                         <div className="rounded-box relative box-border inline-flex h-24 w-24 border-2" key={`${index}-${file.name}`}>
                             <div className="rounded-box h-full w-full overflow-hidden">
                                 <Image
-                                    src={file.preview ?? ""}
-                                    height={50}
-                                    width={50}
+                                    src={file.preview || file.url || ""}
+                                    height={100}
+                                    width={100}
+                                    unoptimized={!!file.preview}
                                     alt="Image-preview"
                                     className="box-border block h-full w-full overflow-hidden object-cover"
                                     // Revoke data uri after image is loaded

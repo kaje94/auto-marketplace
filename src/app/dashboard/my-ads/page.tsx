@@ -26,7 +26,7 @@ const MyAds = async ({ searchParams }: SearchParams) => {
                         price={`${item.price?.currency} ${item.price?.amount}`}
                         description={item.description}
                         imageUrl={thumbnailImage?.url}
-                        imageColor={thumbnailImage?.color}
+                        imageHash={thumbnailImage?.color}
                         tags={getListingTags(item.location, item.vehicle)}
                         status={item.status}
                         // need created at field as well

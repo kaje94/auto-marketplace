@@ -6,7 +6,7 @@ import { addAdvertAction } from "../_actions/AddAdvertAction";
 import { CreateListingSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { convertYearToDateString, uploadToS3 } from "@/utils/helpers";
+import { convertYearToDateString, previewUrlToHash, uploadToS3 } from "@/utils/helpers";
 import { getPresignedS3Url } from "@/app/_actions/imageActions";
 import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
@@ -31,15 +31,16 @@ export const CreateAdvertForm = (props: Props) => {
             const vehicleImages = await Promise.all(
                 files.map(async (item) => {
                     if (item.file && item.preview) {
-                        const compressedFile = await imageCompression(item.file, {
+                        const compressedFile = await imageCompression(item.file as File, {
                             fileType: "image/webp",
                             initialQuality: 0.7,
-                            maxWidthOrHeight: 1920,
+                            maxWidthOrHeight: 1920, // todo: also try 1280 size
                             maxSizeMB: 0.5,
                         });
+                        const hash = await previewUrlToHash(item.preview);
                         const { url, key, bucket, region } = await getPresignedS3Url(compressedFile.type, compressedFile?.length);
                         const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
-                        return { color: uploadedResp.color, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
+                        return { color: hash, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
                     }
                     return item;
                 })

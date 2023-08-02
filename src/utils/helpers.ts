@@ -1,5 +1,5 @@
-import { FastAverageColor } from "fast-average-color";
 import { Vehicle, Location } from "./types";
+import * as ThumbHash from "thumbhash";
 
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;
@@ -22,10 +22,11 @@ export const convertYearToDateString = (year: string | number): string => {
     return formattedDate;
 };
 
-export const uploadToS3 = async (file: File, url: string, key: string, bucket: string, region: string, previewUrl: string) => {
-    const fac = new FastAverageColor();
-    const color = await fac.getColorAsync(previewUrl);
+export const getYearFromDateString = (dateStr: string) => {
+    return new Date(dateStr).getFullYear();
+};
 
+export const uploadToS3 = async (file: File, url: string, key: string, bucket: string, region: string, previewUrl: string) => {
     const buffer = await file.arrayBuffer();
 
     await new Promise<void>((resolve, reject) => {
@@ -49,15 +50,19 @@ export const uploadToS3 = async (file: File, url: string, key: string, bucket: s
 
     const resultUrl = `https://${bucket}.s3.${region}.amazonaws.com/${key}`;
 
-    return { url: resultUrl, color: color.hex };
+    return { url: resultUrl };
+};
+
+export const numberWithCommas = (x: number) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const getFormattedCurrency = (amount: number, currency: string) =>
     new Intl.NumberFormat(undefined, {
         style: "currency",
-        currency: currency,
+        currency: currency || "LKR",
         minimumFractionDigits: 0,
-    }).format(amount);
+    }).format(amount || 0);
 
 export const getListingTags = (location: Location, vehicle: Vehicle) => {
     return [location.city, unCamelCase(vehicle.condition), `${vehicle.millage} km`];
@@ -67,3 +72,45 @@ export const unCamelCase = (str: string) =>
     str.replace(/([A-Z])/g, " $1").replace(/^./, function (str) {
         return str.toUpperCase();
     });
+
+export const thumbHashToDataUrl = (thumbHash?: string) => {
+    if (!thumbHash || thumbHash.length < 8) {
+        return "";
+    }
+    try {
+        const base64ToBinary = (base64: any) =>
+            new Uint8Array(
+                atob(base64)
+                    .split("")
+                    .map((x) => x.charCodeAt(0))
+            );
+        const thumbHashFromBase64 = base64ToBinary(thumbHash);
+        const placeholderURL = ThumbHash.thumbHashToDataURL(thumbHashFromBase64);
+        return placeholderURL;
+    } catch {
+        console.error("Failed to generate placeholder URL for ", thumbHash);
+    }
+};
+
+export const previewUrlToHash = async (previewUrl: string) => {
+    let thumbHash = "";
+    const image = new Image();
+    image.src = previewUrl;
+    await new Promise((resolve) => (image.onload = resolve));
+    const canvas = document.createElement("canvas") as HTMLCanvasElement;
+    const context = canvas.getContext("2d");
+    const scale = 100 / Math.max(image.width, image.height);
+    canvas.width = Math.round(image.width * scale);
+    canvas.height = Math.round(image.height * scale);
+    if (context) {
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+        const binaryThumbHash = ThumbHash.rgbaToThumbHash(pixels.width, pixels.height, pixels.data);
+
+        const binaryToBase64 = (binary: any) => btoa(String.fromCharCode(...binary));
+
+        thumbHash = binaryToBase64(binaryThumbHash);
+    }
+    canvas.remove();
+    return thumbHash;
+};

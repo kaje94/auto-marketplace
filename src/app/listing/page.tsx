@@ -37,12 +37,14 @@ const ListingPage = async () => {
                         return (
                             <ListingItem
                                 key={item.id}
+                                id={item.id}
                                 title={item.title}
                                 price={getFormattedCurrency(item.price.amount, item.price.currency)}
                                 description={item.description}
                                 tags={getListingTags(item.location, item.vehicle)}
                                 imageUrl={thumbnailImage?.url ?? ""}
-                                imageColor={thumbnailImage?.color ?? ""}
+                                imageHash={thumbnailImage?.color ?? ""}
+                                imageAlt={`${item.title} thumbnail`}
                             />
                         );
                     })}

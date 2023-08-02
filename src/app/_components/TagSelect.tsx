@@ -2,15 +2,15 @@ import clsx from "clsx";
 import { FC } from "react";
 
 type Props = {
-    tags: { id: number; name: string }[];
+    tags?: { id: number; name: string }[];
     selectedTags?: number[];
     onSelect?: (item: number[]) => void;
     loading?: boolean;
     loadingPlaceholderCount?: number;
 };
 
-export const TagSelect: FC<Props> = ({ tags, selectedTags = [], loading, loadingPlaceholderCount = 10, onSelect = () => {} }) => {
-    const placeholderWidth = ["w-44", "w-24", "w-32", "w-40", "w-48", "w-28"];
+export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], loading, loadingPlaceholderCount = 10, onSelect = () => {} }) => {
+    const placeholderWidth = ["w-44", "w-24", "w-32", "w-40", "w-48", "w-28", "w-16", "w-14", "w-10"];
     return (
         <div className="flex flex-wrap gap-1">
             {loading ? (
@@ -19,7 +19,7 @@ export const TagSelect: FC<Props> = ({ tags, selectedTags = [], loading, loading
                         <span
                             key={i}
                             className={clsx(
-                                "badge w-40 animate-pulse cursor-progress bg-base-200 p-3",
+                                "badge animate-pulse bg-base-200 p-3",
                                 placeholderWidth[Math.floor(Math.random() * placeholderWidth.length)]
                             )}
                         />

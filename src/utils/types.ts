@@ -5,21 +5,23 @@ export enum Errors {
     Unauthorized = "Unauthorized",
 }
 
+// todo: check following conditions
 export enum ListingStatusTypes {
-    UnderReview = "UnderReview",
-    Posted = "Posted",
-    Declined = "Declined",
-    Expired = "Expired",
-    Sold = "Sold",
-    TemporarilyUnlisted = "TemporarilyUnlisted",
-    PermanentlyRemoved = "PermanentlyRemoved",
+    UnderReview = "UnderReview", // can edit
+    Posted = "Posted", // can edit
+    Declined = "Declined", // can edit
+    Expired = "Expired", // can only renew
+    Sold = "Sold", // lisintg screen or detail screen
+    // just show one button and let user select temporary or permanent
+    TemporarilyUnlisted = "TemporarilyUnlisted", // just show one button and let user select temporary or permanent lisintg screen or detail screen
+    PermanentlyRemoved = "PermanentlyRemoved", // lisintg screen or detail screen
 }
 
 type Price = z.infer<typeof PriceSchema>;
 
 export type Location = z.infer<typeof LocationSchema>;
 
-type User = {
+export type ListingUser = {
     id: string;
     firstName: string;
     lastName: string;
@@ -34,7 +36,7 @@ type User = {
 
 export type Vehicle = z.infer<typeof VehicleSchema>;
 
-type ListingItem = {
+export type ListingItem = {
     id: number;
     title: string;
     description: string;
@@ -46,7 +48,7 @@ type ListingItem = {
     reviewComment?: string;
     vehicle: Vehicle;
     userId?: string;
-    user?: User;
+    user?: ListingUser;
 };
 
 export type PaginatedResponse = {

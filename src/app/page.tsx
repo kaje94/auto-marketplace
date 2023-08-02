@@ -6,8 +6,8 @@ import { Input, Footer, TextArea, NavBar } from "./_components";
 import Link from "next/link";
 
 const HeroSearchBox = () => (
-    <div className="join mb-8 mt-5 flex justify-center shadow-xl md:mb-16 xl:mb-28 2xl:mb-36">
-        <input className="input-bordered input join-item rounded-r-none" placeholder="Search..." />
+    <div className="join mb-8 mt-5 flex  justify-center shadow-xl md:mb-16 xl:mb-28 2xl:mb-36">
+        <input className="input-bordered input join-item max-w-[220px] rounded-r-none sm:max-w-none" placeholder="Search..." />
         <select className="select-bordered select join-item hidden rounded-none sm:block">
             <option disabled>Type</option>
             <option>Car</option>
@@ -47,13 +47,15 @@ const FeatureItem = ({
 export default async function Home() {
     return (
         <main>
-            <section className="relative h-screen hero-bg ">
+            <section className="relative h-screen hero-bg">
                 <div className="container mx-auto w-full p-4 xl:p-7 2xl:p-8">
                     <NavBar hideBackground />
                 </div>
                 <div className="container relative z-10 mx-auto  flex h-4/6 flex-col items-center justify-center gap-2 p-4 xl:p-7 2xl:p-8">
-                    <h1 className={clsx(righteousFont.className, "text-center text-7xl text-white md:text-8xl xl:text-9xl")}>Drive Your Dreams</h1>
-                    <h4 className="text-center text-lg text-white opacity-70 lg:text-xl">
+                    <h1 className={clsx(righteousFont.className, "text-center text-5xl text-white sm:text-7xl md:text-8xl xl:text-9xl")}>
+                        Drive Your Dreams
+                    </h1>
+                    <h4 className="text-center text-base text-white opacity-70 md:text-lg lg:text-xl">
                         Start Your Journey: Discover Your Dream Vehicle or Sell Your Car with Ease
                     </h4>
                     <HeroSearchBox />
@@ -74,8 +76,8 @@ export default async function Home() {
                     <div className="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:p-7 2xl:p-8">
                         <Image
                             src="/features-1.jpg"
-                            height={437}
-                            width={642}
+                            height={400}
+                            width={600}
                             alt="feature-1-image"
                             className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"
                         />
@@ -108,8 +110,8 @@ export default async function Home() {
                         </div>
                         <Image
                             src="/features-2.jpg"
-                            height={437}
-                            width={642}
+                            height={400}
+                            width={600}
                             alt="feature-1-image"
                             className="hidden w-full rounded-lg bg-[#7c7262] object-cover lg:block"
                         />

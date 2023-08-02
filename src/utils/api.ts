@@ -1,6 +1,6 @@
 import { env } from "@/env.mjs";
 import { headers } from "next/headers";
-import { PaginatedResponse, ListingItems, AddListingReq, VehicleFeature, PaginatedRequest } from "./types";
+import { PaginatedResponse, ListingItems, AddListingReq, VehicleFeature, PaginatedRequest, ListingItem } from "./types";
 import { Errors } from "./types";
 import qs from "query-string";
 
@@ -15,8 +15,10 @@ const fetchRequest = async <TResponse>(url: string, config: RequestInit): Promis
         }
     } else {
         try {
-            const badRes = await Promise.race([response.json(), response.text()]);
-            console.error("Failure response:", badRes);
+            const res = await response.json();
+            console.log("error res ", res);
+            // const badRes = await Promise.race([response.json(), response.text()]);
+            // console.error("Failure response:", badRes);
         } catch {
             console.error("Failed to parse failure response: ", response.statusText);
         }
@@ -43,8 +45,12 @@ const fetchApi = {
 };
 
 export const api = {
+    // todo: fix caching strategy for all get endpoints
+    // { next: { revalidate: 0 } } for disabling cache
     getFeatureList: () => fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features"),
-    getPostedListings: () => fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted"),
+    getPostedListings: () => fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted", { next: { revalidate: 0 } }),
+    getPostedListingItem: (id: string | number) => fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`),
+    getRelatedListings: (id: string | number) => fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`),
     postListing: (body: AddListingReq) => fetchApi.protectedPost<BodyInit, number>("/v1/Listings", JSON.stringify(body)),
     getMyListings: (req?: PaginatedRequest) => fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`),
     deleteListing: (listingId: number) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
