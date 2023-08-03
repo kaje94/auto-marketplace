@@ -1,4 +1,5 @@
 import { AlertCircleIcon } from "@/icons";
+import { LabelValue } from "@/utils/types";
 import clsx from "clsx";
 import { ComponentProps, forwardRef } from "react";
 
@@ -7,7 +8,7 @@ interface Props extends ComponentProps<"select"> {
     selectClassName?: string;
     rootClassName?: string;
     error?: string;
-    options?: { label: string; value: string }[];
+    options?: LabelValue[];
     selectablePlaceholder?: boolean;
     loading?: boolean;
 }

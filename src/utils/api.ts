@@ -1,8 +1,8 @@
 import { env } from "@/env.mjs";
 import { headers } from "next/headers";
 import { PaginatedResponse, ListingItems, AddListingReq, VehicleFeature, PaginatedRequest, ListingItem } from "./types";
-import { Errors } from "./types";
 import qs from "query-string";
+import { Errors } from "./enum";
 
 const fetchRequest = async <TResponse>(url: string, config: RequestInit): Promise<TResponse> => {
     const response = await fetch(url, config);

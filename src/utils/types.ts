@@ -1,21 +1,13 @@
 import { z } from "zod";
 import { CreateListingSchema, LocationSchema, PriceSchema, VehicleFeatureSchema, VehicleImageSchema, VehicleSchema } from "./schemas";
+import { ListingStatusTypes } from "./enum";
 
-export enum Errors {
-    Unauthorized = "Unauthorized",
-}
+export type KeyValue = { [key: string]: string };
 
-// todo: check following conditions
-export enum ListingStatusTypes {
-    UnderReview = "UnderReview", // can edit
-    Posted = "Posted", // can edit
-    Declined = "Declined", // can edit
-    Expired = "Expired", // can only renew
-    Sold = "Sold", // lisintg screen or detail screen
-    // just show one button and let user select temporary or permanent
-    TemporarilyUnlisted = "TemporarilyUnlisted", // just show one button and let user select temporary or permanent lisintg screen or detail screen
-    PermanentlyRemoved = "PermanentlyRemoved", // lisintg screen or detail screen
-}
+export type LabelValue = {
+    label: string;
+    value: string | number;
+};
 
 type Price = z.infer<typeof PriceSchema>;
 

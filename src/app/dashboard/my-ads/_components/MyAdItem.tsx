@@ -1,11 +1,11 @@
 import { FC } from "react";
 import Image from "next/image";
-import { TrashIcon, EyeIcon, RefreshIcon, EditIcon } from "@/icons";
+import { RefreshIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Link from "next/link";
-import { ListingStatusTypes } from "@/utils/types";
 import { thumbHashToDataUrl, unCamelCase } from "@/utils/helpers";
 import { DeleteMyAdItem } from "./DeleteMyAdItem";
+import { ListingStatusTypes } from "@/utils/enum";
 
 interface Props {
     id?: number;

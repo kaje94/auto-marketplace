@@ -1,10 +1,10 @@
 "use client";
 import { Select, TextArea, Checkbox, TagSelect, Input } from "@/app/_components";
-import { VehicleTypes, VehicleConditions, TransmissionTypes, FuelTypes } from "@/utils/constants";
 import { ImageUpload } from "../dashboard/my-ads/_components";
 import { AddListingReq, VehicleFeature } from "@/utils/types";
 import { FC } from "react";
 import { FieldError, Controller, UseFormReturn } from "react-hook-form";
+import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 
 interface Props {
     featureOptions?: VehicleFeature[];
@@ -26,7 +26,7 @@ export const AdvertForm: FC<Props> = (props) => {
                         <div className="stat-title">Key Specifications</div>
                         <Select
                             label="Type"
-                            options={VehicleTypes}
+                            options={VehicleTypeList}
                             placeholder="Select Type"
                             loading={isLoading}
                             error={(errors?.vehicle?.type as FieldError)?.message}
@@ -84,7 +84,7 @@ export const AdvertForm: FC<Props> = (props) => {
                             />
                             <Select
                                 label="Condition"
-                                options={VehicleConditions}
+                                options={VehicleConditionList}
                                 placeholder="Select Condition"
                                 loading={isLoading}
                                 error={errors?.vehicle?.condition?.message}
@@ -92,7 +92,7 @@ export const AdvertForm: FC<Props> = (props) => {
                             />
                             <Select
                                 label="Transmission Type"
-                                options={TransmissionTypes}
+                                options={TransmissionTypeList}
                                 placeholder="Select Type"
                                 loading={isLoading}
                                 error={errors?.vehicle?.transmission?.message}
@@ -100,7 +100,7 @@ export const AdvertForm: FC<Props> = (props) => {
                             />
                             <Select
                                 label="Fuel Type"
-                                options={FuelTypes}
+                                options={FuelTypeList}
                                 placeholder="Select Fuel Type"
                                 loading={isLoading}
                                 error={errors?.vehicle?.fuelType?.message}
