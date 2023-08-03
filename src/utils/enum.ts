@@ -28,7 +28,7 @@ export enum VehicleTypes {
 }
 
 export enum VehicleConditionTypes {
-    BrandNew = "Brand New",
+    BrandNew = "BrandNew",
     Registered = "Registered",
     Reconditioned = "Reconditioned",
 }

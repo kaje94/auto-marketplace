@@ -3,7 +3,7 @@ import Image from "next/image";
 import { RefreshIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Link from "next/link";
-import { thumbHashToDataUrl, unCamelCase } from "@/utils/helpers";
+import { unCamelCase } from "@/utils/helpers";
 import { DeleteMyAdItem } from "./DeleteMyAdItem";
 import { ListingStatusTypes } from "@/utils/enum";
 
@@ -11,7 +11,7 @@ interface Props {
     id?: number;
     title?: string;
     imageUrl?: string;
-    imageHash?: string;
+    blurDataURL?: string;
     price?: string;
     description?: string;
     tags?: string[];
@@ -19,8 +19,7 @@ interface Props {
     status?: ListingStatusTypes;
 }
 export const MyAdItem: FC<Props> = (props) => {
-    const { title, price, description, tags = [], status = ListingStatusTypes.Posted, id, imageUrl, imageHash, loading = false } = props;
-    const thumbHashUrl = thumbHashToDataUrl(imageHash);
+    const { title, price, description, tags = [], status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading = false } = props;
     const myAddItemContent = (
         <>
             <figure
@@ -36,11 +35,11 @@ export const MyAdItem: FC<Props> = (props) => {
                         <Image
                             src={imageUrl ?? ""}
                             alt={title ?? ""}
-                            className="zoomable-image aspect-video h-full w-full object-cover transition-transform duration-300 ease-linear"
+                            className="aspect-video h-full w-full object-cover transition-transform duration-300 ease-linear zoomable-image"
                             height={300}
                             width={450}
-                            placeholder={thumbHashUrl ? "blur" : "empty"}
-                            blurDataURL={thumbHashUrl}
+                            placeholder={blurDataURL ? "blur" : "empty"}
+                            blurDataURL={blurDataURL}
                         />
                         <div className="badge badge-ghost badge-lg absolute bottom-5 duration-300 ">{price}</div>
                     </>

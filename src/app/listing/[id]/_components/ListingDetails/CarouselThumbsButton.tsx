@@ -1,4 +1,3 @@
-import { thumbHashToDataUrl } from "@/utils/helpers";
 import clsx from "clsx";
 import Image from "next/image";
 import React, { FC } from "react";
@@ -8,7 +7,7 @@ type PropTypeImage = {
     imgSrc: string;
     onClick: () => void;
     imageAlt: string;
-    imageHash: string;
+    blurDataURL?: string;
 };
 
 type PropTypeLoading = {
@@ -25,8 +24,7 @@ export const Thumb: FC<Props> = (props) => {
             </div>
         );
     } else {
-        const { selected, imgSrc, onClick, imageAlt, imageHash } = props;
-        const thumbHashUrl = thumbHashToDataUrl(imageHash);
+        const { selected, imgSrc, onClick, imageAlt, blurDataURL } = props;
 
         return (
             <div className={clsx("relative shrink-0 grow-0 pl-1 sm:pl-2 lg:pl-4 ", selected && "opacity-100")}>
@@ -44,8 +42,8 @@ export const Thumb: FC<Props> = (props) => {
                         alt={imageAlt}
                         height={300}
                         width={450}
-                        placeholder={thumbHashUrl ? "blur" : "empty"}
-                        blurDataURL={thumbHashUrl}
+                        placeholder={blurDataURL ? "blur" : "empty"}
+                        blurDataURL={blurDataURL}
                     />
                 </button>
             </div>

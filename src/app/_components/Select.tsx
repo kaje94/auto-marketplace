@@ -1,4 +1,5 @@
 import { AlertCircleIcon } from "@/icons";
+import { unCamelCase } from "@/utils/helpers";
 import { LabelValue } from "@/utils/types";
 import clsx from "clsx";
 import { ComponentProps, forwardRef } from "react";
@@ -45,7 +46,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
                 </option>
                 {options?.map((option) => (
                     <option key={option.value} value={option.value}>
-                        {option.label}
+                        {unCamelCase(option.label)}
                     </option>
                 ))}
             </select>

@@ -67,6 +67,7 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, _formRef)
                                     unoptimized={!!file.preview}
                                     alt="Image-preview"
                                     className="box-border block h-full w-full overflow-hidden object-cover"
+                                    // todo: use blurDataURL when editing uploaded items
                                     // Revoke data uri after image is loaded
                                     // onLoad={() => {
                                     //     URL.revokeObjectURL(file.preview!);

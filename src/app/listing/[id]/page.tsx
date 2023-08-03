@@ -1,11 +1,29 @@
 import { BreadCrumbs } from "@/app/_components";
 import { api } from "@/utils/api";
 import { RelatedListings, ListingDetails } from "./_components";
+import { thumbHashToDataUrl, sortVehicleImages } from "@/utils/helpers";
 
 const ItemDetailPage = async ({ params }: { params: { id: string } }) => {
     // use suspense instead for getRelatedListings
-    const [itemDetails, relatedListings] = await Promise.all([api.getPostedListingItem(params.id), api.getRelatedListings(params.id)]);
-    const trimmedRelatedListings = relatedListings.slice(0, 4);
+    let [itemDetails, relatedListings] = await Promise.all([api.getPostedListingItem(params.id), api.getRelatedListings(params.id)]);
+    itemDetails = {
+        ...itemDetails,
+        vehicle: {
+            ...itemDetails.vehicle,
+            vehicleImages: sortVehicleImages(
+                itemDetails.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
+            ),
+        },
+    };
+    relatedListings.slice(0, 4).map((item) => ({
+        ...item,
+        vehicle: {
+            ...item.vehicle,
+            vehicleImages: sortVehicleImages(
+                item.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
+            ),
+        },
+    }));
 
     return (
         <div className="my-10">
@@ -18,7 +36,7 @@ const ItemDetailPage = async ({ params }: { params: { id: string } }) => {
             />
 
             <ListingDetails itemDetails={itemDetails} />
-            <RelatedListings relatedListings={trimmedRelatedListings} />
+            <RelatedListings relatedListings={relatedListings} />
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { Vehicle, Location } from "./types";
+import { Vehicle, Location, ImageFile } from "./types";
 import * as ThumbHash from "thumbhash";
 
 export const convertYearToDateString = (year: string | number): string => {
@@ -78,7 +78,7 @@ export const thumbHashToDataUrl = (thumbHash?: string) => {
         return "";
     }
     try {
-        const base64ToBinary = (base64: any) =>
+        const base64ToBinary = (base64: string) =>
             new Uint8Array(
                 atob(base64)
                     .split("")
@@ -92,7 +92,18 @@ export const thumbHashToDataUrl = (thumbHash?: string) => {
     }
 };
 
+export const sortVehicleImages = (images: ImageFile[]) =>
+    images.sort((a, b) => {
+        if (a.isThumbnail && !b.isThumbnail) {
+            return -1; // a comes before b in the sorted order
+        } else if (!a.isThumbnail && b.isThumbnail) {
+            return 1; // b comes before a in the sorted order
+        }
+        return 0; // no change in order, both have the same value of "isThumbnail"
+    });
+
 export const previewUrlToHash = async (previewUrl: string) => {
+    // Only works in client side due to window.btoa
     let thumbHash = "";
     const image = new Image();
     image.src = previewUrl;
@@ -107,7 +118,7 @@ export const previewUrlToHash = async (previewUrl: string) => {
         const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
         const binaryThumbHash = ThumbHash.rgbaToThumbHash(pixels.width, pixels.height, pixels.data);
 
-        const binaryToBase64 = (binary: any) => btoa(String.fromCharCode(...binary));
+        const binaryToBase64 = (binary: any) => window.btoa(String.fromCharCode(...binary));
 
         thumbHash = binaryToBase64(binaryThumbHash);
     }

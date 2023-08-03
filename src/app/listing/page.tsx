@@ -1,10 +1,22 @@
 import { ListingItem, Pagination, Select } from "@/app/_components";
 import { Filters } from "./_components";
 import { api } from "@/utils/api";
-import { getFormattedCurrency, getListingTags } from "@/utils/helpers";
+import { getFormattedCurrency, getListingTags, thumbHashToDataUrl, sortVehicleImages } from "@/utils/helpers";
 
 const ListingPage = async () => {
-    const listings = await api.getPostedListings();
+    let listings = await api.getPostedListings();
+    listings = {
+        ...listings,
+        items: listings.items.map((item) => ({
+            ...item,
+            vehicle: {
+                ...item.vehicle,
+                vehicleImages: sortVehicleImages(
+                    item.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
+                ),
+            },
+        })),
+    };
 
     return (
         <div className="my-10 grid grid-cols-4 gap-4 xl:gap-7 2xl:gap-8">
@@ -32,22 +44,19 @@ const ListingPage = async () => {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 xl:gap-7 2xl:grid-cols-3 2xl:gap-8">
-                    {listings?.items?.map((item) => {
-                        const thumbnailImage = item.vehicle?.vehicleImages?.find((item) => item.isThumbnail);
-                        return (
-                            <ListingItem
-                                key={item.id}
-                                id={item.id}
-                                title={item.title}
-                                price={getFormattedCurrency(item.price.amount, item.price.currency)}
-                                description={item.description}
-                                tags={getListingTags(item.location, item.vehicle)}
-                                imageUrl={thumbnailImage?.url ?? ""}
-                                imageHash={thumbnailImage?.color ?? ""}
-                                imageAlt={`${item.title} thumbnail`}
-                            />
-                        );
-                    })}
+                    {listings?.items?.map((item) => (
+                        <ListingItem
+                            key={item.id}
+                            id={item.id}
+                            title={item.title}
+                            price={getFormattedCurrency(item.price.amount, item.price.currency)}
+                            description={item.description}
+                            tags={getListingTags(item.location, item.vehicle)}
+                            imageUrl={item.vehicle?.vehicleImages[0]?.url ?? ""}
+                            blurDataURL={item.vehicle?.vehicleImages[0]?.blurDataURL}
+                            imageAlt={`${item.title} thumbnail`}
+                        />
+                    ))}
                 </div>
                 <Pagination />
             </div>

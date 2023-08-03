@@ -5,9 +5,8 @@ import { Thumb } from "./CarouselThumbsButton";
 import Autoplay from "embla-carousel-autoplay";
 import FsLightbox from "fslightbox-react";
 import { MaximizeIcon } from "@/icons";
-import { ImageFile, Location } from "@/utils/types";
+import { ImageFile } from "@/utils/types";
 import Image from "next/image";
-import { thumbHashToDataUrl } from "@/utils/helpers";
 
 type PropType = {
     title?: string;
@@ -62,7 +61,6 @@ export const Carousel: React.FC<PropType> = (props) => {
                     <div className="rounded-box relative overflow-hidden bg-base-200" ref={emblaMainRef}>
                         <div className="relative -ml-1 flex h-auto touch-pan-y flex-row sm:-ml-2 lg:-ml-4">
                             {images.map((imageItem, index) => {
-                                const thumbHashUrl = thumbHashToDataUrl(imageItem.color);
                                 return (
                                     <div
                                         className="relative shrink-0 grow-0 basis-full cursor-pointer pl-1 zoom-inner-image sm:pl-2 lg:pl-4"
@@ -83,8 +81,8 @@ export const Carousel: React.FC<PropType> = (props) => {
                                                 src={imageItem.url ?? ""}
                                                 priority={selectedIndex === index}
                                                 className="aspect-square w-full object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
-                                                placeholder={thumbHashUrl ? "blur" : "empty"}
-                                                blurDataURL={thumbHashUrl}
+                                                placeholder={imageItem.blurDataURL ? "blur" : "empty"}
+                                                blurDataURL={imageItem.blurDataURL}
                                             />
                                         </div>
                                     </div>
@@ -115,7 +113,7 @@ export const Carousel: React.FC<PropType> = (props) => {
                                           imgSrc={imageItem.url ?? ""}
                                           key={imageItem.id}
                                           imageAlt={`${title} thumbnail ${index}`}
-                                          imageHash={imageItem.color ?? ""}
+                                          blurDataURL={imageItem.blurDataURL}
                                       />
                                   ))}
                         </div>

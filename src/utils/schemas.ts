@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FuelTypes, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
 
 export const PriceSchema = z.object({
     amount: z.preprocess(Number, z.number().min(1, "Price amount needs to be a positive number")),
@@ -26,6 +27,7 @@ export const VehicleImageSchema = z.object({
     // file: z.instanceof(File).optional(), // todo: fix since it throws an error saying File not found
     file: z.any().optional(),
     preview: z.string().optional(),
+    blurDataURL: z.string().optional(),
 });
 
 export const VehicleFeatureSchema = z.object({
@@ -43,16 +45,16 @@ const YearSchema = z.string().refine(
 
 export const VehicleSchema = z.object({
     id: z.number().optional(),
-    type: z.string().min(1, "Type is required"), // todo: add enum
+    type: z.nativeEnum(VehicleTypes, { invalid_type_error: "Invalid Vehicle Type" }),
     brand: z.string().min(1, "Brand is required"), // todo: get from api
     model: z.string().min(1, "Model is required"), // todo: get from api
-    trim: z.string().min(1, "Trim is required"), // remove server side validation and make this optional!
+    trim: z.string().min(1, "Trim is required"), // todo: remove server side validation and make this optional!
     yearOfManufacture: YearSchema,
     yearOfRegistration: YearSchema,
     millage: z.preprocess(Number, z.number().min(1, "Milage needs to be a positive number")),
-    condition: z.string().min(1, "Condition is required"), // todo: add enum
-    transmission: z.string().min(1, "Transmission type is required"), // todo: add enum
-    fuelType: z.string().min(1, "Fuel type is required"), // todo: add enum
+    condition: z.nativeEnum(VehicleConditionTypes, { invalid_type_error: "Invalid Condition Type" }),
+    transmission: z.nativeEnum(TransmissionTypes, { invalid_type_error: "Invalid Transmission Type" }),
+    fuelType: z.nativeEnum(FuelTypes, { invalid_type_error: "Invalid Fuel Type" }),
     engineCapacity: z.preprocess(Number, z.number().min(1, "Engine capacity needs to be a positive number")),
     vehicleImages: z.array(VehicleImageSchema).min(1, "At least one image is required").max(10, "Cannot have more than 10 images"),
     features: z.array(VehicleFeatureSchema),

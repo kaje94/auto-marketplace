@@ -16,22 +16,19 @@ export const RelatedListings: FC<Props> = ({ relatedListings = [] }) => {
                 <>
                     <div className="divider mt-16">Related Vehicles</div>
                     <div className="mt-10 grid gap-4 md:grid-cols-2 xl:gap-7 2xl:grid-cols-4 2xl:gap-8">
-                        {relatedListings?.map((item) => {
-                            const thumbnailImage = item.vehicle?.vehicleImages?.find((item) => item.isThumbnail);
-                            return (
-                                <ListingItem
-                                    key={item.id}
-                                    id={item.id}
-                                    title={item.title}
-                                    price={getFormattedCurrency(item.price.amount, item.price.currency)}
-                                    description={item.description}
-                                    tags={getListingTags(item.location, item.vehicle)}
-                                    imageUrl={thumbnailImage?.url ?? ""}
-                                    imageHash={thumbnailImage?.color ?? ""}
-                                    imageAlt={`${item.title} thumbnail`}
-                                />
-                            );
-                        })}
+                        {relatedListings?.map((item) => (
+                            <ListingItem
+                                key={item.id}
+                                id={item.id}
+                                title={item.title}
+                                price={getFormattedCurrency(item.price.amount, item.price.currency)}
+                                description={item.description}
+                                tags={getListingTags(item.location, item.vehicle)}
+                                imageUrl={item.vehicle?.vehicleImages[0]?.url ?? ""}
+                                blurDataURL={item.vehicle?.vehicleImages[0]?.blurDataURL}
+                                imageAlt={`${item.title} thumbnail`}
+                            />
+                        ))}
                     </div>
                 </>
             )}

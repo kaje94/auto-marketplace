@@ -19,5 +19,7 @@ in create form, default image could have a border and click on entire image to m
 add asterisk in form if its a required field
 show error or something when create adverts fails
 use type Props = PropTypeImage | PropTypeLoading pattern whenever loading is done or group all non loading related ones as seperate prop
-generate image data url only in the server side and also sort images so that first item is the default image
 add react memo for all components after everything!
+use daisyui Indicators instead of badges in my ads maybe
+use use-mutation like function yourself instead of using react-query
+replace clsx with tailwind-merge+clsx: https://www.youtube.com/watch?v=re2JFITR7TI
