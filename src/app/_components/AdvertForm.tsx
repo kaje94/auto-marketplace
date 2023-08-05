@@ -30,6 +30,7 @@ export const AdvertForm: FC<Props> = (props) => {
                             placeholder="Select Type"
                             loading={isLoading}
                             error={(errors?.vehicle?.type as FieldError)?.message}
+                            required
                             {...register("vehicle.type")}
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
@@ -38,6 +39,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 label="Brand"
                                 loading={isLoading}
                                 error={errors?.vehicle?.brand?.message}
+                                required
                                 {...register("vehicle.brand")}
                             />
                             <Input
@@ -45,6 +47,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 label="Model"
                                 loading={isLoading}
                                 error={errors?.vehicle?.model?.message}
+                                required
                                 {...register("vehicle.model")}
                             />
                             <Input
@@ -62,6 +65,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 max={new Date().getFullYear()}
                                 loading={isLoading}
                                 error={errors?.vehicle?.yearOfManufacture?.message}
+                                required
                                 {...register("vehicle.yearOfManufacture")}
                             />
                             <Input
@@ -72,6 +76,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 max={new Date().getFullYear()}
                                 loading={isLoading}
                                 error={errors?.vehicle?.yearOfRegistration?.message}
+                                required
                                 {...register("vehicle.yearOfRegistration")}
                             />
                             <Input
@@ -80,6 +85,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 type="number"
                                 loading={isLoading}
                                 error={errors?.vehicle?.millage?.message}
+                                required
                                 {...register("vehicle.millage")}
                             />
                             <Select
@@ -88,6 +94,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 placeholder="Select Condition"
                                 loading={isLoading}
                                 error={errors?.vehicle?.condition?.message}
+                                required
                                 {...register("vehicle.condition")}
                             />
                             <Select
@@ -96,6 +103,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 placeholder="Select Type"
                                 loading={isLoading}
                                 error={errors?.vehicle?.transmission?.message}
+                                required
                                 {...register("vehicle.transmission")}
                             />
                             <Select
@@ -104,6 +112,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 placeholder="Select Fuel Type"
                                 loading={isLoading}
                                 error={errors?.vehicle?.fuelType?.message}
+                                required
                                 {...register("vehicle.fuelType")}
                             />
                             <Input
@@ -112,6 +121,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 type="number"
                                 loading={isLoading}
                                 error={errors?.vehicle?.engineCapacity?.message}
+                                required
                                 {...register("vehicle.engineCapacity")}
                             />
                         </div>
@@ -123,6 +133,7 @@ export const AdvertForm: FC<Props> = (props) => {
                             placeholder="Description of the vehicle for sale"
                             loading={isLoading}
                             error={errors?.description?.message}
+                            required
                             {...register("description")}
                         />
                         <Checkbox label="Has Ongoing Lease" checkboxClassNames="mt-2" loading={isLoading} />
@@ -130,7 +141,10 @@ export const AdvertForm: FC<Props> = (props) => {
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="stat card bg-base-100 p-4 shadow">
-                        <div className="stat-title">Images</div>
+                        <div className="stat-title">
+                            Images <span className="text-error">*</span>
+                        </div>
+                        {/* todo: Add asterisk */}
                         {isLoading ? (
                             <ImageUpload loading={isLoading} />
                         ) : (
@@ -155,6 +169,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 label="Street"
                                 loading={isLoading}
                                 error={errors?.location?.street?.message}
+                                required
                                 {...register("location.street")}
                             />
                             <Input
@@ -162,6 +177,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 label="City"
                                 loading={isLoading}
                                 error={errors?.location?.city?.message}
+                                required
                                 {...register("location.city")}
                             />
                             <Input
@@ -169,6 +185,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 label="State"
                                 loading={isLoading}
                                 error={errors?.location?.state?.message}
+                                required
                                 {...register("location.state")}
                             />
                             <Input
@@ -177,6 +194,7 @@ export const AdvertForm: FC<Props> = (props) => {
                                 type="number"
                                 loading={isLoading}
                                 error={errors?.location?.postalCode?.message}
+                                required
                                 {...register("location.postalCode")}
                             />
                         </div>
@@ -189,6 +207,7 @@ export const AdvertForm: FC<Props> = (props) => {
                             type="number"
                             loading={isLoading}
                             error={errors?.price?.amount?.message}
+                            required
                             {...register("price.amount")}
                         />
                         <Checkbox label="Negotiable Price" checkboxClassNames="mt-2" loading={isLoading} />

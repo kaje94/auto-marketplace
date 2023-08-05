@@ -37,7 +37,7 @@ export const Thumb: FC<Props> = (props) => {
                     type="button"
                 >
                     <Image
-                        className="block h-16 w-16 object-cover sm:h-20 sm:w-20 lg:h-24 lg:w-36"
+                        className="block h-16 w-16 bg-base-200 object-cover sm:h-20 sm:w-20 lg:h-24 lg:w-36"
                         src={imgSrc}
                         alt={imageAlt}
                         height={300}

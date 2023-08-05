@@ -3,9 +3,11 @@
 import { useEffect, forwardRef } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-import { CheckIcon, PlusIcon, TrashIcon } from "@/icons";
+import { PlusIcon, XCircleIcon, XIcon } from "@/icons";
 import clsx from "clsx";
 import { ImageFile } from "@/utils/types";
+import { cn } from "@/utils/helpers";
+import { MaxVehicleImageCount } from "@/utils/constants";
 
 interface Props {
     files?: ImageFile[];
@@ -58,53 +60,57 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, _formRef)
             <div className="mt-2 flex flex-wrap gap-2" {...getRootProps({})}>
                 {files?.map((file, index) => {
                     return (
-                        <div className="rounded-box relative box-border inline-flex h-24 w-24 border-2" key={`${index}-${file.name}`}>
-                            <div className="rounded-box h-full w-full overflow-hidden">
+                        <div className="rounded-box relative box-border inline-flex h-24 w-24 hover:shadow" key={`${index}-${file.name}`}>
+                            <div
+                                className={clsx({
+                                    "rounded-box h-full w-full overflow-hidden": true,
+                                    "grayscale-0": file.isThumbnail,
+                                    "grayscale-[30%]": !file.isThumbnail,
+                                })}
+                            >
                                 <Image
                                     src={file.preview || file.url || ""}
                                     height={100}
                                     width={100}
                                     unoptimized={!!file.preview}
                                     alt="Image-preview"
-                                    className="box-border block h-full w-full overflow-hidden object-cover"
+                                    className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
                                     // todo: use blurDataURL when editing uploaded items
-                                    // Revoke data uri after image is loaded
-                                    // onLoad={() => {
-                                    //     URL.revokeObjectURL(file.preview!);
-                                    // }}
                                 />
                             </div>
-                            <div className="absolute right-0 top-0 z-10 flex h-full w-full flex-row items-center justify-center bg-base-300 opacity-0 duration-200 hover:bg-opacity-20 hover:opacity-100">
-                                <div className="flex items-center justify-center gap-2">
+
+                            <div className="rounded-box absolute right-0 top-0 z-20 flex h-full w-full items-center justify-center opacity-100 transition-opacity duration-200 hover:opacity-100 xl:opacity-0">
+                                <button
+                                    className="btn-error btn-xs btn-circle btn absolute -right-2 -top-2 z-20 flex items-center justify-center text-error-content hover:text-base-300"
+                                    onClick={(event) => {
+                                        removeImage(index);
+                                        event.preventDefault();
+                                    }}
+                                >
+                                    <XCircleIcon className="h-full w-full" strokeWidth={2.5} />
+                                </button>
+
+                                {!file.isThumbnail && (
                                     <button
-                                        className="btn-error btn-square btn-sm btn"
                                         onClick={(event) => {
-                                            removeImage(index);
+                                            if (!file.isThumbnail) {
+                                                setFiles(files.map((item, i) => ({ ...item, isThumbnail: index === i })));
+                                            }
                                             event.preventDefault();
                                         }}
+                                        className="h-full w-full cursor-pointer"
                                     >
-                                        <TrashIcon />
+                                        <span className="rounded-box absolute inset-x-0 bottom-0 rounded-t-none bg-base-content bg-opacity-70 py-1 text-center text-xs font-medium text-base-100 xl:bg-opacity-90 ">
+                                            Set as Thumbnail
+                                        </span>
                                     </button>
-
-                                    <div className="tooltip tooltip-bottom" data-tip={file.isThumbnail ? "Is Thumbnail" : "Set as Thumbnail"}>
-                                        <button
-                                            onClick={(event) => {
-                                                if (!file.isThumbnail) {
-                                                    setFiles(files.map((item, i) => ({ ...item, isThumbnail: index === i })));
-                                                }
-                                                event.preventDefault();
-                                            }}
-                                            className={clsx({
-                                                "btn-info btn-sm btn btn-square": true,
-                                                "btn-outline": !file.isThumbnail,
-                                                "opacity-20 cursor-default": file.isThumbnail,
-                                            })}
-                                        >
-                                            <CheckIcon />
-                                        </button>
-                                    </div>
-                                </div>
+                                )}
                             </div>
+                            {file.isThumbnail && (
+                                <span className="rounded-box absolute inset-x-0 bottom-0 rounded-t-none bg-secondary bg-opacity-80 py-1 text-center text-xs  font-bold text-secondary-content xl:bg-opacity-90">
+                                    Thumbnail
+                                </span>
+                            )}
                         </div>
                     );
                 })}
@@ -120,18 +126,22 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, _formRef)
                         ))}
                     </>
                 ) : (
-                    <div
-                        onClick={open}
-                        className={clsx({
-                            "rounded-box flex h-24 w-24 cursor-pointer flex-col items-center justify-center border border-dashed  bg-base-200 p-2 duration-150 hover:bg-base-300":
-                                true,
-                            "border-error text-error": error,
-                            "border-base-300 text-opacity-80 text-base-content": !error,
-                        })}
-                    >
-                        <PlusIcon className="h-10 w-10" />
-                        <div className="text-center text-xs">Add Images</div>
-                    </div>
+                    <>
+                        {files.length < MaxVehicleImageCount && (
+                            <div
+                                onClick={open}
+                                className={clsx({
+                                    "rounded-box flex h-24 w-24 cursor-pointer flex-col items-center justify-center border border-dashed  bg-base-200 p-2 duration-150 hover:bg-base-300":
+                                        true,
+                                    "border-error text-error": error,
+                                    "border-base-300 text-opacity-80 text-base-content": !error,
+                                })}
+                            >
+                                <PlusIcon className="h-10 w-10" />
+                                <div className="text-center text-xs">Add Images</div>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
             {error && <div className="mt-2 text-xs text-error">{error}</div>}

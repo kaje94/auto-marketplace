@@ -35,7 +35,7 @@ export const MyAdItem: FC<Props> = (props) => {
                         <Image
                             src={imageUrl ?? ""}
                             alt={title ?? ""}
-                            className="aspect-video h-full w-full object-cover transition-transform duration-300 ease-linear zoomable-image"
+                            className="zoomable-image aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear"
                             height={300}
                             width={450}
                             placeholder={blurDataURL ? "blur" : "empty"}

@@ -12,15 +12,29 @@ interface Props extends ComponentProps<"select"> {
     options?: LabelValue[];
     selectablePlaceholder?: boolean;
     loading?: boolean;
+    required?: boolean;
 }
 
 export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
-    const { label, error, options = [], selectClassName, rootClassName, placeholder = "Pick One", selectablePlaceholder, loading, ...rest } = props;
+    const {
+        label,
+        error,
+        options = [],
+        selectClassName,
+        rootClassName,
+        placeholder = "Pick One",
+        selectablePlaceholder,
+        loading,
+        required,
+        ...rest
+    } = props;
     return (
         <div className={clsx("form-control w-full", rootClassName)}>
             {label && (
                 <label className="label">
-                    <span className="label-text">{label}</span>
+                    <span className="label-text">
+                        {label} {required && <span className="text-error">*</span>}
+                    </span>
                     <span className="label-text-alt text-error">
                         <div
                             className={clsx({

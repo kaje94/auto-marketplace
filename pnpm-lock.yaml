@@ -34,6 +34,8 @@ specifiers:
   react-dom: 18.2.0
   react-dropzone: ^14.2.3
   react-hook-form: ^7.45.2
+  react-hot-toast: ^2.4.1
+  tailwind-merge: ^1.14.0
   tailwindcss: 3.3.2
   thumbhash: ^0.1.1
   typescript: ^5.1.5
@@ -65,6 +67,8 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-dropzone: 14.2.3_react@18.2.0
   react-hook-form: 7.45.2_react@18.2.0
+  react-hot-toast: 2.4.1_biqbaboplfbrettd7655fr4n2y
+  tailwind-merge: 1.14.0
   tailwindcss: 3.3.2
   thumbhash: 0.1.1
   typescript: 5.1.6
@@ -2605,6 +2609,12 @@ packages:
       slash: 4.0.0
     dev: false
 
+  /goober/2.1.13:
+    resolution: {integrity: sha512-jFj3BQeleOoy7t93E9rZ2de+ScC4lQICLwiAQmKMg9F6roKGaLSHoCDYKkWlSafg138jejvq/mTdvmnwDQgqoQ==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dev: false
+
   /gopd/1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
@@ -3494,6 +3504,20 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-hot-toast/2.4.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-j8z+cQbWIM5LY37pR6uZR6D4LfseplqnuAO4co4u8917hBUvXlEqyP1ZzqVLcqoyUesZZv/ImreoCeHVDpE5pQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      goober: 2.1.13
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - csstype
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -3763,6 +3787,10 @@ packages:
     dependencies:
       '@pkgr/utils': 2.4.0
       tslib: 2.5.0
+    dev: false
+
+  /tailwind-merge/1.14.0:
+    resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
     dev: false
 
   /tailwindcss/3.3.2:

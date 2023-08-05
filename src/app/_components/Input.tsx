@@ -8,14 +8,17 @@ interface Props extends ComponentProps<"input"> {
     inputClassNames?: string;
     error?: string;
     loading?: boolean;
+    required?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-    const { label, error, inputClassNames, loading, ...rest } = props;
+    const { label, error, inputClassNames, loading, required, ...rest } = props;
     return (
         <div className="form-control w-full">
             <label className="label">
-                <span className="label-text">{label}</span>
+                <span className="label-text">
+                    {label} {required && <span className="text-error">*</span>}
+                </span>
                 <span className="label-text-alt text-error">
                     <div
                         className={clsx({ "duration-200 flex items-center": true, "tooltip-error tooltip opacity-100": error, "opacity-0": !error })}

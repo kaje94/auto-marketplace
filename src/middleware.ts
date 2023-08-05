@@ -14,7 +14,7 @@ export default withAuth(
     },
     {
         callbacks: {
-            authorized: ({ token }) => !!(token as any).accessToken,
+            authorized: ({ token }) => !!(token as any)?.accessToken,
         },
     }
 );

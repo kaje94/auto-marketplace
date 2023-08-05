@@ -25,3 +25,5 @@ export { LogoutIcon } from "./LogoutIcon";
 export { PlusIcon } from "./PlusIcon";
 export { CheckIcon } from "./CheckIcon";
 export { AlertCircleIcon } from "./AlertCircleIcon";
+export { XCircleIcon } from "./XCircleIcon";
+export { XIcon } from "./XIcon";

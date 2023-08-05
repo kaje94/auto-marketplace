@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { FuelTypes, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
+import { MaxVehicleImageCount } from "./constants";
 
 export const PriceSchema = z.object({
     amount: z.preprocess(Number, z.number().min(1, "Price amount needs to be a positive number")),
@@ -56,7 +57,10 @@ export const VehicleSchema = z.object({
     transmission: z.nativeEnum(TransmissionTypes, { invalid_type_error: "Invalid Transmission Type" }),
     fuelType: z.nativeEnum(FuelTypes, { invalid_type_error: "Invalid Fuel Type" }),
     engineCapacity: z.preprocess(Number, z.number().min(1, "Engine capacity needs to be a positive number")),
-    vehicleImages: z.array(VehicleImageSchema).min(1, "At least one image is required").max(10, "Cannot have more than 10 images"),
+    vehicleImages: z
+        .array(VehicleImageSchema)
+        .min(1, "At least one image is required")
+        .max(MaxVehicleImageCount, `Cannot have more than ${MaxVehicleImageCount} images`),
     features: z.array(VehicleFeatureSchema),
 });
 

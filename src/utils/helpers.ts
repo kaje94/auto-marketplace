@@ -1,5 +1,9 @@
 import { Vehicle, Location, ImageFile } from "./types";
 import * as ThumbHash from "thumbhash";
+import clsx, { ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;

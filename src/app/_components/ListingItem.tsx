@@ -22,7 +22,7 @@ export const ListingItem: FC<Props> = ({ id, title, price, description, tags = [
             <Image
                 src={imageUrl}
                 alt={imageAlt}
-                className={"aspect-video w-full transition-transform duration-300 ease-linear zoomable-image"}
+                className={"aspect-video w-full bg-base-200 transition-transform duration-300 ease-linear zoomable-image"}
                 height={300}
                 width={450}
                 placeholder={blurDataURL ? "blur" : "empty"}

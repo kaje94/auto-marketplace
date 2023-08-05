@@ -80,7 +80,7 @@ export const Carousel: React.FC<PropType> = (props) => {
                                                 alt={`${title} ${index}`}
                                                 src={imageItem.url ?? ""}
                                                 priority={selectedIndex === index}
-                                                className="aspect-square w-full object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
+                                                className="aspect-square w-full bg-base-200 object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
                                                 placeholder={imageItem.blurDataURL ? "blur" : "empty"}
                                                 blurDataURL={imageItem.blurDataURL}
                                             />
