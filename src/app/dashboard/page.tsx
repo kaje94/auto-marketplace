@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 
 const Dashboard = () => {
-    return redirect("/dashboard/my-ads");
+    return redirect("/dashboard/profile");
 };
 
 export default Dashboard;

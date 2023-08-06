@@ -1,8 +1,8 @@
 import { env } from "@/env.mjs";
-import { headers } from "next/headers";
 import { PaginatedResponse, ListingItems, AddListingReq, VehicleFeature, PaginatedRequest, ListingItem } from "./types";
 import qs from "query-string";
-import { Errors } from "./enum";
+import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
+import { getServerSession } from "next-auth/next";
 
 const fetchRequest = async <TResponse>(url: string, config: RequestInit): Promise<TResponse> => {
     const response = await fetch(url, config);
@@ -14,34 +14,46 @@ const fetchRequest = async <TResponse>(url: string, config: RequestInit): Promis
             return {} as TResponse;
         }
     } else {
-        try {
-            const res = await response.json();
-            console.log("error res ", res);
-            // const badRes = await Promise.race([response.json(), response.text()]);
-            // console.error("Failure response:", badRes);
-        } catch {
-            console.error("Failed to parse failure response: ", response.statusText);
+        if (response.status === 401) {
+            return redirectToLoginPage();
         }
-        throw new Error(response.statusText || "Failure when calling the endpoint");
+        let errorResponse = "";
+        const [jsonRes, textRes] = await Promise.allSettled([response.json(), response.text()]);
+        if (jsonRes.status === "fulfilled") {
+            errorResponse = jsonRes.value;
+        } else if (textRes.status === "fulfilled") {
+            errorResponse = textRes.value;
+        }
+        console.error("Fetch request failure:", errorResponse || response.statusText);
+        throw new Error(errorResponse || response.statusText || "Failure when calling the endpoint");
     }
 };
 
-const getConfigWithAuth = (config: RequestInit = {}): RequestInit => {
-    const Authorization = headers()?.get("tokenHeader") || "";
-    console.log("Authorization", Authorization);
-    if (!Authorization) {
-        throw new Error(Errors.Unauthorized);
+const getConfigWithAuth = async (config: RequestInit = {}): Promise<RequestInit> => {
+    const session = await getServerSession(authOptions);
+    if (!session?.access_token || session.error === "RefreshAccessTokenError") {
+        return redirectToLoginPage();
     }
-    return { ...config, headers: { Authorization, "Content-Type": "application/json", ...config.headers } };
+    return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, "Content-Type": "application/json", ...config.headers } };
 };
 
 const fetchApi = {
     get: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, config),
-    protectedGet: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchApi.get<TResponse>(endpoint, getConfigWithAuth(config)),
+    protectedGet: <TResponse>(endpoint: string, config: RequestInit = {}) =>
+        (async () => {
+            const configWithAuth = await getConfigWithAuth(config);
+            return fetchApi.get<TResponse>(endpoint, configWithAuth);
+        })(),
     protectedPost: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody, config: RequestInit = {}) =>
-        fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, getConfigWithAuth({ method: "POST", body, ...config })),
+        (async () => {
+            const configWithAuth = await getConfigWithAuth(config);
+            return fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, { method: "POST", body, ...configWithAuth });
+        })(),
     protectedDelete: <TResponse>(endpoint: string, config: RequestInit = {}) =>
-        fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, getConfigWithAuth({ method: "DELETE", ...config })),
+        (async () => {
+            const configWithAuth = await getConfigWithAuth(config);
+            return fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, { method: "DELETE", ...configWithAuth });
+        })(),
 };
 
 export const api = {

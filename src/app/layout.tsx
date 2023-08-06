@@ -1,5 +1,7 @@
 import { ReactQueryProvider } from "@/utils/query-provider";
+import { NextAuthProvider } from "@/utils/auth-provider";
 import { montserratFont } from "./fonts";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 export const metadata = {
@@ -11,7 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className={montserratFont.className}>
-                <ReactQueryProvider>{children}</ReactQueryProvider>
+                <Toaster />
+                <ReactQueryProvider>
+                    <NextAuthProvider>{children}</NextAuthProvider>
+                </ReactQueryProvider>
             </body>
         </html>
     );

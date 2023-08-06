@@ -1,20 +1,20 @@
-import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
 export default withAuth(
     async (request) => {
-        const token = await getToken({ req: request });
-        const headers = new Headers(request.headers);
-        if (token?.accessToken) {
-            headers.set("tokenHeader", `Bearer ${token.accessToken}`);
-        }
-        const resp = NextResponse.next({ request: { headers } });
-        return resp;
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set("x-pathname", request.nextUrl.pathname);
+
+        return NextResponse.next({
+            request: {
+                headers: requestHeaders,
+            },
+        });
     },
     {
         callbacks: {
-            authorized: ({ token }) => !!(token as any)?.accessToken,
+            authorized: ({ token }) => !!token?.access_token && token?.error !== "RefreshAccessTokenError",
         },
     }
 );

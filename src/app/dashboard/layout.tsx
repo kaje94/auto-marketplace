@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <>
             <div className="container mx-auto min-h-screen p-4 xl:p-7 2xl:p-8 ">
                 <div className="relative">
-                    <NavBar />
+                    <NavBar authRequired />
                 </div>
                 <div className="my-10 grid grid-cols-5 gap-4 xl:gap-7 2xl:gap-8">
                     <div className="col-span-5  lg:col-span-1">

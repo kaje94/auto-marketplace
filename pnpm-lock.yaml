@@ -25,7 +25,7 @@ specifiers:
   fslightbox-react: ^1.7.4
   nanoid: ^4.0.2
   next: 13.4.12
-  next-auth: ^4.22.1
+  next-auth: ^4.22.4
   postcss: 8.4.23
   prettier: ^2.8.8
   query-string: ^8.1.0
@@ -59,7 +59,7 @@ dependencies:
   fslightbox-react: 1.7.4_biqbaboplfbrettd7655fr4n2y
   nanoid: 4.0.2
   next: 13.4.12_biqbaboplfbrettd7655fr4n2y
-  next-auth: 4.22.1_54ux7fu2vrztxgcjbkegvwjefy
+  next-auth: 4.22.4_54ux7fu2vrztxgcjbkegvwjefy
   postcss: 8.4.23
   query-string: 8.1.0
   react: 18.2.0
@@ -3049,8 +3049,8 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  /next-auth/4.22.1_54ux7fu2vrztxgcjbkegvwjefy:
-    resolution: {integrity: sha512-NTR3f6W7/AWXKw8GSsgSyQcDW6jkslZLH8AiZa5PQ09w1kR8uHtR9rez/E9gAq/o17+p0JYHE8QjF3RoniiObA==}
+  /next-auth/4.22.4_54ux7fu2vrztxgcjbkegvwjefy:
+    resolution: {integrity: sha512-VMI6pq3z4BfvFeCZHBkYtRYa0qqGTYAi2yy3hWCB78KkN1YsSAsOLSssd4oGrQBj0z/0zg2VLzn9tSJ14AtmWw==}
     peerDependencies:
       next: ^12.2.5 || ^13
       nodemailer: ^6.6.5

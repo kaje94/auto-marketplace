@@ -27,7 +27,7 @@
     "fslightbox-react": "^1.7.4",
     "nanoid": "^4.0.2",
     "next": "13.4.12",
-    "next-auth": "^4.22.1",
+    "next-auth": "^4.22.4",
     "postcss": "8.4.23",
     "query-string": "^8.1.0",
     "react": "18.2.0",

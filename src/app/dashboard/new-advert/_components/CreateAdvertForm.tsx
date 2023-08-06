@@ -1,5 +1,5 @@
 "use client";
-import { AdvertForm } from "@/app/_components";
+import { AdvertForm } from "@/app/_components/AdvertForm";
 import { AddListingReq, VehicleFeature } from "@/utils/types";
 import { useMutation } from "@tanstack/react-query";
 import { addAdvertAction } from "../_actions/AddAdvertAction";
@@ -45,7 +45,6 @@ export const CreateAdvertForm = (props: Props) => {
                     return item;
                 })
             );
-            console.log("resp", vehicleImages);
 
             const requestBody: AddListingReq = {
                 ...formValues,
@@ -56,7 +55,6 @@ export const CreateAdvertForm = (props: Props) => {
                     yearOfRegistration: convertYearToDateString(formValues.vehicle.yearOfRegistration),
                 },
             };
-            console.log("requestBody", requestBody);
             return addAdvertAction(requestBody);
         },
         { onSuccess: () => router.replace(`/dashboard/my-ads`) }

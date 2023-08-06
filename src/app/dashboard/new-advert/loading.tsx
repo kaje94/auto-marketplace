@@ -1,4 +1,4 @@
-import { AdvertForm } from "@/app/_components";
+import { AdvertForm } from "@/app/_components/AdvertForm";
 
 const AdvertFormLoading = () => {
     return <AdvertForm isLoading />;
