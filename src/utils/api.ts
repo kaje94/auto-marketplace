@@ -4,8 +4,14 @@ import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
 import { getServerSession } from "next-auth/next";
 
-const fetchRequest = async <TResponse>(url: string, config: RequestInit): Promise<TResponse> => {
-    const response = await fetch(url, config);
+const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, withAuth = false): Promise<TResponse> => {
+    let response: Response;
+    const configWithAuth = await getConfigWithAuth(config);
+    if (withAuth) {
+        response = await fetch(`${env.API_BASE_URL}${endpoint}`, configWithAuth);
+    } else {
+        response = await fetch(`${env.API_BASE_URL}${endpoint}`, config);
+    }
     if (response.ok) {
         try {
             const responseJson = await response.json();
@@ -30,30 +36,20 @@ const fetchRequest = async <TResponse>(url: string, config: RequestInit): Promis
 };
 
 const getConfigWithAuth = async (config: RequestInit = {}): Promise<RequestInit> => {
-    const session = await getServerSession(authOptions);
-    if (!session?.access_token || session.error === "RefreshAccessTokenError") {
-        return redirectToLoginPage();
+    let session = await getServerSession(authOptions);
+    if (session?.access_token) {
+        return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, "Content-Type": "application/json", ...config.headers } };
     }
-    return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, "Content-Type": "application/json", ...config.headers } };
+    return { ...config, headers: { "Content-Type": "application/json", ...config.headers } };
 };
 
 const fetchApi = {
-    get: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, config),
-    protectedGet: <TResponse>(endpoint: string, config: RequestInit = {}) =>
-        (async () => {
-            const configWithAuth = await getConfigWithAuth(config);
-            return fetchApi.get<TResponse>(endpoint, configWithAuth);
-        })(),
+    get: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchRequest<TResponse>(endpoint, config, false),
+    protectedGet: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchRequest<TResponse>(endpoint, config, true),
     protectedPost: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody, config: RequestInit = {}) =>
-        (async () => {
-            const configWithAuth = await getConfigWithAuth(config);
-            return fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, { method: "POST", body, ...configWithAuth });
-        })(),
+        fetchRequest<TResponse>(endpoint, { method: "POST", body, ...config }, true),
     protectedDelete: <TResponse>(endpoint: string, config: RequestInit = {}) =>
-        (async () => {
-            const configWithAuth = await getConfigWithAuth(config);
-            return fetchRequest<TResponse>(`${env.API_BASE_URL}${endpoint}`, { method: "DELETE", ...configWithAuth });
-        })(),
+        fetchRequest<TResponse>(endpoint, { method: "DELETE", ...config }, true),
 };
 
 export const api = {

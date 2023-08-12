@@ -80,18 +80,18 @@ export const authOptions: NextAuthOptions = {
                         ...token, // Keep the previous token properties
                         error: "",
                         access_token: tokens.access_token,
-                        expires_at: Date.now() / 1000 + tokens?.expires_in,
+                        expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
                         // Fall back to old refresh token, but note that
                         // many providers may only allow using a refresh token once.
-                        refresh_token: tokens.refresh_token ?? token.refresh_token,
+                        refresh_token: tokens.refresh_token,
                     };
                 } catch (error) {
                     console.error("Error refreshing access token", error);
                     // The error property will be used client-side to handle the refresh token error
-                    return { ...token, error: "RefreshAccessTokenError" as const, refresh_token: "", access_token: "" };
+                    return { ...token, error: "RefreshAccessTokenError" as const, refresh_token: "" };
                 }
             } else {
-                return { ...token, error: "RefreshAccessTokenError" as const, refresh_token: "", access_token: "" };
+                return { ...token, error: "RefreshAccessTokenError" as const, refresh_token: "" };
             }
         },
         async session({ session, token }) {

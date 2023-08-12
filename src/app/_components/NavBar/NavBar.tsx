@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { PostAddLink } from "./NavBarButtons";
-import { FC, Suspense } from "react";
+import { FC } from "react";
 import clsx from "clsx";
 import { NavBarSearch } from "./NavBarSearch";
-import { NavBarAuthServer } from "./NavBarAuthServer";
+import { NavBarAuth } from "./NavBarAuth";
 
 interface Props {
     hideBackground?: boolean;
@@ -25,10 +25,7 @@ export const NavBar: FC<Props> = ({ hideBackground, authRequired }) => {
             <div className="flex flex-row items-center gap-3 pr-0 sm:gap-4 sm:pr-2 lg:gap-6">
                 <NavBarSearch />
                 <PostAddLink />
-
-                <Suspense fallback={<span className="loading loading-ring mx-2 flex h-full items-center" />}>
-                    <NavBarAuthServer authRequired={authRequired} />
-                </Suspense>
+                <NavBarAuth authRequired={authRequired} />
             </div>
         </div>
     );
