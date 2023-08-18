@@ -17,7 +17,7 @@ export const NavBarSearch = () => {
         }
     }, [isFocused]);
 
-    if (["/", "/listing"].includes(pathname)) {
+    if (["/", "/search"].includes(pathname)) {
         return null;
     }
 
@@ -50,7 +50,7 @@ export const NavBarSearch = () => {
                     </button>
                 </div>
             </ClickAwayListener>
-            <Link href="/listing" className="visible sm:hidden">
+            <Link href="/search" className="visible sm:hidden">
                 <button className="btn-ghost btn px-0">
                     <SearchIcon />
                 </button>

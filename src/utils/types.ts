@@ -1,5 +1,13 @@
 import { z } from "zod";
-import { CreateListingSchema, LocationSchema, PriceSchema, VehicleFeatureSchema, VehicleImageSchema, VehicleSchema } from "./schemas";
+import {
+    CreateListingSchema,
+    LocationSchema,
+    PriceSchema,
+    ReviewListingSchema,
+    VehicleFeatureSchema,
+    VehicleImageSchema,
+    VehicleSchema,
+} from "./schemas";
 import { ListingStatusTypes } from "./enum";
 
 export type KeyValue = { [key: string]: string };
@@ -60,8 +68,10 @@ export type ImageFile = z.infer<typeof VehicleImageSchema>;
 
 export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;
 
-export type AddListingReq = z.infer<typeof CreateListingSchema>;
+export type CreateListingReq = z.infer<typeof CreateListingSchema>;
 
 export type ListingItems = { items: ListingItem[] };
 
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };
+
+export type ReviewListingReq = z.infer<typeof ReviewListingSchema>;

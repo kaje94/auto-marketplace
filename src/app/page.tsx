@@ -14,7 +14,7 @@ const HeroSearchBox = () => (
             <option>Van</option>
             <option>SUV</option>
         </select>
-        <Link href="/listing">
+        <Link href="/search">
             <button className="btn-secondary join-item btn rounded-l-none">
                 <SearchIcon />
                 <span className="ml-2 hidden lg:block">Search</span>

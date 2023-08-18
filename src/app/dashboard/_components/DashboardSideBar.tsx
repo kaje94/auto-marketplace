@@ -5,12 +5,13 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NavBarItem: FC<{ href: string; label: string; activePaths: string[]; Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element }> = ({
-    href,
-    label,
-    activePaths = [],
-    Icon,
-}) => {
+const NavBarItem: FC<{
+    href: string;
+    label: string;
+    activePaths: string[];
+    regexExp?: RegExp;
+    Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+}> = ({ href, label, activePaths = [], regexExp, Icon }) => {
     const pathname = usePathname();
     return (
         <li>
@@ -18,7 +19,7 @@ const NavBarItem: FC<{ href: string; label: string; activePaths: string[]; Icon:
                 href={href}
                 className={clsx({
                     "px-4 py-3": true,
-                    "active hover:!bg-base-content hover:!text-base-300": activePaths.includes(pathname),
+                    "active hover:!bg-base-content hover:!text-base-300": activePaths.includes(pathname) || regexExp?.test(pathname),
                 })}
             >
                 <Icon className="h-5 w-5" />
@@ -36,9 +37,10 @@ export const DashboardSideBar: FC = () => {
             <ul className="menu rounded-box w-full bg-base-100 p-2 shadow-md">
                 <NavBarItem href="/dashboard/profile" label="Profile" activePaths={["/dashboard/profile"]} Icon={UserIcon} />
                 <NavBarItem
-                    href="/dashboard/my-ads"
+                    href="/dashboard/listings"
                     label="My Adverts"
-                    activePaths={["/dashboard/my-ads", "/dashboard/new-advert"]}
+                    activePaths={["/dashboard/listings", "/dashboard/new-listing"]}
+                    regexExp={new RegExp("^/dashboard/listings/\\d+$")}
                     Icon={AdvertIcon}
                 />
                 <NavBarItem href="/dashboard/preferences" label="Preferences" activePaths={["/dashboard/preferences"]} Icon={SettingsIcon} />

@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { FC } from "react";
 
 interface Props {
-    error?: Error;
+    error?: Error | string;
     reset?: () => void;
     title?: string;
     subTitle?: string;
@@ -18,6 +18,8 @@ export const ErrorComponent: FC<Props> = ({
     title = "Oops, something went wrong",
     subTitle = "But do not worry, you can either try refreshing this page or go back to our home page.",
 }) => {
+    const errorName = typeof error === "string" ? "Error" : error?.name ?? "Error";
+    const errorMessage = typeof error === "string" ? error : error?.message;
     return (
         <section className="flex h-full items-center p-16 text-primary-content">
             <div className="container mx-auto my-8 flex flex-col items-center justify-center px-5">
@@ -39,7 +41,7 @@ export const ErrorComponent: FC<Props> = ({
                             </button>
                         </Link>
                     </div>
-                    {error && <div className="my-4 text-sm font-extralight opacity-50">{`${error?.name}: ${error?.message}`}</div>}
+                    {error && <div className="my-4 text-sm font-extralight opacity-50">{`${errorName}${errorMessage && `:${errorMessage}`}`}</div>}
                 </div>
             </div>
         </section>

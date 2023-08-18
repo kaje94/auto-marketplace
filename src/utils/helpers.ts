@@ -77,6 +77,7 @@ export const unCamelCase = (str: string) =>
         return str.toUpperCase();
     });
 
+// todo: see if this can be moved to only a client side function
 export const thumbHashToDataUrl = (thumbHash?: string) => {
     if (!thumbHash || thumbHash.length < 8) {
         return "";

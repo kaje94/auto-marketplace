@@ -46,9 +46,9 @@ export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; lab
 
 export const PostAddLink = () => {
     const pathname = usePathname();
-    const active = pathname === "/dashboard/new-advert";
+    const active = pathname === "/dashboard/new-listing";
     return (
-        <Link href="/dashboard/new-advert">
+        <Link href="/dashboard/new-listing">
             <button
                 className={clsx({
                     "btn text-xs capitalize sm:text-sm px-0": true,

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FuelTypes, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
+import { FuelTypes, ListingStatusTypes, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
 import { MaxVehicleImageCount } from "./constants";
 
 export const PriceSchema = z.object({
@@ -44,8 +44,10 @@ const YearSchema = z.string().refine(
     { message: `Year must be between 1960 and ${new Date().getFullYear()}` }
 );
 
+const listingId = z.number();
+
 export const VehicleSchema = z.object({
-    id: z.number().optional(),
+    id: listingId.optional(),
     type: z.nativeEnum(VehicleTypes, { invalid_type_error: "Invalid Vehicle Type" }),
     brand: z.string().min(1, "Brand is required"), // todo: get from api
     model: z.string().min(1, "Model is required"), // todo: get from api
@@ -70,4 +72,10 @@ export const CreateListingSchema = z.object({
     hasOnGoingLease: z.boolean().default(false),
     location: LocationSchema,
     vehicle: VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.number()) })),
+});
+
+export const ReviewListingSchema = z.object({
+    listingId: listingId,
+    status: z.nativeEnum(ListingStatusTypes),
+    reviewComment: z.string().min(1, "Review comment is required"),
 });

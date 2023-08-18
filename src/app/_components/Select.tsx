@@ -39,7 +39,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
                         <div
                             className={clsx({
                                 "duration-200 flex items-center": true,
-                                "tooltip-error tooltip opacity-100": error,
+                                "tooltip-error tooltip opacity-100 tooltip-left": error,
                                 "opacity-0": !error,
                             })}
                             data-tip={error}
@@ -55,9 +55,12 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
                 className={clsx("select-bordered select font-normal", error && "select-error", loading && "animate-pulse", selectClassName)}
                 {...rest}
             >
-                <option disabled={!selectablePlaceholder} value={placeholder}>
-                    {placeholder}
-                </option>
+                {!rest.value && selectablePlaceholder && (
+                    <option disabled={!selectablePlaceholder} value={placeholder}>
+                        {placeholder}
+                    </option>
+                )}
+
                 {options?.map((option) => (
                     <option key={option.value} value={option.value}>
                         {unCamelCase(option.label)}

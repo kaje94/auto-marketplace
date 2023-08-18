@@ -7,20 +7,20 @@ import { useEffect, useState } from "react";
 const LoginPage = () => {
     const searchParams = useSearchParams();
     const search = searchParams.get("callbackUrl");
-    const errorParam = searchParams.get("error");
+    const error = searchParams.get("error");
     const [signInError, setSignInError] = useState<any>();
 
     useEffect(() => {
-        if (!errorParam && !signInError) {
+        if (!signInError && error !== "OAuthSignin") {
             signIn("duende-identityserver6", {
                 callbackUrl: search && !search?.includes("auth/login") ? search : "/",
             }).catch((error) => {
                 setSignInError(error);
             });
         }
-    }, [search, errorParam, signInError]);
+    }, [search, signInError, error]);
 
-    if (errorParam || signInError) {
+    if (signInError || error === "OAuthSignin") {
         return <ErrorComponent title="Failed to Authenticate" error={signInError} />;
     }
     return (

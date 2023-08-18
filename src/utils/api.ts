@@ -1,8 +1,18 @@
 import { env } from "@/env.mjs";
-import { PaginatedResponse, ListingItems, AddListingReq, VehicleFeature, PaginatedRequest, ListingItem } from "./types";
+import { PaginatedResponse, ListingItems, CreateListingReq, VehicleFeature, PaginatedRequest, ListingItem, ReviewListingReq } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
 import { getServerSession } from "next-auth/next";
+
+const extractBadRequestError = (errors: { [key: string]: string[] }): string | void => {
+    try {
+        return Object.values(errors)
+            .reduce((prev, current) => [...prev, current.join(", ")], [])
+            .join(", ");
+    } catch {
+        console.error("Failed to parse bad request errors", errors);
+    }
+};
 
 const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, withAuth = false): Promise<TResponse> => {
     let response: Response;
@@ -23,7 +33,7 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
         if (response.status === 401) {
             return redirectToLoginPage();
         }
-        let errorResponse = "";
+        let errorResponse: any = "";
         const [jsonRes, textRes] = await Promise.allSettled([response.json(), response.text()]);
         if (jsonRes.status === "fulfilled") {
             errorResponse = jsonRes.value;
@@ -31,7 +41,11 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
             errorResponse = textRes.value;
         }
         console.error("Fetch request failure:", errorResponse || response.statusText);
-        throw new Error(errorResponse || response.statusText || "Failure when calling the endpoint");
+        const errorMessage = errorResponse?.title || errorResponse?.toString() || response.statusText || "Failure when calling the endpoint";
+        if (response.status === 400 && errorResponse?.errors) {
+            throw new Error(extractBadRequestError(errorResponse?.errors) || errorMessage);
+        }
+        throw new Error(errorMessage);
     }
 };
 
@@ -59,7 +73,9 @@ export const api = {
     getPostedListings: () => fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted", { next: { revalidate: 0 } }),
     getPostedListingItem: (id: string | number) => fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`),
     getRelatedListings: (id: string | number) => fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`),
-    postListing: (body: AddListingReq) => fetchApi.protectedPost<BodyInit, number>("/v1/Listings", JSON.stringify(body)),
-    getMyListings: (req?: PaginatedRequest) => fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`),
+    postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, number>("/v1/Listings", JSON.stringify(body)),
+    getListings: (req?: PaginatedRequest) => fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`),
+    getListingsItem: (id: string | number) => fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`),
     deleteListing: (listingId: number) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
+    reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, any>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
 };

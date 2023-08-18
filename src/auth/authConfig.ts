@@ -5,9 +5,13 @@ import { redirect } from "next/navigation";
 import { headers as nextHeaders } from "next/headers";
 
 declare module "next-auth" {
+    interface User {
+        isAdmin: boolean;
+    }
     interface Session {
         user: {
             id: string;
+            isAdmin: boolean;
         } & DefaultSession["user"];
         access_token?: string;
         expires_at?: number;
@@ -20,6 +24,7 @@ declare module "next-auth/jwt" {
         access_token?: string;
         expires_at?: number;
         refresh_token?: string;
+        isAdmin: boolean;
     }
 }
 
@@ -42,13 +47,16 @@ interface UserInfoResponse {
 export const authOptions: NextAuthOptions = {
     pages: { signIn: "/auth/login" },
     callbacks: {
-        async jwt({ token, account, user }) {
+        async jwt({ token, account, user, profile }) {
+            if (user) {
+                token.isAdmin = user.isAdmin;
+            }
+
             if (user) {
                 token.id = user.id;
             }
 
             if (account) {
-                console.log("account ", account);
                 token.access_token = account.access_token;
                 token.refresh_token = account.refresh_token;
                 token.expires_at = account.expires_at;
@@ -94,10 +102,13 @@ export const authOptions: NextAuthOptions = {
                 return { ...token, error: "RefreshAccessTokenError" as const, refresh_token: "" };
             }
         },
-        async session({ session, token }) {
+        async session({ session, token, user }) {
+            if (token && session?.user) {
+                session.user.isAdmin = token.isAdmin;
+            }
             return {
                 ...session,
-                user: { ...session.user, id: token.sub },
+                user: { ...session.user, id: token.sub, isAdmin: session?.user?.isAdmin },
                 access_token: token.access_token,
                 error: token.error,
                 expires_at: token.expires_at,
@@ -115,7 +126,7 @@ export const authOptions: NextAuthOptions = {
                     headers: { Authorization: `Bearer ${token.access_token!}` },
                 });
                 const data: UserInfoResponse = await response.json();
-                return { id: profile.sub, email: data.email, image: "", name: data.name };
+                return { id: profile.sub, email: data.email, image: "", name: data.name, isAdmin: data.email === "administrator@autostore.com" };
             },
         }),
     ],

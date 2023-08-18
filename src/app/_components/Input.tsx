@@ -21,7 +21,11 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
                 </span>
                 <span className="label-text-alt text-error">
                     <div
-                        className={clsx({ "duration-200 flex items-center": true, "tooltip-error tooltip opacity-100": error, "opacity-0": !error })}
+                        className={clsx({
+                            "duration-200 flex items-center": true,
+                            "tooltip-left tooltip-error tooltip opacity-100": error,
+                            "opacity-0": !error,
+                        })}
                         data-tip={error}
                     >
                         <AlertCircleIcon className="h-4 w-4" />
