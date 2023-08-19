@@ -179,3 +179,9 @@ export const previewUrlToHash = async (previewUrl: string) => {
     canvas.remove();
     return thumbHash;
 };
+
+export const getLocationString = (location: Location) => `${location?.city}, ${location?.state}, ${location?.country}`;
+
+export function getRandomItem<T>(items: T[]): T | undefined {
+    return items[Math.floor(Math.random() * items.length)];
+}

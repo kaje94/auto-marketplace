@@ -1,4 +1,4 @@
-import { unCamelCase, getYearFromDateString, numberWithCommas } from "@/utils/helpers";
+import { unCamelCase, getYearFromDateString, numberWithCommas, getRandomItem } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 import clsx from "clsx";
 import { FC } from "react";
@@ -17,13 +17,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
                 {loading ? (
                     <>
                         {new Array(5).fill("").map((_, i) => (
-                            <span
-                                key={i}
-                                className={clsx(
-                                    "my-0.5 h-5 animate-pulse bg-base-200",
-                                    placeholderWidth[Math.floor(Math.random() * placeholderWidth.length)]
-                                )}
-                            />
+                            <span key={i} className={clsx("my-0.5 h-5 animate-pulse bg-base-200", getRandomItem(placeholderWidth))} />
                         ))}
                     </>
                 ) : (
@@ -51,13 +45,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
                 {loading ? (
                     <>
                         {new Array(5).fill("").map((_, i) => (
-                            <span
-                                key={i}
-                                className={clsx(
-                                    "my-0.5 h-5 animate-pulse bg-base-200",
-                                    placeholderWidth[Math.floor(Math.random() * placeholderWidth.length)]
-                                )}
-                            />
+                            <span key={i} className={clsx("my-0.5 h-5 animate-pulse bg-base-200", getRandomItem(placeholderWidth))} />
                         ))}
                     </>
                 ) : (

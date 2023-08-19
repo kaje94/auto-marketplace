@@ -25,6 +25,7 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                             height={80}
                             width={80}
                             alt="profile-image"
+                            className="object-cover"
                         />
                     )}
                 </div>

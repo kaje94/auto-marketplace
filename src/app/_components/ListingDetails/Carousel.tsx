@@ -93,9 +93,7 @@ export const Carousel: React.FC<PropType> = (props) => {
                             onClick={onOpenLightBox}
                             className="absolute bottom-0 left-0 flex h-1/2 w-full cursor-pointer flex-col justify-end bg-gradient-to-t from-base-content to-transparent p-5 sm:h-2/6 "
                         >
-                            <div className="text-3xl font-bold text-base-100 lg:text-6xl" style={{ textShadow: `0 0 20px black` }}>
-                                {title}
-                            </div>
+                            <div className="text-3xl font-bold text-base-100 image-text-shadow lg:text-6xl">{title}</div>
                             <div className="mt-2 text-sm font-light text-base-200">Posted 500 days ago</div>
                         </div>
                     </div>

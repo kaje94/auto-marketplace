@@ -9,6 +9,7 @@ rename image `color` as `hash` and have max length of 100(even though actually n
 createdAt field is missing in listing response
 milage needs a measurement unit
 decide which lists to take to backend
+vehicle description needs to be at least 1000 characters
 
 //
 Add a plus button when no ads created by user

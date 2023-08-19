@@ -1,3 +1,4 @@
+import { getRandomItem } from "@/utils/helpers";
 import clsx from "clsx";
 import { FC } from "react";
 
@@ -16,13 +17,7 @@ export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], loading, lo
             {loading ? (
                 <>
                     {new Array(loadingPlaceholderCount).fill("").map((_, i) => (
-                        <span
-                            key={i}
-                            className={clsx(
-                                "badge animate-pulse bg-base-200 p-3",
-                                placeholderWidth[Math.floor(Math.random() * placeholderWidth.length)]
-                            )}
-                        />
+                        <span key={i} className={clsx("badge animate-pulse bg-base-200 p-3", getRandomItem(placeholderWidth))} />
                     ))}
                 </>
             ) : (

@@ -1,11 +1,10 @@
 import { FC } from "react";
 import Image from "next/image";
-import { RefreshIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Link from "next/link";
-import { unCamelCase } from "@/utils/helpers";
-import { DeleteRowListingItem } from "./DeleteRowListingItem";
+import { getRandomItem, unCamelCase } from "@/utils/helpers";
 import { ListingStatusTypes } from "@/utils/enum";
+import { ListingRowItemMenu } from "./ListingRowItemMenu";
 
 interface Props {
     id?: number;
@@ -13,109 +12,101 @@ interface Props {
     imageUrl?: string;
     blurDataURL?: string;
     price?: string;
+    location?: string;
     description?: string;
-    tags?: string[];
     loading?: boolean;
     status?: ListingStatusTypes;
 }
-// todo: fix hydration issues when status is posted
+
 export const ListingRowItem: FC<Props> = (props) => {
-    const { title, price, description, tags = [], status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading = false } = props;
+    const { title, price, description, location, status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading } = props;
     const myAddItemContent = (
         <>
-            <figure
-                className={clsx(
-                    "relative col-span-12 h-full overflow-hidden rounded-xl md:col-span-3",
-                    status === ListingStatusTypes.Expired && "opacity-70"
-                )}
-            >
-                {loading ? (
-                    <div className="aspect-video h-full w-full animate-pulse bg-base-300" />
-                ) : (
-                    <>
-                        <Image
-                            src={imageUrl ?? ""}
-                            alt={title ?? ""}
-                            className="aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image"
-                            height={300}
-                            width={450}
-                            placeholder={blurDataURL ? "blur" : "empty"}
-                            blurDataURL={blurDataURL}
-                        />
-                        <div className="badge badge-ghost badge-lg absolute bottom-5 duration-300 ">{price}</div>
-                    </>
-                )}
-            </figure>
+            {loading ? (
+                <div className="relative hidden aspect-video h-full w-full overflow-hidden rounded-xl bg-base-200 md:col-span-5 md:block xl:col-span-3" />
+            ) : (
+                <figure className="relative h-full overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
+                    <Image
+                        src={imageUrl ?? ""}
+                        alt={title ?? ""}
+                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
+                        height={300}
+                        width={450}
+                        placeholder={blurDataURL ? "blur" : "empty"}
+                        blurDataURL={blurDataURL}
+                    />
 
-            <div
-                className={clsx({
-                    "col-span-12 flex flex-col md:col-span-6 xl:col-span-7": true,
-                    "opacity-70": status === ListingStatusTypes.Expired,
-                })}
-            >
-                {loading ? <span className="h-6 w-56 bg-base-200" /> : <span className="text-lg font-semibold text-accent">{title}</span>}
-                <div className="flex flex-wrap gap-1 py-1 md:py-2">
-                    {tags.map((tag) => (
-                        <div key={tag} className="badge badge-outline lg:badge-md">
-                            {tag}
-                        </div>
-                    ))}
-                </div>
-
-                {loading ? (
-                    <div className="h-12 bg-base-200" />
-                ) : (
-                    <p className="line-clamp-2 flex-1 overflow-hidden text-sm opacity-80">{description}</p>
-                )}
-                <div className="mt-2 text-sm italic text-neutral-400">Posted 2 days ago</div>
-            </div>
-            <div className=" col-span-12 flex h-full  items-center md:col-span-3 xl:col-span-2">
-                <div className="rounded-box flex h-min w-full flex-1 flex-wrap items-center justify-center gap-1 border-2 p-2 md:flex-col md:gap-0">
-                    <div
-                        className={clsx({
-                            "badge badge-lg h-auto text-center capitalize p-2 text-sm font-bold md:w-full rounded-box": true,
-                            "badge-secondary": status === ListingStatusTypes.Posted && !loading,
-                            "badge-ghost": status === ListingStatusTypes.Expired,
-                            "badge-primary": status === ListingStatusTypes.UnderReview,
-                        })}
-                    >
-                        {loading ? "Loading..." : unCamelCase(status)}
+                    <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
+                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{price}</div>
                     </div>
-                    <div className="divider my-0" />
-                    {status === ListingStatusTypes.Posted && (
-                        <>
-                            <Link href={`/dashboard/listings/${id}/edit`}>
-                                <button className="btn-ghost btn-sm btn md:w-full" disabled={loading}>
-                                    <EditIcon /> <span className="ml-2">Edit</span>
-                                </button>
-                            </Link>
-                            <div className="divider my-0" />
-                        </>
+                </figure>
+            )}
+
+            <div className="col-span-12 flex flex-col gap-0.5 md:col-span-7 xl:col-span-9">
+                {loading ? (
+                    <div className={clsx("w- h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72", "w-80", "w-96"]))} />
+                ) : (
+                    <div className="flex gap-2">
+                        <div className="flex flex-1 flex-wrap items-center gap-0.5 md:gap-2 xl:gap-4">
+                            <span className="text-xl font-semibold text-base-content">{title}</span>
+                            <span
+                                className={clsx({
+                                    "badge badge-lg": true,
+                                    "badge-error": status === ListingStatusTypes.Declined,
+                                    "badge-info": status === ListingStatusTypes.Posted,
+                                    "badge-warning": [ListingStatusTypes.UnderReview, ListingStatusTypes.Expired].includes(
+                                        status as ListingStatusTypes
+                                    ),
+                                    "badge-success": status === ListingStatusTypes.Sold,
+                                })}
+                            >
+                                {unCamelCase(status)}
+                            </span>
+                        </div>
+                        <ListingRowItemMenu listingId={id} listingTitle={title} />
+                    </div>
+                )}
+
+                {loading ? (
+                    <div className="block h-5 w-44 bg-base-200 md:hidden" />
+                ) : (
+                    <div className="block text-base md:hidden">
+                        Price: <span className="font-medium">{price}</span>
+                    </div>
+                )}
+
+                {loading ? (
+                    <div className={clsx("h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72", "w-80", "w-96"]))} />
+                ) : (
+                    <div className="text-base">
+                        Location: <span className="font-medium">{location}</span>
+                    </div>
+                )}
+
+                <div className="flex-1">
+                    {loading ? (
+                        <div className={clsx("w-full bg-base-200", getRandomItem(["h-10", "h-12", "h-14"]))} />
+                    ) : (
+                        <p className="line-clamp-2 overflow-hidden text-sm opacity-80 md:line-clamp-3">{description}</p>
                     )}
-                    {status === ListingStatusTypes.Expired && (
-                        <>
-                            <button className="btn-ghost btn-sm btn md:w-full">
-                                <RefreshIcon />
-                                <span className="ml-2">Renew</span>
-                            </button>
-                            <div className="divider my-0" />
-                        </>
-                    )}
-                    <DeleteRowListingItem loading={loading} listingId={id} listingTitle={title} />
                 </div>
+
+                {loading ? <div className="h-5 w-32 bg-base-200" /> : <div className="text-sm italic text-neutral-400">Posted 2 days ago</div>}
             </div>
         </>
     );
 
     if (loading) {
-        <div className="card mb-3 grid animate-ping grid-cols-12 gap-4 bg-base-100 p-2 shadow transition-shadow zoom-inner-image hover:shadow-md md:p-4">
-            {myAddItemContent}
-        </div>;
+        return (
+            <div className="card mb-3 grid animate-pulse grid-cols-12 gap-0.5 bg-base-100 p-3 shadow md:gap-2 md:p-4 xl:gap-4">
+                {myAddItemContent}
+            </div>
+        );
     }
 
     return (
         <Link
-            className="card mb-3 grid cursor-pointer grid-cols-12 gap-4 bg-base-100 p-2 shadow transition-shadow zoom-inner-image hover:shadow-md md:p-4"
+            className="card mb-3 grid cursor-pointer grid-cols-12 gap-0.5 bg-base-100 p-3 shadow transition-shadow zoom-inner-image hover:shadow-md md:gap-2 md:p-4 xl:gap-4"
             href={`/dashboard/listings/${id}`}
         >
             {myAddItemContent}

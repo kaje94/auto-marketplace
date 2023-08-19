@@ -1,4 +1,5 @@
 import { TagSelect } from "@/app/_components";
+import { getRandomItem } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 import { clsx } from "clsx";
 import { FC } from "react";
@@ -16,13 +17,7 @@ export const FeaturesOfListing: FC<Props> = ({ vehicle, loading }) => {
             {loading ? (
                 <>
                     {new Array(6).fill("").map((_, i) => (
-                        <span
-                            key={i}
-                            className={clsx(
-                                "badge animate-pulse bg-base-200 p-3",
-                                placeholderWidth[Math.floor(Math.random() * placeholderWidth.length)]
-                            )}
-                        />
+                        <span key={i} className={clsx("badge animate-pulse bg-base-200 p-3", getRandomItem(placeholderWidth))} />
                     ))}
                 </>
             ) : (

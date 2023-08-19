@@ -1,4 +1,4 @@
-import { getFormattedCurrency } from "@/utils/helpers";
+import { getFormattedCurrency, getLocationString } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 import { FC } from "react";
 import { Carousel } from "./Carousel";
@@ -43,7 +43,7 @@ export const ListingDetails: FC<Props> = ({ itemDetails = {}, loading = false, w
                                 <div className="mt-1 h-5 w-4/6 animate-pulse bg-base-200" />
                             </>
                         ) : (
-                            <div className="mt-2 text-center text-lg font-bold">{`${location?.city}, ${location?.state}, ${location?.country}`}</div>
+                            <div className="mt-2 text-center text-lg font-bold">{getLocationString(location)}</div>
                         )}
                     </div>
                     <div className="stat card place-items-center bg-primary text-primary-content shadow">

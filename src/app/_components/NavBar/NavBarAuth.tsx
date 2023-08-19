@@ -44,6 +44,7 @@ export const NavBarAuth: FC<Props> = ({ authRequired }) => {
                                 height={40}
                                 width={40}
                                 alt="profile-image"
+                                className="object-cover"
                             />
                         </div>
                     </label>

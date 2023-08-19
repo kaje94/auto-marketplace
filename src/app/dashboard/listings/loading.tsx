@@ -7,7 +7,7 @@ const DashboardListingsLoading = () => {
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="My Adverts" />
             <div className="grid gap-1 xl:gap-2">
                 {new Array(5).fill("").map((_, i) => (
-                    <ListingRowItem key={i} loading />
+                    <ListingRowItem key={i} loading={true} />
                 ))}
             </div>
         </>

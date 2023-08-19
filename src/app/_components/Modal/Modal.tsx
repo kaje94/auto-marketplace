@@ -12,13 +12,7 @@ export const Modal: FC<PropsWithChildren<Props>> = ({ visible, onVisibleChange, 
     return (
         <>
             <div className={clsx({ modal: true, "modal-open": visible })}>
-                <div
-                    className="modal-box cursor-default"
-                    onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }}
-                >
+                <div className="modal-box cursor-default" onClick={(event) => event.preventDefault()}>
                     <button className="btn-ghost btn-sm btn-circle btn absolute right-2 top-2" onClick={() => onVisibleChange(false)}>
                         ✕
                     </button>
@@ -30,7 +24,6 @@ export const Modal: FC<PropsWithChildren<Props>> = ({ visible, onVisibleChange, 
                     onClick={(event) => {
                         onVisibleChange(false);
                         event.preventDefault();
-                        event.stopPropagation();
                     }}
                 >
                     Close

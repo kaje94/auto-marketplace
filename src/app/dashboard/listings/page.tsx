@@ -1,13 +1,14 @@
 import { BreadCrumbs, Empty, Pagination } from "@/app/_components";
 import { ListingRowItem } from "./_components";
 import { api } from "@/utils/api";
-import { getFormattedCurrency, getListingTags, transformListingResponse } from "@/utils/helpers";
+import { getFormattedCurrency, getListingTags, getLocationString, transformListingResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 
 const MyAds = async ({ searchParams }: SearchParams) => {
     const page = searchParams["page"] ?? "1";
     let listings = await api.getListings({ PageNumber: Number(page) });
+
     listings = { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
 
     if (listings.totalCount > 0 && listings.items?.length === 0 && page !== "1") {
@@ -32,7 +33,7 @@ const MyAds = async ({ searchParams }: SearchParams) => {
                         description={item.description}
                         imageUrl={item.vehicle.vehicleImages[0]?.url}
                         blurDataURL={item.vehicle.vehicleImages[0]?.blurDataURL}
-                        tags={getListingTags(item.location, item.vehicle)}
+                        location={getLocationString(item.location)}
                         status={item.status}
                         // need created at field as well
                     />

@@ -23,6 +23,7 @@ module.exports = {
                     [`&:hover .badge-hover-translucent`]: { opacity: 0.9 },
                 },
                 ".hero-bg": { "background-color": "#000033" },
+                ".image-text-shadow": { textShadow: `0 0 25px #00000080` },
             });
         }),
     ],
