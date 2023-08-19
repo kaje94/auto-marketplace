@@ -1,22 +1,11 @@
 import { ListingItem, Pagination, Select } from "@/app/_components";
 import { Filters } from "./_components";
 import { api } from "@/utils/api";
-import { getFormattedCurrency, getListingTags, thumbHashToDataUrl, sortVehicleImages } from "@/utils/helpers";
+import { getFormattedCurrency, getListingTags, thumbHashToDataUrl, sortVehicleImages, transformListingResponse } from "@/utils/helpers";
 
 const ListingPage = async () => {
     let listings = await api.getPostedListings();
-    listings = {
-        ...listings,
-        items: listings.items.map((item) => ({
-            ...item,
-            vehicle: {
-                ...item.vehicle,
-                vehicleImages: sortVehicleImages(
-                    item.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
-                ),
-            },
-        })),
-    };
+    listings = { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
 
     return (
         <div className="my-10 grid grid-cols-4 gap-4 xl:gap-7 2xl:gap-8">

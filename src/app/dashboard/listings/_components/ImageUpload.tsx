@@ -26,9 +26,15 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) 
         noClick: true,
         noKeyboard: true,
         onDrop: (acceptedFiles) => {
-            const newFileList: ImageFile[] = [...files, ...acceptedFiles.map((file) => ({ file, preview: URL.createObjectURL(file) }))];
-            if (newFileList[0] && !newFileList.some((item) => item.isThumbnail)) {
-                newFileList[0].isThumbnail = true;
+            const newFileList: ImageFile[] = [
+                ...files,
+                ...acceptedFiles.map((file) => ({ file, preview: URL.createObjectURL(file), deleted: false })),
+            ];
+            if (newFileList.length > 0 && !newFileList.some((item) => item.isThumbnail && !item.deleted)) {
+                const thumbnailIndex = newFileList.findIndex((item) => !item.deleted);
+                if (thumbnailIndex >= 0 && newFileList[thumbnailIndex]) {
+                    newFileList[thumbnailIndex]!.isThumbnail = true;
+                }
             }
             setFiles(newFileList);
         },
@@ -36,10 +42,12 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) 
 
     const removeImage = (indexToRemove: number) => {
         if (indexToRemove >= 0 && indexToRemove < files.length) {
-            const newFileList = [...files.slice(0, indexToRemove), ...files.slice(indexToRemove + 1)];
-            if (newFileList[0] && !newFileList.some((item) => item.isThumbnail)) {
-                newFileList[0].isThumbnail = true;
+            let newFileList = files.map((item, index) => (index === indexToRemove ? { ...item, deleted: true, isThumbnail: false } : item));
+            let thumbnailIndex = newFileList.findIndex((item) => !item.deleted && item.isThumbnail);
+            if (thumbnailIndex < 0) {
+                thumbnailIndex = newFileList.findIndex((item) => !item.deleted);
             }
+            newFileList = newFileList.map((item, index) => (index === thumbnailIndex ? { ...item, isThumbnail: true } : item));
             setFiles(newFileList);
         }
     };
@@ -60,6 +68,9 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) 
             <input ref={formRef} className="h-0 w-0" />
             <div className="mt-2 flex flex-wrap gap-2" {...getRootProps({})}>
                 {files?.map((file, index) => {
+                    if (file.deleted) {
+                        return null;
+                    }
                     return (
                         <div
                             className="rounded-box relative box-border inline-flex aspect-square w-[calc(33%-6px)] border-[1px] border-base-300 hover:shadow sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)]"
@@ -131,7 +142,7 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) 
                     </>
                 ) : (
                     <>
-                        {files.length < MaxVehicleImageCount && (
+                        {files.filter((item) => !item.deleted).length < MaxVehicleImageCount && (
                             <div
                                 onClick={open}
                                 className={clsx({

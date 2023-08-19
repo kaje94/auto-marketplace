@@ -2,16 +2,14 @@
 import { ListingForm } from "@/app/_components/ListingForm";
 import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { useMutation } from "@tanstack/react-query";
-import { createListingAction } from "../_actions/CreateListingAction";
 import { CreateListingSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { convertYearToDateString, previewUrlToHash, uploadToS3 } from "@/utils/helpers";
-import { getPresignedS3Url } from "@/app/_actions/imageActions";
-import imageCompression from "browser-image-compression";
+import { convertYearToDateString, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useRef } from "react";
+import { createListingAction } from "@/app/_actions/listingActions";
 
 interface Props {
     features: VehicleFeature[];
@@ -31,24 +29,7 @@ export const CreateListingForm = (props: Props) => {
 
     const { mutate: createListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateListingReq) => {
-            const files = formValues.vehicle.vehicleImages;
-            const vehicleImages = await Promise.all(
-                files.map(async (item) => {
-                    if (item.file && item.preview) {
-                        const compressedFile = await imageCompression(item.file as File, {
-                            fileType: "image/webp",
-                            initialQuality: 0.7,
-                            maxWidthOrHeight: 1920, // todo: also try 1280 size
-                            maxSizeMB: 0.5,
-                        });
-                        const hash = await previewUrlToHash(item.preview);
-                        const { url, key, bucket, region } = await getPresignedS3Url(compressedFile.type, compressedFile?.length);
-                        const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
-                        return { color: hash, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
-                    }
-                    return item;
-                })
-            );
+            const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
 
             const requestBody: CreateListingReq = {
                 ...formValues,
@@ -62,21 +43,34 @@ export const CreateListingForm = (props: Props) => {
             return createListingAction(requestBody);
         },
         {
-            onSuccess: () => {
-                router.replace(`/dashboard/listings`);
+            onSuccess: (id, req) => {
+                if (window?.location?.pathname === `/dashboard/new-listing`) {
+                    router.replace(`/dashboard/listings/${id}`);
+                }
             },
-            onMutate: () => {
-                toastId.current = toast.loading("Creating new Advert...");
+            onMutate: (data) => {
+                toastId.current = toast.loading(`Creating new Advert for ${getListingTitleFromVehicle(data.vehicle)}...`);
             },
-            onSettled: (_data, err) => {
+            onSettled: (_data, err, variables) => {
                 if (err) {
-                    toast.error(`Failed to create advert. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
+                    console.error("Failed to create advert", JSON.stringify(variables), err);
+                    toast.error(`Failed to create advert for ${getListingTitleFromVehicle(variables.vehicle)}. ${(err as Error)?.message ?? ""}`, {
+                        id: toastId?.current,
+                    });
                 } else {
-                    toast.success("Successfully created a new Advert", { id: toastId?.current });
+                    toast.success(`Successfully created a new Advert for ${getListingTitleFromVehicle(variables.vehicle)}`, { id: toastId?.current });
                 }
             },
         }
     );
 
-    return <ListingForm featureOptions={features} form={form} isMutating={isMutating} onMutate={createListingsMutation} />;
+    return (
+        <ListingForm
+            featureOptions={features}
+            form={form}
+            isMutating={isMutating}
+            onMutate={createListingsMutation}
+            submitButton={{ text: "Create", mutatingText: "Creating..." }}
+        />
+    );
 };

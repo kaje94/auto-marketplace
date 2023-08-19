@@ -2,20 +2,13 @@ import { BreadCrumbs, ListingDetails } from "@/app/_components";
 import { ListingDetailBanner } from "@/app/_components/ListingDetails";
 import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
-import { sortVehicleImages, thumbHashToDataUrl } from "@/utils/helpers";
+import { ListingStatusTypes } from "@/utils/enum";
+import { transformListingResponse } from "@/utils/helpers";
 import { getServerSession } from "next-auth";
 
 const ItemDetailPage = async ({ params }: { params: { id: string } }) => {
     let [itemDetails, session] = await Promise.all([api.getListingsItem(params.id), getServerSession(authOptions)]);
-    itemDetails = {
-        ...itemDetails,
-        vehicle: {
-            ...itemDetails.vehicle,
-            vehicleImages: sortVehicleImages(
-                itemDetails.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
-            ),
-        },
-    };
+    itemDetails = transformListingResponse(itemDetails);
 
     return (
         <>
@@ -23,7 +16,13 @@ const ItemDetailPage = async ({ params }: { params: { id: string } }) => {
                 currentPageTitle={itemDetails.title}
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Adverts", href: "/dashboard/listings" }]}
             />
-            <ListingDetailBanner session={session} listingStatus={itemDetails.status} listingId={itemDetails.id} />
+            <ListingDetailBanner
+                session={session}
+                listingStatus={itemDetails.status}
+                listingId={itemDetails.id}
+                listingComment={itemDetails.status === ListingStatusTypes.Declined ? itemDetails.reviewComment : ""}
+                listingName={itemDetails.title}
+            />
             <ListingDetails itemDetails={itemDetails} withinDashboard={true} />
         </>
     );

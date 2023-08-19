@@ -6,14 +6,12 @@ import { ReviewListingSchema } from "@/utils/schemas";
 import { ReviewListingReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Select } from "../Select";
-import { TextArea } from "../TextArea";
-import { ModalFooter, Modal } from "../Modal";
+import { Select, TextArea, ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { reviewListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
 
-export const ReviewButton = ({ listingId }: { listingId: number }) => {
+export const ReviewButton = ({ listingId, listingName }: { listingId: number; listingName?: string }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const toastId = useRef<string>();
 
@@ -26,20 +24,20 @@ export const ReviewButton = ({ listingId }: { listingId: number }) => {
     const { mutate } = useMutation((reqParams: ReviewListingReq) => reviewListingAction(reqParams), {
         onMutate: () => {
             setModalVisible(false);
-            toastId.current = toast.loading("Submitting review...");
+            toastId.current = toast.loading(`Submitting review for advert ${listingName}...`);
         },
         onSettled: (_data, err) => {
             if (err) {
-                toast.error(`Failed to update the status of the advert. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
+                toast.error(`Failed to update the status of the advert ${listingName}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
             } else {
-                toast.success("Successfully updated the status of the advert", { id: toastId?.current });
+                toast.success(`Successfully updated the status of the advert ${listingName}`, { id: toastId?.current });
             }
         },
     });
 
     return (
         <>
-            <button className="btn-sm btn" onClick={() => setModalVisible(true)}>
+            <button className="btn-ghost btn-sm btn" onClick={() => setModalVisible(true)}>
                 Review
             </button>
             <Modal visible={modalVisible} onVisibleChange={setModalVisible} title="Review Advert">

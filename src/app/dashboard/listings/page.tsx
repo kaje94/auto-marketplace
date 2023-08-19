@@ -1,25 +1,14 @@
 import { BreadCrumbs, Empty, Pagination } from "@/app/_components";
 import { ListingRowItem } from "./_components";
 import { api } from "@/utils/api";
-import { getFormattedCurrency, getListingTags, sortVehicleImages, thumbHashToDataUrl } from "@/utils/helpers";
+import { getFormattedCurrency, getListingTags, transformListingResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 
 const MyAds = async ({ searchParams }: SearchParams) => {
     const page = searchParams["page"] ?? "1";
     let listings = await api.getListings({ PageNumber: Number(page) });
-    listings = {
-        ...listings,
-        items: listings.items.map((item) => ({
-            ...item,
-            vehicle: {
-                ...item.vehicle,
-                vehicleImages: sortVehicleImages(
-                    item.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
-                ),
-            },
-        })),
-    };
+    listings = { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
 
     if (listings.totalCount > 0 && listings.items?.length === 0 && page !== "1") {
         const lastPageNumber = Math.ceil(listings.totalCount / 10);

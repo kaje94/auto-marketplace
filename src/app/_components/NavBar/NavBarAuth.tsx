@@ -19,12 +19,17 @@ export const NavBarAuth: FC<Props> = ({ authRequired }) => {
     }, [clientSession, authRequired]);
 
     useEffect(() => {
-        if (authRequired && clientSession && clientSession?.expires_at && clientSession?.expires_at * 1000 > Date.now()) {
-            const timeDifference = clientSession?.expires_at * 1000 - Date.now();
-            const timeOut = setTimeout(() => {
+        if (authRequired && clientSession) {
+            if (clientSession?.expires_at && clientSession?.expires_at * 1000 > Date.now()) {
+                const timeDifference = clientSession?.expires_at * 1000 - Date.now();
+                const timeOut = setTimeout(() => update(), timeDifference - 1000 * Math.floor(Math.random() * 31));
+                return () => clearTimeout(timeOut);
+            } else if (
+                clientSession.error === "RefreshAccessTokenError" ||
+                (clientSession?.expires_at && clientSession?.expires_at * 1000 < Date.now())
+            ) {
                 update();
-            }, timeDifference - 1000 * Math.floor(Math.random() * 31));
-            return () => clearTimeout(timeOut);
+            }
         }
     }, [update, clientSession, authRequired]);
 

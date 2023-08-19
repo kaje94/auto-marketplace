@@ -9,11 +9,10 @@ const config = {
     reactStrictMode: true,
     images: {
         domains: [
+            // todo: check and remove below
             "lh3.googleusercontent.com",
             `${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com`,
             `${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com`,
-            // todo: remove following
-            "cdn.britannica.com",
         ],
     },
     experimental: {

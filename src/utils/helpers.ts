@@ -1,7 +1,9 @@
-import { Vehicle, Location, ImageFile } from "./types";
+import { Vehicle, Location, ImageFile, ListingItem, VehicleCreate } from "./types";
 import * as ThumbHash from "thumbhash";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { deleteObjectFromS3, getPresignedS3Url } from "@/app/_actions/imageActions";
+import imageCompression from "browser-image-compression";
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
@@ -15,7 +17,7 @@ export const convertYearToDateString = (year: string | number): string => {
     // Assuming January 1st of the given year
     const date = new Date(yearNumber, 0, 1);
 
-    // Get the year, month, and day from the date object
+    // // Get the year, month, and day from the date object
     const yyyy = date.getFullYear().toString().padStart(4, "0");
     const mm = (date.getMonth() + 1).toString().padStart(2, "0");
     const dd = date.getDate().toString().padStart(2, "0");
@@ -24,6 +26,13 @@ export const convertYearToDateString = (year: string | number): string => {
     const formattedDate = `${yyyy}-${mm}-${dd}`;
 
     return formattedDate;
+};
+
+export const getListingTitleFromVehicle = (vehicle: Vehicle | VehicleCreate) => {
+    if (vehicle.trim) {
+        return `${vehicle.brand} ${vehicle.model} ${vehicle.trim} ${vehicle.yearOfManufacture}`;
+    }
+    return `${vehicle.brand} ${vehicle.model} ${vehicle.yearOfManufacture}`;
 };
 
 export const getYearFromDateString = (dateStr: string) => {
@@ -72,7 +81,7 @@ export const getListingTags = (location: Location, vehicle: Vehicle) => {
     return [location.city, unCamelCase(vehicle.condition), `${vehicle.millage} km`];
 };
 
-export const unCamelCase = (str: string) =>
+export const unCamelCase = (str: string = "") =>
     str.replace(/([A-Z])/g, " $1").replace(/^./, function (str) {
         return str.toUpperCase();
     });
@@ -95,6 +104,46 @@ export const thumbHashToDataUrl = (thumbHash?: string) => {
     } catch {
         console.error("Failed to generate placeholder URL for ", thumbHash);
     }
+};
+
+export const transformImagesToPost = async (files: ImageFile[]): Promise<ImageFile[]> => {
+    const images = await Promise.all(
+        files.map(async (item) => {
+            if (item.file && item.preview && !item.deleted) {
+                const compressedFile = await imageCompression(item.file as File, {
+                    fileType: "image/webp",
+                    initialQuality: 0.7,
+                    maxWidthOrHeight: 1920, // todo: also try 1280 size
+                    maxSizeMB: 0.5,
+                });
+                const hash = await previewUrlToHash(item.preview);
+                const { url, key, bucket, region } = await getPresignedS3Url(compressedFile.type, compressedFile?.length);
+                const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
+                return { color: hash, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
+            } else if (item.deleted && item.name && item.url) {
+                await deleteObjectFromS3(item.name);
+                return null;
+            }
+            return { color: item.color, isThumbnail: item.isThumbnail, name: item.name, url: item.url };
+        })
+    );
+    return images.filter((item) => !!item?.url) as ImageFile[];
+};
+
+export const transformListingResponse = (itemDetails: ListingItem): ListingItem => {
+    return {
+        ...itemDetails,
+        vehicle: {
+            ...itemDetails.vehicle,
+            vehicleImages: sortVehicleImages(
+                itemDetails.vehicle.vehicleImages.map((imageItem) => ({
+                    ...imageItem,
+                    blurDataURL: thumbHashToDataUrl(imageItem.color),
+                    deleted: false,
+                }))
+            ),
+        },
+    };
 };
 
 export const sortVehicleImages = (images: ImageFile[]) =>

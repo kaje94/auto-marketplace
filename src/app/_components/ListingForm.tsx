@@ -8,6 +8,11 @@ import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeLi
 
 interface Props {
     featureOptions?: VehicleFeature[];
+    submitButton?: {
+        text?: string;
+        mutatingText?: string;
+        disableIfCleanForm?: boolean;
+    };
     isLoading?: boolean;
     isMutating?: boolean;
     form?: UseFormReturn<CreateListingReq>;
@@ -15,8 +20,8 @@ interface Props {
 }
 
 export const ListingForm: FC<Props> = (props) => {
-    const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {} } = props;
-    const { handleSubmit, formState: { errors } = {}, register = () => {}, control } = form as UseFormReturn<CreateListingReq>;
+    const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {} } = props;
+    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control } = form as UseFormReturn<CreateListingReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -136,7 +141,7 @@ export const ListingForm: FC<Props> = (props) => {
                             required
                             {...register("description")}
                         />
-                        <Checkbox label="Has Ongoing Lease" checkboxClassNames="mt-2" loading={isLoading} />
+                        <Checkbox label="Has Ongoing Lease" checkboxClassNames="mt-2" loading={isLoading} {...register("hasOnGoingLease")} />
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
@@ -144,7 +149,6 @@ export const ListingForm: FC<Props> = (props) => {
                         <div className="stat-title">
                             Images <span className="text-error">*</span>
                         </div>
-                        {/* todo: Add asterisk */}
                         {isLoading ? (
                             <ImageUpload loading={isLoading} />
                         ) : (
@@ -166,14 +170,6 @@ export const ListingForm: FC<Props> = (props) => {
                         <div className="stat-title">Location Details</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <Input
-                                placeholder="Street Name"
-                                label="Street"
-                                loading={isLoading}
-                                error={errors?.location?.street?.message}
-                                required
-                                {...register("location.street")}
-                            />
-                            <Input
                                 placeholder="Colombo"
                                 label="City"
                                 loading={isLoading}
@@ -182,8 +178,8 @@ export const ListingForm: FC<Props> = (props) => {
                                 {...register("location.city")}
                             />
                             <Input
-                                placeholder="Colombo"
-                                label="State"
+                                placeholder="Western Province"
+                                label="State/Province"
                                 loading={isLoading}
                                 error={errors?.location?.state?.message}
                                 required
@@ -198,6 +194,16 @@ export const ListingForm: FC<Props> = (props) => {
                                 required
                                 {...register("location.postalCode")}
                             />
+                            <Select
+                                label="Country"
+                                disabled
+                                options={[{ label: "Sri Lanka", value: "LK" }]}
+                                placeholder="Select Country"
+                                loading={isLoading}
+                                error={(errors?.location?.country as FieldError)?.message}
+                                required
+                                {...register("location.country")}
+                            />
                         </div>
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
@@ -211,7 +217,7 @@ export const ListingForm: FC<Props> = (props) => {
                             required
                             {...register("price.amount")}
                         />
-                        <Checkbox label="Negotiable Price" checkboxClassNames="mt-2" loading={isLoading} />
+                        <Checkbox label="Negotiable Price" checkboxClassNames="mt-2" loading={isLoading} {...register("price.isPriceNegotiable")} />
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Features</div>
@@ -232,8 +238,12 @@ export const ListingForm: FC<Props> = (props) => {
                 </div>
             </div>
             <div className="mt-5 flex justify-end">
-                <button type="submit" className="btn-neutral btn-wide btn" disabled={isMutating || isLoading}>
-                    {isMutating ? "Creating..." : "Create"}
+                <button
+                    type="submit"
+                    className="btn-neutral btn-wide btn"
+                    disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
+                >
+                    {isMutating ? submitButton.mutatingText ?? "Loading..." : submitButton.text ?? "Submit"}
                 </button>
             </div>
         </form>

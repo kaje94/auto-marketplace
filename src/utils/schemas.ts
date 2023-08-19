@@ -10,7 +10,6 @@ export const PriceSchema = z.object({
 
 // todo: set from user's values as default
 export const LocationSchema = z.object({
-    street: z.string().min(1, "Street is required"),
     city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),
     country: z.string().min(1, "Country is required").default("LK"),
@@ -29,6 +28,7 @@ export const VehicleImageSchema = z.object({
     file: z.any().optional(),
     preview: z.string().optional(),
     blurDataURL: z.string().optional(),
+    deleted: z.boolean().default(false).optional(),
 });
 
 export const VehicleFeatureSchema = z.object({
@@ -61,17 +61,30 @@ export const VehicleSchema = z.object({
     engineCapacity: z.preprocess(Number, z.number().min(1, "Engine capacity needs to be a positive number")),
     vehicleImages: z
         .array(VehicleImageSchema)
-        .min(1, "At least one image is required")
-        .max(MaxVehicleImageCount, `Cannot have more than ${MaxVehicleImageCount} images`),
+        .refine((array) => array.filter((item) => !item.deleted).length > 0, {
+            message: `At least one image is required`,
+        })
+        .refine((array) => array.filter((item) => !item.deleted).length <= MaxVehicleImageCount, {
+            message: `Cannot have more than ${MaxVehicleImageCount} images`,
+        })
+        .refine((array) => array.some((item) => !item.deleted && item.isThumbnail), {
+            message: `One of the image needs to be marked as a thumbnail`,
+        }),
     features: z.array(VehicleFeatureSchema),
 });
+
+export const vehicleCreateSchema = VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.number()) }));
 
 export const CreateListingSchema = z.object({
     description: z.string().min(1, "Description is required").max(500, "Description cannot have more than 500 characters"),
     price: PriceSchema,
     hasOnGoingLease: z.boolean().default(false),
     location: LocationSchema,
-    vehicle: VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.number()) })),
+    vehicle: vehicleCreateSchema,
+});
+
+export const EditListingSchema = CreateListingSchema.extend({
+    listingId,
 });
 
 export const ReviewListingSchema = z.object({

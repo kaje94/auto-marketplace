@@ -1,12 +1,14 @@
 import { z } from "zod";
 import {
     CreateListingSchema,
+    EditListingSchema,
     LocationSchema,
     PriceSchema,
     ReviewListingSchema,
     VehicleFeatureSchema,
     VehicleImageSchema,
     VehicleSchema,
+    vehicleCreateSchema,
 } from "./schemas";
 import { ListingStatusTypes } from "./enum";
 
@@ -68,7 +70,11 @@ export type ImageFile = z.infer<typeof VehicleImageSchema>;
 
 export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;
 
+export type VehicleCreate = z.infer<typeof vehicleCreateSchema>;
+
 export type CreateListingReq = z.infer<typeof CreateListingSchema>;
+
+export type EditListingReq = z.infer<typeof EditListingSchema>;
 
 export type ListingItems = { items: ListingItem[] };
 

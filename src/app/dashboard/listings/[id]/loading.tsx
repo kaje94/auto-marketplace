@@ -8,7 +8,7 @@ const ItemDetailLoadingPage = async () => {
                 currentPageTitle="Loading..."
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Adverts", href: "/dashboard/listings" }]}
             />
-            <ListingDetailBanner loading />
+            <ListingDetailBanner loading={true} />
             <ListingDetails loading withinDashboard={true} />
         </>
     );

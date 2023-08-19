@@ -1,28 +1,12 @@
 import { BreadCrumbs, RelatedListings, ListingDetails } from "@/app/_components";
 import { api } from "@/utils/api";
-import { thumbHashToDataUrl, sortVehicleImages } from "@/utils/helpers";
+import { thumbHashToDataUrl, sortVehicleImages, transformListingResponse } from "@/utils/helpers";
 
 const ItemDetailPage = async ({ params }: { params: { id: string } }) => {
     // use suspense instead for getRelatedListings
     let [itemDetails, relatedListings] = await Promise.all([api.getPostedListingItem(params.id), api.getRelatedListings(params.id)]);
-    itemDetails = {
-        ...itemDetails,
-        vehicle: {
-            ...itemDetails.vehicle,
-            vehicleImages: sortVehicleImages(
-                itemDetails.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
-            ),
-        },
-    };
-    relatedListings.slice(0, 4).map((item) => ({
-        ...item,
-        vehicle: {
-            ...item.vehicle,
-            vehicleImages: sortVehicleImages(
-                item.vehicle.vehicleImages.map((imageItem) => ({ ...imageItem, blurDataURL: thumbHashToDataUrl(imageItem.color) }))
-            ),
-        },
-    }));
+    itemDetails = transformListingResponse(itemDetails);
+    relatedListings.slice(0, 4).map((item) => transformListingResponse(item));
 
     return (
         <div className="my-10">

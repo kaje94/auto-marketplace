@@ -5,7 +5,7 @@ const MyAdsErrorPage = (props: { error: Error; reset: () => void }) => {
     return (
         <>
             <BreadCrumbs
-                currentPageTitle="item"
+                currentPageTitle="Advert Item"
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Adverts", href: "/dashboard/listings" }]}
             />
             <ErrorComponent {...props} />

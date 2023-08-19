@@ -18,6 +18,7 @@ interface Props {
     loading?: boolean;
     status?: ListingStatusTypes;
 }
+// todo: fix hydration issues when status is posted
 export const ListingRowItem: FC<Props> = (props) => {
     const { title, price, description, tags = [], status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading = false } = props;
     const myAddItemContent = (
@@ -83,9 +84,11 @@ export const ListingRowItem: FC<Props> = (props) => {
                     <div className="divider my-0" />
                     {status === ListingStatusTypes.Posted && (
                         <>
-                            <button className="btn-ghost btn-sm btn md:w-full" disabled={loading}>
-                                <EditIcon /> <span className="ml-2">Edit</span>
-                            </button>
+                            <Link href={`/dashboard/listings/${id}/edit`}>
+                                <button className="btn-ghost btn-sm btn md:w-full" disabled={loading}>
+                                    <EditIcon /> <span className="ml-2">Edit</span>
+                                </button>
+                            </Link>
                             <div className="divider my-0" />
                         </>
                     )}
@@ -98,7 +101,7 @@ export const ListingRowItem: FC<Props> = (props) => {
                             <div className="divider my-0" />
                         </>
                     )}
-                    <DeleteRowListingItem loading={loading} listingId={id} />
+                    <DeleteRowListingItem loading={loading} listingId={id} listingTitle={title} />
                 </div>
             </div>
         </>
