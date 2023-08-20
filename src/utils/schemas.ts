@@ -92,3 +92,19 @@ export const ReviewListingSchema = z.object({
     status: z.nativeEnum(ListingStatusTypes),
     reviewComment: z.string().min(1, "Review comment is required"),
 });
+
+export const DashboardListingFilterSchema = z.object({
+    Title: z.string().optional(),
+    StartCreatedDate: z.string().optional(),
+    EndCreatedDate: z.string().optional(),
+    MinPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal("")]).optional(),
+    MaxPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal("")]).optional(),
+    City: z.string().optional(),
+    Brand: z.string().optional(),
+    Model: z.string().optional(),
+    VehicleType: z.union([z.nativeEnum(VehicleTypes), z.literal("")]).optional(),
+    FuelType: z.union([z.nativeEnum(FuelTypes), z.literal("")]).optional(),
+    Condition: z.union([z.nativeEnum(VehicleConditionTypes), z.literal("")]).optional(),
+    Transmission: z.union([z.nativeEnum(TransmissionTypes), z.literal("")]).optional(),
+    ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
+});

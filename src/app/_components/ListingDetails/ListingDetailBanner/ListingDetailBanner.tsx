@@ -49,7 +49,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingStatus, session
                         <ReviewButton listingId={listingId} listingName={listingName} />
                     )}
                     {listingStatus === ListingStatusTypes.Declined && (
-                        <Link href={`/dashboard/listings/${listingId}/edit`}>
+                        <Link href={`/dashboard/listings/edit/${listingId}`}>
                             <button className="btn-ghost btn-sm btn">Edit</button>
                         </Link>
                     )}

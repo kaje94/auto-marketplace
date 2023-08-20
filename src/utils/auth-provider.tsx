@@ -7,5 +7,10 @@ type Props = {
 };
 
 export const NextAuthProvider = ({ children }: Props) => {
-    return <SessionProvider>{children}</SessionProvider>;
+    // todo: fix the time after api changes
+    return (
+        <SessionProvider refetchInterval={4 * 60} refetchOnWindowFocus={false} refetchWhenOffline={false}>
+            {children}
+        </SessionProvider>
+    );
 };

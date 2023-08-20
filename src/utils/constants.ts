@@ -34,3 +34,8 @@ export const FuelTypeList: LabelValue[] = Object.keys(FuelTypes).map((key) => ({
     value: key,
     label: (FuelTypes as KeyValue)[key]!,
 }));
+
+export const ListingTypeList: LabelValue[] = Object.keys(ListingStatusTypes).map((key) => ({
+    value: key,
+    label: (ListingStatusTypes as KeyValue)[key]!,
+}));

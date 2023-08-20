@@ -22,7 +22,7 @@ export const ListingRowItemMenu: FC<Props> = ({ listingId, listingTitle }) => {
                     <MenuIcon className="cursor-pointer opacity-30 transition-all duration-200 hover:opacity-75 hover:shadow" />
                 </label>
                 <ul tabIndex={0} className="dropdown-content menu rounded-box z-[1] -mr-1 mt-3 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg">
-                    <MenuItem icon={<EditIcon height={18} />} link={`/dashboard/listings/${listingId}/edit`} label="Edit" />
+                    <MenuItem icon={<EditIcon height={18} />} link={`/dashboard/listings/edit/${listingId}`} label="Edit" />
                     <MenuItem
                         icon={<TrashIcon height={18} />}
                         onClick={() => setDeleteModalVisible(true)}

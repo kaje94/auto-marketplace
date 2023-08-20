@@ -40,7 +40,7 @@ export const DashboardSideBar: FC = () => {
                     href="/dashboard/listings"
                     label="My Adverts"
                     activePaths={["/dashboard/listings", "/dashboard/new-listing"]}
-                    regexExp={new RegExp("^/dashboard/listings/\\d+")}
+                    regexExp={new RegExp("^/dashboard/listings/(.*?)")}
                     Icon={AdvertIcon}
                 />
                 <NavBarItem href="/dashboard/preferences" label="Preferences" activePaths={["/dashboard/preferences"]} Icon={SettingsIcon} />

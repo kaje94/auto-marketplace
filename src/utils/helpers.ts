@@ -4,6 +4,7 @@ import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { deleteObjectFromS3, getPresignedS3Url } from "@/app/_actions/imageActions";
 import imageCompression from "browser-image-compression";
+import { ReadonlyURLSearchParams } from "next/navigation";
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
@@ -185,3 +186,13 @@ export const getLocationString = (location: Location) => `${location?.city}, ${l
 export function getRandomItem<T>(items: T[]): T | undefined {
     return items[Math.floor(Math.random() * items.length)];
 }
+
+export const searchParamsToObject = (searchParams: ReadonlyURLSearchParams): Record<string, string> => {
+    const searchObject: Record<string, string> = {};
+
+    for (const [key, value] of searchParams.entries()) {
+        searchObject[key] = value;
+    }
+
+    return searchObject;
+};

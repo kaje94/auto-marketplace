@@ -7,6 +7,7 @@ import { ComponentProps, forwardRef } from "react";
 interface Props extends ComponentProps<"select"> {
     label?: string;
     selectClassName?: string;
+    labelClassName?: string;
     rootClassName?: string;
     error?: string;
     options?: LabelValue[];
@@ -21,6 +22,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
         error,
         options = [],
         selectClassName,
+        labelClassName,
         rootClassName,
         placeholder = "Pick One",
         selectablePlaceholder,
@@ -31,7 +33,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
     return (
         <div className={clsx("form-control w-full", rootClassName)}>
             {label && (
-                <label className="label">
+                <label className={clsx("label", labelClassName)}>
                     <span className="label-text">
                         {label} {required && <span className="text-error">*</span>}
                     </span>
@@ -52,11 +54,16 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
             <select
                 disabled={loading}
                 ref={ref}
-                className={clsx("select-bordered select font-normal", error && "select-error", loading && "animate-pulse", selectClassName)}
+                className={clsx(
+                    "select-bordered select bg-transparent font-normal",
+                    error && "select-error",
+                    loading && "animate-pulse",
+                    selectClassName
+                )}
                 {...rest}
             >
                 {!rest.value && selectablePlaceholder && (
-                    <option disabled={!selectablePlaceholder} value={placeholder}>
+                    <option disabled={!selectablePlaceholder} value={""}>
                         {placeholder}
                     </option>
                 )}

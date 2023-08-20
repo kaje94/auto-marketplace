@@ -6,16 +6,17 @@ import { AlertCircleIcon } from "@/icons";
 interface Props extends ComponentProps<"input"> {
     label?: string;
     inputClassNames?: string;
+    labelClassNames?: string;
     error?: string;
     loading?: boolean;
     required?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-    const { label, error, inputClassNames, loading, required, ...rest } = props;
+    const { label, error, inputClassNames, labelClassNames, loading, required, ...rest } = props;
     return (
         <div className="form-control w-full">
-            <label className="label">
+            <label className={clsx("label", labelClassNames)}>
                 <span className="label-text">
                     {label} {required && <span className="text-error">*</span>}
                 </span>
@@ -34,7 +35,7 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
             </label>
             <input
                 ref={ref}
-                className={clsx("input-bordered input w-full", error && "input-error", loading && "animate-pulse", inputClassNames)}
+                className={clsx("input-bordered input w-full bg-transparent", error && "input-error", loading && "animate-pulse", inputClassNames)}
                 disabled={loading}
                 {...rest}
             />

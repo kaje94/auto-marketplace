@@ -8,6 +8,7 @@ import {
     ListingItem,
     ReviewListingReq,
     EditListingReq,
+    DashboardListFilterReq,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
@@ -87,7 +88,8 @@ export const api = {
     getRelatedListings: (id: string | number) => fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`),
     postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, number>("/v1/Listings", JSON.stringify(body)),
     putListing: (body: EditListingReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Listings/${body.listingId}`, JSON.stringify(body)),
-    getListings: (req?: PaginatedRequest) => fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`),
+    getListings: (req?: PaginatedRequest & DashboardListFilterReq) =>
+        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`),
     getListingsItem: (id: string | number) => fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`),
     deleteListing: (listingId: number) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),

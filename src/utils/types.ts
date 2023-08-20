@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
     CreateListingSchema,
+    DashboardListingFilterSchema,
     EditListingSchema,
     LocationSchema,
     PriceSchema,
@@ -81,3 +82,5 @@ export type ListingItems = { items: ListingItem[] };
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };
 
 export type ReviewListingReq = z.infer<typeof ReviewListingSchema>;
+
+export type DashboardListFilterReq = z.infer<typeof DashboardListingFilterSchema>;

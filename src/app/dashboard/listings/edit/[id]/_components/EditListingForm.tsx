@@ -54,7 +54,7 @@ export const EditListingForm = (props: Props) => {
         },
         {
             onSuccess: (_, req) => {
-                if (window?.location?.pathname === `/dashboard/listings/${req.listingId}/edit`) {
+                if (window?.location?.pathname === `/dashboard/listings/edit/${req.listingId}`) {
                     router.replace(`/dashboard/listings/${req.listingId}`);
                 }
             },

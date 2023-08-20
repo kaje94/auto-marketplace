@@ -10,6 +10,7 @@ createdAt field is missing in listing response
 milage needs a measurement unit
 decide which lists to take to backend
 vehicle description needs to be at least 1000 characters
+filter for start end dates in dashboard listing is not working
 
 //
 Add a plus button when no ads created by user
