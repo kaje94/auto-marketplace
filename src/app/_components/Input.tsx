@@ -3,7 +3,7 @@ import { ComponentProps, forwardRef } from "react";
 import clsx from "clsx";
 import { AlertCircleIcon } from "@/icons";
 
-interface Props extends ComponentProps<"input"> {
+export interface Props extends ComponentProps<"input"> {
     label?: string;
     inputClassNames?: string;
     labelClassNames?: string;

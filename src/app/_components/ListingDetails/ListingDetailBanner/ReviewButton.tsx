@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
 import { ReviewListingSchema } from "@/utils/schemas";
-import { ReviewListingReq } from "@/utils/types";
+import { ListingIdType, ReviewListingReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Select, TextArea, ModalFooter, Modal } from "@/app/_components";
@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { reviewListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
 
-export const ReviewButton = ({ listingId, listingName }: { listingId: number; listingName?: string }) => {
+export const ReviewButton = ({ listingId, listingName }: { listingId: ListingIdType; listingName?: string }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const toastId = useRef<string>();
 
@@ -21,7 +21,7 @@ export const ReviewButton = ({ listingId, listingName }: { listingId: number; li
         mode: "all",
     });
 
-    const { mutate } = useMutation((reqParams: ReviewListingReq) => reviewListingAction(reqParams), {
+    const { mutate, isLoading } = useMutation((reqParams: ReviewListingReq) => reviewListingAction(reqParams), {
         onMutate: () => {
             setModalVisible(false);
             toastId.current = toast.loading(`Submitting review for advert ${listingName}...`);
@@ -64,6 +64,7 @@ export const ReviewButton = ({ listingId, listingName }: { listingId: number; li
                         primaryButton={{ text: "Submit Review" }}
                         onVisibleChange={setModalVisible}
                         onSubmit={handleSubmit((values) => mutate(values))}
+                        loading={isLoading}
                     />
                 </form>
             </Modal>

@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className={montserratFont.className}>
-                <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 } }} />
+                <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 }, duration: 5000 }} />
                 <ReactQueryProvider>
                     <NextAuthProvider>{children}</NextAuthProvider>
                 </ReactQueryProvider>

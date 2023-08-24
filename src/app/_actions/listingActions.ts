@@ -1,7 +1,7 @@
 "use server";
 import { api } from "@/utils/api";
 import { ListingStatusTypes } from "@/utils/enum";
-import { CreateListingReq, EditListingReq, ReviewListingReq } from "@/utils/types";
+import { CreateListingReq, EditListingReq, ListingIdType, ReportListingReq, ReviewListingReq } from "@/utils/types";
 import { revalidatePath } from "next/cache";
 
 export const reviewListingAction = async (req: ReviewListingReq) => {
@@ -27,9 +27,17 @@ export const editListingAction = async (reqBody: EditListingReq) => {
     revalidatePath(`/search/${reqBody.listingId}`);
 };
 
-export const deleteListingAction = async (listingId: number) => {
+export const deleteListingAction = async (listingId: ListingIdType) => {
     await api.deleteListing(listingId);
     revalidatePath(`/dashboard/listings/${listingId}`);
     revalidatePath("/dashboard/listings");
     revalidatePath(`/search/${listingId}`);
+};
+
+export const incrementViews = async (listingId: ListingIdType) => {
+    await api.incrementViews(listingId);
+};
+
+export const reportListingAction = async (reqBody: ReportListingReq) => {
+    await api.reportListing(reqBody);
 };

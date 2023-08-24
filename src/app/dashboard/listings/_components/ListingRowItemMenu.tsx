@@ -2,12 +2,13 @@
 import { DeleteListingItemModal } from "@/app/_components/DeleteListingItemModal";
 import { useMounted } from "@/app/_hooks";
 import { EditIcon, MenuIcon, TrashIcon } from "@/icons";
+import { ListingIdType } from "@/utils/types";
 import clsx from "clsx";
 import Link from "next/link";
 import { FC, ReactNode, useState } from "react";
 
 interface Props {
-    listingId?: number;
+    listingId?: ListingIdType;
     listingTitle?: string;
 }
 

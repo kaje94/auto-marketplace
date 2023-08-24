@@ -2,8 +2,9 @@ import { api } from "@/utils/api";
 import { EditListingForm } from "./_components/EditListingForm";
 import { transformListingResponse } from "@/utils/helpers";
 import { BreadCrumbs } from "@/app/_components";
+import { ListingIdType } from "@/utils/types";
 
-const EditListingPage = async ({ params }: { params: { id: string } }) => {
+const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) => {
     let [itemDetails, features] = await Promise.all([api.getListingsItem(params.id), api.getFeatureList()]);
     itemDetails = transformListingResponse(itemDetails);
 

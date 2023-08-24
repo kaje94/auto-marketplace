@@ -4,7 +4,7 @@ import { LabelValue } from "@/utils/types";
 import clsx from "clsx";
 import { ComponentProps, forwardRef } from "react";
 
-interface Props extends ComponentProps<"select"> {
+export interface Props extends ComponentProps<"select"> {
     label?: string;
     selectClassName?: string;
     labelClassName?: string;

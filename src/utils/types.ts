@@ -3,8 +3,10 @@ import {
     CreateListingSchema,
     DashboardListingFilterSchema,
     EditListingSchema,
+    ListingIdField,
     LocationSchema,
     PriceSchema,
+    ReportListingSchema,
     ReviewListingSchema,
     VehicleFeatureSchema,
     VehicleImageSchema,
@@ -79,8 +81,13 @@ export type EditListingReq = z.infer<typeof EditListingSchema>;
 
 export type ListingItems = { items: ListingItem[] };
 
+// todo: use this for all other instances as well
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };
 
 export type ReviewListingReq = z.infer<typeof ReviewListingSchema>;
 
+export type ReportListingReq = z.infer<typeof ReportListingSchema>;
+
 export type DashboardListFilterReq = z.infer<typeof DashboardListingFilterSchema>;
+
+export type ListingIdType = z.infer<typeof ListingIdField>;

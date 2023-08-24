@@ -29,7 +29,7 @@ export const ListingRowItem: FC<Props> = (props) => {
                     <Image
                         src={imageUrl ?? ""}
                         alt={title ?? ""}
-                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
+                        className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
                         width={450}
                         placeholder={blurDataURL ? "blur" : "empty"}
@@ -37,14 +37,14 @@ export const ListingRowItem: FC<Props> = (props) => {
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
-                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{price}</div>
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg absolute scale-110 duration-300">{price}</div>
                     </div>
                 </figure>
             )}
 
             <div className="col-span-12 flex flex-col gap-0.5 md:col-span-7 xl:col-span-9">
                 {loading ? (
-                    <div className={clsx("w- h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72", "w-80", "w-96"]))} />
+                    <div className={clsx("h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72"]))} />
                 ) : (
                     <div className="flex gap-2">
                         <div className="flex flex-1 flex-wrap items-center gap-0.5 md:gap-2 xl:gap-4">
@@ -76,7 +76,7 @@ export const ListingRowItem: FC<Props> = (props) => {
                 )}
 
                 {loading ? (
-                    <div className={clsx("h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72", "w-80", "w-96"]))} />
+                    <div className={clsx("h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72"]))} />
                 ) : (
                     <div className="text-base">
                         Location: <span className="font-medium">{location}</span>
@@ -98,7 +98,7 @@ export const ListingRowItem: FC<Props> = (props) => {
 
     if (loading) {
         return (
-            <div className="card mb-3 grid animate-pulse grid-cols-12 gap-0.5 bg-base-100 p-3 shadow md:gap-2 md:p-4 xl:gap-4">
+            <div className="card mb-3 grid animate-pulse grid-cols-12 gap-0.5 overflow-x-hidden bg-base-100 p-3 shadow md:gap-2 md:p-4 xl:gap-4">
                 {myAddItemContent}
             </div>
         );

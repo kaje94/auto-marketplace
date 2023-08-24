@@ -9,10 +9,14 @@ import {
     ReviewListingReq,
     EditListingReq,
     DashboardListFilterReq,
+    ListingIdType,
+    ReportListingReq,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
 import { getServerSession } from "next-auth/next";
+
+const defaultReqHeaders = { "Content-Type": "application/json" };
 
 const extractBadRequestError = (errors: { [key: string]: string[] }): string | void => {
     try {
@@ -30,7 +34,7 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
         const configWithAuth = await getConfigWithAuth(config);
         response = await fetch(`${env.API_BASE_URL}${endpoint}`, configWithAuth);
     } else {
-        response = await fetch(`${env.API_BASE_URL}${endpoint}`, config);
+        response = await fetch(`${env.API_BASE_URL}${endpoint}`, { ...config, headers: { ...config.headers, ...defaultReqHeaders } });
     }
     if (response.ok) {
         try {
@@ -65,11 +69,13 @@ const getConfigWithAuth = async (config: RequestInit = {}): Promise<RequestInit>
     if (!session) {
         throw new Error("Session not found");
     }
-    return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, "Content-Type": "application/json", ...config.headers } };
+    return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, ...defaultReqHeaders, ...config.headers } };
 };
 
 const fetchApi = {
     get: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchRequest<TResponse>(endpoint, config, false),
+    post: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody, config: RequestInit = {}) =>
+        fetchRequest<TResponse>(endpoint, { method: "POST", body, ...config }, false),
     protectedGet: <TResponse>(endpoint: string, config: RequestInit = {}) => fetchRequest<TResponse>(endpoint, config, true),
     protectedPost: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody, config: RequestInit = {}) =>
         fetchRequest<TResponse>(endpoint, { method: "POST", body, ...config }, true),
@@ -84,13 +90,16 @@ export const api = {
     // { next: { revalidate: 0 } } for disabling cache
     getFeatureList: () => fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features"),
     getPostedListings: () => fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted", { next: { revalidate: 0 } }),
-    getPostedListingItem: (id: string | number) => fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`),
-    getRelatedListings: (id: string | number) => fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`),
-    postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, number>("/v1/Listings", JSON.stringify(body)),
+    getPostedListingItem: (id: ListingIdType) => fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`),
+    getRelatedListings: (id: ListingIdType) => fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`),
+    postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, ListingIdType>("/v1/Listings", JSON.stringify(body)),
     putListing: (body: EditListingReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Listings/${body.listingId}`, JSON.stringify(body)),
     getListings: (req?: PaginatedRequest & DashboardListFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`),
-    getListingsItem: (id: string | number) => fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`),
-    deleteListing: (listingId: number) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
+    getListingsItem: (id: ListingIdType) => fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`),
+    deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
+    incrementViews: (listingId: ListingIdType) =>
+        fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: 0 } }),
+    reportListing: (body: ReportListingReq) => fetchApi.post<BodyInit, void>(`/v1/Listings/${body.listingId}/report`, JSON.stringify(body)),
 };

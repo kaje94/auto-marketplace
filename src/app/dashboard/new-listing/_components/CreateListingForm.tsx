@@ -11,6 +11,10 @@ import toast from "react-hot-toast";
 import { useRef } from "react";
 import { createListingAction } from "@/app/_actions/listingActions";
 
+// todo
+// separate out into different files in order to reduce the cost of imports
+// enable bundle size library while doing so
+
 interface Props {
     features: VehicleFeature[];
 }

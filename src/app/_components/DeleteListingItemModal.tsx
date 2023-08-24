@@ -4,9 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ListingIdType } from "@/utils/types";
 
 interface Props {
-    listingId?: number;
+    listingId?: ListingIdType;
     listingTitle?: string;
     visible?: boolean;
     setVisible?: (visible: boolean) => void;

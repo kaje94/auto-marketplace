@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FuelTypes, ListingStatusTypes, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
+import { FuelTypes, ListingReportReason, ListingStatusTypes, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
 import { MaxVehicleImageCount } from "./constants";
 
 export const PriceSchema = z.object({
@@ -44,10 +44,10 @@ const YearSchema = z.string().refine(
     { message: `Year must be between 1960 and ${new Date().getFullYear()}` }
 );
 
-const listingId = z.number();
+export const ListingIdField = z.number();
 
 export const VehicleSchema = z.object({
-    id: listingId.optional(),
+    id: ListingIdField.optional(),
     type: z.nativeEnum(VehicleTypes, { invalid_type_error: "Invalid Vehicle Type" }),
     brand: z.string().min(1, "Brand is required"), // todo: get from api
     model: z.string().min(1, "Model is required"), // todo: get from api
@@ -84,13 +84,13 @@ export const CreateListingSchema = z.object({
 });
 
 export const EditListingSchema = CreateListingSchema.extend({
-    listingId,
+    listingId: ListingIdField,
 });
 
 export const ReviewListingSchema = z.object({
-    listingId: listingId,
+    listingId: ListingIdField,
     status: z.nativeEnum(ListingStatusTypes),
-    reviewComment: z.string().min(1, "Review comment is required"),
+    reviewComment: z.string(),
 });
 
 export const DashboardListingFilterSchema = z.object({
@@ -107,4 +107,11 @@ export const DashboardListingFilterSchema = z.object({
     Condition: z.union([z.nativeEnum(VehicleConditionTypes), z.literal("")]).optional(),
     Transmission: z.union([z.nativeEnum(TransmissionTypes), z.literal("")]).optional(),
     ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
+});
+
+export const ReportListingSchema = z.object({
+    listingId: ListingIdField,
+    reason: z.nativeEnum(ListingReportReason),
+    emailAddress: z.string().email(),
+    message: z.string().min(1, "A message is required"),
 });

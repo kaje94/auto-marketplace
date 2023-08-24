@@ -48,3 +48,11 @@ export enum FuelTypes {
     Electric = "Electric",
     Other = "Other",
 }
+
+export enum ListingReportReason {
+    AlreadySold = "AlreadySold",
+    Fraud = "Fraud",
+    Duplicate = "Duplicate",
+    Spam = "Spam",
+    WrongCategory = "WrongCategory",
+}

@@ -25,3 +25,4 @@ add react memo for all components after everything!
 use daisyui Indicators instead of badges in my ads maybe
 use use-mutation like function yourself instead of using react-query
 replace clsx with tailwind-merge+clsx: https://www.youtube.com/watch?v=re2JFITR7TI
+check max length of all strings in schema file

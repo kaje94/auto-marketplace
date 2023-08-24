@@ -1,4 +1,4 @@
-import { VehicleTypes, VehicleConditionTypes, TransmissionTypes, FuelTypes, ListingStatusTypes } from "./enum";
+import { VehicleTypes, VehicleConditionTypes, TransmissionTypes, FuelTypes, ListingStatusTypes, ListingReportReason } from "./enum";
 import { LabelValue, KeyValue } from "./types";
 
 export const MaxVehicleImageCount = 10;
@@ -38,4 +38,9 @@ export const FuelTypeList: LabelValue[] = Object.keys(FuelTypes).map((key) => ({
 export const ListingTypeList: LabelValue[] = Object.keys(ListingStatusTypes).map((key) => ({
     value: key,
     label: (ListingStatusTypes as KeyValue)[key]!,
+}));
+
+export const ListingReportReasonList: LabelValue[] = Object.keys(ListingReportReason).map((key) => ({
+    value: key,
+    label: (ListingReportReason as KeyValue)[key]!,
 }));

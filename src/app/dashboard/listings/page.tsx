@@ -4,7 +4,7 @@ import { api } from "@/utils/api";
 import { getFormattedCurrency, getListingTags, getLocationString, transformListingResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
-import { DashboardListFilter } from "./_components/DashboardListFilter";
+import { DashboardListHeader } from "./_components/DashboardListHeader";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
 
@@ -13,6 +13,7 @@ const MyAds = async ({ searchParams }: SearchParams) => {
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
     let listings = await api.getListings({ PageNumber: Number(page), ...parsedSearchParams });
     listings = { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
+    const hasSearchParams = Object.keys(DashboardListingFilterSchema.parse(parsedSearchParams)).length > 0;
 
     if (listings.totalCount > 0 && listings.items?.length === 0 && page !== "1") {
         const lastPageNumber = Math.ceil(listings.totalCount / 10);
@@ -24,11 +25,18 @@ const MyAds = async ({ searchParams }: SearchParams) => {
         <>
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="My Adverts" />
 
-            <DashboardListFilter />
+            <DashboardListHeader itemCount={listings.totalCount} />
 
             <div className="grid gap-1 xl:gap-2">
-                {listings.items.length === 0 && (
-                    <Empty text="You have not created any adverts yet. Get started by creating your first advert" buttonText="Create new Advert" />
+                {listings.totalCount === 0 && (
+                    <Empty
+                        text={
+                            hasSearchParams
+                                ? "No adverts to display. Please adjust your search filters."
+                                : "You have not created any adverts yet. Get started by creating your first advert"
+                        }
+                        buttonText="Create new Advert"
+                    />
                 )}
                 {listings.items?.map((item) => (
                     <ListingRowItem

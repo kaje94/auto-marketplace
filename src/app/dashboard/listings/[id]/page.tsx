@@ -4,9 +4,10 @@ import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { ListingStatusTypes } from "@/utils/enum";
 import { transformListingResponse } from "@/utils/helpers";
+import { ListingIdType } from "@/utils/types";
 import { getServerSession } from "next-auth";
 
-const ItemDetailPage = async ({ params }: { params: { id: string } }) => {
+const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => {
     let [itemDetails, session] = await Promise.all([api.getListingsItem(params.id), getServerSession(authOptions)]);
     itemDetails = transformListingResponse(itemDetails);
 
