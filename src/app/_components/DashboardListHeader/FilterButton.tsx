@@ -6,11 +6,10 @@ interface Props {
     loading: boolean;
     hasSearchParams: boolean;
     dropdownOpen: boolean;
-    loadingPage: boolean;
     handleFilterOpen: (event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => void;
 }
 
-export const FilterButton: FC<Props> = ({ loading, hasSearchParams, dropdownOpen, loadingPage, handleFilterOpen }) => {
+export const FilterButton: FC<Props> = ({ loading, hasSearchParams, dropdownOpen, handleFilterOpen }) => {
     return (
         <label className="flex  flex-row items-center gap-2" onClick={handleFilterOpen}>
             {hasSearchParams && <div className={clsx("badge badge-outline badge-md", !loading && "cursor-pointer")}>Filters Applied</div>}
@@ -23,7 +22,6 @@ export const FilterButton: FC<Props> = ({ loading, hasSearchParams, dropdownOpen
                         "btn-ghost": !hasSearchParams,
                         "btn-neutral": hasSearchParams,
                         "btn-active": dropdownOpen,
-                        "animate-pulse": loadingPage,
                     })}
                 >
                     <FilterIcon />

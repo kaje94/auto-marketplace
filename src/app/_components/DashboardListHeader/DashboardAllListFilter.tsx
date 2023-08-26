@@ -30,11 +30,7 @@ const defaultFilter: DashboardListFilterReq = {
     StartCreatedDate: "",
 };
 
-interface Props {
-    loadingPage?: boolean;
-}
-
-export const DashboardAllListFilter: FC<Props> = ({ loadingPage = false }) => {
+export const DashboardAllListFilter: FC = () => {
     const searchParams = useSearchParams();
     const searchParamsObj = searchParamsToObject(searchParams);
     const hasSearchParams = Object.keys(DashboardListingFilterSchema.parse(searchParamsObj)).length > 0;
@@ -46,20 +42,13 @@ export const DashboardAllListFilter: FC<Props> = ({ loadingPage = false }) => {
     });
 
     const { loading, dropdownOpen, setDropdownOpen, handleFilterOpen, onApplyFilterClick, onResetClick } = useFilter({
-        loadingPage,
         reset,
         defaultFilter,
     });
 
     return (
         <span className={clsx("dropdown-end dropdown flex justify-end ", dropdownOpen && "dropdown-open")}>
-            <FilterButton
-                loading={loading}
-                dropdownOpen={dropdownOpen}
-                handleFilterOpen={handleFilterOpen}
-                hasSearchParams={hasSearchParams}
-                loadingPage={loadingPage}
-            />
+            <FilterButton loading={loading} dropdownOpen={dropdownOpen} handleFilterOpen={handleFilterOpen} hasSearchParams={hasSearchParams} />
             <ClickAwayListener onClickAway={() => setDropdownOpen(false)}>
                 <ul className="dropdown-content menu rounded-box z-[1] -mr-1 mt-7 w-max !overflow-visible rounded-tr-none border-2 border-base-300 bg-base-200 p-0 shadow-lg md:max-w-md">
                     <form className="flex flex-col">

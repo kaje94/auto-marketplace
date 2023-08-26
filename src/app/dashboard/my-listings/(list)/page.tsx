@@ -7,6 +7,7 @@ import { MyListingsFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
+import { DashboardMyListFilter } from "@/app/_components/DashboardListHeader/DashboardMyListFilter";
 
 const MyAds = async ({ searchParams }: SearchParams) => {
     const page = searchParams["PageNumber"] ?? "1";
@@ -26,7 +27,7 @@ const MyAds = async ({ searchParams }: SearchParams) => {
         <>
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="My Adverts" />
 
-            <DashboardListHeader itemCount={listings.totalCount} />
+            <DashboardListHeader itemCount={listings.totalCount} filter={<DashboardMyListFilter />} />
 
             <div className="grid gap-1 xl:gap-2">
                 {listings.totalCount === 0 && (

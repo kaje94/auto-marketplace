@@ -5,6 +5,7 @@ import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
+import { DashboardAllListFilter } from "@/app/_components/DashboardListHeader/DashboardAllListFilter";
 
 const AllAds = async ({ searchParams }: SearchParams) => {
     const page = searchParams["PageNumber"] ?? "1";
@@ -23,7 +24,7 @@ const AllAds = async ({ searchParams }: SearchParams) => {
         <>
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="All Adverts" />
 
-            <DashboardListHeader itemCount={listings.totalCount} allAdsFilter />
+            <DashboardListHeader itemCount={listings.totalCount} filter={<DashboardAllListFilter />} />
 
             <div className="grid gap-1 xl:gap-2">
                 {listings.totalCount === 0 && (

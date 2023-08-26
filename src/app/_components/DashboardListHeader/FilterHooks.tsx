@@ -6,15 +6,7 @@ import { useState, useEffect } from "react";
 import { UseFormReset } from "react-hook-form";
 import qs from "query-string";
 
-export const useFilter = ({
-    loadingPage,
-    reset,
-    defaultFilter,
-}: {
-    loadingPage?: boolean;
-    reset: UseFormReset<{}>;
-    defaultFilter: MyListingsFilterReq | DashboardListFilterReq;
-}) => {
+export const useFilter = ({ reset, defaultFilter }: { reset: UseFormReset<{}>; defaultFilter: MyListingsFilterReq | DashboardListFilterReq }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -44,7 +36,7 @@ export const useFilter = ({
 
     const handleFilterOpen = (event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
         event.preventDefault();
-        if (!loading && !loadingPage) {
+        if (!loading) {
             reset({ ...defaultFilter, ...searchParamsObj });
             setDropdownOpen(true);
         }
