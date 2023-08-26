@@ -12,7 +12,7 @@ interface Props {
     listingTitle?: string;
 }
 
-export const ListingRowItemMenu: FC<Props> = ({ listingId, listingTitle }) => {
+export const DashboardListingItemMenu: FC<Props> = ({ listingId, listingTitle }) => {
     const mounted = useMounted();
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 

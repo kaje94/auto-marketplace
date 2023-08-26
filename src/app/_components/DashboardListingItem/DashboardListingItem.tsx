@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { getRandomItem, unCamelCase } from "@/utils/helpers";
 import { ListingStatusTypes } from "@/utils/enum";
-import { ListingRowItemMenu } from "./ListingRowItemMenu";
+import { DashboardListingItemMenu } from "./DashboardListingItemMenu";
 
 interface Props {
     id?: number;
@@ -18,7 +18,7 @@ interface Props {
     status?: ListingStatusTypes;
 }
 
-export const ListingRowItem: FC<Props> = (props) => {
+export const DashboardListingItem: FC<Props> = (props) => {
     const { title, price, description, location, status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading } = props;
     const myAddItemContent = (
         <>
@@ -63,7 +63,7 @@ export const ListingRowItem: FC<Props> = (props) => {
                                 {unCamelCase(status)}
                             </span>
                         </div>
-                        <ListingRowItemMenu listingId={id} listingTitle={title} />
+                        <DashboardListingItemMenu listingId={id} listingTitle={title} />
                     </div>
                 )}
 

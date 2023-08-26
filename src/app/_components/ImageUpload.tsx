@@ -3,7 +3,7 @@
 import { useEffect, forwardRef } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-import { PlusIcon, XCircleIcon, XIcon } from "@/icons";
+import { PlusIcon, XCircleIcon } from "@/icons";
 import clsx from "clsx";
 import { ImageFile } from "@/utils/types";
 import { cn } from "@/utils/helpers";

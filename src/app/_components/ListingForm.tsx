@@ -1,6 +1,5 @@
 "use client";
-import { Select, TextArea, Checkbox, TagSelect, Input } from "@/app/_components";
-import { ImageUpload } from "../dashboard/listings/_components";
+import { Select, TextArea, Checkbox, TagSelect, Input, ImageUpload } from "@/app/_components";
 import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { FC } from "react";
 import { FieldError, Controller, UseFormReturn } from "react-hook-form";

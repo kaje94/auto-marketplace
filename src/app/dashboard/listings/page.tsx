@@ -1,10 +1,8 @@
-import { BreadCrumbs, Empty, Pagination } from "@/app/_components";
-import { ListingRowItem } from "./_components";
+import { BreadCrumbs, Empty, Pagination, DashboardListHeader, DashboardListingItem } from "@/app/_components";
 import { api } from "@/utils/api";
-import { getFormattedCurrency, getListingTags, getLocationString, transformListingResponse } from "@/utils/helpers";
+import { getFormattedCurrency, getLocationString, transformListingResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
-import { DashboardListHeader } from "./_components/DashboardListHeader";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
 
@@ -39,7 +37,7 @@ const MyAds = async ({ searchParams }: SearchParams) => {
                     />
                 )}
                 {listings.items?.map((item) => (
-                    <ListingRowItem
+                    <DashboardListingItem
                         key={item.id}
                         id={item.id}
                         title={item.title}
