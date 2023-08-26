@@ -64,7 +64,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                                 {unCamelCase(status)}
                             </span>
                         </div>
-                        <DashboardListingItemMenu listingId={id} listingTitle={title} />
+                        <DashboardListingItemMenu listingId={id} listingTitle={title} status={status} />
                     </div>
                 )}
 

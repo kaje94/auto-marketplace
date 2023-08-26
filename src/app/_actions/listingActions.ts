@@ -8,6 +8,11 @@ export const reviewListingAction = async (req: ReviewListingReq, userId: string)
     listingItemTags(req.listingId, userId).forEach((tag) => revalidateTag(tag));
 };
 
+export const renewListingAction = async (listingId: ListingIdType, userId: string) => {
+    await api.renewListing(listingId);
+    listingItemTags(listingId, userId).forEach((tag) => revalidateTag(tag));
+};
+
 export const createListingAction = async (reqBody: CreateListingReq, userId: string) => {
     const listingId = await api.postListing(reqBody);
     listingItemTags(listingId, userId).forEach((tag) => revalidateTag(tag));
