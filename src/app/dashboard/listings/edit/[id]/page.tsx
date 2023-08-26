@@ -5,7 +5,7 @@ import { BreadCrumbs } from "@/app/_components";
 import { ListingIdType } from "@/utils/types";
 
 const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) => {
-    let [itemDetails, features] = await Promise.all([api.getListingsItem(params.id), api.getFeatureList()]);
+    let [itemDetails, features] = await Promise.all([api.getListingsItem(params.id), api.getFeaturesList()]);
     itemDetails = transformListingResponse(itemDetails);
 
     return (

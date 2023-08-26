@@ -1,37 +1,27 @@
 "use server";
-import { api } from "@/utils/api";
-import { ListingStatusTypes } from "@/utils/enum";
+import { api, listingItemTags } from "@/utils/api";
 import { CreateListingReq, EditListingReq, ListingIdType, ReportListingReq, ReviewListingReq } from "@/utils/types";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
-export const reviewListingAction = async (req: ReviewListingReq) => {
+export const reviewListingAction = async (req: ReviewListingReq, userId: string) => {
     await api.reviewListing(req);
-    revalidatePath(`/dashboard/listings/${req.listingId}`);
-    revalidatePath("/dashboard/listings");
-    if (req.status === ListingStatusTypes.Posted) {
-        revalidatePath(`/search/${req.listingId}`);
-    }
+    listingItemTags(req.listingId, userId).forEach((tag) => revalidateTag(tag));
 };
 
-export const createListingAction = async (reqBody: CreateListingReq) => {
+export const createListingAction = async (reqBody: CreateListingReq, userId: string) => {
     const listingId = await api.postListing(reqBody);
-    revalidatePath(`/dashboard/listings/${listingId}`);
-    revalidatePath("/dashboard/listings");
+    listingItemTags(listingId, userId).forEach((tag) => revalidateTag(tag));
     return listingId;
 };
 
-export const editListingAction = async (reqBody: EditListingReq) => {
+export const editListingAction = async (reqBody: EditListingReq, userId: string) => {
     await api.putListing(reqBody);
-    revalidatePath(`/dashboard/listings/${reqBody.listingId}`);
-    revalidatePath("/dashboard/listings");
-    revalidatePath(`/search/${reqBody.listingId}`);
+    listingItemTags(reqBody.listingId, userId).forEach((tag) => revalidateTag(tag));
 };
 
-export const deleteListingAction = async (listingId: ListingIdType) => {
+export const deleteListingAction = async (listingId: ListingIdType, userId: string) => {
     await api.deleteListing(listingId);
-    revalidatePath(`/dashboard/listings/${listingId}`);
-    revalidatePath("/dashboard/listings");
-    revalidatePath(`/search/${listingId}`);
+    listingItemTags(listingId, userId).forEach((tag) => revalidateTag(tag));
 };
 
 export const incrementViews = async (listingId: ListingIdType) => {

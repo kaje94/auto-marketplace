@@ -7,17 +7,16 @@ import { Session } from "next-auth";
 import { FC } from "react";
 import { ReviewButton } from "./ReviewButton";
 import Link from "next/link";
+import { ListingItem } from "@/utils/types";
 
 interface Props {
     loading?: boolean;
-    listingStatus?: ListingStatusTypes;
-    listingComment?: string;
     session?: Session | null;
-    listingId?: number;
-    listingName?: string;
+    listingItem?: ListingItem;
 }
 
-export const ListingDetailBanner: FC<Props> = ({ loading, listingStatus, session, listingComment, listingId, listingName }) => {
+export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, session }) => {
+    const { status: listingStatus, id: listingId, userId, title: listingName, reviewComment } = listingItem as ListingItem;
     return (
         <div
             className={clsx({
@@ -35,7 +34,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingStatus, session
                 <div className={clsx({ "text-xs": true, "opacity-50": loading })}>
                     {loading
                         ? "Loading description of the listing status..."
-                        : `${ListingStatusDescriptions[listingStatus as ListingStatusTypes]} ${listingComment ?? ""}`}
+                        : `${ListingStatusDescriptions[listingStatus as ListingStatusTypes]} ${reviewComment ?? ""}`}
                 </div>
             </div>
             {!loading && (
@@ -45,8 +44,8 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingStatus, session
                             <button className="btn-ghost btn-sm btn">View</button>
                         </Link>
                     )}
-                    {session?.user?.isAdmin && listingId && listingStatus === ListingStatusTypes.UnderReview && (
-                        <ReviewButton listingId={listingId} listingName={listingName} />
+                    {userId && session?.user?.isAdmin && listingId && listingStatus === ListingStatusTypes.UnderReview && (
+                        <ReviewButton listingId={listingId} listingName={listingName} listingUserId={userId} />
                     )}
                     {listingStatus === ListingStatusTypes.Declined && (
                         <Link href={`/dashboard/listings/edit/${listingId}`}>

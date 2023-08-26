@@ -50,7 +50,7 @@ export const EditListingForm = (props: Props) => {
                     yearOfRegistration: convertYearToDateString(formValues.vehicle.yearOfRegistration),
                 },
             };
-            return editListingAction(requestBody);
+            return editListingAction(requestBody, listingItem?.userId!);
         },
         {
             onSuccess: (_, req) => {

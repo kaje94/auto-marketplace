@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { reviewListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
 
-export const ReviewButton = ({ listingId, listingName }: { listingId: ListingIdType; listingName?: string }) => {
+export const ReviewButton = ({ listingId, listingName, listingUserId }: { listingId: ListingIdType; listingName: string; listingUserId: string }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const toastId = useRef<string>();
 
@@ -21,7 +21,7 @@ export const ReviewButton = ({ listingId, listingName }: { listingId: ListingIdT
         mode: "all",
     });
 
-    const { mutate, isLoading } = useMutation((reqParams: ReviewListingReq) => reviewListingAction(reqParams), {
+    const { mutate, isLoading } = useMutation((reqParams: ReviewListingReq) => reviewListingAction(reqParams, listingUserId), {
         onMutate: () => {
             setModalVisible(false);
             toastId.current = toast.loading(`Submitting review for advert ${listingName}...`);

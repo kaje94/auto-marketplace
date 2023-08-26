@@ -2,7 +2,7 @@ import { api } from "@/utils/api";
 import { CreateListingForm } from "./_components/CreateListingForm";
 
 const CreateListingPage = async () => {
-    const features = await api.getFeatureList();
+    const features = await api.getFeaturesList();
 
     return <CreateListingForm features={features} />;
 };

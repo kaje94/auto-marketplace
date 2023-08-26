@@ -10,10 +10,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useRef } from "react";
 import { createListingAction } from "@/app/_actions/listingActions";
-
-// todo
-// separate out into different files in order to reduce the cost of imports
-// enable bundle size library while doing so
+import { useSession } from "next-auth/react";
 
 interface Props {
     features: VehicleFeature[];
@@ -22,6 +19,7 @@ interface Props {
 export const CreateListingForm = (props: Props) => {
     const { features } = props;
     const router = useRouter();
+    const session = useSession();
 
     const toastId = useRef<string>();
 
@@ -44,7 +42,7 @@ export const CreateListingForm = (props: Props) => {
                     yearOfRegistration: convertYearToDateString(formValues.vehicle.yearOfRegistration),
                 },
             };
-            return createListingAction(requestBody);
+            return createListingAction(requestBody, session?.data?.user?.id!);
         },
         {
             onSuccess: (id, req) => {

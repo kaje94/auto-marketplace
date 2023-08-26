@@ -88,18 +88,48 @@ const fetchApi = {
 export const api = {
     // todo: fix caching strategy for all get endpoints
     // { next: { revalidate: 0 } } for disabling cache
-    getFeatureList: () => fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features"),
-    getPostedListings: () => fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted", { next: { revalidate: 0 } }),
-    getPostedListingItem: (id: ListingIdType) => fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`),
-    getRelatedListings: (id: ListingIdType) => fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`),
+    getFeaturesList: () => fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features", { next: { tags: [apiTags.getFeaturesList()] } }),
+    // need to revalidate after XXX
+    getPostedListings: () =>
+        fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted", { next: { revalidate: 0, tags: [apiTags.getPostedListings()] } }),
+    getPostedListingItem: (id: ListingIdType) =>
+        fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, { next: { tags: [apiTags.getPostedListingItem(id)] } }),
+    // need to revalidate after XXX
+    getRelatedListings: (id: ListingIdType) =>
+        fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`, { next: { tags: [apiTags.getRelatedListings(id)] } }),
     postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, ListingIdType>("/v1/Listings", JSON.stringify(body)),
     putListing: (body: EditListingReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Listings/${body.listingId}`, JSON.stringify(body)),
     getListings: (req?: PaginatedRequest & DashboardListFilterReq) =>
-        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`),
-    getListingsItem: (id: ListingIdType) => fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`),
+        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`, {
+            next: { tags: [apiTags.getListings()] },
+        }),
+    getMyListings: (listingUserId: string, req?: PaginatedRequest & DashboardListFilterReq) =>
+        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {})}`, {
+            next: { tags: [apiTags.getMyListings(listingUserId)] },
+        }),
+    getListingsItem: (id: ListingIdType) =>
+        fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`, { next: { tags: [apiTags.getListingsItem(id)] } }),
     deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
     incrementViews: (listingId: ListingIdType) =>
         fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: 0 } }),
     reportListing: (body: ReportListingReq) => fetchApi.post<BodyInit, void>(`/v1/Listings/${body.listingId}/report`, JSON.stringify(body)),
 };
+
+export const apiTags = {
+    getFeaturesList: () => "get-features-list",
+    getPostedListings: () => "get-posted-listings",
+    getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}`,
+    getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}`,
+    getListings: () => `get-admin-listings`,
+    getMyListings: (listingUserId: string) => `get-my-listings-${listingUserId}`,
+    getListingsItem: (id: ListingIdType) => `get-listing-item-${id}`,
+};
+
+export const listingItemTags = (id: ListingIdType, listingUserId: string) => [
+    apiTags.getPostedListingItem(id),
+    apiTags.getRelatedListings(id),
+    apiTags.getListingsItem(id),
+    apiTags.getMyListings(listingUserId),
+    apiTags.getListings(),
+];

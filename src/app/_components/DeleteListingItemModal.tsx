@@ -5,6 +5,7 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { ListingIdType } from "@/utils/types";
+import { useSession } from "next-auth/react";
 
 interface Props {
     listingId?: ListingIdType;
@@ -16,8 +17,9 @@ interface Props {
 export const DeleteListingItemModal = ({ listingId, listingTitle, visible, setVisible = () => {} }: Props) => {
     const toastId = useRef<string>();
     const router = useRouter();
+    const session = useSession();
 
-    const { mutate, isLoading } = useMutation((id: number) => deleteListingAction(id), {
+    const { mutate, isLoading } = useMutation((id: number) => deleteListingAction(id, session?.data?.user?.id!), {
         onSuccess: (_, id) => {
             if ([`/dashboard/listings/${id}`, `/search/${id}`].includes(window?.location?.pathname)) {
                 router.replace(`/dashboard/listings`);

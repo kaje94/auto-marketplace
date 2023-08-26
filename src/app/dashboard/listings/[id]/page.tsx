@@ -17,13 +17,7 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 currentPageTitle={itemDetails.title}
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Adverts", href: "/dashboard/listings" }]}
             />
-            <ListingDetailBanner
-                session={session}
-                listingStatus={itemDetails.status}
-                listingId={itemDetails.id}
-                listingComment={itemDetails.status === ListingStatusTypes.Declined ? itemDetails.reviewComment : ""}
-                listingName={itemDetails.title}
-            />
+            <ListingDetailBanner session={session} listingItem={itemDetails} />
             <ListingDetails itemDetails={itemDetails} withinDashboard={true} />
         </>
     );
