@@ -34,7 +34,6 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, setVisibl
 
     const { mutate, isLoading } = useMutation(
         (req: ReportListingReq) => {
-            console.log("rewq", req);
             return reportListingAction(req);
         },
         {

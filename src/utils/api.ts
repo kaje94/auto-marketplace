@@ -12,6 +12,7 @@ import {
     ListingIdType,
     ReportListingReq,
     MyListingsFilterReq,
+    UnListListingReq,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
@@ -114,6 +115,7 @@ export const api = {
         fetchApi.protectedGet<ListingItem>(`/v1/Users/me/listings/${id}`, { next: { tags: [apiTags.getMyListingsItem(id)] } }),
     deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
+    unListListing: (body: UnListListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/unlist`, JSON.stringify(body)),
     renewListing: (listingId: ListingIdType) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${listingId}/renew`, JSON.stringify({})),
     incrementViews: (listingId: ListingIdType) =>
         fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: 0 } }),

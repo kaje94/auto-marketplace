@@ -3,22 +3,20 @@ import { Modal, ModalFooter } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { ListingIdType } from "@/utils/types";
-import { useSession } from "next-auth/react";
+import { ListingItem } from "@/utils/types";
 
 interface Props {
-    listingId?: ListingIdType;
-    listingTitle?: string;
+    listingItem?: ListingItem;
     visible?: boolean;
     setVisible?: (visible: boolean) => void;
 }
 
-export const RenewListingItemModal = ({ listingId, listingTitle, visible, setVisible = () => {} }: Props) => {
+export const RenewListingItemModal = (props: Props) => {
+    const { listingItem = {}, visible, setVisible = () => {} } = props;
+    const { id: listingId, title: listingTitle, userId } = listingItem as ListingItem;
     const toastId = useRef<string>();
-    const session = useSession();
 
-    const { mutate, isLoading } = useMutation((id: number) => renewListingAction(id, session?.data?.user?.id!), {
+    const { mutate, isLoading } = useMutation((id: number) => renewListingAction(id, userId!), {
         onMutate: () => {
             setVisible(false);
             toastId.current = toast.loading(`Renewing advert ${listingTitle}...`);

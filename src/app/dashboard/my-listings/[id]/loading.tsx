@@ -9,7 +9,7 @@ const ItemDetailLoadingPage = async () => {
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Adverts", href: "/dashboard/my-listings" }]}
             />
             <ListingDetailBanner loading={true} />
-            <ListingDetails loading withinDashboard={true} />
+            <ListingDetails loading withinDashboard={true} showSellerDetails={false} />
         </>
     );
 };

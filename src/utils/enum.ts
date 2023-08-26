@@ -37,8 +37,6 @@ export enum VehicleConditionTypes {
 export enum TransmissionTypes {
     Automatic = "Automatic",
     Manual = "Manual",
-    Tiptronic = "Tiptronic",
-    Other = "Other",
 }
 
 export enum FuelTypes {
@@ -46,7 +44,6 @@ export enum FuelTypes {
     Diesel = "Diesel",
     Hybrid = "Hybrid",
     Electric = "Electric",
-    Other = "Other",
 }
 
 export enum ListingReportReason {

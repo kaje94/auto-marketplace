@@ -17,7 +17,7 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Adverts", href: "/dashboard/my-listings" }]}
             />
             <ListingDetailBanner session={session} listingItem={itemDetails} />
-            <ListingDetails itemDetails={itemDetails} withinDashboard={true} />
+            <ListingDetails itemDetails={itemDetails} withinDashboard={true} showSellerDetails={false} />
         </>
     );
 };

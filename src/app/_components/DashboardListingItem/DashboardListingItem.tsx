@@ -2,25 +2,25 @@ import { FC } from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import Link from "next/link";
-import { getRandomItem, unCamelCase } from "@/utils/helpers";
+import { getFormattedCurrency, getLocationString, getRandomItem, unCamelCase } from "@/utils/helpers";
 import { ListingStatusTypes } from "@/utils/enum";
 import { DashboardListingItemMenu } from "./DashboardListingItemMenu";
+import { ListingItem } from "@/utils/types";
 
 interface Props {
-    basePath?: string;
-    id?: number;
-    title?: string;
-    imageUrl?: string;
-    blurDataURL?: string;
-    price?: string;
-    location?: string;
-    description?: string;
+    listingItem?: ListingItem;
     loading?: boolean;
-    status?: ListingStatusTypes;
+    basePath?: string;
 }
 
 export const DashboardListingItem: FC<Props> = (props) => {
-    const { basePath, title, price, description, location, status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading } = props;
+    const { basePath, listingItem = {}, loading } = props;
+    const { title, price, description, status, id, vehicle, location } = listingItem as ListingItem;
+    const imageUrl = vehicle?.vehicleImages[0]?.url;
+    const blurDataURL = vehicle?.vehicleImages[0]?.blurDataURL;
+    const locationStr = getLocationString(location);
+    const priceStr = getFormattedCurrency(price?.amount, price?.currency);
+
     const myAddItemContent = (
         <>
             {loading ? (
@@ -30,7 +30,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     <Image
                         src={imageUrl ?? ""}
                         alt={title ?? ""}
-                        className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
+                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
                         height={300}
                         width={450}
                         placeholder={blurDataURL ? "blur" : "empty"}
@@ -38,7 +38,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
-                        <div className="badge-hover-translucent badge badge-secondary badge-lg absolute scale-110 duration-300">{price}</div>
+                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{priceStr}</div>
                     </div>
                 </figure>
             )}
@@ -64,7 +64,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                                 {unCamelCase(status)}
                             </span>
                         </div>
-                        <DashboardListingItemMenu listingId={id} listingTitle={title} status={status} />
+                        <DashboardListingItemMenu listingItem={listingItem as ListingItem} />
                     </div>
                 )}
 
@@ -72,7 +72,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     <div className="block h-5 w-44 bg-base-200 md:hidden" />
                 ) : (
                     <div className="block text-base md:hidden">
-                        Price: <span className="font-medium">{price}</span>
+                        Price: <span className="font-medium">{priceStr}</span>
                     </div>
                 )}
 
@@ -80,7 +80,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     <div className={clsx("h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72"]))} />
                 ) : (
                     <div className="text-base">
-                        Location: <span className="font-medium">{location}</span>
+                        Location: <span className="font-medium">{locationStr}</span>
                     </div>
                 )}
 

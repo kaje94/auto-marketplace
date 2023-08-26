@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, session }) => {
-    const { status: listingStatus, id: listingId, userId, title: listingName, reviewComment } = listingItem as ListingItem;
+    const { status: listingStatus, id: listingId, userId, reviewComment } = listingItem as ListingItem;
     return (
         <div
             className={clsx({
@@ -45,7 +45,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, sess
                         </Link>
                     )}
                     {userId && session?.user?.isAdmin && listingId && listingStatus === ListingStatusTypes.UnderReview && (
-                        <ReviewButton listingId={listingId} listingName={listingName} listingUserId={userId} />
+                        <ReviewButton listingItem={listingItem as ListingItem} />
                     )}
                     {listingStatus === ListingStatusTypes.Declined && (
                         <Link href={`${window?.location?.pathname}/edit/${listingId}`}>

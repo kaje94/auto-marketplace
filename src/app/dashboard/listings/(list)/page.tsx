@@ -39,14 +39,7 @@ const AllAds = async ({ searchParams }: SearchParams) => {
                 {listings.items?.map((item) => (
                     <DashboardListingItem
                         key={item.id}
-                        id={item.id}
-                        title={item.title}
-                        price={getFormattedCurrency(item.price.amount, item.price.currency)}
-                        description={item.description}
-                        imageUrl={item.vehicle.vehicleImages[0]?.url}
-                        blurDataURL={item.vehicle.vehicleImages[0]?.blurDataURL}
-                        location={getLocationString(item.location)}
-                        status={item.status}
+                        listingItem={item}
                         basePath="/dashboard/listings"
                         // need created at field as well
                     />

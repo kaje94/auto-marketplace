@@ -16,9 +16,10 @@ interface Props {
     loading?: boolean;
     withinDashboard?: boolean;
     userSession?: Session | null;
+    showSellerDetails?: boolean;
 }
 
-export const ListingDetails: FC<Props> = ({ userSession, itemDetails = {}, loading = false, withinDashboard = false }) => {
+export const ListingDetails: FC<Props> = ({ userSession, itemDetails = {}, loading = false, withinDashboard = false, showSellerDetails = true }) => {
     const { price, vehicle, location, user, title, description, status, id } = itemDetails as ListingItem;
 
     return (
@@ -71,10 +72,12 @@ export const ListingDetails: FC<Props> = ({ userSession, itemDetails = {}, loadi
                     <div className="stat-title">Features</div>
                     <FeaturesOfListing vehicle={vehicle} loading={loading} />
                 </div>
-                <div className="stat card place-items-center bg-base-100 shadow">
-                    <div className="stat-title">Seller</div>
-                    <ListingSellerDetails user={user} loading={loading} />
-                </div>
+                {showSellerDetails && (
+                    <div className="stat card place-items-center bg-base-100 shadow">
+                        <div className="stat-title">Seller</div>
+                        <ListingSellerDetails user={user} loading={loading} />
+                    </div>
+                )}
                 {status === ListingStatusTypes.Posted && !withinDashboard && (
                     <div className="grid grid-cols-2 gap-4">
                         <ShareButton loading={loading} title={title} />

@@ -9,6 +9,7 @@ import {
     PriceSchema,
     ReportListingSchema,
     ReviewListingSchema,
+    UnListListingSchema,
     VehicleFeatureSchema,
     VehicleImageSchema,
     VehicleSchema,
@@ -86,6 +87,8 @@ export type ListingItems = { items: ListingItem[] };
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };
 
 export type ReviewListingReq = z.infer<typeof ReviewListingSchema>;
+
+export type UnListListingReq = z.infer<typeof UnListListingSchema>;
 
 export type ReportListingReq = z.infer<typeof ReportListingSchema>;
 

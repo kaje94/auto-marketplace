@@ -31,3 +31,5 @@ export { InboxIcon } from "./InboxIcon";
 export { MenuIcon } from "./MenuIcon";
 export { FilterIcon } from "./FilterIcon";
 export { ListIcon } from "./ListIcon";
+export { CheckCircleIcon } from "./CheckCircleIcon";
+export { EyeOffIcon } from "./EyeOffIcon";

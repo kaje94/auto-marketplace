@@ -2,7 +2,7 @@
 import { InfoIcon } from "@/icons";
 import clsx from "clsx";
 import { FC, useState } from "react";
-import { ReportListingModal } from "../ReportListingModal";
+import { ReportListingModal } from "@/app/_components/Modals/ReportListingModal";
 import { ListingIdType } from "@/utils/types";
 
 interface Props {

@@ -93,6 +93,11 @@ export const ReviewListingSchema = z.object({
     reviewComment: z.string(),
 });
 
+export const UnListListingSchema = z.object({
+    listingId: ListingIdField,
+    listingStatus: z.nativeEnum(ListingStatusTypes),
+});
+
 export const DashboardListingFilterSchema = z.object({
     Title: z.string().optional(),
     StartCreatedDate: z.string().optional(),
