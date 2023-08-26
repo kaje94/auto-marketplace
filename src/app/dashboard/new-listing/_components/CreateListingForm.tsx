@@ -14,11 +14,10 @@ import { useSession } from "next-auth/react";
 
 interface Props {
     features: VehicleFeature[];
-    successRedirectPath: string;
 }
 
 export const CreateListingForm = (props: Props) => {
-    const { features, successRedirectPath } = props;
+    const { features } = props;
     const router = useRouter();
     const session = useSession();
 
@@ -47,8 +46,8 @@ export const CreateListingForm = (props: Props) => {
         },
         {
             onSuccess: (id, req) => {
-                if ([`/dashboard/listings/new-listing`, `/dashboard/my-listings/new-listing`].includes(window?.location?.pathname)) {
-                    router.replace(`${successRedirectPath}/${id}`);
+                if (window?.location?.pathname === "/dashboard/new-listing") {
+                    router.replace(`/dashboard/my-listings/${id}`);
                 }
             },
             onMutate: (data) => {
