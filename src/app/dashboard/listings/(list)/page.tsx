@@ -5,10 +5,8 @@ import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth/authConfig";
 
-const MyAds = async ({ searchParams }: SearchParams) => {
+const AllAds = async ({ searchParams }: SearchParams) => {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
     let listings = await api.getListings({ PageNumber: Number(page), ...parsedSearchParams });
@@ -25,7 +23,7 @@ const MyAds = async ({ searchParams }: SearchParams) => {
         <>
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="All Adverts" />
 
-            <DashboardListHeader itemCount={listings.totalCount} />
+            <DashboardListHeader itemCount={listings.totalCount} allAdsFilter />
 
             <div className="grid gap-1 xl:gap-2">
                 {listings.totalCount === 0 && (
@@ -60,4 +58,4 @@ const MyAds = async ({ searchParams }: SearchParams) => {
     );
 };
 
-export default MyAds;
+export default AllAds;
