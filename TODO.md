@@ -26,3 +26,9 @@ use daisyui Indicators instead of badges in my ads maybe
 use use-mutation like function yourself instead of using react-query
 replace clsx with tailwind-merge+clsx: https://www.youtube.com/watch?v=re2JFITR7TI
 check max length of all strings in schema file
+
+
+// performance
+// separate out into different files in order to reduce the cost of imports
+// enable bundle size library while doing so
+// https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading

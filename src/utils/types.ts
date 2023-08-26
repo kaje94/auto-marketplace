@@ -5,6 +5,7 @@ import {
     EditListingSchema,
     ListingIdField,
     LocationSchema,
+    MyListingsFilterSchema,
     PriceSchema,
     ReportListingSchema,
     ReviewListingSchema,
@@ -89,5 +90,7 @@ export type ReviewListingReq = z.infer<typeof ReviewListingSchema>;
 export type ReportListingReq = z.infer<typeof ReportListingSchema>;
 
 export type DashboardListFilterReq = z.infer<typeof DashboardListingFilterSchema>;
+
+export type MyListingsFilterReq = z.infer<typeof MyListingsFilterSchema>;
 
 export type ListingIdType = z.infer<typeof ListingIdField>;

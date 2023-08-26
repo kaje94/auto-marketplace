@@ -12,17 +12,18 @@ interface Props {
     listingTitle?: string;
     visible?: boolean;
     setVisible?: (visible: boolean) => void;
+    successRedirectPath: string;
 }
 
-export const DeleteListingItemModal = ({ listingId, listingTitle, visible, setVisible = () => {} }: Props) => {
+export const DeleteListingItemModal = ({ listingId, listingTitle, visible, successRedirectPath, setVisible = () => {} }: Props) => {
     const toastId = useRef<string>();
     const router = useRouter();
     const session = useSession();
 
     const { mutate, isLoading } = useMutation((id: number) => deleteListingAction(id, session?.data?.user?.id!), {
         onSuccess: (_, id) => {
-            if ([`/dashboard/listings/${id}`, `/search/${id}`].includes(window?.location?.pathname)) {
-                router.replace(`/dashboard/listings`);
+            if ([`/dashboard/listings/${id}`, `/dashboard/my-listings/${id}`, `/search/${id}`].includes(window?.location?.pathname)) {
+                router.replace(successRedirectPath);
             }
         },
         onMutate: () => {
@@ -47,6 +48,7 @@ export const DeleteListingItemModal = ({ listingId, listingTitle, visible, setVi
                     onVisibleChange={setVisible}
                     primaryButton={{ text: "Delete", classNames: "btn-error" }}
                     onSubmit={listingId ? () => mutate(listingId) : undefined}
+                    loading={isLoading}
                 />
             </Modal>
         </>

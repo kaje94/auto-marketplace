@@ -109,6 +109,12 @@ export const DashboardListingFilterSchema = z.object({
     ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
 });
 
+export const MyListingsFilterSchema = z.object({
+    ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
+    StartCreatedDate: z.string().optional(),
+    EndCreatedDate: z.string().optional(),
+});
+
 export const ReportListingSchema = z.object({
     listingId: ListingIdField,
     reason: z.nativeEnum(ListingReportReason),

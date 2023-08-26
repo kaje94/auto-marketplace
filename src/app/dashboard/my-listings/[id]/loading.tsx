@@ -6,7 +6,7 @@ const ItemDetailLoadingPage = async () => {
         <>
             <BreadCrumbs
                 currentPageTitle="Loading..."
-                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "All Adverts", href: "/dashboard/listings" }]}
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Adverts", href: "/dashboard/my-listings" }]}
             />
             <ListingDetailBanner loading={true} />
             <ListingDetails loading withinDashboard={true} />

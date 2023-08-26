@@ -48,7 +48,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, sess
                         <ReviewButton listingId={listingId} listingName={listingName} listingUserId={userId} />
                     )}
                     {listingStatus === ListingStatusTypes.Declined && (
-                        <Link href={`/dashboard/listings/edit/${listingId}`}>
+                        <Link href={`${window?.location?.pathname}/edit/${listingId}`}>
                             <button className="btn-ghost btn-sm btn">Edit</button>
                         </Link>
                     )}

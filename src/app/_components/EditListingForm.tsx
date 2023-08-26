@@ -8,16 +8,17 @@ import { useForm } from "react-hook-form";
 import { convertYearToDateString, transformImagesToPost, getListingTitleFromVehicle } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useRef } from "react";
+import { FC, useRef } from "react";
 import { editListingAction } from "@/app/_actions/listingActions";
 
 interface Props {
     features: VehicleFeature[];
     listingItem: ListingItem;
+    successRedirectPath: string;
 }
 
-export const EditListingForm = (props: Props) => {
-    const { features, listingItem } = props;
+export const EditListingForm: FC<Props> = (props) => {
+    const { features, listingItem, successRedirectPath } = props;
     const router = useRouter();
 
     const toastId = useRef<string>();
@@ -54,8 +55,10 @@ export const EditListingForm = (props: Props) => {
         },
         {
             onSuccess: (_, req) => {
-                if (window?.location?.pathname === `/dashboard/listings/edit/${req.listingId}`) {
-                    router.replace(`/dashboard/listings/${req.listingId}`);
+                if (
+                    [`/dashboard/listings/edit/${req.listingId}`, `/dashboard/my-listings/edit/${req.listingId}`].includes(window?.location?.pathname)
+                ) {
+                    router.replace(`${successRedirectPath}/${req.listingId}`);
                 }
             },
             onMutate: (data) => {

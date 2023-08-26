@@ -30,3 +30,4 @@ export { XIcon } from "./XIcon";
 export { InboxIcon } from "./InboxIcon";
 export { MenuIcon } from "./MenuIcon";
 export { FilterIcon } from "./FilterIcon";
+export { ListIcon } from "./ListIcon";

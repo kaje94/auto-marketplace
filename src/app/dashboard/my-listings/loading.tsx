@@ -3,7 +3,7 @@ import { BreadCrumbs, DashboardListingItem, DashboardListHeader } from "@/app/_c
 const DashboardListingsLoading = () => {
     return (
         <>
-            <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="All Adverts" />
+            <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="My Adverts" />
 
             <DashboardListHeader loading />
 

@@ -1,14 +1,15 @@
 "use client";
 import { FC, SVGProps } from "react";
-import { AdvertIcon, NotificationIcon, SettingsIcon, UserIcon } from "@/icons";
+import { AdvertIcon, ListIcon, NotificationIcon, SettingsIcon, UserIcon } from "@/icons";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const NavBarItem: FC<{
     href: string;
     label: string;
-    activePaths: string[];
+    activePaths?: string[];
     regexExp?: RegExp;
     Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
 }> = ({ href, label, activePaths = [], regexExp, Icon }) => {
@@ -30,17 +31,17 @@ const NavBarItem: FC<{
 };
 
 export const DashboardSideBar: FC = () => {
-    const pathname = usePathname();
+    const session = useSession();
 
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <ul className="menu rounded-box w-full bg-base-100 p-2 shadow-md">
                 <NavBarItem href="/dashboard/profile" label="Profile" activePaths={["/dashboard/profile"]} Icon={UserIcon} />
                 <NavBarItem
-                    href="/dashboard/listings"
+                    href="/dashboard/my-listings"
                     label="My Adverts"
-                    activePaths={["/dashboard/listings", "/dashboard/new-listing"]}
-                    regexExp={new RegExp("^/dashboard/listings/(.*?)")}
+                    activePaths={["/dashboard/my-listings", "/dashboard/new-listing"]}
+                    regexExp={new RegExp("^/dashboard/my-listings/(.*?)")}
                     Icon={AdvertIcon}
                 />
                 <NavBarItem href="/dashboard/preferences" label="Preferences" activePaths={["/dashboard/preferences"]} Icon={SettingsIcon} />
@@ -50,6 +51,15 @@ export const DashboardSideBar: FC = () => {
                     activePaths={["/dashboard/notifications"]}
                     Icon={NotificationIcon}
                 />
+                {session?.data?.user?.isAdmin && (
+                    <NavBarItem
+                        href="/dashboard/listings"
+                        activePaths={["/dashboard/listings"]}
+                        label="All Adverts"
+                        regexExp={new RegExp("^/dashboard/listings/(.*?)")}
+                        Icon={ListIcon}
+                    />
+                )}
             </ul>
         </aside>
     );

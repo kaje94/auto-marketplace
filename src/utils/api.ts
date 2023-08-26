@@ -11,6 +11,7 @@ import {
     DashboardListFilterReq,
     ListingIdType,
     ReportListingReq,
+    MyListingsFilterReq,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
@@ -103,12 +104,14 @@ export const api = {
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`, {
             next: { tags: [apiTags.getListings()] },
         }),
-    getMyListings: (listingUserId: string, req?: PaginatedRequest & DashboardListFilterReq) =>
+    getMyListings: (listingUserId: string, req?: PaginatedRequest & MyListingsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {})}`, {
             next: { tags: [apiTags.getMyListings(listingUserId)] },
         }),
     getListingsItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`, { next: { tags: [apiTags.getListingsItem(id)] } }),
+    getMyListingsItem: (id: ListingIdType) =>
+        fetchApi.protectedGet<ListingItem>(`/v1/Users/me/listings/${id}`, { next: { tags: [apiTags.getMyListingsItem(id)] } }),
     deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
     incrementViews: (listingId: ListingIdType) =>
@@ -124,6 +127,7 @@ export const apiTags = {
     getListings: () => `get-admin-listings`,
     getMyListings: (listingUserId: string) => `get-my-listings-${listingUserId}`,
     getListingsItem: (id: ListingIdType) => `get-listing-item-${id}`,
+    getMyListingsItem: (id: ListingIdType) => `get-my-listing-item-${id}`,
 };
 
 export const listingItemTags = (id: ListingIdType, listingUserId: string) => [

@@ -71,7 +71,7 @@ export const DashboardListFilter: FC<Props> = ({ loadingPage = false }) => {
         setDropdownOpen(false);
         setNewSearchQuery("");
         reset(defaultFilter);
-        router.push(`/dashboard/listings`);
+        router.push(window?.location?.pathname);
     };
 
     const onApplyFilterClick = (values: DashboardListFilterReq) => {
@@ -81,7 +81,7 @@ export const DashboardListFilter: FC<Props> = ({ loadingPage = false }) => {
             reset(values);
             setLoading(true);
             setNewSearchQuery(searchQuery);
-            router.push(`/dashboard/listings?${searchQuery}`);
+            router.push(`${window?.location?.pathname}?${searchQuery}`);
         }
     };
 

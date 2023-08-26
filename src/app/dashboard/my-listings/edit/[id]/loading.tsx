@@ -9,7 +9,7 @@ const ListingFormLoading = () => {
                 links={[
                     { href: "/", title: "Home" },
                     { title: "Dashboard" },
-                    { title: "All Adverts", href: "/dashboard/listings" },
+                    { title: "My Adverts", href: "/dashboard/my-listings" },
                     { title: "Advert Item" },
                 ]}
             />

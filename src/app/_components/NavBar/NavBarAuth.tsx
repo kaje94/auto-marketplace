@@ -53,8 +53,7 @@ export const NavBarAuth: FC<Props> = ({ authRequired }) => {
                         className="dropdown-content menu rounded-box z-20 -mr-1 mt-3 w-52 rounded-tr-none bg-neutral p-2 text-neutral-content shadow-md shadow-black"
                     >
                         <NavBarMenuLink link="/dashboard/profile" label="Profile" icon={<UserIcon height={18} />} />
-                        {/** Change below label based of admin or not */}
-                        <NavBarMenuLink link="/dashboard/listings" label="My Adverts" icon={<AdvertIcon height={18} />} />
+                        <NavBarMenuLink link="/dashboard/my-listings" label="My Adverts" icon={<AdvertIcon height={18} />} />
                         <NavBarLogoutButton />
                     </ul>
                 </div>

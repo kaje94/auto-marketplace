@@ -7,6 +7,7 @@ import { ListingStatusTypes } from "@/utils/enum";
 import { DashboardListingItemMenu } from "./DashboardListingItemMenu";
 
 interface Props {
+    basePath?: string;
     id?: number;
     title?: string;
     imageUrl?: string;
@@ -19,7 +20,7 @@ interface Props {
 }
 
 export const DashboardListingItem: FC<Props> = (props) => {
-    const { title, price, description, location, status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading } = props;
+    const { basePath, title, price, description, location, status = ListingStatusTypes.Posted, id, imageUrl, blurDataURL, loading } = props;
     const myAddItemContent = (
         <>
             {loading ? (
@@ -107,7 +108,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
     return (
         <Link
             className="card mb-3 grid cursor-pointer grid-cols-12 gap-0.5 bg-base-100 p-3 shadow transition-shadow zoom-inner-image hover:shadow-md md:gap-2 md:p-4 xl:gap-4"
-            href={`/dashboard/listings/${id}`}
+            href={`${basePath}/${id}`}
         >
             {myAddItemContent}
         </Link>
