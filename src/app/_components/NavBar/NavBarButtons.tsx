@@ -1,5 +1,5 @@
 "use client";
-import { LogoutIcon } from "@/icons";
+import { LogoutIcon, SearchIcon } from "@/icons";
 import clsx from "clsx";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
@@ -57,6 +57,16 @@ export const PostAddLink = () => {
                 })}
             >
                 Post your Advert
+            </button>
+        </Link>
+    );
+};
+
+export const SearchLink = () => {
+    return (
+        <Link href="/search">
+            <button className="btn-ghost btn px-0 text-base-300 hover:text-accent">
+                <SearchIcon />
             </button>
         </Link>
     );
