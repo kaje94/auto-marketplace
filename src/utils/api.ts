@@ -67,7 +67,7 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
 };
 
 const getConfigWithAuth = async (config: RequestInit = {}): Promise<RequestInit> => {
-    let session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
     if (!session) {
         throw new Error("Session not found");
     }

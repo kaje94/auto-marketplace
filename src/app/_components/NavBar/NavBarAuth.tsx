@@ -1,41 +1,16 @@
-"use client";
+"use server";
 import { UserIcon, AdvertIcon } from "@/icons";
 import { NavBarMenuLink, NavBarLogoutButton, NavBarLoginButton } from "./NavBarButtons";
 import Image from "next/image";
-import { signIn, useSession } from "next-auth/react";
-import { FC, useEffect } from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth/authConfig";
 
-interface Props {
-    authRequired?: boolean;
-}
-
-export const NavBarAuth: FC<Props> = ({ authRequired }) => {
-    const { data: clientSession, status, update } = useSession({ required: authRequired!! });
-
-    useEffect(() => {
-        if (clientSession?.error === "RefreshAccessTokenError" && authRequired) {
-            signIn("duende-identity-server6");
-        }
-    }, [clientSession, authRequired]);
-
-    // useEffect(() => {
-    //     if (authRequired && clientSession) {
-    //         if (clientSession?.expires_at && clientSession?.expires_at * 1000 > Date.now()) {
-    //             const timeDifference = clientSession?.expires_at * 1000 - Date.now();
-    //             const timeOut = setTimeout(() => update(), timeDifference - 1000 * Math.floor(Math.random() * 31));
-    //             return () => clearTimeout(timeOut);
-    //         } else if (
-    //             clientSession.error === "RefreshAccessTokenError" ||
-    //             (clientSession?.expires_at && clientSession?.expires_at * 1000 < Date.now())
-    //         ) {
-    //             update();
-    //         }
-    //     }
-    // }, [update, clientSession, authRequired]);
+export const NavBarAuth = async () => {
+    const session = await getServerSession(authOptions);
 
     return (
         <div className="flex-none">
-            {clientSession?.user ? (
+            {session ? (
                 <div className="dropdown-end dropdown">
                     <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
                         <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
@@ -58,7 +33,7 @@ export const NavBarAuth: FC<Props> = ({ authRequired }) => {
                     </ul>
                 </div>
             ) : (
-                <>{status === "loading" ? <span className="loading loading-ring mx-2 flex h-full items-center" /> : <NavBarLoginButton />}</>
+                <NavBarLoginButton />
             )}
         </div>
     );

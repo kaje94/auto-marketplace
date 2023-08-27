@@ -7,8 +7,8 @@ import { ListingIdType } from "@/utils/types";
 import { getServerSession } from "next-auth";
 
 const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => {
-    let [itemDetails, session] = await Promise.all([api.getListingsItem(params.id), getServerSession(authOptions)]);
-    itemDetails = transformListingResponse(itemDetails);
+    const session = await getServerSession(authOptions);
+    const itemDetails = transformListingResponse(await api.getListingsItem(params.id));
 
     return (
         <>
@@ -16,8 +16,8 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 currentPageTitle={itemDetails.title}
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "All Adverts", href: "/dashboard/listings" }]}
             />
-            <ListingDetailBanner session={session} listingItem={itemDetails} />
-            <ListingDetails itemDetails={itemDetails} withinDashboard={true} />
+            <ListingDetailBanner isAdmin={session?.user?.isAdmin} listingItem={itemDetails} />
+            <ListingDetails itemDetails={itemDetails} withinDashboard={true} loggedInUser={{ email: session?.user?.email, id: session?.user?.id }} />
         </>
     );
 };

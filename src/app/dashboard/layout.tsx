@@ -1,5 +1,5 @@
 import { NavBar, Footer } from "@/app/_components";
-import { DashboardSideBar } from "./_components";
+import { DashboardSideBar } from "../_components/DashboardSideBar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (

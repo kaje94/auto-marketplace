@@ -10,16 +10,15 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useRef } from "react";
 import { createListingAction } from "@/app/_actions/listingActions";
-import { useSession } from "next-auth/react";
 
 interface Props {
     features: VehicleFeature[];
+    userId?: string;
 }
 
 export const CreateListingForm = (props: Props) => {
-    const { features } = props;
+    const { features, userId } = props;
     const router = useRouter();
-    const session = useSession();
 
     const toastId = useRef<string>();
 
@@ -42,7 +41,7 @@ export const CreateListingForm = (props: Props) => {
                     yearOfRegistration: convertYearToDateString(formValues.vehicle.yearOfRegistration),
                 },
             };
-            return createListingAction(requestBody, session?.data?.user?.id!);
+            return createListingAction(requestBody, userId!);
         },
         {
             onSuccess: (id, req) => {

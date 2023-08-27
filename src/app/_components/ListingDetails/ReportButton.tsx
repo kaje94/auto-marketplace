@@ -9,9 +9,10 @@ interface Props {
     loading?: boolean;
     listingId?: ListingIdType;
     listingTitle?: string;
+    userEmail?: string | null;
 }
 
-export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle }) => {
+export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle, userEmail }) => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <>
@@ -24,7 +25,15 @@ export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle }) =>
                 <InfoIcon />
                 Report
             </button>
-            {!loading && <ReportListingModal listingId={listingId} listingTitle={listingTitle} setVisible={setModalVisible} visible={modalVisible} />}
+            {!loading && (
+                <ReportListingModal
+                    userEmail={userEmail}
+                    listingId={listingId}
+                    listingTitle={listingTitle}
+                    setVisible={setModalVisible}
+                    visible={modalVisible}
+                />
+            )}
         </>
     );
 };

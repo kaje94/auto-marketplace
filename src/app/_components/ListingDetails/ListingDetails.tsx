@@ -9,17 +9,19 @@ import { ReportButton } from "./ReportButton";
 import { ShareButton } from "./ShareButton";
 import clsx from "clsx";
 import { ListingStatusTypes } from "@/utils/enum";
-import { Session } from "next-auth";
 
 interface Props {
     itemDetails?: ListingItem;
     loading?: boolean;
     withinDashboard?: boolean;
-    userSession?: Session | null;
+    loggedInUser?: {
+        id?: string;
+        email?: string | null;
+    };
     showSellerDetails?: boolean;
 }
 
-export const ListingDetails: FC<Props> = ({ userSession, itemDetails = {}, loading = false, withinDashboard = false, showSellerDetails = true }) => {
+export const ListingDetails: FC<Props> = ({ loggedInUser, itemDetails = {}, loading = false, withinDashboard = false, showSellerDetails = true }) => {
     const { price, vehicle, location, user, title, description, status, id } = itemDetails as ListingItem;
 
     return (
@@ -81,7 +83,9 @@ export const ListingDetails: FC<Props> = ({ userSession, itemDetails = {}, loadi
                 {status === ListingStatusTypes.Posted && !withinDashboard && (
                     <div className="grid grid-cols-2 gap-4">
                         <ShareButton loading={loading} title={title} />
-                        {userSession?.user?.id !== user?.id && <ReportButton loading={loading} listingId={id} listingTitle={title} />}
+                        {loggedInUser?.id !== user?.id && (
+                            <ReportButton loading={loading} listingId={id} listingTitle={title} userEmail={loggedInUser?.email} />
+                        )}
                     </div>
                 )}
             </div>

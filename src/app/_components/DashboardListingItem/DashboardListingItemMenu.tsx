@@ -10,16 +10,15 @@ import { RenewListingItemModal } from "@/app/_components/Modals/RenewListingItem
 import { DeleteListingItemModal } from "@/app/_components/Modals/DeleteListingItemModal";
 import { ReviewListingModal } from "@/app/_components/Modals/ReviewListingModal";
 import { UnListListingModal } from "@/app/_components/Modals/UnListListingModal";
-import { useSession } from "next-auth/react";
 
 interface Props {
     listingItem?: ListingItem;
+    isAdmin?: boolean;
 }
 
-export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {} }) => {
+export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin }) => {
     const { id: listingId, status } = listingItem as ListingItem;
     const mounted = useMounted();
-    const session = useSession();
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [renewModalVisible, setRenewModalVisible] = useState(false);
     const [reviewModalVisible, setReviewModalVisible] = useState(false);
@@ -39,7 +38,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {} }) => {
                     {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status) && (
                         <MenuItem icon={<RefreshIcon height={17} />} onClick={() => setRenewModalVisible(true)} label="Renew" />
                     )}
-                    {session?.data?.user?.isAdmin && status === ListingStatusTypes.UnderReview && (
+                    {isAdmin && status === ListingStatusTypes.UnderReview && (
                         <MenuItem icon={<CheckCircleIcon height={18} />} onClick={() => setReviewModalVisible(true)} label="Review" />
                     )}
                     <MenuItem

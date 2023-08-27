@@ -1,13 +1,17 @@
 import { BreadCrumbs, RelatedListings, ListingDetails } from "@/app/_components";
+import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdType } from "@/utils/types";
+import { getServerSession } from "next-auth";
 
 const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => {
     // use suspense instead for getRelatedListings
     let [itemDetails, relatedListings] = await Promise.all([api.getPostedListingItem(params.id), api.getRelatedListings(params.id)]);
     itemDetails = transformListingResponse(itemDetails);
     relatedListings.slice(0, 4).map((item) => transformListingResponse(item));
+
+    const session = await getServerSession(authOptions);
 
     api.incrementViews(params.id);
 
@@ -20,7 +24,7 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                     { href: "/search", title: "Search" },
                 ]}
             />
-            <ListingDetails itemDetails={itemDetails} />
+            <ListingDetails itemDetails={itemDetails} loggedInUser={{ email: session?.user?.email, id: session?.user?.id }} />
             <RelatedListings relatedListings={relatedListings} />
         </div>
     );

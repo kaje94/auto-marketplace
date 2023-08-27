@@ -8,7 +8,6 @@ import { ListingReportReasonList } from "@/utils/constants";
 import { ListingReportReason } from "@/utils/enum";
 import { ReportListingSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -16,14 +15,14 @@ interface Props {
     listingTitle?: string;
     visible?: boolean;
     setVisible?: (visible: boolean) => void;
+    userEmail?: string | null;
 }
 
-export const ReportListingModal = ({ listingId, listingTitle, visible, setVisible = () => {} }: Props) => {
+export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail, setVisible = () => {} }: Props) => {
     const toastId = useRef<string>();
-    const session = useSession();
     const defaultForm = useMemo<ReportListingReq>(
-        () => ({ listingId: listingId!, message: "", reason: ListingReportReason.Spam, emailAddress: session.data?.user?.email ?? "" }),
-        [session.data?.user, listingId]
+        () => ({ listingId: listingId!, message: "", reason: ListingReportReason.Spam, emailAddress: userEmail ?? "" }),
+        [userEmail, listingId]
     );
 
     const { formState, handleSubmit, register, reset } = useForm<ReportListingReq>({
@@ -75,7 +74,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, setVisibl
                     error={formState.errors.emailAddress?.message}
                     required
                     type="email"
-                    disabled={session.status === "authenticated" || session.status === "loading"}
+                    disabled={!userEmail}
                     {...register("emailAddress")}
                 />
                 <TextArea

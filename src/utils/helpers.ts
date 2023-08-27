@@ -131,6 +131,7 @@ export const transformImagesToPost = async (files: ImageFile[]): Promise<ImageFi
     return images.filter((item) => !!item?.url) as ImageFile[];
 };
 
+// todo: change how this is called
 export const transformListingResponse = (itemDetails: ListingItem): ListingItem => {
     return {
         ...itemDetails,

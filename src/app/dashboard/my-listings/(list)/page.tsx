@@ -1,6 +1,6 @@
 import { BreadCrumbs, Empty, Pagination, DashboardListHeader, DashboardListingItem } from "@/app/_components";
 import { api } from "@/utils/api";
-import { getFormattedCurrency, getLocationString, transformListingResponse } from "@/utils/helpers";
+import { transformListingResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 import { MyListingsFilterSchema } from "@/utils/schemas";
@@ -44,6 +44,7 @@ const MyAds = async ({ searchParams }: SearchParams) => {
                         key={item.id}
                         listingItem={item}
                         basePath="/dashboard/my-listings"
+                        isAdmin={session?.user?.isAdmin}
                         // need created at field as well
                     />
                 ))}

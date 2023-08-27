@@ -1,4 +1,4 @@
-import type { DefaultSession, NextAuthOptions } from "next-auth";
+import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import DuendeIDS6Provider from "next-auth/providers/duende-identity-server6";
 import { env } from "@/env.mjs";
 import { redirect } from "next/navigation";
@@ -14,6 +14,7 @@ declare module "next-auth" {
             isAdmin: boolean;
         } & DefaultSession["user"];
         access_token?: string;
+        refresh_token?: string;
         expires_at?: number;
         error: "RefreshAccessTokenError";
     }
@@ -109,6 +110,7 @@ export const authOptions: NextAuthOptions = {
             return {
                 ...session,
                 user: { ...session.user, id: token.sub, isAdmin: session?.user?.isAdmin },
+                refresh_token: token.refresh_token,
                 access_token: token.access_token,
                 error: token.error,
                 expires_at: token.expires_at,
@@ -121,6 +123,7 @@ export const authOptions: NextAuthOptions = {
             clientSecret: env.IDENTITY_CLIENT_SECRET,
             issuer: env.IDENTITY_BASE_URL,
             authorization: { params: { scope: "openid email profile offline_access" } },
+            token: { params: { params: { scope: "openid email profile offline_access" } } },
             profile: async (profile, token) => {
                 const response = await fetch(`${env.IDENTITY_BASE_URL}/connect/userinfo`, {
                     headers: { Authorization: `Bearer ${token.access_token!}` },

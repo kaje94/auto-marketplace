@@ -24,7 +24,7 @@ export const NavBar: FC<Props> = ({ hideBackground, authRequired }) => {
             <div className="flex flex-row items-center gap-3 pr-0 sm:gap-4 sm:pr-2 lg:gap-6">
                 <SearchLink />
                 <PostAddLink />
-                <NavBarAuth authRequired={authRequired} />
+                <NavBarAuth />
             </div>
         </div>
     );

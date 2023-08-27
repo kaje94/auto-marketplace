@@ -3,7 +3,6 @@ import { ListingStatusDescriptions } from "@/utils/constants";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
 import clsx from "clsx";
-import { Session } from "next-auth";
 import { FC } from "react";
 import { ReviewButton } from "./ReviewButton";
 import Link from "next/link";
@@ -11,11 +10,11 @@ import { ListingItem } from "@/utils/types";
 
 interface Props {
     loading?: boolean;
-    session?: Session | null;
+    isAdmin?: boolean;
     listingItem?: ListingItem;
 }
 
-export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, session }) => {
+export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAdmin }) => {
     const { status: listingStatus, id: listingId, userId, reviewComment } = listingItem as ListingItem;
     return (
         <div
@@ -44,7 +43,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, sess
                             <button className="btn-ghost btn-sm btn">View</button>
                         </Link>
                     )}
-                    {userId && session?.user?.isAdmin && listingId && listingStatus === ListingStatusTypes.UnderReview && (
+                    {userId && isAdmin && listingId && listingStatus === ListingStatusTypes.UnderReview && (
                         <ReviewButton listingItem={listingItem as ListingItem} />
                     )}
                     {listingStatus === ListingStatusTypes.Declined && (

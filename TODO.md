@@ -1,5 +1,6 @@
 - [ ] mjs instead of js for root configs
 // await new Promise((resolve) => setTimeout(resolve, 10000));
+// admin user id: 'c1485d4a-0f38-4b11-bd06-7b428288dedd'
 
 // setting up s3
 https://next-s3-upload.codingvalue.com/setup
@@ -11,6 +12,7 @@ milage needs a measurement unit
 decide which lists to take to backend
 vehicle description needs to be at least 1000 characters
 filter for start end dates in dashboard listing is not working
+re-list after temporarily unlisting
 
 //
 Add a plus button when no ads created by user
@@ -26,6 +28,7 @@ use daisyui Indicators instead of badges in my ads maybe
 use use-mutation like function yourself instead of using react-query
 replace clsx with tailwind-merge+clsx: https://www.youtube.com/watch?v=re2JFITR7TI
 check max length of all strings in schema file
+remove async from components if not needed
 
 
 // performance
