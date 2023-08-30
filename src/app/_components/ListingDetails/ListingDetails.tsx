@@ -9,19 +9,32 @@ import { ReportButton } from "./ReportButton";
 import { ShareButton } from "./ShareButton";
 import clsx from "clsx";
 import { ListingStatusTypes } from "@/utils/enum";
+import { UnListButton } from "./UnlistButton";
+import { DeleteButton } from "./DeleteButton";
+import { EditButton } from "./EditButton";
+import { RenewButton } from "./RenewButton";
 
 interface Props {
     itemDetails?: ListingItem;
     loading?: boolean;
     withinDashboard?: boolean;
+    basePath?: string;
     loggedInUser?: {
         id?: string;
         email?: string | null;
+        isAdmin?: boolean;
     };
     showSellerDetails?: boolean;
 }
 
-export const ListingDetails: FC<Props> = ({ loggedInUser, itemDetails = {}, loading = false, withinDashboard = false, showSellerDetails = true }) => {
+export const ListingDetails: FC<Props> = ({
+    loggedInUser,
+    itemDetails = {},
+    loading = false,
+    withinDashboard = false,
+    showSellerDetails = true,
+    basePath,
+}) => {
     const { price, vehicle, location, user, title, description, status, id } = itemDetails as ListingItem;
 
     return (
@@ -88,6 +101,26 @@ export const ListingDetails: FC<Props> = ({ loggedInUser, itemDetails = {}, load
                         )}
                     </div>
                 )}
+                <>
+                    {!loading && (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) && (
+                        <>
+                            <div className="grid grid-cols-2 gap-4">
+                                <EditButton
+                                    listingItem={itemDetails as ListingItem}
+                                    basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
+                                />
+                                {status &&
+                                    [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(
+                                        status
+                                    ) && <UnListButton listingItem={itemDetails as ListingItem} />}
+                                {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status) && (
+                                    <RenewButton listingItem={itemDetails as ListingItem} />
+                                )}
+                                <DeleteButton listingItem={itemDetails as ListingItem} isOwner={user?.id === loggedInUser?.id} />
+                            </div>
+                        </>
+                    )}
+                </>
             </div>
         </div>
     );

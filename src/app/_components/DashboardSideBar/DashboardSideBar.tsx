@@ -14,7 +14,7 @@ export const DashboardSideBar = async () => {
                     href="/dashboard/my-listings"
                     label="My Adverts"
                     activePaths={["/dashboard/my-listings", "/dashboard/new-listing"]}
-                    regexExp={new RegExp("^/dashboard/my-listings/(.*?)")}
+                    regexExp="^/dashboard/my-listings/(.*?)"
                     iconName="AdvertIcon"
                 />
                 <NavBarItem href="/dashboard/preferences" label="Preferences" activePaths={["/dashboard/preferences"]} iconName="SettingsIcon" />
@@ -29,7 +29,7 @@ export const DashboardSideBar = async () => {
                         href="/dashboard/listings"
                         activePaths={["/dashboard/listings"]}
                         label="All Adverts"
-                        regexExp={new RegExp("^/dashboard/listings/(.*?)")}
+                        regexExp="^/dashboard/listings/(.*?)"
                         iconName="ListIcon"
                     />
                 )}

@@ -1,21 +1,21 @@
 "use client";
 import { useState } from "react";
 import { ListingItem } from "@/utils/types";
-import { ReviewListingModal } from "../../Modals/ReviewListingModal";
+import { RenewListingItemModal } from "../../Modals/RenewListingItemModal";
 
 interface Props {
     listingItem?: ListingItem;
 }
 
-export const ReviewButton = ({ listingItem }: Props) => {
+export const RenewButton = ({ listingItem }: Props) => {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
         <>
             <button className="btn-ghost btn-sm btn" onClick={() => setModalVisible(true)}>
-                Review
+                Renew
             </button>
-            <ReviewListingModal setVisible={setModalVisible} visible={modalVisible} listingItem={listingItem} />
+            <RenewListingItemModal setVisible={setModalVisible} visible={modalVisible} listingItem={listingItem} />
         </>
     );
 };

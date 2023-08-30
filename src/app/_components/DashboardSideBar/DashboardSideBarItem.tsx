@@ -9,7 +9,7 @@ interface Props {
     href: string;
     label: string;
     activePaths?: string[];
-    regexExp?: RegExp;
+    regexExp?: string;
     iconName?: "UserIcon" | "AdvertIcon" | "SettingsIcon" | "NotificationIcon" | "ListIcon";
 }
 
@@ -22,7 +22,7 @@ export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp,
                 className={clsx({
                     "px-4 py-3": true,
                     "active hover:!bg-base-content hover:!text-base-300":
-                        activePaths.includes(pathname) || (regexExp?.test && regexExp?.test(pathname)),
+                        activePaths.includes(pathname) || (regexExp && new RegExp(regexExp)?.test(pathname)),
                 })}
             >
                 {iconName && (

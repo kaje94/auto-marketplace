@@ -1,6 +1,6 @@
 "use client";
 import { useMounted } from "@/app/_hooks";
-import { CheckCircleIcon, EditIcon, EyeOffIcon, MenuIcon, RefreshIcon, TrashIcon } from "@/icons";
+import { CheckCircleIcon, EditIcon, EyeIcon, EyeOffIcon, MenuIcon, RefreshIcon, TrashIcon } from "@/icons";
 import { ListingStatusTypes } from "@/utils/enum";
 import { ListingItem } from "@/utils/types";
 import clsx from "clsx";
@@ -31,6 +31,9 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin 
                     <MenuIcon className="cursor-pointer opacity-30 transition-all duration-200 hover:opacity-75 hover:shadow" />
                 </label>
                 <ul tabIndex={0} className="dropdown-content menu rounded-box z-[1] -mr-1 mt-3 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg">
+                    {status && status === ListingStatusTypes.Posted && (
+                        <MenuItem icon={<EyeIcon height={18} />} link={`/search/${listingId}`} label="View Advert" />
+                    )}
                     <MenuItem icon={<EditIcon height={18} />} link={`${window?.location?.pathname}/edit/${listingId}`} label="Edit" />
                     {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
                         <MenuItem icon={<EyeOffIcon height={17} />} onClick={() => setUnListModalVisible(true)} label="Unlist" />

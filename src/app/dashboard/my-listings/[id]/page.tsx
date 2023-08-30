@@ -21,7 +21,8 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 itemDetails={itemDetails}
                 withinDashboard={true}
                 showSellerDetails={false}
-                loggedInUser={{ email: session?.user?.email, id: session?.user?.id }}
+                loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
+                basePath="/dashboard/my-listings"
             />
         </>
     );

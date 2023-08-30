@@ -24,7 +24,10 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                     { href: "/search", title: "Search" },
                 ]}
             />
-            <ListingDetails itemDetails={itemDetails} loggedInUser={{ email: session?.user?.email, id: session?.user?.id }} />
+            <ListingDetails
+                itemDetails={itemDetails}
+                loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
+            />
             <RelatedListings relatedListings={relatedListings} />
         </div>
     );

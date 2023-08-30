@@ -7,6 +7,7 @@ import { FC } from "react";
 import { ReviewButton } from "./ReviewButton";
 import Link from "next/link";
 import { ListingItem } from "@/utils/types";
+import { RenewButton } from "./RenewButton";
 
 interface Props {
     loading?: boolean;
@@ -43,9 +44,10 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
                             <button className="btn-ghost btn-sm btn">View</button>
                         </Link>
                     )}
-                    {userId && isAdmin && listingId && listingStatus === ListingStatusTypes.UnderReview && (
+                    {userId && isAdmin && listingStatus === ListingStatusTypes.UnderReview && (
                         <ReviewButton listingItem={listingItem as ListingItem} />
                     )}
+                    {userId && listingStatus === ListingStatusTypes.Expired && <RenewButton listingItem={listingItem as ListingItem} />}
                     {listingStatus === ListingStatusTypes.Declined && (
                         <Link href={`${window?.location?.pathname}/edit/${listingId}`}>
                             <button className="btn-ghost btn-sm btn">Edit</button>

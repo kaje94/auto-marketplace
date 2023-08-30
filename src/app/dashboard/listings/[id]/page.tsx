@@ -17,7 +17,12 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "All Adverts", href: "/dashboard/listings" }]}
             />
             <ListingDetailBanner isAdmin={session?.user?.isAdmin} listingItem={itemDetails} />
-            <ListingDetails itemDetails={itemDetails} withinDashboard={true} loggedInUser={{ email: session?.user?.email, id: session?.user?.id }} />
+            <ListingDetails
+                itemDetails={itemDetails}
+                withinDashboard={true}
+                loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
+                basePath="/dashboard/listings"
+            />
         </>
     );
 };

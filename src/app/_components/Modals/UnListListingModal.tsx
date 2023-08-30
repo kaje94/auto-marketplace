@@ -10,6 +10,7 @@ import { Select, TextArea, ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { unListListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface Props {
     listingItem?: ListingItem;
@@ -21,6 +22,7 @@ export const UnListListingModal = (props: Props) => {
     const { listingItem = {}, setVisible, visible } = props;
     const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
     const toastId = useRef<string>();
+    const router = useRouter();
 
     const { formState, handleSubmit, register } = useForm<UnListListingReq>({
         resolver: zodResolver(UnListListingSchema),
@@ -29,9 +31,14 @@ export const UnListListingModal = (props: Props) => {
     });
 
     const { mutate, isLoading } = useMutation((reqParams: UnListListingReq) => unListListingAction(reqParams, listingUserId!), {
+        onSuccess: (_, id) => {
+            if (window?.location?.pathname === `/search/${id}`) {
+                router.replace(`/dashboard/listings/${id}`);
+            }
+        },
         onMutate: () => {
             setVisible(false);
-            toastId.current = toast.loading(`Un-listing advert ${listingTitle}...`);
+            toastId.current = toast.loading(`Unlisting advert ${listingTitle}...`);
         },
         onSettled: (_data, err) => {
             if (err) {
@@ -43,9 +50,9 @@ export const UnListListingModal = (props: Props) => {
     });
 
     return (
-        <Modal visible={visible} onVisibleChange={setVisible} title="Un-List Advert">
+        <Modal visible={visible} onVisibleChange={setVisible} title="Unlist Advert">
             <div className="mb-2 mt-4 text-sm">
-                By Un-Listing or withdrawing the advert, the advertisement will no longer be visible to the public.
+                By Unlisting or withdrawing the advert, the advertisement will no longer be visible to the public.
             </div>
             <form className="grid gap-1">
                 <Select
