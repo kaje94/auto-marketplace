@@ -11,7 +11,7 @@ interface Props extends ComponentProps<"input"> {
 export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     const { label, checkboxClassNames, loading, ...rest } = props;
     return (
-        <div className="form-control">
+        <div className="form-control mb-1 mt-2">
             <label className={clsx("label", !loading && "cursor-pointer")}>
                 <span className="label-text">{label}</span>
                 <input

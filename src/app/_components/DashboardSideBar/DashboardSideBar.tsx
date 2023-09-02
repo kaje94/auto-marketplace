@@ -9,7 +9,13 @@ export const DashboardSideBar = async () => {
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <ul className="menu rounded-box w-full bg-base-100 p-2 shadow-md">
-                <NavBarItem href="/dashboard/profile" label="Profile" activePaths={["/dashboard/profile"]} iconName="UserIcon" />
+                <NavBarItem
+                    href="/dashboard/profile"
+                    label="Profile"
+                    activePaths={["/dashboard/profile"]}
+                    iconName="UserIcon"
+                    regexExp="^/dashboard/profile/(.*?)"
+                />
                 <NavBarItem
                     href="/dashboard/my-listings"
                     label="My Adverts"

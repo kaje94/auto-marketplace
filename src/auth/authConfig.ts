@@ -122,13 +122,26 @@ export const authOptions: NextAuthOptions = {
             clientId: env.IDENTITY_CLIENT_ID,
             clientSecret: env.IDENTITY_CLIENT_SECRET,
             issuer: env.IDENTITY_BASE_URL,
-            authorization: { params: { scope: "openid email profile offline_access" } },
-            token: { params: { params: { scope: "openid email profile offline_access" } } },
+            authorization: { params: { scope: "openid email profile address phone offline_access" } },
+            token: { params: { params: { scope: "openid email profile address phone  offline_access" } } },
             profile: async (profile, token) => {
                 const response = await fetch(`${env.IDENTITY_BASE_URL}/connect/userinfo`, {
                     headers: { Authorization: `Bearer ${token.access_token!}` },
                 });
                 const data: UserInfoResponse = await response.json();
+                /*
+                data {
+                    sub: '545b2348-e19b-4a81-9db6-71c8d4c56f81',
+                    email: 'administrator@autostore.com',
+                    address: 'Piliyandala, Colombo, LK, 45676',
+                    preferred_username: 'administrator@autostore.com',
+                    name: 'administrator@autostore.com',
+                    email_verified: false,
+                    phone_number: '+94770742755',
+                    phone_number_verified: false
+                }
+                */
+
                 return { id: profile.sub, email: data.email, image: "", name: data.name, isAdmin: data.email === "administrator@autostore.com" };
             },
         }),
@@ -136,8 +149,10 @@ export const authOptions: NextAuthOptions = {
 };
 
 export const redirectToLoginPage = () => {
-    if (nextHeaders().get("x-invoke-path")) {
-        return redirect(`${authOptions.pages?.signIn}?callbackUrl=${nextHeaders().get("x-invoke-path")}`);
+    const invokedPath = nextHeaders().get("x-invoke-path") || nextHeaders().get("x-pathname");
+    console.log("invokedPath", invokedPath);
+    if (invokedPath) {
+        return redirect(`${authOptions.pages?.signIn}?callbackUrl=${invokedPath}`);
     } else {
         return redirect(`${authOptions.pages?.signIn}`);
     }

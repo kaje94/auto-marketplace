@@ -47,6 +47,7 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
         }
     } else {
         if (response.status === 401) {
+            console.log("getting 401 for api call", endpoint);
             return redirectToLoginPage();
         }
         let errorResponse: any = "";
