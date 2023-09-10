@@ -6,7 +6,6 @@ import Image from "next/image";
 import { PlusIcon, XCircleIcon } from "@/icons";
 import clsx from "clsx";
 import { ImageFile } from "@/utils/types";
-import { cn } from "@/utils/helpers";
 import { MaxVehicleImageCount } from "@/utils/constants";
 
 interface Props {
@@ -17,7 +16,7 @@ interface Props {
     error?: string;
 }
 
-export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {
+export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {
     const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1 } = props;
     const { getRootProps, getInputProps, open } = useDropzone({
         accept: { "image/*": [] },
@@ -163,4 +162,4 @@ export const ImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) 
         </>
     );
 });
-ImageUpload.displayName = "ImageUpload";
+ListingImageUpload.displayName = "ImageUpload";

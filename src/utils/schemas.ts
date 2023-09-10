@@ -1,9 +1,33 @@
 import { z } from "zod";
-import { FuelTypes, ListingReportReason, ListingStatusTypes, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
-import { MaxVehicleImageCount } from "./constants";
+import {
+    FuelTypes,
+    ListingReportReason,
+    ListingStatusTypes,
+    SubscriptionFrequencies,
+    TransmissionTypes,
+    VehicleConditionTypes,
+    VehicleTypes,
+} from "./enum";
+import { MaxVehicleImageCount, YearSelectMinYear } from "./constants";
+import { isValidDate } from "./helpers";
 
+const BooleanStringSchema = z.union([
+    z.boolean(),
+    z
+        .string()
+        .refine((value) => value === "true" || value === "false", {
+            message: "Value must be 'true' or 'false'",
+        })
+        .transform((value) => value === "true"),
+]);
 export const PriceSchema = z.object({
     amount: z.preprocess(Number, z.number().min(1, "Price amount needs to be a positive number")),
+    currency: z.string().default("LKR"),
+    isPriceNegotiable: z.boolean().default(false),
+});
+
+export const OptionalPriceSchema = z.object({
+    amount: z.preprocess(Number, z.number().min(0, "Price amount needs to be a positive number")).default(0),
     currency: z.string().default("LKR"),
     isPriceNegotiable: z.boolean().default(false),
 });
@@ -39,12 +63,13 @@ export const VehicleFeatureSchema = z.object({
 const YearSchema = z.string().refine(
     (value) => {
         const numericValue = Number(value);
-        return numericValue >= 1900 && numericValue <= new Date().getFullYear();
+        return numericValue >= YearSelectMinYear && numericValue <= new Date().getFullYear();
     },
-    { message: `Year must be between 1960 and ${new Date().getFullYear()}` }
+    { message: `Year must be between ${YearSelectMinYear} and ${new Date().getFullYear()}` }
 );
 
 export const ListingIdField = z.number();
+export const ListingSubscriptionIdField = z.number();
 
 export const VehicleSchema = z.object({
     id: ListingIdField.optional(),
@@ -87,6 +112,33 @@ export const EditListingSchema = CreateListingSchema.extend({
     listingId: ListingIdField,
 });
 
+export const CreateSubscriptionSchema = z.object({
+    displayName: z.string().min(1),
+    type: z.nativeEnum(VehicleTypes, { invalid_type_error: "Invalid Vehicle Type" }),
+    brand: z.union([z.string(), z.null()]).optional(),
+    model: z.union([z.string(), z.null()]).optional(),
+    trim: z.union([z.string(), z.null()]).optional(),
+    minYearOfManufacture: z.union([YearSchema, z.literal(""), z.null()]).optional(),
+    maxYearOfManufacture: z.union([YearSchema, z.literal(""), z.null()]).optional(),
+    minYearOfRegistration: z.union([YearSchema, z.literal(""), z.null()]).optional(),
+    maxYearOfRegistration: z.union([YearSchema, z.literal(""), z.null()]).optional(),
+    minMillage: z
+        .union([z.preprocess(Number, z.number().min(1, "Minimum milage needs to be a positive number")), z.literal(""), z.null()])
+        .optional(),
+    maxMillage: z
+        .union([z.preprocess(Number, z.number().min(1, "Minimum milage needs to be a positive number")), z.literal(""), z.null()])
+        .optional(),
+    condition: z.union([z.nativeEnum(VehicleConditionTypes, { invalid_type_error: "Invalid Condition Type" }), z.literal(""), z.null()]).optional(),
+    minPrice: OptionalPriceSchema.optional(),
+    maxPrice: OptionalPriceSchema.optional(),
+    notificationFrequency: z.nativeEnum(SubscriptionFrequencies, { invalid_type_error: "Invalid frequency Type" }),
+    subscriptionExpiryDate: z.string().min(1, "Expiration date is required"),
+});
+
+export const EditSubscriptionSchema = CreateSubscriptionSchema.extend({
+    listingSubscriptionId: ListingSubscriptionIdField,
+});
+
 export const ReviewListingSchema = z.object({
     listingId: ListingIdField,
     status: z.nativeEnum(ListingStatusTypes),
@@ -98,10 +150,14 @@ export const UnListListingSchema = z.object({
     listingStatus: z.nativeEnum(ListingStatusTypes),
 });
 
-export const DashboardListingFilterSchema = z.object({
-    Title: z.string().optional(),
+export const MyListingsFilterSchema = z.object({
+    ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
     StartCreatedDate: z.string().optional(),
     EndCreatedDate: z.string().optional(),
+});
+
+export const DashboardListingFilterSchema = MyListingsFilterSchema.extend({
+    Title: z.string().optional(),
     MinPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal("")]).optional(),
     MaxPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal("")]).optional(),
     City: z.string().optional(),
@@ -111,13 +167,15 @@ export const DashboardListingFilterSchema = z.object({
     FuelType: z.union([z.nativeEnum(FuelTypes), z.literal("")]).optional(),
     Condition: z.union([z.nativeEnum(VehicleConditionTypes), z.literal("")]).optional(),
     Transmission: z.union([z.nativeEnum(TransmissionTypes), z.literal("")]).optional(),
-    ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
 });
 
-export const MyListingsFilterSchema = z.object({
-    ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
-    StartCreatedDate: z.string().optional(),
-    EndCreatedDate: z.string().optional(),
+export const DashboardMySubscriptionFilterSchema = z.object({
+    Active: z.union([BooleanStringSchema, z.literal("")]).optional(),
+    NotificationFrequency: z.union([z.nativeEnum(SubscriptionFrequencies), z.literal("")]).optional(),
+});
+
+export const DashboardSubscriptionFilterSchema = DashboardMySubscriptionFilterSchema.extend({
+    UserId: z.string().optional(),
 });
 
 export const ReportListingSchema = z.object({
@@ -125,4 +183,9 @@ export const ReportListingSchema = z.object({
     reason: z.nativeEnum(ListingReportReason),
     emailAddress: z.string().email(),
     message: z.string().min(1, "A message is required"),
+});
+
+export const ToggleSubscriptionSchema = z.object({
+    listingSubscriptionId: ListingSubscriptionIdField,
+    subscriptionExpiryDate: z.union([z.string().min(1, "Expiration date is required"), z.date()]),
 });

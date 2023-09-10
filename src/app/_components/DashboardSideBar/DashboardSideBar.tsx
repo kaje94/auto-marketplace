@@ -23,7 +23,13 @@ export const DashboardSideBar = async () => {
                     regexExp="^/dashboard/my-listings/(.*?)"
                     iconName="AdvertIcon"
                 />
-                <NavBarItem href="/dashboard/preferences" label="Preferences" activePaths={["/dashboard/preferences"]} iconName="SettingsIcon" />
+                <NavBarItem
+                    href="/dashboard/my-subscriptions"
+                    label="My Subscriptions"
+                    activePaths={["/dashboard/my-subscriptions", "/dashboard/new-subscription"]}
+                    regexExp="^/dashboard/my-subscriptions/(.*?)"
+                    iconName="RssIcon"
+                />
                 <NavBarItem
                     href="/dashboard/notifications"
                     label="Notifications"
@@ -31,13 +37,22 @@ export const DashboardSideBar = async () => {
                     iconName="NotificationIcon"
                 />
                 {session?.user?.isAdmin && (
-                    <NavBarItem
-                        href="/dashboard/listings"
-                        activePaths={["/dashboard/listings"]}
-                        label="All Adverts"
-                        regexExp="^/dashboard/listings/(.*?)"
-                        iconName="ListIcon"
-                    />
+                    <>
+                        <NavBarItem
+                            href="/dashboard/listings"
+                            activePaths={["/dashboard/listings"]}
+                            label="All Adverts"
+                            regexExp="^/dashboard/listings/(.*?)"
+                            iconName="ListIcon"
+                        />
+                        <NavBarItem
+                            href="/dashboard/subscriptions"
+                            label="All Subscriptions"
+                            activePaths={["/dashboard/subscriptions"]}
+                            regexExp="^/dashboard/subscriptions/(.*?)"
+                            iconName="ClipboardIcon"
+                        />
+                    </>
                 )}
             </ul>
         </aside>

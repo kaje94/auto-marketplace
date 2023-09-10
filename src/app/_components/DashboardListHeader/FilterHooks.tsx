@@ -1,12 +1,18 @@
 import { searchParamsToObject } from "@/utils/helpers";
-import { MyListingsFilterReq, DashboardListFilterReq } from "@/utils/types";
+import { MyListingsFilterReq, DashboardListFilterReq, DashboardSubscriptionFilterReq } from "@/utils/types";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { UseFormReset } from "react-hook-form";
 import qs from "query-string";
 
-export const useFilter = ({ reset, defaultFilter }: { reset: UseFormReset<{}>; defaultFilter: MyListingsFilterReq | DashboardListFilterReq }) => {
+export const useFilter = ({
+    reset,
+    defaultFilter,
+}: {
+    reset: UseFormReset<{}>;
+    defaultFilter: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq;
+}) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -23,7 +29,7 @@ export const useFilter = ({ reset, defaultFilter }: { reset: UseFormReset<{}>; d
         router.push(window?.location?.pathname);
     };
 
-    const onApplyFilterClick = (values: MyListingsFilterReq | DashboardListFilterReq) => {
+    const onApplyFilterClick = (values: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq) => {
         const searchQuery = qs.stringify({ ...searchParamsObj, ...values }, { skipEmptyString: true });
         setDropdownOpen(false);
         if (newSearchQuery !== searchQuery) {

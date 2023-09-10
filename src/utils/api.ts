@@ -13,6 +13,14 @@ import {
     ReportListingReq,
     MyListingsFilterReq,
     UnListListingReq,
+    CreateSubscriptionReq,
+    ListingSubscriptionItems,
+    DashboardSubscriptionFilterReq,
+    DashboardMySubscriptionFilterReq,
+    ListingSubscriptionIdType,
+    ToggleSubscriptionReq,
+    EditSubscriptionReq,
+    ListingSubscriptionItem,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
@@ -121,6 +129,31 @@ export const api = {
     incrementViews: (listingId: ListingIdType) =>
         fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: 0 } }),
     reportListing: (body: ReportListingReq) => fetchApi.post<BodyInit, void>(`/v1/Listings/${body.listingId}/report`, JSON.stringify(body)),
+
+    // Listing subscriptions
+    postListingSubscription: (body: CreateSubscriptionReq) =>
+        fetchApi.protectedPost<BodyInit, ListingSubscriptionIdType>("/v1/ListingSubscriptions", JSON.stringify(body)),
+    putListingSubscription: (body: EditSubscriptionReq) =>
+        fetchApi.protectedPut<BodyInit, void>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}`, JSON.stringify(body)),
+    getListingSubscriptions: (req?: PaginatedRequest & DashboardSubscriptionFilterReq) =>
+        fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(`/v1/ListingSubscriptions?${qs.stringify(req ?? {})}`, {
+            next: { tags: [apiTags.getListingSubscriptions()] },
+        }),
+    getMyListingSubscriptions: (listingUserId: string, req?: PaginatedRequest & DashboardMySubscriptionFilterReq) =>
+        fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(`/v1/Users/me/listing-subscriptions?${qs.stringify(req ?? {})}`, {
+            next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)] },
+        }),
+    getListingSubscriptionItem: (id: ListingIdType) =>
+        fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/ListingSubscriptions/${id}`, {
+            next: { tags: [apiTags.getListingSubscriptionItem(id)] },
+        }),
+    getMyListingSubscriptionItem: (id: ListingIdType) =>
+        fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/Users/me/listing-subscriptions/${id}`, {
+            next: { tags: [apiTags.getMyListingSubscriptionItem(id)] },
+        }),
+    deleteListingSubscriptions: (id: ListingSubscriptionIdType) => fetchApi.protectedDelete<void>(`/v1/ListingSubscriptions/${id}`),
+    toggleListingSubscription: (body: ToggleSubscriptionReq) =>
+        fetchApi.protectedPost<BodyInit, string>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}/toggle-activation`, JSON.stringify(body)),
 };
 
 export const apiTags = {
@@ -132,6 +165,10 @@ export const apiTags = {
     getMyListings: (listingUserId: string) => `get-my-listings-${listingUserId}`,
     getListingsItem: (id: ListingIdType) => `get-listing-item-${id}`,
     getMyListingsItem: (id: ListingIdType) => `get-my-listing-item-${id}`,
+    getListingSubscriptions: () => `get-admin-listing-subscriptions`,
+    getMyListingSubscriptions: (listingUserId: string) => `get-my-listing-subscriptions-${listingUserId}`,
+    getListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-listing-subscription-item-${id}`,
+    getMyListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-my-listing-subscription-item-${id}`,
 };
 
 export const listingItemTags = (id: ListingIdType, listingUserId: string) => [
@@ -140,4 +177,11 @@ export const listingItemTags = (id: ListingIdType, listingUserId: string) => [
     apiTags.getListingsItem(id),
     apiTags.getMyListings(listingUserId),
     apiTags.getListings(),
+];
+
+export const subscriptionApiTags = (id: ListingSubscriptionIdType, listingUserId: string) => [
+    apiTags.getMyListingSubscriptions(listingUserId),
+    apiTags.getListingSubscriptions(),
+    apiTags.getListingSubscriptionItem(id),
+    apiTags.getMyListingSubscriptionItem(id),
 ];

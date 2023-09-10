@@ -1,5 +1,5 @@
 "use client";
-import { ListingForm } from "@/app/_components/ListingForm";
+import { ListingForm } from "@/app/_components/Forms/Listings/ListingForm";
 import { CreateListingReq, EditListingReq, ListingItem, VehicleFeature } from "@/utils/types";
 import { useMutation } from "@tanstack/react-query";
 import { CreateListingSchema } from "@/utils/schemas";

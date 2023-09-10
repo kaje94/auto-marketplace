@@ -15,41 +15,32 @@ const AllAds = async ({ searchParams }: SearchParams) => {
     const session = await getServerSession(authOptions);
     let listings = await api.getListings({ PageNumber: Number(page), ...parsedSearchParams });
     listings = { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
-    const hasSearchParams = Object.keys(DashboardListingFilterSchema.parse(parsedSearchParams)).length > 0;
 
     if (listings.totalCount > 0 && listings.items?.length === 0 && page !== "1") {
         const lastPageNumber = Math.ceil(listings.totalCount / 10);
-        // todo: check if this works fine
         redirect(`/dashboard/listings?${qs.stringify({ ...parsedSearchParams, PageNumber: lastPageNumber }, { skipEmptyString: true })}`);
     }
 
     return (
         <>
-            <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="All Adverts" />
-
-            <DashboardListHeader itemCount={listings.totalCount} filter={<DashboardAllListFilter />} />
+            <DashboardListHeader
+                itemCount={listings.totalCount}
+                filter={<DashboardAllListFilter />}
+                addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
+            />
 
             <div className="grid gap-1 xl:gap-2">
-                {listings.totalCount === 0 && (
-                    <Empty
-                        text={
-                            hasSearchParams
-                                ? "No adverts to display. Please adjust your search filters."
-                                : "You have not created any adverts yet. Get started by creating your first advert"
-                        }
-                    />
-                )}
+                {listings.totalCount === 0 && <Empty text={"No adverts to display. Please adjust your search filters."} />}
                 {listings.items?.map((item) => (
-                    <DashboardListingItem
-                        key={item.id}
-                        listingItem={item}
-                        basePath="/dashboard/listings"
-                        isAdmin={session?.user?.isAdmin}
-                        // need created at field as well
-                    />
+                    <DashboardListingItem key={item.id} listingItem={item} basePath="/dashboard/listings" isAdmin={session?.user?.isAdmin} />
                 ))}
                 {listings.totalPages > 1 && (
-                    <Pagination pageNumber={listings.pageNumber} totalPages={listings.totalPages} basePath="/dashboard/listings" />
+                    <Pagination
+                        pageNumber={listings.pageNumber}
+                        totalPages={listings.totalPages}
+                        basePath="/dashboard/listings"
+                        searchParams={searchParams}
+                    />
                 )}
             </div>
         </>

@@ -2,7 +2,7 @@ import { FC } from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import Link from "next/link";
-import { getFormattedCurrency, getLocationString, getRandomItem, unCamelCase } from "@/utils/helpers";
+import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingStatusTypes } from "@/utils/enum";
 import { DashboardListingItemMenu } from "./DashboardListingItemMenu";
 import { ListingItem } from "@/utils/types";
@@ -16,14 +16,14 @@ interface Props {
 
 export const DashboardListingItem: FC<Props> = (props) => {
     const { basePath, listingItem = {}, loading, isAdmin } = props;
-    const { title, price, description, status, id, vehicle, location } = listingItem as ListingItem;
+    const { title, price, description, status, id, vehicle, location, createdOn } = listingItem as ListingItem;
     const imageUrl = vehicle?.vehicleImages[0]?.url;
     const blurDataURL = vehicle?.vehicleImages[0]?.blurDataURL;
     const locationStr = getLocationString(location);
     const priceStr = getFormattedCurrency(price?.amount, price?.currency);
 
-    const myAddItemContent = (
-        <>
+    const listingItemContent = (
+        <div className="grid grid-cols-12 gap-0.5 p-3 md:gap-2 md:p-4 xl:gap-4">
             {loading ? (
                 <div className="relative hidden aspect-video h-full w-full overflow-hidden rounded-xl bg-base-200 md:col-span-5 md:block xl:col-span-3" />
             ) : (
@@ -65,7 +65,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                                 {unCamelCase(status)}
                             </span>
                         </div>
-                        <DashboardListingItemMenu listingItem={listingItem as ListingItem} isAdmin={isAdmin} />
+                        <DashboardListingItemMenu listingItem={listingItem as ListingItem} isAdmin={isAdmin} key={id} />
                     </div>
                 )}
 
@@ -93,25 +93,24 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     )}
                 </div>
 
-                {loading ? <div className="h-5 w-32 bg-base-200" /> : <div className="text-sm italic text-neutral-400">Posted 2 days ago</div>}
+                <div className="mt-2">
+                    {loading ? (
+                        <div className="h-4 w-32 bg-base-200" />
+                    ) : (
+                        <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdOn))}</div>
+                    )}
+                </div>
             </div>
-        </>
+        </div>
     );
 
     if (loading) {
-        return (
-            <div className="card mb-3 grid animate-pulse grid-cols-12 gap-0.5 overflow-x-hidden bg-base-100 p-3 shadow md:gap-2 md:p-4 xl:gap-4">
-                {myAddItemContent}
-            </div>
-        );
+        return <div className="card mb-3 animate-pulse overflow-x-hidden bg-base-100 shadow">{listingItemContent}</div>;
     }
 
     return (
-        <Link
-            className="card mb-3 grid cursor-pointer grid-cols-12 gap-0.5 bg-base-100 p-3 shadow transition-shadow zoom-inner-image hover:shadow-md md:gap-2 md:p-4 xl:gap-4"
-            href={`${basePath}/${id}`}
-        >
-            {myAddItemContent}
+        <Link className="card mb-3 cursor-pointer bg-base-100 shadow transition-shadow zoom-inner-image hover:shadow-md" href={`${basePath}/${id}`}>
+            {listingItemContent}
         </Link>
     );
 };

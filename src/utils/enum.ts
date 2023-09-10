@@ -53,3 +53,10 @@ export enum ListingReportReason {
     Spam = "Spam",
     WrongCategory = "WrongCategory",
 }
+
+export enum SubscriptionFrequencies {
+    EveryThreeHours = "EveryThreeHours",
+    EverySixHours = "EverySixHours",
+    OnceADay = "OnceADay",
+    OnceAWeek = "OnceAWeek",
+}

@@ -19,15 +19,16 @@ const MyAds = async ({ searchParams }: SearchParams) => {
 
     if (listings.totalCount > 0 && listings.items?.length === 0 && page !== "1") {
         const lastPageNumber = Math.ceil(listings.totalCount / 10);
-        // todo: check if this works fine
         redirect(`/dashboard/my-listings?${qs.stringify({ ...parsedSearchParams, PageNumber: lastPageNumber }, { skipEmptyString: true })}`);
     }
 
     return (
         <>
-            <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="My Adverts" />
-
-            <DashboardListHeader itemCount={listings.totalCount} filter={<DashboardMyListFilter />} />
+            <DashboardListHeader
+                itemCount={listings.totalCount}
+                filter={<DashboardMyListFilter />}
+                addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
+            />
 
             <div className="grid gap-1 xl:gap-2">
                 {listings.totalCount === 0 && (
@@ -40,16 +41,15 @@ const MyAds = async ({ searchParams }: SearchParams) => {
                     />
                 )}
                 {listings.items?.map((item) => (
-                    <DashboardListingItem
-                        key={item.id}
-                        listingItem={item}
-                        basePath="/dashboard/my-listings"
-                        isAdmin={session?.user?.isAdmin}
-                        // need created at field as well
-                    />
+                    <DashboardListingItem key={item.id} listingItem={item} basePath="/dashboard/my-listings" isAdmin={session?.user?.isAdmin} />
                 ))}
                 {listings.totalPages > 1 && (
-                    <Pagination pageNumber={listings.pageNumber} totalPages={listings.totalPages} basePath="/dashboard/my-listings" />
+                    <Pagination
+                        pageNumber={listings.pageNumber}
+                        totalPages={listings.totalPages}
+                        basePath="/dashboard/my-listings"
+                        searchParams={searchParams}
+                    />
                 )}
             </div>
         </>

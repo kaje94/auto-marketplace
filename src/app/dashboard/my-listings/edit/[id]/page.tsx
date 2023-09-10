@@ -1,7 +1,8 @@
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
-import { BreadCrumbs, EditListingForm } from "@/app/_components";
+import { BreadCrumbs } from "@/app/_components";
 import { ListingIdType } from "@/utils/types";
+import { EditListingForm } from "@/app/_components/Forms/Listings/EditListingForm";
 
 const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) => {
     let [itemDetails, features] = await Promise.all([api.getMyListingsItem(params.id), api.getFeaturesList()]);

@@ -1,4 +1,4 @@
-import { ListingForm } from "@/app/_components/ListingForm";
+import { ListingForm } from "@/app/_components/Forms/Listings/ListingForm";
 
 const ListingFormLoading = () => {
     return <ListingForm isLoading />;

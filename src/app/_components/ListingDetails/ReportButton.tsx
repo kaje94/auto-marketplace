@@ -17,7 +17,6 @@ export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle, user
     return (
         <>
             <button
-                tabIndex={0}
                 className={clsx("!btn-ghost btn-error btn-block btn gap-2", loading && "animate-pulse")}
                 disabled={loading}
                 onClick={() => setModalVisible(true)}

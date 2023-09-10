@@ -12,6 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.374.0",
     "@aws-sdk/s3-request-presigner": "^3.375.0",
+    "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.1.1",
     "@t3-oss/env-nextjs": "^0.6.0",
     "@tanstack/react-query": "^4.32.0",
@@ -32,6 +33,7 @@
     "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-click-away-listener": "^2.2.3",
+    "react-datepicker": "^4.17.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.45.2",
@@ -45,6 +47,7 @@
   "devDependencies": {
     "@types/fslightbox-react": "^1.7.3",
     "@types/react": "^18.2.14",
+    "@types/react-datepicker": "^4.15.0",
     "@types/react-dom": "^18.2.6",
     "@typescript-eslint/parser": "^5.59.7",
     "eslint-config-prettier": "^8.8.0",

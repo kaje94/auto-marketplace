@@ -10,6 +10,7 @@ import { RenewListingItemModal } from "@/app/_components/Modals/RenewListingItem
 import { DeleteListingItemModal } from "@/app/_components/Modals/DeleteListingItemModal";
 import { ReviewListingModal } from "@/app/_components/Modals/ReviewListingModal";
 import { UnListListingModal } from "@/app/_components/Modals/UnListListingModal";
+import ClickAwayListener from "react-click-away-listener";
 
 interface Props {
     listingItem?: ListingItem;
@@ -23,34 +24,44 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin 
     const [renewModalVisible, setRenewModalVisible] = useState(false);
     const [reviewModalVisible, setReviewModalVisible] = useState(false);
     const [unListModalVisible, setUnListModalVisible] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);
 
     if (mounted) {
         return (
-            <div className="dropdown-end dropdown">
-                <label tabIndex={0} onClick={(event) => event.preventDefault()}>
-                    <MenuIcon className="cursor-pointer opacity-30 transition-all duration-200 hover:opacity-75 hover:shadow" />
-                </label>
-                <ul tabIndex={0} className="dropdown-content menu rounded-box z-[1] -mr-1 mt-3 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg">
-                    {status && status === ListingStatusTypes.Posted && (
-                        <MenuItem icon={<EyeIcon height={18} />} link={`/search/${listingId}`} label="View Advert" />
-                    )}
-                    <MenuItem icon={<EditIcon height={18} />} link={`${window?.location?.pathname}/edit/${listingId}`} label="Edit" />
-                    {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
-                        <MenuItem icon={<EyeOffIcon height={17} />} onClick={() => setUnListModalVisible(true)} label="Unlist" />
-                    )}
-                    {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status) && (
-                        <MenuItem icon={<RefreshIcon height={17} />} onClick={() => setRenewModalVisible(true)} label="Renew" />
-                    )}
-                    {isAdmin && status === ListingStatusTypes.UnderReview && (
-                        <MenuItem icon={<CheckCircleIcon height={18} />} onClick={() => setReviewModalVisible(true)} label="Review" />
-                    )}
-                    <MenuItem
-                        icon={<TrashIcon height={18} />}
-                        onClick={() => setDeleteModalVisible(true)}
-                        label="Delete"
-                        classNames="text-error hover:!bg-error hover:!text-error-content"
-                    />
-                </ul>
+            <>
+                <MenuIcon
+                    className="cursor-pointer opacity-30 transition-all duration-200 hover:opacity-75 hover:shadow"
+                    onClick={(event) => {
+                        event.preventDefault();
+                        setMenuVisible(true);
+                    }}
+                />
+                <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
+                    <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>
+                        <ul className="dropdown-content menu rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg">
+                            {status && status === ListingStatusTypes.Posted && (
+                                <MenuItem icon={<EyeIcon height={18} />} link={`/search/${listingId}`} label="View Advert" />
+                            )}
+                            <MenuItem icon={<EditIcon height={18} />} link={`${window?.location?.pathname}/edit/${listingId}`} label="Edit" />
+                            {status &&
+                                [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
+                                    <MenuItem icon={<EyeOffIcon height={17} />} onClick={() => setUnListModalVisible(true)} label="Unlist" />
+                                )}
+                            {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status) && (
+                                <MenuItem icon={<RefreshIcon height={17} />} onClick={() => setRenewModalVisible(true)} label="Renew" />
+                            )}
+                            {isAdmin && status === ListingStatusTypes.UnderReview && (
+                                <MenuItem icon={<CheckCircleIcon height={18} />} onClick={() => setReviewModalVisible(true)} label="Review" />
+                            )}
+                            <MenuItem
+                                icon={<TrashIcon height={18} />}
+                                onClick={() => setDeleteModalVisible(true)}
+                                label="Delete"
+                                classNames="text-error hover:!bg-error hover:!text-error-content"
+                            />
+                        </ul>
+                    </div>
+                </ClickAwayListener>
                 <DeleteListingItemModal
                     visible={deleteModalVisible}
                     setVisible={setDeleteModalVisible}
@@ -60,7 +71,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin 
                 <RenewListingItemModal visible={renewModalVisible} setVisible={setRenewModalVisible} listingItem={listingItem as ListingItem} />
                 <ReviewListingModal visible={reviewModalVisible} setVisible={setReviewModalVisible} listingItem={listingItem as ListingItem} />
                 <UnListListingModal visible={unListModalVisible} setVisible={setUnListModalVisible} listingItem={listingItem as ListingItem} />
-            </div>
+            </>
         );
     }
     return null;

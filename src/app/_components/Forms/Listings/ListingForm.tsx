@@ -1,9 +1,12 @@
 "use client";
-import { Select, TextArea, Checkbox, TagSelect, Input, ImageUpload } from "@/app/_components";
+import { Select, TextArea, Checkbox, TagSelect, Input } from "@/app/_components";
 import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { FC } from "react";
 import { FieldError, Controller, UseFormReturn } from "react-hook-form";
-import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
+import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
+import { AutocompleteController } from "../../FormElements/AutoComplete";
+import { ListingImageUpload } from "./ListingImageUpload";
+import { InputController } from "../../FormElements/Input";
 
 interface Props {
     featureOptions?: VehicleFeature[];
@@ -20,7 +23,7 @@ interface Props {
 
 export const ListingForm: FC<Props> = (props) => {
     const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {} } = props;
-    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control } = form as UseFormReturn<CreateListingReq>;
+    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control, setValue } = form as UseFormReturn<CreateListingReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -28,105 +31,101 @@ export const ListingForm: FC<Props> = (props) => {
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Key Specifications</div>
-                        <Select
+                        <AutocompleteController
+                            fieldName="vehicle.type"
                             label="Type"
-                            options={VehicleTypeList}
                             placeholder="Select Type"
                             loading={isLoading}
-                            error={(errors?.vehicle?.type as FieldError)?.message}
                             required
-                            {...register("vehicle.type")}
+                            options={VehicleTypeList}
+                            control={control}
+                            setValue={setValue}
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <Input
+                            <InputController
+                                fieldName="vehicle.brand"
                                 placeholder="Toyota, Nissan, Honda, etc"
                                 label="Brand"
-                                loading={isLoading}
-                                error={errors?.vehicle?.brand?.message}
                                 required
-                                {...register("vehicle.brand")}
+                                control={control}
                             />
-                            <Input
+                            <InputController
+                                fieldName="vehicle.model"
                                 placeholder="Civic, Sunny, Swift, etc"
                                 label="Model"
-                                loading={isLoading}
-                                error={errors?.vehicle?.model?.message}
                                 required
-                                {...register("vehicle.model")}
+                                control={control}
                             />
-                            <Input
-                                placeholder="LX, EX, EX-L, Sport, etc"
-                                label="Trim"
-                                loading={isLoading}
-                                error={errors?.vehicle?.trim?.message}
-                                {...register("vehicle.trim")}
-                            />
-                            <Input
-                                placeholder="2008"
+                            <InputController fieldName="vehicle.trim" placeholder="LX, EX, EX-L, Sport, etc" label="Trim" control={control} />
+                            <AutocompleteController
+                                fieldName="vehicle.yearOfManufacture"
                                 label="Year of Manufacture"
-                                type="number"
-                                min={1960}
-                                max={new Date().getFullYear()}
+                                placeholder="2000"
                                 loading={isLoading}
-                                error={errors?.vehicle?.yearOfManufacture?.message}
                                 required
-                                {...register("vehicle.yearOfManufacture")}
+                                options={YearRangeList}
+                                gridCols="grid-cols-3"
+                                showSelectedTick={false}
+                                control={control}
+                                setValue={setValue}
                             />
-                            <Input
-                                placeholder="2020"
+                            <AutocompleteController
+                                fieldName="vehicle.yearOfRegistration"
                                 label="Year of Registration"
-                                type="number"
-                                min={1960}
-                                max={new Date().getFullYear()}
+                                placeholder="2010"
                                 loading={isLoading}
-                                error={errors?.vehicle?.yearOfRegistration?.message}
                                 required
-                                {...register("vehicle.yearOfRegistration")}
+                                options={YearRangeList}
+                                gridCols="grid-cols-3"
+                                showSelectedTick={false}
+                                control={control}
+                                setValue={setValue}
                             />
-                            <Input
+                            <InputController
+                                fieldName="vehicle.millage"
                                 placeholder="50000"
                                 label="Milage"
                                 type="number"
-                                loading={isLoading}
-                                error={errors?.vehicle?.millage?.message}
                                 required
-                                {...register("vehicle.millage")}
+                                control={control}
                             />
-                            <Select
+                            <AutocompleteController
+                                fieldName="vehicle.condition"
                                 label="Condition"
-                                options={VehicleConditionList}
                                 placeholder="Select Condition"
                                 loading={isLoading}
-                                error={errors?.vehicle?.condition?.message}
                                 required
-                                {...register("vehicle.condition")}
+                                options={VehicleConditionList}
+                                control={control}
+                                setValue={setValue}
                             />
-                            <Select
+                            <AutocompleteController
+                                fieldName="vehicle.transmission"
                                 label="Transmission Type"
-                                options={TransmissionTypeList}
                                 placeholder="Select Type"
                                 loading={isLoading}
-                                error={errors?.vehicle?.transmission?.message}
                                 required
-                                {...register("vehicle.transmission")}
+                                options={TransmissionTypeList}
+                                control={control}
+                                setValue={setValue}
                             />
-                            <Select
+                            <AutocompleteController
+                                fieldName="vehicle.fuelType"
                                 label="Fuel Type"
-                                options={FuelTypeList}
                                 placeholder="Select Fuel Type"
                                 loading={isLoading}
-                                error={errors?.vehicle?.fuelType?.message}
                                 required
-                                {...register("vehicle.fuelType")}
+                                options={FuelTypeList}
+                                control={control}
+                                setValue={setValue}
                             />
-                            <Input
+                            <InputController
+                                fieldName="vehicle.engineCapacity"
                                 placeholder="1500"
                                 label="Engine Capacity in CC"
                                 type="number"
-                                loading={isLoading}
-                                error={errors?.vehicle?.engineCapacity?.message}
                                 required
-                                {...register("vehicle.engineCapacity")}
+                                control={control}
                             />
                         </div>
                     </div>
@@ -149,13 +148,13 @@ export const ListingForm: FC<Props> = (props) => {
                             Images <span className="text-error">*</span>
                         </div>
                         {isLoading ? (
-                            <ImageUpload loading={isLoading} />
+                            <ListingImageUpload loading={isLoading} />
                         ) : (
                             <Controller
                                 name="vehicle.vehicleImages"
                                 control={control}
                                 render={({ field, fieldState }) => (
-                                    <ImageUpload
+                                    <ListingImageUpload
                                         files={field.value}
                                         setFiles={(images) => field.onChange(images)}
                                         error={fieldState.error?.message}
@@ -168,31 +167,23 @@ export const ListingForm: FC<Props> = (props) => {
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Location Details</div>
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <Input
-                                placeholder="Colombo"
-                                label="City"
-                                loading={isLoading}
-                                error={errors?.location?.city?.message}
-                                required
-                                {...register("location.city")}
-                            />
-                            <Input
+                            <InputController fieldName="location.city" placeholder="Colombo" label="City" required control={control} />
+                            <InputController
+                                fieldName="location.state"
                                 placeholder="Western Province"
                                 label="State/Province"
-                                loading={isLoading}
-                                error={errors?.location?.state?.message}
                                 required
-                                {...register("location.state")}
+                                control={control}
                             />
-                            <Input
+                            <InputController
+                                fieldName="location.postalCode"
                                 placeholder="00001"
                                 label="Postal Code"
                                 type="number"
-                                loading={isLoading}
-                                error={errors?.location?.postalCode?.message}
                                 required
-                                {...register("location.postalCode")}
+                                control={control}
                             />
+
                             <Select
                                 label="Country"
                                 disabled
@@ -207,15 +198,7 @@ export const ListingForm: FC<Props> = (props) => {
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Price Details</div>
-                        <Input
-                            placeholder="40000000"
-                            label="Price"
-                            type="number"
-                            loading={isLoading}
-                            error={errors?.price?.amount?.message}
-                            required
-                            {...register("price.amount")}
-                        />
+                        <InputController fieldName="price.amount" placeholder="40000000" label="Price" type="number" required control={control} />
                         <Checkbox label="Negotiable Price" checkboxClassNames="mt-2" loading={isLoading} {...register("price.isPriceNegotiable")} />
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">

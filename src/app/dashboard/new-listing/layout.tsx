@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <>
             <BreadCrumbs
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { href: "/dashboard/my-listings", title: "My Adverts" }]}
-                currentPageTitle="Add new"
+                currentPageTitle="Create new Advert"
             />
             {children}
         </>

@@ -15,12 +15,7 @@ export const RenewButton: FC<Props> = ({ listingItem, loading }) => {
 
     return (
         <>
-            <button
-                tabIndex={0}
-                className={clsx("btn-block btn gap-2", loading && "animate-pulse")}
-                onClick={() => setRenewModalVisible(true)}
-                disabled={loading}
-            >
+            <button className={clsx("btn-block btn gap-2", loading && "animate-pulse")} onClick={() => setRenewModalVisible(true)} disabled={loading}>
                 <RefreshIcon />
                 Renew
             </button>

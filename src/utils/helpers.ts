@@ -29,6 +29,14 @@ export const convertYearToDateString = (year: string | number): string => {
     return formattedDate;
 };
 
+export const formatDateToYYYYMMDD = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so add 1 and pad with '0'
+    const day = String(date.getDate()).padStart(2, "0"); // Pad day with '0' if needed
+
+    return `${year}-${month}-${day}`;
+};
+
 export const getListingTitleFromVehicle = (vehicle: Vehicle | VehicleCreate) => {
     if (vehicle.trim) {
         return `${vehicle.brand} ${vehicle.model} ${vehicle.trim} ${vehicle.yearOfManufacture}`;
@@ -82,10 +90,17 @@ export const getListingTags = (location: Location, vehicle: Vehicle) => {
     return [location.city, unCamelCase(vehicle.condition), `${vehicle.millage} km`];
 };
 
-export const unCamelCase = (str: string = "") =>
-    str.replace(/([A-Z])/g, " $1").replace(/^./, function (str) {
-        return str.toUpperCase();
-    });
+export const unCamelCase = (str: string = "") => {
+    if (typeof str === "string") {
+        return str
+            .replace(/([A-Z])/g, " $1")
+            .replace(/^./, function (str) {
+                return str.toUpperCase();
+            })
+            ?.trim();
+    }
+    return str;
+};
 
 // todo: see if this can be moved to only a client side function
 export const thumbHashToDataUrl = (thumbHash?: string) => {
@@ -197,3 +212,39 @@ export const searchParamsToObject = (searchParams: ReadonlyURLSearchParams): Rec
 
     return searchObject;
 };
+
+export const isValidDate = (dateString: string) => {
+    // Use a regular expression or a library like Date-fns to validate the date format.
+    // Here, we use a simple regex pattern for illustration purposes.
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    return datePattern.test(dateString);
+};
+
+export const timeAgo = (date: Date): string => {
+    const currentDate = new Date();
+    const timeDifference = currentDate.getTime() - date.getTime();
+    const minutesAgo = Math.floor(timeDifference / (1000 * 60));
+    const hoursAgo = Math.floor(minutesAgo / 60);
+    const daysAgo = Math.floor(hoursAgo / 24);
+    const weeksAgo = Math.floor(daysAgo / 7);
+    const monthsAgo = Math.floor(currentDate.getMonth() - date.getMonth() + 12 * (currentDate.getFullYear() - date.getFullYear()));
+    const yearsAgo = Math.floor(currentDate.getFullYear() - date.getFullYear());
+
+    if (minutesAgo < 1) {
+        return "just now";
+    } else if (minutesAgo < 60) {
+        return minutesAgo === 1 ? "1 minute ago" : `${minutesAgo} minutes ago`;
+    } else if (hoursAgo < 24) {
+        return hoursAgo === 1 ? "1 hour ago" : `${hoursAgo} hours ago`;
+    } else if (daysAgo < 7) {
+        return daysAgo === 1 ? "1 day ago" : `${daysAgo} days ago`;
+    } else if (weeksAgo < 4) {
+        return weeksAgo === 1 ? "1 week ago" : `${weeksAgo} weeks ago`;
+    } else if (monthsAgo < 12) {
+        return monthsAgo === 1 ? "1 month ago" : `${monthsAgo} months ago`;
+    } else {
+        return yearsAgo === 1 ? "1 year ago" : `${yearsAgo} years ago`;
+    }
+};
+
+export const getRandomNumber = (min: number, max: number) => Math.round(Math.random() * (max - min) + min);

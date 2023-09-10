@@ -3,14 +3,14 @@ import { FC } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AdvertIcon, ListIcon, NotificationIcon, SettingsIcon, UserIcon } from "@/icons";
+import { AdvertIcon, ClipboardIcon, ListIcon, NotificationIcon, RssIcon, SettingsIcon, UserIcon } from "@/icons";
 
 interface Props {
     href: string;
     label: string;
     activePaths?: string[];
     regexExp?: string;
-    iconName?: "UserIcon" | "AdvertIcon" | "SettingsIcon" | "NotificationIcon" | "ListIcon";
+    iconName?: "UserIcon" | "AdvertIcon" | "SettingsIcon" | "NotificationIcon" | "ListIcon" | "RssIcon" | "ClipboardIcon";
 }
 
 export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp, iconName }) => {
@@ -34,6 +34,8 @@ export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp,
                                 SettingsIcon: <SettingsIcon className="h-5 w-5" />,
                                 NotificationIcon: <NotificationIcon className="h-5 w-5" />,
                                 ListIcon: <ListIcon className="h-5 w-5" />,
+                                RssIcon: <RssIcon className="h-5 w-5" />,
+                                ClipboardIcon: <ClipboardIcon className="h-5 w-5" />,
                             }[iconName]
                         }
                     </>

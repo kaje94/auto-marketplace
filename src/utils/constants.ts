@@ -1,7 +1,21 @@
-import { VehicleTypes, VehicleConditionTypes, TransmissionTypes, FuelTypes, ListingStatusTypes, ListingReportReason } from "./enum";
+import {
+    VehicleTypes,
+    VehicleConditionTypes,
+    TransmissionTypes,
+    FuelTypes,
+    ListingStatusTypes,
+    ListingReportReason,
+    SubscriptionFrequencies,
+} from "./enum";
 import { LabelValue, KeyValue } from "./types";
 
 export const MaxVehicleImageCount = 10;
+export const YearSelectMinYear = 1960;
+
+export const Dates = {
+    Days_7_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 7 + 1)),
+    Months_3_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * (31 * 3))),
+};
 
 export const ListingStatusDescriptions: {
     [key in ListingStatusTypes]: string;
@@ -44,3 +58,16 @@ export const ListingReportReasonList: LabelValue[] = Object.keys(ListingReportRe
     value: key,
     label: (ListingReportReason as KeyValue)[key]!,
 }));
+
+export const SubscriptFrequenciesList: LabelValue[] = Object.keys(SubscriptionFrequencies).map((key) => ({
+    value: key,
+    label: (SubscriptionFrequencies as KeyValue)[key]!,
+}));
+
+export const YearRangeList: LabelValue[] = Array.from({ length: new Date().getFullYear() - YearSelectMinYear + 1 }, (_, index) => {
+    const year = new Date().getFullYear() - index;
+    return {
+        value: year.toString(),
+        label: year.toString(),
+    };
+});

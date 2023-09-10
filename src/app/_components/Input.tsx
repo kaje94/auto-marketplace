@@ -7,15 +7,16 @@ export interface Props extends ComponentProps<"input"> {
     label?: string;
     inputClassNames?: string;
     labelClassNames?: string;
+    rootClassName?: string;
     error?: string;
     loading?: boolean;
     required?: boolean;
 }
-
+// todo: remove and replace with Input controller
 export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-    const { label, error, inputClassNames, labelClassNames, loading, required, ...rest } = props;
+    const { label, error, inputClassNames, labelClassNames, rootClassName, loading, required, ...rest } = props;
     return (
-        <div className="form-control w-full">
+        <div className={clsx("form-control w-full", rootClassName)}>
             <label className={clsx("label", labelClassNames)}>
                 <span className="label-text">
                     {label} {required && <span className="text-error">*</span>}

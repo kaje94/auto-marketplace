@@ -33,3 +33,7 @@ export { FilterIcon } from "./FilterIcon";
 export { ListIcon } from "./ListIcon";
 export { CheckCircleIcon } from "./CheckCircleIcon";
 export { EyeOffIcon } from "./EyeOffIcon";
+export { RssIcon } from "./RssIcon";
+export { ClipboardIcon } from "./ClipboardIcon";
+export { BellIcon } from "./BellIcon";
+export { BellOffIcon } from "./BellOffIcon";
