@@ -21,6 +21,7 @@ import {
     ToggleSubscriptionReq,
     EditSubscriptionReq,
     ListingSubscriptionItem,
+    VehicleBrand,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
@@ -100,6 +101,9 @@ export const api = {
     // todo: fix caching strategy for all get endpoints
     // { next: { revalidate: 0 } } for disabling cache
     getFeaturesList: () => fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features", { next: { tags: [apiTags.getFeaturesList()] } }),
+    getVehicleBrands: () => fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()] } }),
+    getVehicleModels: (brandId: string) =>
+        fetchApi.get<VehicleFeature[]>(`/v1/Vehicles/${brandId}/models`, { next: { tags: [apiTags.getVehicleModels()] } }),
     // need to revalidate after XXX
     getPostedListings: () =>
         fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted", { next: { revalidate: 0, tags: [apiTags.getPostedListings()] } }),
@@ -158,6 +162,8 @@ export const api = {
 
 export const apiTags = {
     getFeaturesList: () => "get-features-list",
+    getVehicleBrands: () => "get-vehicle-brands",
+    getVehicleModels: () => "get-vehicle-models",
     getPostedListings: () => "get-posted-listings",
     getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}`,
     getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}`,

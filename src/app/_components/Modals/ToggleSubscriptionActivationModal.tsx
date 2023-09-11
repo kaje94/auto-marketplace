@@ -4,11 +4,10 @@ import { ToggleSubscriptionSchema } from "@/utils/schemas";
 import { ListingSubscriptionItem, ToggleSubscriptionReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ModalFooter, Modal, Input } from "@/app/_components";
+import { ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { toggleListingSubscriptionAction } from "@/app/_actions/listingSubscriptionActions";
-import { Controller } from "react-hook-form";
 import { Dates } from "@/utils/constants";
 import { DatePickerController } from "../FormElements/DatePicker";
 

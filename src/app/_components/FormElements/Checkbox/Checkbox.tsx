@@ -1,12 +1,17 @@
 "use client";
 import { ComponentProps, FC, forwardRef } from "react";
 import clsx from "clsx";
+import { Control } from "react-hook-form";
 
-interface Props extends ComponentProps<"input"> {
+export interface ControllerProps extends ComponentProps<"input"> {
     label?: string;
     checkboxClassNames?: string;
     loading?: boolean;
+    fieldName: string;
+    control?: Control<any>;
 }
+
+export interface Props extends Omit<ControllerProps, "fieldName" | "control"> {}
 
 export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     const { label, checkboxClassNames, loading, ...rest } = props;

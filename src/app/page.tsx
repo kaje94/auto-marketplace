@@ -2,8 +2,10 @@ import clsx from "clsx";
 import Image from "next/image";
 import { righteousFont } from "./fonts";
 import { SearchIcon, ZapIcon, TagIcon, NotificationIcon, DropletIcon } from "@/icons";
-import { Input, Footer, TextArea, NavBar } from "./_components";
+import { Footer, NavBar } from "./_components";
 import Link from "next/link";
+import { InputController } from "./_components/FormElements/Input";
+import { TextAreaController } from "./_components/FormElements/TextArea";
 
 const HeroSearchBox = () => (
     <div className="join mb-8 mt-5 flex  justify-center shadow-xl md:mb-16 xl:mb-28 2xl:mb-36">
@@ -122,9 +124,9 @@ export default async function Home() {
                 <div className="container mx-auto w-full max-w-xl">
                     <h3 className={clsx(righteousFont.className, "mb-6 text-center text-4xl")}>Contact Us</h3>
                     <div className="mb-4 flex flex-col gap-1 p-4">
-                        <Input placeholder="Name" label="Name" />
-                        <Input placeholder="user@email.com" label="Email" />
-                        <TextArea placeholder="Your message..." label="Message" />
+                        <InputController placeholder="Name" label="Name" fieldName="name" inputClassNames="bg-white" />
+                        <InputController placeholder="user@email.com" label="Email" fieldName="email" inputClassNames="bg-white" />
+                        <TextAreaController placeholder="Your message..." label="Message" fieldName="message" textAreaClassNames="bg-white" />
                         <button className="btn-neutral btn mt-6 w-full">Submit</button>
                     </div>
                 </div>

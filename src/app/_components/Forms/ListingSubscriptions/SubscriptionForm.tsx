@@ -1,8 +1,7 @@
 "use client";
-import { Select, TextArea, Checkbox, TagSelect, Input } from "@/app/_components";
-import { CreateSubscriptionReq, VehicleFeature } from "@/utils/types";
+import { CreateSubscriptionReq } from "@/utils/types";
 import { FC } from "react";
-import { FieldError, Controller, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList, YearSelectMinYear } from "@/utils/constants";
 import { AutocompleteController } from "../../FormElements/AutoComplete";
 import { DatePickerController } from "../../FormElements/DatePicker";
@@ -36,7 +35,13 @@ export const SubscriptionForm: FC<Props> = (props) => {
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Subscription Configurations</div>
-                        <InputController fieldName="displayName" placeholder="Name of the subscription" label="Display Name" control={control} />
+                        <InputController
+                            fieldName="displayName"
+                            placeholder="Name of the subscription"
+                            loading={isLoading}
+                            label="Display Name"
+                            control={control}
+                        />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <AutocompleteController
                                 label="Subscription Frequency"
@@ -52,6 +57,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 label="Subscription expiry date"
                                 placeholderText="01/01/2025"
                                 minDate={Dates.Days_7_from_now}
+                                loading={isLoading}
                                 required
                                 control={control}
                                 fieldName="subscriptionExpiryDate"
@@ -65,18 +71,38 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             placeholder="Select Type"
                             required
                             options={VehicleTypeList}
+                            loading={isLoading}
                             control={control}
                             fieldName="type"
                             setValue={setValue}
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController fieldName="brand" placeholder="Toyota, Nissan, Honda, etc" label="Brand" control={control} />
-                            <InputController fieldName="model" placeholder="Civic, Sunny, Swift, etc" label="Model" control={control} />
-                            <InputController fieldName="trim" placeholder="LX, EX, EX-L, Sport, etc" label="Trim" control={control} />
+                            <InputController
+                                fieldName="brand"
+                                placeholder="Toyota, Nissan, Honda, etc"
+                                label="Brand"
+                                loading={isLoading}
+                                control={control}
+                            />
+                            <InputController
+                                fieldName="model"
+                                placeholder="Civic, Sunny, Swift, etc"
+                                label="Model"
+                                loading={isLoading}
+                                control={control}
+                            />
+                            <InputController
+                                fieldName="trim"
+                                placeholder="LX, EX, EX-L, Sport, etc"
+                                label="Trim"
+                                loading={isLoading}
+                                control={control}
+                            />
                             <AutocompleteController
                                 label="Condition"
                                 placeholder="Select Condition"
                                 options={VehicleConditionList}
+                                loading={isLoading}
                                 control={control}
                                 fieldName="condition"
                                 setValue={setValue}
@@ -94,6 +120,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 type="number"
                                 min={YearSelectMinYear}
                                 max={new Date().getFullYear()}
+                                loading={isLoading}
                                 fieldName="minYearOfManufacture"
                                 control={control}
                             />
@@ -103,6 +130,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 type="number"
                                 min={YearSelectMinYear}
                                 max={new Date().getFullYear()}
+                                loading={isLoading}
                                 fieldName="maxYearOfManufacture"
                                 control={control}
                             />
@@ -117,6 +145,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 type="number"
                                 min={YearSelectMinYear}
                                 max={new Date().getFullYear()}
+                                loading={isLoading}
                                 fieldName="minYearOfRegistration"
                                 control={control}
                             />
@@ -126,6 +155,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 type="number"
                                 min={YearSelectMinYear}
                                 max={new Date().getFullYear()}
+                                loading={isLoading}
                                 fieldName="maxYearOfRegistration"
                                 control={control}
                             />
@@ -138,6 +168,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 placeholder="1000000"
                                 label="Minimum Price"
                                 type="number"
+                                loading={isLoading}
                                 fieldName="minPrice.amount"
                                 control={control}
                             />
@@ -145,6 +176,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 placeholder="1000000"
                                 label="Maximum Price"
                                 type="number"
+                                loading={isLoading}
                                 fieldName="maxPrice.amount"
                                 control={control}
                             />
@@ -153,8 +185,22 @@ export const SubscriptionForm: FC<Props> = (props) => {
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Milage</div>
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController placeholder="10000" label="Minimum milage" type="number" fieldName="minMillage" control={control} />
-                            <InputController placeholder="1000000" label="Maximum milage" type="number" fieldName="maxMillage" control={control} />
+                            <InputController
+                                placeholder="10000"
+                                label="Minimum milage"
+                                type="number"
+                                loading={isLoading}
+                                fieldName="minMillage"
+                                control={control}
+                            />
+                            <InputController
+                                placeholder="1000000"
+                                label="Maximum milage"
+                                type="number"
+                                loading={isLoading}
+                                fieldName="maxMillage"
+                                control={control}
+                            />
                         </div>
                     </div>
                 </div>

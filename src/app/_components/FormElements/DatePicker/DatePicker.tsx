@@ -21,7 +21,14 @@ export interface Props extends Omit<ControllerProps, "label" | "labelClassNames"
     onChange: (date: Date | null) => void;
 }
 
-export const DatePicker: FC<Props> = (props, ref) => {
+export const DatePicker = forwardRef<ReactDatePicker, Props>((props, ref) => {
     const { error, inputClassNames, ...rest } = props;
-    return <ReactDatePicker className={clsx("input-bordered input w-full bg-transparent", error && "input-error", inputClassNames)} {...rest} />;
-};
+    return (
+        <ReactDatePicker
+            className={clsx("input-bordered input w-full bg-transparent", error && "input-error", inputClassNames)}
+            {...rest}
+            ref={ref}
+        />
+    );
+});
+DatePicker.displayName = "DatePicker";

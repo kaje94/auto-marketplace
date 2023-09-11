@@ -6,11 +6,12 @@ import { UnListListingSchema } from "@/utils/schemas";
 import { ListingItem, UnListListingReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Select, TextArea, ModalFooter, Modal } from "@/app/_components";
+import { ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { unListListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { SelectController } from "../FormElements/Select";
 
 interface Props {
     listingItem?: ListingItem;
@@ -24,7 +25,7 @@ export const UnListListingModal = (props: Props) => {
     const toastId = useRef<string>();
     const router = useRouter();
 
-    const { formState, handleSubmit, register } = useForm<UnListListingReq>({
+    const { formState, handleSubmit, register, control } = useForm<UnListListingReq>({
         resolver: zodResolver(UnListListingSchema),
         defaultValues: { listingId, listingStatus: ListingStatusTypes.Sold },
         mode: "all",
@@ -55,7 +56,7 @@ export const UnListListingModal = (props: Props) => {
                 By Unlisting or withdrawing the advert, the advertisement will no longer be visible to the public.
             </div>
             <form className="grid gap-1">
-                <Select
+                <SelectController
                     label="Status"
                     selectablePlaceholder={false}
                     options={[
@@ -63,9 +64,9 @@ export const UnListListingModal = (props: Props) => {
                         { label: unCamelCase(ListingStatusTypes.PermanentlyRemoved), value: ListingStatusTypes.PermanentlyRemoved },
                         { label: unCamelCase(ListingStatusTypes.Sold), value: ListingStatusTypes.Sold },
                     ]}
-                    error={formState.errors?.listingStatus?.message}
                     required
-                    {...register("listingStatus")}
+                    control={control}
+                    fieldName="listingStatus"
                 />
                 <ModalFooter
                     primaryButton={{ text: "Submit" }}

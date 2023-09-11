@@ -9,8 +9,8 @@ import { DashboardListingFilterSchema } from "@/utils/schemas";
 import { DashboardListFilterReq } from "@/utils/types";
 import { useSearchParams } from "next/navigation";
 import { searchParamsToObject } from "@/utils/helpers";
-import { FilterInput as Input } from "./DashboardFilterInput";
-import { FilterSelect as Select } from "./DashboardFilterSelect";
+import { FilterInput as InputController } from "./DashboardFilterInput";
+import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { FilterButton } from "./FilterButton";
 import { useFilter } from "./FilterHooks";
 
@@ -35,7 +35,7 @@ export const DashboardAllListFilter: FC = () => {
     const searchParamsObj = searchParamsToObject(searchParams);
     const hasSearchParams = Object.keys(DashboardListingFilterSchema.parse(searchParamsObj)).length > 0;
 
-    const { formState, handleSubmit, register, reset } = useForm<DashboardListFilterReq>({
+    const { formState, handleSubmit, register, reset, control } = useForm<DashboardListFilterReq>({
         resolver: zodResolver(DashboardListingFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
@@ -62,72 +62,50 @@ export const DashboardAllListFilter: FC = () => {
                         </div>
                         <div className="grid max-h-96 grid-cols-1 gap-0.5 overflow-y-auto px-2 py-1 md:max-h-max md:grid-cols-2 md:gap-2 md:px-3">
                             <div className="col-span-full">
-                                <Input label="Title" placeholder="Advert Title" error={formState.errors.Title?.message} {...register("Title")} />
+                                <InputController label="Title" placeholder="Advert Title" fieldName="Title" control={control} />
                             </div>
-                            <Select
+                            <SelectController
                                 label="Type"
                                 options={VehicleTypeList}
                                 placeholder="All Types"
                                 selectablePlaceholder
-                                error={formState.errors.VehicleType?.message}
-                                {...register("VehicleType")}
+                                fieldName="VehicleType"
+                                control={control}
                             />
-                            <Select
+                            <SelectController
                                 label="Status"
                                 options={ListingTypeList}
                                 placeholder="All status types"
                                 selectablePlaceholder
-                                error={formState.errors.ListingStatus?.message}
-                                {...register("ListingStatus")}
+                                fieldName="ListingStatus"
+                                control={control}
                             />
-                            <Input
-                                label="Brand"
-                                placeholder="Toyota, Nissan, Honda, etc"
-                                error={formState.errors.Brand?.message}
-                                {...register("Brand")}
-                            />
-                            <Input
-                                label="Model"
-                                placeholder="Civic, Sunny, Swift, etc"
-                                error={formState.errors.Model?.message}
-                                {...register("Model")}
-                            />
-                            <Input
-                                label="Minimum Price"
-                                placeholder="Minimum price"
-                                type="number"
-                                error={formState.errors.MinPrice?.message}
-                                {...register("MinPrice")}
-                            />
-                            <Input
-                                label="Maximum Price"
-                                placeholder="Maximum price"
-                                type="number"
-                                error={formState.errors.MaxPrice?.message}
-                                {...register("MaxPrice")}
-                            />
-                            <Input
+                            <InputController label="Brand" placeholder="Toyota, Nissan, Honda, etc" fieldName="Brand" control={control} />
+                            <InputController label="Model" placeholder="Civic, Sunny, Swift, etc" fieldName="Model" control={control} />
+                            <InputController label="Minimum Price" placeholder="Minimum price" type="number" fieldName="MinPrice" control={control} />
+                            <InputController label="Maximum Price" placeholder="Maximum price" type="number" fieldName="MaxPrice" control={control} />
+                            <InputController
                                 label="Created After"
                                 placeholder="Created after date"
                                 type="date"
-                                error={formState.errors.StartCreatedDate?.message}
-                                {...register("StartCreatedDate")}
+                                fieldName="StartCreatedDate"
+                                control={control}
                             />
-                            <Input
+                            <InputController
                                 label="Created Before"
                                 placeholder="Created before date"
                                 type="date"
-                                error={formState.errors.EndCreatedDate?.message}
-                                {...register("EndCreatedDate")}
+                                fieldName="EndCreatedDate"
+                                control={control}
                             />
-                            <Input label="City" placeholder="Colombo" error={formState.errors.City?.message} {...register("City")} />
-                            <Select
+                            <InputController label="City" placeholder="Colombo" fieldName="City" control={control} />
+                            <SelectController
                                 label="Fuel Type"
                                 options={FuelTypeList}
                                 placeholder="All fuel types"
                                 selectablePlaceholder
-                                error={formState.errors.FuelType?.message}
-                                {...register("FuelType")}
+                                fieldName="FuelType"
+                                control={control}
                             />
                         </div>
                         <button

@@ -1,11 +1,11 @@
 "use client";
 import React, { FC } from "react";
 import { Controller } from "react-hook-form";
-import { Input } from "../../Input";
 import { Autocomplete, ControllerProps } from "./Autocomplete";
 import { AlertCircleIcon } from "@/icons";
 import clsx from "clsx";
 import { InputController } from "../Input";
+import { FormFieldControllerWrap } from "../Common";
 
 export const AutocompleteController: FC<ControllerProps> = ({
     loading,
@@ -32,7 +32,8 @@ export const AutocompleteController: FC<ControllerProps> = ({
                 inputClassNames={inputClassNames}
                 labelClassNames={labelClassNames}
                 rootClassName={rootClassName}
-                loading
+                loading={loading}
+                disabled={true}
                 fieldName={fieldName}
             />
         );
@@ -42,28 +43,14 @@ export const AutocompleteController: FC<ControllerProps> = ({
         <Controller
             name={fieldName}
             control={control}
-            render={({ field, fieldState, formState }) => (
-                <div className={clsx("form-control w-full", rootClassName)}>
-                    {label && (
-                        <label className={clsx("label", labelClassNames)}>
-                            <span className="label-text">
-                                {label} {required && <span className="text-error">*</span>}
-                            </span>
-                            <span className="label-text-alt text-error">
-                                <div
-                                    className={clsx({
-                                        "duration-200 flex items-center": true,
-                                        "tooltip-left tooltip-error tooltip opacity-100": fieldState.error?.message,
-                                        "opacity-0": !fieldState.error?.message,
-                                    })}
-                                    data-tip={fieldState.error?.message}
-                                >
-                                    <AlertCircleIcon className="h-4 w-4" />
-                                </div>
-                            </span>
-                        </label>
-                    )}
-
+            render={({ field, fieldState }) => (
+                <FormFieldControllerWrap
+                    rootClassName={rootClassName}
+                    label={label}
+                    labelClassNames={labelClassNames}
+                    required={required}
+                    error={fieldState.error?.message}
+                >
                     <Autocomplete
                         placeholder={placeholder}
                         error={fieldState.error?.message}
@@ -81,7 +68,7 @@ export const AutocompleteController: FC<ControllerProps> = ({
                         onBlur={field.onBlur}
                         ref={field.ref}
                     />
-                </div>
+                </FormFieldControllerWrap>
             )}
         />
     );

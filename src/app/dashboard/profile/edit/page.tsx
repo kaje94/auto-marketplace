@@ -1,4 +1,4 @@
-import { BreadCrumbs, Input, Select } from "@/app/_components";
+import { BreadCrumbs } from "@/app/_components";
 import Image from "next/image";
 
 const ProfilePage = () => {
@@ -21,23 +21,23 @@ const ProfilePage = () => {
                     </div>
                 </div>
                 <div className="grid w-full gap-1 lg:grid-cols-2">
-                    <Input label="Name" disabled placeholder="User name" />
+                    {/* <Input label="Name" disabled placeholder="User name" />
                     <Input label="Email" disabled placeholder="user@gmail.com" />
-                    <Input label="Phone Number" required placeholder="+94 774436111" />
-                    <Select
+                    <Input label="Phone Number" required placeholder="+94 774436111" /> */}
+                    {/* <Select
                         label="User Type"
                         options={[
                             { value: 0, label: "Normal User" },
                             { value: 1, label: "Vehicle Dealer" },
                         ]}
-                    />
+                    /> */}
                 </div>
                 <div className="divider mt-8">Location Details</div>
                 <div className="grid w-full gap-1 lg:grid-cols-2">
-                    <Input label="City" required placeholder="Colombo" />
+                    {/* <Input label="City" required placeholder="Colombo" />
                     <Input label="State" required placeholder="Western Province" />
                     <Input label="Country" required placeholder="Sri Lanka" />
-                    <Input label="Postal Code" required placeholder="00001" />
+                    <Input label="Postal Code" required placeholder="00001" /> */}
                 </div>
 
                 <div className="mt-3 flex justify-end">

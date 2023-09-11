@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-import { Input as InputComponent, Props as InputProps } from "@/app/_components/Input";
+import { InputController, ControllerProps } from "../FormElements/Input";
 
-export const FilterInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-    return <InputComponent inputClassNames="input-sm" labelClassNames="pb-0 pt-0.5" {...props} ref={ref} />;
+export const FilterInput = forwardRef<HTMLInputElement, ControllerProps>((props, ref) => {
+    return <InputController inputClassNames="input-sm" labelClassNames="pb-0 pt-0.5" {...props} ref={ref} />;
 });
 FilterInput.displayName = "Input";

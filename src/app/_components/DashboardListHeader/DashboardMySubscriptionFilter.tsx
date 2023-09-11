@@ -9,7 +9,7 @@ import { DashboardMySubscriptionFilterSchema } from "@/utils/schemas";
 import { DashboardMySubscriptionFilterReq } from "@/utils/types";
 import { useSearchParams } from "next/navigation";
 import { searchParamsToObject } from "@/utils/helpers";
-import { FilterSelect as Select } from "./DashboardFilterSelect";
+import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { FilterButton } from "./FilterButton";
 import { useFilter } from "./FilterHooks";
 
@@ -23,7 +23,7 @@ export const DashboardMySubscriptionFilter: FC = () => {
     const searchParamsObj = searchParamsToObject(searchParams);
     const hasSearchParams = Object.keys(DashboardMySubscriptionFilterSchema.parse(searchParamsObj)).length > 0;
 
-    const { formState, handleSubmit, register, reset } = useForm<DashboardMySubscriptionFilterReq>({
+    const { formState, handleSubmit, register, reset, control } = useForm<DashboardMySubscriptionFilterReq>({
         resolver: zodResolver(DashboardMySubscriptionFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
@@ -49,7 +49,7 @@ export const DashboardMySubscriptionFilter: FC = () => {
                             )}
                         </div>
                         <div className="grid max-h-96 grid-cols-1 gap-0.5 overflow-y-auto px-2 py-1 md:max-h-max md:gap-2 md:px-3">
-                            <Select
+                            <SelectController
                                 label="Active/Inactive"
                                 options={[
                                     { label: "Active", value: "true" },
@@ -57,16 +57,16 @@ export const DashboardMySubscriptionFilter: FC = () => {
                                 ]}
                                 placeholder="All status types"
                                 selectablePlaceholder
-                                error={formState.errors.Active?.message}
-                                {...register("Active")}
+                                control={control}
+                                fieldName="Active"
                             />
-                            <Select
+                            <SelectController
                                 label="Notification Frequency"
                                 options={SubscriptFrequenciesList}
                                 placeholder="All frequency types"
                                 selectablePlaceholder
-                                error={formState.errors.NotificationFrequency?.message}
-                                {...register("NotificationFrequency")}
+                                control={control}
+                                fieldName="NotificationFrequency"
                             />
                         </div>
                         <button

@@ -1,15 +1,15 @@
 "use client";
 import { FC } from "react";
-import { ControllerProps, Input } from "./Input";
+import { ControllerProps, TextArea } from "./TextArea";
 import { Controller } from "react-hook-form";
 import { FormFieldControllerWrap } from "../Common";
 
-export const InputController: FC<ControllerProps> = (props) => {
+export const TextAreaController: FC<ControllerProps> = (props) => {
     const { label, labelClassNames, rootClassName, loading, required, fieldName, control, ...rest } = props;
     if (loading || !control) {
         return (
             <FormFieldControllerWrap rootClassName={rootClassName} label={label} labelClassNames={labelClassNames} required={required}>
-                <Input disabled={loading} loading={loading} {...rest} ref={undefined} />
+                <TextArea loading={loading} disabled {...rest} ref={undefined} />
             </FormFieldControllerWrap>
         );
     }
@@ -26,7 +26,7 @@ export const InputController: FC<ControllerProps> = (props) => {
                     required={required}
                     error={fieldState.error?.message}
                 >
-                    <Input disabled={loading} loading={loading} error={fieldState.error?.message} {...rest} {...field} ref={field.ref} />
+                    <TextArea loading={loading} error={fieldState.error?.message} {...rest} {...field} ref={field.ref} />
                 </FormFieldControllerWrap>
             )}
         />

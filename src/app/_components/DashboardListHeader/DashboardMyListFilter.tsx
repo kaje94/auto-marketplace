@@ -10,8 +10,8 @@ import { MyListingsFilterReq } from "@/utils/types";
 import { useSearchParams } from "next/navigation";
 import { searchParamsToObject } from "@/utils/helpers";
 import { FilterButton } from "./FilterButton";
-import { FilterInput as Input } from "./DashboardFilterInput";
-import { FilterSelect as Select } from "./DashboardFilterSelect";
+import { FilterInput as InputController } from "./DashboardFilterInput";
+import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { useFilter } from "./FilterHooks";
 
 const defaultFilter: MyListingsFilterReq = {
@@ -25,7 +25,7 @@ export const DashboardMyListFilter: FC = () => {
     const searchParamsObj = searchParamsToObject(searchParams);
     const hasSearchParams = Object.keys(MyListingsFilterSchema.parse(searchParamsObj)).length > 0;
 
-    const { formState, handleSubmit, register, reset } = useForm<MyListingsFilterReq>({
+    const { formState, handleSubmit, register, reset, control } = useForm<MyListingsFilterReq>({
         resolver: zodResolver(MyListingsFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
@@ -52,29 +52,29 @@ export const DashboardMyListFilter: FC = () => {
                         </div>
                         <div className="grid max-h-96 grid-cols-1 gap-0.5 overflow-y-auto px-2 py-1 md:max-h-max md:grid-cols-2 md:gap-2 md:px-3">
                             <div className="col-span-full">
-                                <Select
+                                <SelectController
                                     label="Status"
                                     options={ListingTypeList}
                                     placeholder="All status types"
                                     selectablePlaceholder
-                                    error={formState.errors.ListingStatus?.message}
-                                    {...register("ListingStatus")}
+                                    control={control}
+                                    fieldName="ListingStatus"
                                 />{" "}
                             </div>
 
-                            <Input
+                            <InputController
                                 label="Created After"
                                 placeholder="Created after date"
                                 type="date"
-                                error={formState.errors.StartCreatedDate?.message}
-                                {...register("StartCreatedDate")}
+                                fieldName="StartCreatedDate"
+                                control={control}
                             />
-                            <Input
+                            <InputController
                                 label="Created Before"
                                 placeholder="Created before date"
                                 type="date"
-                                error={formState.errors.EndCreatedDate?.message}
-                                {...register("EndCreatedDate")}
+                                fieldName="EndCreatedDate"
+                                control={control}
                             />
                         </div>
                         <button

@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-import { Select as SelectComponent, Props as SelectProps } from "@/app/_components/Select";
+import { SelectController, ControllerProps } from "../FormElements/Select";
 
-export const FilterSelect = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-    return <SelectComponent selectClassName="select-sm" labelClassName="pb-0 pt-0.5" {...props} ref={ref} />;
+export const FilterSelect = forwardRef<HTMLSelectElement, ControllerProps>((props, ref) => {
+    return <SelectController selectClassName="select-sm" labelClassNames="pb-0 pt-0.5" {...props} ref={ref} />;
 });
 FilterSelect.displayName = "Select";

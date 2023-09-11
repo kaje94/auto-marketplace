@@ -6,10 +6,12 @@ import { ReviewListingSchema } from "@/utils/schemas";
 import { ListingItem, ReviewListingReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Select, TextArea, ModalFooter, Modal } from "@/app/_components";
+import { ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { reviewListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
+import { TextAreaController } from "../FormElements/TextArea";
+import { SelectController } from "../FormElements/Select";
 
 interface Props {
     listingItem?: ListingItem;
@@ -22,7 +24,7 @@ export const ReviewListingModal = (props: Props) => {
     const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
     const toastId = useRef<string>();
 
-    const { formState, handleSubmit, register } = useForm<ReviewListingReq>({
+    const { formState, handleSubmit, register, control } = useForm<ReviewListingReq>({
         resolver: zodResolver(ReviewListingSchema),
         defaultValues: { listingId, status: ListingStatusTypes.Posted },
         mode: "all",
@@ -45,23 +47,23 @@ export const ReviewListingModal = (props: Props) => {
     return (
         <Modal visible={visible} onVisibleChange={setVisible} title="Review Advert">
             <form className="grid gap-1">
-                <Select
+                <SelectController
                     label="Review Status"
                     selectablePlaceholder={false}
                     options={[
                         { label: unCamelCase(ListingStatusTypes.Posted), value: ListingStatusTypes.Posted },
                         { label: unCamelCase(ListingStatusTypes.Declined), value: ListingStatusTypes.Declined },
                     ]}
-                    error={formState.errors.status?.message}
                     required
-                    {...register("status")}
+                    control={control}
+                    fieldName="status"
                 />
-                <TextArea
+                <TextAreaController
                     label="Review comment"
                     placeholder="Additional details related to the advert review"
-                    error={formState.errors.reviewComment?.message}
                     required
-                    {...register("reviewComment")}
+                    fieldName="reviewComment"
+                    control={control}
                 />
                 <ModalFooter
                     primaryButton={{ text: "Submit Review" }}

@@ -1,4 +1,3 @@
-import { Select, Input } from "@/app/_components";
 import { SearchIcon } from "@/icons";
 import { FC } from "react";
 
@@ -16,7 +15,7 @@ export const Filters: FC = () => {
                 </div>
                 <div className="divider col-span-2 mt-6">Filters</div>
                 <div className="col-span-2">
-                    <Select
+                    {/* <Select
                         label="Type"
                         options={[
                             { label: "Car", value: "Car" },
@@ -26,10 +25,10 @@ export const Filters: FC = () => {
                         selectClassName="select-sm"
                         placeholder="All Types"
                         selectablePlaceholder
-                    />
+                    /> */}
                 </div>
                 <div className="col-span-2">
-                    <Select
+                    {/* <Select
                         label="City"
                         options={[
                             { label: "Colombo", value: "Colombo" },
@@ -38,29 +37,29 @@ export const Filters: FC = () => {
                         selectClassName="select-sm"
                         placeholder="All Cities"
                         selectablePlaceholder
-                    />
+                    /> */}
                 </div>
                 <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    <Input label="Minimum Price" type="number" placeholder="Minimum Price" min={0} inputClassNames="input-sm" />
+                    {/* <Input label="Minimum Price" type="number" placeholder="Minimum Price" min={0} inputClassNames="input-sm" /> */}
                 </div>
                 <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    <Input label="Maximum Price" type="number" placeholder="Maximum Price" min={0} inputClassNames="input-sm" />
+                    {/* <Input label="Maximum Price" type="number" placeholder="Maximum Price" min={0} inputClassNames="input-sm" /> */}
                 </div>
                 <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    <Input label="Manufactured From" type="number" placeholder="1990" min={0} inputClassNames="input-sm" />
+                    {/* <Input label="Manufactured From" type="number" placeholder="1990" min={0} inputClassNames="input-sm" /> */}
                 </div>
                 <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    <Input
+                    {/* <Input
                         label="Manufactured Upto"
                         type="number"
                         placeholder="2023"
                         min={0}
                         max={new Date().getFullYear()}
                         inputClassNames="input-sm"
-                    />
+                    /> */}
                 </div>
                 <div className="col-span-2">
-                    <Select
+                    {/* <Select
                         label="Condition"
                         options={[
                             { label: "New", value: "New" },
@@ -70,10 +69,10 @@ export const Filters: FC = () => {
                         selectClassName="select-sm"
                         placeholder="Any Condition"
                         selectablePlaceholder
-                    />
+                    /> */}
                 </div>
                 <div className="col-span-1 lg:col-span-2">
-                    <Select
+                    {/* <Select
                         label="Fuel Type"
                         options={[
                             { label: "Petrol", value: "Petrol" },
@@ -85,10 +84,10 @@ export const Filters: FC = () => {
                         selectClassName="select-sm"
                         placeholder="Any Fuel Type"
                         selectablePlaceholder
-                    />
+                    /> */}
                 </div>
                 <div className="col-span-1 lg:col-span-2">
-                    <Select
+                    {/* <Select
                         label="Transmission Type"
                         options={[
                             { label: "Automatic", value: "Automatic" },
@@ -99,7 +98,7 @@ export const Filters: FC = () => {
                         selectClassName="select-sm"
                         placeholder="Any Type"
                         selectablePlaceholder
-                    />
+                    /> */}
                 </div>
                 <button className="btn-ghost btn col-span-2 mt-5">Reset</button>
             </div>

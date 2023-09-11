@@ -1,7 +1,6 @@
 "use client";
 import { ComponentProps, forwardRef } from "react";
 import clsx from "clsx";
-import { AlertCircleIcon } from "@/icons";
 import { Control } from "react-hook-form";
 
 export interface ControllerProps extends ComponentProps<"input"> {
@@ -16,11 +15,7 @@ export interface ControllerProps extends ComponentProps<"input"> {
     control?: Control<any>;
 }
 
-export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {
-    inputClassNames?: string;
-    error?: string;
-    loading?: boolean;
-}
+export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {}
 
 export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
     const { error, inputClassNames, loading, ...rest } = props;

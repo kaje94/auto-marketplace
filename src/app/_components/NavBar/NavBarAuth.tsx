@@ -1,5 +1,5 @@
 "use server";
-import { UserIcon, AdvertIcon, RssIcon, ListIcon, ClipboardIcon } from "@/icons";
+import { UserIcon, AdvertIcon, RssIcon } from "@/icons";
 import { NavBarMenuLink, NavBarLogoutButton, NavBarLoginButton } from "./NavBarButtons";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
@@ -30,12 +30,6 @@ export const NavBarAuth = async () => {
                         <NavBarMenuLink link="/dashboard/profile" label="Profile" icon={<UserIcon height={18} />} />
                         <NavBarMenuLink link="/dashboard/my-listings" label="My Adverts" icon={<AdvertIcon height={18} />} />
                         <NavBarMenuLink link="/dashboard/my-subscriptions" label="My Subscriptions" icon={<RssIcon height={18} />} />
-                        {session?.user?.isAdmin && (
-                            <>
-                                <NavBarMenuLink link="/dashboard/listings" label="All Adverts" icon={<ListIcon height={18} />} />
-                                <NavBarMenuLink link="/dashboard/subscriptions" label="All Subscriptions" icon={<ClipboardIcon height={18} />} />
-                            </>
-                        )}
                         <NavBarLogoutButton />
                     </ul>
                 </div>

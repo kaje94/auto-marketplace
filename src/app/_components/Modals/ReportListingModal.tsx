@@ -1,5 +1,5 @@
 import { reportListingAction } from "@/app/_actions/listingActions";
-import { Input, Modal, ModalFooter, Select, TextArea } from "@/app/_components";
+import { Modal, ModalFooter } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +9,9 @@ import { ListingReportReason } from "@/utils/enum";
 import { ReportListingSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { InputController } from "../FormElements/Input";
+import { TextAreaController } from "../FormElements/TextArea";
+import { SelectController } from "../FormElements/Select";
 
 interface Props {
     listingId?: ListingIdType;
@@ -25,7 +28,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
         [userEmail, listingId]
     );
 
-    const { formState, handleSubmit, register, reset } = useForm<ReportListingReq>({
+    const { formState, handleSubmit, register, reset, control } = useForm<ReportListingReq>({
         resolver: zodResolver(ReportListingSchema),
         defaultValues: defaultForm,
         mode: "all",
@@ -60,29 +63,21 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
     return (
         <Modal visible={!!visible} onVisibleChange={setVisible} title="Report Advert" titleClassNames="text-error">
             <form className="grid gap-1">
-                <Select
+                <SelectController
                     label="Reason"
                     selectablePlaceholder={false}
                     options={ListingReportReasonList}
-                    error={formState.errors.reason?.message}
                     required
-                    {...register("reason")}
+                    control={control}
+                    fieldName="status"
                 />
-                <Input
-                    label="Email"
-                    placeholder="user@gmail.com"
-                    error={formState.errors.emailAddress?.message}
-                    required
-                    type="email"
-                    disabled={!userEmail}
-                    {...register("emailAddress")}
-                />
-                <TextArea
+                <InputController label="Email" placeholder="user@gmail.com" required type="email" fieldName="emailAddress" control={control} />
+                <TextAreaController
                     label="Message"
                     placeholder="Additional details on why you are reporting this advert"
-                    error={formState.errors.message?.message}
                     required
-                    {...register("message")}
+                    control={control}
+                    fieldName="message"
                 />
                 <ModalFooter
                     primaryButton={{ text: "Report Advert" }}

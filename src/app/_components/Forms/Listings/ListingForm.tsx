@@ -1,5 +1,4 @@
 "use client";
-import { Select, TextArea, Checkbox, TagSelect, Input } from "@/app/_components";
 import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { FC } from "react";
 import { FieldError, Controller, UseFormReturn } from "react-hook-form";
@@ -7,6 +6,10 @@ import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeLi
 import { AutocompleteController } from "../../FormElements/AutoComplete";
 import { ListingImageUpload } from "./ListingImageUpload";
 import { InputController } from "../../FormElements/Input";
+import { TagSelectController } from "../../FormElements/TagSelect";
+import { TextAreaController } from "../../FormElements/TextArea";
+import { CheckboxController } from "../../FormElements/Checkbox";
+import { SelectController } from "../../FormElements/Select";
 
 interface Props {
     featureOptions?: VehicleFeature[];
@@ -46,6 +49,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 fieldName="vehicle.brand"
                                 placeholder="Toyota, Nissan, Honda, etc"
                                 label="Brand"
+                                loading={isLoading}
                                 required
                                 control={control}
                             />
@@ -53,10 +57,17 @@ export const ListingForm: FC<Props> = (props) => {
                                 fieldName="vehicle.model"
                                 placeholder="Civic, Sunny, Swift, etc"
                                 label="Model"
+                                loading={isLoading}
                                 required
                                 control={control}
                             />
-                            <InputController fieldName="vehicle.trim" placeholder="LX, EX, EX-L, Sport, etc" label="Trim" control={control} />
+                            <InputController
+                                fieldName="vehicle.trim"
+                                placeholder="LX, EX, EX-L, Sport, etc"
+                                loading={isLoading}
+                                label="Trim"
+                                control={control}
+                            />
                             <AutocompleteController
                                 fieldName="vehicle.yearOfManufacture"
                                 label="Year of Manufacture"
@@ -86,6 +97,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 placeholder="50000"
                                 label="Milage"
                                 type="number"
+                                loading={isLoading}
                                 required
                                 control={control}
                             />
@@ -124,6 +136,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 placeholder="1500"
                                 label="Engine Capacity in CC"
                                 type="number"
+                                loading={isLoading}
                                 required
                                 control={control}
                             />
@@ -131,15 +144,15 @@ export const ListingForm: FC<Props> = (props) => {
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Other details</div>
-                        <TextArea
+                        <TextAreaController
                             label="Description"
                             placeholder="Description of the vehicle for sale"
                             loading={isLoading}
-                            error={errors?.description?.message}
                             required
-                            {...register("description")}
+                            control={control}
+                            fieldName="description"
                         />
-                        <Checkbox label="Has Ongoing Lease" checkboxClassNames="mt-2" loading={isLoading} {...register("hasOnGoingLease")} />
+                        <CheckboxController label="Has Ongoing Lease" loading={isLoading} control={control} fieldName="hasOnGoingLease" />
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
@@ -167,11 +180,19 @@ export const ListingForm: FC<Props> = (props) => {
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Location Details</div>
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController fieldName="location.city" placeholder="Colombo" label="City" required control={control} />
+                            <InputController
+                                fieldName="location.city"
+                                placeholder="Colombo"
+                                label="City"
+                                loading={isLoading}
+                                required
+                                control={control}
+                            />
                             <InputController
                                 fieldName="location.state"
                                 placeholder="Western Province"
                                 label="State/Province"
+                                loading={isLoading}
                                 required
                                 control={control}
                             />
@@ -179,42 +200,46 @@ export const ListingForm: FC<Props> = (props) => {
                                 fieldName="location.postalCode"
                                 placeholder="00001"
                                 label="Postal Code"
+                                loading={isLoading}
                                 type="number"
                                 required
                                 control={control}
                             />
-
-                            <Select
+                            <SelectController
                                 label="Country"
                                 disabled
                                 options={[{ label: "Sri Lanka", value: "LK" }]}
                                 placeholder="Select Country"
                                 loading={isLoading}
-                                error={(errors?.location?.country as FieldError)?.message}
                                 required
-                                {...register("location.country")}
+                                control={control}
+                                fieldName="location.country"
                             />
                         </div>
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Price Details</div>
-                        <InputController fieldName="price.amount" placeholder="40000000" label="Price" type="number" required control={control} />
-                        <Checkbox label="Negotiable Price" checkboxClassNames="mt-2" loading={isLoading} {...register("price.isPriceNegotiable")} />
+                        <InputController
+                            fieldName="price.amount"
+                            placeholder="40000000"
+                            label="Price"
+                            type="number"
+                            loading={isLoading}
+                            required
+                            control={control}
+                        />
+                        <CheckboxController label="Negotiable Price" loading={isLoading} control={control} fieldName="price.isPriceNegotiable" />
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Features</div>
                         <span className="mt-2">
-                            {isLoading ? (
-                                <TagSelect tags={featureOptions} loading={isLoading} />
-                            ) : (
-                                <Controller
-                                    name="vehicle.featureIds"
-                                    control={control}
-                                    render={({ field: { value = [], onChange } }) => (
-                                        <TagSelect tags={featureOptions} selectedTags={value} onSelect={onChange} />
-                                    )}
-                                />
-                            )}
+                            <TagSelectController
+                                fieldName="vehicle.featureIds"
+                                control={control}
+                                loading={isLoading}
+                                tags={featureOptions}
+                                loadingPlaceholderCount={20}
+                            />
                         </span>
                     </div>
                 </div>

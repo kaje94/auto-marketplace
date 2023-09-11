@@ -89,6 +89,11 @@ export type ListingSubscriptionItem = {
     user?: ListingUser;
 };
 
+export type VehicleBrand = {
+    id: string;
+    name: string;
+};
+
 export type PaginatedResponse = {
     pageNumber: number;
     totalPages: number;

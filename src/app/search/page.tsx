@@ -1,4 +1,4 @@
-import { ListingItem, Pagination, Select } from "@/app/_components";
+import { ListingItem, Pagination } from "@/app/_components";
 import { Filters } from "./_components";
 import { api } from "@/utils/api";
 import { getFormattedCurrency, getListingTags, thumbHashToDataUrl, sortVehicleImages, transformListingResponse } from "@/utils/helpers";
@@ -17,7 +17,7 @@ const ListingPage = async () => {
                     <div className="col-span-1 text-sm font-light text-info-content 2xl:col-span-2">{listings.totalCount} results found</div>
                     <div className="col-span-1 flex items-center">
                         <label className="mr-5 text-secondary-content">Sort By</label>
-                        <Select
+                        {/* <Select
                             selectClassName="select-sm "
                             rootClassName="flex-1"
                             options={[
@@ -28,7 +28,7 @@ const ListingPage = async () => {
                                 { label: "Price: High to Low", value: "price_dsc" },
                                 { label: "Price: Low to High", value: "price_asc" },
                             ]}
-                        />
+                        /> */}
                     </div>
                 </div>
 
