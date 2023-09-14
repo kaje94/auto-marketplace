@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
+    // todo: include dealership
     return (
         <>
             <div className="avatar my-4">

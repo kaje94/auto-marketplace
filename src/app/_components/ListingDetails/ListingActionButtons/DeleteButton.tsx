@@ -3,7 +3,7 @@ import { TrashIcon } from "@/icons";
 import { ListingItem } from "@/utils/types";
 import clsx from "clsx";
 import { FC, useState } from "react";
-import { DeleteListingItemModal } from "../Modals/DeleteListingItemModal";
+import { DeleteListingItemModal } from "../../Modals/DeleteListingItemModal";
 
 interface Props {
     listingItem: ListingItem;

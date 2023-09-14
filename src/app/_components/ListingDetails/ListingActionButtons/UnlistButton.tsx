@@ -3,7 +3,7 @@ import { EyeOffIcon } from "@/icons";
 import { ListingItem } from "@/utils/types";
 import clsx from "clsx";
 import { FC, useState } from "react";
-import { UnListListingModal } from "../Modals/UnListListingModal";
+import { UnListListingModal } from "@/app/_components/Modals/UnListListingModal";
 
 interface Props {
     listingItem: ListingItem;

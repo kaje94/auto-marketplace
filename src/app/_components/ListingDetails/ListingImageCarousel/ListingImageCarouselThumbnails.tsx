@@ -16,7 +16,7 @@ type PropTypeLoading = {
 
 type Props = PropTypeImage | PropTypeLoading;
 
-export const Thumb: FC<Props> = (props) => {
+export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
     if ("loading" in props) {
         return (
             <div className="relative animate-pulse pl-1 sm:pl-2 lg:pl-4">

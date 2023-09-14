@@ -1,18 +1,13 @@
 import { getFormattedCurrency, getLocationString } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 import { FC } from "react";
-import { Carousel } from "./Carousel";
+import { ListingImageCarousel } from "./ListingImageCarousel";
 import { FeaturesOfListing } from "./FeaturesOfListing";
 import { ListingKeySpecifications } from "./ListingKeySpecifications";
 import { ListingSellerDetails } from "./ListingSellerDetails";
-import { ReportButton } from "./ReportButton";
-import { ShareButton } from "./ShareButton";
 import clsx from "clsx";
 import { ListingStatusTypes } from "@/utils/enum";
-import { UnListButton } from "./UnlistButton";
-import { DeleteButton } from "./DeleteButton";
-import { EditButton } from "./EditButton";
-import { RenewButton } from "./RenewButton";
+import { DeleteButton, EditButton, RenewButton, ShareButton, UnListButton, ReportButton } from "./ListingActionButtons";
 
 interface Props {
     itemDetails?: ListingItem;
@@ -41,7 +36,7 @@ export const ListingDetails: FC<Props> = ({
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-5" : "lg:col-span-5")}>
                 <div className="card  bg-base-100 shadow">
-                    <Carousel images={vehicle?.vehicleImages} title={title} loading={loading} />
+                    <ListingImageCarousel images={vehicle?.vehicleImages} title={title} loading={loading} />
                 </div>
                 <div className="stat card  bg-base-100 p-3  shadow lg:p-5 xl:p-6">
                     <div className="stat-title">Description</div>
@@ -93,34 +88,34 @@ export const ListingDetails: FC<Props> = ({
                         <ListingSellerDetails user={user} loading={loading} />
                     </div>
                 )}
-                {status === ListingStatusTypes.Posted && !withinDashboard && (
-                    <div className="grid grid-cols-2 gap-4">
-                        <ShareButton loading={loading} title={title} />
-                        {loggedInUser?.id !== user?.id && (
-                            <ReportButton loading={loading} listingId={id} listingTitle={title} userEmail={loggedInUser?.email} />
-                        )}
-                    </div>
-                )}
-                <>
+                <div className="grid grid-cols-2 gap-4">
                     {!loading && (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) && (
                         <>
-                            <div className="grid grid-cols-2 gap-4">
-                                <EditButton
-                                    listingItem={itemDetails as ListingItem}
-                                    basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
-                                />
-                                {status &&
-                                    [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(
-                                        status
-                                    ) && <UnListButton listingItem={itemDetails as ListingItem} />}
-                                {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status) && (
-                                    <RenewButton listingItem={itemDetails as ListingItem} />
+                            <EditButton
+                                listingItem={itemDetails as ListingItem}
+                                basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
+                            />
+                            {status &&
+                                [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
+                                    <UnListButton listingItem={itemDetails as ListingItem} />
                                 )}
-                                <DeleteButton listingItem={itemDetails as ListingItem} isOwner={user?.id === loggedInUser?.id} />
-                            </div>
+                            {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status) && (
+                                <RenewButton listingItem={itemDetails as ListingItem} />
+                            )}
                         </>
                     )}
-                </>
+                    {status === ListingStatusTypes.Posted && !withinDashboard && (
+                        <>
+                            <ShareButton loading={loading} title={title} />
+                            {loggedInUser?.id !== user?.id && (
+                                <ReportButton loading={loading} listingId={id} listingTitle={title} userEmail={loggedInUser?.email} />
+                            )}
+                        </>
+                    )}
+                    {!loading && (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) && (
+                        <DeleteButton listingItem={itemDetails as ListingItem} isOwner={user?.id === loggedInUser?.id} />
+                    )}
+                </div>
             </div>
         </div>
     );

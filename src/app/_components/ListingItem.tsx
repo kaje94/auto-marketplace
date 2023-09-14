@@ -16,7 +16,7 @@ interface Props {
 export const ListingItem: FC<Props> = ({ id, title, price, description, tags = [], imageUrl, blurDataURL, imageAlt }) => (
     <Link
         href={`/search/${id}`}
-        className="card w-full cursor-pointer overflow-hidden bg-base-100 shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg"
+        className="card h-full w-full cursor-pointer overflow-hidden bg-base-100 shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg"
     >
         <figure className="relative">
             <Image

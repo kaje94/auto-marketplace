@@ -37,3 +37,5 @@ export { RssIcon } from "./RssIcon";
 export { ClipboardIcon } from "./ClipboardIcon";
 export { BellIcon } from "./BellIcon";
 export { BellOffIcon } from "./BellOffIcon";
+export { ChevronLeftIcon } from "./ChevronLeftIcon";
+export { ChevronRightIcon } from "./ChevronRightIcon";

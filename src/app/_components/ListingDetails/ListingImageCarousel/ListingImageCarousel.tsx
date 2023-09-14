@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
-import { Thumb } from "./CarouselThumbsButton";
+import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails";
 import Autoplay from "embla-carousel-autoplay";
 import FsLightbox from "fslightbox-react";
 import { MaximizeIcon } from "@/icons";
@@ -15,7 +15,7 @@ type PropType = {
     loading?: boolean;
 };
 
-export const Carousel: React.FC<PropType> = (props) => {
+export const ListingImageCarousel: React.FC<PropType> = (props) => {
     const { title = "", images = [], options = {}, loading } = props;
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isLightBoxOpen, setLightBoxOpen] = useState(false);
@@ -103,9 +103,9 @@ export const Carousel: React.FC<PropType> = (props) => {
                     <div className="overflow-hidden" ref={emblaThumbsRef}>
                         <div className="-ml-1 flex flex-row sm:-ml-2 lg:-ml-4">
                             {loading
-                                ? new Array(6).fill("").map((_, i) => <Thumb loading key={i} />)
+                                ? new Array(6).fill("").map((_, i) => <ListingImageCarouselThumbnails loading key={i} />)
                                 : images.map((imageItem, index) => (
-                                      <Thumb
+                                      <ListingImageCarouselThumbnails
                                           onClick={() => onThumbClick(index)}
                                           selected={index === selectedIndex}
                                           imgSrc={imageItem.url ?? ""}

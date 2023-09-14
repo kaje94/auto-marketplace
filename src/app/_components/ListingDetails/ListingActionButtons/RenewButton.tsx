@@ -3,7 +3,7 @@ import { RefreshIcon } from "@/icons";
 import { ListingItem } from "@/utils/types";
 import clsx from "clsx";
 import { FC, useState } from "react";
-import { RenewListingItemModal } from "../Modals/RenewListingItemModal";
+import { RenewListingItemModal } from "@/app/_components/Modals/RenewListingItemModal";
 
 interface Props {
     listingItem: ListingItem;

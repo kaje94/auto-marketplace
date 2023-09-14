@@ -10,7 +10,7 @@ interface Props {
 
 export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
     const placeholderWidth = ["w-44", "w-32", "w-28", "w-16", "w-24", "w-40", "w-40"];
-
+    // todo: add vehicle type
     return (
         <div className="mt-2 grid w-full gap-2 lg:grid-cols-2">
             <div className="flex flex-col items-center gap-1 lg:items-start">

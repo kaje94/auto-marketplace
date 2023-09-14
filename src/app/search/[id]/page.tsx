@@ -1,4 +1,4 @@
-import { BreadCrumbs, RelatedListings, ListingDetails } from "@/app/_components";
+import { BreadCrumbs, ListingsCarouselSection, ListingDetails } from "@/app/_components";
 import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
@@ -9,7 +9,6 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
     // use suspense instead for getRelatedListings
     let [itemDetails, relatedListings] = await Promise.all([api.getPostedListingItem(params.id), api.getRelatedListings(params.id)]);
     itemDetails = transformListingResponse(itemDetails);
-    relatedListings.slice(0, 4).map((item) => transformListingResponse(item));
 
     const session = await getServerSession(authOptions);
 
@@ -28,7 +27,7 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 itemDetails={itemDetails}
                 loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
             />
-            <RelatedListings relatedListings={relatedListings} />
+            <ListingsCarouselSection items={relatedListings} title="Related Adverts" />
         </div>
     );
 };

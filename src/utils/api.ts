@@ -118,6 +118,7 @@ export const api = {
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`, {
             next: { tags: [apiTags.getListings()] },
         }),
+    getFeaturedListings: () => fetchApi.get<ListingItem[]>("/v1/Listings/featured-listings", { next: { tags: [apiTags.getFeaturedListings()] } }),
     getMyListings: (listingUserId: string, req?: PaginatedRequest & MyListingsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {})}`, {
             next: { tags: [apiTags.getMyListings(listingUserId)] },
@@ -164,6 +165,7 @@ export const apiTags = {
     getFeaturesList: () => "get-features-list",
     getVehicleBrands: () => "get-vehicle-brands",
     getVehicleModels: () => "get-vehicle-models",
+    getFeaturedListings: () => "get-featured-listings",
     getPostedListings: () => "get-posted-listings",
     getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}`,
     getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}`,

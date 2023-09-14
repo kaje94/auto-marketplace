@@ -1,4 +1,4 @@
-import { BreadCrumbs, RelatedListings, ListingDetails } from "@/app/_components";
+import { BreadCrumbs, ListingsCarouselSection, ListingDetails } from "@/app/_components";
 
 const ItemDetailLoadingPage = async () => {
     return (
@@ -12,7 +12,7 @@ const ItemDetailLoadingPage = async () => {
             />
 
             <ListingDetails loading />
-            <RelatedListings loading />
+            <ListingsCarouselSection loading title="Related Adverts" />
         </div>
     );
 };

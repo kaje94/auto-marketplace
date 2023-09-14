@@ -9,7 +9,7 @@ export const TextAreaController: FC<ControllerProps> = (props) => {
     if (loading || !control) {
         return (
             <FormFieldControllerWrap rootClassName={rootClassName} label={label} labelClassNames={labelClassNames} required={required}>
-                <TextArea loading={loading} disabled {...rest} ref={undefined} />
+                <TextArea disabled={loading} loading={loading} {...rest} ref={undefined} />
             </FormFieldControllerWrap>
         );
     }

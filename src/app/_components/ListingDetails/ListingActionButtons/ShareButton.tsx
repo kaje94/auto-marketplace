@@ -2,7 +2,7 @@
 import { ShareIcon, CopyIcon, FacebookIcon, TwitterIcon } from "@/icons";
 import clsx from "clsx";
 import queryString from "query-string";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -11,14 +11,14 @@ interface Props {
 }
 
 export const ShareButton: FC<Props> = ({ loading, title }) => {
-    const popupWindowFeatures = useMemo(() => {
+    const popupWindowFeatures = () => {
         const popupWidth = 900;
         const popupHeight = 600;
-        const left = window.innerWidth / 2 - popupWidth / 2;
-        const top = window.innerHeight / 2 - popupHeight / 2;
+        const left = typeof window === undefined ? 0 : window?.innerWidth / 2 - popupWidth / 2;
+        const top = typeof window === undefined ? 0 : window?.innerHeight / 2 - popupHeight / 2;
 
         return `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
-    }, []);
+    };
 
     return (
         <div className="dropdown-top dropdown-end dropdown">
@@ -26,7 +26,10 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
                 <ShareIcon />
                 Share
             </button>
-            <ul tabIndex={0} className="dropdown-content menu rounded-box  mb-2 w-11/12 bg-base-100 p-2 shadow-2xl">
+            <ul
+                tabIndex={0}
+                className="dropdown-content menu rounded-box mb-2 w-11/12 rounded-br-none border-2 border-base-200 bg-base-100 p-2 shadow-xl"
+            >
                 <li className="flex cursor-pointer rounded-lg duration-200 hover:bg-base-200">
                     <button
                         onClick={() => {
@@ -41,7 +44,7 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
                     <button
                         onClick={() => {
                             const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${window?.location?.href}`;
-                            window?.open(facebookShareUrl, "Share on Facebook", popupWindowFeatures);
+                            window?.open(facebookShareUrl, "Share on Facebook", popupWindowFeatures());
                         }}
                     >
                         <FacebookIcon /> Share on Facebook
@@ -54,7 +57,7 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
                                 text: title ?? "Vehicle for Sales",
                                 url: window?.location?.href,
                             })}`;
-                            window?.open(twitterShareUrl, "Share on Twitter", popupWindowFeatures);
+                            window?.open(twitterShareUrl, "Share on Twitter", popupWindowFeatures());
                         }}
                     >
                         <TwitterIcon /> Share on Twitter
