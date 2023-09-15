@@ -1,14 +1,14 @@
-import { BreadCrumbs, ListingsCarouselSection, ListingDetails } from "@/app/_components";
+import { BreadCrumbs } from "@/app/_components";
 import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdType } from "@/utils/types";
 import { getServerSession } from "next-auth";
+import { ListingDetails } from "@/app/_components/ListingDetails";
+import { RelatedListingsCarousel } from "@/app/_components/ListingsCarousel/RelatedListingsCarousel";
 
 const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => {
-    // use suspense instead for getRelatedListings
-    let [itemDetails, relatedListings] = await Promise.all([api.getPostedListingItem(params.id), api.getRelatedListings(params.id)]);
-    itemDetails = transformListingResponse(itemDetails);
+    const itemDetails = transformListingResponse(await api.getPostedListingItem(params.id));
 
     const session = await getServerSession(authOptions);
 
@@ -27,7 +27,7 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 itemDetails={itemDetails}
                 loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
             />
-            <ListingsCarouselSection items={relatedListings} title="Related Adverts" />
+            <RelatedListingsCarousel id={params.id} />
         </div>
     );
 };

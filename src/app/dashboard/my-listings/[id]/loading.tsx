@@ -1,5 +1,5 @@
-import { BreadCrumbs, ListingDetails } from "@/app/_components";
-import { ListingDetailBanner } from "@/app/_components/ListingDetails";
+import { BreadCrumbs } from "@/app/_components";
+import { ListingDetailBanner, ListingDetails } from "@/app/_components/ListingDetails";
 
 const ItemDetailLoadingPage = async () => {
     return (

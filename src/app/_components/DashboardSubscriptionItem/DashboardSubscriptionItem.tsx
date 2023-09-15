@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { TrashIcon, EditIcon } from "@/icons";
 import { ListingStatusTypes } from "@/utils/enum";
-import { getLocationString, getFormattedCurrency, getRandomItem, unCamelCase, timeAgo, getRandomNumber } from "@/utils/helpers";
+import { getLocationString, getFormattedCurrency, getRandomItem, unCamelCase, timeAgo, getRandomNumber, numberWithCommas } from "@/utils/helpers";
 import clsx from "clsx";
 import Link from "next/link";
 import { DashboardSubscriptionItemMenu } from "./DashboardSubscriptionItemMenu";
@@ -40,7 +40,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     const subscriptionDetails: { label: string; value: string | number }[] = [];
 
     if (type) {
-        subscriptionDetails.push({ label: "Type", value: type });
+        subscriptionDetails.push({ label: "Type", value: unCamelCase(type) });
     }
 
     if (condition) {
@@ -60,7 +60,10 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     }
 
     if (minPrice && maxPrice) {
-        subscriptionDetails.push({ label: "Price Range", value: `${minPrice}-${maxPrice}` });
+        subscriptionDetails.push({
+            label: "Price Range",
+            value: `${getFormattedCurrency(minPrice.amount, minPrice.currency)}-${getFormattedCurrency(maxPrice.amount, maxPrice.currency)}`,
+        });
     } else if (minPrice) {
         subscriptionDetails.push({ label: "Minimum Price", value: getFormattedCurrency(minPrice.amount, minPrice.currency) });
     } else if (maxPrice) {
@@ -68,11 +71,11 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     }
 
     if (minMillage && maxMillage) {
-        subscriptionDetails.push({ label: "Milage Range", value: `${minMillage}-${maxMillage}` });
+        subscriptionDetails.push({ label: "Milage Range", value: `${numberWithCommas(minMillage)} km-${numberWithCommas(maxMillage)} km` });
     } else if (minMillage) {
-        subscriptionDetails.push({ label: "Minimum Milage", value: minMillage });
+        subscriptionDetails.push({ label: "Minimum Milage", value: `${numberWithCommas(minMillage)} km` });
     } else if (maxMillage) {
-        subscriptionDetails.push({ label: "Maximum Milage", value: maxMillage });
+        subscriptionDetails.push({ label: "Maximum Milage", value: `${numberWithCommas(maxMillage)} km` });
     }
 
     if (minYearOfManufacture && maxYearOfManufacture) {

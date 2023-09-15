@@ -51,7 +51,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
                 ) : (
                     <>
                         <div className="font-light">
-                            Milage:<span className="ml-1 font-semibold text-primary-content">{numberWithCommas(vehicle?.millage ?? 0)}</span>
+                            Milage:<span className="ml-1 font-semibold text-primary-content">{numberWithCommas(vehicle?.millage ?? 0)} km</span>
                         </div>
                         <div className="font-light">
                             Transmission:<span className="ml-1 font-semibold text-primary-content">{unCamelCase(vehicle?.transmission ?? "")}</span>
@@ -61,7 +61,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
                         </div>
                         <div className="font-light">
                             Engine Capacity:
-                            <span className="ml-1 font-semibold text-primary-content">{numberWithCommas(vehicle?.engineCapacity ?? 0)}</span>
+                            <span className="ml-1 font-semibold text-primary-content">{numberWithCommas(vehicle?.engineCapacity ?? 0)}CC</span>
                         </div>
                         <div className="font-light">
                             Registered Year:

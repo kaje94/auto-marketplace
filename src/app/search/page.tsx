@@ -34,17 +34,7 @@ const ListingPage = async () => {
 
                 <div className="grid gap-4 md:grid-cols-2 xl:gap-7 2xl:grid-cols-3 2xl:gap-8">
                     {listings?.items?.map((item) => (
-                        <ListingItem
-                            key={item.id}
-                            id={item.id}
-                            title={item.title}
-                            price={getFormattedCurrency(item.price.amount, item.price.currency)}
-                            description={item.description}
-                            tags={getListingTags(item.location, item.vehicle)}
-                            imageUrl={item.vehicle?.vehicleImages[0]?.url ?? ""}
-                            blurDataURL={item.vehicle?.vehicleImages[0]?.blurDataURL}
-                            imageAlt={`${item.title} thumbnail`}
-                        />
+                        <ListingItem key={item.id} item={item} detailed />
                     ))}
                 </div>
                 <Pagination />

@@ -7,16 +7,18 @@ import FsLightbox from "fslightbox-react";
 import { MaximizeIcon } from "@/icons";
 import { ImageFile } from "@/utils/types";
 import Image from "next/image";
+import { timeAgo } from "@/utils/helpers";
 
 type PropType = {
     title?: string;
+    createdOn?: string;
     images?: ImageFile[];
     options?: EmblaOptionsType;
     loading?: boolean;
 };
 
 export const ListingImageCarousel: React.FC<PropType> = (props) => {
-    const { title = "", images = [], options = {}, loading } = props;
+    const { title = "", createdOn = "", images = [], options = {}, loading } = props;
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isLightBoxOpen, setLightBoxOpen] = useState(false);
     const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options, [Autoplay({ delay: 5000 })]);
@@ -94,7 +96,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                             className="absolute bottom-0 left-0 flex h-1/2 w-full cursor-pointer flex-col justify-end bg-gradient-to-t from-base-content to-transparent p-5 sm:h-2/6 "
                         >
                             <div className="text-3xl font-bold text-base-100 image-text-shadow lg:text-6xl">{title}</div>
-                            <div className="mt-2 text-sm font-light text-base-200">Posted 500 days ago</div>
+                            {createdOn && <div className="mt-2 text-sm font-light text-base-200">Posted {timeAgo(new Date(createdOn))}</div>}
                         </div>
                     </div>
                 )}

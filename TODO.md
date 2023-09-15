@@ -13,6 +13,9 @@ decide which lists to take to backend
 vehicle description needs to be at least 1000 characters
 filter for start end dates in dashboard listing is not working
 re-list after temporarily unlisting
+Active search field in all subscription listing is not working (works fine in my subscription list)
+related listings min 5, max maybe 10
+when toggling subscriptions off, why do we need an expiry date
 
 //
 Add a plus button when no ads created by user
@@ -29,6 +32,7 @@ use use-mutation like function yourself instead of using react-query
 replace clsx with tailwind-merge+clsx: https://www.youtube.com/watch?v=re2JFITR7TI
 check max length of all strings in schema file
 remove async from components if not needed
+add react memo throughout
 
 
 // performance

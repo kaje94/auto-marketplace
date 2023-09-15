@@ -2,11 +2,11 @@ import clsx from "clsx";
 import Image from "next/image";
 import { righteousFont } from "./fonts";
 import { SearchIcon, ZapIcon, TagIcon, NotificationIcon, DropletIcon } from "@/icons";
-import { Footer, ListingsCarouselSection, NavBar } from "./_components";
+import { Footer, NavBar } from "./_components";
 import Link from "next/link";
 import { InputController } from "./_components/FormElements/Input";
 import { TextAreaController } from "./_components/FormElements/TextArea";
-import { api } from "@/utils/api";
+import { FeaturedListingsCarousel } from "./_components/ListingsCarousel/FeaturedListingsCarousel";
 
 const HeroSearchBox = () => (
     <div className="join mb-8 mt-5 flex  justify-center shadow-xl md:mb-16 xl:mb-28 2xl:mb-36">
@@ -47,8 +47,7 @@ const FeatureItem = ({
     </div>
 );
 
-export default async function Home() {
-    const featuredListings = await api.getFeaturedListings();
+export default function Home() {
     return (
         <main>
             <section className="relative h-screen hero-bg">
@@ -75,14 +74,9 @@ export default async function Home() {
                 />
             </section>
 
-            <section className="relative bg-white py-12 md:py-20">
-                <div className="container mx-auto mb-2 w-full md:mb-6">
-                    <h3 className={clsx(righteousFont.className, "mb-10 text-center text-2xl lg:text-4xl")}>Featured Adverts</h3>
-                    <ListingsCarouselSection items={featuredListings} />
-                </div>
-            </section>
+            <FeaturedListingsCarousel />
 
-            <section className="bg-base-200 py-12 md:py-20">
+            <section className="bg-white py-12 md:py-20">
                 <div className="container mx-auto w-full max-w-7xl">
                     <h3 className={clsx(righteousFont.className, "mb-6 text-center text-2xl lg:text-4xl")}>Why Choose Us?</h3>
                     <div className="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:p-7 2xl:p-8">
@@ -131,13 +125,13 @@ export default async function Home() {
                 </div>
             </section>
 
-            <section className="relative bg-base-100 py-12 md:py-20">
+            <section className="relative bg-base-200 py-12 md:py-20">
                 <div className="container mx-auto w-full max-w-xl">
                     <h3 className={clsx(righteousFont.className, "mb-6 text-center text-2xl lg:text-4xl")}>Contact Us</h3>
                     <div className="mb-4 flex flex-col gap-1 p-4">
-                        <InputController placeholder="Name" label="Name" fieldName="name" />
-                        <InputController placeholder="user@email.com" label="Email" fieldName="email" />
-                        <TextAreaController placeholder="Your message..." label="Message" fieldName="message" />
+                        <InputController placeholder="Name" label="Name" fieldName="name" inputClassNames="bg-white" />
+                        <InputController placeholder="user@email.com" label="Email" fieldName="email" inputClassNames="bg-white" />
+                        <TextAreaController placeholder="Your message..." label="Message" fieldName="message" textAreaClassNames="bg-white" />
                         <button className="btn-neutral btn mt-6 w-full">Submit</button>
                     </div>
                 </div>
