@@ -14,7 +14,7 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
         <>
             <BreadCrumbs
                 currentPageTitle={itemDetails.title}
-                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "All Adverts", href: "/dashboard/listings" }]}
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Manage Adverts", href: "/dashboard/listings" }]}
             />
             <ListingDetailBanner isAdmin={session?.user?.isAdmin} listingItem={itemDetails} />
             <ListingDetails

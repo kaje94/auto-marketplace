@@ -2,15 +2,11 @@
 import { ComponentProps, forwardRef } from "react";
 import clsx from "clsx";
 import { Control } from "react-hook-form";
+import { FormFieldControllerProps } from "../Common";
 
-export interface ControllerProps extends ComponentProps<"textarea"> {
-    label?: string;
+export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"textarea"> {
     textAreaClassNames?: string;
-    labelClassNames?: string;
-    rootClassName?: string;
-    error?: string;
     loading?: boolean;
-    required?: boolean;
     fieldName: string;
     control?: Control<any>;
 }

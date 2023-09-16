@@ -41,13 +41,13 @@ export const DashboardSideBar = async () => {
                         <NavBarItem
                             href="/dashboard/listings"
                             activePaths={["/dashboard/listings"]}
-                            label="All Adverts"
+                            label="Manage Adverts"
                             regexExp="^/dashboard/listings/(.*?)"
                             iconName="ListIcon"
                         />
                         <NavBarItem
                             href="/dashboard/subscriptions"
-                            label="All Subscriptions"
+                            label="Manage Subscriptions"
                             activePaths={["/dashboard/subscriptions"]}
                             regexExp="^/dashboard/subscriptions/(.*?)"
                             iconName="ClipboardIcon"

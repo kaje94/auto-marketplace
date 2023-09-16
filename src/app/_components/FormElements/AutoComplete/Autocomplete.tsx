@@ -6,17 +6,14 @@ import { Combobox } from "@headlessui/react";
 import { CheckIcon } from "@/icons";
 import { unCamelCase } from "@/utils/helpers";
 import { Control, UseFormSetValue } from "react-hook-form";
+import { FormFieldControllerProps } from "../Common";
 
-export interface ControllerProps {
-    label?: string;
+export interface ControllerProps extends FormFieldControllerProps {
     inputClassNames?: string;
-    labelClassNames?: string;
-    rootClassName?: string;
     gridCols?: "grid-cols-3" | "grid-cols-1";
     showSelectedTick?: boolean;
     loading?: boolean;
     options?: LabelValue[];
-    required?: boolean;
     disabled?: boolean;
     fieldName: string;
     control: Control<any>;

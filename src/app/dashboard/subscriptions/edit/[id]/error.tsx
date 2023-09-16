@@ -6,7 +6,7 @@ const SubscriptionsEditErrorPage = (props: { error: Error; reset: () => void }) 
         <>
             <BreadCrumbs
                 currentPageTitle="Edit"
-                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "All Subscriptions", href: "/dashboard/subscriptions" }]}
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Manage Subscriptions", href: "/dashboard/subscriptions" }]}
             />
             <ErrorComponent {...props} />
         </>

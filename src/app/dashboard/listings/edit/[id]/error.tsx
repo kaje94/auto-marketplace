@@ -9,7 +9,7 @@ const ListingEditErrorPage = (props: { error: Error; reset: () => void }) => {
                 links={[
                     { href: "/", title: "Home" },
                     { title: "Dashboard" },
-                    { title: "All Adverts", href: "/dashboard/listings" },
+                    { title: "Manage Adverts", href: "/dashboard/listings" },
                     { title: "Advert Item" },
                 ]}
             />

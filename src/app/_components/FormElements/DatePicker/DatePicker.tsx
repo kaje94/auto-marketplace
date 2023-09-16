@@ -4,15 +4,11 @@ import clsx from "clsx";
 import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Control } from "react-hook-form";
+import { FormFieldControllerProps } from "../Common";
 
-export interface ControllerProps extends Omit<ReactDatePickerProps, "onChange"> {
-    label?: string;
-    rootClassName?: string;
+export interface ControllerProps extends FormFieldControllerProps, Omit<ReactDatePickerProps, "onChange"> {
     inputClassNames?: string;
-    labelClassNames?: string;
-    error?: string;
     loading?: boolean;
-    required?: boolean;
     fieldName: string;
     control: Control<any>;
 }

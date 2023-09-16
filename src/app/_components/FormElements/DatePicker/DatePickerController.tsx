@@ -17,6 +17,7 @@ export const DatePickerController: FC<ControllerProps> = ({
     labelClassNames,
     rootClassName,
     fieldName,
+    errorAsTooltip,
     ...rest
 }) => {
     if (loading || !control) {
@@ -30,6 +31,7 @@ export const DatePickerController: FC<ControllerProps> = ({
                 rootClassName={rootClassName}
                 loading
                 fieldName={fieldName}
+                errorAsTooltip={errorAsTooltip}
             />
         );
     }
@@ -45,6 +47,7 @@ export const DatePickerController: FC<ControllerProps> = ({
                     labelClassNames={labelClassNames}
                     required={required}
                     error={fieldState.error?.message}
+                    errorAsTooltip={errorAsTooltip}
                 >
                     <DatePicker
                         error={fieldState.error?.message}

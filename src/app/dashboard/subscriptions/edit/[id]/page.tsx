@@ -10,7 +10,7 @@ const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) =>
         <>
             <BreadCrumbs
                 currentPageTitle="Edit"
-                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "All Subscriptions", href: "/dashboard/subscriptions" }]}
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Manage Subscriptions", href: "/dashboard/subscriptions" }]}
             />
             <EditSubscriptionForm listingSubscriptionItem={subscriptionDetails} successRedirectPath="/dashboard/subscriptions" />
         </>

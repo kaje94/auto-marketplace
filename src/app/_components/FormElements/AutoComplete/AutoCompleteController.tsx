@@ -22,6 +22,7 @@ export const AutocompleteController: FC<ControllerProps> = ({
     gridCols,
     showSelectedTick,
     disabled,
+    errorAsTooltip,
 }) => {
     if (loading || !control) {
         return (
@@ -35,6 +36,7 @@ export const AutocompleteController: FC<ControllerProps> = ({
                 loading={loading}
                 disabled={true}
                 fieldName={fieldName}
+                errorAsTooltip={errorAsTooltip}
             />
         );
     }
@@ -50,6 +52,7 @@ export const AutocompleteController: FC<ControllerProps> = ({
                     labelClassNames={labelClassNames}
                     required={required}
                     error={fieldState.error?.message}
+                    errorAsTooltip={errorAsTooltip}
                 >
                     <Autocomplete
                         placeholder={placeholder}
