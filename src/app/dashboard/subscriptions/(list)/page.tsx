@@ -15,9 +15,8 @@ const SubscriptionsPage = async ({ searchParams }: SearchParams) => {
     const session = await getServerSession(authOptions);
     const listingSubscriptions = await api.getListingSubscriptions({ PageNumber: Number(page), ...parsedSearchParams });
 
-    if (listingSubscriptions.totalCount > 0 && listingSubscriptions.items?.length === 0 && page !== "1") {
-        const lastPageNumber = Math.ceil(listingSubscriptions.totalCount / 10);
-        redirect(`/dashboard/subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: lastPageNumber }, { skipEmptyString: true })}`);
+    if (listingSubscriptions.items?.length === 0 && page !== "1") {
+        redirect(`/dashboard/subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
 
     return (

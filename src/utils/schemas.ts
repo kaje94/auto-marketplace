@@ -135,6 +135,21 @@ export const CreateSubscriptionSchema = z.object({
     subscriptionExpiryDate: z.string().min(1, "Expiration date is required"),
 });
 
+export const PostedListingsFilterSchema = z.object({
+    Title: z.string().optional(),
+    YomStartDate: z.union([z.string(), z.null()]).optional(),
+    YomEndDate: z.union([z.string(), z.null()]).optional(),
+    MinPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal(""), z.null()]).optional(),
+    MaxPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal(""), z.null()]).optional(),
+    City: z.string().optional(),
+    Brand: z.string().optional(),
+    Model: z.string().optional(),
+    VehicleType: z.union([z.nativeEnum(VehicleTypes), z.literal(""), z.null()]).optional(),
+    FuelType: z.union([z.nativeEnum(FuelTypes), z.literal(""), z.null()]).optional(),
+    Condition: z.union([z.nativeEnum(VehicleConditionTypes), z.literal(""), z.null()]).optional(),
+    Transmission: z.union([z.nativeEnum(TransmissionTypes), z.literal(""), z.null()]).optional(),
+});
+
 export const EditSubscriptionSchema = CreateSubscriptionSchema.extend({
     listingSubscriptionId: ListingSubscriptionIdField,
 });

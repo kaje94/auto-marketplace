@@ -7,24 +7,7 @@ import Link from "next/link";
 import { InputController } from "./_components/FormElements/Input";
 import { TextAreaController } from "./_components/FormElements/TextArea";
 import { FeaturedListingsCarousel } from "./_components/ListingsCarousel/FeaturedListingsCarousel";
-
-const HeroSearchBox = () => (
-    <div className="join mb-8 mt-5 flex  justify-center shadow-xl md:mb-16 xl:mb-28 2xl:mb-36">
-        <input className="input-bordered input join-item max-w-[220px] rounded-r-none sm:max-w-none" placeholder="Search..." />
-        <select className="select-bordered select join-item hidden rounded-none sm:block">
-            <option disabled>Type</option>
-            <option>Car</option>
-            <option>Van</option>
-            <option>SUV</option>
-        </select>
-        <Link href="/search">
-            <button className="btn-secondary join-item btn rounded-l-none">
-                <SearchIcon />
-                <span className="ml-2 hidden lg:block">Search</span>
-            </button>
-        </Link>
-    </div>
-);
+import { LandingHeroSearch } from "./_components/LandingHeroSearch";
 
 const FeatureItem = ({
     title,
@@ -61,7 +44,7 @@ export default function Home() {
                     <h4 className="text-center text-base text-white opacity-70 md:text-lg lg:text-xl">
                         Start Your Journey: Discover Your Dream Vehicle or Sell Your Car with Ease
                     </h4>
-                    <HeroSearchBox />
+                    <LandingHeroSearch />
                 </div>
                 <Image
                     src="/cover-image.jpg"

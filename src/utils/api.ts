@@ -22,6 +22,7 @@ import {
     EditSubscriptionReq,
     ListingSubscriptionItem,
     VehicleBrand,
+    PostedListingsFilterReq,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
@@ -105,8 +106,10 @@ export const api = {
     getVehicleModels: (brandId: string) =>
         fetchApi.get<VehicleFeature[]>(`/v1/Vehicles/${brandId}/models`, { next: { tags: [apiTags.getVehicleModels()] } }),
     // need to revalidate after XXX
-    getPostedListings: () =>
-        fetchApi.get<PaginatedResponse & ListingItems>("/v1/Listings/posted", { next: { revalidate: 0, tags: [apiTags.getPostedListings()] } }),
+    getPostedListings: (req?: PaginatedRequest & PostedListingsFilterReq) =>
+        fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
+            next: { revalidate: 0, tags: [apiTags.getPostedListings()] },
+        }),
     getPostedListingItem: (id: ListingIdType) =>
         fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, { next: { tags: [apiTags.getPostedListingItem(id)] } }),
     // need to revalidate after XXX
@@ -115,12 +118,12 @@ export const api = {
     postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, ListingIdType>("/v1/Listings", JSON.stringify(body)),
     putListing: (body: EditListingReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Listings/${body.listingId}`, JSON.stringify(body)),
     getListings: (req?: PaginatedRequest & DashboardListFilterReq) =>
-        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {})}`, {
+        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { tags: [apiTags.getListings()] },
         }),
     getFeaturedListings: () => fetchApi.get<ListingItem[]>("/v1/Listings/featured-listings", { next: { tags: [apiTags.getFeaturedListings()] } }),
     getMyListings: (listingUserId: string, req?: PaginatedRequest & MyListingsFilterReq) =>
-        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {})}`, {
+        fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { tags: [apiTags.getMyListings(listingUserId)] },
         }),
     getListingsItem: (id: ListingIdType) =>
@@ -134,20 +137,21 @@ export const api = {
     incrementViews: (listingId: ListingIdType) =>
         fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: 0 } }),
     reportListing: (body: ReportListingReq) => fetchApi.post<BodyInit, void>(`/v1/Listings/${body.listingId}/report`, JSON.stringify(body)),
-
     // Listing subscriptions
     postListingSubscription: (body: CreateSubscriptionReq) =>
         fetchApi.protectedPost<BodyInit, ListingSubscriptionIdType>("/v1/ListingSubscriptions", JSON.stringify(body)),
     putListingSubscription: (body: EditSubscriptionReq) =>
         fetchApi.protectedPut<BodyInit, void>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}`, JSON.stringify(body)),
     getListingSubscriptions: (req?: PaginatedRequest & DashboardSubscriptionFilterReq) =>
-        fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(`/v1/ListingSubscriptions?${qs.stringify(req ?? {})}`, {
-            next: { tags: [apiTags.getListingSubscriptions()] },
-        }),
+        fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
+            `/v1/ListingSubscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
+            { next: { tags: [apiTags.getListingSubscriptions()] } }
+        ),
     getMyListingSubscriptions: (listingUserId: string, req?: PaginatedRequest & DashboardMySubscriptionFilterReq) =>
-        fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(`/v1/Users/me/listing-subscriptions?${qs.stringify(req ?? {})}`, {
-            next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)] },
-        }),
+        fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
+            `/v1/Users/me/listing-subscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
+            { next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)] } }
+        ),
     getListingSubscriptionItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/ListingSubscriptions/${id}`, {
             next: { tags: [apiTags.getListingSubscriptionItem(id)] },

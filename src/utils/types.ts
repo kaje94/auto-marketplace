@@ -11,6 +11,7 @@ import {
     ListingSubscriptionIdField,
     LocationSchema,
     MyListingsFilterSchema,
+    PostedListingsFilterSchema,
     PriceSchema,
     ReportListingSchema,
     ReviewListingSchema,
@@ -141,6 +142,8 @@ export type DashboardSubscriptionFilterReq = z.infer<typeof DashboardSubscriptio
 export type DashboardMySubscriptionFilterReq = z.infer<typeof DashboardMySubscriptionFilterSchema>;
 
 export type MyListingsFilterReq = z.infer<typeof MyListingsFilterSchema>;
+
+export type PostedListingsFilterReq = z.infer<typeof PostedListingsFilterSchema>;
 
 export type ListingIdType = z.infer<typeof ListingIdField>;
 

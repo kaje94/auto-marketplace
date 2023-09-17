@@ -26,7 +26,7 @@ interface Props {
 
 export const ListingForm: FC<Props> = (props) => {
     const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {} } = props;
-    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control, setValue } = form as UseFormReturn<CreateListingReq>;
+    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control } = form as UseFormReturn<CreateListingReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -42,7 +42,6 @@ export const ListingForm: FC<Props> = (props) => {
                             required
                             options={VehicleTypeList}
                             control={control}
-                            setValue={setValue}
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
@@ -78,7 +77,6 @@ export const ListingForm: FC<Props> = (props) => {
                                 gridCols="grid-cols-3"
                                 showSelectedTick={false}
                                 control={control}
-                                setValue={setValue}
                             />
                             <AutocompleteController
                                 fieldName="vehicle.yearOfRegistration"
@@ -90,7 +88,6 @@ export const ListingForm: FC<Props> = (props) => {
                                 gridCols="grid-cols-3"
                                 showSelectedTick={false}
                                 control={control}
-                                setValue={setValue}
                             />
                             <InputController
                                 fieldName="vehicle.millage"
@@ -109,7 +106,6 @@ export const ListingForm: FC<Props> = (props) => {
                                 required
                                 options={VehicleConditionList}
                                 control={control}
-                                setValue={setValue}
                             />
                             <AutocompleteController
                                 fieldName="vehicle.transmission"
@@ -119,7 +115,6 @@ export const ListingForm: FC<Props> = (props) => {
                                 required
                                 options={TransmissionTypeList}
                                 control={control}
-                                setValue={setValue}
                             />
                             <AutocompleteController
                                 fieldName="vehicle.fuelType"
@@ -129,7 +124,6 @@ export const ListingForm: FC<Props> = (props) => {
                                 required
                                 options={FuelTypeList}
                                 control={control}
-                                setValue={setValue}
                             />
                             <InputController
                                 fieldName="vehicle.engineCapacity"

@@ -16,9 +16,8 @@ const MySubscriptionsPage = async ({ searchParams }: SearchParams) => {
     const listingSubscriptions = await api.getMyListingSubscriptions(session?.user?.id!, { PageNumber: Number(page), ...parsedSearchParams });
     const hasSearchParams = Object.keys(DashboardMySubscriptionFilterSchema.parse(parsedSearchParams)).length > 0;
 
-    if (listingSubscriptions.totalCount > 0 && listingSubscriptions.items?.length === 0 && page !== "1") {
-        const lastPageNumber = Math.ceil(listingSubscriptions.totalCount / 10);
-        redirect(`/dashboard/my-subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: lastPageNumber }, { skipEmptyString: true })}`);
+    if (listingSubscriptions.items?.length === 0 && page !== "1") {
+        redirect(`/dashboard/my-subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
 
     return (

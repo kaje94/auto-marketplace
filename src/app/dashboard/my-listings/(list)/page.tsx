@@ -1,6 +1,6 @@
 import { BreadCrumbs, Empty, Pagination, DashboardListHeader, DashboardListingItem } from "@/app/_components";
 import { api } from "@/utils/api";
-import { transformListingResponse } from "@/utils/helpers";
+import { transformListingResponse, transformListingsListResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 import { MyListingsFilterSchema } from "@/utils/schemas";
@@ -13,13 +13,11 @@ const MyAds = async ({ searchParams }: SearchParams) => {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = MyListingsFilterSchema.parse(searchParams);
     const session = await getServerSession(authOptions);
-    let listings = await api.getMyListings(session?.user?.id!, { PageNumber: Number(page), ...parsedSearchParams });
-    listings = { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
+    const listings = transformListingsListResponse(await api.getMyListings(session?.user?.id!, { PageNumber: Number(page), ...parsedSearchParams }));
     const hasSearchParams = Object.keys(MyListingsFilterSchema.parse(parsedSearchParams)).length > 0;
 
-    if (listings.totalCount > 0 && listings.items?.length === 0 && page !== "1") {
-        const lastPageNumber = Math.ceil(listings.totalCount / 10);
-        redirect(`/dashboard/my-listings?${qs.stringify({ ...parsedSearchParams, PageNumber: lastPageNumber }, { skipEmptyString: true })}`);
+    if (listings.items?.length === 0 && page !== "1") {
+        redirect(`/dashboard/my-listings?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
 
     return (

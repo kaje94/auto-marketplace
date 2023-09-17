@@ -14,15 +14,18 @@ export const useFilter = ({
     defaultFilter: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq;
 }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
     const searchParamsObj = searchParamsToObject(searchParams);
-    const [newSearchQuery, setNewSearchQuery] = useState(searchParams.toString());
+    const [newSearchQuery, setNewSearchQuery] = useState(qs.stringify({ ...searchParamsObj }));
+    const loading = qs.stringify({ ...searchParamsObj }) !== newSearchQuery;
+
+    useEffect(() => {
+        setNewSearchQuery(qs.stringify({ ...searchParamsObj }));
+    }, [searchParamsObj]);
 
     const onResetClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
-        setLoading(true);
         setDropdownOpen(false);
         setNewSearchQuery("");
         reset(defaultFilter);
@@ -30,11 +33,10 @@ export const useFilter = ({
     };
 
     const onApplyFilterClick = (values: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq) => {
-        const searchQuery = qs.stringify({ ...searchParamsObj, ...values }, { skipEmptyString: true });
+        const searchQuery = qs.stringify({ ...searchParamsObj, ...values }, { skipEmptyString: true, skipNull: true });
         setDropdownOpen(false);
         if (newSearchQuery !== searchQuery) {
             reset(values);
-            setLoading(true);
             setNewSearchQuery(searchQuery);
             router.push(`${window?.location?.pathname}?${searchQuery}`);
         }
@@ -47,12 +49,6 @@ export const useFilter = ({
             setDropdownOpen(true);
         }
     };
-
-    useEffect(() => {
-        if (searchParams.toString() === newSearchQuery) {
-            setLoading(false);
-        }
-    }, [searchParams, newSearchQuery, setLoading]);
 
     return { loading, dropdownOpen, setDropdownOpen, onResetClick, onApplyFilterClick, handleFilterOpen };
 };

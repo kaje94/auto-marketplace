@@ -22,25 +22,28 @@ export const FormFieldControllerWrap: FC<FormFieldControllerProps> = ({
     errorAsTooltip,
 }) => (
     <div className={clsx("form-control w-full", rootClassName, !error && !errorAsTooltip && "mb-4")}>
-        <label className={clsx("label py-0.5", labelClassNames)}>
-            <span className="label-text ">
-                {label} {required && <span className="text-error">*</span>}
-            </span>
-            {errorAsTooltip && (
-                <span className="label-text-alt text-error">
-                    <div
-                        className={clsx({
-                            "duration-200 flex items-center": true,
-                            "tooltip-left tooltip-error tooltip opacity-100": error,
-                            "opacity-0": !error,
-                        })}
-                        data-tip={error}
-                    >
-                        <AlertCircleIcon className="h-4 w-4" />
-                    </div>
+        {label && (
+            <label className={clsx("label py-0.5", labelClassNames)}>
+                <span className="label-text opacity-70">
+                    {label} {required && <span className="text-error">*</span>}
                 </span>
-            )}
-        </label>
+                {errorAsTooltip && (
+                    <span className="label-text-alt text-error">
+                        <div
+                            className={clsx({
+                                "duration-200 flex items-center": true,
+                                "tooltip-left tooltip-error tooltip opacity-100": error,
+                                "opacity-0": !error,
+                            })}
+                            data-tip={error}
+                        >
+                            <AlertCircleIcon className="h-4 w-4" />
+                        </div>
+                    </span>
+                )}
+            </label>
+        )}
+
         {children}
         {error && !errorAsTooltip && (
             <label className="label pb-0 pt-0.5">

@@ -12,6 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.374.0",
     "@aws-sdk/s3-request-presigner": "^3.375.0",
+    "@formkit/auto-animate": "^0.8.0",
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.1.1",
     "@t3-oss/env-nextjs": "^0.6.0",
@@ -26,6 +27,7 @@
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
     "fslightbox-react": "^1.7.4",
+    "lodash.debounce": "^4.0.8",
     "nanoid": "^4.0.2",
     "next": "13.4.12",
     "next-auth": "^4.22.4",
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "@types/fslightbox-react": "^1.7.3",
+    "@types/lodash.debounce": "^4.0.7",
     "@types/react": "^18.2.14",
     "@types/react-datepicker": "^4.15.0",
     "@types/react-dom": "^18.2.6",

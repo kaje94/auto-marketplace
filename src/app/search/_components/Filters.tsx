@@ -1,106 +1,181 @@
+"use client";
+import { useFilter } from "@/app/_components/DashboardListHeader/FilterHooks";
+import { AutocompleteController } from "@/app/_components/FormElements/AutoComplete";
+import { InputController } from "@/app/_components/FormElements/Input";
 import { SearchIcon } from "@/icons";
-import { FC } from "react";
+import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
+import { convertYearToDateString, getYearFromDateString, searchParamsToObject } from "@/utils/helpers";
+import { PostedListingsFilterSchema } from "@/utils/schemas";
+import { PostedListingsFilterReq } from "@/utils/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FC, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import qs from "query-string";
+import debounce from "lodash.debounce";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import clsx from "clsx";
 
-export const Filters: FC = () => {
+const debouncedSearchRedirect = debounce((searchQuery: string, router: AppRouterInstance, callback?: Function) => {
+    router.push(`${window?.location?.pathname}?${searchQuery}`);
+    if (callback) {
+        callback();
+    }
+}, 1000);
+
+const defaultFilter: PostedListingsFilterReq = {
+    Brand: "",
+    City: "",
+    Condition: "",
+    FuelType: "",
+    MaxPrice: "",
+    MinPrice: "",
+    Model: "",
+    Title: "",
+    Transmission: "",
+    VehicleType: "",
+    YomEndDate: "",
+    YomStartDate: "",
+};
+
+export const Filters = ({ setNewSearchQuery, newSearchQuery }: { newSearchQuery?: string; setNewSearchQuery: (queryStr: string) => void }) => {
+    const searchParams = useSearchParams();
+    const searchParamsObj = searchParamsToObject(searchParams);
+    const hasSearchParams = Object.keys(PostedListingsFilterSchema.parse(searchParamsObj)).length > 0;
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    const { reset, control, watch } = useForm<PostedListingsFilterReq>({
+        resolver: zodResolver(PostedListingsFilterSchema),
+        defaultValues: {
+            ...defaultFilter,
+            ...searchParamsObj,
+            YomStartDate: searchParamsObj.YomStartDate ? `${getYearFromDateString(searchParamsObj.YomStartDate)}` : undefined,
+            YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate)}` : undefined,
+        },
+        mode: "onChange",
+    });
+
+    const formValues = watch();
+
+    const formQueryString = qs.stringify(
+        {
+            ...searchParamsObj,
+            ...formValues,
+            YomStartDate: formValues.YomStartDate ? convertYearToDateString(formValues.YomStartDate) : undefined,
+            YomEndDate: formValues.YomEndDate ? convertYearToDateString(formValues.YomEndDate) : undefined,
+        },
+        { skipEmptyString: true, skipNull: true }
+    );
+
+    useEffect(() => {
+        reset({
+            ...defaultFilter,
+            ...searchParamsObj,
+            YomStartDate: searchParamsObj.YomStartDate ? `${getYearFromDateString(searchParamsObj.YomStartDate)}` : undefined,
+            YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate)}` : undefined,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [qs.stringify(searchParamsObj)]);
+
+    useEffect(() => {
+        debouncedSearchRedirect(formQueryString, router, () => setNewSearchQuery(formQueryString));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formValues.Title, formValues.MinPrice, formValues.MaxPrice, formValues.City, formValues.Brand, formValues.Model, router]);
+
+    useEffect(() => {
+        router.push(`${window?.location?.pathname}?${formQueryString}`);
+        setNewSearchQuery(formQueryString);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        formValues.VehicleType,
+        formValues.Condition,
+        formValues.YomStartDate,
+        formValues.YomEndDate,
+        formValues.Transmission,
+        formValues.FuelType,
+        router,
+    ]);
+
+    const onResetClick = () => {
+        router.push("/search");
+    };
+
+    // useEffect(() => {
+    //     if (searchParams.toString() === newSearchQuery) {
+    //         setLoading(false);
+    //     }
+    // }, [searchParams, newSearchQuery, setLoading]);
+
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <div className="card grid grid-cols-2 gap-2 bg-base-100 p-3 shadow-md lg:p-5 xl:p-6">
+                <div className="mt-0 lg:mt-2" />
+                <InputController placeholder="Search..." fieldName="Title" control={control} rootClassName="col-span-2" errorAsTooltip />
+                <div className="divider col-span-2 mt-4 lg:mt-6">Advanced Filters</div>
+                <AutocompleteController
+                    placeholder="Type"
+                    label="Vehicle Type"
+                    fieldName="VehicleType"
+                    control={control}
+                    options={VehicleTypeList}
+                    rootClassName="col-span-2"
+                    errorAsTooltip
+                />
                 <div className="col-span-2">
-                    <div className="relative ">
-                        <input type="text" placeholder="Search..." className="input-bordered input w-full bg-transparent text-sm" />
-                        <button className="btn absolute right-0 top-0 rounded-l-none border-none">
-                            <SearchIcon />
-                        </button>
+                    <div className="pb-0.5 pl-1 text-sm opacity-70">Price Range</div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <InputController placeholder="Minimum" fieldName="MinPrice" control={control} type="number" errorAsTooltip />
+                        <InputController placeholder="Maximum" fieldName="MaxPrice" control={control} type="number" errorAsTooltip />
                     </div>
                 </div>
-                <div className="divider col-span-2 mt-6">Filters</div>
+                <AutocompleteController
+                    placeholder="Condition"
+                    label="Condition"
+                    fieldName="Condition"
+                    control={control}
+                    options={VehicleConditionList}
+                    errorAsTooltip
+                />
+                <InputController placeholder="City" label="City" fieldName="City" control={control} errorAsTooltip />
+                <InputController placeholder="Brand" label="Brand" fieldName="Brand" control={control} errorAsTooltip />
+                <InputController placeholder="Model" label="Model" fieldName="Model" control={control} errorAsTooltip />
                 <div className="col-span-2">
-                    {/* <Select
-                        label="Type"
-                        options={[
-                            { label: "Car", value: "Car" },
-                            { label: "SUV", value: "SUV" },
-                            { label: "Van", value: "Van" },
-                        ]}
-                        selectClassName="select-sm"
-                        placeholder="All Types"
-                        selectablePlaceholder
-                    /> */}
+                    <div className="pb-0.5 pl-1 text-sm opacity-70">Manufactured Year Range</div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <AutocompleteController
+                            placeholder="From"
+                            fieldName="YomStartDate"
+                            control={control}
+                            errorAsTooltip
+                            options={YearRangeList}
+                        />
+                        <AutocompleteController placeholder="To" fieldName="YomEndDate" control={control} errorAsTooltip options={YearRangeList} />
+                    </div>
                 </div>
-                <div className="col-span-2">
-                    {/* <Select
-                        label="City"
-                        options={[
-                            { label: "Colombo", value: "Colombo" },
-                            { label: "Galle", value: "Galle" },
-                        ]}
-                        selectClassName="select-sm"
-                        placeholder="All Cities"
-                        selectablePlaceholder
-                    /> */}
-                </div>
-                <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    {/* <Input label="Minimum Price" type="number" placeholder="Minimum Price" min={0} inputClassNames="input-sm" /> */}
-                </div>
-                <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    {/* <Input label="Maximum Price" type="number" placeholder="Maximum Price" min={0} inputClassNames="input-sm" /> */}
-                </div>
-                <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    {/* <Input label="Manufactured From" type="number" placeholder="1990" min={0} inputClassNames="input-sm" /> */}
-                </div>
-                <div className="col-span-1 lg:col-span-2 xl:col-span-1">
-                    {/* <Input
-                        label="Manufactured Upto"
-                        type="number"
-                        placeholder="2023"
-                        min={0}
-                        max={new Date().getFullYear()}
-                        inputClassNames="input-sm"
-                    /> */}
-                </div>
-                <div className="col-span-2">
-                    {/* <Select
-                        label="Condition"
-                        options={[
-                            { label: "New", value: "New" },
-                            { label: "Used", value: "Used" },
-                            { label: "Refurbished", value: "Refurbished" },
-                        ]}
-                        selectClassName="select-sm"
-                        placeholder="Any Condition"
-                        selectablePlaceholder
-                    /> */}
-                </div>
-                <div className="col-span-1 lg:col-span-2">
-                    {/* <Select
-                        label="Fuel Type"
-                        options={[
-                            { label: "Petrol", value: "Petrol" },
-                            { label: "Diesel", value: "Diesel" },
-                            { label: "Hybrid", value: "Hybrid" },
-                            { label: "Electric", value: "Electric" },
-                            { label: "Other", value: "Other" },
-                        ]}
-                        selectClassName="select-sm"
-                        placeholder="Any Fuel Type"
-                        selectablePlaceholder
-                    /> */}
-                </div>
-                <div className="col-span-1 lg:col-span-2">
-                    {/* <Select
-                        label="Transmission Type"
-                        options={[
-                            { label: "Automatic", value: "Automatic" },
-                            { label: "Manual", value: "Manual" },
-                            { label: "Tiptronic", value: "Tiptronic" },
-                            { label: "Other", value: "Other" },
-                        ]}
-                        selectClassName="select-sm"
-                        placeholder="Any Type"
-                        selectablePlaceholder
-                    /> */}
-                </div>
-                <button className="btn-ghost btn col-span-2 mt-5">Reset</button>
+                <AutocompleteController
+                    placeholder="Fuel Type"
+                    label="Fuel Type"
+                    fieldName="FuelType"
+                    control={control}
+                    options={FuelTypeList}
+                    errorAsTooltip
+                />
+                <AutocompleteController
+                    placeholder="Transmission"
+                    label="Transmission"
+                    fieldName="Transmission"
+                    control={control}
+                    options={TransmissionTypeList}
+                    errorAsTooltip
+                />
+                <button
+                    disabled={!hasSearchParams}
+                    className={clsx("btn-accent btn-outline btn col-span-2 mt-3 lg:mt-5", !hasSearchParams && "opacity-50")}
+                    onClick={onResetClick}
+                >
+                    Reset
+                </button>
             </div>
         </aside>
     );

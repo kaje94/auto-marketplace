@@ -14,11 +14,10 @@ export const AutocompleteController: FC<ControllerProps> = ({
     required,
     options,
     control,
-    inputClassNames,
+    selectClassNames,
     labelClassNames,
     rootClassName,
     fieldName,
-    setValue,
     gridCols,
     showSelectedTick,
     disabled,
@@ -30,7 +29,7 @@ export const AutocompleteController: FC<ControllerProps> = ({
                 label={label}
                 placeholder={placeholder}
                 required={required}
-                inputClassNames={inputClassNames}
+                inputClassNames={selectClassNames}
                 labelClassNames={labelClassNames}
                 rootClassName={rootClassName}
                 loading={loading}
@@ -57,13 +56,9 @@ export const AutocompleteController: FC<ControllerProps> = ({
                     <Autocomplete
                         placeholder={placeholder}
                         error={fieldState.error?.message}
-                        inputClassNames={inputClassNames}
+                        selectClassNames={selectClassNames}
                         options={options}
-                        setFieldValue={(value: string | number) => {
-                            if (setValue) {
-                                setValue(fieldName, value, { shouldValidate: true, shouldDirty: true, shouldTouch: true });
-                            }
-                        }}
+                        setFieldValue={(value: string | number) => field.onChange(value)}
                         value={field.value}
                         gridCols={gridCols}
                         showSelectedTick={showSelectedTick}

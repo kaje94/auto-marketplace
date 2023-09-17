@@ -1,4 +1,4 @@
-import { Vehicle, Location, ImageFile, ListingItem, VehicleCreate } from "./types";
+import { Vehicle, Location, ImageFile, ListingItem, VehicleCreate, ListingItems, PaginatedResponse } from "./types";
 import * as ThumbHash from "thumbhash";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -147,6 +147,10 @@ export const transformImagesToPost = async (files: ImageFile[]): Promise<ImageFi
 };
 
 // todo: change how this is called
+export const transformListingsListResponse = (listings: PaginatedResponse & ListingItems): PaginatedResponse & ListingItems => {
+    return { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
+};
+
 export const transformListingResponse = (itemDetails: ListingItem): ListingItem => {
     return {
         ...itemDetails,

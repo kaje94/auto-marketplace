@@ -21,13 +21,7 @@ interface Props {
 
 export const SubscriptionForm: FC<Props> = (props) => {
     const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {} } = props;
-    const {
-        handleSubmit,
-        formState: { errors, isDirty } = {},
-        register = () => {},
-        setValue,
-        control,
-    } = form as UseFormReturn<CreateSubscriptionReq>;
+    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control } = form as UseFormReturn<CreateSubscriptionReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -51,7 +45,6 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 options={SubscriptFrequenciesList}
                                 control={control}
                                 fieldName="notificationFrequency"
-                                setValue={setValue}
                             />
                             <DatePickerController
                                 label="Subscription expiry date"
@@ -74,7 +67,6 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             loading={isLoading}
                             control={control}
                             fieldName="type"
-                            setValue={setValue}
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
@@ -105,7 +97,6 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 loading={isLoading}
                                 control={control}
                                 fieldName="condition"
-                                setValue={setValue}
                             />
                         </div>
                     </div>

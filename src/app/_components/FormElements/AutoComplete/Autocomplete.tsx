@@ -1,15 +1,15 @@
 "use client";
 import { LabelValue } from "@/utils/types";
 import { clsx } from "clsx";
-import React, { useState, FC, forwardRef } from "react";
+import React, { useState, forwardRef } from "react";
 import { Combobox } from "@headlessui/react";
 import { CheckIcon } from "@/icons";
 import { unCamelCase } from "@/utils/helpers";
-import { Control, UseFormSetValue } from "react-hook-form";
+import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "../Common";
 
 export interface ControllerProps extends FormFieldControllerProps {
-    inputClassNames?: string;
+    selectClassNames?: string;
     gridCols?: "grid-cols-3" | "grid-cols-1";
     showSelectedTick?: boolean;
     loading?: boolean;
@@ -17,11 +17,10 @@ export interface ControllerProps extends FormFieldControllerProps {
     disabled?: boolean;
     fieldName: string;
     control: Control<any>;
-    setValue?: UseFormSetValue<any>;
     placeholder?: string;
 }
 
-export interface Props extends Pick<ControllerProps, "inputClassNames" | "placeholder" | "options" | "gridCols" | "showSelectedTick" | "disabled"> {
+export interface Props extends Pick<ControllerProps, "selectClassNames" | "placeholder" | "options" | "gridCols" | "showSelectedTick" | "disabled"> {
     setFieldValue?: (value: any) => void;
     value?: string;
     error?: string;
@@ -31,7 +30,7 @@ export interface Props extends Pick<ControllerProps, "inputClassNames" | "placeh
 export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => {
     const {
         error,
-        inputClassNames,
+        selectClassNames,
         options = [],
         value,
         disabled,
@@ -71,7 +70,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                 "select-bordered select w-full bg-transparent font-normal",
                                 error && "select-error",
                                 disabled && "text-opacity-90",
-                                inputClassNames
+                                selectClassNames
                             )}
                             displayValue={(option: any) => (option && option !== "" ? unCamelCase(option as string) : query)}
                             placeholder={placeholder}
