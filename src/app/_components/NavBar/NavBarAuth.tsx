@@ -9,9 +9,9 @@ import { useSession } from "next-auth/react";
 export const NavBarAuth = () => {
     const { data, status } = useSession();
     return (
-        <div className="relative flex-none">
+        <div className="relative flex w-12 items-center justify-center">
             {status === "loading" ? (
-                <span className="loading loading-ring ml-1 w-11" />
+                <span className="loading loading-ring w-8" />
             ) : (
                 <>
                     {data ? (
