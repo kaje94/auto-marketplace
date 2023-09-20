@@ -107,7 +107,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                             })
                                         }
                                         value={option.value}
-                                        onClick={() => setSelectedValue(option.value)}
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            setSelectedValue(option.value);
+                                        }}
                                     >
                                         {({ selected }) => (
                                             <div className="flex flex-1 items-center justify-between">

@@ -2,6 +2,7 @@ import { ReactQueryProvider } from "@/utils/query-provider";
 import { NextAuthProvider } from "@/utils/auth-provider";
 import { montserratFont } from "./fonts";
 import { Toaster } from "react-hot-toast";
+import { NavBar, Footer } from "./_components";
 import "./globals.css";
 
 export const metadata = {
@@ -15,7 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={montserratFont.className}>
                 <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 }, duration: 5000 }} />
                 <ReactQueryProvider>
-                    <NextAuthProvider>{children}</NextAuthProvider>
+                    <NextAuthProvider>
+                        <NavBar />
+                        {children}
+                        <Footer />
+                    </NextAuthProvider>
                 </ReactQueryProvider>
             </body>
         </html>

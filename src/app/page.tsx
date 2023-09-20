@@ -34,15 +34,12 @@ export default function Home() {
     return (
         <main>
             <section className="relative h-screen hero-bg">
-                <div className="container mx-auto w-full p-4 xl:p-7 2xl:p-8">
-                    <NavBar hideBackground />
-                </div>
-                <div className="container relative z-10 mx-auto  flex h-4/6 flex-col items-center justify-center gap-2 p-4 xl:p-7 2xl:p-8">
-                    <h1 className={clsx(righteousFont.className, "text-center text-5xl text-white sm:text-7xl md:text-8xl xl:text-9xl")}>
+                <div className="container relative z-10 mx-auto flex  h-full flex-col items-center justify-center gap-2 p-4 !pb-[10%]  xl:p-7 2xl:p-8">
+                    <h1 className={clsx(righteousFont.className, "text-center text-5xl text-white sm:text-7xl md:text-8xl xl:text-9xl ")}>
                         Drive Your Dreams
                     </h1>
                     <h4 className="text-center text-base text-white opacity-70 md:text-lg lg:text-xl">
-                        Start Your Journey: Discover Your Dream Vehicle or Sell Your Car with Ease
+                        Start Your Journey: Discover Your Dream Vehicle or Sell Your Automobile with Ease
                     </h4>
                     <LandingHeroSearch />
                 </div>
@@ -79,20 +76,20 @@ export default function Home() {
                             />
                             <FeatureItem
                                 title="Confidence in Every Detail"
-                                description="Rest assured that every vehicle listing on our platform undergoes a thorough verification process, providing you with accurate and reliable information about the condition, history, and specifications of each car."
+                                description="Rest assured that every vehicle listing on our platform undergoes a thorough verification process, providing you with accurate and reliable information about the condition, history, and specifications of each vehicle."
                                 icon={<ZapIcon />}
                             />
                         </div>
                         <div className="flex flex-col justify-center gap-8">
                             <FeatureItem
-                                title="Simplify Your Car Buying Experience"
-                                description="We believe in keeping things simple and transparent. Our user-friendly interface and intuitive search tools make it easy for you to navigate, compare, and make informed decisions, saving you time and effort in your car buying journey"
+                                title="Simplify Your Vehicle Buying Experience"
+                                description="We believe in keeping things simple and transparent. Our user-friendly interface and intuitive search tools make it easy for you to navigate, compare, and make informed decisions, saving you time and effort in your vehicle buying journey"
                                 alignRight
                                 icon={<DropletIcon />}
                             />
                             <FeatureItem
                                 title="Enjoy the Benefits Without Any Fees"
-                                description="We provide our services at no cost to you. You can access our wide selection, verified listings, and user-friendly platform without incurring any fees, making it even more convenient for you to find your dream car."
+                                description="We provide our services at no cost to you. You can access our wide selection, verified listings, and user-friendly platform without incurring any fees, making it even more convenient for you to find your dream vehicle."
                                 alignRight
                                 icon={<TagIcon />}
                             />
@@ -129,7 +126,6 @@ export default function Home() {
                     />
                 ))}
             </section>
-            <Footer />
         </main>
     );
 }

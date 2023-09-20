@@ -1,10 +1,9 @@
-"use server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth/authConfig";
+"use client";
 import { NavBarItem } from "./DashboardSideBarItem";
+import { useSession } from "next-auth/react";
 
-export const DashboardSideBar = async () => {
-    const session = await getServerSession(authOptions);
+export const DashboardSideBar = () => {
+    const session = useSession();
 
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
@@ -36,7 +35,7 @@ export const DashboardSideBar = async () => {
                     activePaths={["/dashboard/notifications"]}
                     iconName="NotificationIcon"
                 />
-                {session?.user?.isAdmin && (
+                {session?.data?.user?.isAdmin && (
                     <>
                         <NavBarItem
                             href="/dashboard/listings"

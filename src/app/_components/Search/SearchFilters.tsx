@@ -15,6 +15,7 @@ import qs from "query-string";
 import debounce from "lodash.debounce";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import clsx from "clsx";
+import { useSearchContext } from "@/utils/search-provider";
 
 const debouncedSearchRedirect = debounce((searchQuery: string, router: AppRouterInstance, callback?: Function) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);
@@ -38,11 +39,9 @@ const defaultFilter: PostedListingsFilterReq = {
     YomStartDate: "",
 };
 
-export const Filters = ({ setNewSearchQuery, newSearchQuery }: { newSearchQuery?: string; setNewSearchQuery: (queryStr: string) => void }) => {
-    const searchParams = useSearchParams();
-    const searchParamsObj = searchParamsToObject(searchParams);
-    const hasSearchParams = Object.keys(PostedListingsFilterSchema.parse(searchParamsObj)).length > 0;
-    const [loading, setLoading] = useState(false);
+export const SearchFilters = () => {
+    const { setNewSearchQuery, hasSearchParams, searchParamsObj } = useSearchContext();
+
     const router = useRouter();
 
     const { reset, control, watch } = useForm<PostedListingsFilterReq>({
@@ -100,12 +99,6 @@ export const Filters = ({ setNewSearchQuery, newSearchQuery }: { newSearchQuery?
     const onResetClick = () => {
         router.push("/search");
     };
-
-    // useEffect(() => {
-    //     if (searchParams.toString() === newSearchQuery) {
-    //         setLoading(false);
-    //     }
-    // }, [searchParams, newSearchQuery, setLoading]);
 
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">

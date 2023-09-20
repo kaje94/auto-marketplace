@@ -7,15 +7,7 @@ https://next-s3-upload.codingvalue.com/setup
 
 // API changes
 rename image `color` as `hash` and have max length of 100(even though actually needed is less than 25)
-createdAt field is missing in listing response
-milage needs a measurement unit
-decide which lists to take to backend
 vehicle description needs to be at least 1000 characters
-filter for start end dates in dashboard listing is not working
-re-list after temporarily unlisting
-Active search field in all subscription listing is not working (works fine in my subscription list)
-related listings min 5, max maybe 10
-when toggling subscriptions off, why do we need an expiry date
 
 //
 Add a plus button when no ads created by user
@@ -33,9 +25,19 @@ replace clsx with tailwind-merge+clsx: https://www.youtube.com/watch?v=re2JFITR7
 check max length of all strings in schema file
 remove async from components if not needed
 add react memo throughout
-
+if expired or temporary unlisted, then can renew
+delete should be only for admin
+notifications changes
+invalidate notification after admin approves or rejects
 
 // performance
 // separate out into different files in order to reduce the cost of imports
 // enable bundle size library while doing so
 // https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading
+
+// api informed
+when toggling subscriptions off, why do we need an expiry date
+related listings min 5, max maybe 10
+Active search field in all subscription listing is not working (works fine in my subscription list)
+filter for start end dates in dashboard listing is not working
+milage needs a measurement unit
