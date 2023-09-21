@@ -5,9 +5,8 @@ import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdType } from "@/utils/types";
 import { getServerSession } from "next-auth";
 import { ListingDetails } from "@/app/_components/ListingDetails";
-import { RelatedListingsCarousel } from "@/app/_components/ListingsCarousel/RelatedListingsCarousel";
 
-const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => {
+export default async function Page({ params }: { params: { id: ListingIdType } }) {
     const itemDetails = transformListingResponse(await api.getPostedListingItem(params.id));
 
     const session = await getServerSession(authOptions);
@@ -15,7 +14,7 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
     api.incrementViews(params.id);
 
     return (
-        <div className="my-10">
+        <>
             <BreadCrumbs
                 currentPageTitle={itemDetails.title}
                 links={[
@@ -27,9 +26,6 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
                 itemDetails={itemDetails}
                 loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
             />
-            <RelatedListingsCarousel id={params.id} />
-        </div>
+        </>
     );
-};
-
-export default ItemDetailPage;
+}

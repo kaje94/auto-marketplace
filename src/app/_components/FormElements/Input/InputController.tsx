@@ -8,7 +8,13 @@ export const InputController: FC<ControllerProps> = (props) => {
     const { label, labelClassNames, rootClassName, loading, required, fieldName, control, errorAsTooltip, ...rest } = props;
     if (loading || !control) {
         return (
-            <FormFieldControllerWrap rootClassName={rootClassName} label={label} labelClassNames={labelClassNames} required={required}>
+            <FormFieldControllerWrap
+                rootClassName={rootClassName}
+                label={label}
+                labelClassNames={labelClassNames}
+                required={required}
+                errorAsTooltip={errorAsTooltip}
+            >
                 <Input disabled={loading} loading={loading} {...rest} ref={undefined} />
             </FormFieldControllerWrap>
         );

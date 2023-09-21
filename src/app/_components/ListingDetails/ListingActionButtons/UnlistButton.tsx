@@ -16,7 +16,7 @@ export const UnListButton: FC<Props> = ({ listingItem, loading }) => {
     return (
         <>
             <button
-                className={clsx("btn-block btn gap-2", loading && "animate-pulse")}
+                className={clsx("btn-error btn-block btn gap-2", loading && "animate-pulse")}
                 onClick={() => setUnListModalVisible(true)}
                 disabled={loading}
             >

@@ -13,11 +13,10 @@ import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import qs from "query-string";
 import debounce from "lodash.debounce";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import clsx from "clsx";
 import { useSearchContext } from "@/utils/search-provider";
 
-const debouncedSearchRedirect = debounce((searchQuery: string, router: AppRouterInstance, callback?: Function) => {
+const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>, callback?: Function) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);
     if (callback) {
         callback();
@@ -39,7 +38,7 @@ const defaultFilter: PostedListingsFilterReq = {
     YomStartDate: "",
 };
 
-export const SearchFilters = () => {
+export const SearchFilters = ({ loading }: { loading?: boolean }) => {
     const { setNewSearchQuery, hasSearchParams, searchParamsObj } = useSearchContext();
 
     const router = useRouter();
@@ -104,7 +103,14 @@ export const SearchFilters = () => {
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <div className="card grid grid-cols-2 gap-2 bg-base-100 p-3 shadow-md lg:p-5 xl:p-6">
                 <div className="mt-0 lg:mt-2" />
-                <InputController placeholder="Search..." fieldName="Title" control={control} rootClassName="col-span-2" errorAsTooltip />
+                <InputController
+                    placeholder="Search..."
+                    fieldName="Title"
+                    control={control}
+                    rootClassName="col-span-2"
+                    errorAsTooltip
+                    loading={loading}
+                />
                 <div className="divider col-span-2 mt-4 lg:mt-6">Advanced Filters</div>
                 <AutocompleteController
                     placeholder="Type"
@@ -114,12 +120,27 @@ export const SearchFilters = () => {
                     options={VehicleTypeList}
                     rootClassName="col-span-2"
                     errorAsTooltip
+                    loading={loading}
                 />
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Price Range</div>
                     <div className="grid grid-cols-2 gap-2">
-                        <InputController placeholder="Minimum" fieldName="MinPrice" control={control} type="number" errorAsTooltip />
-                        <InputController placeholder="Maximum" fieldName="MaxPrice" control={control} type="number" errorAsTooltip />
+                        <InputController
+                            placeholder="Minimum"
+                            fieldName="MinPrice"
+                            control={control}
+                            type="number"
+                            errorAsTooltip
+                            loading={loading}
+                        />
+                        <InputController
+                            placeholder="Maximum"
+                            fieldName="MaxPrice"
+                            control={control}
+                            type="number"
+                            errorAsTooltip
+                            loading={loading}
+                        />
                     </div>
                 </div>
                 <AutocompleteController
@@ -129,10 +150,11 @@ export const SearchFilters = () => {
                     control={control}
                     options={VehicleConditionList}
                     errorAsTooltip
+                    loading={loading}
                 />
-                <InputController placeholder="City" label="City" fieldName="City" control={control} errorAsTooltip />
-                <InputController placeholder="Brand" label="Brand" fieldName="Brand" control={control} errorAsTooltip />
-                <InputController placeholder="Model" label="Model" fieldName="Model" control={control} errorAsTooltip />
+                <InputController placeholder="City" label="City" fieldName="City" control={control} errorAsTooltip loading={loading} />
+                <InputController placeholder="Brand" label="Brand" fieldName="Brand" control={control} errorAsTooltip loading={loading} />
+                <InputController placeholder="Model" label="Model" fieldName="Model" control={control} errorAsTooltip loading={loading} />
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Manufactured Year Range</div>
                     <div className="grid grid-cols-2 gap-2">
@@ -142,8 +164,16 @@ export const SearchFilters = () => {
                             control={control}
                             errorAsTooltip
                             options={YearRangeList}
+                            loading={loading}
                         />
-                        <AutocompleteController placeholder="To" fieldName="YomEndDate" control={control} errorAsTooltip options={YearRangeList} />
+                        <AutocompleteController
+                            placeholder="To"
+                            fieldName="YomEndDate"
+                            control={control}
+                            errorAsTooltip
+                            options={YearRangeList}
+                            loading={loading}
+                        />
                     </div>
                 </div>
                 <AutocompleteController
@@ -153,6 +183,7 @@ export const SearchFilters = () => {
                     control={control}
                     options={FuelTypeList}
                     errorAsTooltip
+                    loading={loading}
                 />
                 <AutocompleteController
                     placeholder="Transmission"
@@ -161,9 +192,10 @@ export const SearchFilters = () => {
                     control={control}
                     options={TransmissionTypeList}
                     errorAsTooltip
+                    loading={loading}
                 />
                 <button
-                    disabled={!hasSearchParams}
+                    disabled={!hasSearchParams || loading}
                     className={clsx("btn-accent btn-outline btn col-span-2 mt-3 lg:mt-5", !hasSearchParams && "opacity-50")}
                     onClick={onResetClick}
                 >

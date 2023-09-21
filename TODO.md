@@ -26,7 +26,6 @@ check max length of all strings in schema file
 remove async from components if not needed
 add react memo throughout
 if expired or temporary unlisted, then can renew
-delete should be only for admin
 notifications changes
 invalidate notification after admin approves or rejects
 

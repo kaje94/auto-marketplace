@@ -73,7 +73,7 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
         if (response.status === 400 && errorResponse?.errors) {
             throw new Error(extractBadRequestError(errorResponse?.errors) || errorMessage);
         }
-        throw new Error(errorMessage);
+        throw new Error(`${errorMessage} (${response.status})`);
     }
 };
 

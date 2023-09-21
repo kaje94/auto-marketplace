@@ -95,10 +95,6 @@ export const ListingDetails: FC<Props> = ({
                                 listingItem={itemDetails as ListingItem}
                                 basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
                             />
-                            {status &&
-                                [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
-                                    <UnListButton listingItem={itemDetails as ListingItem} />
-                                )}
                             {status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status) && (
                                 <RenewButton listingItem={itemDetails as ListingItem} />
                             )}
@@ -112,7 +108,13 @@ export const ListingDetails: FC<Props> = ({
                             )}
                         </>
                     )}
-                    {!loading && (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) && (
+                    {!loading &&
+                        (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) &&
+                        status &&
+                        [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
+                            <UnListButton listingItem={itemDetails as ListingItem} />
+                        )}
+                    {!loading && loggedInUser?.isAdmin && (
                         <DeleteButton listingItem={itemDetails as ListingItem} isOwner={user?.id === loggedInUser?.id} />
                     )}
                 </div>

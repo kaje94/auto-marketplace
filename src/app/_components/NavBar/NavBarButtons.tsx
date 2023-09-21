@@ -24,11 +24,7 @@ export const NavBarLogoutButton = () => {
 export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; label: string; icon: ReactNode; badgeCount?: number }) => {
     const { link, label, icon, badgeCount, onClick } = props;
     const pathname = usePathname();
-    const badge = (
-        <div className="badge badge-primary badge-md  border-2 border-accent bg-gradient-to-t from-secondary to-primary p-0.5 px-1 text-neutral">
-            {badgeCount}
-        </div>
-    );
+    const badge = <div className="badge badge-primary badge-md  border-2 border-accent bg-primary p-0.5 px-1 text-neutral">{badgeCount}</div>;
     return (
         <li>
             {link ? (

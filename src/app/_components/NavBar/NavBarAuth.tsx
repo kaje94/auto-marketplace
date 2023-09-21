@@ -5,11 +5,14 @@ import Image from "next/image";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
 import { useSession } from "next-auth/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const NavBarAuth = () => {
     const { data, status } = useSession();
+    const [parent] = useAutoAnimate();
+
     return (
-        <div className="relative flex w-12 items-center justify-center">
+        <div className="relative flex w-12 items-center justify-center" ref={parent}>
             {status === "loading" ? (
                 <span className="loading loading-ring w-8" />
             ) : (

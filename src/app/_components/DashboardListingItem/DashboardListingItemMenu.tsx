@@ -53,12 +53,14 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin 
                             {isAdmin && status === ListingStatusTypes.UnderReview && (
                                 <MenuItem icon={<CheckCircleIcon height={18} />} onClick={() => setReviewModalVisible(true)} label="Review" />
                             )}
-                            <MenuItem
-                                icon={<TrashIcon height={18} />}
-                                onClick={() => setDeleteModalVisible(true)}
-                                label="Delete"
-                                classNames="text-error hover:!bg-error hover:!text-error-content"
-                            />
+                            {isAdmin && (
+                                <MenuItem
+                                    icon={<TrashIcon height={18} />}
+                                    onClick={() => setDeleteModalVisible(true)}
+                                    label="Delete"
+                                    classNames="text-error hover:!bg-error hover:!text-error-content"
+                                />
+                            )}
                         </ul>
                     </div>
                 </ClickAwayListener>

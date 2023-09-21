@@ -1,10 +1,9 @@
 import { BreadCrumbs } from "@/app/_components";
 import { ListingDetails } from "@/app/_components/ListingDetails";
-import { ListingsCarousel } from "@/app/_components/ListingsCarousel";
 
-const ItemDetailLoadingPage = async () => {
+export default function Loading() {
     return (
-        <div className="my-10">
+        <>
             <BreadCrumbs
                 currentPageTitle="Loading..."
                 links={[
@@ -12,11 +11,7 @@ const ItemDetailLoadingPage = async () => {
                     { href: "/search", title: "Search" },
                 ]}
             />
-
             <ListingDetails loading />
-            <ListingsCarousel loading title="Related Adverts" />
-        </div>
+        </>
     );
-};
-
-export default ItemDetailLoadingPage;
+}

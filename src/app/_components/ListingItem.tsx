@@ -11,9 +11,8 @@ interface Props {
     loading?: boolean;
 }
 
-export const ListingItem: FC<Props> = ({ item = {}, detailed = false, loading }) => {
-    const { id, title, price, vehicle = {}, createdOn, location } = item as ListingItemType;
-    const { vehicleImages = [], millage, condition } = vehicle as Vehicle;
+export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
+    const vehicleImages = item?.vehicle?.vehicleImages || [];
     const image = vehicleImages[0];
 
     const ListingItemContent = (
@@ -22,7 +21,7 @@ export const ListingItem: FC<Props> = ({ item = {}, detailed = false, loading })
                 {item ? (
                     <Image
                         src={image?.url!}
-                        alt={`${title}-thumbnail`}
+                        alt={`${item?.title}-thumbnail`}
                         className={clsx(
                             "zoomable-image aspect-video w-full bg-base-200 object-cover transition-transform duration-300 ease-linear",
                             loading && "opacity-50"
@@ -44,7 +43,7 @@ export const ListingItem: FC<Props> = ({ item = {}, detailed = false, loading })
                 >
                     {item ? (
                         <div className="badge-hover-translucent badge badge-primary badge-lg font-bold duration-300 image-text-shadow ">
-                            {getFormattedCurrency(price?.amount, price?.currency)}
+                            {getFormattedCurrency(item?.price?.amount, item?.price?.currency)}
                         </div>
                     ) : (
                         <div className="badge badge-primary badge-lg w-32 opacity-50" />
@@ -57,10 +56,10 @@ export const ListingItem: FC<Props> = ({ item = {}, detailed = false, loading })
                                 detailed ? "text-2xl" : "text-xl"
                             )}
                         >
-                            {title}
+                            {item?.title}
                         </div>
                     ) : (
-                        <div className={clsx("rounded-box my-1 h-8 bg-base-300", getRandomItem(["w-4/5", "w-5/6", "w-9/12"]))} />
+                        <div className={clsx("my-2 h-8 bg-base-300", getRandomItem(["w-4/5", "w-5/6", "w-9/12"]))} />
                     )}
                 </div>
             </figure>
@@ -71,19 +70,21 @@ export const ListingItem: FC<Props> = ({ item = {}, detailed = false, loading })
                 )}
             >
                 {item ? (
-                    <div className="text-sm font-medium text-base-200">{getLocationString(location)}</div>
+                    <div className="text-sm font-medium text-base-200">{getLocationString(item?.location)}</div>
                 ) : (
-                    <div className={clsx("h-3 rounded bg-base-300", getRandomItem(["w-1/2", "w-4/6", "w-5/12"]))} />
+                    <div className={clsx("mt-2 h-3 bg-base-300", getRandomItem(["w-1/2", "w-4/6", "w-5/12"]))} />
                 )}
                 <div className="flex items-center justify-between  text-base-300">
                     {item ? (
                         <div className="text-sm font-light">
-                            {millage ? `${numberWithCommas(millage)} km (${unCamelCase(condition)})` : unCamelCase(condition)}
+                            {item?.vehicle?.millage
+                                ? `${numberWithCommas(item?.vehicle?.millage)} km (${unCamelCase(item?.vehicle?.condition)})`
+                                : unCamelCase(item?.vehicle?.condition)}
                         </div>
                     ) : (
-                        <div className={clsx("h-3 rounded bg-base-300", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />
+                        <div className={clsx("mt-1 h-3 bg-base-300", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />
                     )}
-                    {detailed && <div className="text-xs font-extralight">{timeAgo(new Date(createdOn))}</div>}
+                    {detailed && item?.createdOn && <div className="text-xs font-extralight">{timeAgo(new Date(item?.createdOn))}</div>}
                 </div>
             </div>
         </>
@@ -92,16 +93,13 @@ export const ListingItem: FC<Props> = ({ item = {}, detailed = false, loading })
     if (item) {
         return (
             <Link
-                href={`/search/${id}`}
-                className={clsx(
-                    "card h-fit w-full cursor-pointer overflow-hidden bg-base-100 shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg",
-                    loading && "animate-pulse"
-                )}
+                href={`/search/${item?.id}`}
+                className="card h-fit w-full cursor-pointer overflow-hidden bg-base-100 shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg"
             >
                 {ListingItemContent}
             </Link>
         );
     }
 
-    return <div className="card h-fit w-full animate-pulse overflow-hidden bg-base-200">{ListingItemContent}</div>;
+    return <div className="card h-fit w-full overflow-hidden bg-base-200 shadow">{ListingItemContent}</div>;
 };

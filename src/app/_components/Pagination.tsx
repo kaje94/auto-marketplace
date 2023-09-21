@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FC } from "react";
 import qs, { StringifiableRecord } from "query-string";
 import { SearchParams } from "@/utils/types";
+import clsx from "clsx";
 
 interface Props {
     pageNumber?: number;
@@ -10,42 +11,52 @@ interface Props {
     basePath?: string;
     searchParams?: StringifiableRecord;
     setNewSearchQuery?: (queryStr: string) => void;
+    loading?: boolean;
 }
 
-export const Pagination: FC<Props> = ({ totalPages = 1, pageNumber = 1, basePath = "/", searchParams = {}, setNewSearchQuery }) => {
-    if (totalPages === 1) {
-        return null;
-    }
+export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath = "/", searchParams = {}, setNewSearchQuery, loading = false }) => {
     const prevPage = qs.stringify({ ...searchParams, PageNumber: pageNumber - 1 }, { skipNull: true, skipEmptyString: true });
     const nextPage = qs.stringify({ ...searchParams, PageNumber: pageNumber + 1 }, { skipNull: true, skipEmptyString: true });
 
     return (
         <div className="mt-16 flex justify-center">
-            <div className="join">
+            <div className={clsx(totalPages > 0 && "join", loading && "opacity-50")}>
                 {pageNumber > 1 && (
-                    <Link
-                        href={`${basePath}?${prevPage}`}
-                        onClick={() => {
-                            if (setNewSearchQuery) {
-                                setNewSearchQuery(prevPage);
-                            }
-                        }}
-                    >
-                        <button className="join-item btn">«</button>
-                    </Link>
+                    <>
+                        {loading ? (
+                            <button className={clsx("join-item btn", loading && "cursor-progress")}>«</button>
+                        ) : (
+                            <Link
+                                href={`${basePath}?${prevPage}`}
+                                onClick={() => {
+                                    if (setNewSearchQuery) {
+                                        setNewSearchQuery(prevPage);
+                                    }
+                                }}
+                            >
+                                <button className="join-item btn">«</button>
+                            </Link>
+                        )}
+                    </>
                 )}
-                <button className="join-item btn">Page {pageNumber}</button>
+                <button className={clsx("join-item btn cursor-default")}>{loading ? "Loading..." : `Page ${pageNumber}`}</button>
                 {pageNumber < totalPages && (
-                    <Link
-                        href={`${basePath}?${nextPage}`}
-                        onClick={() => {
-                            if (setNewSearchQuery) {
-                                setNewSearchQuery(nextPage);
-                            }
-                        }}
-                    >
-                        <button className="join-item btn">»</button>
-                    </Link>
+                    <>
+                        {loading ? (
+                            <button className={clsx("join-item btn", loading && "cursor-progress")}>»</button>
+                        ) : (
+                            <Link
+                                href={`${basePath}?${nextPage}`}
+                                onClick={() => {
+                                    if (setNewSearchQuery) {
+                                        setNewSearchQuery(nextPage);
+                                    }
+                                }}
+                            >
+                                <button className="join-item btn">»</button>
+                            </Link>
+                        )}
+                    </>
                 )}
             </div>
         </div>

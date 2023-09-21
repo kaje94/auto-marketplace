@@ -51,7 +51,7 @@ export const UnListListingModal = (props: Props) => {
     });
 
     return (
-        <Modal visible={visible} onVisibleChange={setVisible} title="Unlist Advert">
+        <Modal visible={visible} onVisibleChange={setVisible} title="Unlist Advert" titleClassNames="text-error">
             <div className="mb-2 mt-4 text-sm">
                 By Unlisting or withdrawing the advert, the advertisement will no longer be visible to the public.
             </div>
@@ -69,7 +69,7 @@ export const UnListListingModal = (props: Props) => {
                     fieldName="listingStatus"
                 />
                 <ModalFooter
-                    primaryButton={{ text: "Submit" }}
+                    primaryButton={{ text: "Submit", classNames: "btn-error" }}
                     onVisibleChange={setVisible}
                     onSubmit={handleSubmit((values) => mutate(values))}
                     loading={isLoading}
