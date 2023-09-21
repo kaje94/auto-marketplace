@@ -108,15 +108,15 @@ export const ListingDetails: FC<Props> = ({
                             )}
                         </>
                     )}
+                    {!loading && loggedInUser?.isAdmin && (
+                        <DeleteButton listingItem={itemDetails as ListingItem} isOwner={user?.id === loggedInUser?.id} />
+                    )}
                     {!loading &&
                         (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) &&
                         status &&
                         [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
                             <UnListButton listingItem={itemDetails as ListingItem} />
                         )}
-                    {!loading && loggedInUser?.isAdmin && (
-                        <DeleteButton listingItem={itemDetails as ListingItem} isOwner={user?.id === loggedInUser?.id} />
-                    )}
                 </div>
             </div>
         </div>

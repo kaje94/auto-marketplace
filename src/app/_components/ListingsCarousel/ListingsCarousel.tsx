@@ -12,10 +12,11 @@ type Props = {
     loading?: boolean;
     loadingItemCount?: number;
     bgFromColor?: "from-white" | "from-base-200";
+    emptyPlaceholderText?: string;
 };
 
 export const ListingsCarousel = (props: Props) => {
-    const { items, loading, loadingItemCount = 5, bgFromColor = "from-white" } = props;
+    const { items = [], loading, loadingItemCount = 5, bgFromColor = "from-white", emptyPlaceholderText = "No items to display" } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: true, axis: "x", containScroll: "trimSnaps" }, [Autoplay()]);
 
     const onButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
@@ -25,6 +26,10 @@ export const ListingsCarousel = (props: Props) => {
     }, []);
 
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi, onButtonClick);
+
+    if (items?.length === 0 && !loading) {
+        return <div className="text center relative flex h-52 items-center justify-center text-2xl font-bold opacity-10">{emptyPlaceholderText}</div>;
+    }
 
     return (
         <div className="relative flex items-center">

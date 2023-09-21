@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ReactQueryProvider>
                     <NextAuthProvider>
                         <NavBar />
-                        {children}
+                        <main>{children}</main>
                         <Footer />
                     </NextAuthProvider>
                 </ReactQueryProvider>
