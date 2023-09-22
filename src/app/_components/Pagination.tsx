@@ -20,7 +20,7 @@ export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath
 
     return (
         <div className="mt-16 flex justify-center">
-            <div className={clsx(totalPages > 0 && "join", loading && "opacity-50")}>
+            <div className={clsx(totalPages > 1 && "join", loading && "opacity-50")}>
                 {pageNumber > 1 && (
                     <>
                         {loading ? (
