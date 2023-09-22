@@ -47,7 +47,7 @@ export const NavBarAuth = () => {
                                 />
                                 <NavBarMenuLink link="/dashboard/my-listings" label="My Adverts" icon={<AdvertIcon height={18} />} />
                                 <NavBarMenuLink link="/dashboard/my-subscriptions" label="My Subscriptions" icon={<RssIcon height={18} />} />
-                                <div className="divider my-1 h-0.5 rounded bg-gray-800" />
+                                <div className="divider mx-3 my-1 h-0.5 rounded bg-gray-800" />
                                 <NavBarLogoutButton />
                             </ul>
                         </div>
