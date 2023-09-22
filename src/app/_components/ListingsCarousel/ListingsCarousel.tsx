@@ -6,6 +6,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { ListingItem } from "../ListingItem";
 import { ListingItem as ListingItemType } from "@/utils/types";
 import clsx from "clsx";
+import { Empty } from "../Empty";
 
 type Props = {
     items?: ListingItemType[];
@@ -13,10 +14,18 @@ type Props = {
     loadingItemCount?: number;
     bgFromColor?: "from-white" | "from-base-200";
     emptyPlaceholderText?: string;
+    emptyPlaceholderSubText?: string;
 };
 
 export const ListingsCarousel = (props: Props) => {
-    const { items = [], loading, loadingItemCount = 5, bgFromColor = "from-white", emptyPlaceholderText = "No items to display" } = props;
+    const {
+        items = [],
+        loading,
+        loadingItemCount = 5,
+        bgFromColor = "from-white",
+        emptyPlaceholderText = "No items to display",
+        emptyPlaceholderSubText,
+    } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: true, axis: "x", containScroll: "trimSnaps" }, [Autoplay()]);
 
     const onButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
@@ -28,7 +37,7 @@ export const ListingsCarousel = (props: Props) => {
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi, onButtonClick);
 
     if (items?.length === 0 && !loading) {
-        return <div className="text center relative flex h-52 items-center justify-center text-2xl font-bold opacity-10">{emptyPlaceholderText}</div>;
+        return <Empty text={emptyPlaceholderText} subText={emptyPlaceholderSubText} iconSize="sm" />;
     }
 
     return (

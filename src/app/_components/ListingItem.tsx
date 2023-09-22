@@ -32,15 +32,10 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                         blurDataURL={image?.blurDataURL}
                     />
                 ) : (
-                    <div className="aspect-video w-full bg-base-200" />
+                    <div className="aspect-video w-full bg-neutral bg-opacity-50" />
                 )}
 
-                <div
-                    className={clsx(
-                        "absolute bottom-0 left-0 flex h-2/3 w-full flex-col justify-end px-3 py-0",
-                        item && "bg-gradient-to-t from-base-content to-transparent"
-                    )}
-                >
+                <div className="absolute bottom-0 left-0 flex h-2/3 w-full flex-col justify-end bg-gradient-to-t from-base-content to-transparent px-3 py-0">
                     {item ? (
                         <div className="badge-hover-translucent badge badge-primary badge-lg font-bold duration-300 image-text-shadow ">
                             {getFormattedCurrency(item?.price?.amount, item?.price?.currency)}
@@ -59,20 +54,15 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                             {item?.title}
                         </div>
                     ) : (
-                        <div className={clsx("my-2 h-8 bg-base-300", getRandomItem(["w-4/5", "w-5/6", "w-9/12"]))} />
+                        <div className={clsx("my-2 h-8 bg-white opacity-50", getRandomItem(["w-4/5", "w-5/6", "w-9/12"]))} />
                     )}
                 </div>
             </figure>
-            <div
-                className={clsx(
-                    "card-body flex flex-col gap-0  px-3 pb-2 pt-0",
-                    item ? "bg-gradient-to-t from-black to-base-content" : "bg-base-200"
-                )}
-            >
+            <div className="card-body flex flex-col gap-0  bg-gradient-to-t from-black to-base-content px-3 pb-2 pt-0">
                 {item ? (
                     <div className="text-sm font-medium text-base-200">{getLocationString(item?.location)}</div>
                 ) : (
-                    <div className={clsx("mt-2 h-3 bg-base-300", getRandomItem(["w-1/2", "w-4/6", "w-5/12"]))} />
+                    <div className={clsx("mt-2 h-3 bg-base-200 opacity-50", getRandomItem(["w-1/2", "w-4/6", "w-5/12"]))} />
                 )}
                 <div className="flex items-center justify-between  text-base-300">
                     {item ? (
@@ -82,7 +72,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                                 : unCamelCase(item?.vehicle?.condition)}
                         </div>
                     ) : (
-                        <div className={clsx("mt-1 h-3 bg-base-300", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />
+                        <div className={clsx("mt-1 h-3 bg-base-200 opacity-50", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />
                     )}
                     {detailed && item?.createdOn && <div className="text-xs font-extralight">{timeAgo(new Date(item?.createdOn))}</div>}
                 </div>

@@ -7,6 +7,7 @@ import qs from "query-string";
 import { SearchGrid } from "@/app/_components/Search";
 
 export default async function Page({ searchParams }: SearchParams) {
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = PostedListingsFilterSchema.parse(searchParams);
     const listings = transformListingsListResponse(await api.getPostedListings({ PageNumber: Number(page), PageSize: 12, ...parsedSearchParams }));

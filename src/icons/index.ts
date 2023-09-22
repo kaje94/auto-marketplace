@@ -27,7 +27,7 @@ export { CheckIcon } from "./CheckIcon";
 export { AlertCircleIcon } from "./AlertCircleIcon";
 export { XCircleIcon } from "./XCircleIcon";
 export { XIcon } from "./XIcon";
-export { InboxIcon } from "./InboxIcon";
+export { LayersIcon } from "./LayersIcon";
 export { MenuIcon } from "./MenuIcon";
 export { FilterIcon } from "./FilterIcon";
 export { ListIcon } from "./ListIcon";

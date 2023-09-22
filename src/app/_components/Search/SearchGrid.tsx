@@ -1,5 +1,5 @@
 "use client";
-import { ListingItem, Pagination } from "@/app/_components";
+import { Empty, ListingItem, Pagination } from "@/app/_components";
 import { Select } from "@/app/_components/FormElements/Select";
 import { useSearchContext } from "@/utils/search-provider";
 import { PaginatedResponse, ListingItems } from "@/utils/types";
@@ -36,7 +36,16 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                 {listings?.items?.map((item) => (
                     <ListingItem key={item.id} item={item} detailed />
                 ))}
+
                 {pageLoading && new Array(12).fill("").map((_, i) => <ListingItem key={`loading-listing-item-${i}`} loading />)}
+
+                {!pageLoading && listings?.items?.length === 0 && (
+                    <Empty
+                        text="No adverts to display"
+                        subText="Try adjusting your search filter or resetting it"
+                        button={{ text: "Reset Filter", href: "/search", onClick: () => setNewSearchQuery("/search"), loading: isLoading }}
+                    />
+                )}
 
                 <div className="col-span-full">
                     <Pagination

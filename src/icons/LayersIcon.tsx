@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-export const InboxIcon = (props: SVGProps<SVGSVGElement>) => (
+export const LayersIcon = (props: SVGProps<SVGSVGElement>) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width={24}
@@ -13,7 +13,6 @@ export const InboxIcon = (props: SVGProps<SVGSVGElement>) => (
         strokeWidth={2}
         {...props}
     >
-        <path d="M22 12h-6l-2 3h-4l-2-3H2" />
-        <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+        <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
     </svg>
 );
