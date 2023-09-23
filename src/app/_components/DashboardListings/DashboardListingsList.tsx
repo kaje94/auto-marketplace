@@ -44,7 +44,7 @@ export const DashboardListingsList: FC<
             )}
 
             {listings?.items?.map((item) => (
-                <DashboardListingItem key={item.id} listingItem={item} isAdmin={session?.user?.isAdmin} />
+                <DashboardListingItem basePath={basePath} key={item.id} listingItem={item} isAdmin={session?.user?.isAdmin} />
             ))}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardListingItem key={`loading-listing-item-${i}`} loading />)}

@@ -10,10 +10,10 @@ import ClickAwayListener from "react-click-away-listener";
 
 interface Props {
     listingSubscriptionItem?: ListingSubscriptionItem;
-    isAdmin?: boolean;
+    basePath?: string;
 }
 
-export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionItem = {}, isAdmin }) => {
+export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionItem = {}, basePath }) => {
     const { id, active } = listingSubscriptionItem as ListingSubscriptionItem;
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [activationModalVisible, setActivationModalVisible] = useState(false);
@@ -28,11 +28,7 @@ export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionIt
             <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
                 <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>
                     <ul className="dropdown-content menu rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg">
-                        <MenuItem
-                            icon={<EditIcon height={18} />}
-                            link={`${typeof window !== "undefined" ? window?.location?.pathname : ""}/edit/${id}`}
-                            label="Edit"
-                        />
+                        <MenuItem icon={<EditIcon height={18} />} link={`${basePath}/edit/${id}`} label="Edit" />
                         <MenuItem
                             icon={active ? <BellOffIcon height={18} /> : <BellIcon height={18} />}
                             onClick={() => setActivationModalVisible(true)}

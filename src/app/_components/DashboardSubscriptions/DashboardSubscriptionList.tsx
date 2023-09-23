@@ -44,7 +44,7 @@ export const DashboardSubscriptionList: FC<
             )}
 
             {listingSubscriptions?.items?.map((item) => (
-                <DashboardSubscriptionItem key={item.id} listingSubscriptionItem={item} isAdmin={session?.user?.isAdmin} />
+                <DashboardSubscriptionItem key={item.id} listingSubscriptionItem={item} basePath={basePath} />
             ))}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardSubscriptionItem key={`loading-subscription-item-${i}`} loading />)}

@@ -14,9 +14,10 @@ import ClickAwayListener from "react-click-away-listener";
 interface Props {
     listingItem?: ListingItem;
     isAdmin?: boolean;
+    basePath?: string;
 }
 
-export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin }) => {
+export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin, basePath }) => {
     const { id: listingId, status } = listingItem as ListingItem;
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [renewModalVisible, setRenewModalVisible] = useState(false);
@@ -39,11 +40,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin 
                         {status && status === ListingStatusTypes.Posted && (
                             <MenuItem icon={<EyeIcon height={18} />} link={`/search/${listingId}`} label="View Advert" />
                         )}
-                        <MenuItem
-                            icon={<EditIcon height={18} />}
-                            link={`${typeof window !== "undefined" ? window?.location?.pathname : ""}/edit/${listingId}`}
-                            label="Edit"
-                        />
+                        <MenuItem icon={<EditIcon height={18} />} link={`${basePath}/edit/${listingId}`} label="Edit" />
                         {status &&
                             [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
                                 <MenuItem icon={<EyeOffIcon height={17} />} onClick={() => setUnListModalVisible(true)} label="Unlist" />
@@ -69,7 +66,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin 
                 visible={deleteModalVisible}
                 setVisible={setDeleteModalVisible}
                 listingItem={listingItem as ListingItem}
-                successRedirectPath={typeof window !== "undefined" ? window?.location?.pathname : ""}
+                successRedirectPath={basePath || ""}
             />
             <RenewListingItemModal visible={renewModalVisible} setVisible={setRenewModalVisible} listingItem={listingItem as ListingItem} />
             <ReviewListingModal visible={reviewModalVisible} setVisible={setReviewModalVisible} listingItem={listingItem as ListingItem} />

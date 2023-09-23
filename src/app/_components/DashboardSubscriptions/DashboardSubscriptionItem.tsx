@@ -12,11 +12,11 @@ const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscript
 interface Props {
     listingSubscriptionItem?: ListingSubscriptionItem;
     loading?: boolean;
-    isAdmin?: boolean;
+    basePath?: string;
 }
 
 export const DashboardSubscriptionItem: FC<Props> = (props) => {
-    const { listingSubscriptionItem = {}, loading, isAdmin } = props;
+    const { listingSubscriptionItem = {}, loading, basePath } = props;
     const {
         id,
         displayName,
@@ -119,7 +119,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
                     <DashboardSubscriptionItemMenu
                         key={id}
                         listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
-                        isAdmin={isAdmin}
+                        basePath={basePath}
                     />
                 </div>
             )}

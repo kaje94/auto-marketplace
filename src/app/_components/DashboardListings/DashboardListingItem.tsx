@@ -36,7 +36,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     <Image
                         src={imageUrl ?? ""}
                         alt={title ?? ""}
-                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
+                        className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
                         width={450}
                         placeholder={blurDataURL ? "blur" : "empty"}
@@ -44,7 +44,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
-                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{priceStr}</div>
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg absolute scale-110 duration-300">{priceStr}</div>
                     </div>
                 </figure>
             )}
@@ -70,7 +70,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                                 {unCamelCase(status)}
                             </span>
                         </div>
-                        <DashboardListingItemMenu listingItem={listingItem as ListingItem} isAdmin={isAdmin} key={id} />
+                        <DashboardListingItemMenu listingItem={listingItem as ListingItem} isAdmin={isAdmin} key={id} basePath={basePath} />
                     </div>
                 )}
 
