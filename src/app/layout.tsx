@@ -1,8 +1,8 @@
-import { ReactQueryProvider } from "@/utils/query-provider";
-import { NextAuthProvider } from "@/utils/auth-provider";
 import { montserratFont } from "./fonts";
 import { Toaster } from "react-hot-toast";
 import { Footer } from "./_components";
+import { NextAuthProvider } from "@/providers/auth-provider";
+import { ReactQueryProvider } from "@/providers/query-provider";
 import "./globals.css";
 
 export const metadata = {

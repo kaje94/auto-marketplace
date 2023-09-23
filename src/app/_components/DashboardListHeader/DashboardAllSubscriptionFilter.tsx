@@ -7,12 +7,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DashboardSubscriptionFilterSchema } from "@/utils/schemas";
 import { DashboardSubscriptionFilterReq } from "@/utils/types";
-import { useSearchParams } from "next/navigation";
-import { searchParamsToObject } from "@/utils/helpers";
 import { FilterInput as InputController } from "./DashboardFilterInput";
 import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { FilterButton } from "./FilterButton";
-import { useFilter } from "./FilterHooks";
+import { useDashboardFilter } from "./FilterHooks";
+import { useDashboardSubscriptionsContext } from "@/providers/dashboard-subscriptions-provider";
 
 const defaultFilter: DashboardSubscriptionFilterReq = {
     Active: "",
@@ -21,31 +20,33 @@ const defaultFilter: DashboardSubscriptionFilterReq = {
 };
 
 export const DashboardAllSubscriptionFilter: FC = () => {
-    const searchParams = useSearchParams();
-    const searchParamsObj = searchParamsToObject(searchParams);
-    const hasSearchParams = Object.keys(DashboardSubscriptionFilterSchema.parse(searchParamsObj)).length > 0;
+    const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardSubscriptionsContext();
 
-    const { formState, handleSubmit, register, reset, control } = useForm<DashboardSubscriptionFilterReq>({
+    const { handleSubmit, reset, control } = useForm<DashboardSubscriptionFilterReq>({
         resolver: zodResolver(DashboardSubscriptionFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
     });
 
-    const { loading, dropdownOpen, setDropdownOpen, handleFilterOpen, onApplyFilterClick, onResetClick } = useFilter({
+    const { dropdownOpen, setDropdownOpen, handleFilterOpen, onApplyFilterClick, onResetClick } = useDashboardFilter({
         reset,
         defaultFilter,
+        isLoading,
+        newSearchQuery,
+        setNewSearchQuery,
+        searchParamsObj,
     });
 
     return (
         <span className={clsx("dropdown-end dropdown flex justify-end ", dropdownOpen && "dropdown-open")}>
-            <FilterButton loading={loading} dropdownOpen={dropdownOpen} handleFilterOpen={handleFilterOpen} hasSearchParams={hasSearchParams} />
+            <FilterButton loading={isLoading} dropdownOpen={dropdownOpen} handleFilterOpen={handleFilterOpen} hasSearchParams={hasSearchParams} />
             <ClickAwayListener onClickAway={() => setDropdownOpen(false)}>
                 <ul className="dropdown-content menu rounded-box z-[1] -mr-1 mt-7 w-max !overflow-visible rounded-tr-none border-2 border-base-300 bg-base-200 p-0 shadow-lg md:max-w-md">
                     <form className="flex flex-col">
                         <div className="flex items-center justify-between gap-2 p-2 md:p-3">
                             <div className="text-sm font-semibold">Filters</div>
                             {hasSearchParams && (
-                                <button disabled={loading} className="btn-accent btn-outline btn-xs btn" onClick={onResetClick}>
+                                <button disabled={isLoading} className="btn-accent btn-outline btn-xs btn" onClick={onResetClick}>
                                     Reset Applied Filters
                                 </button>
                             )}
@@ -58,7 +59,6 @@ export const DashboardAllSubscriptionFilter: FC = () => {
                                     { label: "Inactive", value: "false" },
                                 ]}
                                 placeholder="All status types"
-                                selectablePlaceholder
                                 control={control}
                                 fieldName="Active"
                             />
@@ -66,7 +66,6 @@ export const DashboardAllSubscriptionFilter: FC = () => {
                                 label="Notification Frequency"
                                 options={SubscriptFrequenciesList}
                                 placeholder="All frequency types"
-                                selectablePlaceholder
                                 control={control}
                                 fieldName="NotificationFrequency"
                             />
@@ -75,9 +74,9 @@ export const DashboardAllSubscriptionFilter: FC = () => {
                         <button
                             className="btn-neutral btn-wide btn-sm btn mx-2 mb-3 mt-6 place-self-center"
                             onClick={handleSubmit(onApplyFilterClick)}
-                            disabled={loading}
+                            disabled={isLoading}
                         >
-                            {loading ? "Applying Filters..." : "Apply Filters"}
+                            {isLoading ? "Applying Filters..." : "Apply Filters"}
                         </button>
                     </form>
                 </ul>

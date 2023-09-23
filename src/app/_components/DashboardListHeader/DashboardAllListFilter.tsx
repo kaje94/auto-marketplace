@@ -7,12 +7,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
 import { DashboardListFilterReq } from "@/utils/types";
-import { useSearchParams } from "next/navigation";
-import { searchParamsToObject } from "@/utils/helpers";
 import { FilterInput as InputController } from "./DashboardFilterInput";
 import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { FilterButton } from "./FilterButton";
-import { useFilter } from "./FilterHooks";
+import { useDashboardFilter } from "./FilterHooks";
+import { useDashboardListingsContext } from "@/providers/dashboard-listings-provider";
 
 const defaultFilter: DashboardListFilterReq = {
     Brand: "",
@@ -31,31 +30,33 @@ const defaultFilter: DashboardListFilterReq = {
 };
 
 export const DashboardAllListFilter: FC = () => {
-    const searchParams = useSearchParams();
-    const searchParamsObj = searchParamsToObject(searchParams);
-    const hasSearchParams = Object.keys(DashboardListingFilterSchema.parse(searchParamsObj)).length > 0;
+    const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardListingsContext();
 
-    const { formState, handleSubmit, register, reset, control } = useForm<DashboardListFilterReq>({
+    const { handleSubmit, reset, control } = useForm<DashboardListFilterReq>({
         resolver: zodResolver(DashboardListingFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
     });
 
-    const { loading, dropdownOpen, setDropdownOpen, handleFilterOpen, onApplyFilterClick, onResetClick } = useFilter({
+    const { dropdownOpen, setDropdownOpen, handleFilterOpen, onApplyFilterClick, onResetClick } = useDashboardFilter({
         reset,
         defaultFilter,
+        isLoading,
+        newSearchQuery,
+        setNewSearchQuery,
+        searchParamsObj,
     });
 
     return (
         <span className={clsx("dropdown-end dropdown flex justify-end ", dropdownOpen && "dropdown-open")}>
-            <FilterButton loading={loading} dropdownOpen={dropdownOpen} handleFilterOpen={handleFilterOpen} hasSearchParams={hasSearchParams} />
+            <FilterButton loading={isLoading} dropdownOpen={dropdownOpen} handleFilterOpen={handleFilterOpen} hasSearchParams={hasSearchParams} />
             <ClickAwayListener onClickAway={() => setDropdownOpen(false)}>
                 <ul className="dropdown-content menu rounded-box z-[1] -mr-1 mt-7 w-max !overflow-visible rounded-tr-none border-2 border-base-300 bg-base-200 p-0 shadow-lg md:max-w-md">
                     <form className="flex flex-col">
                         <div className="flex items-center justify-between gap-2 p-2 md:p-3">
                             <div className="text-sm font-semibold">Filters</div>
                             {hasSearchParams && (
-                                <button disabled={loading} className="btn-accent btn-outline btn-xs btn" onClick={onResetClick}>
+                                <button disabled={isLoading} className="btn-accent btn-outline btn-xs btn" onClick={onResetClick}>
                                     Reset Applied Filters
                                 </button>
                             )}
@@ -68,7 +69,6 @@ export const DashboardAllListFilter: FC = () => {
                                 label="Type"
                                 options={VehicleTypeList}
                                 placeholder="All Types"
-                                selectablePlaceholder
                                 fieldName="VehicleType"
                                 control={control}
                             />
@@ -76,7 +76,6 @@ export const DashboardAllListFilter: FC = () => {
                                 label="Status"
                                 options={ListingTypeList}
                                 placeholder="All status types"
-                                selectablePlaceholder
                                 fieldName="ListingStatus"
                                 control={control}
                             />
@@ -103,7 +102,6 @@ export const DashboardAllListFilter: FC = () => {
                                 label="Fuel Type"
                                 options={FuelTypeList}
                                 placeholder="All fuel types"
-                                selectablePlaceholder
                                 fieldName="FuelType"
                                 control={control}
                             />
@@ -111,9 +109,9 @@ export const DashboardAllListFilter: FC = () => {
                         <button
                             className="btn-neutral btn-wide btn-sm btn mx-2 mb-3 mt-6 place-self-center"
                             onClick={handleSubmit(onApplyFilterClick)}
-                            disabled={loading}
+                            disabled={isLoading}
                         >
-                            {loading ? "Applying Filters..." : "Apply Filters"}
+                            {isLoading ? "Applying Filters..." : "Apply Filters"}
                         </button>
                     </form>
                 </ul>

@@ -59,7 +59,12 @@ export const CreateListingForm = (props: Props) => {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(`Successfully created a new Advert for ${getListingTitleFromVehicle(variables.vehicle)}`, { id: toastId?.current });
+                    toast.success(
+                        `Your advertisement, ${getListingTitleFromVehicle(
+                            variables.vehicle
+                        )}, has been successfully submitted for review. We will notify you once the review process is complete.`,
+                        { id: toastId?.current }
+                    );
                 }
             },
         }

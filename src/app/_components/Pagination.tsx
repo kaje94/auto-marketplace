@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { FC } from "react";
 import qs, { StringifiableRecord } from "query-string";
-import { SearchParams } from "@/utils/types";
 import clsx from "clsx";
 
 interface Props {

@@ -28,6 +28,8 @@ add react memo throughout
 if expired or temporary unlisted, then can renew
 notifications changes
 invalidate notification after admin approves or rejects
+refactor layout,page,error component export formats
+search all awaits and check to see if you can call in parallel
 
 // performance
 // separate out into different files in order to reduce the cost of imports

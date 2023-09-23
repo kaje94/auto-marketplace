@@ -83,7 +83,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                                 width={450}
                                                 alt={`${title} ${index}`}
                                                 src={imageItem.url ?? ""}
-                                                priority={selectedIndex === index}
+                                                priority={selectedIndex === index ? true : undefined}
                                                 className="aspect-square w-full bg-base-200 object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
                                                 placeholder={imageItem.blurDataURL ? "blur" : "empty"}
                                                 blurDataURL={imageItem.blurDataURL}

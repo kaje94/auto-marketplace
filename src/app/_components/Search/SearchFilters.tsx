@@ -1,20 +1,18 @@
 "use client";
-import { useFilter } from "@/app/_components/DashboardListHeader/FilterHooks";
 import { AutocompleteController } from "@/app/_components/FormElements/AutoComplete";
 import { InputController } from "@/app/_components/FormElements/Input";
-import { SearchIcon } from "@/icons";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
-import { convertYearToDateString, getYearFromDateString, searchParamsToObject } from "@/utils/helpers";
+import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { PostedListingsFilterReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import qs from "query-string";
 import debounce from "lodash.debounce";
 import clsx from "clsx";
-import { useSearchContext } from "@/utils/search-provider";
+import { useSearchContext } from "@/providers/search-provider";
 
 const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>, callback?: Function) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);
@@ -39,7 +37,7 @@ const defaultFilter: PostedListingsFilterReq = {
 };
 
 export const SearchFilters = ({ loading }: { loading?: boolean }) => {
-    const { setNewSearchQuery, hasSearchParams, searchParamsObj } = useSearchContext();
+    const { setNewSearchQuery, hasSearchParams, searchParamsObj, searchParamStr } = useSearchContext();
 
     const router = useRouter();
 
@@ -74,7 +72,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
             YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate)}` : undefined,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [qs.stringify(searchParamsObj)]);
+    }, [searchParamStr]);
 
     useEffect(() => {
         debouncedSearchRedirect(formQueryString, router, () => setNewSearchQuery(formQueryString));
@@ -95,9 +93,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
         router,
     ]);
 
-    const onResetClick = () => {
-        router.push("/search");
-    };
+    const onResetClick = useCallback(() => router.push("/search"), [router]);
 
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">

@@ -31,7 +31,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
             )}
             {...rest}
         >
-            {!rest.value && selectablePlaceholder && (
+            {selectablePlaceholder && (
                 <option disabled={!selectablePlaceholder} value={""}>
                     {placeholder}
                 </option>

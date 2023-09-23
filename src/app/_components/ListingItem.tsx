@@ -30,6 +30,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                         width={450}
                         placeholder={image?.blurDataURL ? "blur" : "empty"}
                         blurDataURL={image?.blurDataURL}
+                        priority={false}
                     />
                 ) : (
                     <div className="aspect-video w-full bg-neutral bg-opacity-50" />

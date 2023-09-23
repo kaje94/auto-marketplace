@@ -6,5 +6,4 @@ export { ErrorComponent } from "./ErrorComponent";
 export { BreadCrumbs } from "./BreadCrumbs";
 export { Modal, ModalFooter } from "./Modal";
 export { Empty } from "./Empty";
-export { DashboardListingItem } from "./DashboardListingItem";
 export { DashboardListHeader } from "./DashboardListHeader";

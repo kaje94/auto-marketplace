@@ -1,7 +1,7 @@
 "use client";
 import { Empty, ListingItem, Pagination } from "@/app/_components";
 import { Select } from "@/app/_components/FormElements/Select";
-import { useSearchContext } from "@/utils/search-provider";
+import { useSearchContext } from "@/providers/search-provider";
 import { PaginatedResponse, ListingItems } from "@/utils/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import clsx from "clsx";
@@ -43,7 +43,7 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                     <Empty
                         text="No adverts to display"
                         subText="Try adjusting your search filter or resetting it"
-                        button={{ text: "Reset Filter", href: "/search", onClick: () => setNewSearchQuery("/search"), loading: isLoading }}
+                        button={{ text: "Reset Filter", href: "/search", onClick: () => setNewSearchQuery(""), loading: isLoading }}
                     />
                 )}
 

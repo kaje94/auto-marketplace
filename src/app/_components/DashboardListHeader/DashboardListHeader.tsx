@@ -22,7 +22,7 @@ export const DashboardListHeader: FC<Props> = ({ itemCount = 0, loading, filter,
             </div>
 
             <div className="col-span-1 flex flex-row-reverse items-center justify-between md:flex-row md:justify-end md:gap-2">
-                {loading ? <div className="h-8 w-8 animate-pulse bg-base-300" /> : <>{filter}</>}
+                {loading ? <div className="h-8 w-8 animate-pulse rounded bg-base-300" /> : <>{filter}</>}
                 {addNewButton && (
                     <Link href={addNewButton?.path} className="flex h-full items-center">
                         <button className="btn-ghost btn-sm btn px-0 md:px-2">

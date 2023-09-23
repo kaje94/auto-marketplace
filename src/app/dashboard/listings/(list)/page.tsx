@@ -1,4 +1,4 @@
-import { BreadCrumbs, Empty, Pagination, DashboardListHeader, DashboardListingItem } from "@/app/_components";
+import { DashboardListHeader } from "@/app/_components";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
@@ -8,6 +8,8 @@ import qs from "query-string";
 import { DashboardAllListFilter } from "@/app/_components/DashboardListHeader/DashboardAllListFilter";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
+import { DashboardListingsContextProvider } from "@/providers/dashboard-listings-provider";
+import { DashboardAllListingsList } from "@/app/_components/DashboardListings/DashboardListingsList";
 
 const AllAds = async ({ searchParams }: SearchParams) => {
     const page = searchParams["PageNumber"] ?? "1";
@@ -20,28 +22,14 @@ const AllAds = async ({ searchParams }: SearchParams) => {
     }
 
     return (
-        <>
+        <DashboardListingsContextProvider>
             <DashboardListHeader
                 itemCount={listings.totalCount}
                 filter={<DashboardAllListFilter />}
                 addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
             />
-
-            <div className="grid gap-1 xl:gap-2">
-                {listings.totalCount === 0 && <Empty text={"No adverts to display. Please adjust your search filters."} />}
-                {listings.items?.map((item) => (
-                    <DashboardListingItem key={item.id} listingItem={item} basePath="/dashboard/listings" isAdmin={session?.user?.isAdmin} />
-                ))}
-                {listings.totalPages > 1 && (
-                    <Pagination
-                        pageNumber={listings.pageNumber}
-                        totalPages={listings.totalPages}
-                        basePath="/dashboard/listings"
-                        searchParams={searchParams}
-                    />
-                )}
-            </div>
-        </>
+            <DashboardAllListingsList listings={listings} session={session} basePath="/dashboard/listings" />
+        </DashboardListingsContextProvider>
     );
 };
 
