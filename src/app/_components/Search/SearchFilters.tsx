@@ -36,8 +36,8 @@ const defaultFilter: PostedListingsFilterReq = {
     YomStartDate: "",
 };
 
-export const SearchFilters = ({ loading }: { loading?: boolean }) => {
-    const { setNewSearchQuery, hasSearchParams, searchParamsObj, searchParamStr } = useSearchContext();
+export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
+    const { setNewSearchQuery, hasSearchParams, searchParamsObj, searchParamStr, isLoading } = useSearchContext();
 
     const router = useRouter();
 
@@ -93,7 +93,10 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
         router,
     ]);
 
-    const onResetClick = useCallback(() => router.push("/search"), [router]);
+    const onResetClick = useCallback(() => {
+        setNewSearchQuery("");
+        router.push("/search");
+    }, [router, setNewSearchQuery]);
 
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
@@ -105,7 +108,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                     control={control}
                     rootClassName="col-span-2"
                     errorAsTooltip
-                    loading={loading}
+                    loading={pageLoading}
                 />
                 <div className="divider col-span-2 mt-4 lg:mt-6">Advanced Filters</div>
                 <AutocompleteController
@@ -116,7 +119,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                     options={VehicleTypeList}
                     rootClassName="col-span-2"
                     errorAsTooltip
-                    loading={loading}
+                    loading={pageLoading}
                 />
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Price Range</div>
@@ -127,7 +130,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                             control={control}
                             type="number"
                             errorAsTooltip
-                            loading={loading}
+                            loading={pageLoading}
                         />
                         <InputController
                             placeholder="Maximum"
@@ -135,7 +138,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                             control={control}
                             type="number"
                             errorAsTooltip
-                            loading={loading}
+                            loading={pageLoading}
                         />
                     </div>
                 </div>
@@ -146,11 +149,11 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                     control={control}
                     options={VehicleConditionList}
                     errorAsTooltip
-                    loading={loading}
+                    loading={pageLoading}
                 />
-                <InputController placeholder="City" label="City" fieldName="City" control={control} errorAsTooltip loading={loading} />
-                <InputController placeholder="Brand" label="Brand" fieldName="Brand" control={control} errorAsTooltip loading={loading} />
-                <InputController placeholder="Model" label="Model" fieldName="Model" control={control} errorAsTooltip loading={loading} />
+                <InputController placeholder="City" label="City" fieldName="City" control={control} errorAsTooltip loading={pageLoading} />
+                <InputController placeholder="Brand" label="Brand" fieldName="Brand" control={control} errorAsTooltip loading={pageLoading} />
+                <InputController placeholder="Model" label="Model" fieldName="Model" control={control} errorAsTooltip loading={pageLoading} />
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Manufactured Year Range</div>
                     <div className="grid grid-cols-2 gap-2">
@@ -160,7 +163,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                             control={control}
                             errorAsTooltip
                             options={YearRangeList}
-                            loading={loading}
+                            loading={pageLoading}
                         />
                         <AutocompleteController
                             placeholder="To"
@@ -168,7 +171,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                             control={control}
                             errorAsTooltip
                             options={YearRangeList}
-                            loading={loading}
+                            loading={pageLoading}
                         />
                     </div>
                 </div>
@@ -179,7 +182,7 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                     control={control}
                     options={FuelTypeList}
                     errorAsTooltip
-                    loading={loading}
+                    loading={pageLoading}
                 />
                 <AutocompleteController
                     placeholder="Transmission"
@@ -188,10 +191,10 @@ export const SearchFilters = ({ loading }: { loading?: boolean }) => {
                     control={control}
                     options={TransmissionTypeList}
                     errorAsTooltip
-                    loading={loading}
+                    loading={pageLoading}
                 />
                 <button
-                    disabled={!hasSearchParams || loading}
+                    disabled={!hasSearchParams || pageLoading || isLoading}
                     className={clsx("btn-accent btn-outline btn col-span-2 mt-3 lg:mt-5", !hasSearchParams && "opacity-50")}
                     onClick={onResetClick}
                 >

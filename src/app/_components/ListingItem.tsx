@@ -23,7 +23,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                         src={image?.url!}
                         alt={`${item?.title}-thumbnail`}
                         className={clsx(
-                            "zoomable-image aspect-video w-full bg-base-200 object-cover transition-transform duration-300 ease-linear",
+                            "aspect-video w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image",
                             loading && "opacity-50"
                         )}
                         height={300}
@@ -38,7 +38,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
 
                 <div className="absolute bottom-0 left-0 flex h-2/3 w-full flex-col justify-end bg-gradient-to-t from-base-content to-transparent px-3 py-0">
                     {item ? (
-                        <div className="badge-hover-translucent badge badge-primary badge-lg font-bold duration-300 image-text-shadow ">
+                        <div className="badge badge-primary badge-lg font-bold duration-300 badge-hover-translucent image-text-shadow ">
                             {getFormattedCurrency(item?.price?.amount, item?.price?.currency)}
                         </div>
                     ) : (
@@ -48,7 +48,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                     {item ? (
                         <div
                             className={clsx(
-                                "badge-hover-translucent font-bold text-base-100 duration-300 image-text-shadow",
+                                "line-clamp-3 font-bold text-base-100 duration-300 badge-hover-translucent image-text-shadow",
                                 detailed ? "text-2xl" : "text-xl"
                             )}
                         >
@@ -67,10 +67,10 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                 )}
                 <div className="flex items-end justify-between text-base-300">
                     {item ? (
-                        <div className="flex-1 text-sm font-light">
-                            {`${unCamelCase(item?.vehicle?.type)} | ${unCamelCase(item?.vehicle?.condition)} ${
-                                item?.vehicle?.millage ? `| ${numberWithCommas(item?.vehicle?.millage)} km` : ""
-                            }`}
+                        <div className="line-clamp-1 flex-1 text-sm font-light">
+                            {`${unCamelCase(item?.vehicle?.condition)} ${
+                                item?.vehicle?.millage ? `| ${numberWithCommas(item?.vehicle?.millage)} km ` : ""
+                            }| ${unCamelCase(item?.vehicle?.type)}`}
                         </div>
                     ) : (
                         <div className={clsx("mt-1 h-3 bg-base-200 opacity-50", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />
