@@ -38,18 +38,18 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                 </div>
             ) : (
                 <>
-                    <div className="text-center text-2xl font-extrabold">
+                    <div className="w-full flex-wrap !break-all text-center text-2xl font-extrabold">
                         {user?.firstName} {user?.lastName}
                     </div>
                     <div className="mt-2 flex flex-col items-center gap-1">
                         {user?.phone && (
-                            <div className="font-light">
-                                Contact Number:<span className="ml-1 font-semibold text-primary-content">{user?.phone}</span>
-                            </div>
+                            <p className="w-full max-w-xs flex-wrap !break-all text-center font-light">
+                                Contact Number:
+                                <span className="font-semibold text-primary-content">{user?.phone}</span>
+                            </p>
                         )}
-                        <p className="w-full max-w-xs overflow-hidden truncate text-center font-light hover:overflow-visible">
-                            Email:
-                            <span className="ml-1 font-semibold text-primary-content">{user?.email}</span>
+                        <p className="w-full max-w-xs flex-wrap !break-all text-center font-light">
+                            Email: <span className="font-semibold text-primary-content">{user?.email}</span>
                         </p>
                     </div>
                 </>
