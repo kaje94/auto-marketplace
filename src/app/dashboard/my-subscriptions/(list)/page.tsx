@@ -10,7 +10,7 @@ import { authOptions } from "@/auth/authConfig";
 import { DashboardMySubscriptionList } from "@/app/_components/DashboardSubscriptions/DashboardSubscriptionList";
 import { DashboardSubscriptionsContextProvider } from "@/providers/dashboard-my-subscriptions-provider";
 
-const MySubscriptionsPage = async ({ searchParams }: SearchParams) => {
+export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardMySubscriptionFilterSchema.parse(searchParams);
     const session = await getServerSession(authOptions);
@@ -30,6 +30,4 @@ const MySubscriptionsPage = async ({ searchParams }: SearchParams) => {
             <DashboardMySubscriptionList listingSubscriptions={listingSubscriptions} session={session} basePath="/dashboard/my-subscriptions" />
         </DashboardSubscriptionsContextProvider>
     );
-};
-
-export default MySubscriptionsPage;
+}

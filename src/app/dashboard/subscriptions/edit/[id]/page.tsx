@@ -1,9 +1,9 @@
 import { api } from "@/utils/api";
 import { BreadCrumbs } from "@/app/_components";
-import { ListingIdType } from "@/utils/types";
+import { SubscriptionIdPathParam } from "@/utils/types";
 import { EditSubscriptionForm } from "@/app/_components/Forms/ListingSubscriptions/EditSubscriptionForm";
 
-const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) => {
+export default async function Page({ params }: SubscriptionIdPathParam) {
     const subscriptionDetails = await api.getListingSubscriptionItem(params.id);
 
     return (
@@ -15,6 +15,4 @@ const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) =>
             <EditSubscriptionForm listingSubscriptionItem={subscriptionDetails} successRedirectPath="/dashboard/subscriptions" />
         </>
     );
-};
-
-export default EditListingPage;
+}

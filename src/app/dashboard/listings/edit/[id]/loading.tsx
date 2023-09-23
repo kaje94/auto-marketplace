@@ -1,7 +1,7 @@
 import { BreadCrumbs } from "@/app/_components";
 import { ListingForm } from "@/app/_components/Forms/Listings/ListingForm";
 
-const ListingFormLoading = () => {
+export default function Loading() {
     return (
         <>
             <BreadCrumbs
@@ -16,6 +16,4 @@ const ListingFormLoading = () => {
             <ListingForm isLoading />
         </>
     );
-};
-
-export default ListingFormLoading;
+}

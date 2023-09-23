@@ -3,12 +3,14 @@ import { ListingDetailBanner, ListingDetails } from "@/app/_components/ListingDe
 import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
-import { ListingIdType } from "@/utils/types";
+import { ListingIdPathParam } from "@/utils/types";
 import { getServerSession } from "next-auth";
 
-const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => {
-    const session = await getServerSession(authOptions);
-    const itemDetails = transformListingResponse(await api.getMyListingsItem(params.id));
+export default async function Page({ params }: ListingIdPathParam) {
+    const [session, itemDetails] = await Promise.all([
+        getServerSession(authOptions),
+        transformListingResponse(await api.getMyListingsItem(params.id)),
+    ]);
 
     return (
         <>
@@ -26,6 +28,4 @@ const ItemDetailPage = async ({ params }: { params: { id: ListingIdType } }) => 
             />
         </>
     );
-};
-
-export default ItemDetailPage;
+}

@@ -11,7 +11,7 @@ import { DashboardMyListFilter } from "@/app/_components/DashboardListHeader/Das
 import { DashboardMyListingsContextProvider } from "@/providers/dashboard-my-listings-provider";
 import { DashboardMyListingsList } from "@/app/_components/DashboardListings/DashboardListingsList";
 
-const MyAds = async ({ searchParams }: SearchParams) => {
+export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = MyListingsFilterSchema.parse(searchParams);
     const session = await getServerSession(authOptions);
@@ -31,6 +31,4 @@ const MyAds = async ({ searchParams }: SearchParams) => {
             <DashboardMyListingsList listings={listings} session={session} basePath="/dashboard/my-listings" />
         </DashboardMyListingsContextProvider>
     );
-};
-
-export default MyAds;
+}

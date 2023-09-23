@@ -7,9 +7,10 @@ import { getServerSession } from "next-auth";
 import { ListingDetails } from "@/app/_components/ListingDetails";
 
 export default async function Page({ params }: { params: { id: ListingIdType } }) {
-    const itemDetails = transformListingResponse(await api.getPostedListingItem(params.id));
-
-    const session = await getServerSession(authOptions);
+    const [session, itemDetails] = await Promise.all([
+        getServerSession(authOptions),
+        transformListingResponse(await api.getPostedListingItem(params.id)),
+    ]);
 
     api.incrementViews(params.id);
 

@@ -10,7 +10,7 @@ const DetailsItem = ({ title, value }: { title: string; value: string }) => (
     </div>
 );
 
-const ProfilePage = () => {
+export default async function Page() {
     return (
         <>
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="Profile" />
@@ -66,6 +66,4 @@ const ProfilePage = () => {
             </div>
         </>
     );
-};
-
-export default ProfilePage;
+}

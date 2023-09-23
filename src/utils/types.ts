@@ -111,6 +111,14 @@ export type PaginatedRequest = {
 // todo: use this for all other instances as well
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };
 
+export type ChildrenProps = { children: React.ReactNode };
+
+export type ErrorPageProps = { error: Error; reset: () => void };
+
+export type ListingIdPathParam = { params: { id: ListingIdType } };
+
+export type SubscriptionIdPathParam = { params: { id: ListingSubscriptionIdType } };
+
 export type ImageFile = z.infer<typeof VehicleImageSchema>;
 
 export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;

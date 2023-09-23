@@ -10,11 +10,13 @@ import { authOptions } from "@/auth/authConfig";
 import { DashboardSubscriptionsContextProvider } from "@/providers/dashboard-subscriptions-provider";
 import { DashboardAllSubscriptionList } from "@/app/_components/DashboardSubscriptions/DashboardSubscriptionList";
 
-const SubscriptionsPage = async ({ searchParams }: SearchParams) => {
+export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardSubscriptionFilterSchema.parse(searchParams);
-    const session = await getServerSession(authOptions);
-    const listingSubscriptions = await api.getListingSubscriptions({ PageNumber: Number(page), ...parsedSearchParams });
+    const [session, listingSubscriptions] = await Promise.all([
+        getServerSession(authOptions),
+        api.getListingSubscriptions({ PageNumber: Number(page), ...parsedSearchParams }),
+    ]);
 
     if (listingSubscriptions.items?.length === 0 && page !== "1") {
         redirect(`/dashboard/subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
@@ -30,6 +32,4 @@ const SubscriptionsPage = async ({ searchParams }: SearchParams) => {
             <DashboardAllSubscriptionList listingSubscriptions={listingSubscriptions} session={session} basePath="/dashboard/subscriptions" />
         </DashboardSubscriptionsContextProvider>
     );
-};
-
-export default SubscriptionsPage;
+}

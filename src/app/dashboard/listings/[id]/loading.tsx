@@ -1,7 +1,7 @@
 import { BreadCrumbs } from "@/app/_components";
 import { ListingDetailBanner, ListingDetails } from "@/app/_components/ListingDetails";
 
-const ItemDetailLoadingPage = async () => {
+export default function Loading() {
     return (
         <>
             <BreadCrumbs
@@ -12,6 +12,4 @@ const ItemDetailLoadingPage = async () => {
             <ListingDetails loading withinDashboard={true} />
         </>
     );
-};
-
-export default ItemDetailLoadingPage;
+}

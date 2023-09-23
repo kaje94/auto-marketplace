@@ -1,7 +1,7 @@
 import { BreadCrumbs } from "@/app/_components";
 import { NotificationItem } from "./_components";
 
-const Notifications = () => {
+export default async function Page() {
     return (
         <>
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="Notifications" />
@@ -23,6 +23,4 @@ choose If a dog chews shoes whose shoes does he choose?"
             </div>
         </>
     );
-};
-
-export default Notifications;
+}

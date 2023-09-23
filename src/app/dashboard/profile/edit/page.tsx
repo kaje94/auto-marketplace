@@ -1,7 +1,7 @@
 import { BreadCrumbs } from "@/app/_components";
 import Image from "next/image";
 
-const ProfilePage = () => {
+export default async function Page() {
     return (
         <>
             <BreadCrumbs
@@ -48,6 +48,4 @@ const ProfilePage = () => {
             </div>
         </>
     );
-};
-
-export default ProfilePage;
+}

@@ -1,6 +1,7 @@
 import { NavBar, Footer, BreadCrumbs } from "@/app/_components";
+import { ChildrenProps } from "@/utils/types";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: ChildrenProps) {
     return (
         <>
             <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="Manage Subscriptions" />

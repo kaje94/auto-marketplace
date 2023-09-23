@@ -1,8 +1,7 @@
 "use client";
 import { ErrorComponent } from "@/app/_components";
+import { ErrorPageProps } from "@/utils/types";
 
-const LoginErrorPage = (props: { error: Error; reset: () => void }) => {
+export default function Error(props: ErrorPageProps) {
     return <ErrorComponent {...props} title="Failed to login the user" />;
-};
-
-export default LoginErrorPage;
+}

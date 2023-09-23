@@ -1,7 +1,5 @@
 import { SubscriptionForm } from "@/app/_components/Forms/ListingSubscriptions/SubscriptionForm";
 
-const SubscriptionFormLoading = () => {
+export default function Loading() {
     return <SubscriptionForm isLoading />;
-};
-
-export default SubscriptionFormLoading;
+}

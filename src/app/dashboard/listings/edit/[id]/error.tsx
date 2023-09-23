@@ -1,7 +1,8 @@
 "use client";
 import { BreadCrumbs, ErrorComponent } from "@/app/_components";
+import { ErrorPageProps } from "@/utils/types";
 
-const ListingEditErrorPage = (props: { error: Error; reset: () => void }) => {
+export default function Error(props: ErrorPageProps) {
     return (
         <>
             <BreadCrumbs
@@ -16,6 +17,4 @@ const ListingEditErrorPage = (props: { error: Error; reset: () => void }) => {
             <ErrorComponent {...props} />
         </>
     );
-};
-
-export default ListingEditErrorPage;
+}

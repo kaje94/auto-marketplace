@@ -2,10 +2,8 @@ import { CreateSubscriptionForm } from "../../_components/Forms/ListingSubscript
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
 
-const CreateSubscriptionPage = async () => {
+export default async function Page() {
     const session = await getServerSession(authOptions);
 
     return <CreateSubscriptionForm userId={session?.user?.id} />;
-};
-
-export default CreateSubscriptionPage;
+}

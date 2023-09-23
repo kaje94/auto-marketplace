@@ -108,7 +108,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                         }
                                         value={option.value}
                                         onClick={(event) => {
-                                            event.preventDefault();
+                                            event.stopPropagation();
                                             setSelectedValue(option.value);
                                         }}
                                     >

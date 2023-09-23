@@ -3,11 +3,8 @@ import { CreateListingForm } from "../../_components/Forms/Listings/CreateListin
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
 
-const CreateListingPage = async () => {
-    const session = await getServerSession(authOptions);
-    const features = await api.getFeaturesList();
+export default async function Page() {
+    const [session, features] = await Promise.all([getServerSession(authOptions), api.getFeaturesList()]);
 
     return <CreateListingForm features={features} userId={session?.user?.id} />;
-};
-
-export default CreateListingPage;
+}

@@ -1,12 +1,11 @@
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
 import { BreadCrumbs } from "@/app/_components";
-import { ListingIdType } from "@/utils/types";
+import { ListingIdPathParam } from "@/utils/types";
 import { EditListingForm } from "@/app/_components/Forms/Listings/EditListingForm";
 
-const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) => {
-    let [itemDetails, features] = await Promise.all([api.getMyListingsItem(params.id), api.getFeaturesList()]);
-    itemDetails = transformListingResponse(itemDetails);
+export default async function Page({ params }: ListingIdPathParam) {
+    const [itemDetails, features] = await Promise.all([transformListingResponse(await api.getMyListingsItem(params.id)), api.getFeaturesList()]);
 
     return (
         <>
@@ -25,6 +24,4 @@ const EditListingPage = async ({ params }: { params: { id: ListingIdType } }) =>
             <EditListingForm features={features} listingItem={itemDetails} successRedirectPath="/dashboard/my-listings" />
         </>
     );
-};
-
-export default EditListingPage;
+}

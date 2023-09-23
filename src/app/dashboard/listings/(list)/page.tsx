@@ -11,11 +11,13 @@ import { authOptions } from "@/auth/authConfig";
 import { DashboardListingsContextProvider } from "@/providers/dashboard-listings-provider";
 import { DashboardAllListingsList } from "@/app/_components/DashboardListings/DashboardListingsList";
 
-const AllAds = async ({ searchParams }: SearchParams) => {
+export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
-    const session = await getServerSession(authOptions);
-    const listings = transformListingsListResponse(await api.getListings({ PageNumber: Number(page), ...parsedSearchParams }));
+    const [session, listings] = await Promise.all([
+        getServerSession(authOptions),
+        transformListingsListResponse(await api.getListings({ PageNumber: Number(page), ...parsedSearchParams })),
+    ]);
 
     if (listings.items?.length === 0 && page !== "1") {
         redirect(`/dashboard/listings?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
@@ -31,6 +33,4 @@ const AllAds = async ({ searchParams }: SearchParams) => {
             <DashboardAllListingsList listings={listings} session={session} basePath="/dashboard/listings" />
         </DashboardListingsContextProvider>
     );
-};
-
-export default AllAds;
+}

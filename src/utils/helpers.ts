@@ -132,8 +132,10 @@ export const transformImagesToPost = async (files: ImageFile[]): Promise<ImageFi
                     maxWidthOrHeight: 1920, // todo: also try 1280 size
                     maxSizeMB: 0.5,
                 });
-                const hash = await previewUrlToHash(item.preview);
-                const { url, key, bucket, region } = await getPresignedS3Url(compressedFile.type, compressedFile?.length);
+                const [hash, { url, key, bucket, region }] = await Promise.all([
+                    previewUrlToHash(item.preview),
+                    getPresignedS3Url(compressedFile.type, compressedFile?.length),
+                ]);
                 const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
                 return { color: hash, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
             } else if (item.deleted && item.name && item.url) {

@@ -1,7 +1,7 @@
 import { BreadCrumbs } from "@/app/_components";
 import { SubscriptionForm } from "@/app/_components/Forms/ListingSubscriptions/SubscriptionForm";
 
-const MySubscriptionFormLoading = () => {
+export default function Loading() {
     return (
         <>
             <BreadCrumbs
@@ -11,6 +11,4 @@ const MySubscriptionFormLoading = () => {
             <SubscriptionForm isLoading />
         </>
     );
-};
-
-export default MySubscriptionFormLoading;
+}

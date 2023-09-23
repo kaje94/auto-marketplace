@@ -2,7 +2,7 @@ import { ListingIdType } from "@/utils/types";
 import { ListingsCarousel } from "@/app/_components/ListingsCarousel";
 import { api } from "@/utils/api";
 
-export default async function Page({ params }: { params: { id: ListingIdType } }) {
+export default async function Page() {
     const featuredListings = await api.getFeaturedListings();
     return (
         <ListingsCarousel

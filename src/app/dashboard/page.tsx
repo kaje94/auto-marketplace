@@ -1,8 +1,5 @@
-// import { RedirectType } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
 
-const Dashboard = () => {
+export default function Page() {
     return redirect("/dashboard/profile");
-};
-
-export default Dashboard;
+}

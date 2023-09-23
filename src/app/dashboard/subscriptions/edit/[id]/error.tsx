@@ -1,7 +1,8 @@
 "use client";
 import { BreadCrumbs, ErrorComponent } from "@/app/_components";
+import { ErrorPageProps } from "@/utils/types";
 
-const SubscriptionsEditErrorPage = (props: { error: Error; reset: () => void }) => {
+export default function Error(props: ErrorPageProps) {
     return (
         <>
             <BreadCrumbs
@@ -11,6 +12,4 @@ const SubscriptionsEditErrorPage = (props: { error: Error; reset: () => void }) 
             <ErrorComponent {...props} />
         </>
     );
-};
-
-export default SubscriptionsEditErrorPage;
+}
