@@ -9,69 +9,66 @@ interface Props {
 }
 
 export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
-    const placeholderWidth = ["w-44", "w-32", "w-28", "w-16", "w-24", "w-40", "w-40"];
-    // todo: add vehicle type
+    const placeholderWidth = ["w-28", "w-32", "w-28", "w-16", "w-24", "w-36", "w-14"];
+
+    const items: { label: string; value: string | number }[] = [];
+    if (vehicle?.brand) {
+        items.push({ label: "Brand", value: vehicle.brand });
+    }
+    if (vehicle?.model) {
+        items.push({ label: "Modal", value: vehicle.model });
+    }
+    if (vehicle?.trim) {
+        items.push({ label: "Trim / Edition", value: vehicle.trim });
+    }
+    if (vehicle?.yearOfManufacture) {
+        items.push({ label: "Manufactured Year", value: getYearFromDateString(vehicle.yearOfManufacture) });
+    }
+    if (vehicle?.yearOfRegistration) {
+        items.push({ label: "Registered Year", value: getYearFromDateString(vehicle.yearOfRegistration) });
+    }
+    if (vehicle?.condition) {
+        items.push({ label: "Condition", value: unCamelCase(vehicle?.condition) });
+    }
+    if (vehicle?.millage) {
+        items.push({ label: "Milage", value: `${numberWithCommas(vehicle?.millage)} km` });
+    }
+    if (vehicle?.transmission) {
+        items.push({ label: "Transmission", value: unCamelCase(vehicle?.transmission) });
+    }
+    if (vehicle?.fuelType) {
+        items.push({ label: "Fuel Type", value: unCamelCase(vehicle?.fuelType) });
+    }
+    if (vehicle?.engineCapacity) {
+        items.push({ label: "Engine Capacity", value: `${numberWithCommas(vehicle?.engineCapacity)}CC` });
+    }
     return (
-        <div className="mt-2 grid w-full gap-2 lg:grid-cols-2">
-            <div className="flex flex-col items-center gap-1 lg:items-start">
-                {loading ? (
-                    <>
-                        {new Array(5).fill("").map((_, i) => (
-                            <span key={i} className={clsx("my-0.5 h-5 animate-pulse bg-base-200", getRandomItem(placeholderWidth))} />
-                        ))}
-                    </>
-                ) : (
-                    <>
-                        <div className="font-light">
-                            Brand:<span className="ml-1 font-semibold text-primary-content">{vehicle?.brand}</span>
+        <div className="mt-2 grid w-full gap-1 lg:grid-cols-2">
+            {loading ? (
+                <>
+                    {new Array(10).fill("").map((_, i) => (
+                        <div
+                            key={i}
+                            className={clsx("flex flex-col items-center gap-0.5 lg:md:gap-0.5", i % 2 === 0 ? "lg:items-start" : "lg:items-end")}
+                        >
+                            <div className={clsx("w- h-4 w-11 bg-base-200", getRandomItem(placeholderWidth))} />
+                            <div className={clsx("h-5 bg-base-200", getRandomItem(placeholderWidth))} />
                         </div>
-                        <div className="font-light">
-                            Modal:<span className="ml-1 font-semibold text-primary-content">{vehicle?.model}</span>
+                    ))}{" "}
+                </>
+            ) : (
+                <>
+                    {items.map((item, index) => (
+                        <div
+                            key={item.label}
+                            className={clsx("flex flex-col items-center md:gap-0.5", index % 2 === 0 ? "lg:items-start" : "lg:items-end")}
+                        >
+                            <div className="text-sm font-light">{item.label}</div>
+                            <div className="!break-words text-base font-semibold text-primary-content">{item.value}</div>
                         </div>
-                        <div className="font-light">
-                            Trim / Edition::<span className="ml-1 font-semibold text-primary-content">{vehicle?.trim}</span>
-                        </div>
-                        <div className="font-light">
-                            Condition::<span className="ml-1 font-semibold text-primary-content">{unCamelCase(vehicle?.condition ?? "")}</span>
-                        </div>
-                        <div className="font-light">
-                            Manufactured Year:
-                            <span className="ml-1 font-semibold text-primary-content">{getYearFromDateString(vehicle?.yearOfManufacture ?? "")}</span>
-                        </div>
-                    </>
-                )}
-            </div>
-            <div className="flex flex-col items-center gap-1 text-right lg:items-end">
-                {loading ? (
-                    <>
-                        {new Array(5).fill("").map((_, i) => (
-                            <span key={i} className={clsx("my-0.5 h-5 animate-pulse bg-base-200", getRandomItem(placeholderWidth))} />
-                        ))}
-                    </>
-                ) : (
-                    <>
-                        <div className="font-light">
-                            Milage:<span className="ml-1 font-semibold text-primary-content">{numberWithCommas(vehicle?.millage ?? 0)} km</span>
-                        </div>
-                        <div className="font-light">
-                            Transmission:<span className="ml-1 font-semibold text-primary-content">{unCamelCase(vehicle?.transmission ?? "")}</span>
-                        </div>
-                        <div className="font-light">
-                            Fuel Type:<span className="ml-1 font-semibold text-primary-content">{vehicle?.fuelType}</span>
-                        </div>
-                        <div className="font-light">
-                            Engine Capacity:
-                            <span className="ml-1 font-semibold text-primary-content">{numberWithCommas(vehicle?.engineCapacity ?? 0)}CC</span>
-                        </div>
-                        <div className="font-light">
-                            Registered Year:
-                            <span className="ml-1 font-semibold text-primary-content">
-                                {getYearFromDateString(vehicle?.yearOfRegistration ?? "")}
-                            </span>
-                        </div>
-                    </>
-                )}
-            </div>
+                    ))}
+                </>
+            )}
         </div>
     );
 };

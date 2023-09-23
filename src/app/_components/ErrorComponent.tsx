@@ -21,7 +21,7 @@ export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showR
             : "But do not worry, you can alway head to our home page and start over.";
     let errorTitle = title || "Oops, something went wrong";
     if (error instanceof Error && error?.message?.endsWith("(404)")) {
-        errorTitle = "Item no longer available";
+        errorTitle = "Item is not available";
     }
     const errorName = typeof error === "string" ? "Error" : error?.name ?? "Error";
     const errorMessage = typeof error === "string" ? error : error?.message;

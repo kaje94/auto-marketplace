@@ -64,12 +64,12 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                 ) : (
                     <div className={clsx("mt-2 h-3 bg-base-200 opacity-50", getRandomItem(["w-1/2", "w-4/6", "w-5/12"]))} />
                 )}
-                <div className="flex items-center justify-between  text-base-300">
+                <div className="flex items-end justify-between text-base-300">
                     {item ? (
-                        <div className="text-sm font-light">
-                            {item?.vehicle?.millage
-                                ? `${numberWithCommas(item?.vehicle?.millage)} km (${unCamelCase(item?.vehicle?.condition)})`
-                                : unCamelCase(item?.vehicle?.condition)}
+                        <div className="flex-1 text-sm font-light">
+                            {`${unCamelCase(item?.vehicle?.type)} | ${unCamelCase(item?.vehicle?.condition)} ${
+                                item?.vehicle?.millage ? `| ${numberWithCommas(item?.vehicle?.millage)} km` : ""
+                            }`}
                         </div>
                     ) : (
                         <div className={clsx("mt-1 h-3 bg-base-200 opacity-50", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />

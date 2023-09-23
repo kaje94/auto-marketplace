@@ -34,7 +34,9 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
                 <div className={clsx({ "text-xs": true, "opacity-50": loading })}>
                     {loading
                         ? "Loading description of the listing status..."
-                        : `${ListingStatusDescriptions[listingStatus as ListingStatusTypes]} ${reviewComment ?? ""}`}
+                        : `${ListingStatusDescriptions[listingStatus as ListingStatusTypes]} ${
+                              listingStatus === ListingStatusTypes.Declined && reviewComment ? reviewComment : ""
+                          }`}
                 </div>
             </div>
             {!loading && (

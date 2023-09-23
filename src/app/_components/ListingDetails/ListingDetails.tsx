@@ -36,7 +36,13 @@ export const ListingDetails: FC<Props> = ({
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-5" : "lg:col-span-5")}>
                 <div className="card  bg-base-100 shadow">
-                    <ListingImageCarousel images={vehicle?.vehicleImages} title={title} createdOn={createdOn} loading={loading} />
+                    <ListingImageCarousel
+                        images={vehicle?.vehicleImages}
+                        title={title}
+                        createdOn={createdOn}
+                        loading={loading}
+                        vehicleType={vehicle?.type}
+                    />
                 </div>
                 <div className="stat card  bg-base-100 p-3  shadow lg:p-5 xl:p-6">
                     <div className="stat-title">Description</div>
