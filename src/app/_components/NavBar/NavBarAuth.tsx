@@ -1,23 +1,16 @@
-"use client";
 import { UserIcon, AdvertIcon, RssIcon, NotificationIcon } from "@/icons";
 import { NavBarMenuLink, NavBarLogoutButton, NavBarLoginButton } from "./NavBarButtons";
 import Image from "next/image";
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/auth/authConfig";
-import { useSession } from "next-auth/react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Session } from "next-auth";
 
-export const NavBarAuth = () => {
-    const { data, status } = useSession();
-    const [parent] = useAutoAnimate();
-
+export const NavBarAuth = ({ session, loading }: { session?: Session | null; loading?: boolean }) => {
     return (
-        <div className="relative flex w-12 items-center justify-center" ref={parent}>
-            {status === "loading" ? (
+        <div className="relative flex w-12 items-center justify-center">
+            {loading ? (
                 <span className="loading loading-ring w-8" />
             ) : (
                 <>
-                    {data ? (
+                    {session ? (
                         <div className="dropdown-end dropdown">
                             <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
