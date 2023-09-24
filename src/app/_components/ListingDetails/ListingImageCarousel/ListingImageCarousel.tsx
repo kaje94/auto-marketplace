@@ -82,7 +82,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                             <ListingImage
                                                 height={300}
                                                 width={450}
-                                                alt={`${title} ${index}`}
+                                                title={title}
                                                 image={imageItem}
                                                 priority={selectedIndex === index ? true : undefined}
                                                 className="aspect-square w-full bg-base-200 object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
@@ -116,7 +116,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                           selected={index === selectedIndex}
                                           image={imageItem}
                                           key={imageItem.id}
-                                          imageAlt={`${title} thumbnail ${index}`}
+                                          title={title}
                                       />
                                   ))}
                         </div>

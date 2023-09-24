@@ -28,7 +28,7 @@ export const NavBarClient = ({ session, loading }: { session?: Session | null; l
                 <div className="flex flex-row items-center gap-0 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                     <SearchLink />
                     <PostAddLink />
-                    <NavBarAuth session={session} loading={loading} />
+                    <NavBarAuth session={session} loading={loading} key={`navbar-auth-${pathName}`} />
                 </div>
             </div>
         </div>

@@ -83,6 +83,7 @@ export const EditListingForm: FC<Props> = (props) => {
             isMutating={isMutating}
             onMutate={(values) => updateListingsMutation({ ...values, listingId: listingItem.id })}
             submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
+            title={listingItem?.title}
         />
     );
 };

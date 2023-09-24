@@ -27,7 +27,10 @@ export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionIt
             />
             <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
                 <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>
-                    <ul className="dropdown-content menu rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg">
+                    <ul
+                        className="dropdown-content menu rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg"
+                        onClick={() => setMenuVisible(false)}
+                    >
                         <MenuItem icon={<EditIcon height={18} />} link={`${basePath}/edit/${id}`} label="Edit" />
                         <MenuItem
                             icon={active ? <BellOffIcon height={18} /> : <BellIcon height={18} />}

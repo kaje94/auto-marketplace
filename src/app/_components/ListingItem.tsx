@@ -21,7 +21,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                 {item ? (
                     <ListingImage
                         image={image}
-                        alt={`${item?.title}-thumbnail`}
+                        title={item.title}
                         className={clsx(
                             "zoomable-image aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear",
                             loading && "opacity-50"

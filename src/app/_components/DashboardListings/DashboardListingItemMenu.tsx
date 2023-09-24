@@ -36,7 +36,10 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
             />
             <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
                 <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>
-                    <ul className="dropdown-content menu rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg">
+                    <ul
+                        className="dropdown-content menu rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg"
+                        onClick={() => setMenuVisible(false)}
+                    >
                         {status && status === ListingStatusTypes.Posted && (
                             <MenuItem icon={<EyeIcon height={18} />} link={`/search/${listingId}`} label="View Advert" />
                         )}

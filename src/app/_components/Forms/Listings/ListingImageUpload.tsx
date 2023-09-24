@@ -15,10 +15,11 @@ interface Props {
     loading?: boolean;
     loadingPlaceholderCount?: number;
     error?: string;
+    title?: string;
 }
 
 export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {
-    const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1 } = props;
+    const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1, title } = props;
     const { getRootProps, getInputProps, open } = useDropzone({
         accept: { "image/*": [] },
         disabled: loading,
@@ -95,7 +96,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                                 ) : (
                                     <ListingImage
                                         image={file}
-                                        alt="Image-preview"
+                                        title={title || `new-listing-image-${index}`}
                                         height={100}
                                         width={100}
                                         className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"

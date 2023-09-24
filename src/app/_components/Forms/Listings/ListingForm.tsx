@@ -22,10 +22,11 @@ interface Props {
     isMutating?: boolean;
     form?: UseFormReturn<CreateListingReq>;
     onMutate?: (values: CreateListingReq) => void;
+    title?: string;
 }
 
 export const ListingForm: FC<Props> = (props) => {
-    const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {} } = props;
+    const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, title } = props;
     const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control } = form as UseFormReturn<CreateListingReq>;
 
     return (
@@ -166,6 +167,7 @@ export const ListingForm: FC<Props> = (props) => {
                                         setFiles={(images) => field.onChange(images)}
                                         error={fieldState.error?.message}
                                         ref={field.ref}
+                                        title={title || "New Advert Image"}
                                     />
                                 )}
                             />

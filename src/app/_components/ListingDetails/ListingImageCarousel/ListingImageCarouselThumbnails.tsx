@@ -6,7 +6,7 @@ import { VehicleImageType } from "@/utils/types";
 type PropTypeImage = {
     selected: boolean;
     onClick: () => void;
-    imageAlt: string;
+    title: string;
     image: VehicleImageType;
 };
 
@@ -24,7 +24,7 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
             </div>
         );
     } else {
-        const { selected, onClick, image, imageAlt } = props;
+        const { selected, onClick, image, title } = props;
 
         return (
             <div className={clsx("relative shrink-0 grow-0 pl-1 sm:pl-2 lg:pl-4 ", selected && "opacity-100")}>
@@ -39,7 +39,7 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
                     <ListingImage
                         className="block h-16 w-16 bg-base-200 object-cover sm:h-20 sm:w-20 lg:h-24 lg:w-36"
                         image={image}
-                        alt={imageAlt}
+                        title={title}
                         height={300}
                         width={450}
                     />

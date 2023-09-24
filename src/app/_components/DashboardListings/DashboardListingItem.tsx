@@ -32,7 +32,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
             ) : (
                 <figure className="relative h-full overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
                     <ListingImage
-                        alt={title ?? ""}
+                        title={title}
                         className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
                         width={450}
