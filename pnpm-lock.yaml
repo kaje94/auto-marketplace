@@ -26,6 +26,7 @@ specifiers:
   eslint-config-prettier: ^8.8.0
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-tailwindcss: ^3.12.0
+  fast-average-color: ^9.4.0
   fslightbox-react: ^1.7.4
   lodash.debounce: ^4.0.8
   nanoid: ^4.0.2
@@ -64,6 +65,7 @@ dependencies:
   embla-carousel-react: 8.0.0-rc03_react@18.2.0
   eslint: 8.40.0
   eslint-config-next: 13.5.2_uci2wugtwpizkleuwbfwoxrp4q
+  fast-average-color: 9.4.0
   fslightbox-react: 1.7.4_biqbaboplfbrettd7655fr4n2y
   lodash.debounce: 4.0.8
   nanoid: 4.0.2
@@ -2549,6 +2551,11 @@ packages:
       onetime: 6.0.0
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
+    dev: false
+
+  /fast-average-color/9.4.0:
+    resolution: {integrity: sha512-bvM8vV6YwK07dPbzFz77zJaBcfF6ABVfgNwaxVgXc2G+o0e/tzLCF9WU8Ryp1r0Nkk6JuJNsWCzbb4cLOMlB+Q==}
+    engines: {node: '>= 12'}
     dev: false
 
   /fast-deep-equal/3.1.3:

@@ -9,11 +9,11 @@ const config = {
     reactStrictMode: true,
     // swcMinify: true,
     images: {
+        formats: ["image/avif", "image/webp"],
         domains: [
             // todo: check and remove below
             "lh3.googleusercontent.com",
-            `${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com`,
-            `${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com`,
+            "ik.imagekit.io",
         ],
     },
     experimental: {

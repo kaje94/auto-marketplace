@@ -7,6 +7,7 @@ https://next-s3-upload.codingvalue.com/setup
 
 // API changes
 rename image `color` as `hash` and have max length of 100(even though actually needed is less than 25)
+always sort images to make the preview image as the first image (specially in the detail screen)
 vehicle description needs to be at least 1000 characters
 
 //

@@ -1,10 +1,11 @@
-import { Vehicle, Location, ImageFile, ListingItem, VehicleCreate, ListingItems, PaginatedResponse } from "./types";
+import { Vehicle, Location, VehicleImageType, ListingItem, VehicleCreate, ListingItems, PaginatedResponse } from "./types";
 import * as ThumbHash from "thumbhash";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { deleteObjectFromS3, getPresignedS3Url } from "@/app/_actions/imageActions";
 import imageCompression from "browser-image-compression";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { FastAverageColor } from "fast-average-color";
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
@@ -110,7 +111,8 @@ export const thumbHashToDataUrl = (thumbHash?: string) => {
     try {
         const base64ToBinary = (base64: string) =>
             new Uint8Array(
-                atob(base64)
+                window
+                    .atob(base64)
                     .split("")
                     .map((x) => x.charCodeAt(0))
             );
@@ -122,22 +124,25 @@ export const thumbHashToDataUrl = (thumbHash?: string) => {
     }
 };
 
-export const transformImagesToPost = async (files: ImageFile[]): Promise<ImageFile[]> => {
+export const transformImagesToPost = async (files: VehicleImageType[]): Promise<VehicleImageType[]> => {
     const images = await Promise.all(
         files.map(async (item) => {
             if (item.file && item.preview && !item.deleted) {
+                const fac = new FastAverageColor();
                 const compressedFile = await imageCompression(item.file as File, {
                     fileType: "image/webp",
                     initialQuality: 0.7,
                     maxWidthOrHeight: 1920, // todo: also try 1280 size
                     maxSizeMB: 0.5,
                 });
-                const [hash, { url, key, bucket, region }] = await Promise.all([
+                const [hash, { url, key, bucket, region }, color] = await Promise.all([
                     previewUrlToHash(item.preview),
                     getPresignedS3Url(compressedFile.type, compressedFile?.length),
+                    fac.getColorAsync(item.preview),
                 ]);
                 const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
-                return { color: hash, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
+
+                return { color: `${color.hex}_${hash}`, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
             } else if (item.deleted && item.name && item.url) {
                 await deleteObjectFromS3(item.name);
                 return null;
@@ -145,7 +150,7 @@ export const transformImagesToPost = async (files: ImageFile[]): Promise<ImageFi
             return { color: item.color, isThumbnail: item.isThumbnail, name: item.name, url: item.url };
         })
     );
-    return images.filter((item) => !!item?.url) as ImageFile[];
+    return images.filter((item) => !!item?.url) as VehicleImageType[];
 };
 
 // todo: change how this is called
@@ -161,7 +166,8 @@ export const transformListingResponse = (itemDetails: ListingItem): ListingItem 
             vehicleImages: sortVehicleImages(
                 itemDetails.vehicle.vehicleImages.map((imageItem) => ({
                     ...imageItem,
-                    blurDataURL: thumbHashToDataUrl(imageItem.color),
+                    averageColor: imageItem?.color?.includes("_") ? imageItem?.color.split("_")[0] : "",
+                    thumbHash: imageItem?.color?.includes("_") ? imageItem?.color.split("_")[1] : imageItem?.color,
                     deleted: false,
                 }))
             ),
@@ -169,7 +175,7 @@ export const transformListingResponse = (itemDetails: ListingItem): ListingItem 
     };
 };
 
-export const sortVehicleImages = (images: ImageFile[]) =>
+export const sortVehicleImages = (images: VehicleImageType[]) =>
     images.sort((a, b) => {
         if (a.isThumbnail && !b.isThumbnail) {
             return -1; // a comes before b in the sorted order

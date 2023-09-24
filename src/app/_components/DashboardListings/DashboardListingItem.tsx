@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Image from "next/image";
+import { ListingImage } from "@/app/_components/Common";
 import clsx from "clsx";
 import Link from "next/link";
 import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
@@ -22,8 +22,6 @@ interface Props {
 export const DashboardListingItem: FC<Props> = (props) => {
     const { basePath, listingItem = {}, loading, isAdmin } = props;
     const { title, price, description, status, id, vehicle, location, createdOn } = listingItem as ListingItem;
-    const imageUrl = vehicle?.vehicleImages[0]?.url;
-    const blurDataURL = vehicle?.vehicleImages[0]?.blurDataURL;
     const locationStr = getLocationString(location);
     const priceStr = getFormattedCurrency(price?.amount, price?.currency);
 
@@ -33,14 +31,12 @@ export const DashboardListingItem: FC<Props> = (props) => {
                 <div className="relative hidden aspect-video h-full w-full overflow-hidden rounded-xl bg-base-200 md:col-span-5 md:block xl:col-span-3" />
             ) : (
                 <figure className="relative h-full overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
-                    <Image
-                        src={imageUrl ?? ""}
+                    <ListingImage
                         alt={title ?? ""}
                         className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
                         width={450}
-                        placeholder={blurDataURL ? "blur" : "empty"}
-                        blurDataURL={blurDataURL}
+                        image={vehicle?.vehicleImages[0]}
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">

@@ -51,7 +51,8 @@ export const VehicleImageSchema = z.object({
     // file: z.instanceof(File).optional(), // todo: fix since it throws an error saying File not found
     file: z.any().optional(),
     preview: z.string().optional(),
-    blurDataURL: z.string().optional(),
+    averageColor: z.string().optional(),
+    thumbHash: z.string().optional(),
     deleted: z.boolean().default(false).optional(),
 });
 

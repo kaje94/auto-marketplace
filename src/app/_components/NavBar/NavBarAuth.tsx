@@ -1,7 +1,7 @@
 import { UserIcon, AdvertIcon, RssIcon, NotificationIcon } from "@/icons";
 import { NavBarMenuLink, NavBarLogoutButton, NavBarLoginButton } from "./NavBarButtons";
-import Image from "next/image";
 import { Session } from "next-auth";
+import Image from "next/image";
 
 export const NavBarAuth = ({ session, loading }: { session?: Session | null; loading?: boolean }) => {
     return (
@@ -20,6 +20,7 @@ export const NavBarAuth = ({ session, loading }: { session?: Session | null; loa
                                         width={40}
                                         alt="profile-image"
                                         className="object-cover"
+                                        unoptimized
                                     />
                                     <div className="badge badge-primary badge-md absolute -right-1 -top-1 flex aspect-square items-center justify-center border-2 border-accent bg-gradient-to-t from-secondary to-primary p-0.5 text-neutral shadow-2xl">
                                         <NotificationIcon strokeWidth={3} className="animate-pulse" />

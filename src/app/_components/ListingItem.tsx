@@ -1,7 +1,7 @@
 import { FC } from "react";
-import Image from "next/image";
+import { ListingImage } from "@/app/_components/Common";
 import Link from "next/link";
-import { ListingItem as ListingItemType, Vehicle } from "@/utils/types";
+import { ListingItem as ListingItemType } from "@/utils/types";
 import { getFormattedCurrency, getLocationString, getRandomItem, numberWithCommas, timeAgo, unCamelCase } from "@/utils/helpers";
 import clsx from "clsx";
 
@@ -19,18 +19,15 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
         <>
             <figure className="relative">
                 {item ? (
-                    <Image
-                        src={image?.url!}
+                    <ListingImage
+                        image={image}
                         alt={`${item?.title}-thumbnail`}
                         className={clsx(
-                            "aspect-video w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image",
+                            "zoomable-image aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear",
                             loading && "opacity-50"
                         )}
                         height={300}
                         width={450}
-                        placeholder={image?.blurDataURL ? "blur" : "empty"}
-                        blurDataURL={image?.blurDataURL}
-                        priority={false}
                     />
                 ) : (
                     <div className="aspect-video w-full bg-neutral bg-opacity-50" />
@@ -38,7 +35,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
 
                 <div className="absolute bottom-0 left-0 flex h-2/3 w-full flex-col justify-end bg-gradient-to-t from-base-content to-transparent px-3 py-0">
                     {item ? (
-                        <div className="badge badge-primary badge-lg font-bold duration-300 badge-hover-translucent image-text-shadow ">
+                        <div className="badge-hover-translucent badge badge-primary badge-lg font-bold duration-300 image-text-shadow ">
                             {getFormattedCurrency(item?.price?.amount, item?.price?.currency)}
                         </div>
                     ) : (
@@ -48,7 +45,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                     {item ? (
                         <div
                             className={clsx(
-                                "line-clamp-3 font-bold text-base-100 duration-300 badge-hover-translucent image-text-shadow",
+                                "badge-hover-translucent line-clamp-3 font-bold text-base-100 duration-300 image-text-shadow",
                                 detailed ? "text-2xl" : "text-xl"
                             )}
                         >

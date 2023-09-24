@@ -119,7 +119,7 @@ export type ListingIdPathParam = { params: { id: ListingIdType } };
 
 export type SubscriptionIdPathParam = { params: { id: ListingSubscriptionIdType } };
 
-export type ImageFile = z.infer<typeof VehicleImageSchema>;
+export type VehicleImageType = z.infer<typeof VehicleImageSchema>;
 
 export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;
 

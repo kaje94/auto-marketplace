@@ -26,6 +26,7 @@
     "embla-carousel-react": "8.0.0-rc03",
     "eslint": "8.40.0",
     "eslint-config-next": "13.5.2",
+    "fast-average-color": "^9.4.0",
     "fslightbox-react": "^1.7.4",
     "lodash.debounce": "^4.0.8",
     "nanoid": "^4.0.2",

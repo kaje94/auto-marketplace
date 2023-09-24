@@ -5,16 +5,17 @@ import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails
 import Autoplay from "embla-carousel-autoplay";
 import FsLightbox from "fslightbox-react";
 import { MaximizeIcon } from "@/icons";
-import { ImageFile } from "@/utils/types";
-import Image from "next/image";
+import { VehicleImageType } from "@/utils/types";
+import { ListingImage } from "@/app/_components/Common";
 import { timeAgo, unCamelCase } from "@/utils/helpers";
 import { VehicleTypes } from "@/utils/enum";
+import { env } from "@/env.mjs";
 
 type PropType = {
     title?: string;
     createdOn?: string;
     vehicleType?: VehicleTypes;
-    images?: ImageFile[];
+    images?: VehicleImageType[];
     options?: EmblaOptionsType;
     loading?: boolean;
 };
@@ -78,15 +79,13 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                             <MaximizeIcon height={18} width={18} />
                                         </button>
                                         <div className="block aspect-square w-full sm:aspect-video">
-                                            <Image
+                                            <ListingImage
                                                 height={300}
                                                 width={450}
                                                 alt={`${title} ${index}`}
-                                                src={imageItem.url ?? ""}
+                                                image={imageItem}
                                                 priority={selectedIndex === index ? true : undefined}
                                                 className="aspect-square w-full bg-base-200 object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
-                                                placeholder={imageItem.blurDataURL ? "blur" : "empty"}
-                                                blurDataURL={imageItem.blurDataURL}
                                             />
                                         </div>
                                     </div>
@@ -115,10 +114,9 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                       <ListingImageCarouselThumbnails
                                           onClick={() => onThumbClick(index)}
                                           selected={index === selectedIndex}
-                                          imgSrc={imageItem.url ?? ""}
+                                          image={imageItem}
                                           key={imageItem.id}
                                           imageAlt={`${title} thumbnail ${index}`}
-                                          blurDataURL={imageItem.blurDataURL}
                                       />
                                   ))}
                         </div>
@@ -130,7 +128,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                     toggler={isLightBoxOpen}
                     sourceIndex={selectedIndex}
                     exitFullscreenOnClose
-                    sources={images.map((item) => item.url ?? "")}
+                    sources={images.map((item) => `${env.NEXT_PUBLIC_IMAGE_CDN_BASE}${item?.name?.replace("images", "")}`)}
                     onClose={() => setLightBoxOpen(false)}
                     type="image"
                     openOnMount

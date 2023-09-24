@@ -23,6 +23,7 @@ export default async function Page() {
                 alt="cover-image"
                 className="absolute inset-x-0 bottom-0 m-auto w-full md:w-10/12 lg:w-11/12 xl:max-w-7xl"
                 priority
+                unoptimized
             />
         </section>
     );

@@ -1,13 +1,13 @@
 import clsx from "clsx";
-import Image from "next/image";
+import { ListingImage } from "@/app/_components/Common";
 import React, { FC } from "react";
+import { VehicleImageType } from "@/utils/types";
 
 type PropTypeImage = {
     selected: boolean;
-    imgSrc: string;
     onClick: () => void;
     imageAlt: string;
-    blurDataURL?: string;
+    image: VehicleImageType;
 };
 
 type PropTypeLoading = {
@@ -24,7 +24,7 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
             </div>
         );
     } else {
-        const { selected, imgSrc, onClick, imageAlt, blurDataURL } = props;
+        const { selected, onClick, image, imageAlt } = props;
 
         return (
             <div className={clsx("relative shrink-0 grow-0 pl-1 sm:pl-2 lg:pl-4 ", selected && "opacity-100")}>
@@ -36,14 +36,12 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
                     )}
                     type="button"
                 >
-                    <Image
+                    <ListingImage
                         className="block h-16 w-16 bg-base-200 object-cover sm:h-20 sm:w-20 lg:h-24 lg:w-36"
-                        src={imgSrc}
+                        image={image}
                         alt={imageAlt}
                         height={300}
                         width={450}
-                        placeholder={blurDataURL ? "blur" : "empty"}
-                        blurDataURL={blurDataURL}
                     />
                 </button>
             </div>

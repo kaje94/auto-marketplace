@@ -27,6 +27,10 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                             width={80}
                             alt="profile-image"
                             className="object-cover"
+                            unoptimized
+                            // todo: check how to optimize user profile pics
+                            // also try and use the same size throughout //128
+                            // update in 3+ plages
                         />
                     )}
                 </div>

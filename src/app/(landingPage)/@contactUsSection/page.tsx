@@ -1,6 +1,5 @@
 import { InputController } from "@/app/_components/FormElements/Input";
 import { TextAreaController } from "@/app/_components/FormElements/TextArea";
-import { LandingHeroSearch } from "@/app/_components/LandingHeroSearch";
 import { righteousFont } from "@/app/fonts";
 import clsx from "clsx";
 import Image from "next/image";
@@ -25,6 +24,7 @@ export default async function Page() {
                     width={100}
                     alt="contact-us-illustration"
                     className={clsx("absolute hidden lg:block", position)}
+                    unoptimized
                 />
             ))}
         </section>

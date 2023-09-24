@@ -17,6 +17,7 @@ export default async function Page() {
                             width={128}
                             alt="profile-image"
                             className="object-cover"
+                            unoptimized
                         />
                     </div>
                 </div>

@@ -24,6 +24,7 @@ export default async function Page() {
                             width={128}
                             alt="profile-image"
                             className="object-cover"
+                            unoptimized
                         />
                     </div>
                     <div className="flex flex-1 flex-col justify-center gap-1 text-center">

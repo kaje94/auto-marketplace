@@ -2,15 +2,16 @@
 
 import { useEffect, forwardRef } from "react";
 import { useDropzone } from "react-dropzone";
-import Image from "next/image";
+import { ListingImage } from "@/app/_components/Common";
 import { PlusIcon, XCircleIcon } from "@/icons";
 import clsx from "clsx";
-import { ImageFile } from "@/utils/types";
+import { VehicleImageType } from "@/utils/types";
 import { MaxVehicleImageCount } from "@/utils/constants";
+import Image from "next/image";
 
 interface Props {
-    files?: ImageFile[];
-    setFiles?: (images: ImageFile[]) => void;
+    files?: VehicleImageType[];
+    setFiles?: (images: VehicleImageType[]) => void;
     loading?: boolean;
     loadingPlaceholderCount?: number;
     error?: string;
@@ -25,7 +26,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
         noClick: true,
         noKeyboard: true,
         onDrop: (acceptedFiles) => {
-            const newFileList: ImageFile[] = [
+            const newFileList: VehicleImageType[] = [
                 ...files,
                 ...acceptedFiles.map((file) => ({ file, preview: URL.createObjectURL(file), deleted: false })),
             ];
@@ -82,15 +83,24 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                                     "grayscale-[30%]": !file.isThumbnail,
                                 })}
                             >
-                                <Image
-                                    src={file.preview || file.url || ""}
-                                    height={100}
-                                    width={100}
-                                    unoptimized={!!file.preview}
-                                    alt="Image-preview"
-                                    className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
-                                    // todo: use blurDataURL when editing uploaded items
-                                />
+                                {file.preview ? (
+                                    <Image
+                                        src={file.preview}
+                                        alt="Image-preview"
+                                        unoptimized
+                                        height={100}
+                                        width={100}
+                                        className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
+                                    />
+                                ) : (
+                                    <ListingImage
+                                        image={file}
+                                        alt="Image-preview"
+                                        height={100}
+                                        width={100}
+                                        className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
+                                    />
+                                )}
                             </div>
 
                             <div className="rounded-box absolute right-0 top-0 z-20 flex h-full w-full items-center justify-center opacity-100 transition-opacity duration-200 hover:opacity-100 xl:opacity-0">

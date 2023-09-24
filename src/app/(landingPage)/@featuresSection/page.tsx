@@ -36,6 +36,7 @@ export default async function Page() {
                         width={600}
                         alt="feature-1-image"
                         className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"
+                        unoptimized
                     />
                     <div className="flex flex-col justify-center gap-8">
                         <FeatureItem
@@ -70,6 +71,7 @@ export default async function Page() {
                         width={600}
                         alt="feature-1-image"
                         className="hidden w-full rounded-lg bg-[#7c7262] object-cover lg:block"
+                        unoptimized
                     />
                 </div>
             </div>

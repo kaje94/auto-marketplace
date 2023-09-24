@@ -31,7 +31,7 @@ export const env = createEnv({
      * `NEXT_PUBLIC_`.
      */
     client: {
-        // NEXT_PUBLIC_APP_URL: z.string().url(),
+        NEXT_PUBLIC_IMAGE_CDN_BASE: z.string().url(),
     },
 
     /**
@@ -49,6 +49,7 @@ export const env = createEnv({
         S3_UPLOAD_SECRET: process.env.S3_UPLOAD_SECRET,
         S3_UPLOAD_BUCKET: process.env.S3_UPLOAD_BUCKET,
         S3_UPLOAD_REGION: process.env.S3_UPLOAD_REGION,
+        NEXT_PUBLIC_IMAGE_CDN_BASE: process.env.NEXT_PUBLIC_IMAGE_CDN_BASE,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
