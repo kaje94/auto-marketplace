@@ -42,8 +42,12 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                 {!pageLoading && listings?.items?.length === 0 && (
                     <Empty
                         text="No adverts to display"
-                        subText="Try adjusting your search filter or resetting it"
-                        button={{ text: "Reset Filter", href: "/search", onClick: () => setNewSearchQuery(""), loading: isLoading }}
+                        subText="You can try refining or resetting your search criteria or check again later"
+                        button={
+                            hasSearchParams
+                                ? { text: "Reset Filter", href: "/search", onClick: () => setNewSearchQuery(""), loading: isLoading }
+                                : undefined
+                        }
                     />
                 )}
 

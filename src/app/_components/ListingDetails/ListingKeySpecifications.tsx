@@ -54,7 +54,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
                             <div className={clsx("w- h-4 w-11 bg-base-200", getRandomItem(placeholderWidth))} />
                             <div className={clsx("h-5 bg-base-200", getRandomItem(placeholderWidth))} />
                         </div>
-                    ))}{" "}
+                    ))}
                 </>
             ) : (
                 <>

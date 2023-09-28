@@ -11,10 +11,17 @@ interface Props {
     activePaths?: string[];
     regexExp?: string;
     iconName?: "UserIcon" | "AdvertIcon" | "SettingsIcon" | "NotificationIcon" | "ListIcon" | "RssIcon" | "ClipboardIcon";
+    badgeCount?: number;
 }
 
-export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp, iconName }) => {
+export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp, iconName, badgeCount }) => {
     const pathname = usePathname();
+    const badge = (
+        <div className="badge badge-primary badge-md  border-2 border-accent bg-primary p-0.5 px-1 text-xs text-neutral">
+            {badgeCount && badgeCount > 9 ? `9+` : badgeCount}
+        </div>
+    );
+
     return (
         <li>
             <Link
@@ -41,6 +48,7 @@ export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp,
                     </>
                 )}
                 {label}
+                {badgeCount ? badge : null}
             </Link>
         </li>
     );

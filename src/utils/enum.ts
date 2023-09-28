@@ -60,3 +60,10 @@ export enum SubscriptionFrequencies {
     OnceADay = "OnceADay",
     OnceAWeek = "OnceAWeek",
 }
+
+export enum NotificationTypes {
+    ListingApproved = "ListingApproved",
+    ListingRejected = "ListingRejected",
+    ListingExpired = "ListingExpired",
+    ListingSubscriptionAlert = "ListingSubscriptionAlert",
+}

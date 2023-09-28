@@ -23,7 +23,10 @@ export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionIt
         <>
             <MenuIcon
                 className="cursor-pointer opacity-30 transition-all duration-200 hover:opacity-75 hover:shadow"
-                onClick={() => setMenuVisible(true)}
+                onClick={(event) => {
+                    event.preventDefault();
+                    setMenuVisible(true);
+                }}
             />
             <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
                 <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>

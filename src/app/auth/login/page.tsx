@@ -21,7 +21,11 @@ export default function Page() {
     }, [search, signInError, error]);
 
     if (signInError || error === "OAuthSignin") {
-        return <ErrorComponent title="Failed to Authenticate" error={signInError} />;
+        return (
+            <div className="p-20">
+                <ErrorComponent title="Failed to Authenticate" error={signInError} />
+            </div>
+        );
     }
 
     return (

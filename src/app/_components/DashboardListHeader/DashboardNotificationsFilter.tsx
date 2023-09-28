@@ -2,28 +2,27 @@
 import clsx from "clsx";
 import { FC } from "react";
 import ClickAwayListener from "react-click-away-listener";
-import { ListingTypeList } from "@/utils/constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MyListingsFilterSchema } from "@/utils/schemas";
-import { MyListingsFilterReq } from "@/utils/types";
+import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
+import { DashboardNotificationsFilterReq } from "@/utils/types";
 import { FilterButton } from "./FilterButton";
 import { FilterInput as InputController } from "./DashboardFilterInput";
 import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { useDashboardFilter } from "./FilterHooks";
 import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
 
-const defaultFilter: MyListingsFilterReq = {
-    ListingStatus: "",
-    EndCreatedDate: "",
-    StartCreatedDate: "",
+const defaultFilter: DashboardNotificationsFilterReq = {
+    StartDate: "",
+    EndDate: "",
+    IsShown: "",
 };
 
-export const DashboardMyListFilter: FC = () => {
+export const DashboardNotificationsFilter: FC = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardMySubscriptionsContext();
 
-    const { handleSubmit, reset, control } = useForm<MyListingsFilterReq>({
-        resolver: zodResolver(MyListingsFilterSchema),
+    const { handleSubmit, reset, control } = useForm<DashboardNotificationsFilterReq>({
+        resolver: zodResolver(DashboardNotificationsFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
     });
@@ -54,28 +53,18 @@ export const DashboardMyListFilter: FC = () => {
                         <div className="grid max-h-96 grid-cols-1 gap-0.5 overflow-y-auto px-2 py-1 md:max-h-max md:grid-cols-2 md:gap-2 md:px-3">
                             <div className="col-span-full">
                                 <SelectController
-                                    label="Status"
-                                    options={ListingTypeList}
-                                    placeholder="All status types"
+                                    label="Type"
+                                    options={[
+                                        { label: "Seen notifications", value: "true" },
+                                        { label: "New notifications", value: "false" },
+                                    ]}
+                                    placeholder="All notifications"
                                     control={control}
-                                    fieldName="ListingStatus"
+                                    fieldName="IsShown"
                                 />
                             </div>
-
-                            <InputController
-                                label="Created After"
-                                placeholder="Created after date"
-                                type="date"
-                                fieldName="StartCreatedDate"
-                                control={control}
-                            />
-                            <InputController
-                                label="Created Before"
-                                placeholder="Created before date"
-                                type="date"
-                                fieldName="EndCreatedDate"
-                                control={control}
-                            />
+                            <InputController label="From" placeholder="Notifications from date" type="date" fieldName="StartDate" control={control} />
+                            <InputController label="To" placeholder="Notifications to date" type="date" fieldName="EndDate" control={control} />
                         </div>
                         <button
                             className="btn-neutral btn-wide btn-sm btn mx-2 mb-3 mt-6 place-self-center"

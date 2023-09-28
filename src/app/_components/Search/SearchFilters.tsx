@@ -120,6 +120,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     rootClassName="col-span-2"
                     errorAsTooltip
                     loading={pageLoading}
+                    showSelectedTick={false}
                 />
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Price Range</div>
@@ -150,6 +151,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     options={VehicleConditionList}
                     errorAsTooltip
                     loading={pageLoading}
+                    showSelectedTick={false}
                 />
                 <InputController placeholder="City" label="City" fieldName="City" control={control} errorAsTooltip loading={pageLoading} />
                 <InputController placeholder="Brand" label="Brand" fieldName="Brand" control={control} errorAsTooltip loading={pageLoading} />
@@ -164,6 +166,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                             errorAsTooltip
                             options={YearRangeList}
                             loading={pageLoading}
+                            showSelectedTick={false}
                         />
                         <AutocompleteController
                             placeholder="To"
@@ -172,6 +175,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                             errorAsTooltip
                             options={YearRangeList}
                             loading={pageLoading}
+                            showSelectedTick={false}
                         />
                     </div>
                 </div>
@@ -183,6 +187,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     options={FuelTypeList}
                     errorAsTooltip
                     loading={pageLoading}
+                    showSelectedTick={false}
                 />
                 <AutocompleteController
                     placeholder="Transmission"
@@ -192,6 +197,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     options={TransmissionTypeList}
                     errorAsTooltip
                     loading={pageLoading}
+                    showSelectedTick={false}
                 />
                 <button
                     disabled={!hasSearchParams || pageLoading || isLoading}

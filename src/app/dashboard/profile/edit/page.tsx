@@ -1,4 +1,5 @@
 import { BreadCrumbs } from "@/app/_components";
+import { Avatar } from "@/app/_components/Common/Avatar";
 import Image from "next/image";
 
 export default async function Page() {
@@ -11,13 +12,9 @@ export default async function Page() {
             <div className="stat card flex flex-col gap-2 bg-base-100 p-4 shadow ">
                 <div className="rounded-box flex w-full flex-col items-center gap-2 bg-gradient-to-t from-base-300 to-base-200 p-2 md:p-3 lg:gap-4 xl:p-6">
                     <div className="mt-1 flex w-16 rounded-full ring ring-offset-base-100 md:w-24 xl:w-32 ">
-                        <Image
-                            src="https://lh3.googleusercontent.com/a/AAcHTtd7MmSI5uFKspCkopw4j4fnk64GQYhA2zL-EOKSdjTtNxk=s96-c-rg-br100"
-                            height={128}
+                        <Avatar
+                            url="https://lh3.googleusercontent.com/a/AAcHTtd7MmSI5uFKspCkopw4j4fnk64GQYhA2zL-EOKSdjTtNxk=s96-c-rg-br100"
                             width={128}
-                            alt="profile-image"
-                            className="object-cover"
-                            unoptimized
                         />
                     </div>
                 </div>

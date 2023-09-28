@@ -4,6 +4,7 @@ import {
     CreateSubscriptionSchema,
     DashboardListingFilterSchema,
     DashboardMySubscriptionFilterSchema,
+    DashboardNotificationsFilterSchema,
     DashboardSubscriptionFilterSchema,
     EditListingSchema,
     EditSubscriptionSchema,
@@ -22,7 +23,7 @@ import {
     VehicleSchema,
     vehicleCreateSchema,
 } from "./schemas";
-import { ListingStatusTypes, SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "./enum";
+import { ListingStatusTypes, NotificationTypes, SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "./enum";
 
 export type KeyValue = { [key: string]: string };
 
@@ -90,6 +91,17 @@ export type ListingSubscriptionItem = {
     user?: ListingUser;
 };
 
+export type NotificationItem = {
+    id: number;
+    title: string;
+    body: string;
+    isShown: boolean;
+    userId: string;
+    createdOn: string;
+    type: NotificationTypes;
+    redirectUrl: string;
+};
+
 export type VehicleBrand = {
     id: string;
     name: string;
@@ -137,6 +149,8 @@ export type ListingItems = { items: ListingItem[] };
 
 export type ListingSubscriptionItems = { items: ListingSubscriptionItem[] };
 
+export type NotificationItems = { items: NotificationItem[] };
+
 export type ReviewListingReq = z.infer<typeof ReviewListingSchema>;
 
 export type UnListListingReq = z.infer<typeof UnListListingSchema>;
@@ -150,6 +164,8 @@ export type DashboardSubscriptionFilterReq = z.infer<typeof DashboardSubscriptio
 export type DashboardMySubscriptionFilterReq = z.infer<typeof DashboardMySubscriptionFilterSchema>;
 
 export type MyListingsFilterReq = z.infer<typeof MyListingsFilterSchema>;
+
+export type DashboardNotificationsFilterReq = z.infer<typeof DashboardNotificationsFilterSchema>;
 
 export type PostedListingsFilterReq = z.infer<typeof PostedListingsFilterSchema>;
 

@@ -106,7 +106,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
     );
 
     if (loading) {
-        return <div className="card mb-3 h-fit animate-pulse overflow-x-hidden bg-base-100 shadow">{listingItemContent}</div>;
+        return <div className="card mb-3 h-fit overflow-x-hidden bg-base-100 shadow">{listingItemContent}</div>;
     }
 
     return (

@@ -1,0 +1,1 @@
+export { DashboardNotificationsList } from "./DashboardNotificationsList";

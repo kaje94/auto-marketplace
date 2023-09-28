@@ -205,3 +205,9 @@ export const ToggleSubscriptionSchema = z.object({
     listingSubscriptionId: ListingSubscriptionIdField,
     subscriptionExpiryDate: z.union([z.string().min(1, "Expiration date is required"), z.date()]),
 });
+
+export const DashboardNotificationsFilterSchema = z.object({
+    StartDate: z.string().optional(),
+    EndDate: z.string().optional(),
+    IsShown: z.union([z.union([z.literal("true").transform(() => true), z.literal("false").transform(() => false)]), z.literal("")]).optional(),
+});

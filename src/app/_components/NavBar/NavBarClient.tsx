@@ -6,7 +6,15 @@ import { NavBarAuth } from "./NavBarAuth";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
 
-export const NavBarClient = ({ session, loading }: { session?: Session | null; loading?: boolean }) => {
+export const NavBarClient = ({
+    session,
+    loading,
+    notificationCount,
+}: {
+    session?: Session | null;
+    loading?: boolean;
+    notificationCount?: number;
+}) => {
     const pathName = usePathname();
     const absolutePosition = ["/", "/auth/login"].includes(pathName);
     return (
@@ -28,7 +36,7 @@ export const NavBarClient = ({ session, loading }: { session?: Session | null; l
                 <div className="flex flex-row items-center gap-0 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                     <SearchLink />
                     <PostAddLink />
-                    <NavBarAuth session={session} loading={loading} key={`navbar-auth-${pathName}`} />
+                    <NavBarAuth session={session} loading={loading} key={`navbar-auth-${pathName}`} notificationCount={notificationCount} />
                 </div>
             </div>
         </div>

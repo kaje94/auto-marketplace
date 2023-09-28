@@ -23,6 +23,8 @@ import {
     ListingSubscriptionItem,
     VehicleBrand,
     PostedListingsFilterReq,
+    DashboardNotificationsFilterReq,
+    NotificationItems,
 } from "./types";
 import qs from "query-string";
 import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
@@ -82,6 +84,8 @@ const getConfigWithAuth = async (config: RequestInit = {}): Promise<RequestInit>
     if (!session) {
         throw new Error("Session not found");
     }
+    console.log("session?.userid", session?.user?.id);
+    console.log("session?.access_token", session?.access_token);
     return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, ...defaultReqHeaders, ...config.headers } };
 };
 
@@ -163,6 +167,13 @@ export const api = {
     deleteListingSubscriptions: (id: ListingSubscriptionIdType) => fetchApi.protectedDelete<void>(`/v1/ListingSubscriptions/${id}`),
     toggleListingSubscription: (body: ToggleSubscriptionReq) =>
         fetchApi.protectedPost<BodyInit, string>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}/toggle-activation`, JSON.stringify(body)),
+
+    getMyNotifications: (listingUserId: string, req?: PaginatedRequest & DashboardNotificationsFilterReq) =>
+        fetchApi.protectedGet<PaginatedResponse & NotificationItems>(
+            `/v1/Users/me/notifications?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
+            { next: { tags: [apiTags.getMyNotifications(listingUserId)] } }
+        ),
+    setAllNotificationsAsShown: () => fetchApi.protectedPost<BodyInit, void>(`/v1/Users/me/notifications/set-all-shown`, ""),
 };
 
 export const apiTags = {
@@ -181,6 +192,7 @@ export const apiTags = {
     getMyListingSubscriptions: (listingUserId: string) => `get-my-listing-subscriptions-${listingUserId}`,
     getListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-listing-subscription-item-${id}`,
     getMyListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-my-listing-subscription-item-${id}`,
+    getMyNotifications: (listingUserId: string) => `get-my-notifications-${listingUserId}`,
 };
 
 export const listingItemTags = (id: ListingIdType, listingUserId: string) => [

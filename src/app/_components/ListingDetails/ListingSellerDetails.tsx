@@ -2,6 +2,7 @@ import { FC } from "react";
 import Image from "next/image";
 import { ListingUser } from "@/utils/types";
 import clsx from "clsx";
+import { Avatar } from "../Common/Avatar";
 
 interface Props {
     user?: ListingUser;
@@ -21,16 +22,9 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                     })}
                 >
                     {user && (
-                        <Image
-                            src="https://lh3.googleusercontent.com/a/AAcHTtd7MmSI5uFKspCkopw4j4fnk64GQYhA2zL-EOKSdjTtNxk=s96-c-rg-br100"
-                            height={80}
+                        <Avatar
+                            url="https://lh3.googleusercontent.com/a/AAcHTtd7MmSI5uFKspCkopw4j4fnk64GQYhA2zL-EOKSdjTtNxk=s96-c-rg-br100"
                             width={80}
-                            alt="profile-image"
-                            className="object-cover"
-                            unoptimized
-                            // todo: check how to optimize user profile pics
-                            // also try and use the same size throughout //128
-                            // update in 3+ plages
                         />
                     )}
                 </div>

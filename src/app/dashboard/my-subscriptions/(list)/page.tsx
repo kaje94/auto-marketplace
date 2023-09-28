@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: SearchParams) {
                 filter={<DashboardMySubscriptionFilter />}
                 addNewButton={{ label: "New Subscription", path: "/dashboard/new-subscription" }}
             />
-            <DashboardMySubscriptionList listingSubscriptions={listingSubscriptions} session={session} basePath="/dashboard/my-subscriptions" />
+            <DashboardMySubscriptionList listingSubscriptions={listingSubscriptions} basePath="/dashboard/my-subscriptions" />
         </DashboardSubscriptionsContextProvider>
     );
 }

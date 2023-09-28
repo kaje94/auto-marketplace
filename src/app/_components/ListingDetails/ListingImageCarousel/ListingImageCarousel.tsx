@@ -7,7 +7,7 @@ import FsLightbox from "fslightbox-react";
 import { MaximizeIcon } from "@/icons";
 import { VehicleImageType } from "@/utils/types";
 import { ListingImage } from "@/app/_components/Common";
-import { timeAgo, unCamelCase } from "@/utils/helpers";
+import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyName, unCamelCase } from "@/utils/helpers";
 import { VehicleTypes } from "@/utils/enum";
 import { env } from "@/env.mjs";
 
@@ -128,7 +128,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                     toggler={isLightBoxOpen}
                     sourceIndex={selectedIndex}
                     exitFullscreenOnClose
-                    sources={images.map((item) => `${env.NEXT_PUBLIC_IMAGE_CDN_BASE}${item?.name?.replace("images", "")}`)}
+                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyName(title), 100))}
                     onClose={() => setLightBoxOpen(false)}
                     type="image"
                     openOnMount

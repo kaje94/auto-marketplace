@@ -13,7 +13,6 @@ import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-sub
 import { DashboardSubscriptionItem } from "./DashboardSubscriptionItem";
 
 interface Props {
-    session?: Session | null;
     listingSubscriptions?: PaginatedResponse & ListingSubscriptionItems;
     pageLoading?: boolean;
     basePath?: string;
@@ -22,7 +21,7 @@ interface Props {
 
 export const DashboardSubscriptionList: FC<
     Props & { isLoading: boolean; searchParamsObj: Record<string, string>; setNewSearchQuery: Dispatch<SetStateAction<string>> }
-> = ({ session, listingSubscriptions, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
+> = ({ listingSubscriptions, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
     const [parent] = useAutoAnimate();
 
     return (

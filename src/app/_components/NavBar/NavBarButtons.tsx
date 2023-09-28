@@ -24,7 +24,11 @@ export const NavBarLogoutButton = () => {
 export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; label: string; icon: ReactNode; badgeCount?: number }) => {
     const { link, label, icon, badgeCount, onClick } = props;
     const pathname = usePathname();
-    const badge = <div className="badge badge-primary badge-md  border-2 border-accent bg-primary p-0.5 px-1 text-neutral">{badgeCount}</div>;
+    const badge = (
+        <div className="badge badge-primary badge-md  border-2 border-accent bg-primary p-0.5 px-1 text-xs text-neutral">
+            {badgeCount && badgeCount > 9 ? `9+` : badgeCount}
+        </div>
+    );
     return (
         <li>
             {link ? (
@@ -38,7 +42,7 @@ export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; lab
                     >
                         <span className="flex gap-2">
                             {label}
-                            {badgeCount && badge}
+                            {badgeCount ? badge : null}
                         </span>
                         {icon}
                     </div>
@@ -48,7 +52,7 @@ export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; lab
                     <div className="flex flex-1 items-center justify-between font-medium text-base-300 duration-200 hover:text-secondary">
                         <span className="flex gap-2">
                             {label}
-                            {badgeCount && badge}
+                            {badgeCount ? badge : null}
                         </span>
                         {icon}
                     </div>

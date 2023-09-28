@@ -6,6 +6,8 @@ import { deleteObjectFromS3, getPresignedS3Url } from "@/app/_actions/imageActio
 import imageCompression from "browser-image-compression";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { FastAverageColor } from "fast-average-color";
+import { env } from "@/env.mjs";
+import qs from "query-string";
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
@@ -260,3 +262,66 @@ export const timeAgo = (date: Date): string => {
 };
 
 export const getRandomNumber = (min: number, max: number) => Math.round(Math.random() * (max - min) + min);
+
+export const generateInitialsFromName = (name?: string): string => {
+    if (!name) {
+        return "";
+    }
+    // Split the name into words using spaces and periods as delimiters
+    const words = name.split(/[\s.]+/);
+
+    // Initialize an empty string to store the initials
+    let initials = "";
+
+    // Iterate through the words and add the first character of each word to the initials
+    for (const word of words) {
+        if (initials.length < 2 && word.length > 0 && word[0]?.toUpperCase()) {
+            initials += word[0]?.toUpperCase();
+        }
+    }
+
+    // Return the generated initials (up to 2 characters)
+    return initials;
+};
+
+export const convertToSEOFriendlyImageURL = (src: string, seoFriendlyName: string, quality: number = 75, width?: number): string => {
+    const fileExtension = getFileExtension(src);
+    return `${env.NEXT_PUBLIC_IMAGE_CDN_BASE}/ik-seo/${src?.replace(fileExtension, "")}/${seoFriendlyName}${fileExtension}?${qs.stringify({
+        tr: width ? `w-${width}` : undefined,
+        q: quality,
+    })}`;
+};
+
+const getFileExtension = (filePath: string): string => {
+    // Use the split method to separate the path into segments
+    const segments = filePath.split("/");
+
+    // Get the last segment (file name)
+    const fileName = segments[segments.length - 1];
+
+    if (fileName) {
+        // Use the split method again to separate the file name from its extension
+        const fileNameSegments = fileName.split(".");
+
+        // Check if there's a valid file extension
+        if (fileNameSegments.length > 1) {
+            // Return the last segment (the file extension)
+            return fileNameSegments[fileNameSegments.length - 1] ? `.${fileNameSegments[fileNameSegments.length - 1]}` : "";
+        }
+    }
+    // If there's no valid file extension, return null or an appropriate default value
+    return "";
+};
+
+export const toSEOFriendlyName = (originalName: string): string => {
+    // Convert to lowercase
+    let seoName = originalName.toLowerCase();
+
+    // Replace spaces with dashes
+    seoName = seoName.replace(/\s+/g, "-");
+
+    // Remove special characters and symbols
+    seoName = seoName.replace(/[^\w\-]+/g, "");
+
+    return seoName;
+};

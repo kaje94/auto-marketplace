@@ -175,8 +175,8 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     );
 
     if (loading) {
-        return <div className="card mb-3 h-fit animate-pulse overflow-x-hidden bg-base-100 shadow">{myAddItemContent}</div>;
+        return <div className="card mb-3 h-fit overflow-x-hidden bg-base-100 shadow">{myAddItemContent}</div>;
     }
 
-    return <div className="card mb-3 h-fit bg-base-100 shadow transition-shadow zoom-inner-image">{myAddItemContent}</div>;
+    return <div className="card mb-3 h-fit bg-base-100 shadow">{myAddItemContent}</div>;
 };
