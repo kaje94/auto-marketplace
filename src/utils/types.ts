@@ -82,13 +82,13 @@ export type ListingSubscriptionItem = {
     minPrice?: Price;
     minYearOfManufacture?: string;
     minYearOfRegistration?: string;
-    userId: string;
-    trim?: string;
     model?: string;
     notificationFrequency: SubscriptionFrequencies;
     subscriptionExpiryDate: string;
+    trim?: string;
     type?: VehicleTypes;
     user?: ListingUser;
+    userId: string;
 };
 
 export type NotificationItem = {
