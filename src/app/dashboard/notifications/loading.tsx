@@ -1,5 +1,5 @@
-import { DashboardListHeader } from "@/app/_components";
-import { DashboardNotificationsList } from "@/app/_components/DashboardNotifications";
+import { DashboardListHeader } from "@/components";
+import { DashboardNotificationsList } from "@/components/DashboardNotifications";
 
 export default function Loading() {
     return (

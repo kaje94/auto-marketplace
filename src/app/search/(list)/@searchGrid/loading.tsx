@@ -1,4 +1,4 @@
-import { SearchGrid } from "@/app/_components/Search";
+import { SearchGrid } from "@/components/Search";
 
 export default function Loading() {
     return <SearchGrid pageLoading />;

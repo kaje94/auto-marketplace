@@ -1,5 +1,5 @@
 "use client";
-import { ErrorComponent } from "./_components";
+import { ErrorComponent } from "@/components/ErrorComponent";
 
 export default function NotFoundPage() {
     return <ErrorComponent title="Page not found!" />;

@@ -1,5 +1,5 @@
 import { ListingIdType } from "@/utils/types";
-import { ListingsCarousel } from "@/app/_components/ListingsCarousel";
+import { ListingsCarousel } from "@/components/ListingsCarousel";
 import { api } from "@/utils/api";
 
 export default async function Page() {

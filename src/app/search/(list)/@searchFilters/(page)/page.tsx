@@ -1,4 +1,4 @@
-import { SearchFilters } from "@/app/_components/Search";
+import { SearchFilters } from "@/components/Search";
 
 export default async function Page() {
     return <SearchFilters />;

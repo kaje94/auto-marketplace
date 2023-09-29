@@ -1,5 +1,5 @@
 "use client";
-import { ErrorComponent } from "@/app/_components";
+import { ErrorComponent } from "@/components";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

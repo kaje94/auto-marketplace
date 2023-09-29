@@ -1,5 +1,5 @@
-import { BreadCrumbs } from "@/app/_components";
-import { Avatar } from "@/app/_components/Common/Avatar";
+import { BreadCrumbs } from "@/components";
+import { Avatar } from "@/components/Common/Avatar";
 import { EditIcon, TrashIcon } from "@/icons";
 import Image from "next/image";
 import Link from "next/link";

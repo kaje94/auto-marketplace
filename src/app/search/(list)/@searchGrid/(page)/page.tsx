@@ -4,7 +4,7 @@ import { transformListingsListResponse } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { redirect } from "next/navigation";
 import qs from "query-string";
-import { SearchGrid } from "@/app/_components/Search";
+import { SearchGrid } from "@/components/Search";
 
 export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";

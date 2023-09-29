@@ -1,4 +1,4 @@
-import { DashboardListHeader } from "@/app/_components";
+import { DashboardListHeader } from "@/components";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
@@ -7,9 +7,9 @@ import { MyListingsFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
-import { DashboardMyListFilter } from "@/app/_components/DashboardListHeader/DashboardMyListFilter";
+import { DashboardMyListFilter } from "@/components/DashboardListHeader/DashboardMyListFilter";
 import { DashboardMyListingsContextProvider } from "@/providers/dashboard-my-listings-provider";
-import { DashboardMyListingsList } from "@/app/_components/DashboardListings/DashboardListingsList";
+import { DashboardMyListingsList } from "@/components/DashboardListings/DashboardListingsList";
 
 export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";

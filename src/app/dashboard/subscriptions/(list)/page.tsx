@@ -1,12 +1,12 @@
-import { DashboardListHeader } from "@/app/_components";
+import { DashboardListHeader } from "@/components";
 import { api } from "@/utils/api";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 import { DashboardSubscriptionFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
-import { DashboardAllSubscriptionFilter } from "@/app/_components/DashboardListHeader/DashboardAllSubscriptionFilter";
+import { DashboardAllSubscriptionFilter } from "@/components/DashboardListHeader/DashboardAllSubscriptionFilter";
 import { DashboardSubscriptionsContextProvider } from "@/providers/dashboard-subscriptions-provider";
-import { DashboardAllSubscriptionList } from "@/app/_components/DashboardSubscriptions/DashboardSubscriptionList";
+import { DashboardAllSubscriptionList } from "@/components/DashboardSubscriptions/DashboardSubscriptionList";
 
 export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";

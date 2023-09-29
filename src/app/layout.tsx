@@ -1,6 +1,6 @@
 import { standardFont } from "./fonts";
 import { Toaster } from "react-hot-toast";
-import { Footer, NavBar } from "./_components";
+import { Footer, NavBar } from "@/components";
 import { NextAuthProvider } from "@/providers/auth-provider";
 import { ReactQueryProvider } from "@/providers/query-provider";
 import { ChildrenProps } from "@/utils/types";

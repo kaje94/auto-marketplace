@@ -1,5 +1,5 @@
-import { InputController } from "@/app/_components/FormElements/Input";
-import { TextAreaController } from "@/app/_components/FormElements/TextArea";
+import { InputController } from "@/components/FormElements/Input";
+import { TextAreaController } from "@/components/FormElements/TextArea";
 import { displayFont } from "@/app/fonts";
 import clsx from "clsx";
 import Image from "next/image";

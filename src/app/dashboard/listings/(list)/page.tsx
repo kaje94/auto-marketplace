@@ -1,15 +1,15 @@
-import { DashboardListHeader } from "@/app/_components";
+import { DashboardListHeader } from "@/components";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
 import qs from "query-string";
-import { DashboardAllListFilter } from "@/app/_components/DashboardListHeader/DashboardAllListFilter";
+import { DashboardAllListFilter } from "@/components/DashboardListHeader/DashboardAllListFilter";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
 import { DashboardListingsContextProvider } from "@/providers/dashboard-listings-provider";
-import { DashboardAllListingsList } from "@/app/_components/DashboardListings/DashboardListingsList";
+import { DashboardAllListingsList } from "@/components/DashboardListings/DashboardListingsList";
 
 export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";

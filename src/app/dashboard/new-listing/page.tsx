@@ -1,5 +1,5 @@
 import { api } from "@/utils/api";
-import { CreateListingForm } from "@/app/_components/Forms/Listings/CreateListingForm";
+import { CreateListingForm } from "@/components/Forms/Listings/CreateListingForm";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
 

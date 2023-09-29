@@ -1,5 +1,5 @@
-import { BreadCrumbs } from "@/app/_components";
-import { ListingForm } from "@/app/_components/Forms/Listings/ListingForm";
+import { BreadCrumbs } from "@/components";
+import { ListingForm } from "@/components/Forms/Listings/ListingForm";
 
 export default function Loading() {
     return (

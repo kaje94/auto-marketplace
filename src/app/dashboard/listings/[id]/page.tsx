@@ -1,5 +1,5 @@
-import { BreadCrumbs } from "@/app/_components";
-import { ListingDetailBanner, ListingDetails } from "@/app/_components/ListingDetails";
+import { BreadCrumbs } from "@/components";
+import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
 import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
