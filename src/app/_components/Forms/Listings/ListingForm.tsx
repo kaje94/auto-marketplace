@@ -3,13 +3,13 @@ import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { FC } from "react";
 import { FieldError, Controller, UseFormReturn } from "react-hook-form";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
-import { AutocompleteController } from "../../FormElements/AutoComplete";
+import { AutocompleteController } from "@/app/_components/FormElements/AutoComplete";
 import { ListingImageUpload } from "./ListingImageUpload";
-import { InputController } from "../../FormElements/Input";
-import { TagSelectController } from "../../FormElements/TagSelect";
-import { TextAreaController } from "../../FormElements/TextArea";
-import { CheckboxController } from "../../FormElements/Checkbox";
-import { SelectController } from "../../FormElements/Select";
+import { InputController } from "@/app/_components/FormElements/Input";
+import { TagSelectController } from "@/app/_components/FormElements/TagSelect";
+import { TextAreaController } from "@/app/_components/FormElements/TextArea";
+import { CheckboxController } from "@/app/_components/FormElements/Checkbox";
+import { SelectController } from "@/app/_components/FormElements/Select";
 
 interface Props {
     featureOptions?: VehicleFeature[];

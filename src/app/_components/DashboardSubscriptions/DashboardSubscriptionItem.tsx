@@ -3,7 +3,7 @@ import { getFormattedCurrency, getRandomItem, unCamelCase, timeAgo, getRandomNum
 import clsx from "clsx";
 import { ListingSubscriptionItem } from "@/utils/types";
 import dynamic from "next/dynamic";
-import { ContextMenuLoading } from "../Common/ContextMenu";
+import { ContextMenuLoading } from "@/app/_components/Common/ContextMenu";
 
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {
     loading: () => <ContextMenuLoading />,

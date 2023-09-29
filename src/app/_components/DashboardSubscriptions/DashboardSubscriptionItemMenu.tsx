@@ -4,7 +4,7 @@ import { ListingSubscriptionItem } from "@/utils/types";
 import { FC, useState } from "react";
 import { DeleteSubscriptionItemModal } from "@/app/_components/Modals/DeleteSubscriptionItemModal";
 import { ToggleSubscriptionActivationModal } from "@/app/_components/Modals/ToggleSubscriptionActivationModal";
-import { ContextMenu } from "../Common/ContextMenu";
+import { ContextMenu } from "@/app/_components/Common/ContextMenu";
 
 interface Props {
     listingSubscriptionItem?: ListingSubscriptionItem;

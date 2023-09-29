@@ -7,7 +7,7 @@ import { RenewListingItemModal } from "@/app/_components/Modals/RenewListingItem
 import { DeleteListingItemModal } from "@/app/_components/Modals/DeleteListingItemModal";
 import { ReviewListingModal } from "@/app/_components/Modals/ReviewListingModal";
 import { UnListListingModal } from "@/app/_components/Modals/UnListListingModal";
-import { ContextMenu, MenuItemProp } from "../Common/ContextMenu";
+import { ContextMenu, MenuItemProp } from "@/app/_components/Common/ContextMenu";
 
 interface Props {
     listingItem?: ListingItem;

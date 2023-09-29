@@ -2,7 +2,7 @@ import { UserIcon, AdvertIcon, RssIcon, NotificationIcon } from "@/icons";
 import { NavBarMenuLink, NavBarLogoutButton, NavBarLoginButton } from "./NavBarButtons";
 import { Session } from "next-auth";
 import Image from "next/image";
-import { Avatar } from "../Common/Avatar";
+import { Avatar } from "@/app/_components/Common/Avatar";
 
 export const NavBarAuth = ({ session, notificationCount, loading }: { session?: Session | null; loading?: boolean; notificationCount?: number }) => {
     return (

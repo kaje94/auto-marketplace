@@ -2,7 +2,7 @@
 import { FC } from "react";
 import { ControllerProps, Select } from "./Select";
 import { Controller } from "react-hook-form";
-import { FormFieldControllerWrap } from "../Common";
+import { FormFieldControllerWrap } from "@/app/_components/FormElements/Common";
 
 export const SelectController: FC<ControllerProps> = (props) => {
     const { label, labelClassNames, rootClassName, loading, required, fieldName, control, errorAsTooltip, ...rest } = props;

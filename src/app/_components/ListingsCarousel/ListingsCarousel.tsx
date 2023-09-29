@@ -3,10 +3,10 @@ import React, { useCallback } from "react";
 import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
 import { PrevButton, NextButton, usePrevNextButtons } from "./ListingsCarouselButtons";
 import Autoplay from "embla-carousel-autoplay";
-import { ListingItem } from "../ListingItem";
+import { ListingItem } from "@/app/_components/ListingItem";
 import { ListingItem as ListingItemType } from "@/utils/types";
 import clsx from "clsx";
-import { Empty } from "../Empty";
+import { Empty } from "@/app/_components/Empty";
 
 type Props = {
     items?: ListingItemType[];

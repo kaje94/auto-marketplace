@@ -10,8 +10,8 @@ import { ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { reviewListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
-import { TextAreaController } from "../FormElements/TextArea";
-import { SelectController } from "../FormElements/Select";
+import { TextAreaController } from "@/app/_components/FormElements/TextArea";
+import { SelectController } from "@/app/_components/FormElements/Select";
 
 interface Props {
     listingItem?: ListingItem;

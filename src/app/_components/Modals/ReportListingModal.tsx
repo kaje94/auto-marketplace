@@ -9,9 +9,9 @@ import { ListingReportReason } from "@/utils/enum";
 import { ReportListingSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { InputController } from "../FormElements/Input";
-import { TextAreaController } from "../FormElements/TextArea";
-import { SelectController } from "../FormElements/Select";
+import { InputController } from "@/app/_components/FormElements/Input";
+import { TextAreaController } from "@/app/_components/FormElements/TextArea";
+import { SelectController } from "@/app/_components/FormElements/Select";
 
 interface Props {
     listingId?: ListingIdType;

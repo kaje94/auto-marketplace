@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Control } from "react-hook-form";
 import { LabelValue } from "@/utils/types";
 import { unCamelCase } from "@/utils/helpers";
-import { FormFieldControllerProps } from "../Common";
+import { FormFieldControllerProps } from "@/app/_components/FormElements/Common";
 
 export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"select"> {
     selectClassName?: string;

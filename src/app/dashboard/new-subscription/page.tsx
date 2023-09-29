@@ -1,4 +1,4 @@
-import { CreateSubscriptionForm } from "../../_components/Forms/ListingSubscriptions/CreateSubscriptionForm";
+import { CreateSubscriptionForm } from "@/app/_components/Forms/ListingSubscriptions/CreateSubscriptionForm";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
 

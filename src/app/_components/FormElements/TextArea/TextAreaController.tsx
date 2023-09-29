@@ -2,7 +2,7 @@
 import { FC } from "react";
 import { ControllerProps, TextArea } from "./TextArea";
 import { Controller } from "react-hook-form";
-import { FormFieldControllerWrap } from "../Common";
+import { FormFieldControllerWrap } from "@/app/_components/FormElements/Common";
 
 export const TextAreaController: FC<ControllerProps> = (props) => {
     const { label, labelClassNames, rootClassName, loading, required, fieldName, control, errorAsTooltip, ...rest } = props;

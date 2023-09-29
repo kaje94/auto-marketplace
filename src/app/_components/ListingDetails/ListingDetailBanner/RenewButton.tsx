@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ListingItem } from "@/utils/types";
-import { RenewListingItemModal } from "../../Modals/RenewListingItemModal";
+import { RenewListingItemModal } from "@/app/_components/Modals/RenewListingItemModal";
 
 interface Props {
     listingItem?: ListingItem;

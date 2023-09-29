@@ -3,9 +3,9 @@ import { CreateSubscriptionReq } from "@/utils/types";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList, YearSelectMinYear } from "@/utils/constants";
-import { AutocompleteController } from "../../FormElements/AutoComplete";
-import { DatePickerController } from "../../FormElements/DatePicker";
-import { InputController } from "../../FormElements/Input";
+import { AutocompleteController } from "@/app/_components/FormElements/AutoComplete";
+import { DatePickerController } from "@/app/_components/FormElements/DatePicker";
+import { InputController } from "@/app/_components/FormElements/Input";
 
 interface Props {
     submitButton?: {

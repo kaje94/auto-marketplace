@@ -6,7 +6,7 @@ import { Combobox } from "@headlessui/react";
 import { CheckIcon } from "@/icons";
 import { unCamelCase } from "@/utils/helpers";
 import { Control } from "react-hook-form";
-import { FormFieldControllerProps } from "../Common";
+import { FormFieldControllerProps } from "@/app/_components/FormElements/Common";
 
 export interface ControllerProps extends FormFieldControllerProps {
     selectClassNames?: string;

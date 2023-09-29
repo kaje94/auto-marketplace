@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { unListListingAction } from "@/app/_actions/listingActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { SelectController } from "../FormElements/Select";
+import { SelectController } from "@/app/_components/FormElements/Select";
 
 interface Props {
     listingItem?: ListingItem;

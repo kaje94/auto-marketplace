@@ -6,7 +6,7 @@ import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCame
 import { ListingStatusTypes } from "@/utils/enum";
 import { ListingItem } from "@/utils/types";
 import dynamic from "next/dynamic";
-import { ContextMenuLoading } from "../Common/ContextMenu";
+import { ContextMenuLoading } from "@/app/_components/Common/ContextMenu";
 
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
     loading: () => <ContextMenuLoading />,

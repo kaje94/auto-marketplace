@@ -2,10 +2,8 @@
 import React, { FC } from "react";
 import { Controller } from "react-hook-form";
 import { Autocomplete, ControllerProps } from "./Autocomplete";
-import { AlertCircleIcon } from "@/icons";
-import clsx from "clsx";
-import { InputController } from "../Input";
-import { FormFieldControllerWrap } from "../Common";
+import { InputController } from "@/app/_components/FormElements/Input";
+import { FormFieldControllerWrap } from "@/app/_components/FormElements/Common";
 
 export const AutocompleteController: FC<ControllerProps> = ({
     loading,
