@@ -1,29 +1,24 @@
 {
-  "plugins": ["prettier"],
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:tailwindcss/recommended",
-    "prettier",
-    "plugin:prettier/recommended",
-    "plugin:import/recommended"
-  ],
-  "rules": {
-    "prettier/prettier": ["warn", { "tabWidth": 4, "printWidth": 150 }],
-    "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }],
+    "plugins": ["prettier"],
+    "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended", "prettier", "plugin:prettier/recommended", "plugin:import/recommended"],
+    "rules": {
+        "max-lines": ["warn", 300],
+        "prettier/prettier": ["warn", { "tabWidth": 4, "printWidth": 150 }],
+        "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }],
         "import/order": [
             "warn",
             {
                 "groups": [["external", "builtin", "object"], "type", "internal", ["parent", "sibling", "index"]],
-                "pathGroups": [ { "pattern": "@/**", "group": "internal" }],
+                "pathGroups": [{ "pattern": "@/**", "group": "internal" }],
                 "alphabetize": { "order": "asc", "caseInsensitive": true }
             }
         ],
-    "tailwindcss/migration-from-tailwind-2":"off"
-  },
-  "settings": {
-    "import/resolver":{
-      "typescript": true,
-      "node": true
+        "tailwindcss/migration-from-tailwind-2": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": true,
+            "node": true
+        }
     }
-  }
 }
