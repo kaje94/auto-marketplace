@@ -4,7 +4,7 @@ import { ChildrenProps } from "@/utils/types";
 export default function Layout({ children }: ChildrenProps) {
     return (
         <>
-            <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="Manage Adverts" />
+            <BreadCrumbs currentPageTitle="Manage Adverts" links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} />
             {children}
         </>
     );

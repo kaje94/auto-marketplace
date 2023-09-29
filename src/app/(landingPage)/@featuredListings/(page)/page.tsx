@@ -5,10 +5,10 @@ export default async function Page() {
     const featuredListings = await api.getFeaturedListings();
     return (
         <ListingsCarousel
-            items={featuredListings}
-            emptyPlaceholderText="No featured adverts available to display"
-            emptyPlaceholderSubText="Try checking out later"
             bgFromColor="from-base-200"
+            emptyPlaceholderSubText="Try checking out later"
+            emptyPlaceholderText="No featured adverts available to display"
+            items={featuredListings}
         />
     );
 }

@@ -68,8 +68,8 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                             {images.map((imageItem, index) => {
                                 return (
                                     <div
-                                        className="relative shrink-0 grow-0 basis-full cursor-pointer pl-1 zoom-inner-image sm:pl-2 lg:pl-4"
                                         key={imageItem.id}
+                                        className="relative shrink-0 grow-0 basis-full cursor-pointer pl-1 zoom-inner-image sm:pl-2 lg:pl-4"
                                         onClick={onOpenLightBox}
                                     >
                                         <button
@@ -80,13 +80,13 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                         </button>
                                         <div className="block aspect-square w-full sm:aspect-video">
                                             <ListingImage
+                                                className="aspect-square w-full bg-base-200 object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
                                                 height={300}
-                                                width={450}
-                                                title={title}
                                                 image={imageItem}
                                                 location={location as Location}
                                                 priority={selectedIndex === index ? true : undefined}
-                                                className="aspect-square w-full bg-base-200 object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
+                                                title={title}
+                                                width={450}
                                             />
                                         </div>
                                     </div>
@@ -94,8 +94,8 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                             })}
                         </div>
                         <div
-                            onClick={onOpenLightBox}
                             className="absolute bottom-0 left-0 flex h-1/2 w-full cursor-pointer flex-col justify-end bg-gradient-to-t from-base-content to-transparent p-5 sm:h-2/6 "
+                            onClick={onOpenLightBox}
                         >
                             <div className="text-3xl font-bold text-base-100 image-text-shadow lg:text-6xl">{title}</div>
                             <div className="-mb-1 mt-1 flex justify-between px-0.5 text-sm font-light text-base-200">
@@ -110,15 +110,15 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                     <div className="overflow-hidden" ref={emblaThumbsRef}>
                         <div className="-ml-1 flex flex-row sm:-ml-2 lg:-ml-4">
                             {loading
-                                ? new Array(6).fill("").map((_, i) => <ListingImageCarouselThumbnails loading key={i} />)
+                                ? new Array(6).fill("").map((_, i) => <ListingImageCarouselThumbnails key={i} loading />)
                                 : images.map((imageItem, index) => (
                                       <ListingImageCarouselThumbnails
+                                          key={imageItem.id}
+                                          image={imageItem}
+                                          location={location as Location}
                                           onClick={() => onThumbClick(index)}
                                           selected={index === selectedIndex}
-                                          image={imageItem}
-                                          key={imageItem.id}
                                           title={title}
-                                          location={location as Location}
                                       />
                                   ))}
                         </div>
@@ -127,14 +127,14 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
             </div>
             {isLightBoxOpen && (
                 <FsLightbox
-                    toggler={isLightBoxOpen}
-                    sourceIndex={selectedIndex}
-                    exitFullscreenOnClose
-                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyName(title, location as Location), 100))}
-                    onClose={() => setLightBoxOpen(false)}
-                    type="image"
-                    openOnMount
                     disableSlideSwiping
+                    exitFullscreenOnClose
+                    onClose={() => setLightBoxOpen(false)}
+                    openOnMount
+                    sourceIndex={selectedIndex}
+                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyName(title, location as Location), 100))}
+                    toggler={isLightBoxOpen}
+                    type="image"
                 />
             )}
         </>

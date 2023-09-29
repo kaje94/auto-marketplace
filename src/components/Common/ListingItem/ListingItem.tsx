@@ -20,15 +20,15 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
             <figure className="relative">
                 {item ? (
                     <ListingImage
-                        image={image}
-                        title={item.title}
                         className={clsx(
                             "zoomable-image aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear",
                             loading && "opacity-50",
                         )}
                         height={300}
-                        width={450}
+                        image={image}
                         location={item.location}
+                        title={item.title}
+                        width={450}
                     />
                 ) : (
                     <div className="aspect-video w-full bg-neutral bg-opacity-50" />
@@ -82,8 +82,8 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
     if (item) {
         return (
             <Link
-                href={`/search/${item?.id}`}
                 className="card h-fit w-full cursor-pointer overflow-hidden bg-base-100 shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg"
+                href={`/search/${item?.id}`}
             >
                 {ListingItemContent}
             </Link>

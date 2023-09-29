@@ -15,11 +15,11 @@ export const RenewButton: FC<Props> = ({ listingItem, loading }) => {
 
     return (
         <>
-            <button className={clsx("btn-block btn gap-2", loading && "animate-pulse")} onClick={() => setRenewModalVisible(true)} disabled={loading}>
+            <button className={clsx("btn-block btn gap-2", loading && "animate-pulse")} disabled={loading} onClick={() => setRenewModalVisible(true)}>
                 <RefreshIcon />
                 Renew
             </button>
-            <RenewListingItemModal visible={renewModalVisible} setVisible={setRenewModalVisible} listingItem={listingItem} />
+            <RenewListingItemModal listingItem={listingItem} setVisible={setRenewModalVisible} visible={renewModalVisible} />
         </>
     );
 };

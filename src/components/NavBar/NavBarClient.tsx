@@ -30,13 +30,13 @@ export const NavBarClient = ({
                     pathName === "/" ? "bg-transparent !shadow-xl" : "bg-neutral",
                 )}
             >
-                <Link href="/" className="ml-0 sm:ml-1 md:ml-2">
+                <Link className="ml-0 sm:ml-1 md:ml-2" href="/">
                     <button className="btn-ghost btn px-0 text-xl normal-case">Car Sale</button>
                 </Link>
                 <div className="flex flex-row items-center gap-0 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                     <SearchLink />
                     <PostAddLink />
-                    <NavBarAuth session={session} loading={loading} key={`navbar-auth-${pathName}`} notificationCount={notificationCount} />
+                    <NavBarAuth key={`navbar-auth-${pathName}`} loading={loading} notificationCount={notificationCount} session={session} />
                 </div>
             </div>
         </div>

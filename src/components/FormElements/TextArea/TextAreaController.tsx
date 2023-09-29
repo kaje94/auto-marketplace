@@ -9,11 +9,11 @@ export const TextAreaController: FC<ControllerProps> = (props) => {
     if (loading || !control) {
         return (
             <FormFieldControllerWrap
-                rootClassName={rootClassName}
+                errorAsTooltip={errorAsTooltip}
                 label={label}
                 labelClassNames={labelClassNames}
                 required={required}
-                errorAsTooltip={errorAsTooltip}
+                rootClassName={rootClassName}
             >
                 <TextArea disabled={loading} loading={loading} {...rest} ref={undefined} />
             </FormFieldControllerWrap>
@@ -22,18 +22,18 @@ export const TextAreaController: FC<ControllerProps> = (props) => {
 
     return (
         <Controller
-            name={fieldName}
             control={control}
+            name={fieldName}
             render={({ field, fieldState }) => (
                 <FormFieldControllerWrap
-                    rootClassName={rootClassName}
+                    error={fieldState.error?.message}
+                    errorAsTooltip={errorAsTooltip}
                     label={label}
                     labelClassNames={labelClassNames}
                     required={required}
-                    error={fieldState.error?.message}
-                    errorAsTooltip={errorAsTooltip}
+                    rootClassName={rootClassName}
                 >
-                    <TextArea loading={loading} error={fieldState.error?.message} {...rest} {...field} ref={field.ref} />
+                    <TextArea error={fieldState.error?.message} loading={loading} {...rest} {...field} ref={field.ref} />
                 </FormFieldControllerWrap>
             )}
         />

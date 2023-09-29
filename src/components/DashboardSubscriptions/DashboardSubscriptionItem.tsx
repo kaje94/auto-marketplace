@@ -118,8 +118,8 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
                     </div>
                     <DashboardSubscriptionItemMenu
                         key={id}
-                        listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
                         basePath={basePath}
+                        listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
                     />
                 </div>
             )}

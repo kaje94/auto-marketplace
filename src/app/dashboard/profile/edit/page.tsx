@@ -5,8 +5,8 @@ export default async function Page() {
     return (
         <>
             <BreadCrumbs
-                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Profile", href: "/dashboard/profile" }]}
                 currentPageTitle="Edit Profile"
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Profile", href: "/dashboard/profile" }]}
             />
             <div className="stat card flex flex-col gap-2 bg-base-100 p-4 shadow ">
                 <div className="rounded-box flex w-full flex-col items-center gap-2 bg-gradient-to-t from-base-300 to-base-200 p-2 md:p-3 lg:gap-4 xl:p-6">
@@ -38,7 +38,7 @@ export default async function Page() {
                 </div>
 
                 <div className="mt-3 flex justify-end">
-                    <button type="submit" className="btn-neutral btn-wide btn">
+                    <button className="btn-neutral btn-wide btn" type="submit">
                         Save
                     </button>
                 </div>

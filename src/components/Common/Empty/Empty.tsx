@@ -30,7 +30,7 @@ export const Empty: FC<EmptyProps> = ({ iconSize = "lg", button, text = "Nothing
                         {button?.text}
                     </button>
                 ) : (
-                    <Link href={button.href} className="btn-ghost btn-outline btn-wide btn mt-6" onClick={button.onClick}>
+                    <Link className="btn-ghost btn-outline btn-wide btn mt-6" href={button.href} onClick={button.onClick}>
                         {button?.text}
                     </Link>
                 )}

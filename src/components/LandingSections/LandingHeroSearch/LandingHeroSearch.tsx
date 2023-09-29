@@ -21,25 +21,25 @@ export const LandingHeroSearch = () => {
     return (
         <div className="mb-8 mt-5 flex flex-col justify-center shadow-xl sm:mb-16 sm:flex-row xl:mb-28 2xl:mb-36">
             <InputController
-                placeholder="Search..."
-                fieldName="Title"
                 control={control}
                 errorAsTooltip
+                fieldName="Title"
                 inputClassNames="bg-white rounded-box rounded-b-none sm:rounded-b-box sm:rounded-r-none"
+                placeholder="Search..."
             />
             <div className="relative sm:w-36">
                 <AutocompleteController
-                    placeholder="Type"
-                    fieldName="VehicleType"
                     control={control}
-                    options={VehicleTypeList}
-                    selectClassNames="bg-white rounded-none !outline-none sm:!w-36"
                     errorAsTooltip
+                    fieldName="VehicleType"
+                    options={VehicleTypeList}
+                    placeholder="Type"
+                    selectClassNames="bg-white rounded-none !outline-none sm:!w-36"
                 />
             </div>
             <Link
-                href={qs.stringifyUrl({ url: "/search", query: formValues }, { skipEmptyString: true, skipNull: true })}
                 className="btn-secondary rounded-box join-item btn rounded-t-none sm:rounded-t-box sm:rounded-l-none"
+                href={qs.stringifyUrl({ url: "/search", query: formValues }, { skipEmptyString: true, skipNull: true })}
             >
                 <SearchIcon />
                 <span className="ml-2">Search</span>

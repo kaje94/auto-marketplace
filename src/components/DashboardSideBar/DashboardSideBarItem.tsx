@@ -25,12 +25,12 @@ export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp,
     return (
         <li>
             <Link
-                href={href}
                 className={clsx({
                     "px-4 py-3": true,
                     "active hover:!bg-base-content hover:!text-base-300":
                         activePaths.includes(pathname) || (regexExp && new RegExp(regexExp)?.test(pathname)),
                 })}
+                href={href}
             >
                 {iconName && (
                     <>

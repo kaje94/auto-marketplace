@@ -17,7 +17,7 @@ export const ModalFooter: FC<Props> = ({ onVisibleChange, primaryButton, loading
             <button className="btn-ghost btn" onClick={() => onVisibleChange(false)}>
                 Cancel
             </button>
-            <button onClick={onSubmit} className={clsx("btn-neutral btn", primaryButton?.classNames)}>
+            <button className={clsx("btn-neutral btn", primaryButton?.classNames)} onClick={onSubmit}>
                 {loading && <span className="loading loading-spinner"></span>}
                 {primaryButton?.text}
             </button>

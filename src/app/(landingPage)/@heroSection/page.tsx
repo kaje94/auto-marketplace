@@ -16,14 +16,14 @@ export default async function Page() {
                 <LandingHeroSearch />
             </div>
             <Image
-                src="/images/cover-image.jpg"
-                height={450}
-                width={1246}
-                quality={100}
                 alt="cover-image"
                 className="absolute inset-x-0 bottom-0 m-auto w-full md:w-10/12 lg:w-11/12 xl:max-w-7xl"
+                height={450}
                 priority
+                quality={100}
+                src="/images/cover-image.jpg"
                 unoptimized
+                width={1246}
             />
         </section>
     );

@@ -20,11 +20,11 @@ export default async function Page({ params }: ListingIdPathParam) {
             />
             <ListingDetailBanner isAdmin={session?.user?.isAdmin} listingItem={itemDetails} />
             <ListingDetails
-                itemDetails={itemDetails}
-                withinDashboard={true}
-                showSellerDetails={false}
-                loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
                 basePath="/dashboard/my-listings"
+                itemDetails={itemDetails}
+                loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
+                showSellerDetails={false}
+                withinDashboard={true}
             />
         </>
     );

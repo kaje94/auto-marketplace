@@ -42,13 +42,13 @@ export const DeleteListingItemModal = (props: Props) => {
 
     return (
         <>
-            <Modal visible={!!visible} onVisibleChange={setVisible} title="Delete Advert" titleClassNames="text-error">
+            <Modal onVisibleChange={setVisible} title="Delete Advert" titleClassNames="text-error" visible={!!visible}>
                 <div>Are you sure you want to delete this advert? This action is not reversible.</div>
                 <ModalFooter
+                    loading={isLoading}
+                    onSubmit={listingId ? () => mutate(listingId) : undefined}
                     onVisibleChange={setVisible}
                     primaryButton={{ text: "Delete", classNames: "btn-error" }}
-                    onSubmit={listingId ? () => mutate(listingId) : undefined}
-                    loading={isLoading}
                 />
             </Modal>
         </>

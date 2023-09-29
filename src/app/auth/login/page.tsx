@@ -23,7 +23,7 @@ export default function Page() {
     if (signInError || error === "OAuthSignin") {
         return (
             <div className="p-20">
-                <ErrorComponent title="Failed to Authenticate" error={signInError} />
+                <ErrorComponent error={signInError} title="Failed to Authenticate" />
             </div>
         );
     }

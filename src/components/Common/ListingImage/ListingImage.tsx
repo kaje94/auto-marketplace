@@ -19,14 +19,14 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
 
     return (
         <Image
-            priority={false}
-            width={width}
             alt={seoFriendlyName}
-            src={image?.name!}
+            blurDataURL={blurDataURL}
             loader={({ src, width, quality }) => convertToSEOFriendlyImageURL(src, seoFriendlyName, quality, width)}
             placeholder={blurDataURL ? "blur" : "empty"}
-            blurDataURL={blurDataURL}
+            priority={false}
+            src={image?.name!}
             style={{ background: image?.averageColor }}
+            width={width}
             {...rest}
         />
     );

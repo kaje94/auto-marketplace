@@ -21,14 +21,14 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
     const { error, selectClassName, selectablePlaceholder, placeholder, options = [], loading, ...rest } = props;
     return (
         <select
-            disabled={loading}
-            ref={ref}
             className={clsx(
                 "select-bordered select bg-transparent font-normal",
                 error && "select-error",
                 loading && "animate-pulse",
                 selectClassName,
             )}
+            disabled={loading}
+            ref={ref}
             {...rest}
         >
             {selectablePlaceholder && (

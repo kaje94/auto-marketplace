@@ -18,7 +18,7 @@ export const NavBarLoginButton = () => {
 };
 
 export const NavBarLogoutButton = () => {
-    return <NavBarMenuLink label="Logout" icon={<LogoutIcon height={17} className="pl-0.5" />} onClick={() => signOut({ callbackUrl: "/" })} />;
+    return <NavBarMenuLink icon={<LogoutIcon className="pl-0.5" height={17} />} label="Logout" onClick={() => signOut({ callbackUrl: "/" })} />;
 };
 
 export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; label: string; icon: ReactNode; badgeCount?: number }) => {
@@ -32,7 +32,7 @@ export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; lab
     return (
         <li>
             {link ? (
-                <Link href={link} className="flex">
+                <Link className="flex" href={link}>
                     <div
                         className={clsx({
                             "flex flex-1 items-center justify-between font-medium duration-200 ": true,
@@ -48,7 +48,7 @@ export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; lab
                     </div>
                 </Link>
             ) : (
-                <div onClick={onClick} className="flex">
+                <div className="flex" onClick={onClick}>
                     <div className="flex flex-1 items-center justify-between font-medium text-base-300 duration-200 hover:text-secondary">
                         <span className="flex gap-2">
                             {label}

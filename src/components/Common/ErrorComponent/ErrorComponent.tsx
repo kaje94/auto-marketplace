@@ -31,7 +31,7 @@ export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showR
                 <div className="max-w-lg text-center">
                     {variant === "lg" && (
                         <h2 className="mb-8 flex justify-center text-9xl font-extrabold dark:text-gray-600">
-                            <ActivityIcon width={180} height={180} />
+                            <ActivityIcon height={180} width={180} />
                         </h2>
                     )}
 

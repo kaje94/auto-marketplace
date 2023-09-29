@@ -36,7 +36,7 @@ export const ListingsCarousel = (props: Props) => {
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi, onButtonClick);
 
     if (items?.length === 0 && !loading) {
-        return <Empty text={emptyPlaceholderText} subText={emptyPlaceholderSubText} iconSize="sm" />;
+        return <Empty iconSize="sm" subText={emptyPlaceholderSubText} text={emptyPlaceholderText} />;
     }
 
     return (

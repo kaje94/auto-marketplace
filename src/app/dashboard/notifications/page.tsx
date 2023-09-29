@@ -21,8 +21,8 @@ export default async function Page({ searchParams }: SearchParams) {
 
     return (
         <DashboardNotificationsContextProvider>
-            <DashboardListHeader itemCount={notifications.totalCount} filter={<DashboardNotificationsFilter />} />
-            <DashboardNotificationsList notifications={notifications} basePath="/dashboard/notifications" session={session} />
+            <DashboardListHeader filter={<DashboardNotificationsFilter />} itemCount={notifications.totalCount} />
+            <DashboardNotificationsList basePath="/dashboard/notifications" notifications={notifications} session={session} />
         </DashboardNotificationsContextProvider>
     );
 }

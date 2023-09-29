@@ -36,118 +36,118 @@ export const ListingForm: FC<Props> = (props) => {
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Key Specifications</div>
                         <AutocompleteController
+                            control={control}
                             fieldName="vehicle.type"
                             label="Type"
-                            placeholder="Select Type"
                             loading={isLoading}
-                            required
                             options={VehicleTypeList}
-                            control={control}
+                            placeholder="Select Type"
+                            required
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
+                                control={control}
                                 fieldName="vehicle.brand"
-                                placeholder="Toyota, Nissan, Honda, etc"
                                 label="Brand"
                                 loading={isLoading}
+                                placeholder="Toyota, Nissan, Honda, etc"
                                 required
-                                control={control}
                             />
                             <InputController
+                                control={control}
                                 fieldName="vehicle.model"
-                                placeholder="Civic, Sunny, Swift, etc"
                                 label="Model"
                                 loading={isLoading}
+                                placeholder="Civic, Sunny, Swift, etc"
                                 required
-                                control={control}
                             />
                             <InputController
+                                control={control}
                                 fieldName="vehicle.trim"
-                                placeholder="LX, EX, EX-L, Sport, etc"
-                                loading={isLoading}
                                 label="Trim"
-                                control={control}
+                                loading={isLoading}
+                                placeholder="LX, EX, EX-L, Sport, etc"
                             />
                             <AutocompleteController
+                                control={control}
                                 fieldName="vehicle.yearOfManufacture"
-                                label="Year of Manufacture"
-                                placeholder="2000"
-                                loading={isLoading}
-                                required
-                                options={YearRangeList}
                                 gridCols="grid-cols-3"
+                                label="Year of Manufacture"
+                                loading={isLoading}
+                                options={YearRangeList}
+                                placeholder="2000"
+                                required
                                 showSelectedTick={false}
-                                control={control}
                             />
                             <AutocompleteController
-                                fieldName="vehicle.yearOfRegistration"
-                                label="Year of Registration"
-                                placeholder="2010"
-                                loading={isLoading}
-                                required
-                                options={YearRangeList}
-                                gridCols="grid-cols-3"
-                                showSelectedTick={false}
                                 control={control}
+                                fieldName="vehicle.yearOfRegistration"
+                                gridCols="grid-cols-3"
+                                label="Year of Registration"
+                                loading={isLoading}
+                                options={YearRangeList}
+                                placeholder="2010"
+                                required
+                                showSelectedTick={false}
                             />
                             <InputController
-                                fieldName="vehicle.millage"
-                                placeholder="50000"
-                                label="Milage"
-                                type="number"
-                                loading={isLoading}
-                                required
                                 control={control}
+                                fieldName="vehicle.millage"
+                                label="Milage"
+                                loading={isLoading}
+                                placeholder="50000"
+                                required
+                                type="number"
                             />
                             <AutocompleteController
+                                control={control}
                                 fieldName="vehicle.condition"
                                 label="Condition"
-                                placeholder="Select Condition"
                                 loading={isLoading}
-                                required
                                 options={VehicleConditionList}
-                                control={control}
+                                placeholder="Select Condition"
+                                required
                             />
                             <AutocompleteController
+                                control={control}
                                 fieldName="vehicle.transmission"
                                 label="Transmission Type"
-                                placeholder="Select Type"
                                 loading={isLoading}
-                                required
                                 options={TransmissionTypeList}
-                                control={control}
+                                placeholder="Select Type"
+                                required
                             />
                             <AutocompleteController
+                                control={control}
                                 fieldName="vehicle.fuelType"
                                 label="Fuel Type"
-                                placeholder="Select Fuel Type"
                                 loading={isLoading}
-                                required
                                 options={FuelTypeList}
-                                control={control}
+                                placeholder="Select Fuel Type"
+                                required
                             />
                             <InputController
-                                fieldName="vehicle.engineCapacity"
-                                placeholder="1500"
-                                label="Engine Capacity in CC"
-                                type="number"
-                                loading={isLoading}
-                                required
                                 control={control}
+                                fieldName="vehicle.engineCapacity"
+                                label="Engine Capacity in CC"
+                                loading={isLoading}
+                                placeholder="1500"
+                                required
+                                type="number"
                             />
                         </div>
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Other details</div>
                         <TextAreaController
-                            label="Description"
-                            placeholder="Description of the vehicle for sale"
-                            loading={isLoading}
-                            required
                             control={control}
                             fieldName="description"
+                            label="Description"
+                            loading={isLoading}
+                            placeholder="Description of the vehicle for sale"
+                            required
                         />
-                        <CheckboxController label="Has Ongoing Lease" loading={isLoading} control={control} fieldName="hasOnGoingLease" />
+                        <CheckboxController control={control} fieldName="hasOnGoingLease" label="Has Ongoing Lease" loading={isLoading} />
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
@@ -159,14 +159,14 @@ export const ListingForm: FC<Props> = (props) => {
                             <ListingImageUpload loading={isLoading} />
                         ) : (
                             <Controller
-                                name="vehicle.vehicleImages"
                                 control={control}
+                                name="vehicle.vehicleImages"
                                 render={({ field, fieldState }) => (
                                     <ListingImageUpload
-                                        files={field.value}
-                                        setFiles={(images) => field.onChange(images)}
                                         error={fieldState.error?.message}
+                                        files={field.value}
                                         ref={field.ref}
+                                        setFiles={(images) => field.onChange(images)}
                                         title={title || "New Advert Image"}
                                     />
                                 )}
@@ -177,64 +177,64 @@ export const ListingForm: FC<Props> = (props) => {
                         <div className="stat-title">Location Details</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
+                                control={control}
                                 fieldName="location.city"
-                                placeholder="Colombo"
                                 label="City"
                                 loading={isLoading}
+                                placeholder="Colombo"
                                 required
-                                control={control}
                             />
                             <InputController
+                                control={control}
                                 fieldName="location.state"
-                                placeholder="Western Province"
                                 label="State/Province"
                                 loading={isLoading}
+                                placeholder="Western Province"
                                 required
-                                control={control}
                             />
                             <InputController
+                                control={control}
                                 fieldName="location.postalCode"
-                                placeholder="00001"
                                 label="Postal Code"
                                 loading={isLoading}
-                                type="number"
+                                placeholder="00001"
                                 required
-                                control={control}
+                                type="number"
                             />
                             <SelectController
-                                label="Country"
+                                control={control}
                                 disabled
+                                fieldName="location.country"
+                                label="Country"
+                                loading={isLoading}
                                 options={[{ label: "Sri Lanka", value: "LK" }]}
                                 placeholder="Select Country"
-                                loading={isLoading}
                                 required
-                                control={control}
-                                fieldName="location.country"
                             />
                         </div>
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Price Details</div>
                         <InputController
-                            fieldName="price.amount"
-                            placeholder="40000000"
-                            label="Price"
-                            type="number"
-                            loading={isLoading}
-                            required
                             control={control}
+                            fieldName="price.amount"
+                            label="Price"
+                            loading={isLoading}
+                            placeholder="40000000"
+                            required
+                            type="number"
                         />
-                        <CheckboxController label="Negotiable Price" loading={isLoading} control={control} fieldName="price.isPriceNegotiable" />
+                        <CheckboxController control={control} fieldName="price.isPriceNegotiable" label="Negotiable Price" loading={isLoading} />
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Features</div>
                         <span className="mt-2">
                             <TagSelectController
-                                fieldName="vehicle.featureIds"
                                 control={control}
+                                fieldName="vehicle.featureIds"
                                 loading={isLoading}
-                                tags={featureOptions}
                                 loadingPlaceholderCount={20}
+                                tags={featureOptions}
                             />
                         </span>
                     </div>
@@ -242,9 +242,9 @@ export const ListingForm: FC<Props> = (props) => {
             </div>
             <div className="mt-5 flex justify-end">
                 <button
-                    type="submit"
                     className="btn-neutral btn-wide btn"
                     disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
+                    type="submit"
                 >
                     {isMutating ? submitButton.mutatingText ?? "Loading..." : submitButton.text ?? "Submit"}
                 </button>

@@ -20,40 +20,40 @@ export const DatePickerController: FC<ControllerProps> = ({
     if (loading || !control) {
         return (
             <InputController
+                errorAsTooltip={errorAsTooltip}
+                fieldName={fieldName}
+                inputClassNames={inputClassNames}
                 label={label}
+                labelClassNames={labelClassNames}
+                loading
                 placeholder={placeholderText}
                 required={required}
-                inputClassNames={inputClassNames}
-                labelClassNames={labelClassNames}
                 rootClassName={rootClassName}
-                loading
-                fieldName={fieldName}
-                errorAsTooltip={errorAsTooltip}
             />
         );
     }
 
     return (
         <Controller
-            name={fieldName}
             control={control}
+            name={fieldName}
             render={({ field, fieldState }) => (
                 <FormFieldControllerWrap
-                    rootClassName={rootClassName}
+                    error={fieldState.error?.message}
+                    errorAsTooltip={errorAsTooltip}
                     label={label}
                     labelClassNames={labelClassNames}
                     required={required}
-                    error={fieldState.error?.message}
-                    errorAsTooltip={errorAsTooltip}
+                    rootClassName={rootClassName}
                 >
                     <DatePicker
                         error={fieldState.error?.message}
+                        onBlur={field.onBlur}
                         placeholderText={placeholderText}
                         selected={field.value ? new Date(field.value) : null}
-                        onBlur={field.onBlur}
                         {...rest}
-                        ref={field.ref}
                         onChange={(date) => field.onChange(date?.toString())}
+                        ref={field.ref}
                     />
                 </FormFieldControllerWrap>
             )}

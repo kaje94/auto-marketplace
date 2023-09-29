@@ -45,31 +45,31 @@ export const ReviewListingModal = (props: Props) => {
     });
 
     return (
-        <Modal visible={visible} onVisibleChange={setVisible} title="Review Advert">
+        <Modal onVisibleChange={setVisible} title="Review Advert" visible={visible}>
             <form className="grid gap-1">
                 <SelectController
+                    control={control}
+                    fieldName="status"
                     label="Review Status"
-                    selectablePlaceholder={false}
                     options={[
                         { label: unCamelCase(ListingStatusTypes.Posted), value: ListingStatusTypes.Posted },
                         { label: unCamelCase(ListingStatusTypes.Declined), value: ListingStatusTypes.Declined },
                     ]}
                     required
-                    control={control}
-                    fieldName="status"
+                    selectablePlaceholder={false}
                 />
                 <TextAreaController
+                    control={control}
+                    fieldName="reviewComment"
                     label="Review comment"
                     placeholder="Additional details related to the advert review"
                     required
-                    fieldName="reviewComment"
-                    control={control}
                 />
                 <ModalFooter
-                    primaryButton={{ text: "Submit Review" }}
-                    onVisibleChange={setVisible}
-                    onSubmit={handleSubmit((values) => mutate(values))}
                     loading={isLoading}
+                    onSubmit={handleSubmit((values) => mutate(values))}
+                    onVisibleChange={setVisible}
+                    primaryButton={{ text: "Submit Review" }}
                 />
             </form>
         </Modal>

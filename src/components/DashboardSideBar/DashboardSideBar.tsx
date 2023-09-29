@@ -16,7 +16,7 @@ const DashboardSideBarWithSession = async () => {
     const session = await getServerSession(authOptions);
     const notifications = await api.getMyNotifications(session?.user?.id!, { PageNumber: 1 });
     const notificationCount = notifications.items?.filter((item) => !item.isShown)?.length;
-    return <DashboardSideBarItems session={session} notificationCount={notificationCount} />;
+    return <DashboardSideBarItems notificationCount={notificationCount} session={session} />;
 };
 
 const DashboardSideBarItems = ({ session, notificationCount }: { session?: Session | null; notificationCount?: number }) => {
@@ -24,48 +24,48 @@ const DashboardSideBarItems = ({ session, notificationCount }: { session?: Sessi
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <ul className="menu rounded-box w-full bg-base-100 p-2 shadow-md">
                 <NavBarItem
-                    href="/dashboard/profile"
-                    label="Profile"
                     activePaths={["/dashboard/profile"]}
+                    href="/dashboard/profile"
                     iconName="UserIcon"
+                    label="Profile"
                     regexExp="^/dashboard/profile/(.*?)"
                 />
                 <NavBarItem
-                    href="/dashboard/my-listings"
-                    label="My Adverts"
                     activePaths={["/dashboard/my-listings", "/dashboard/new-listing"]}
-                    regexExp="^/dashboard/my-listings/(.*?)"
+                    href="/dashboard/my-listings"
                     iconName="AdvertIcon"
+                    label="My Adverts"
+                    regexExp="^/dashboard/my-listings/(.*?)"
                 />
                 <NavBarItem
-                    href="/dashboard/my-subscriptions"
-                    label="My Subscriptions"
                     activePaths={["/dashboard/my-subscriptions", "/dashboard/new-subscription"]}
-                    regexExp="^/dashboard/my-subscriptions/(.*?)"
+                    href="/dashboard/my-subscriptions"
                     iconName="RssIcon"
+                    label="My Subscriptions"
+                    regexExp="^/dashboard/my-subscriptions/(.*?)"
                 />
                 <NavBarItem
-                    href="/dashboard/notifications"
-                    label="Notifications"
                     activePaths={["/dashboard/notifications"]}
-                    iconName="NotificationIcon"
                     badgeCount={notificationCount}
+                    href="/dashboard/notifications"
+                    iconName="NotificationIcon"
+                    label="Notifications"
                 />
                 {session?.user?.isAdmin && (
                     <>
                         <NavBarItem
-                            href="/dashboard/listings"
                             activePaths={["/dashboard/listings"]}
+                            href="/dashboard/listings"
+                            iconName="ListIcon"
                             label="Manage Adverts"
                             regexExp="^/dashboard/listings/(.*?)"
-                            iconName="ListIcon"
                         />
                         <NavBarItem
-                            href="/dashboard/subscriptions"
-                            label="Manage Subscriptions"
                             activePaths={["/dashboard/subscriptions"]}
-                            regexExp="^/dashboard/subscriptions/(.*?)"
+                            href="/dashboard/subscriptions"
                             iconName="ClipboardIcon"
+                            label="Manage Subscriptions"
+                            regexExp="^/dashboard/subscriptions/(.*?)"
                         />
                     </>
                 )}

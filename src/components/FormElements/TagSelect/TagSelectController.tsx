@@ -26,9 +26,9 @@ export const TagSelectController: FC<Props> = ({ tags = [], fieldName, loading, 
     }
     return (
         <Controller
-            name={fieldName}
             control={control}
-            render={({ field: { value = [], onChange } }) => <TagSelect tags={tags} selectedTags={value} onSelect={onChange} />}
+            name={fieldName}
+            render={({ field: { value = [], onChange } }) => <TagSelect onSelect={onChange} selectedTags={value} tags={tags} />}
         />
     );
 };

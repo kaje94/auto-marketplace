@@ -28,33 +28,33 @@ export const DashboardListingsList: FC<
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
             {!pageLoading && listings?.totalCount === 0 && (
                 <Empty
-                    text="No advertisements to display."
-                    subText={
-                        hasSearchParams
-                            ? "Try adjusting or resetting your search filters"
-                            : "By creating a new new advertisement, you have the opportunity to showcase the vehicle you want to sell to a wide audience."
-                    }
                     button={
                         hasSearchParams
                             ? { text: "Reset Filters", href: basePath!, onClick: () => setNewSearchQuery("") }
                             : { text: "Create New", href: "/dashboard/new-listing" }
                     }
+                    subText={
+                        hasSearchParams
+                            ? "Try adjusting or resetting your search filters"
+                            : "By creating a new new advertisement, you have the opportunity to showcase the vehicle you want to sell to a wide audience."
+                    }
+                    text="No advertisements to display."
                 />
             )}
 
             {listings?.items?.map((item) => (
-                <DashboardListingItem basePath={basePath} key={item.id} listingItem={item} isAdmin={session?.user?.isAdmin} />
+                <DashboardListingItem key={item.id} basePath={basePath} isAdmin={session?.user?.isAdmin} listingItem={item} />
             ))}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardListingItem key={`loading-listing-item-${i}`} loading />)}
 
             <Pagination
-                pageNumber={listings?.pageNumber}
-                totalPages={listings?.totalPages}
                 basePath={basePath}
+                loading={pageLoading || isLoading}
+                pageNumber={listings?.pageNumber}
                 searchParams={searchParamsObj as StringifiableRecord}
                 setNewSearchQuery={setNewSearchQuery}
-                loading={pageLoading || isLoading}
+                totalPages={listings?.totalPages}
             />
         </div>
     );
@@ -65,10 +65,10 @@ export const DashboardMyListingsList: FC<Props> = (props) => {
 
     return (
         <DashboardListingsList
+            hasSearchParams={hasSearchParams}
             isLoading={isLoading}
             searchParamsObj={searchParamsObj}
             setNewSearchQuery={setNewSearchQuery}
-            hasSearchParams={hasSearchParams}
             {...props}
         />
     );
@@ -79,10 +79,10 @@ export const DashboardAllListingsList: FC<Props> = (props) => {
 
     return (
         <DashboardListingsList
+            hasSearchParams={hasSearchParams}
             isLoading={isLoading}
             searchParamsObj={searchParamsObj}
             setNewSearchQuery={setNewSearchQuery}
-            hasSearchParams={hasSearchParams}
             {...props}
         />
     );

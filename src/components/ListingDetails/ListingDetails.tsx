@@ -37,12 +37,12 @@ export const ListingDetails: FC<Props> = ({
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-5" : "lg:col-span-5")}>
                 <div className="card  bg-base-100 shadow">
                     <ListingImageCarousel
-                        images={vehicle?.vehicleImages}
-                        title={title}
                         createdOn={createdOn}
+                        images={vehicle?.vehicleImages}
                         loading={loading}
-                        vehicleType={vehicle?.type}
                         location={location}
+                        title={title}
+                        vehicleType={vehicle?.type}
                     />
                 </div>
                 <div className="stat card  bg-base-100 p-3  shadow lg:p-5 xl:p-6">
@@ -84,24 +84,24 @@ export const ListingDetails: FC<Props> = ({
 
                 <div className="stat card place-items-center bg-base-100 shadow">
                     <div className="stat-title">Key Specifications</div>
-                    <ListingKeySpecifications vehicle={vehicle} loading={loading} />
+                    <ListingKeySpecifications loading={loading} vehicle={vehicle} />
                 </div>
                 <div className="stat card place-items-center bg-base-100 shadow">
                     <div className="stat-title">Features</div>
-                    <ListingDetailsFeatures vehicle={vehicle} loading={loading} />
+                    <ListingDetailsFeatures loading={loading} vehicle={vehicle} />
                 </div>
                 {showSellerDetails && (
                     <div className="stat card place-items-center bg-base-100 shadow">
                         <div className="stat-title">Seller</div>
-                        <ListingSellerDetails user={user} loading={loading} />
+                        <ListingSellerDetails loading={loading} user={user} />
                     </div>
                 )}
                 <div className="grid grid-cols-2 gap-4">
                     {!loading && (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) && (
                         <>
                             <EditButton
-                                listingItem={itemDetails as ListingItem}
                                 basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
+                                listingItem={itemDetails as ListingItem}
                             />
                             {status &&
                                 [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
@@ -113,12 +113,12 @@ export const ListingDetails: FC<Props> = ({
                         <>
                             <ShareButton loading={loading} title={title} />
                             {loggedInUser?.id !== user?.id && (
-                                <ReportButton loading={loading} listingId={id} listingTitle={title} userEmail={loggedInUser?.email} />
+                                <ReportButton listingId={id} listingTitle={title} loading={loading} userEmail={loggedInUser?.email} />
                             )}
                         </>
                     )}
                     {!loading && loggedInUser?.isAdmin && (
-                        <DeleteButton listingItem={itemDetails as ListingItem} isOwner={user?.id === loggedInUser?.id} />
+                        <DeleteButton isOwner={user?.id === loggedInUser?.id} listingItem={itemDetails as ListingItem} />
                     )}
                     {!loading &&
                         (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) &&

@@ -24,45 +24,45 @@ export const AutocompleteController: FC<ControllerProps> = ({
     if (loading || !control) {
         return (
             <InputController
+                disabled={true}
+                errorAsTooltip={errorAsTooltip}
+                fieldName={fieldName}
+                inputClassNames={selectClassNames}
                 label={label}
+                labelClassNames={labelClassNames}
+                loading={loading}
                 placeholder={placeholder}
                 required={required}
-                inputClassNames={selectClassNames}
-                labelClassNames={labelClassNames}
                 rootClassName={rootClassName}
-                loading={loading}
-                disabled={true}
-                fieldName={fieldName}
-                errorAsTooltip={errorAsTooltip}
             />
         );
     }
 
     return (
         <Controller
-            name={fieldName}
             control={control}
+            name={fieldName}
             render={({ field, fieldState }) => (
                 <FormFieldControllerWrap
-                    rootClassName={rootClassName}
+                    error={fieldState.error?.message}
+                    errorAsTooltip={errorAsTooltip}
                     label={label}
                     labelClassNames={labelClassNames}
                     required={required}
-                    error={fieldState.error?.message}
-                    errorAsTooltip={errorAsTooltip}
+                    rootClassName={rootClassName}
                 >
                     <Autocomplete
-                        placeholder={placeholder}
-                        error={fieldState.error?.message}
-                        selectClassNames={selectClassNames}
-                        options={options}
-                        setFieldValue={(value: string | number) => field.onChange(value)}
-                        value={field.value}
-                        gridCols={gridCols}
-                        showSelectedTick={showSelectedTick}
                         disabled={disabled}
+                        error={fieldState.error?.message}
+                        gridCols={gridCols}
                         onBlur={field.onBlur}
+                        options={options}
+                        placeholder={placeholder}
                         ref={field.ref}
+                        selectClassNames={selectClassNames}
+                        setFieldValue={(value: string | number) => field.onChange(value)}
+                        showSelectedTick={showSelectedTick}
+                        value={field.value}
                     />
                 </FormFieldControllerWrap>
             )}

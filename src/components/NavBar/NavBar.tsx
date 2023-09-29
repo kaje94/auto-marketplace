@@ -18,5 +18,5 @@ const NavBarWithSession = async () => {
     const notifications = await api.getMyNotifications(session?.user?.id!, { PageNumber: 1 });
     const notificationCount = notifications.items?.filter((item) => !item.isShown)?.length;
 
-    return <NavBarClient session={session} notificationCount={notificationCount} />;
+    return <NavBarClient notificationCount={notificationCount} session={session} />;
 };

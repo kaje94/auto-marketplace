@@ -26,11 +26,11 @@ export default async function Page({ searchParams }: SearchParams) {
     return (
         <DashboardListingsContextProvider>
             <DashboardListHeader
-                itemCount={listings.totalCount}
-                filter={<DashboardAllListFilter />}
                 addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
+                filter={<DashboardAllListFilter />}
+                itemCount={listings.totalCount}
             />
-            <DashboardAllListingsList listings={listings} session={session} basePath="/dashboard/listings" />
+            <DashboardAllListingsList basePath="/dashboard/listings" listings={listings} session={session} />
         </DashboardListingsContextProvider>
     );
 }

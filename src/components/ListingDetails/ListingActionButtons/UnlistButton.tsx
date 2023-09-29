@@ -17,13 +17,13 @@ export const UnListButton: FC<Props> = ({ listingItem, loading }) => {
         <>
             <button
                 className={clsx("btn-error btn-block btn gap-2", loading && "animate-pulse")}
-                onClick={() => setUnListModalVisible(true)}
                 disabled={loading}
+                onClick={() => setUnListModalVisible(true)}
             >
                 <EyeOffIcon />
                 Unlist
             </button>
-            <UnListListingModal visible={unListModalVisible} setVisible={setUnListModalVisible} listingItem={listingItem} />
+            <UnListListingModal listingItem={listingItem} setVisible={setUnListModalVisible} visible={unListModalVisible} />
         </>
     );
 };

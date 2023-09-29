@@ -13,12 +13,8 @@
                 "alphabetize": { "order": "asc", "caseInsensitive": true }
             }
         ],
-        "tailwindcss/migration-from-tailwind-2": "off"
+        "tailwindcss/migration-from-tailwind-2": "off",
+        "react/jsx-sort-props": ["warn", { "reservedFirst": ["key"] }]
     },
-    "settings": {
-        "import/resolver": {
-            "typescript": true,
-            "node": true
-        }
-    }
+    "settings": { "import/resolver": { "typescript": true, "node": true } }
 }

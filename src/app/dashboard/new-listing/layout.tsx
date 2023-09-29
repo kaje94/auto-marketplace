@@ -5,8 +5,8 @@ export default function Layout({ children }: ChildrenProps) {
     return (
         <>
             <BreadCrumbs
-                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { href: "/dashboard/my-listings", title: "My Adverts" }]}
                 currentPageTitle="Create new Advert"
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { href: "/dashboard/my-listings", title: "My Adverts" }]}
             />
             {children}
         </>

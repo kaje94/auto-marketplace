@@ -17,13 +17,13 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
     const { error, loading, textAreaClassNames, ...rest } = props;
     return (
         <textarea
-            ref={ref}
             className={clsx(
                 "textarea-bordered textarea textarea-md min-h-[140px] w-full bg-transparent",
                 error && "textarea-error",
                 loading && "animate-pulse",
                 textAreaClassNames,
             )}
+            ref={ref}
             {...rest}
         />
     );

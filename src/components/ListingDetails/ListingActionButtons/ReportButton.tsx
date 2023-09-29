@@ -26,10 +26,10 @@ export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle, user
             </button>
             {!loading && (
                 <ReportListingModal
-                    userEmail={userEmail}
                     listingId={listingId}
                     listingTitle={listingTitle}
                     setVisible={setModalVisible}
+                    userEmail={userEmail}
                     visible={modalVisible}
                 />
             )}

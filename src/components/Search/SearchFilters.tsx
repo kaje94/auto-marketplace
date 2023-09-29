@@ -103,105 +103,105 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
             <div className="card grid grid-cols-2 gap-2 bg-base-100 p-3 shadow-md lg:p-5 xl:p-6">
                 <div className="mt-0 lg:mt-2" />
                 <InputController
-                    placeholder="Search..."
-                    fieldName="Title"
                     control={control}
-                    rootClassName="col-span-2"
                     errorAsTooltip
+                    fieldName="Title"
                     loading={pageLoading}
+                    placeholder="Search..."
+                    rootClassName="col-span-2"
                 />
                 <div className="divider col-span-2 mt-4 lg:mt-6">Advanced Filters</div>
                 <AutocompleteController
-                    placeholder="Type"
-                    label="Vehicle Type"
-                    fieldName="VehicleType"
                     control={control}
-                    options={VehicleTypeList}
-                    rootClassName="col-span-2"
                     errorAsTooltip
+                    fieldName="VehicleType"
+                    label="Vehicle Type"
                     loading={pageLoading}
+                    options={VehicleTypeList}
+                    placeholder="Type"
+                    rootClassName="col-span-2"
                     showSelectedTick={false}
                 />
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Price Range</div>
                     <div className="grid grid-cols-2 gap-2">
                         <InputController
-                            placeholder="Minimum"
-                            fieldName="MinPrice"
                             control={control}
-                            type="number"
                             errorAsTooltip
+                            fieldName="MinPrice"
                             loading={pageLoading}
+                            placeholder="Minimum"
+                            type="number"
                         />
                         <InputController
-                            placeholder="Maximum"
-                            fieldName="MaxPrice"
                             control={control}
-                            type="number"
                             errorAsTooltip
+                            fieldName="MaxPrice"
                             loading={pageLoading}
+                            placeholder="Maximum"
+                            type="number"
                         />
                     </div>
                 </div>
                 <AutocompleteController
-                    placeholder="Condition"
-                    label="Condition"
-                    fieldName="Condition"
                     control={control}
-                    options={VehicleConditionList}
                     errorAsTooltip
+                    fieldName="Condition"
+                    label="Condition"
                     loading={pageLoading}
+                    options={VehicleConditionList}
+                    placeholder="Condition"
                     showSelectedTick={false}
                 />
-                <InputController placeholder="City" label="City" fieldName="City" control={control} errorAsTooltip loading={pageLoading} />
-                <InputController placeholder="Brand" label="Brand" fieldName="Brand" control={control} errorAsTooltip loading={pageLoading} />
-                <InputController placeholder="Model" label="Model" fieldName="Model" control={control} errorAsTooltip loading={pageLoading} />
+                <InputController control={control} errorAsTooltip fieldName="City" label="City" loading={pageLoading} placeholder="City" />
+                <InputController control={control} errorAsTooltip fieldName="Brand" label="Brand" loading={pageLoading} placeholder="Brand" />
+                <InputController control={control} errorAsTooltip fieldName="Model" label="Model" loading={pageLoading} placeholder="Model" />
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Manufactured Year Range</div>
                     <div className="grid grid-cols-2 gap-2">
                         <AutocompleteController
-                            placeholder="From"
-                            fieldName="YomStartDate"
                             control={control}
                             errorAsTooltip
-                            options={YearRangeList}
+                            fieldName="YomStartDate"
                             loading={pageLoading}
+                            options={YearRangeList}
+                            placeholder="From"
                             showSelectedTick={false}
                         />
                         <AutocompleteController
-                            placeholder="To"
-                            fieldName="YomEndDate"
                             control={control}
                             errorAsTooltip
-                            options={YearRangeList}
+                            fieldName="YomEndDate"
                             loading={pageLoading}
+                            options={YearRangeList}
+                            placeholder="To"
                             showSelectedTick={false}
                         />
                     </div>
                 </div>
                 <AutocompleteController
-                    placeholder="Fuel Type"
-                    label="Fuel Type"
-                    fieldName="FuelType"
                     control={control}
-                    options={FuelTypeList}
                     errorAsTooltip
+                    fieldName="FuelType"
+                    label="Fuel Type"
                     loading={pageLoading}
+                    options={FuelTypeList}
+                    placeholder="Fuel Type"
                     showSelectedTick={false}
                 />
                 <AutocompleteController
-                    placeholder="Transmission"
-                    label="Transmission"
-                    fieldName="Transmission"
                     control={control}
-                    options={TransmissionTypeList}
                     errorAsTooltip
+                    fieldName="Transmission"
+                    label="Transmission"
                     loading={pageLoading}
+                    options={TransmissionTypeList}
+                    placeholder="Transmission"
                     showSelectedTick={false}
                 />
                 <button
-                    disabled={!hasSearchParams || pageLoading || isLoading}
                     className={clsx("btn-accent btn-outline btn col-span-2 mt-3 lg:mt-5", !hasSearchParams && "opacity-50")}
+                    disabled={!hasSearchParams || pageLoading || isLoading}
                     onClick={onResetClick}
                 >
                     Reset

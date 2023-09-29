@@ -3,5 +3,5 @@ import { ErrorComponent } from "@/components/Common";
 import { ErrorPageProps } from "@/utils/types";
 
 export default function Error(props: ErrorPageProps) {
-    return <ErrorComponent {...props} variant="sm" showReset={false} />;
+    return <ErrorComponent {...props} showReset={false} variant="sm" />;
 }

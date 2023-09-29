@@ -18,17 +18,17 @@ export const DeleteButton: FC<Props> = ({ listingItem, isOwner, loading }) => {
         <>
             <button
                 className={clsx("btn-block btn gap-2", loading && "animate-pulse")}
-                onClick={() => setDeleteModalVisible(true)}
                 disabled={loading}
+                onClick={() => setDeleteModalVisible(true)}
             >
                 <TrashIcon />
                 Delete
             </button>
             <DeleteListingItemModal
-                visible={deleteModalVisible}
-                setVisible={setDeleteModalVisible}
                 listingItem={listingItem}
+                setVisible={setDeleteModalVisible}
                 successRedirectPath={isOwner ? "/dashboard/my-listings" : "/dashboard/listings"}
+                visible={deleteModalVisible}
             />
         </>
     );

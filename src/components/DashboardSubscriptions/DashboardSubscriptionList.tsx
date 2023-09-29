@@ -26,33 +26,33 @@ export const DashboardSubscriptionList: FC<
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
             {!pageLoading && listingSubscriptions?.totalCount === 0 && (
                 <Empty
-                    text="No subscriptions to display."
-                    subText={
-                        hasSearchParams
-                            ? "Try adjusting or resetting your search filters"
-                            : "By creating a new subscription, you'll receive notifications about any new advertisements that match your interests."
-                    }
                     button={
                         hasSearchParams
                             ? { text: "Reset Filters", href: basePath!, onClick: () => setNewSearchQuery("") }
                             : { text: "Create New", href: "/dashboard/new-subscription" }
                     }
+                    subText={
+                        hasSearchParams
+                            ? "Try adjusting or resetting your search filters"
+                            : "By creating a new subscription, you'll receive notifications about any new advertisements that match your interests."
+                    }
+                    text="No subscriptions to display."
                 />
             )}
 
             {listingSubscriptions?.items?.map((item) => (
-                <DashboardSubscriptionItem key={item.id} listingSubscriptionItem={item} basePath={basePath} />
+                <DashboardSubscriptionItem key={item.id} basePath={basePath} listingSubscriptionItem={item} />
             ))}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardSubscriptionItem key={`loading-subscription-item-${i}`} loading />)}
 
             <Pagination
-                pageNumber={listingSubscriptions?.pageNumber}
-                totalPages={listingSubscriptions?.totalPages}
                 basePath={basePath}
+                loading={pageLoading || isLoading}
+                pageNumber={listingSubscriptions?.pageNumber}
                 searchParams={searchParamsObj as StringifiableRecord}
                 setNewSearchQuery={setNewSearchQuery}
-                loading={pageLoading || isLoading}
+                totalPages={listingSubscriptions?.totalPages}
             />
         </div>
     );
@@ -63,10 +63,10 @@ export const DashboardMySubscriptionList: FC<Props> = (props) => {
 
     return (
         <DashboardSubscriptionList
+            hasSearchParams={hasSearchParams}
             isLoading={isLoading}
             searchParamsObj={searchParamsObj}
             setNewSearchQuery={setNewSearchQuery}
-            hasSearchParams={hasSearchParams}
             {...props}
         />
     );
@@ -77,10 +77,10 @@ export const DashboardAllSubscriptionList: FC<Props> = (props) => {
 
     return (
         <DashboardSubscriptionList
+            hasSearchParams={hasSearchParams}
             isLoading={isLoading}
             searchParamsObj={searchParamsObj}
             setNewSearchQuery={setNewSearchQuery}
-            hasSearchParams={hasSearchParams}
             {...props}
         />
     );

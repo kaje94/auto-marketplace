@@ -26,37 +26,37 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                 </div>
                 <div className="col-span-1 flex items-center">
                     <label className="mr-5 text-secondary-content">Sort By</label>
-                    <Select selectClassName="select-sm flex-1" options={[{ label: "Date: Newest First", value: "date_asc" }]} disabled />
+                    <Select disabled options={[{ label: "Date: Newest First", value: "date_asc" }]} selectClassName="select-sm flex-1" />
                 </div>
             </div>
             <div
                 className={clsx("grid gap-4 md:grid-cols-2 xl:gap-7 2xl:grid-cols-3 2xl:gap-8", (pageLoading || isLoading) && "animate-pulse")}
                 ref={parent}
             >
-                {listings?.items?.map((item) => <ListingItem key={item.id} item={item} detailed />)}
+                {listings?.items?.map((item) => <ListingItem key={item.id} detailed item={item} />)}
 
                 {pageLoading && new Array(12).fill("").map((_, i) => <ListingItem key={`loading-listing-item-${i}`} loading />)}
 
                 {!pageLoading && listings?.items?.length === 0 && (
                     <Empty
-                        text="No adverts to display"
-                        subText="You can try refining or resetting your search criteria or check again later"
                         button={
                             hasSearchParams
                                 ? { text: "Reset Filter", href: "/search", onClick: () => setNewSearchQuery(""), loading: isLoading }
                                 : undefined
                         }
+                        subText="You can try refining or resetting your search criteria or check again later"
+                        text="No adverts to display"
                     />
                 )}
 
                 <div className="col-span-full">
                     <Pagination
-                        pageNumber={listings?.pageNumber}
-                        totalPages={listings?.totalPages}
                         basePath="/search"
+                        loading={pageLoading || isLoading}
+                        pageNumber={listings?.pageNumber}
                         searchParams={searchParamsObj as StringifiableRecord}
                         setNewSearchQuery={setNewSearchQuery}
-                        loading={pageLoading || isLoading}
+                        totalPages={listings?.totalPages}
                     />
                 </div>
             </div>

@@ -33,13 +33,13 @@ export const RenewListingItemModal = (props: Props) => {
 
     return (
         <>
-            <Modal visible={!!visible} onVisibleChange={setVisible} title="Renew Advert">
+            <Modal onVisibleChange={setVisible} title="Renew Advert" visible={!!visible}>
                 <div>Are you sure you want to renew the advert {listingTitle}</div>
                 <ModalFooter
+                    loading={isLoading}
+                    onSubmit={listingId ? () => mutate(listingId) : undefined}
                     onVisibleChange={setVisible}
                     primaryButton={{ text: "Renew" }}
-                    onSubmit={listingId ? () => mutate(listingId) : undefined}
-                    loading={isLoading}
                 />
             </Modal>
         </>

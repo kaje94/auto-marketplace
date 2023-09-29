@@ -39,13 +39,13 @@ export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoadi
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
             {!pageLoading && notifications?.totalCount === 0 && (
                 <Empty
-                    text="No notifications to display."
+                    button={hasSearchParams ? { text: "Reset Filters", href: basePath!, onClick: () => setNewSearchQuery("") } : undefined}
                     subText={
                         hasSearchParams
                             ? "Try adjusting or resetting your search filters"
                             : "You do not have any notifications yet. Try checking out again later"
                     }
-                    button={hasSearchParams ? { text: "Reset Filters", href: basePath!, onClick: () => setNewSearchQuery("") } : undefined}
+                    text="No notifications to display."
                 />
             )}
 
@@ -54,12 +54,12 @@ export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoadi
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardNotificationItem key={`loading-notification-item-${i}`} loading />)}
 
             <Pagination
-                pageNumber={notifications?.pageNumber}
-                totalPages={notifications?.totalPages}
                 basePath={basePath}
+                loading={pageLoading || isLoading}
+                pageNumber={notifications?.pageNumber}
                 searchParams={searchParamsObj as StringifiableRecord}
                 setNewSearchQuery={setNewSearchQuery}
-                loading={pageLoading || isLoading}
+                totalPages={notifications?.totalPages}
             />
         </div>
     );

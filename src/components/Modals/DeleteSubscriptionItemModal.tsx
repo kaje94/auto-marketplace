@@ -34,13 +34,13 @@ export const DeleteSubscriptionItemModal = (props: Props) => {
 
     return (
         <>
-            <Modal visible={!!visible} onVisibleChange={setVisible} title="Delete Subscription" titleClassNames="text-error">
+            <Modal onVisibleChange={setVisible} title="Delete Subscription" titleClassNames="text-error" visible={!!visible}>
                 <div>Are you sure you want to delete this advert subscription? This action is not reversible.</div>
                 <ModalFooter
+                    loading={isLoading}
+                    onSubmit={id ? () => mutate(id) : undefined}
                     onVisibleChange={setVisible}
                     primaryButton={{ text: "Delete", classNames: "btn-error" }}
-                    onSubmit={id ? () => mutate(id) : undefined}
-                    loading={isLoading}
                 />
             </Modal>
         </>

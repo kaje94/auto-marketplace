@@ -50,7 +50,7 @@ const MenuItem: FC<ContextMenuItemProp> = ({ link, label, icon, onClick, classNa
     return (
         <li>
             {link ? (
-                <Link href={link} className="flex">
+                <Link className="flex" href={link}>
                     <div className={clsx("flex flex-1 items-center justify-between font-medium", classNames)}>
                         {label}
                         {icon}
@@ -58,13 +58,13 @@ const MenuItem: FC<ContextMenuItemProp> = ({ link, label, icon, onClick, classNa
                 </Link>
             ) : (
                 <div
+                    className={clsx("flex flex-1 items-center justify-between font-medium", classNames)}
                     onClick={(event) => {
                         event.preventDefault();
                         if (onClick) {
                             onClick();
                         }
                     }}
-                    className={clsx("flex flex-1 items-center justify-between font-medium", classNames)}
                 >
                     {label}
                     {icon}

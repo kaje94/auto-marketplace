@@ -12,34 +12,34 @@ export const NavBarAuth = ({ session, notificationCount, loading }: { session?: 
                 <>
                     {session ? (
                         <div className="dropdown-end dropdown">
-                            <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
+                            <label className="btn-ghost btn-circle avatar btn" tabIndex={0}>
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
                                     <Avatar
+                                        name={session?.user?.name!}
                                         url="https://lh3.googleusercontent.com/a/AAcHTtd7MmSI5uFKspCkopw4j4fnk64GQYhA2zL-EOKSdjTtNxk=s96-c-rg-br100"
                                         width={40}
-                                        name={session?.user?.name!}
                                     />
                                     {notificationCount ? (
                                         <div className=" badge badge-primary badge-md absolute -right-1 -top-1 z-10 flex aspect-square items-center justify-center border-2 border-accent bg-gradient-to-t from-secondary to-primary p-0.5 text-neutral shadow-2xl">
-                                            <NotificationIcon strokeWidth={3} className="animate-pulse" />
+                                            <NotificationIcon className="animate-pulse" strokeWidth={3} />
                                         </div>
                                     ) : null}
                                 </div>
                             </label>
 
                             <ul
-                                tabIndex={0}
                                 className="dropdown-content menu rounded-box z-20 -mr-1 mt-3 w-60 rounded-tr-none bg-neutral p-2 text-neutral-content shadow-md shadow-black"
+                                tabIndex={0}
                             >
-                                <NavBarMenuLink link="/dashboard/profile" label="Profile" icon={<UserIcon height={18} />} />
+                                <NavBarMenuLink icon={<UserIcon height={18} />} label="Profile" link="/dashboard/profile" />
                                 <NavBarMenuLink
-                                    link="/dashboard/notifications"
-                                    label="Notifications"
-                                    icon={<NotificationIcon height={18} />}
                                     badgeCount={notificationCount}
+                                    icon={<NotificationIcon height={18} />}
+                                    label="Notifications"
+                                    link="/dashboard/notifications"
                                 />
-                                <NavBarMenuLink link="/dashboard/my-listings" label="My Adverts" icon={<AdvertIcon height={18} />} />
-                                <NavBarMenuLink link="/dashboard/my-subscriptions" label="My Subscriptions" icon={<RssIcon height={18} />} />
+                                <NavBarMenuLink icon={<AdvertIcon height={18} />} label="My Adverts" link="/dashboard/my-listings" />
+                                <NavBarMenuLink icon={<RssIcon height={18} />} label="My Subscriptions" link="/dashboard/my-subscriptions" />
                                 <div className="divider mx-3 my-1 h-0.5 rounded bg-gray-800" />
                                 <NavBarLogoutButton />
                             </ul>

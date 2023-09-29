@@ -1,5 +1,5 @@
 import { ListingsCarousel } from "@/components/ListingsCarousel";
 
 export default function Loading() {
-    return <ListingsCarousel loading bgFromColor="from-base-200" />;
+    return <ListingsCarousel bgFromColor="from-base-200" loading />;
 }

@@ -20,11 +20,11 @@ export default async function Page({ searchParams }: SearchParams) {
     return (
         <DashboardSubscriptionsContextProvider>
             <DashboardListHeader
-                itemCount={listingSubscriptions.totalCount}
-                filter={<DashboardAllSubscriptionFilter />}
                 addNewButton={{ label: "New Subscription", path: "/dashboard/new-subscription" }}
+                filter={<DashboardAllSubscriptionFilter />}
+                itemCount={listingSubscriptions.totalCount}
             />
-            <DashboardAllSubscriptionList listingSubscriptions={listingSubscriptions} basePath="/dashboard/subscriptions" />
+            <DashboardAllSubscriptionList basePath="/dashboard/subscriptions" listingSubscriptions={listingSubscriptions} />
         </DashboardSubscriptionsContextProvider>
     );
 }

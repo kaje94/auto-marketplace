@@ -13,7 +13,7 @@ const DetailsItem = ({ title, value }: { title: string; value: string }) => (
 export default async function Page() {
     return (
         <>
-            <BreadCrumbs links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} currentPageTitle="Profile" />
+            <BreadCrumbs currentPageTitle="Profile" links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} />
 
             <div className="stat card flex flex-col items-center gap-4 bg-base-100 p-4 shadow ">
                 <div className="rounded-box flex w-full flex-col items-center gap-2 bg-gradient-to-t from-base-300 to-base-200 p-2 md:p-3 lg:gap-4 xl:p-6">

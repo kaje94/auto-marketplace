@@ -38,14 +38,14 @@ export const DashboardNotificationsFilter: FC = () => {
 
     return (
         <span className={clsx("dropdown-end dropdown flex justify-end ", dropdownOpen && "dropdown-open")}>
-            <FilterButton loading={isLoading} dropdownOpen={dropdownOpen} handleFilterOpen={handleFilterOpen} hasSearchParams={hasSearchParams} />
+            <FilterButton dropdownOpen={dropdownOpen} handleFilterOpen={handleFilterOpen} hasSearchParams={hasSearchParams} loading={isLoading} />
             <ClickAwayListener onClickAway={() => setDropdownOpen(false)}>
                 <ul className="dropdown-content menu rounded-box z-[1] -mr-1 mt-7 w-max !overflow-visible rounded-tr-none border-2 border-base-300 bg-base-200 p-0 shadow-lg md:max-w-md">
                     <form className="flex flex-col">
                         <div className="flex items-center justify-between gap-2 p-2 md:p-3">
                             <div className="text-sm font-semibold">Filters</div>
                             {hasSearchParams && (
-                                <button disabled={isLoading} className="btn-accent btn-outline btn-xs btn" onClick={onResetClick}>
+                                <button className="btn-accent btn-outline btn-xs btn" disabled={isLoading} onClick={onResetClick}>
                                     Reset Applied Filters
                                 </button>
                             )}
@@ -53,23 +53,23 @@ export const DashboardNotificationsFilter: FC = () => {
                         <div className="grid max-h-96 grid-cols-1 gap-0.5 overflow-y-auto px-2 py-1 md:max-h-max md:grid-cols-2 md:gap-2 md:px-3">
                             <div className="col-span-full">
                                 <SelectController
+                                    control={control}
+                                    fieldName="IsShown"
                                     label="Type"
                                     options={[
                                         { label: "Seen notifications", value: "true" },
                                         { label: "New notifications", value: "false" },
                                     ]}
                                     placeholder="All notifications"
-                                    control={control}
-                                    fieldName="IsShown"
                                 />
                             </div>
-                            <InputController label="From" placeholder="Notifications from date" type="date" fieldName="StartDate" control={control} />
-                            <InputController label="To" placeholder="Notifications to date" type="date" fieldName="EndDate" control={control} />
+                            <InputController control={control} fieldName="StartDate" label="From" placeholder="Notifications from date" type="date" />
+                            <InputController control={control} fieldName="EndDate" label="To" placeholder="Notifications to date" type="date" />
                         </div>
                         <button
                             className="btn-neutral btn-wide btn-sm btn mx-2 mb-3 mt-6 place-self-center"
-                            onClick={handleSubmit(onApplyFilterClick)}
                             disabled={isLoading}
+                            onClick={handleSubmit(onApplyFilterClick)}
                         >
                             {isLoading ? "Applying Filters..." : "Apply Filters"}
                         </button>

@@ -30,73 +30,73 @@ export const SubscriptionForm: FC<Props> = (props) => {
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Subscription Configurations</div>
                         <InputController
-                            fieldName="displayName"
-                            placeholder="Name of the subscription"
-                            loading={isLoading}
-                            label="Display Name"
                             control={control}
+                            fieldName="displayName"
+                            label="Display Name"
+                            loading={isLoading}
+                            placeholder="Name of the subscription"
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <AutocompleteController
-                                label="Subscription Frequency"
-                                placeholder="Select Frequency"
-                                loading={isLoading}
-                                required
-                                options={SubscriptFrequenciesList}
                                 control={control}
                                 fieldName="notificationFrequency"
+                                label="Subscription Frequency"
+                                loading={isLoading}
+                                options={SubscriptFrequenciesList}
+                                placeholder="Select Frequency"
+                                required
                             />
                             <DatePickerController
-                                label="Subscription expiry date"
-                                placeholderText="01/01/2025"
-                                minDate={Dates.Days_7_from_now}
-                                loading={isLoading}
-                                required
                                 control={control}
                                 fieldName="subscriptionExpiryDate"
+                                label="Subscription expiry date"
+                                loading={isLoading}
+                                minDate={Dates.Days_7_from_now}
+                                placeholderText="01/01/2025"
+                                required
                             />
                         </div>
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Key Specifications</div>
                         <AutocompleteController
-                            label="Type"
-                            placeholder="Select Type"
-                            required
-                            options={VehicleTypeList}
-                            loading={isLoading}
                             control={control}
                             fieldName="type"
+                            label="Type"
+                            loading={isLoading}
+                            options={VehicleTypeList}
+                            placeholder="Select Type"
+                            required
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
+                                control={control}
                                 fieldName="brand"
-                                placeholder="Toyota, Nissan, Honda, etc"
                                 label="Brand"
                                 loading={isLoading}
-                                control={control}
+                                placeholder="Toyota, Nissan, Honda, etc"
                             />
                             <InputController
+                                control={control}
                                 fieldName="model"
-                                placeholder="Civic, Sunny, Swift, etc"
                                 label="Model"
                                 loading={isLoading}
-                                control={control}
+                                placeholder="Civic, Sunny, Swift, etc"
                             />
                             <InputController
+                                control={control}
                                 fieldName="trim"
-                                placeholder="LX, EX, EX-L, Sport, etc"
                                 label="Trim"
                                 loading={isLoading}
-                                control={control}
+                                placeholder="LX, EX, EX-L, Sport, etc"
                             />
                             <AutocompleteController
-                                label="Condition"
-                                placeholder="Select Condition"
-                                options={VehicleConditionList}
-                                loading={isLoading}
                                 control={control}
                                 fieldName="condition"
+                                label="Condition"
+                                loading={isLoading}
+                                options={VehicleConditionList}
+                                placeholder="Select Condition"
                             />
                         </div>
                     </div>
@@ -106,24 +106,24 @@ export const SubscriptionForm: FC<Props> = (props) => {
                         <div className="stat-title">Manufactured Year</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
-                                placeholder="1990"
-                                label="Manufactured after"
-                                type="number"
-                                min={YearSelectMinYear}
-                                max={new Date().getFullYear()}
-                                loading={isLoading}
-                                fieldName="minYearOfManufacture"
                                 control={control}
+                                fieldName="minYearOfManufacture"
+                                label="Manufactured after"
+                                loading={isLoading}
+                                max={new Date().getFullYear()}
+                                min={YearSelectMinYear}
+                                placeholder="1990"
+                                type="number"
                             />
                             <InputController
-                                placeholder="2000"
-                                label="Manufactured before"
-                                type="number"
-                                min={YearSelectMinYear}
-                                max={new Date().getFullYear()}
-                                loading={isLoading}
-                                fieldName="maxYearOfManufacture"
                                 control={control}
+                                fieldName="maxYearOfManufacture"
+                                label="Manufactured before"
+                                loading={isLoading}
+                                max={new Date().getFullYear()}
+                                min={YearSelectMinYear}
+                                placeholder="2000"
+                                type="number"
                             />
                         </div>
                     </div>
@@ -131,24 +131,24 @@ export const SubscriptionForm: FC<Props> = (props) => {
                         <div className="stat-title">Registered Year</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
-                                placeholder="2010"
-                                label="Registered after"
-                                type="number"
-                                min={YearSelectMinYear}
-                                max={new Date().getFullYear()}
-                                loading={isLoading}
-                                fieldName="minYearOfRegistration"
                                 control={control}
+                                fieldName="minYearOfRegistration"
+                                label="Registered after"
+                                loading={isLoading}
+                                max={new Date().getFullYear()}
+                                min={YearSelectMinYear}
+                                placeholder="2010"
+                                type="number"
                             />
                             <InputController
-                                placeholder="2020"
-                                label="Registered before"
-                                type="number"
-                                min={YearSelectMinYear}
-                                max={new Date().getFullYear()}
-                                loading={isLoading}
-                                fieldName="maxYearOfRegistration"
                                 control={control}
+                                fieldName="maxYearOfRegistration"
+                                label="Registered before"
+                                loading={isLoading}
+                                max={new Date().getFullYear()}
+                                min={YearSelectMinYear}
+                                placeholder="2020"
+                                type="number"
                             />
                         </div>
                     </div>
@@ -156,20 +156,20 @@ export const SubscriptionForm: FC<Props> = (props) => {
                         <div className="stat-title">Price Range</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
-                                placeholder="1000000"
-                                label="Minimum Price"
-                                type="number"
-                                loading={isLoading}
-                                fieldName="minPrice.amount"
                                 control={control}
+                                fieldName="minPrice.amount"
+                                label="Minimum Price"
+                                loading={isLoading}
+                                placeholder="1000000"
+                                type="number"
                             />
                             <InputController
-                                placeholder="1000000"
-                                label="Maximum Price"
-                                type="number"
-                                loading={isLoading}
-                                fieldName="maxPrice.amount"
                                 control={control}
+                                fieldName="maxPrice.amount"
+                                label="Maximum Price"
+                                loading={isLoading}
+                                placeholder="1000000"
+                                type="number"
                             />
                         </div>
                     </div>
@@ -177,20 +177,20 @@ export const SubscriptionForm: FC<Props> = (props) => {
                         <div className="stat-title">Milage</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
-                                placeholder="10000"
-                                label="Minimum milage"
-                                type="number"
-                                loading={isLoading}
-                                fieldName="minMillage"
                                 control={control}
+                                fieldName="minMillage"
+                                label="Minimum milage"
+                                loading={isLoading}
+                                placeholder="10000"
+                                type="number"
                             />
                             <InputController
-                                placeholder="1000000"
-                                label="Maximum milage"
-                                type="number"
-                                loading={isLoading}
-                                fieldName="maxMillage"
                                 control={control}
+                                fieldName="maxMillage"
+                                label="Maximum milage"
+                                loading={isLoading}
+                                placeholder="1000000"
+                                type="number"
                             />
                         </div>
                     </div>
@@ -198,9 +198,9 @@ export const SubscriptionForm: FC<Props> = (props) => {
             </div>
             <div className="mt-5 flex justify-end">
                 <button
-                    type="submit"
                     className="btn-neutral btn-wide btn"
                     disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
+                    type="submit"
                 >
                     {isMutating ? submitButton.mutatingText ?? "Loading..." : submitButton.text ?? "Submit"}
                 </button>

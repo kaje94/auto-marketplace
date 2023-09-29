@@ -61,29 +61,29 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
     }, [visible, reset, defaultForm]);
 
     return (
-        <Modal visible={!!visible} onVisibleChange={setVisible} title="Report Advert" titleClassNames="text-error">
+        <Modal onVisibleChange={setVisible} title="Report Advert" titleClassNames="text-error" visible={!!visible}>
             <form className="grid gap-1">
                 <SelectController
-                    label="Reason"
-                    selectablePlaceholder={false}
-                    options={ListingReportReasonList}
-                    required
                     control={control}
                     fieldName="status"
+                    label="Reason"
+                    options={ListingReportReasonList}
+                    required
+                    selectablePlaceholder={false}
                 />
-                <InputController label="Email" placeholder="user@gmail.com" required type="email" fieldName="emailAddress" control={control} />
+                <InputController control={control} fieldName="emailAddress" label="Email" placeholder="user@gmail.com" required type="email" />
                 <TextAreaController
+                    control={control}
+                    fieldName="message"
                     label="Message"
                     placeholder="Additional details on why you are reporting this advert"
                     required
-                    control={control}
-                    fieldName="message"
                 />
                 <ModalFooter
-                    primaryButton={{ text: "Report Advert" }}
-                    onVisibleChange={setVisible}
-                    onSubmit={handleSubmit((values) => mutate(values))}
                     loading={isLoading}
+                    onSubmit={handleSubmit((values) => mutate(values))}
+                    onVisibleChange={setVisible}
+                    primaryButton={{ text: "Report Advert" }}
                 />
             </form>
         </Modal>

@@ -15,8 +15,8 @@ export const CheckboxController: FC<ControllerProps> = (props) => {
 
     return (
         <Controller
-            name={fieldName}
             control={control}
+            name={fieldName}
             render={({ field, fieldState }) => (
                 <div className="form-control mb-1 mt-2">
                     <Checkbox {...rest} {...field} ref={field.ref} />

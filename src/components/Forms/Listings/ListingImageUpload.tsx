@@ -67,7 +67,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
 
     return (
         <>
-            <input ref={formRef} className="h-0 w-0" />
+            <input className="h-0 w-0" ref={formRef} />
             <div className="mt-2 flex flex-wrap gap-2" {...getRootProps({})}>
                 {files?.map((file, index) => {
                     if (file.deleted) {
@@ -75,8 +75,8 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                     }
                     return (
                         <div
-                            className="rounded-box relative box-border inline-flex aspect-square w-[calc(33%-6px)] border-[1px] border-base-300 hover:shadow sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)]"
                             key={`${index}-${file.name}`}
+                            className="rounded-box relative box-border inline-flex aspect-square w-[calc(33%-6px)] border-[1px] border-base-300 hover:shadow sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)]"
                         >
                             <div
                                 className={clsx({
@@ -87,21 +87,21 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                             >
                                 {file.preview ? (
                                     <Image
-                                        src={file.preview}
                                         alt="Image-preview"
-                                        unoptimized
-                                        height={100}
-                                        width={100}
                                         className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
+                                        height={100}
+                                        src={file.preview}
+                                        unoptimized
+                                        width={100}
                                     />
                                 ) : (
                                     <ListingImage
-                                        image={file}
-                                        title={title || `new-listing-image-${index}`}
-                                        location={location as Location}
-                                        height={300}
-                                        width={450}
                                         className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
+                                        height={300}
+                                        image={file}
+                                        location={location as Location}
+                                        title={title || `new-listing-image-${index}`}
+                                        width={450}
                                     />
                                 )}
                             </div>
@@ -119,13 +119,13 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
 
                                 {!file.isThumbnail && (
                                     <button
+                                        className="h-full w-full cursor-pointer"
                                         onClick={(event) => {
                                             if (!file.isThumbnail) {
                                                 setFiles(files.map((item, i) => ({ ...item, isThumbnail: index === i })));
                                             }
                                             event.preventDefault();
                                         }}
-                                        className="h-full w-full cursor-pointer"
                                     >
                                         <span className="rounded-box absolute inset-x-0 bottom-0 rounded-t-none bg-base-content bg-opacity-70 py-1 text-center text-xs font-medium text-base-100 xl:bg-opacity-90 ">
                                             Set as Thumbnail
@@ -156,13 +156,13 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                     <>
                         {files.filter((item) => !item.deleted).length < MaxVehicleImageCount && (
                             <div
-                                onClick={open}
                                 className={clsx({
                                     "rounded-box flex aspect-square w-[calc(33%-6px)] sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)] cursor-pointer flex-col items-center justify-center border border-dashed  bg-base-200 p-0 sm:p-2 duration-150 hover:bg-base-300":
                                         true,
                                     "border-error text-error": error,
                                     "border-base-300 text-opacity-80 text-base-content": !error,
                                 })}
+                                onClick={open}
                             >
                                 <PlusIcon className="h-10 w-10" />
                                 <div className="text-center text-xs">Add Images</div>

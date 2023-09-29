@@ -20,10 +20,10 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
             <label className={clsx("label", !loading && "cursor-pointer")}>
                 <span className="label-text">{label}</span>
                 <input
-                    ref={ref}
-                    disabled={loading}
-                    type="checkbox"
                     className={clsx("checkbox", loading && "animate-pulse", checkboxClassNames)}
+                    disabled={loading}
+                    ref={ref}
+                    type="checkbox"
                     {...rest}
                 />
             </label>
