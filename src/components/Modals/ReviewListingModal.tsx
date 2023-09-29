@@ -6,7 +6,7 @@ import { ReviewListingSchema } from "@/utils/schemas";
 import { ListingItem, ReviewListingReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ModalFooter, Modal } from "@/components";
+import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { useMutation } from "@tanstack/react-query";
 import { reviewListingAction } from "@/actions/listingActions";
 import toast from "react-hot-toast";
@@ -24,7 +24,7 @@ export const ReviewListingModal = (props: Props) => {
     const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
     const toastId = useRef<string>();
 
-    const { formState, handleSubmit, register, control } = useForm<ReviewListingReq>({
+    const { handleSubmit, control } = useForm<ReviewListingReq>({
         resolver: zodResolver(ReviewListingSchema),
         defaultValues: { listingId, status: ListingStatusTypes.Posted },
         mode: "all",

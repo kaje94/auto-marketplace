@@ -1,4 +1,4 @@
-import { NavBar, Footer, BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { ChildrenProps } from "@/utils/types";
 
 export default function Layout({ children }: ChildrenProps) {

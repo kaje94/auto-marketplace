@@ -1,5 +1,5 @@
 import { api } from "@/utils/api";
-import { BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { SubscriptionIdPathParam } from "@/utils/types";
 import { EditSubscriptionForm } from "@/components/Forms/ListingSubscriptions/EditSubscriptionForm";
 

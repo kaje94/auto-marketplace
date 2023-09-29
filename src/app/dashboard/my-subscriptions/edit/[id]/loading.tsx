@@ -1,4 +1,4 @@
-import { BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { SubscriptionForm } from "@/components/Forms/ListingSubscriptions/SubscriptionForm";
 
 export default function Loading() {

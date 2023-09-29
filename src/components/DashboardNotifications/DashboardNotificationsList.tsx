@@ -1,8 +1,7 @@
 "use client";
 
-import { FC, useEffect } from "react";
-import { Empty } from "@/components/Empty";
-import { Pagination } from "@/components/Pagination";
+import { FC } from "react";
+import { Empty, Pagination } from "@/components/Common";
 import { PaginatedResponse, NotificationItems } from "@/utils/types";
 import { StringifiableRecord } from "query-string";
 import { useAutoAnimate } from "@formkit/auto-animate/react";

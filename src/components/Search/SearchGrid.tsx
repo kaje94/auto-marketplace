@@ -1,5 +1,5 @@
 "use client";
-import { Empty, ListingItem, Pagination } from "@/components";
+import { Empty, Pagination, ListingItem } from "@/components/Common";
 import { Select } from "@/components/FormElements/Select";
 import { useSearchContext } from "@/providers/search-provider";
 import { PaginatedResponse, ListingItems } from "@/utils/types";

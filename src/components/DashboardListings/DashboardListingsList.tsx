@@ -1,8 +1,6 @@
 "use client";
 
 import { Dispatch, FC, SetStateAction } from "react";
-import { Empty } from "@/components/Empty";
-import { Pagination } from "@/components/Pagination";
 import { Session } from "next-auth";
 import { PaginatedResponse, ListingItems } from "@/utils/types";
 import { StringifiableRecord } from "query-string";
@@ -11,6 +9,7 @@ import { useDashboardSubscriptionsContext } from "@/providers/dashboard-subscrip
 import clsx from "clsx";
 import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
 import { DashboardListingItem } from "./DashboardListingItem";
+import { Empty, Pagination } from "@/components/Common";
 
 interface Props {
     session?: Session | null;

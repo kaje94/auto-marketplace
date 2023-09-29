@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FC, ReactNode, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 
-export interface MenuItemProp {
+export interface ContextMenuItemProp {
     onClick?: () => void;
     link?: string;
     label: string;
@@ -14,7 +14,7 @@ export interface MenuItemProp {
 }
 
 interface Props {
-    menuItems: MenuItemProp[];
+    menuItems: ContextMenuItemProp[];
 }
 
 export const ContextMenuLoading: FC = () => {
@@ -48,7 +48,7 @@ export const ContextMenu: FC<Props> = ({ menuItems = [] }) => {
     );
 };
 
-const MenuItem: FC<MenuItemProp> = ({ link, label, icon, onClick, classNames }) => {
+const MenuItem: FC<ContextMenuItemProp> = ({ link, label, icon, onClick, classNames }) => {
     return (
         <li>
             {link ? (

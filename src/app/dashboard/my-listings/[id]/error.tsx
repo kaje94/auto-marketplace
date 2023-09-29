@@ -1,5 +1,5 @@
 "use client";
-import { BreadCrumbs, ErrorComponent } from "@/components";
+import { ErrorComponent, BreadCrumbs } from "@/components/Common";
 import { ErrorPageProps } from "@/utils/types";
 
 export default function Error(props: ErrorPageProps) {

@@ -6,7 +6,7 @@ import { UnListListingSchema } from "@/utils/schemas";
 import { LabelValue, ListingItem, UnListListingReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ModalFooter, Modal } from "@/components";
+import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { useMutation } from "@tanstack/react-query";
 import { unListListingAction } from "@/actions/listingActions";
 import toast from "react-hot-toast";
@@ -25,7 +25,7 @@ export const UnListListingModal = (props: Props) => {
     const toastId = useRef<string>();
     const router = useRouter();
 
-    const { formState, handleSubmit, register, control } = useForm<UnListListingReq>({
+    const { handleSubmit, control } = useForm<UnListListingReq>({
         resolver: zodResolver(UnListListingSchema),
         defaultValues: { listingId, listingStatus: ListingStatusTypes.Sold },
         mode: "all",

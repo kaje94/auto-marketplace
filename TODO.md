@@ -17,6 +17,12 @@ https://next-s3-upload.codingvalue.com/setup
 - [] check max length of all strings in schema file
 - [] invalidate notification after admin approves or rejects
 - [] get vehicle brands and models from API
+- [] add clearable prop to form elements
+- [] check if we can have only one provider for searching
+- [] brand and models needs to come from API
+- [] try out the date picker package for year select
+- [] contact us section
+- [] view more adverts button in featured adverts
 
 
 > Web app performance improvements
@@ -25,6 +31,6 @@ https://next-s3-upload.codingvalue.com/setup
 - [] https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading
 - [] add react memo throughout
 - [] remove async from components if not needed
-
+- [] contact us section?
 
 

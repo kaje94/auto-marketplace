@@ -2,7 +2,7 @@ import { getFormattedCurrency, getLocationString } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 import { FC } from "react";
 import { ListingImageCarousel } from "./ListingImageCarousel";
-import { FeaturesOfListing } from "./FeaturesOfListing";
+import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
 import { ListingKeySpecifications } from "./ListingKeySpecifications";
 import { ListingSellerDetails } from "./ListingSellerDetails";
 import clsx from "clsx";
@@ -88,7 +88,7 @@ export const ListingDetails: FC<Props> = ({
                 </div>
                 <div className="stat card place-items-center bg-base-100 shadow">
                     <div className="stat-title">Features</div>
-                    <FeaturesOfListing vehicle={vehicle} loading={loading} />
+                    <ListingDetailsFeatures vehicle={vehicle} loading={loading} />
                 </div>
                 {showSellerDetails && (
                     <div className="stat card place-items-center bg-base-100 shadow">

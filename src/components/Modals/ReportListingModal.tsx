@@ -1,5 +1,5 @@
 import { reportListingAction } from "@/actions/listingActions";
-import { Modal, ModalFooter } from "@/components";
+import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef } from "react";
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
         [userEmail, listingId]
     );
 
-    const { formState, handleSubmit, register, reset, control } = useForm<ReportListingReq>({
+    const { handleSubmit, reset, control } = useForm<ReportListingReq>({
         resolver: zodResolver(ReportListingSchema),
         defaultValues: defaultForm,
         mode: "all",

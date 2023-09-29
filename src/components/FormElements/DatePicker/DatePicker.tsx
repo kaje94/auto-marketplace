@@ -1,5 +1,5 @@
 "use client";
-import { FC, forwardRef } from "react";
+import { forwardRef } from "react";
 import clsx from "clsx";
 import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

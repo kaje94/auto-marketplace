@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, FC, forwardRef } from "react";
+import { ComponentProps, forwardRef } from "react";
 import clsx from "clsx";
 import { Control } from "react-hook-form";
 

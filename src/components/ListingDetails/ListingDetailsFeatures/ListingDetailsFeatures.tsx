@@ -8,7 +8,7 @@ interface Props {
     loading?: boolean;
 }
 
-export const FeaturesOfListing: FC<Props> = ({ vehicle, loading }) => {
+export const ListingDetailsFeatures: FC<Props> = ({ vehicle, loading }) => {
     const placeholderWidth = ["w-44", "w-24", "w-32", "w-40", "w-48", "w-28", "w-16", "w-14"];
 
     return (

@@ -7,7 +7,7 @@ import { RenewListingItemModal } from "@/components/Modals/RenewListingItemModal
 import { DeleteListingItemModal } from "@/components/Modals/DeleteListingItemModal";
 import { ReviewListingModal } from "@/components/Modals/ReviewListingModal";
 import { UnListListingModal } from "@/components/Modals/UnListListingModal";
-import { ContextMenu, MenuItemProp } from "@/components/Common/ContextMenu";
+import { ContextMenu, ContextMenuItemProp } from "@/components/Common";
 
 interface Props {
     listingItem?: ListingItem;
@@ -22,7 +22,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
     const [reviewModalVisible, setReviewModalVisible] = useState(false);
     const [unListModalVisible, setUnListModalVisible] = useState(false);
 
-    const menuItems: MenuItemProp[] = [];
+    const menuItems: ContextMenuItemProp[] = [];
 
     if (status && status === ListingStatusTypes.Posted) {
         menuItems.push({

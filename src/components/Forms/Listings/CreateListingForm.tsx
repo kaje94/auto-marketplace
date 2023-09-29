@@ -44,7 +44,7 @@ export const CreateListingForm = (props: Props) => {
             return createListingAction(requestBody, userId!);
         },
         {
-            onSuccess: (id, req) => {
+            onSuccess: (id) => {
                 if (window?.location?.pathname === "/dashboard/new-listing") {
                     router.replace(`/dashboard/my-listings/${id}`);
                 }

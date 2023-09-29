@@ -1,4 +1,4 @@
-import { BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { Avatar } from "@/components/Common/Avatar";
 import Image from "next/image";
 

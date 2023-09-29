@@ -1,4 +1,4 @@
-import { BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
 import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";

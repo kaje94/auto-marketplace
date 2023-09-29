@@ -21,7 +21,7 @@ interface Props {
 
 export const SubscriptionForm: FC<Props> = (props) => {
     const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {} } = props;
-    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control } = form as UseFormReturn<CreateSubscriptionReq>;
+    const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<CreateSubscriptionReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>

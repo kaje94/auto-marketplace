@@ -1,8 +1,6 @@
 import { PlusIcon } from "@/icons";
 import { FC, ReactNode } from "react";
 import Link from "next/link";
-import { DashboardMyListFilter } from "./DashboardMyListFilter";
-import { DashboardAllListFilter } from "./DashboardAllListFilter";
 
 interface Props {
     loading?: boolean;

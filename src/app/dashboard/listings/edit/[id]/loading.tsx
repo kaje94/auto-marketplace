@@ -1,4 +1,4 @@
-import { BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
 
 export default function Loading() {

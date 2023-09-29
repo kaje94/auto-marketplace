@@ -45,6 +45,7 @@ export const FormFieldControllerWrap: FC<FormFieldControllerProps> = ({
         )}
 
         {children}
+
         {error && !errorAsTooltip && (
             <label className="label pb-0 pt-0.5">
                 <span className="label-text-alt text-xs text-error">{error}</span>

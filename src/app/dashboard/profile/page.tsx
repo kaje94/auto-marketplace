@@ -1,7 +1,6 @@
-import { BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { Avatar } from "@/components/Common/Avatar";
 import { EditIcon, TrashIcon } from "@/icons";
-import Image from "next/image";
 import Link from "next/link";
 
 const DetailsItem = ({ title, value }: { title: string; value: string }) => (

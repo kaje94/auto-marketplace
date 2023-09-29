@@ -1,5 +1,4 @@
-import { DashboardListHeader } from "@/components";
-import { api, apiTags } from "@/utils/api";
+import { api } from "@/utils/api";
 import { SearchParams } from "@/utils/types";
 import { redirect } from "next/navigation";
 import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
@@ -9,6 +8,7 @@ import { authOptions } from "@/auth/authConfig";
 import { DashboardNotificationsFilter } from "@/components/DashboardListHeader/DashboardNotificationsFilter";
 import { DashboardNotificationsContextProvider } from "@/providers/dashboard-notifications-provider";
 import { DashboardNotificationsList } from "@/components/DashboardNotifications";
+import { DashboardListHeader } from "@/components/DashboardListHeader";
 
 export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";

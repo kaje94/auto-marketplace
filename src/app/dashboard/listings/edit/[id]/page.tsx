@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
-import { BreadCrumbs } from "@/components";
+import { BreadCrumbs } from "@/components/Common";
 import { ListingIdPathParam } from "@/utils/types";
 import { EditListingForm } from "@/components/Forms/Listings/EditListingForm";
 

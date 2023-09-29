@@ -5,9 +5,9 @@ import { PostedListingsFilterReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { InputController } from "./FormElements/Input";
+import { InputController } from "../../FormElements/Input";
 import { VehicleTypeList } from "@/utils/constants";
-import { AutocompleteController } from "./FormElements/AutoComplete";
+import { AutocompleteController } from "../../FormElements/AutoComplete";
 import qs from "query-string";
 
 export const LandingHeroSearch = () => {

@@ -1,4 +1,3 @@
-import { DashboardListHeader } from "@/components";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { SearchParams } from "@/utils/types";
@@ -10,6 +9,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/authConfig";
 import { DashboardListingsContextProvider } from "@/providers/dashboard-listings-provider";
 import { DashboardAllListingsList } from "@/components/DashboardListings/DashboardListingsList";
+import { DashboardListHeader } from "@/components/DashboardListHeader";
 
 export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";

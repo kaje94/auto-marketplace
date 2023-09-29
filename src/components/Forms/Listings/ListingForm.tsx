@@ -1,7 +1,7 @@
 "use client";
 import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { FC } from "react";
-import { FieldError, Controller, UseFormReturn } from "react-hook-form";
+import { Controller, UseFormReturn } from "react-hook-form";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { ListingImageUpload } from "./ListingImageUpload";
@@ -27,7 +27,7 @@ interface Props {
 
 export const ListingForm: FC<Props> = (props) => {
     const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, title } = props;
-    const { handleSubmit, formState: { errors, isDirty } = {}, register = () => {}, control } = form as UseFormReturn<CreateListingReq>;
+    const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<CreateListingReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>

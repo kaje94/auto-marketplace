@@ -1,4 +1,4 @@
-import { Modal, ModalFooter } from "@/components";
+import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import toast from "react-hot-toast";

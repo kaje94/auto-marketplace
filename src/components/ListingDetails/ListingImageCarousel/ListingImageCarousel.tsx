@@ -9,7 +9,6 @@ import { Location, VehicleImageType } from "@/utils/types";
 import { ListingImage } from "@/components/Common";
 import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyName, unCamelCase } from "@/utils/helpers";
 import { VehicleTypes } from "@/utils/enum";
-import { env } from "@/env.mjs";
 
 type PropType = {
     title?: string;

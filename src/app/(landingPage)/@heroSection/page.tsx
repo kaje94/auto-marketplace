@@ -1,5 +1,5 @@
-import { LandingHeroSearch } from "@/components/LandingHeroSearch";
 import { displayFont } from "@/app/fonts";
+import { LandingHeroSearch } from "@/components/LandingSections/LandingHeroSearch";
 import clsx from "clsx";
 import Image from "next/image";
 

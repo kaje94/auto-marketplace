@@ -1,10 +1,8 @@
 "use client";
-import { env } from "@/env.mjs";
 import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyName } from "@/utils/helpers";
 import { Location, VehicleImageType } from "@/utils/types";
 import Image, { ImageProps } from "next/image";
 import { FC, useEffect, useState } from "react";
-import qs from "query-string";
 
 interface Props extends Omit<ImageProps, "src" | "alt"> {
     title: string;

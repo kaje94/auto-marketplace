@@ -4,7 +4,7 @@ import { ToggleSubscriptionSchema } from "@/utils/schemas";
 import { ListingSubscriptionItem, ToggleSubscriptionReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ModalFooter, Modal } from "@/components";
+import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { toggleListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
@@ -22,7 +22,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
     const { id, userId, displayName, active } = listingSubscriptionItem as ListingSubscriptionItem;
     const toastId = useRef<string>();
 
-    const { formState, handleSubmit, control } = useForm<ToggleSubscriptionReq>({
+    const { handleSubmit, control } = useForm<ToggleSubscriptionReq>({
         resolver: zodResolver(ToggleSubscriptionSchema),
         defaultValues: {
             listingSubscriptionId: id,
