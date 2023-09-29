@@ -210,7 +210,11 @@ export const getLocationString = (location?: Location) => {
         itemsArr.push(location.state);
     }
     if (location?.country) {
-        itemsArr.push(location.country);
+        if (location?.country === "LK") {
+            itemsArr.push("Sri Lanka");
+        } else {
+            itemsArr.push(location.country);
+        }
     }
     return itemsArr.join(", ");
 };

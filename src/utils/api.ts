@@ -84,8 +84,6 @@ const getConfigWithAuth = async (config: RequestInit = {}): Promise<RequestInit>
     if (!session) {
         throw new Error("Session not found");
     }
-    console.log("session?.userid", session?.user?.id);
-    console.log("session?.access_token", session?.access_token);
     return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, ...defaultReqHeaders, ...config.headers } };
 };
 
@@ -103,45 +101,55 @@ const fetchApi = {
 };
 
 export const api = {
-    // todo: fix caching strategy for all get endpoints
-    // { next: { revalidate: 0 } } for disabling cache
-    getFeaturesList: () => fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features", { next: { tags: [apiTags.getFeaturesList()] } }),
-    getVehicleBrands: () => fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()] } }),
+    getFeaturesList: () =>
+        fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features", { next: { tags: [apiTags.getFeaturesList()], revalidate: revalidationTime.oneDay } }),
+    getVehicleBrands: () =>
+        fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()], revalidate: revalidationTime.oneDay } }),
     getVehicleModels: (brandId: string) =>
-        fetchApi.get<VehicleFeature[]>(`/v1/Vehicles/${brandId}/models`, { next: { tags: [apiTags.getVehicleModels()] } }),
-    // need to revalidate after XXX
+        fetchApi.get<VehicleFeature[]>(`/v1/Vehicles/${brandId}/models`, {
+            next: { tags: [apiTags.getVehicleModels()], revalidate: revalidationTime.oneDay },
+        }),
     getPostedListings: (req?: PaginatedRequest & PostedListingsFilterReq) =>
         fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
-            next: { revalidate: 0, tags: [apiTags.getPostedListings()] },
+            next: { revalidate: revalidationTime.thirtyMins, tags: [apiTags.getPostedListings()] },
         }),
     getPostedListingItem: (id: ListingIdType) =>
-        fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, { next: { tags: [apiTags.getPostedListingItem(id)] } }),
-    // need to revalidate after XXX
+        fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, {
+            next: { tags: [apiTags.getPostedListingItem(id)], revalidate: revalidationTime.oneDay },
+        }),
     getRelatedListings: (id: ListingIdType) =>
-        fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`, { next: { tags: [apiTags.getRelatedListings(id)] } }),
+        fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`, {
+            next: { tags: [apiTags.getRelatedListings(id)], revalidate: revalidationTime.twelveHours },
+        }),
     postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, ListingIdType>("/v1/Listings", JSON.stringify(body)),
     putListing: (body: EditListingReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Listings/${body.listingId}`, JSON.stringify(body)),
     getListings: (req?: PaginatedRequest & DashboardListFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
-            next: { tags: [apiTags.getListings()] },
+            next: { tags: [apiTags.getListings()], revalidate: revalidationTime.oneDay },
         }),
-    getFeaturedListings: () => fetchApi.get<ListingItem[]>("/v1/Listings/featured-listings", { next: { tags: [apiTags.getFeaturedListings()] } }),
+    getFeaturedListings: () =>
+        fetchApi.get<ListingItem[]>("/v1/Listings/featured-listings", {
+            next: { tags: [apiTags.getFeaturedListings()], revalidate: revalidationTime.twelveHours },
+        }),
     getMyListings: (listingUserId: string, req?: PaginatedRequest & MyListingsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
-            next: { tags: [apiTags.getMyListings(listingUserId)] },
+            next: { tags: [apiTags.getMyListings(listingUserId)], revalidate: revalidationTime.oneDay },
         }),
     getListingsItem: (id: ListingIdType) =>
-        fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`, { next: { tags: [apiTags.getListingsItem(id)] } }),
+        fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`, {
+            next: { tags: [apiTags.getListingsItem(id)], revalidate: revalidationTime.oneDay },
+        }),
     getMyListingsItem: (id: ListingIdType) =>
-        fetchApi.protectedGet<ListingItem>(`/v1/Users/me/listings/${id}`, { next: { tags: [apiTags.getMyListingsItem(id)] } }),
+        fetchApi.protectedGet<ListingItem>(`/v1/Users/me/listings/${id}`, {
+            next: { tags: [apiTags.getMyListingsItem(id)], revalidate: revalidationTime.oneDay },
+        }),
     deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
     unListListing: (body: UnListListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/unlist`, JSON.stringify(body)),
     renewListing: (listingId: ListingIdType) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${listingId}/renew`, JSON.stringify({})),
     incrementViews: (listingId: ListingIdType) =>
-        fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: 0 } }),
+        fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: revalidationTime.noCache } }),
     reportListing: (body: ReportListingReq) => fetchApi.post<BodyInit, void>(`/v1/Listings/${body.listingId}/report`, JSON.stringify(body)),
-    // Listing subscriptions
     postListingSubscription: (body: CreateSubscriptionReq) =>
         fetchApi.protectedPost<BodyInit, ListingSubscriptionIdType>("/v1/ListingSubscriptions", JSON.stringify(body)),
     putListingSubscription: (body: EditSubscriptionReq) =>
@@ -149,29 +157,28 @@ export const api = {
     getListingSubscriptions: (req?: PaginatedRequest & DashboardSubscriptionFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
             `/v1/ListingSubscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
-            { next: { tags: [apiTags.getListingSubscriptions()] } }
+            { next: { tags: [apiTags.getListingSubscriptions()], revalidate: revalidationTime.oneDay } }
         ),
     getMyListingSubscriptions: (listingUserId: string, req?: PaginatedRequest & DashboardMySubscriptionFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
             `/v1/Users/me/listing-subscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
-            { next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)] } }
+            { next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)], revalidate: revalidationTime.oneDay } }
         ),
     getListingSubscriptionItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/ListingSubscriptions/${id}`, {
-            next: { tags: [apiTags.getListingSubscriptionItem(id)] },
+            next: { tags: [apiTags.getListingSubscriptionItem(id)], revalidate: revalidationTime.oneDay },
         }),
     getMyListingSubscriptionItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/Users/me/listing-subscriptions/${id}`, {
-            next: { tags: [apiTags.getMyListingSubscriptionItem(id)] },
+            next: { tags: [apiTags.getMyListingSubscriptionItem(id)], revalidate: revalidationTime.oneDay },
         }),
     deleteListingSubscriptions: (id: ListingSubscriptionIdType) => fetchApi.protectedDelete<void>(`/v1/ListingSubscriptions/${id}`),
     toggleListingSubscription: (body: ToggleSubscriptionReq) =>
         fetchApi.protectedPost<BodyInit, string>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}/toggle-activation`, JSON.stringify(body)),
-
     getMyNotifications: (listingUserId: string, req?: PaginatedRequest & DashboardNotificationsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & NotificationItems>(
             `/v1/Users/me/notifications?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
-            { next: { tags: [apiTags.getMyNotifications(listingUserId)] } }
+            { next: { tags: [apiTags.getMyNotifications(listingUserId)], revalidate: revalidationTime.threeHours } }
         ),
     setAllNotificationsAsShown: () => fetchApi.protectedPost<BodyInit, void>(`/v1/Users/me/notifications/set-all-shown`, ""),
 };
@@ -198,14 +205,26 @@ export const apiTags = {
 export const listingItemTags = (id: ListingIdType, listingUserId: string) => [
     apiTags.getPostedListingItem(id),
     apiTags.getRelatedListings(id),
-    apiTags.getListingsItem(id),
     apiTags.getMyListings(listingUserId),
+    apiTags.getMyListingsItem(id),
     apiTags.getListings(),
+    apiTags.getListingsItem(id),
 ];
 
 export const subscriptionApiTags = (id: ListingSubscriptionIdType, listingUserId: string) => [
-    apiTags.getMyListingSubscriptions(listingUserId),
     apiTags.getListingSubscriptions(),
     apiTags.getListingSubscriptionItem(id),
+    apiTags.getMyListingSubscriptions(listingUserId),
     apiTags.getMyListingSubscriptionItem(id),
 ];
+
+const revalidationTime = {
+    noCache: 0,
+    fifteenMins: 900,
+    thirtyMins: 1800,
+    oneHour: 3600,
+    threeHours: 10800,
+    sixHours: 21600,
+    twelveHours: 43200,
+    oneDay: 86400,
+};
