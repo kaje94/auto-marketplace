@@ -1,10 +1,10 @@
 "use client";
+import { clsx } from "clsx";
 import { ComponentProps, forwardRef } from "react";
-import clsx from "clsx";
 import { Control } from "react-hook-form";
-import { LabelValue } from "@/utils/types";
-import { unCamelCase } from "@/utils/helpers";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
+import { unCamelCase } from "@/utils/helpers";
+import { LabelValue } from "@/utils/types";
 
 export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"select"> {
     selectClassName?: string;

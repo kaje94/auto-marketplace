@@ -1,13 +1,13 @@
-import { Vehicle, Location, VehicleImageType, ListingItem, VehicleCreate, ListingItems, PaginatedResponse } from "./types";
-import * as ThumbHash from "thumbhash";
-import clsx, { ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { deleteObjectFromS3, getPresignedS3Url } from "@/actions/imageActions";
 import imageCompression from "browser-image-compression";
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { ClassValue, clsx } from "clsx";
 import { FastAverageColor } from "fast-average-color";
-import { env } from "@/env.mjs";
+import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "query-string";
+import { twMerge } from "tailwind-merge";
+import * as ThumbHash from "thumbhash";
+import { deleteObjectFromS3, getPresignedS3Url } from "@/actions/imageActions";
+import { env } from "@/env.mjs";
+import { ListingItem, ListingItems, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 

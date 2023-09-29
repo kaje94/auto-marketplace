@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, forwardRef } from "react";
+import { clsx } from "clsx";
+import Image from "next/image";
+import { forwardRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { ListingImage } from "@/components/Common";
 import { PlusIcon, XCircleIcon } from "@/icons";
-import clsx from "clsx";
-import { Location, VehicleImageType } from "@/utils/types";
 import { MaxVehicleImageCount } from "@/utils/constants";
-import Image from "next/image";
+import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props {
     files?: VehicleImageType[];

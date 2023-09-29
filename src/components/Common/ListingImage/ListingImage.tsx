@@ -1,8 +1,8 @@
 "use client";
-import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyName } from "@/utils/helpers";
-import { Location, VehicleImageType } from "@/utils/types";
 import Image, { ImageProps } from "next/image";
 import { FC, useEffect, useState } from "react";
+import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyName } from "@/utils/helpers";
+import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props extends Omit<ImageProps, "src" | "alt"> {
     title: string;

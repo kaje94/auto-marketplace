@@ -1,6 +1,6 @@
 "use server";
-import { api, apiTags } from "@/utils/api";
 import { revalidateTag } from "next/cache";
+import { api, apiTags } from "@/utils/api";
 
 export const setAllNotificationsAsShownActions = async (userId: string) => {
     await api.setAllNotificationsAsShown();

@@ -1,8 +1,8 @@
+import { clsx } from "clsx";
+import Link from "next/link";
+import { FC } from "react";
 import { EditIcon } from "@/icons";
 import { ListingItem } from "@/utils/types";
-import clsx from "clsx";
-import { FC } from "react";
-import Link from "next/link";
 
 interface Props {
     listingItem: ListingItem;

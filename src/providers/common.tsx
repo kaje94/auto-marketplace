@@ -1,6 +1,6 @@
-import { searchParamsToObject } from "@/utils/helpers";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React, { createContext, useMemo, useState } from "react";
+import { searchParamsToObject } from "@/utils/helpers";
 
 export interface FiltersContextProps {
     newSearchQuery: string;
@@ -20,7 +20,7 @@ export const defaultFiltersValue: FiltersContextProps = {
     searchParamStr: "",
 };
 
-export const FiltersContext = React.createContext<FiltersContextProps>(defaultFiltersValue);
+export const FiltersContext = createContext<FiltersContextProps>(defaultFiltersValue);
 
 export const useSearchFilters = () => {
     const searchParams = useSearchParams();

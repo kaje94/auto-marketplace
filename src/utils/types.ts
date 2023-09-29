@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ListingStatusTypes, NotificationTypes, SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "./enum";
 import {
     CreateListingSchema,
     CreateSubscriptionSchema,
@@ -18,12 +19,11 @@ import {
     ReviewListingSchema,
     ToggleSubscriptionSchema,
     UnListListingSchema,
+    vehicleCreateSchema,
     VehicleFeatureSchema,
     VehicleImageSchema,
     VehicleSchema,
-    vehicleCreateSchema,
 } from "./schemas";
-import { ListingStatusTypes, NotificationTypes, SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "./enum";
 
 export type KeyValue = { [key: string]: string };
 

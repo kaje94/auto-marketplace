@@ -1,9 +1,9 @@
 "use client";
+import { clsx } from "clsx";
 import Link from "next/link";
-import { HomeIcon, RefreshIcon, ActivityIcon } from "@/icons";
-import { displayFont } from "@/app/fonts";
-import clsx from "clsx";
 import { FC } from "react";
+import { displayFont } from "@/app/fonts";
+import { ActivityIcon, HomeIcon, RefreshIcon } from "@/icons";
 
 interface Props {
     error?: Error | string;

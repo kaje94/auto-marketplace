@@ -1,8 +1,8 @@
 "use client";
+import { clsx } from "clsx";
 import Link from "next/link";
-import { FC } from "react";
 import qs, { StringifiableRecord } from "query-string";
-import clsx from "clsx";
+import { FC } from "react";
 
 interface Props {
     pageNumber?: number;

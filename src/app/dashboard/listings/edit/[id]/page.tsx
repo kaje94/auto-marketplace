@@ -1,8 +1,8 @@
+import { BreadCrumbs } from "@/components/Common";
+import { EditListingForm } from "@/components/Forms/Listings/EditListingForm";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
-import { BreadCrumbs } from "@/components/Common";
 import { ListingIdPathParam } from "@/utils/types";
-import { EditListingForm } from "@/components/Forms/Listings/EditListingForm";
 
 export default async function Page({ params }: ListingIdPathParam) {
     const [itemDetails, features] = await Promise.all([transformListingResponse(await api.getListingsItem(params.id)), api.getFeaturesList()]);

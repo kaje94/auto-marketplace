@@ -1,11 +1,11 @@
 "use client";
-import React, { useCallback } from "react";
-import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
-import { PrevButton, NextButton, usePrevNextButtons } from "./ListingsCarouselButtons";
+import { clsx } from "clsx";
 import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
+import React, { useCallback } from "react";
 import { Empty, ListingItem } from "@/components/Common";
 import { ListingItem as ListingItemType } from "@/utils/types";
-import clsx from "clsx";
+import { NextButton, PrevButton, usePrevNextButtons } from "./ListingsCarouselButtons";
 
 type Props = {
     items?: ListingItemType[];

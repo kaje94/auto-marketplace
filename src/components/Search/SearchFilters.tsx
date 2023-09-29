@@ -1,18 +1,18 @@
 "use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { clsx } from "clsx";
+import debounce from "lodash.debounce";
+import { useRouter } from "next/navigation";
+import qs from "query-string";
+import { useCallback, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
+import { useSearchContext } from "@/providers/search-provider";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
 import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { PostedListingsFilterReq } from "@/utils/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import qs from "query-string";
-import debounce from "lodash.debounce";
-import clsx from "clsx";
-import { useSearchContext } from "@/providers/search-provider";
 
 const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>, callback?: Function) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);

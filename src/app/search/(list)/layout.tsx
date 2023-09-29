@@ -1,5 +1,5 @@
-import { SearchContextProvider } from "@/providers/search-provider";
 import React from "react";
+import { SearchContextProvider } from "@/providers/search-provider";
 
 export default function Layout(props: { searchFilters: React.ReactNode; searchGrid: React.ReactNode }) {
     return (

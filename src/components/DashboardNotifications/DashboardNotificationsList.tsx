@@ -1,16 +1,16 @@
 "use client";
 
-import { FC } from "react";
-import { Empty, Pagination } from "@/components/Common";
-import { PaginatedResponse, NotificationItems } from "@/utils/types";
-import { StringifiableRecord } from "query-string";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import clsx from "clsx";
-import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
-import { DashboardNotificationItem } from "./DashboardNotificationItem";
-import { setAllNotificationsAsShownActions } from "@/actions/notificationActions";
-import { Session } from "next-auth";
 import { useQuery } from "@tanstack/react-query";
+import { clsx } from "clsx";
+import { Session } from "next-auth";
+import { StringifiableRecord } from "query-string";
+import { FC } from "react";
+import { setAllNotificationsAsShownActions } from "@/actions/notificationActions";
+import { Empty, Pagination } from "@/components/Common";
+import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
+import { NotificationItems, PaginatedResponse } from "@/utils/types";
+import { DashboardNotificationItem } from "./DashboardNotificationItem";
 
 interface Props {
     notifications?: PaginatedResponse & NotificationItems;

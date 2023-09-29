@@ -1,8 +1,8 @@
-import { Session, getServerSession } from "next-auth";
-import { NavBarItem } from "./DashboardSideBarItem";
-import { authOptions } from "@/auth/authConfig";
+import { getServerSession, Session } from "next-auth";
 import { Suspense } from "react";
+import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
+import { NavBarItem } from "./DashboardSideBarItem";
 
 export const DashboardSideBar = async () => {
     return (

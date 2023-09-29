@@ -29,5 +29,6 @@ module.exports = {
     ],
     daisyui: {
         themes: ["bumblebee"],
+        logs: false
     },
 };

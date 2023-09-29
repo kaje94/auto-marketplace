@@ -1,14 +1,14 @@
 "use client";
-import { SearchIcon } from "@/icons";
-import { PostedListingsFilterSchema } from "@/utils/schemas";
-import { PostedListingsFilterReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { InputController } from "../../FormElements/Input";
-import { VehicleTypeList } from "@/utils/constants";
-import { AutocompleteController } from "../../FormElements/AutoComplete";
 import qs from "query-string";
+import { useForm } from "react-hook-form";
+import { SearchIcon } from "@/icons";
+import { VehicleTypeList } from "@/utils/constants";
+import { PostedListingsFilterSchema } from "@/utils/schemas";
+import { PostedListingsFilterReq } from "@/utils/types";
+import { AutocompleteController } from "../../FormElements/AutoComplete";
+import { InputController } from "../../FormElements/Input";
 
 export const LandingHeroSearch = () => {
     const { control, watch } = useForm<PostedListingsFilterReq>({

@@ -1,8 +1,8 @@
 "use client";
-import { ErrorComponent } from "@/components/Common";
-import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { ErrorComponent } from "@/components/Common";
 
 export default function Page() {
     const searchParams = useSearchParams();

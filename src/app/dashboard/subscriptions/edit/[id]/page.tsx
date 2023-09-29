@@ -1,7 +1,7 @@
-import { api } from "@/utils/api";
 import { BreadCrumbs } from "@/components/Common";
-import { SubscriptionIdPathParam } from "@/utils/types";
 import { EditSubscriptionForm } from "@/components/Forms/ListingSubscriptions/EditSubscriptionForm";
+import { api } from "@/utils/api";
+import { SubscriptionIdPathParam } from "@/utils/types";
 
 export default async function Page({ params }: SubscriptionIdPathParam) {
     const subscriptionDetails = await api.getListingSubscriptionItem(params.id);

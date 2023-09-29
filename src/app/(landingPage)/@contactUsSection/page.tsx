@@ -1,8 +1,8 @@
+import { clsx } from "clsx";
+import Image from "next/image";
+import { displayFont } from "@/app/fonts";
 import { InputController } from "@/components/FormElements/Input";
 import { TextAreaController } from "@/components/FormElements/TextArea";
-import { displayFont } from "@/app/fonts";
-import clsx from "clsx";
-import Image from "next/image";
 
 export default async function Page() {
     return (

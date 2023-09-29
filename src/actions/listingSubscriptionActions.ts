@@ -1,7 +1,7 @@
 "use server";
+import { revalidateTag } from "next/cache";
 import { api, subscriptionApiTags } from "@/utils/api";
 import { CreateSubscriptionReq, EditSubscriptionReq, ListingSubscriptionIdType, ToggleSubscriptionReq } from "@/utils/types";
-import { revalidateTag } from "next/cache";
 
 export const createListingSubscriptionAction = async (reqBody: CreateSubscriptionReq, userId: string) => {
     const subscriptionId = await api.postListingSubscription(reqBody);

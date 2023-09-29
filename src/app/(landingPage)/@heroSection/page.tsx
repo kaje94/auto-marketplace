@@ -1,7 +1,7 @@
+import { clsx } from "clsx";
+import Image from "next/image";
 import { displayFont } from "@/app/fonts";
 import { LandingHeroSearch } from "@/components/LandingSections/LandingHeroSearch";
-import clsx from "clsx";
-import Image from "next/image";
 
 export default async function Page() {
     return (

@@ -1,7 +1,7 @@
+import { clsx } from "clsx";
+import Image from "next/image";
 import { displayFont } from "@/app/fonts";
 import { DropletIcon, NotificationIcon, TagIcon, ZapIcon } from "@/icons";
-import clsx from "clsx";
-import Image from "next/image";
 
 const FeatureItem = ({
     title,

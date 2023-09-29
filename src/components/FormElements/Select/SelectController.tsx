@@ -1,8 +1,8 @@
 "use client";
 import { FC } from "react";
-import { ControllerProps, Select } from "./Select";
 import { Controller } from "react-hook-form";
 import { FormFieldControllerWrap } from "@/components/FormElements/Common";
+import { ControllerProps, Select } from "./Select";
 
 export const SelectController: FC<ControllerProps> = (props) => {
     const { label, labelClassNames, rootClassName, loading, required, fieldName, control, errorAsTooltip, ...rest } = props;

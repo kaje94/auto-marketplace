@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { Controller } from "react-hook-form";
-import { DatePicker } from "./DatePicker";
-import { ControllerProps } from "./DatePicker";
-import { InputController } from "@/components/FormElements/Input";
 import { FormFieldControllerWrap } from "@/components/FormElements/Common";
+import { InputController } from "@/components/FormElements/Input";
+import { ControllerProps, DatePicker } from "./DatePicker";
 
 export const DatePickerController: FC<ControllerProps> = ({
     loading,

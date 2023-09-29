@@ -1,6 +1,6 @@
-import { FilterIcon } from "@/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { FC } from "react";
+import { FilterIcon } from "@/icons";
 
 interface Props {
     loading: boolean;

@@ -1,6 +1,5 @@
 import { BreadCrumbs } from "@/components/Common";
 import { Avatar } from "@/components/Common/Avatar";
-import Image from "next/image";
 
 export default async function Page() {
     return (

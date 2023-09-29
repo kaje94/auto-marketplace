@@ -1,11 +1,11 @@
 "use client";
-import { Empty, Pagination, ListingItem } from "@/components/Common";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { clsx } from "clsx";
+import { StringifiableRecord } from "query-string";
+import { Empty, ListingItem, Pagination } from "@/components/Common";
 import { Select } from "@/components/FormElements/Select";
 import { useSearchContext } from "@/providers/search-provider";
-import { PaginatedResponse, ListingItems } from "@/utils/types";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import clsx from "clsx";
-import { StringifiableRecord } from "query-string";
+import { ListingItems, PaginatedResponse } from "@/utils/types";
 
 export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResponse & ListingItems; pageLoading?: boolean }) => {
     const { setNewSearchQuery, isLoading, searchParamsObj, hasSearchParams } = useSearchContext();

@@ -1,9 +1,9 @@
 "use client";
-import { ShareIcon, CopyIcon, FacebookIcon, TwitterIcon } from "@/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import queryString from "query-string";
 import { FC } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import { CopyIcon, FacebookIcon, ShareIcon, TwitterIcon } from "@/icons";
 
 interface Props {
     loading?: boolean;

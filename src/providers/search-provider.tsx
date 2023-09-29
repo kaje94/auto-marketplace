@@ -1,7 +1,7 @@
 "use client";
 
-import { PostedListingsFilterSchema } from "@/utils/schemas";
 import React, { ReactNode, useContext } from "react";
+import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { FiltersContext, useSearchFilters } from "./common";
 
 export const useSearchContext = () => {

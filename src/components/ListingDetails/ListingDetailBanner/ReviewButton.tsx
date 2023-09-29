@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { ListingItem } from "@/utils/types";
 import { ReviewListingModal } from "@/components/Modals/ReviewListingModal";
+import { ListingItem } from "@/utils/types";
 
 interface Props {
     listingItem?: ListingItem;

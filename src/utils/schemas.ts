@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { MaxVehicleImageCount, YearSelectMinYear } from "./constants";
 import {
     FuelTypes,
     ListingReportReason,
@@ -8,7 +9,6 @@ import {
     VehicleConditionTypes,
     VehicleTypes,
 } from "./enum";
-import { MaxVehicleImageCount, YearSelectMinYear } from "./constants";
 
 const BooleanStringSchema = z.union([
     z.boolean(),

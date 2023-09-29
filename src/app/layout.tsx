@@ -1,11 +1,11 @@
-import { standardFont } from "./fonts";
 import { Toaster } from "react-hot-toast";
+import { Footer } from "@/components/Footer";
+import { NavBar } from "@/components/NavBar";
 import { NextAuthProvider } from "@/providers/auth-provider";
 import { ReactQueryProvider } from "@/providers/query-provider";
 import { ChildrenProps } from "@/utils/types";
+import { standardFont } from "./fonts";
 import "./globals.css";
-import { NavBar } from "@/components/NavBar";
-import { Footer } from "@/components/Footer";
 
 export const metadata = {
     title: "Create Next App",

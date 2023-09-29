@@ -1,13 +1,13 @@
 import {
-    VehicleTypes,
-    VehicleConditionTypes,
-    TransmissionTypes,
     FuelTypes,
-    ListingStatusTypes,
     ListingReportReason,
+    ListingStatusTypes,
     SubscriptionFrequencies,
+    TransmissionTypes,
+    VehicleConditionTypes,
+    VehicleTypes,
 } from "./enum";
-import { LabelValue, KeyValue } from "./types";
+import { KeyValue, LabelValue } from "./types";
 
 export const MaxVehicleImageCount = 10;
 export const YearSelectMinYear = 1960;

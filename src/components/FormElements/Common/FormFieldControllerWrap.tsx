@@ -1,6 +1,6 @@
-import { AlertCircleIcon } from "@/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
+import { AlertCircleIcon } from "@/icons";
 
 export interface FormFieldControllerProps {
     error?: string;

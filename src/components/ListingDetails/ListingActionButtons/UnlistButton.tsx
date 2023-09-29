@@ -1,9 +1,9 @@
 "use client";
-import { EyeOffIcon } from "@/icons";
-import { ListingItem } from "@/utils/types";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { UnListListingModal } from "@/components/Modals/UnListListingModal";
+import { EyeOffIcon } from "@/icons";
+import { ListingItem } from "@/utils/types";
 
 interface Props {
     listingItem: ListingItem;

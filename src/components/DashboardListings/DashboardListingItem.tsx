@@ -1,12 +1,12 @@
+import { clsx } from "clsx";
+import dynamic from "next/dynamic";
+import Link from "next/link";
 import { FC } from "react";
 import { ListingImage } from "@/components/Common";
-import clsx from "clsx";
-import Link from "next/link";
-import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
-import { ListingStatusTypes } from "@/utils/enum";
-import { ListingItem } from "@/utils/types";
-import dynamic from "next/dynamic";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
+import { ListingStatusTypes } from "@/utils/enum";
+import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
+import { ListingItem } from "@/utils/types";
 
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
     loading: () => <ContextMenuLoading />,
@@ -33,7 +33,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                 <figure className="relative h-full overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
                     <ListingImage
                         title={title}
-                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
+                        className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
                         width={450}
                         image={vehicle?.vehicleImages[0]}
@@ -41,7 +41,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
-                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{priceStr}</div>
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg absolute scale-110 duration-300">{priceStr}</div>
                     </div>
                 </figure>
             )}

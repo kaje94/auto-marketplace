@@ -1,10 +1,10 @@
 "use client";
-import { LogoutIcon, SearchIcon } from "@/icons";
-import clsx from "clsx";
-import { signIn, signOut } from "next-auth/react";
+import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signIn, signOut } from "next-auth/react";
 import { ReactNode } from "react";
+import { LogoutIcon, SearchIcon } from "@/icons";
 
 export const NavBarLoginButton = () => {
     return (

@@ -1,7 +1,7 @@
-import { getRandomItem } from "@/utils/helpers";
-import { Vehicle } from "@/utils/types";
 import { clsx } from "clsx";
 import { FC } from "react";
+import { getRandomItem } from "@/utils/helpers";
+import { Vehicle } from "@/utils/types";
 
 interface Props {
     vehicle?: Vehicle;

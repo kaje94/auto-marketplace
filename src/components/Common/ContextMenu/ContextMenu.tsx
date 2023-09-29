@@ -1,9 +1,9 @@
 "use client";
-import { MenuIcon } from "@/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import Link from "next/link";
 import { FC, ReactNode, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
+import { MenuIcon } from "@/icons";
 
 export interface ContextMenuItemProp {
     onClick?: () => void;

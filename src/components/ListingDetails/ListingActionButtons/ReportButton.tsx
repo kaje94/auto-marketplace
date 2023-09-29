@@ -1,8 +1,8 @@
 "use client";
-import { InfoIcon } from "@/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { ReportListingModal } from "@/components/Modals/ReportListingModal";
+import { InfoIcon } from "@/icons";
 import { ListingIdType } from "@/utils/types";
 
 interface Props {

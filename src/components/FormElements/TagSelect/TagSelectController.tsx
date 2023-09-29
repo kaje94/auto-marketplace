@@ -1,7 +1,7 @@
-import { getRandomItem } from "@/utils/helpers";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { FC } from "react";
 import { Control, Controller } from "react-hook-form";
+import { getRandomItem } from "@/utils/helpers";
 import { TagSelect } from "./TagSelect";
 
 interface Props {

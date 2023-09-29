@@ -1,7 +1,7 @@
 "use server";
+import { revalidateTag } from "next/cache";
 import { api, listingItemTags } from "@/utils/api";
 import { CreateListingReq, EditListingReq, ListingIdType, ReportListingReq, ReviewListingReq, UnListListingReq } from "@/utils/types";
-import { revalidateTag } from "next/cache";
 
 export const reviewListingAction = async (req: ReviewListingReq, userId: string) => {
     await api.reviewListing(req);

@@ -1,9 +1,9 @@
 "use server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth/authConfig";
-import { NavBarClient } from "./NavBarClient";
 import { Suspense } from "react";
+import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
+import { NavBarClient } from "./NavBarClient";
 
 export const NavBar = async () => {
     return (

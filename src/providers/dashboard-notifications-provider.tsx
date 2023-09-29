@@ -1,8 +1,8 @@
 "use client";
 
-import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
 import React, { ReactNode, useContext } from "react";
-import { useSearchFilters, FiltersContext } from "./common";
+import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
+import { FiltersContext, useSearchFilters } from "./common";
 
 export const useNotificationsContext = () => {
     const data = useContext(FiltersContext);

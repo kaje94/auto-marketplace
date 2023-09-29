@@ -1,9 +1,9 @@
 "use client";
-import { TrashIcon } from "@/icons";
-import { ListingItem } from "@/utils/types";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { DeleteListingItemModal } from "@/components/Modals/DeleteListingItemModal";
+import { TrashIcon } from "@/icons";
+import { ListingItem } from "@/utils/types";
 
 interface Props {
     listingItem: ListingItem;

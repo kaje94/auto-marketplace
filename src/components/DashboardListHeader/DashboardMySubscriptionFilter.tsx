@@ -1,16 +1,16 @@
 "use client";
-import clsx from "clsx";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { clsx } from "clsx";
 import { FC } from "react";
 import ClickAwayListener from "react-click-away-listener";
-import { SubscriptFrequenciesList } from "@/utils/constants";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
+import { SubscriptFrequenciesList } from "@/utils/constants";
 import { DashboardMySubscriptionFilterSchema } from "@/utils/schemas";
 import { DashboardMySubscriptionFilterReq } from "@/utils/types";
 import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { FilterButton } from "./FilterButton";
 import { useDashboardFilter } from "./FilterHooks";
-import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
 
 const defaultFilter: DashboardMySubscriptionFilterReq = {
     Active: "",

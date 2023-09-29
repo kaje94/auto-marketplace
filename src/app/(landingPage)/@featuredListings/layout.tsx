@@ -1,6 +1,6 @@
-import { displayFont } from "@/app/fonts";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { ReactNode } from "react";
+import { displayFont } from "@/app/fonts";
 
 export default function Loading({ children }: { children: ReactNode }) {
     return (

@@ -1,13 +1,13 @@
+import { clsx } from "clsx";
+import { FC } from "react";
+import { ListingStatusTypes } from "@/utils/enum";
 import { getFormattedCurrency, getLocationString } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
-import { FC } from "react";
-import { ListingImageCarousel } from "./ListingImageCarousel";
+import { DeleteButton, EditButton, RenewButton, ReportButton, ShareButton, UnListButton } from "./ListingActionButtons";
 import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
+import { ListingImageCarousel } from "./ListingImageCarousel";
 import { ListingKeySpecifications } from "./ListingKeySpecifications";
 import { ListingSellerDetails } from "./ListingSellerDetails";
-import clsx from "clsx";
-import { ListingStatusTypes } from "@/utils/enum";
-import { DeleteButton, EditButton, RenewButton, ShareButton, UnListButton, ReportButton } from "./ListingActionButtons";
 
 interface Props {
     itemDetails?: ListingItem;
@@ -73,7 +73,7 @@ export const ListingDetails: FC<Props> = ({
                             <div className="h-8 w-4/6 animate-pulse bg-secondary" />
                         ) : (
                             <>
-                                <p className="... w-full overflow-hidden truncate text-center text-xl font-extrabold">
+                                <p className="line-clamp-1 w-full overflow-hidden truncate text-center text-xl font-extrabold">
                                     {getFormattedCurrency(price?.amount, price?.currency)}
                                 </p>
                                 {price?.isPriceNegotiable && <span className="badge badge-secondary">Negotiable</span>}

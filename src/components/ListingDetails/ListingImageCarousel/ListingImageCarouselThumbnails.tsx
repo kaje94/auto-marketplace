@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { ListingImage } from "@/components/Common";
+import { clsx } from "clsx";
 import React, { FC } from "react";
+import { ListingImage } from "@/components/Common";
 import { Location, VehicleImageType } from "@/utils/types";
 
 type PropTypeImage = {

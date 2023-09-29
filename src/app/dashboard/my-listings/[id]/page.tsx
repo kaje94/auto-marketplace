@@ -1,10 +1,10 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth/authConfig";
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
-import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
-import { getServerSession } from "next-auth";
 
 export default async function Page({ params }: ListingIdPathParam) {
     const [session, itemDetails] = await Promise.all([

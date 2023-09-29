@@ -1,8 +1,8 @@
+import { headers as nextHeaders } from "next/headers";
+import { redirect } from "next/navigation";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import DuendeIDS6Provider from "next-auth/providers/duende-identity-server6";
 import { env } from "@/env.mjs";
-import { redirect } from "next/navigation";
-import { headers as nextHeaders } from "next/headers";
 
 declare module "next-auth" {
     interface User {

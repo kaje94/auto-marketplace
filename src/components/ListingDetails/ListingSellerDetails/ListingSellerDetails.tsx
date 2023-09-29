@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { clsx } from "clsx";
 import Image from "next/image";
-import { ListingUser } from "@/utils/types";
-import clsx from "clsx";
+import { FC } from "react";
 import { Avatar } from "@/components/Common/Avatar";
+import { ListingUser } from "@/utils/types";
 
 interface Props {
     user?: ListingUser;

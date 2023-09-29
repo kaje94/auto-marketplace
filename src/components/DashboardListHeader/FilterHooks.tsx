@@ -1,8 +1,8 @@
-import { MyListingsFilterReq, DashboardListFilterReq, DashboardSubscriptionFilterReq, DashboardNotificationsFilterReq } from "@/utils/types";
 import { useRouter } from "next/navigation";
-import { useState, Dispatch, SetStateAction } from "react";
-import { UseFormReset } from "react-hook-form";
 import qs from "query-string";
+import { Dispatch, SetStateAction, useState } from "react";
+import { UseFormReset } from "react-hook-form";
+import { DashboardListFilterReq, DashboardNotificationsFilterReq, DashboardSubscriptionFilterReq, MyListingsFilterReq } from "@/utils/types";
 
 export const useDashboardFilter = ({
     reset,

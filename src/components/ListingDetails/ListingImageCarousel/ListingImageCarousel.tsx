@@ -1,14 +1,14 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
-import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
-import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails";
 import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import FsLightbox from "fslightbox-react";
-import { MaximizeIcon } from "@/icons";
-import { Location, VehicleImageType } from "@/utils/types";
+import React, { useCallback, useEffect, useState } from "react";
 import { ListingImage } from "@/components/Common";
-import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyName, unCamelCase } from "@/utils/helpers";
+import { MaximizeIcon } from "@/icons";
 import { VehicleTypes } from "@/utils/enum";
+import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyName, unCamelCase } from "@/utils/helpers";
+import { Location, VehicleImageType } from "@/utils/types";
+import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails";
 
 type PropType = {
     title?: string;

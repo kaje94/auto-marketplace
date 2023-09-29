@@ -1,4 +1,3 @@
-import { ListingIdType } from "@/utils/types";
 import { ListingsCarousel } from "@/components/ListingsCarousel";
 import { api } from "@/utils/api";
 

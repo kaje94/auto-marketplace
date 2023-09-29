@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { clsx } from "clsx";
 import Link from "next/link";
+import { FC } from "react";
+import { NotificationIcon } from "@/icons";
 import { getRandomItem, timeAgo } from "@/utils/helpers";
 import { NotificationItem } from "@/utils/types";
-import { NotificationIcon } from "@/icons";
-import clsx from "clsx";
 
 interface Props {
     notificationItem?: NotificationItem;

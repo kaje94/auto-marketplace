@@ -1,10 +1,10 @@
 "use client";
+import { clsx } from "clsx";
 import Link from "next/link";
-import { PostAddLink, SearchLink } from "./NavBarButtons";
-import clsx from "clsx";
-import { NavBarAuth } from "./NavBarAuth";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
+import { NavBarAuth } from "./NavBarAuth";
+import { PostAddLink, SearchLink } from "./NavBarButtons";
 
 export const NavBarClient = ({
     session,

@@ -1,7 +1,7 @@
 "use client";
 import { FC } from "react";
-import { ControllerProps, Checkbox } from "./Checkbox";
 import { Controller } from "react-hook-form";
+import { Checkbox, ControllerProps } from "./Checkbox";
 
 export const CheckboxController: FC<ControllerProps> = (props) => {
     const { loading, fieldName, control, ...rest } = props;

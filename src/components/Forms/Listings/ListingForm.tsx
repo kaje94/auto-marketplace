@@ -1,15 +1,15 @@
 "use client";
-import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
-import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
-import { ListingImageUpload } from "./ListingImageUpload";
+import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
+import { SelectController } from "@/components/FormElements/Select";
 import { TagSelectController } from "@/components/FormElements/TagSelect";
 import { TextAreaController } from "@/components/FormElements/TextArea";
-import { CheckboxController } from "@/components/FormElements/Checkbox";
-import { SelectController } from "@/components/FormElements/Select";
+import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
+import { CreateListingReq, VehicleFeature } from "@/utils/types";
+import { ListingImageUpload } from "./ListingImageUpload";
 
 interface Props {
     featureOptions?: VehicleFeature[];

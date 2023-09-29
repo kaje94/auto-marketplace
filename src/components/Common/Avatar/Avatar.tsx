@@ -1,9 +1,9 @@
 "use client";
+import { clsx } from "clsx";
+import Image from "next/image";
+import React, { FC, memo, useState } from "react";
 import { UserIcon } from "@/icons";
 import { generateInitialsFromName } from "@/utils/helpers";
-import clsx from "clsx";
-import Image from "next/image";
-import React, { FC, useState } from "react";
 
 interface Props {
     url: string;
@@ -11,7 +11,7 @@ interface Props {
     name?: string;
 }
 
-export const Avatar: FC<Props> = React.memo(({ url, width, name }) => {
+export const Avatar: FC<Props> = memo(({ url, width, name }) => {
     const [hasError, setHasError] = useState(false);
     return (
         <div className="relative flex items-center justify-center" style={{ width: width, height: width }}>

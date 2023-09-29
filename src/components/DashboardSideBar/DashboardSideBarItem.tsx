@@ -1,8 +1,8 @@
 "use client";
-import { FC } from "react";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FC } from "react";
 import { AdvertIcon, ClipboardIcon, ListIcon, NotificationIcon, RssIcon, SettingsIcon, UserIcon } from "@/icons";
 
 interface Props {

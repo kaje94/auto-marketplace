@@ -1,12 +1,12 @@
 "use client";
-import { LabelValue } from "@/utils/types";
-import { clsx } from "clsx";
-import React, { useState, forwardRef } from "react";
 import { Combobox } from "@headlessui/react";
-import { CheckIcon } from "@/icons";
-import { unCamelCase } from "@/utils/helpers";
+import { clsx } from "clsx";
+import React, { forwardRef, useState } from "react";
 import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
+import { CheckIcon } from "@/icons";
+import { unCamelCase } from "@/utils/helpers";
+import { LabelValue } from "@/utils/types";
 
 export interface ControllerProps extends FormFieldControllerProps {
     selectClassNames?: string;

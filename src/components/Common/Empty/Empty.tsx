@@ -1,7 +1,7 @@
-import { LayersIcon } from "@/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import Link from "next/link";
 import { FC } from "react";
+import { LayersIcon } from "@/icons";
 
 interface EmptyProps {
     iconSize?: "sm" | "lg";

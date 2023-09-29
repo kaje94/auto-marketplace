@@ -1,6 +1,6 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 import { EmblaCarouselType } from "embla-carousel-react";
 import React, { ComponentProps, useCallback, useEffect, useState } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 
 export const usePrevNextButtons = (emblaApi: EmblaCarouselType | undefined, onButtonClick: (emblaApi: EmblaCarouselType) => void) => {
     const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
