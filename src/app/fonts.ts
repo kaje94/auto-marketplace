@@ -1,12 +1,10 @@
 import { Montserrat, Righteous } from "next/font/google";
 
-// todo: rename as display and standard fonts
-
-export const montserratFont = Montserrat({
+export const standardFont = Montserrat({
     subsets: ["cyrillic"],
 });
 
-export const righteousFont = Righteous({
+export const displayFont = Righteous({
     weight: "400",
     subsets: ["latin-ext"],
 });

@@ -5,11 +5,11 @@ import Link from "next/link";
 import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingStatusTypes } from "@/utils/enum";
 import { ListingItem } from "@/utils/types";
-import { MenuIcon } from "@/icons";
 import dynamic from "next/dynamic";
+import { ContextMenuLoading } from "../Common/ContextMenu";
 
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
-    loading: () => <MenuIcon className="animate-pulse cursor-progress opacity-10" />,
+    loading: () => <ContextMenuLoading />,
 });
 
 interface Props {
@@ -37,6 +37,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                         height={300}
                         width={450}
                         image={vehicle?.vehicleImages[0]}
+                        location={location}
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">

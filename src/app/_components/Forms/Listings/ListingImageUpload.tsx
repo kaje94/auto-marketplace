@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { ListingImage } from "@/app/_components/Common";
 import { PlusIcon, XCircleIcon } from "@/icons";
 import clsx from "clsx";
-import { VehicleImageType } from "@/utils/types";
+import { Location, VehicleImageType } from "@/utils/types";
 import { MaxVehicleImageCount } from "@/utils/constants";
 import Image from "next/image";
 
@@ -16,10 +16,11 @@ interface Props {
     loadingPlaceholderCount?: number;
     error?: string;
     title?: string;
+    location?: Location;
 }
 
 export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {
-    const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1, title } = props;
+    const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1, title, location } = props;
     const { getRootProps, getInputProps, open } = useDropzone({
         accept: { "image/*": [] },
         disabled: loading,
@@ -97,8 +98,9 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                                     <ListingImage
                                         image={file}
                                         title={title || `new-listing-image-${index}`}
-                                        height={100}
-                                        width={100}
+                                        location={location as Location}
+                                        height={300}
+                                        width={450}
                                         className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
                                     />
                                 )}

@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
-    // todo: include dealership
     return (
         <>
             <div className="avatar my-4">
@@ -33,6 +32,7 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                 <div className="flex w-full flex-col items-center justify-center gap-3">
                     <div className="h-5 w-4/6 animate-pulse bg-base-200" />
                     <div className="h-5 w-1/2 animate-pulse bg-base-200" />
+                    <div className="h-5 w-1/3 animate-pulse bg-base-200" />
                 </div>
             ) : (
                 <>
@@ -40,15 +40,16 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                         {user?.firstName} {user?.lastName}
                     </div>
                     <div className="mt-2 flex flex-col items-center gap-1">
+                        <p className="w-full max-w-xs flex-wrap !break-all text-center font-light">
+                            Email: <span className="font-semibold text-primary-content">{user?.email}</span>
+                        </p>
                         {user?.phone && (
                             <p className="w-full max-w-xs flex-wrap !break-all text-center font-light">
                                 Contact Number:
                                 <span className="font-semibold text-primary-content">{user?.phone}</span>
                             </p>
                         )}
-                        <p className="w-full max-w-xs flex-wrap !break-all text-center font-light">
-                            Email: <span className="font-semibold text-primary-content">{user?.email}</span>
-                        </p>
+                        <div className="badge badge-outline badge-lg mt-2">Car Dealer</div>
                     </div>
                 </>
             )}

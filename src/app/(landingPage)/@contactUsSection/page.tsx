@@ -1,6 +1,6 @@
 import { InputController } from "@/app/_components/FormElements/Input";
 import { TextAreaController } from "@/app/_components/FormElements/TextArea";
-import { righteousFont } from "@/app/fonts";
+import { displayFont } from "@/app/fonts";
 import clsx from "clsx";
 import Image from "next/image";
 
@@ -8,7 +8,7 @@ export default async function Page() {
     return (
         <section className="relative bg-base-200 py-12 md:py-20">
             <div className="container mx-auto w-full max-w-xl">
-                <h3 className={clsx(righteousFont.className, "mb-6 text-center text-2xl lg:text-4xl")}>Contact Us</h3>
+                <h3 className={clsx(displayFont.className, "mb-6 text-center text-2xl lg:text-4xl")}>Contact Us</h3>
                 <div className="mb-4 flex flex-col gap-1 p-4">
                     <InputController placeholder="Name" label="Name" fieldName="name" inputClassNames="bg-white" />
                     <InputController placeholder="user@email.com" label="Email" fieldName="email" inputClassNames="bg-white" />

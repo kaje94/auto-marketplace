@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { useRef } from "react";
 import { createListingSubscriptionAction } from "@/app/_actions/listingSubscriptionActions";
 import { SubscriptionForm } from "./SubscriptionForm";
-import { convertYearToDateString, formatDateToYYYYMMDD } from "@/utils/helpers";
+import { convertYearToDateString } from "@/utils/helpers";
 
 interface Props {
     userId?: string;
@@ -31,7 +31,7 @@ export const CreateSubscriptionForm = (props: Props) => {
         async (formValues: CreateSubscriptionReq) => {
             const requestBody: CreateSubscriptionReq = {
                 ...formValues,
-                subscriptionExpiryDate: formatDateToYYYYMMDD(new Date(formValues.subscriptionExpiryDate)), // todo:check if this util is needed
+                subscriptionExpiryDate: new Date(formValues.subscriptionExpiryDate).toISOString(),
                 minYearOfManufacture: formValues.minYearOfManufacture ? convertYearToDateString(formValues.minYearOfManufacture) : undefined,
                 maxYearOfManufacture: formValues.maxYearOfManufacture ? convertYearToDateString(formValues.maxYearOfManufacture) : undefined,
                 minYearOfRegistration: formValues.minYearOfRegistration ? convertYearToDateString(formValues.minYearOfRegistration) : undefined,

@@ -1,4 +1,4 @@
-import { montserratFont } from "./fonts";
+import { standardFont } from "./fonts";
 import { Toaster } from "react-hot-toast";
 import { Footer, NavBar } from "./_components";
 import { NextAuthProvider } from "@/providers/auth-provider";
@@ -13,8 +13,8 @@ export const metadata = {
 
 export default function RootLayout({ children }: ChildrenProps) {
     return (
-        <html lang="en" className="bg-neutral">
-            <body className={montserratFont.className}>
+        <html lang="en">
+            <body className={standardFont.className}>
                 <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 }, duration: 5000 }} />
                 <ReactQueryProvider>
                     <NextAuthProvider>

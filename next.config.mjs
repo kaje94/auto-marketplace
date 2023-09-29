@@ -7,24 +7,13 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 const config = {
     reactStrictMode: true,
-    // swcMinify: true,
+    swcMinify: true,
     images: {
         formats: ["image/avif", "image/webp"],
-        domains: [
-            // todo: check and remove below
-            "lh3.googleusercontent.com",
-            "ik.imagekit.io",
-        ],
+        domains: ["ik.imagekit.io"],
     },
     experimental: {
         serverActions: true,
     },
-    /** Linting and typechecking are already done as separate tasks in the CI pipeline */
-    // eslint: {
-    //   ignoreDuringBuilds: true,
-    // },
-    // typescript: {
-    //   ignoreBuildErrors: true,
-    // },
 };
 export default config;

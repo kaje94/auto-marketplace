@@ -5,7 +5,7 @@ import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails
 import Autoplay from "embla-carousel-autoplay";
 import FsLightbox from "fslightbox-react";
 import { MaximizeIcon } from "@/icons";
-import { VehicleImageType } from "@/utils/types";
+import { Location, VehicleImageType } from "@/utils/types";
 import { ListingImage } from "@/app/_components/Common";
 import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyName, unCamelCase } from "@/utils/helpers";
 import { VehicleTypes } from "@/utils/enum";
@@ -13,6 +13,7 @@ import { env } from "@/env.mjs";
 
 type PropType = {
     title?: string;
+    location?: Location;
     createdOn?: string;
     vehicleType?: VehicleTypes;
     images?: VehicleImageType[];
@@ -21,7 +22,7 @@ type PropType = {
 };
 
 export const ListingImageCarousel: React.FC<PropType> = (props) => {
-    const { title = "", createdOn = "", images = [], options = {}, loading, vehicleType } = props;
+    const { title = "", createdOn = "", images = [], options = {}, loading, vehicleType, location = {} } = props;
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isLightBoxOpen, setLightBoxOpen] = useState(false);
     const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options, [Autoplay({ delay: 5000 })]);
@@ -84,6 +85,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                                 width={450}
                                                 title={title}
                                                 image={imageItem}
+                                                location={location as Location}
                                                 priority={selectedIndex === index ? true : undefined}
                                                 className="aspect-square w-full bg-base-200 object-cover duration-300 ease-linear zoomable-cover-image sm:aspect-video"
                                             />
@@ -117,6 +119,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                           image={imageItem}
                                           key={imageItem.id}
                                           title={title}
+                                          location={location as Location}
                                       />
                                   ))}
                         </div>
@@ -128,7 +131,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                     toggler={isLightBoxOpen}
                     sourceIndex={selectedIndex}
                     exitFullscreenOnClose
-                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyName(title), 100))}
+                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyName(title, location as Location), 100))}
                     onClose={() => setLightBoxOpen(false)}
                     type="image"
                     openOnMount

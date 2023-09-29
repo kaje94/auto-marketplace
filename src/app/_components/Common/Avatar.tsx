@@ -22,9 +22,6 @@ export const Avatar: FC<Props> = React.memo(({ url, width, name }) => {
                 alt="profile-image"
                 className="rounded-full bg-slate-600 object-cover"
                 unoptimized
-                // todo: check how to optimize user profile pics
-                // also try and use the same size throughout //128
-                // update in 3+ plages
                 onError={() => setHasError(true)}
             />
             <div className={clsx("placeholder avatar absolute inset-0", hasError ? "block" : "hidden")}>

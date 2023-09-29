@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import { ListingImage } from "@/app/_components/Common";
 import React, { FC } from "react";
-import { VehicleImageType } from "@/utils/types";
+import { Location, VehicleImageType } from "@/utils/types";
 
 type PropTypeImage = {
     selected: boolean;
     onClick: () => void;
     title: string;
+    location: Location;
     image: VehicleImageType;
 };
 
@@ -24,7 +25,7 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
             </div>
         );
     } else {
-        const { selected, onClick, image, title } = props;
+        const { selected, onClick, image, title, location } = props;
 
         return (
             <div className={clsx("relative shrink-0 grow-0 pl-1 sm:pl-2 lg:pl-4 ", selected && "opacity-100")}>
@@ -42,6 +43,7 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
                         title={title}
                         height={300}
                         width={450}
+                        location={location}
                     />
                 </button>
             </div>

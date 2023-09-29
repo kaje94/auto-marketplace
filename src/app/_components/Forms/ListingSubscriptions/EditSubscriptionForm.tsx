@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { convertYearToDateString, transformImagesToPost, getListingTitleFromVehicle, formatDateToYYYYMMDD } from "@/utils/helpers";
+import { convertYearToDateString, transformImagesToPost, getListingTitleFromVehicle } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FC, useRef } from "react";
@@ -27,6 +27,7 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
         resolver: zodResolver(CreateSubscriptionSchema),
         defaultValues: {
             ...listingSubscriptionItem,
+            // todo: check update functionality once the backend API issues are fixed
             // vehicle: {
             //     ...listingItem.vehicle,
             //     yearOfManufacture: new Date(new Date(listingItem.vehicle.yearOfManufacture).getFullYear(), 0, 1).getFullYear().toString(),
@@ -42,7 +43,7 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             const requestBody: EditSubscriptionReq = {
                 ...formValues,
                 listingSubscriptionId: listingSubscriptionItem.id,
-                subscriptionExpiryDate: formatDateToYYYYMMDD(new Date(formValues.subscriptionExpiryDate)), // todo:check if this util is needed
+                subscriptionExpiryDate: new Date(formValues.subscriptionExpiryDate).toISOString(),
                 minYearOfManufacture: formValues.minYearOfManufacture ? convertYearToDateString(formValues.minYearOfManufacture) : undefined,
                 maxYearOfManufacture: formValues.maxYearOfManufacture ? convertYearToDateString(formValues.maxYearOfManufacture) : undefined,
                 minYearOfRegistration: formValues.minYearOfRegistration ? convertYearToDateString(formValues.minYearOfRegistration) : undefined,

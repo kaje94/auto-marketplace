@@ -32,14 +32,6 @@ export const convertYearToDateString = (year: string | number): string => {
     return formattedDate;
 };
 
-export const formatDateToYYYYMMDD = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so add 1 and pad with '0'
-    const day = String(date.getDate()).padStart(2, "0"); // Pad day with '0' if needed
-
-    return `${year}-${month}-${day}`;
-};
-
 export const getListingTitleFromVehicle = (vehicle: Vehicle | VehicleCreate) => {
     if (vehicle.trim) {
         return `${vehicle.brand} ${vehicle.model} ${vehicle.trim} ${vehicle.yearOfManufacture}`;
@@ -105,7 +97,6 @@ export const unCamelCase = (str: string = "") => {
     return str;
 };
 
-// todo: see if this can be moved to only a client side function
 export const thumbHashToDataUrl = (thumbHash?: string) => {
     if (!thumbHash || thumbHash.length < 8) {
         return "";
@@ -134,7 +125,7 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
                 const compressedFile = await imageCompression(item.file as File, {
                     fileType: "image/webp",
                     initialQuality: 0.7,
-                    maxWidthOrHeight: 1920, // todo: also try 1280 size
+                    maxWidthOrHeight: 1920,
                     maxSizeMB: 0.5,
                 });
                 const [hash, { url, key, bucket, region }, color] = await Promise.all([
@@ -155,7 +146,6 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
     return images.filter((item) => !!item?.url) as VehicleImageType[];
 };
 
-// todo: change how this is called
 export const transformListingsListResponse = (listings: PaginatedResponse & ListingItems): PaginatedResponse & ListingItems => {
     return { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
 };
@@ -211,7 +201,19 @@ export const previewUrlToHash = async (previewUrl: string) => {
     return thumbHash;
 };
 
-export const getLocationString = (location: Location) => `${location?.city}, ${location?.state}, ${location?.country}`;
+export const getLocationString = (location?: Location) => {
+    const itemsArr = [];
+    if (location?.city) {
+        itemsArr.push(location.city);
+    }
+    if (location?.state) {
+        itemsArr.push(location.state);
+    }
+    if (location?.country) {
+        itemsArr.push(location.country);
+    }
+    return itemsArr.join(", ");
+};
 
 export function getRandomItem<T>(items: T[]): T | undefined {
     return items[Math.floor(Math.random() * items.length)];
@@ -225,13 +227,6 @@ export const searchParamsToObject = (searchParams: ReadonlyURLSearchParams): Rec
     }
 
     return searchObject;
-};
-
-export const isValidDate = (dateString: string) => {
-    // Use a regular expression or a library like Date-fns to validate the date format.
-    // Here, we use a simple regex pattern for illustration purposes.
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    return datePattern.test(dateString);
 };
 
 export const timeAgo = (date: Date): string => {
@@ -313,15 +308,16 @@ const getFileExtension = (filePath: string): string => {
     return "";
 };
 
-export const toSEOFriendlyName = (originalName: string): string => {
-    // Convert to lowercase
-    let seoName = originalName.toLowerCase();
+export const toSEOFriendlyName = (originalName: string, location?: Location): string => {
+    const seoName = originalName
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "");
 
-    // Replace spaces with dashes
-    seoName = seoName.replace(/\s+/g, "-");
+    const locationStr = getLocationString(location)
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "");
 
-    // Remove special characters and symbols
-    seoName = seoName.replace(/[^\w\-]+/g, "");
-
-    return seoName;
+    return `${seoName}-for-sale${locationStr ? `-in-${locationStr}` : ""}`;
 };

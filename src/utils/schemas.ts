@@ -9,7 +9,6 @@ import {
     VehicleTypes,
 } from "./enum";
 import { MaxVehicleImageCount, YearSelectMinYear } from "./constants";
-import { isValidDate } from "./helpers";
 
 const BooleanStringSchema = z.union([
     z.boolean(),
@@ -41,14 +40,12 @@ export const LocationSchema = z.object({
 });
 
 export const VehicleImageSchema = z.object({
-    // remote file properties
     id: z.number().optional(),
     name: z.string().min(1).optional(),
     url: z.string().url().optional(),
     color: z.string().min(1).optional(),
     isThumbnail: z.boolean().optional(),
     // locale file properties
-    // file: z.instanceof(File).optional(), // todo: fix since it throws an error saying File not found
     file: z.any().optional(),
     preview: z.string().optional(),
     averageColor: z.string().optional(),
@@ -75,8 +72,8 @@ export const ListingSubscriptionIdField = z.number();
 export const VehicleSchema = z.object({
     id: ListingIdField.optional(),
     type: z.nativeEnum(VehicleTypes, { invalid_type_error: "Invalid Vehicle Type" }),
-    brand: z.string().min(1, "Brand is required"), // todo: get from api
-    model: z.string().min(1, "Model is required"), // todo: get from api
+    brand: z.string().min(1, "Brand is required"),
+    model: z.string().min(1, "Model is required"),
     trim: z.string().min(1, "Trim is required"), // todo: remove server side validation and make this optional!
     yearOfManufacture: YearSchema,
     yearOfRegistration: YearSchema,

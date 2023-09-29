@@ -1,17 +1,11 @@
-// export enum Errors {
-//     Unauthorized = "Unauthorized",
-// }
-
-// todo: check following conditions
 export enum ListingStatusTypes {
-    UnderReview = "UnderReview", // can edit
-    Posted = "Posted", // can edit
-    Declined = "Declined", // can edit
-    Expired = "Expired", // can only renew
-    Sold = "Sold", // lisintg screen or detail screen
-    // just show one button and let user select temporary or permanent
-    TemporarilyUnlisted = "TemporarilyUnlisted", // just show one button and let user select temporary or permanent lisintg screen or detail screen
-    PermanentlyRemoved = "PermanentlyRemoved", // lisintg screen or detail screen
+    UnderReview = "UnderReview",
+    Posted = "Posted",
+    Declined = "Declined",
+    Expired = "Expired",
+    Sold = "Sold",
+    TemporarilyUnlisted = "TemporarilyUnlisted",
+    PermanentlyRemoved = "PermanentlyRemoved",
 }
 
 export enum VehicleTypes {

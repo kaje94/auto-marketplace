@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
 import { UnListListingSchema } from "@/utils/schemas";
-import { ListingItem, UnListListingReq } from "@/utils/types";
+import { LabelValue, ListingItem, UnListListingReq } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ModalFooter, Modal } from "@/app/_components";
@@ -50,6 +50,15 @@ export const UnListListingModal = (props: Props) => {
         },
     });
 
+    const selectOptions: LabelValue[] = [];
+    if ((listingItem as ListingItem)?.status !== ListingStatusTypes.TemporarilyUnlisted) {
+        selectOptions.push({ label: unCamelCase(ListingStatusTypes.TemporarilyUnlisted), value: ListingStatusTypes.TemporarilyUnlisted });
+    }
+    selectOptions.push(
+        { label: unCamelCase(ListingStatusTypes.PermanentlyRemoved), value: ListingStatusTypes.PermanentlyRemoved },
+        { label: unCamelCase(ListingStatusTypes.Sold), value: ListingStatusTypes.Sold }
+    );
+
     return (
         <Modal visible={visible} onVisibleChange={setVisible} title="Unlist Advert" titleClassNames="text-error">
             <div className="mb-2 mt-4 text-sm">
@@ -59,11 +68,7 @@ export const UnListListingModal = (props: Props) => {
                 <SelectController
                     label="Status"
                     selectablePlaceholder={false}
-                    options={[
-                        { label: unCamelCase(ListingStatusTypes.TemporarilyUnlisted), value: ListingStatusTypes.TemporarilyUnlisted },
-                        { label: unCamelCase(ListingStatusTypes.PermanentlyRemoved), value: ListingStatusTypes.PermanentlyRemoved },
-                        { label: unCamelCase(ListingStatusTypes.Sold), value: ListingStatusTypes.Sold },
-                    ]}
+                    options={selectOptions}
                     required
                     control={control}
                     fieldName="listingStatus"

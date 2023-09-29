@@ -28,6 +28,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                         )}
                         height={300}
                         width={450}
+                        location={item.location}
                     />
                 ) : (
                     <div className="aspect-video w-full bg-neutral bg-opacity-50" />

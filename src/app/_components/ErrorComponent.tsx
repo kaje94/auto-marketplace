@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { HomeIcon, RefreshIcon, ActivityIcon } from "@/icons";
-import { righteousFont } from "@/app/fonts";
+import { displayFont } from "@/app/fonts";
 import clsx from "clsx";
 import { FC } from "react";
 
@@ -37,7 +37,7 @@ export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showR
 
                     <p
                         className={clsx({
-                            [righteousFont.className]: true,
+                            [displayFont.className]: true,
                             "text-3xl md:text-4xl": variant === "lg",
                             "text-2xl md:text-3xl": variant === "sm",
                         })}

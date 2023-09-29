@@ -1,4 +1,4 @@
-import { righteousFont } from "@/app/fonts";
+import { displayFont } from "@/app/fonts";
 import { DropletIcon, NotificationIcon, TagIcon, ZapIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
@@ -28,7 +28,7 @@ export default async function Page() {
     return (
         <section className="bg-white py-12 md:py-20">
             <div className="container mx-auto w-full max-w-7xl">
-                <h3 className={clsx(righteousFont.className, "mb-6 text-center text-2xl lg:text-4xl")}>Why Choose Us?</h3>
+                <h3 className={clsx(displayFont.className, "mb-6 text-center text-2xl lg:text-4xl")}>Why Choose Us?</h3>
                 <div className="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:p-7 2xl:p-8">
                     <Image
                         src="/features-1.jpg"

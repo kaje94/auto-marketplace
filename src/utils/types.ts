@@ -120,7 +120,6 @@ export type PaginatedRequest = {
     PageSize?: number;
 };
 
-// todo: use this for all other instances as well
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };
 
 export type ChildrenProps = { children: React.ReactNode };

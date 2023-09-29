@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { MenuIcon } from "@/icons";
 import { getFormattedCurrency, getRandomItem, unCamelCase, timeAgo, getRandomNumber, numberWithCommas } from "@/utils/helpers";
 import clsx from "clsx";
 import { ListingSubscriptionItem } from "@/utils/types";
 import dynamic from "next/dynamic";
+import { ContextMenuLoading } from "../Common/ContextMenu";
 
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {
-    loading: () => <MenuIcon className="animate-pulse cursor-progress opacity-10" />,
+    loading: () => <ContextMenuLoading />,
 });
 
 interface Props {
