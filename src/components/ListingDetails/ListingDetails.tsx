@@ -10,16 +10,16 @@ import { ListingKeySpecifications } from "./ListingKeySpecifications";
 import { ListingSellerDetails } from "./ListingSellerDetails";
 
 interface Props {
+    basePath?: string;
     itemDetails?: ListingItem;
     loading?: boolean;
-    withinDashboard?: boolean;
-    basePath?: string;
     loggedInUser?: {
-        id?: string;
         email?: string | null;
+        id?: string;
         isAdmin?: boolean;
     };
     showSellerDetails?: boolean;
+    withinDashboard?: boolean;
 }
 
 export const ListingDetails: FC<Props> = ({

@@ -5,10 +5,10 @@ import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
 
 export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"textarea"> {
-    textAreaClassNames?: string;
-    loading?: boolean;
-    fieldName: string;
     control?: Control<any>;
+    fieldName: string;
+    loading?: boolean;
+    textAreaClassNames?: string;
 }
 
 export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {}

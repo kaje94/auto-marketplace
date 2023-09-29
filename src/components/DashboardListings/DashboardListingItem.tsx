@@ -13,10 +13,10 @@ const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMen
 });
 
 interface Props {
-    listingItem?: ListingItem;
-    loading?: boolean;
     basePath?: string;
     isAdmin?: boolean;
+    listingItem?: ListingItem;
+    loading?: boolean;
 }
 
 export const DashboardListingItem: FC<Props> = (props) => {

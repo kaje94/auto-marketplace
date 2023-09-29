@@ -2,8 +2,8 @@ import Link from "next/link";
 import { FC } from "react";
 
 interface Props {
-    links: { title: string; href?: string }[];
     currentPageTitle: string;
+    links: { href?: string; title: string }[];
 }
 
 export const BreadCrumbs: FC<Props> = ({ links = [], currentPageTitle }) => {

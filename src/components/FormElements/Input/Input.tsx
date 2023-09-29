@@ -5,10 +5,10 @@ import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
 
 export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"input"> {
+    control?: Control<any>;
+    fieldName: string;
     inputClassNames?: string;
     loading?: boolean;
-    fieldName: string;
-    control?: Control<any>;
 }
 
 export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {}

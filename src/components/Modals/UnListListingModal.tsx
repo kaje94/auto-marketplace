@@ -15,8 +15,8 @@ import { LabelValue, ListingItem, UnListListingReq } from "@/utils/types";
 
 interface Props {
     listingItem?: ListingItem;
-    visible: boolean;
     setVisible: (visible: boolean) => void;
+    visible: boolean;
 }
 
 export const UnListListingModal = (props: Props) => {

@@ -13,15 +13,15 @@ import { ListingImageUpload } from "./ListingImageUpload";
 
 interface Props {
     featureOptions?: VehicleFeature[];
-    submitButton?: {
-        text?: string;
-        mutatingText?: string;
-        disableIfCleanForm?: boolean;
-    };
+    form?: UseFormReturn<CreateListingReq>;
     isLoading?: boolean;
     isMutating?: boolean;
-    form?: UseFormReturn<CreateListingReq>;
     onMutate?: (values: CreateListingReq) => void;
+    submitButton?: {
+        disableIfCleanForm?: boolean;
+        mutatingText?: string;
+        text?: string;
+    };
     title?: string;
 }
 

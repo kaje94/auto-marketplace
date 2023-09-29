@@ -5,9 +5,9 @@ import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyName } f
 import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props extends Omit<ImageProps, "src" | "alt"> {
-    title: string;
-    location: Location;
     image?: VehicleImageType;
+    location: Location;
+    title: string;
 }
 
 export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest }) => {

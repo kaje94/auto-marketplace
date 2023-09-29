@@ -2,10 +2,10 @@ import { clsx } from "clsx";
 import { FC, PropsWithChildren } from "react";
 
 interface Props {
-    visible: boolean;
     onVisibleChange: (visible: boolean) => void;
     title?: string;
     titleClassNames?: string;
+    visible: boolean;
 }
 
 export const Modal: FC<PropsWithChildren<Props>> = ({ visible, onVisibleChange, children, title, titleClassNames }) => {

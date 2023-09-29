@@ -16,9 +16,9 @@ import { ListingIdType, ReportListingReq } from "@/utils/types";
 interface Props {
     listingId?: ListingIdType;
     listingTitle?: string;
-    visible?: boolean;
     setVisible?: (visible: boolean) => void;
     userEmail?: string | null;
+    visible?: boolean;
 }
 
 export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail, setVisible = () => {} }: Props) => {

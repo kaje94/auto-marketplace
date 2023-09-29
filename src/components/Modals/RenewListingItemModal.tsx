@@ -7,8 +7,8 @@ import { ListingItem } from "@/utils/types";
 
 interface Props {
     listingItem?: ListingItem;
-    visible?: boolean;
     setVisible?: (visible: boolean) => void;
+    visible?: boolean;
 }
 
 export const RenewListingItemModal = (props: Props) => {

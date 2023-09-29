@@ -6,9 +6,9 @@ import { UserIcon } from "@/icons";
 import { generateInitialsFromName } from "@/utils/helpers";
 
 interface Props {
+    name?: string;
     url: string;
     width: number;
-    name?: string;
 }
 
 export const Avatar: FC<Props> = memo(({ url, width, name }) => {

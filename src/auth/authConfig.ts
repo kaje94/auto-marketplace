@@ -9,14 +9,14 @@ declare module "next-auth" {
         isAdmin: boolean;
     }
     interface Session {
+        access_token?: string;
+        error: "RefreshAccessTokenError";
+        expires_at?: number;
+        refresh_token?: string;
         user: {
             id: string;
             isAdmin: boolean;
         } & DefaultSession["user"];
-        access_token?: string;
-        refresh_token?: string;
-        expires_at?: number;
-        error: "RefreshAccessTokenError";
     }
 }
 
@@ -24,8 +24,8 @@ declare module "next-auth/jwt" {
     interface JWT {
         access_token?: string;
         expires_at?: number;
-        refresh_token?: string;
         isAdmin: boolean;
+        refresh_token?: string;
     }
 }
 
@@ -36,13 +36,13 @@ interface TokenSet {
 }
 
 interface UserInfoResponse {
-    sub: string;
     email: string;
-    given_name: string;
-    family_name: string;
-    preferred_username: string;
-    name: string;
     email_verified: boolean;
+    family_name: string;
+    given_name: string;
+    name: string;
+    preferred_username: string;
+    sub: string;
 }
 
 export const authOptions: NextAuthOptions = {

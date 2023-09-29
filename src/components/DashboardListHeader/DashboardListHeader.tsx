@@ -3,13 +3,13 @@ import { FC, ReactNode } from "react";
 import { PlusIcon } from "@/icons";
 
 interface Props {
-    loading?: boolean;
-    itemCount?: number;
-    filter?: ReactNode;
     addNewButton?: {
-        path: string;
         label: string;
+        path: string;
     };
+    filter?: ReactNode;
+    itemCount?: number;
+    loading?: boolean;
 }
 
 export const DashboardListHeader: FC<Props> = ({ itemCount = 0, loading, filter, addNewButton }) => {

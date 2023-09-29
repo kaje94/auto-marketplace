@@ -5,9 +5,9 @@ import { EditIcon } from "@/icons";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
+    basePath?: string;
     listingItem: ListingItem;
     loading?: boolean;
-    basePath?: string;
 }
 
 export const EditButton: FC<Props> = ({ listingItem, loading, basePath }) => {

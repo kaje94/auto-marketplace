@@ -10,9 +10,9 @@ import { RenewButton } from "./RenewButton";
 import { ReviewButton } from "./ReviewButton";
 
 interface Props {
-    loading?: boolean;
     isAdmin?: boolean;
     listingItem?: ListingItem;
+    loading?: boolean;
 }
 
 export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAdmin }) => {

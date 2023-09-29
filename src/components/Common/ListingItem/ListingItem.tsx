@@ -6,8 +6,8 @@ import { getFormattedCurrency, getLocationString, getRandomItem, numberWithComma
 import { ListingItem as ListingItemType } from "@/utils/types";
 
 interface Props {
-    item?: ListingItemType;
     detailed?: boolean;
+    item?: ListingItemType;
     loading?: boolean;
 }
 

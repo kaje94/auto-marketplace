@@ -2,9 +2,9 @@ import { clsx } from "clsx";
 import { FC } from "react";
 
 interface Props {
-    tags?: { id: number; name: string }[];
-    selectedTags?: number[];
     onSelect?: (item: number[]) => void;
+    selectedTags?: number[];
+    tags?: { id: number; name: string }[];
 }
 
 export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], onSelect = () => {} }) => {

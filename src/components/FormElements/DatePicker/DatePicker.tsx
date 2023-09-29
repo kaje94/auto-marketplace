@@ -7,10 +7,10 @@ import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
 
 export interface ControllerProps extends FormFieldControllerProps, Omit<ReactDatePickerProps, "onChange"> {
+    control: Control<any>;
+    fieldName: string;
     inputClassNames?: string;
     loading?: boolean;
-    fieldName: string;
-    control: Control<any>;
 }
 
 export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "loading" | "required" | "control" | "fieldName"> {

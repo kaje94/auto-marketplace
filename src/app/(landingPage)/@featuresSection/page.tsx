@@ -9,10 +9,10 @@ const FeatureItem = ({
     alignRight,
     icon,
 }: {
-    title: string;
-    description: string;
     alignRight?: boolean;
+    description: string;
     icon: React.ReactElement;
+    title: string;
 }) => (
     <div>
         <div className={clsx("flex items-center justify-center text-base-content lg:justify-start", alignRight && "lg:flex-row-reverse")}>

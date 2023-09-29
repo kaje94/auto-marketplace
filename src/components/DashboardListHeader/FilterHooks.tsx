@@ -12,12 +12,12 @@ export const useDashboardFilter = ({
     setNewSearchQuery,
     isLoading,
 }: {
-    reset: UseFormReset<{}>;
     defaultFilter: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq | DashboardNotificationsFilterReq;
-    searchParamsObj: Record<string, string>;
-    newSearchQuery: string;
-    setNewSearchQuery: Dispatch<SetStateAction<string>>;
     isLoading: boolean;
+    newSearchQuery: string;
+    reset: UseFormReset<{}>;
+    searchParamsObj: Record<string, string>;
+    setNewSearchQuery: Dispatch<SetStateAction<string>>;
 }) => {
     const router = useRouter();
     const [dropdownOpen, setDropdownOpen] = useState(false);

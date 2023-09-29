@@ -19,7 +19,7 @@ const DashboardSideBarWithSession = async () => {
     return <DashboardSideBarItems notificationCount={notificationCount} session={session} />;
 };
 
-const DashboardSideBarItems = ({ session, notificationCount }: { session?: Session | null; notificationCount?: number }) => {
+const DashboardSideBarItems = ({ session, notificationCount }: { notificationCount?: number; session?: Session | null }) => {
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <ul className="menu rounded-box w-full bg-base-100 p-2 shadow-md">

@@ -6,9 +6,9 @@ import { InfoIcon } from "@/icons";
 import { ListingIdType } from "@/utils/types";
 
 interface Props {
-    loading?: boolean;
     listingId?: ListingIdType;
     listingTitle?: string;
+    loading?: boolean;
     userEmail?: string | null;
 }
 

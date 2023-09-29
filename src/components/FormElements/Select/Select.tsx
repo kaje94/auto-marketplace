@@ -7,11 +7,11 @@ import { unCamelCase } from "@/utils/helpers";
 import { LabelValue } from "@/utils/types";
 
 export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"select"> {
-    selectClassName?: string;
-    loading?: boolean;
-    fieldName: string;
     control?: Control<any>;
+    fieldName: string;
+    loading?: boolean;
     options?: LabelValue[];
+    selectClassName?: string;
     selectablePlaceholder?: boolean;
 }
 

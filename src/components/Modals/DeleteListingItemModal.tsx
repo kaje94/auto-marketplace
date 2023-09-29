@@ -8,9 +8,9 @@ import { ListingItem } from "@/utils/types";
 
 interface Props {
     listingItem?: ListingItem;
-    visible?: boolean;
     setVisible?: (visible: boolean) => void;
     successRedirectPath: string;
+    visible?: boolean;
 }
 
 export const DeleteListingItemModal = (props: Props) => {

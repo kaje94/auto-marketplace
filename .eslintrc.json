@@ -1,5 +1,5 @@
 {
-    "plugins": ["prettier"],
+    "plugins": ["prettier","typescript-sort-keys"],
     "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended", "prettier", "plugin:prettier/recommended", "plugin:import/recommended"],
     "rules": {
         "max-lines": ["warn", 300],
@@ -14,6 +14,7 @@
             }
         ],
         "tailwindcss/migration-from-tailwind-2": "off",
+        "typescript-sort-keys/interface": "warn",
         "react/jsx-sort-props": ["warn", { "reservedFirst": ["key"] }]
     },
     "settings": { "import/resolver": { "typescript": true, "node": true } }

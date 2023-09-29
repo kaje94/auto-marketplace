@@ -5,12 +5,12 @@ import qs, { StringifiableRecord } from "query-string";
 import { FC } from "react";
 
 interface Props {
-    pageNumber?: number;
-    totalPages?: number;
     basePath?: string;
+    loading?: boolean;
+    pageNumber?: number;
     searchParams?: StringifiableRecord;
     setNewSearchQuery?: (queryStr: string) => void;
-    loading?: boolean;
+    totalPages?: number;
 }
 
 export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath = "/", searchParams = {}, setNewSearchQuery, loading = false }) => {

@@ -21,7 +21,7 @@ export const NavBarLogoutButton = () => {
     return <NavBarMenuLink icon={<LogoutIcon className="pl-0.5" height={17} />} label="Logout" onClick={() => signOut({ callbackUrl: "/" })} />;
 };
 
-export const NavBarMenuLink = (props: { onClick?: () => void; link?: string; label: string; icon: ReactNode; badgeCount?: number }) => {
+export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; label: string; link?: string; onClick?: () => void }) => {
     const { link, label, icon, badgeCount, onClick } = props;
     const pathname = usePathname();
     const badge = (

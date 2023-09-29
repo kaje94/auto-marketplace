@@ -11,13 +11,13 @@ import { Location, VehicleImageType } from "@/utils/types";
 import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails";
 
 type PropType = {
-    title?: string;
-    location?: Location;
     createdOn?: string;
-    vehicleType?: VehicleTypes;
     images?: VehicleImageType[];
-    options?: EmblaOptionsType;
     loading?: boolean;
+    location?: Location;
+    options?: EmblaOptionsType;
+    title?: string;
+    vehicleType?: VehicleTypes;
 };
 
 export const ListingImageCarousel: React.FC<PropType> = (props) => {

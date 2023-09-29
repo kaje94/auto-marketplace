@@ -4,8 +4,8 @@ import { getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } f
 import { Vehicle } from "@/utils/types";
 
 interface Props {
-    vehicle?: Vehicle;
     loading?: boolean;
+    vehicle?: Vehicle;
 }
 
 export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {

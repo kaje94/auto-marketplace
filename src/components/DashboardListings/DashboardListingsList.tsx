@@ -12,11 +12,11 @@ import { ListingItems, PaginatedResponse } from "@/utils/types";
 import { DashboardListingItem } from "./DashboardListingItem";
 
 interface Props {
-    session?: Session | null;
-    listings?: PaginatedResponse & ListingItems;
-    pageLoading?: boolean;
     basePath?: string;
     hasSearchParams?: boolean;
+    listings?: PaginatedResponse & ListingItems;
+    pageLoading?: boolean;
+    session?: Session | null;
 }
 
 export const DashboardListingsList: FC<

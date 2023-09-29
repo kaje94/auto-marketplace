@@ -11,9 +11,9 @@ export const NavBarClient = ({
     loading,
     notificationCount,
 }: {
-    session?: Session | null;
     loading?: boolean;
     notificationCount?: number;
+    session?: Session | null;
 }) => {
     const pathName = usePathname();
     const absolutePosition = ["/", "/auth/login"].includes(pathName);

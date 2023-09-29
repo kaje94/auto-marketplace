@@ -13,8 +13,8 @@ import { ListingSubscriptionItem, ToggleSubscriptionReq } from "@/utils/types";
 
 interface Props {
     listingSubscriptionItem?: ListingSubscriptionItem;
-    visible: boolean;
     setVisible: (visible: boolean) => void;
+    visible: boolean;
 }
 
 export const ToggleSubscriptionActivationModal = (props: Props) => {

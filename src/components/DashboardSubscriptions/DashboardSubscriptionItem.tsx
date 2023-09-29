@@ -10,9 +10,9 @@ const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscript
 });
 
 interface Props {
+    basePath?: string;
     listingSubscriptionItem?: ListingSubscriptionItem;
     loading?: boolean;
-    basePath?: string;
 }
 
 export const DashboardSubscriptionItem: FC<Props> = (props) => {

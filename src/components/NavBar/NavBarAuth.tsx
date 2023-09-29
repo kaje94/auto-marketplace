@@ -3,7 +3,7 @@ import { Avatar } from "@/components/Common/Avatar";
 import { AdvertIcon, NotificationIcon, RssIcon, UserIcon } from "@/icons";
 import { NavBarLoginButton, NavBarLogoutButton, NavBarMenuLink } from "./NavBarButtons";
 
-export const NavBarAuth = ({ session, notificationCount, loading }: { session?: Session | null; loading?: boolean; notificationCount?: number }) => {
+export const NavBarAuth = ({ session, notificationCount, loading }: { loading?: boolean; notificationCount?: number; session?: Session | null }) => {
     return (
         <div className="relative flex w-12 items-center justify-center">
             {loading ? (

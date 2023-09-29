@@ -1,10 +1,10 @@
 import React from "react";
 
 export default function Layout(props: {
-    heroSection: React.ReactNode;
-    featuresSection: React.ReactNode;
     contactUsSection: React.ReactNode;
     featuredListings: React.ReactNode;
+    featuresSection: React.ReactNode;
+    heroSection: React.ReactNode;
 }) {
     return (
         <>

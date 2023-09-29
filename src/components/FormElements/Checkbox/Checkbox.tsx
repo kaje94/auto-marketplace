@@ -4,11 +4,11 @@ import { ComponentProps, forwardRef } from "react";
 import { Control } from "react-hook-form";
 
 export interface ControllerProps extends ComponentProps<"input"> {
-    label?: string;
     checkboxClassNames?: string;
-    loading?: boolean;
-    fieldName: string;
     control?: Control<any>;
+    fieldName: string;
+    label?: string;
+    loading?: boolean;
 }
 
 export interface Props extends Omit<ControllerProps, "fieldName" | "control"> {}

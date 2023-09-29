@@ -7,8 +7,8 @@ import { BellIcon, BellOffIcon, EditIcon, TrashIcon } from "@/icons";
 import { ListingSubscriptionItem } from "@/utils/types";
 
 interface Props {
-    listingSubscriptionItem?: ListingSubscriptionItem;
     basePath?: string;
+    listingSubscriptionItem?: ListingSubscriptionItem;
 }
 
 export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionItem = {}, basePath }) => {

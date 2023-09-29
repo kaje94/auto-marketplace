@@ -4,8 +4,8 @@ import { getRandomItem } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 
 interface Props {
-    vehicle?: Vehicle;
     loading?: boolean;
+    vehicle?: Vehicle;
 }
 
 export const ListingDetailsFeatures: FC<Props> = ({ vehicle, loading }) => {

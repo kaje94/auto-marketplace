@@ -10,9 +10,9 @@ import { ListingStatusTypes } from "@/utils/enum";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
-    listingItem?: ListingItem;
-    isAdmin?: boolean;
     basePath?: string;
+    isAdmin?: boolean;
+    listingItem?: ListingItem;
 }
 
 export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin, basePath }) => {

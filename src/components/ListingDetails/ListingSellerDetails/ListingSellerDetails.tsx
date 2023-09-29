@@ -5,8 +5,8 @@ import { Avatar } from "@/components/Common/Avatar";
 import { ListingUser } from "@/utils/types";
 
 interface Props {
-    user?: ListingUser;
     loading?: boolean;
+    user?: ListingUser;
 }
 
 export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {

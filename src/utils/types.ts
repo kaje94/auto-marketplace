@@ -37,69 +37,69 @@ type Price = z.infer<typeof PriceSchema>;
 export type Location = z.infer<typeof LocationSchema>;
 
 export type ListingUser = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    isDealership: boolean;
     address: Location;
-    userName: string;
     email: string;
     emailConfirmed: boolean;
+    firstName: string;
+    id: string;
+    isDealership: boolean;
+    lastName: string;
     phone: string;
     phoneConfirmed: boolean;
+    userName: string;
 };
 
 export type Vehicle = z.infer<typeof VehicleSchema>;
 
 export type ListingItem = {
-    id: ListingIdType;
-    title: string;
-    description: string;
-    price: Price;
-    location: Location;
-    hasOnGoingLease: boolean;
-    status: ListingStatusTypes;
-    expiryDate: string;
-    reviewComment?: string;
-    vehicle: Vehicle;
-    userId?: string;
     createdOn: string;
+    description: string;
+    expiryDate: string;
+    hasOnGoingLease: boolean;
+    id: ListingIdType;
+    location: Location;
+    price: Price;
+    reviewComment?: string;
+    status: ListingStatusTypes;
+    title: string;
     user?: ListingUser;
+    userId?: string;
+    vehicle: Vehicle;
 };
 
 export type ListingSubscriptionItem = {
-    id: ListingSubscriptionIdType;
     active: boolean;
-    userId: string;
-    displayName: string;
-    type?: VehicleTypes;
     brand?: string;
-    model?: string;
-    trim?: string;
-    minMillage?: number;
-    maxMillage?: number;
     condition?: VehicleConditionTypes;
-    minPrice?: Price;
+    createdOn: string;
+    displayName: string;
+    id: ListingSubscriptionIdType;
+    maxMillage?: number;
     maxPrice?: Price;
-    minYearOfManufacture?: string;
     maxYearOfManufacture?: string;
-    minYearOfRegistration?: string;
     maxYearOfRegistration?: string;
+    minMillage?: number;
+    minPrice?: Price;
+    minYearOfManufacture?: string;
+    minYearOfRegistration?: string;
+    userId: string;
+    trim?: string;
+    model?: string;
     notificationFrequency: SubscriptionFrequencies;
     subscriptionExpiryDate: string;
-    createdOn: string;
+    type?: VehicleTypes;
     user?: ListingUser;
 };
 
 export type NotificationItem = {
-    id: number;
-    title: string;
     body: string;
-    isShown: boolean;
-    userId: string;
     createdOn: string;
-    type: NotificationTypes;
+    id: number;
+    isShown: boolean;
     redirectUrl: string;
+    title: string;
+    type: NotificationTypes;
+    userId: string;
 };
 
 export type VehicleBrand = {
@@ -108,11 +108,11 @@ export type VehicleBrand = {
 };
 
 export type PaginatedResponse = {
-    pageNumber: number;
-    totalPages: number;
-    totalCount: number;
-    hasPreviousPage: boolean;
     hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    pageNumber: number;
+    totalCount: number;
+    totalPages: number;
 };
 
 export type PaginatedRequest = {

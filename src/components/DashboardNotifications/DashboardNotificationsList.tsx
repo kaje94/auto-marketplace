@@ -13,9 +13,9 @@ import { NotificationItems, PaginatedResponse } from "@/utils/types";
 import { DashboardNotificationItem } from "./DashboardNotificationItem";
 
 interface Props {
+    basePath?: string;
     notifications?: PaginatedResponse & NotificationItems;
     pageLoading?: boolean;
-    basePath?: string;
     session?: Session | null;
 }
 

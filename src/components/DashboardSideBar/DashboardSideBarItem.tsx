@@ -6,12 +6,12 @@ import { FC } from "react";
 import { AdvertIcon, ClipboardIcon, ListIcon, NotificationIcon, RssIcon, SettingsIcon, UserIcon } from "@/icons";
 
 interface Props {
-    href: string;
-    label: string;
     activePaths?: string[];
-    regexExp?: string;
-    iconName?: "UserIcon" | "AdvertIcon" | "SettingsIcon" | "NotificationIcon" | "ListIcon" | "RssIcon" | "ClipboardIcon";
     badgeCount?: number;
+    href: string;
+    iconName?: "UserIcon" | "AdvertIcon" | "SettingsIcon" | "NotificationIcon" | "ListIcon" | "RssIcon" | "ClipboardIcon";
+    label: string;
+    regexExp?: string;
 }
 
 export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp, iconName, badgeCount }) => {

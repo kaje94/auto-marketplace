@@ -6,8 +6,8 @@ import { getRandomItem, timeAgo } from "@/utils/helpers";
 import { NotificationItem } from "@/utils/types";
 
 interface Props {
-    notificationItem?: NotificationItem;
     loading?: boolean;
+    notificationItem?: NotificationItem;
 }
 
 export const DashboardNotificationItem: FC<Props> = (props) => {

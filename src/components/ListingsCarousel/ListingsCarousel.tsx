@@ -8,12 +8,12 @@ import { ListingItem as ListingItemType } from "@/utils/types";
 import { NextButton, PrevButton, usePrevNextButtons } from "./ListingsCarouselButtons";
 
 type Props = {
+    bgFromColor?: "from-white" | "from-base-200";
+    emptyPlaceholderSubText?: string;
+    emptyPlaceholderText?: string;
     items?: ListingItemType[];
     loading?: boolean;
     loadingItemCount?: number;
-    bgFromColor?: "from-white" | "from-base-200";
-    emptyPlaceholderText?: string;
-    emptyPlaceholderSubText?: string;
 };
 
 export const ListingsCarousel = (props: Props) => {

@@ -6,8 +6,8 @@ import { TrashIcon } from "@/icons";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
-    listingItem: ListingItem;
     isOwner: boolean;
+    listingItem: ListingItem;
     loading?: boolean;
 }
 

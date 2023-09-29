@@ -4,11 +4,11 @@ import { ListingImage } from "@/components/Common";
 import { Location, VehicleImageType } from "@/utils/types";
 
 type PropTypeImage = {
-    selected: boolean;
-    onClick: () => void;
-    title: string;
-    location: Location;
     image: VehicleImageType;
+    location: Location;
+    onClick: () => void;
+    selected: boolean;
+    title: string;
 };
 
 type PropTypeLoading = {

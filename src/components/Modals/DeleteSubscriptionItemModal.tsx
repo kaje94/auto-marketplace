@@ -7,8 +7,8 @@ import { ListingSubscriptionItem } from "@/utils/types";
 
 interface Props {
     listingSubscriptionItem?: ListingSubscriptionItem;
-    visible?: boolean;
     setVisible?: (visible: boolean) => void;
+    visible?: boolean;
 }
 
 export const DeleteSubscriptionItemModal = (props: Props) => {

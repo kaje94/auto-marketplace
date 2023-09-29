@@ -6,11 +6,11 @@ import ClickAwayListener from "react-click-away-listener";
 import { MenuIcon } from "@/icons";
 
 export interface ContextMenuItemProp {
-    onClick?: () => void;
-    link?: string;
-    label: string;
-    icon: ReactNode;
     classNames?: string;
+    icon: ReactNode;
+    label: string;
+    link?: string;
+    onClick?: () => void;
 }
 
 interface Props {

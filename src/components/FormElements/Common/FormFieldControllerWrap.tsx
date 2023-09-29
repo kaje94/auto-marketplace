@@ -3,13 +3,13 @@ import { FC, ReactNode } from "react";
 import { AlertCircleIcon } from "@/icons";
 
 export interface FormFieldControllerProps {
-    error?: string;
-    required?: boolean;
-    labelClassNames?: string;
-    label?: string;
-    rootClassName?: string;
     children?: ReactNode;
+    error?: string;
     errorAsTooltip?: boolean;
+    label?: string;
+    labelClassNames?: string;
+    required?: boolean;
+    rootClassName?: string;
 }
 
 export const FormFieldControllerWrap: FC<FormFieldControllerProps> = ({

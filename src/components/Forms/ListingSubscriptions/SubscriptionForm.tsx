@@ -8,15 +8,15 @@ import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList,
 import { CreateSubscriptionReq } from "@/utils/types";
 
 interface Props {
-    submitButton?: {
-        text?: string;
-        mutatingText?: string;
-        disableIfCleanForm?: boolean;
-    };
+    form?: UseFormReturn<CreateSubscriptionReq>;
     isLoading?: boolean;
     isMutating?: boolean;
-    form?: UseFormReturn<CreateSubscriptionReq>;
     onMutate?: (values: CreateSubscriptionReq) => void;
+    submitButton?: {
+        disableIfCleanForm?: boolean;
+        mutatingText?: string;
+        text?: string;
+    };
 }
 
 export const SubscriptionForm: FC<Props> = (props) => {

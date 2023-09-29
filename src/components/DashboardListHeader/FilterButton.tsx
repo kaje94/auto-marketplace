@@ -3,10 +3,10 @@ import { FC } from "react";
 import { FilterIcon } from "@/icons";
 
 interface Props {
-    loading: boolean;
-    hasSearchParams: boolean;
     dropdownOpen: boolean;
     handleFilterOpen: (event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => void;
+    hasSearchParams: boolean;
+    loading: boolean;
 }
 
 export const FilterButton: FC<Props> = ({ loading, hasSearchParams, dropdownOpen, handleFilterOpen }) => {

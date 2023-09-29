@@ -4,15 +4,15 @@ import { FC } from "react";
 import { LayersIcon } from "@/icons";
 
 interface EmptyProps {
-    iconSize?: "sm" | "lg";
-    text?: string;
-    subText?: string;
     button?: {
-        text: string;
         href: string;
-        onClick?: () => void;
         loading?: boolean;
+        onClick?: () => void;
+        text: string;
     };
+    iconSize?: "sm" | "lg";
+    subText?: string;
+    text?: string;
 }
 
 export const Empty: FC<EmptyProps> = ({ iconSize = "lg", button, text = "Nothing to display", subText = "" }) => (

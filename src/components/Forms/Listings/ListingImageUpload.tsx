@@ -10,13 +10,13 @@ import { MaxVehicleImageCount } from "@/utils/constants";
 import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props {
+    error?: string;
     files?: VehicleImageType[];
-    setFiles?: (images: VehicleImageType[]) => void;
     loading?: boolean;
     loadingPlaceholderCount?: number;
-    error?: string;
-    title?: string;
     location?: Location;
+    setFiles?: (images: VehicleImageType[]) => void;
+    title?: string;
 }
 
 export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {

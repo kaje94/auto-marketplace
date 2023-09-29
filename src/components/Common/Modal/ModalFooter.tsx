@@ -2,13 +2,13 @@ import { clsx } from "clsx";
 import { FC } from "react";
 
 interface Props {
-    onVisibleChange: (visible: boolean) => void;
-    primaryButton?: {
-        text?: string;
-        classNames?: string;
-    };
     loading?: boolean;
     onSubmit?: () => void;
+    onVisibleChange: (visible: boolean) => void;
+    primaryButton?: {
+        classNames?: string;
+        text?: string;
+    };
 }
 
 export const ModalFooter: FC<Props> = ({ onVisibleChange, primaryButton, loading, onSubmit }) => {

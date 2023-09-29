@@ -9,22 +9,22 @@ import { unCamelCase } from "@/utils/helpers";
 import { LabelValue } from "@/utils/types";
 
 export interface ControllerProps extends FormFieldControllerProps {
-    selectClassNames?: string;
-    gridCols?: "grid-cols-3" | "grid-cols-1";
-    showSelectedTick?: boolean;
-    loading?: boolean;
-    options?: LabelValue[];
+    control: Control<any>;
     disabled?: boolean;
     fieldName: string;
-    control: Control<any>;
+    gridCols?: "grid-cols-3" | "grid-cols-1";
+    loading?: boolean;
+    options?: LabelValue[];
     placeholder?: string;
+    selectClassNames?: string;
+    showSelectedTick?: boolean;
 }
 
 export interface Props extends Pick<ControllerProps, "selectClassNames" | "placeholder" | "options" | "gridCols" | "showSelectedTick" | "disabled"> {
-    setFieldValue?: (value: any) => void;
-    value?: string;
     error?: string;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
+    setFieldValue?: (value: any) => void;
+    value?: string;
 }
 
 export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => {

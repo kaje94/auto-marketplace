@@ -5,11 +5,11 @@ import { getRandomItem } from "@/utils/helpers";
 import { TagSelect } from "./TagSelect";
 
 interface Props {
-    loading?: boolean;
-    tags?: { id: number; name: string }[];
-    loadingPlaceholderCount?: number;
-    fieldName: string;
     control?: Control<any>;
+    fieldName: string;
+    loading?: boolean;
+    loadingPlaceholderCount?: number;
+    tags?: { id: number; name: string }[];
 }
 
 export const TagSelectController: FC<Props> = ({ tags = [], fieldName, loading, loadingPlaceholderCount = 10, control }) => {

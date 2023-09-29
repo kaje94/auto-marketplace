@@ -8,9 +8,9 @@ import { ActivityIcon, HomeIcon, RefreshIcon } from "@/icons";
 interface Props {
     error?: Error | string;
     reset?: () => void;
-    title?: string;
-    subTitle?: string;
     showReset?: boolean;
+    subTitle?: string;
+    title?: string;
     variant?: "sm" | "lg";
 }
 

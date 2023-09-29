@@ -11,10 +11,10 @@ import { ListingSubscriptionItems, PaginatedResponse } from "@/utils/types";
 import { DashboardSubscriptionItem } from "./DashboardSubscriptionItem";
 
 interface Props {
-    listingSubscriptions?: PaginatedResponse & ListingSubscriptionItems;
-    pageLoading?: boolean;
     basePath?: string;
     hasSearchParams?: boolean;
+    listingSubscriptions?: PaginatedResponse & ListingSubscriptionItems;
+    pageLoading?: boolean;
 }
 
 export const DashboardSubscriptionList: FC<
