@@ -33,7 +33,7 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
                     onClick={onClick}
                     className={clsx(
                         "rounded-box m-0 block w-full cursor-pointer touch-manipulation overflow-hidden bg-transparent p-0 transition-opacity duration-200",
-                        selected ? "opacity-100" : "opacity-20 hover:opacity-30"
+                        selected ? "opacity-100" : "opacity-20 hover:opacity-30",
                     )}
                     type="button"
                 >

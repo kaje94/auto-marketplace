@@ -63,7 +63,7 @@ const YearSchema = z.string().refine(
         const numericValue = Number(value);
         return numericValue >= YearSelectMinYear && numericValue <= new Date().getFullYear();
     },
-    { message: `Year must be between ${YearSelectMinYear} and ${new Date().getFullYear()}` }
+    { message: `Year must be between ${YearSelectMinYear} and ${new Date().getFullYear()}` },
 );
 
 export const ListingIdField = z.number();

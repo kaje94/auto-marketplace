@@ -73,7 +73,7 @@ export const EditListingForm: FC<Props> = (props) => {
                     toast.success(`Successfully updated the Advert ${getListingTitleFromVehicle(req.vehicle)}`, { id: toastId?.current });
                 }
             },
-        }
+        },
     );
 
     return (

@@ -18,7 +18,7 @@ export const DashboardNotificationItem: FC<Props> = (props) => {
         <div
             className={clsx(
                 "flex flex-col gap-0.5 bg-opacity-10 p-3 transition-colors duration-1000 md:p-4",
-                !loading && !isShown ? "bg-secondary" : "bg-base-100"
+                !loading && !isShown ? "bg-secondary" : "bg-base-100",
             )}
         >
             <div className="flex flex-row items-start gap-2 ">

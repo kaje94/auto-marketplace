@@ -59,7 +59,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                                     "badge-error": status === ListingStatusTypes.Declined,
                                     "badge-info": status === ListingStatusTypes.Posted,
                                     "badge-warning": [ListingStatusTypes.UnderReview, ListingStatusTypes.Expired].includes(
-                                        status as ListingStatusTypes
+                                        status as ListingStatusTypes,
                                     ),
                                     "badge-success": status === ListingStatusTypes.Sold,
                                 })}

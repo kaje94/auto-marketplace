@@ -61,13 +61,13 @@ export const CreateListingForm = (props: Props) => {
                 } else {
                     toast.success(
                         `Your advertisement, ${getListingTitleFromVehicle(
-                            variables.vehicle
+                            variables.vehicle,
                         )}, has been successfully submitted for review. We will notify you once the review process is complete.`,
-                        { id: toastId?.current }
+                        { id: toastId?.current },
                     );
                 }
             },
-        }
+        },
     );
 
     return (

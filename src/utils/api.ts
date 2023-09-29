@@ -157,12 +157,12 @@ export const api = {
     getListingSubscriptions: (req?: PaginatedRequest & DashboardSubscriptionFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
             `/v1/ListingSubscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
-            { next: { tags: [apiTags.getListingSubscriptions()], revalidate: revalidationTime.oneDay } }
+            { next: { tags: [apiTags.getListingSubscriptions()], revalidate: revalidationTime.oneDay } },
         ),
     getMyListingSubscriptions: (listingUserId: string, req?: PaginatedRequest & DashboardMySubscriptionFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
             `/v1/Users/me/listing-subscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
-            { next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)], revalidate: revalidationTime.oneDay } }
+            { next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)], revalidate: revalidationTime.oneDay } },
         ),
     getListingSubscriptionItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/ListingSubscriptions/${id}`, {
@@ -178,7 +178,7 @@ export const api = {
     getMyNotifications: (listingUserId: string, req?: PaginatedRequest & DashboardNotificationsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & NotificationItems>(
             `/v1/Users/me/notifications?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
-            { next: { tags: [apiTags.getMyNotifications(listingUserId)], revalidate: revalidationTime.threeHours } }
+            { next: { tags: [apiTags.getMyNotifications(listingUserId)], revalidate: revalidationTime.threeHours } },
         ),
     setAllNotificationsAsShown: () => fetchApi.protectedPost<BodyInit, void>(`/v1/Users/me/notifications/set-all-shown`, ""),
 };

@@ -16,7 +16,7 @@ export default withAuth(
         callbacks: {
             authorized: ({ token }) => !!token?.access_token && token?.error !== "RefreshAccessTokenError",
         },
-    }
+    },
 );
 
 export const config = {

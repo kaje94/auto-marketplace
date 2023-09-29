@@ -27,7 +27,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
                 "select-bordered select bg-transparent font-normal",
                 error && "select-error",
                 loading && "animate-pulse",
-                selectClassName
+                selectClassName,
             )}
             {...rest}
         >

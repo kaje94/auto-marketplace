@@ -31,7 +31,7 @@ export const useDashboardFilter = ({
     };
 
     const onApplyFilterClick = (
-        values: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq | DashboardNotificationsFilterReq
+        values: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq | DashboardNotificationsFilterReq,
     ) => {
         const searchQuery = qs.stringify({ ...searchParamsObj, ...values }, { skipEmptyString: true, skipNull: true });
         setDropdownOpen(false);

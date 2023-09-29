@@ -61,7 +61,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
             YomStartDate: formValues.YomStartDate ? convertYearToDateString(formValues.YomStartDate) : undefined,
             YomEndDate: formValues.YomEndDate ? convertYearToDateString(formValues.YomEndDate) : undefined,
         },
-        { skipEmptyString: true, skipNull: true }
+        { skipEmptyString: true, skipNull: true },
     );
 
     useEffect(() => {

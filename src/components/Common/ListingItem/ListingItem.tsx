@@ -23,8 +23,8 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                         image={image}
                         title={item.title}
                         className={clsx(
-                            "aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear zoomable-image",
-                            loading && "opacity-50"
+                            "zoomable-image aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear",
+                            loading && "opacity-50",
                         )}
                         height={300}
                         width={450}
@@ -36,7 +36,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
 
                 <div className="absolute bottom-0 left-0 flex h-2/3 w-full flex-col justify-end bg-gradient-to-t from-base-content to-transparent px-3 py-0">
                     {item ? (
-                        <div className="badge badge-primary badge-lg font-bold duration-300 badge-hover-translucent image-text-shadow ">
+                        <div className="badge-hover-translucent badge badge-primary badge-lg font-bold duration-300 image-text-shadow ">
                             {getFormattedCurrency(item?.price?.amount, item?.price?.currency)}
                         </div>
                     ) : (
@@ -46,8 +46,8 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                     {item ? (
                         <div
                             className={clsx(
-                                "line-clamp-3 font-bold text-base-100 duration-300 badge-hover-translucent image-text-shadow",
-                                detailed ? "text-2xl" : "text-xl"
+                                "badge-hover-translucent line-clamp-3 font-bold text-base-100 duration-300 image-text-shadow",
+                                detailed ? "text-2xl" : "text-xl",
                             )}
                         >
                             {item?.title}

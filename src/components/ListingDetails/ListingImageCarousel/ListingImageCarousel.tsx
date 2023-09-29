@@ -36,7 +36,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
             emblaMainApi.scrollTo(index);
             emblaMainApi?.plugins()?.autoplay?.stop();
         },
-        [emblaMainApi, emblaThumbsApi]
+        [emblaMainApi, emblaThumbsApi],
     );
 
     const onSelect = useCallback(() => {

@@ -33,9 +33,7 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                 className={clsx("grid gap-4 md:grid-cols-2 xl:gap-7 2xl:grid-cols-3 2xl:gap-8", (pageLoading || isLoading) && "animate-pulse")}
                 ref={parent}
             >
-                {listings?.items?.map((item) => (
-                    <ListingItem key={item.id} item={item} detailed />
-                ))}
+                {listings?.items?.map((item) => <ListingItem key={item.id} item={item} detailed />)}
 
                 {pageLoading && new Array(12).fill("").map((_, i) => <ListingItem key={`loading-listing-item-${i}`} loading />)}
 

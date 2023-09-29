@@ -81,7 +81,7 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
                     toast.success(`Successfully updated the Subscription ${req.displayName}`, { id: toastId?.current });
                 }
             },
-        }
+        },
     );
 
     return (

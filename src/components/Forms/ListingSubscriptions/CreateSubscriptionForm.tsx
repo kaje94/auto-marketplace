@@ -67,7 +67,7 @@ export const CreateSubscriptionForm = (props: Props) => {
                     toast.success(`Successfully created a new subscription ${variables.displayName}`, { id: toastId?.current });
                 }
             },
-        }
+        },
     );
 
     return (

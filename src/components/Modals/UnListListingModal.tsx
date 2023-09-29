@@ -56,7 +56,7 @@ export const UnListListingModal = (props: Props) => {
     }
     selectOptions.push(
         { label: unCamelCase(ListingStatusTypes.PermanentlyRemoved), value: ListingStatusTypes.PermanentlyRemoved },
-        { label: unCamelCase(ListingStatusTypes.Sold), value: ListingStatusTypes.Sold }
+        { label: unCamelCase(ListingStatusTypes.Sold), value: ListingStatusTypes.Sold },
     );
 
     return (

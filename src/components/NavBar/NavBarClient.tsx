@@ -27,7 +27,7 @@ export const NavBarClient = ({
             <div
                 className={clsx(
                     "navbar rounded-box relative z-20 min-h-[70px] items-center justify-between gap-8 text-neutral-content shadow shadow-neutral",
-                    pathName === "/" ? "bg-transparent !shadow-xl" : "bg-neutral"
+                    pathName === "/" ? "bg-transparent !shadow-xl" : "bg-neutral",
                 )}
             >
                 <Link href="/" className="ml-0 sm:ml-1 md:ml-2">

@@ -49,9 +49,7 @@ export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoadi
                 />
             )}
 
-            {notifications?.items?.map((item) => (
-                <DashboardNotificationItem key={item.id} notificationItem={item} />
-            ))}
+            {notifications?.items?.map((item) => <DashboardNotificationItem key={item.id} notificationItem={item} />)}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardNotificationItem key={`loading-notification-item-${i}`} loading />)}
 

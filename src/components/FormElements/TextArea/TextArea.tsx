@@ -22,7 +22,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
                 "textarea-bordered textarea textarea-md min-h-[140px] w-full bg-transparent",
                 error && "textarea-error",
                 loading && "animate-pulse",
-                textAreaClassNames
+                textAreaClassNames,
             )}
             {...rest}
         />

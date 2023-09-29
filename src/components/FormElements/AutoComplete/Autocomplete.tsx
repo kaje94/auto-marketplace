@@ -70,7 +70,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                 "select-bordered select w-full bg-transparent font-normal",
                                 error && "select-error",
                                 disabled && "text-opacity-90",
-                                selectClassNames
+                                selectClassNames,
                             )}
                             displayValue={(option: any) => (option && option !== "" ? unCamelCase(option as string) : query)}
                             placeholder={placeholder}
@@ -90,7 +90,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                         <div
                             className={clsx(
                                 "dropdown-content menu z-[1] mt-1 grid max-h-60 w-full overflow-y-auto rounded rounded-t-none bg-base-200 shadow-lg",
-                                gridCols
+                                gridCols,
                             )}
                         >
                             {filteredOptions.length === 0 && query !== "" ? (
@@ -118,7 +118,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                                     className={clsx(
                                                         `flex-1 truncate`,
                                                         selected ? "font-bold" : "font-normal",
-                                                        gridCols !== "grid-cols-1" && "text-center"
+                                                        gridCols !== "grid-cols-1" && "text-center",
                                                     )}
                                                 >
                                                     {unCamelCase(option.label)}

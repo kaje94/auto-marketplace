@@ -1,15 +1,11 @@
 import imageCompression from "browser-image-compression";
-import { ClassValue, clsx } from "clsx";
 import { FastAverageColor } from "fast-average-color";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "query-string";
-import { twMerge } from "tailwind-merge";
 import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3, getPresignedS3Url } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
 import { ListingItem, ListingItems, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
-
-export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;
@@ -107,7 +103,7 @@ export const thumbHashToDataUrl = (thumbHash?: string) => {
                 window
                     .atob(base64)
                     .split("")
-                    .map((x) => x.charCodeAt(0))
+                    .map((x) => x.charCodeAt(0)),
             );
         const thumbHashFromBase64 = base64ToBinary(thumbHash);
         const placeholderURL = ThumbHash.thumbHashToDataURL(thumbHashFromBase64);
@@ -141,7 +137,7 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
                 return null;
             }
             return { color: item.color, isThumbnail: item.isThumbnail, name: item.name, url: item.url };
-        })
+        }),
     );
     return images.filter((item) => !!item?.url) as VehicleImageType[];
 };
@@ -161,7 +157,7 @@ export const transformListingResponse = (itemDetails: ListingItem): ListingItem 
                     averageColor: imageItem?.color?.includes("_") ? imageItem?.color.split("_")[0] : "",
                     thumbHash: imageItem?.color?.includes("_") ? imageItem?.color.split("_")[1] : imageItem?.color,
                     deleted: false,
-                }))
+                })),
             ),
         },
     };

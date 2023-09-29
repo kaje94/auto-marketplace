@@ -25,7 +25,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
     const toastId = useRef<string>();
     const defaultForm = useMemo<ReportListingReq>(
         () => ({ listingId: listingId!, message: "", reason: ListingReportReason.Spam, emailAddress: userEmail ?? "" }),
-        [userEmail, listingId]
+        [userEmail, listingId],
     );
 
     const { handleSubmit, reset, control } = useForm<ReportListingReq>({
@@ -51,7 +51,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
                     toast.success(`Successfully reported the Advert ${listingTitle}`, { id: toastId?.current });
                 }
             },
-        }
+        },
     );
 
     useEffect(() => {
