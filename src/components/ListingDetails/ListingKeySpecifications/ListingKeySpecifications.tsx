@@ -49,7 +49,10 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
                     {new Array(10).fill("").map((_, i) => (
                         <div
                             key={i}
-                            className={clsx("flex flex-col items-center gap-0.5 lg:md:gap-0.5", i % 2 === 0 ? "lg:items-start" : "lg:items-end")}
+                            className={clsx(
+                                "flex animate-pulse flex-col items-center gap-0.5 lg:md:gap-0.5",
+                                i % 2 === 0 ? "lg:items-start" : "lg:items-end",
+                            )}
                         >
                             <div className={clsx("h-4 w-11 bg-base-200", getRandomItem(placeholderWidth))} />
                             <div className={clsx("h-5 bg-base-200", getRandomItem(placeholderWidth))} />
