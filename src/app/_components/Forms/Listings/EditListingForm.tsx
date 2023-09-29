@@ -9,7 +9,7 @@ import { convertYearToDateString, transformImagesToPost, getListingTitleFromVehi
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FC, useRef } from "react";
-import { editListingAction } from "@/app/_actions/listingActions";
+import { editListingAction } from "@/actions/listingActions";
 
 interface Props {
     features: VehicleFeature[];

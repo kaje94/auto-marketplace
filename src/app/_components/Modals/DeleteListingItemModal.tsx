@@ -1,4 +1,4 @@
-import { deleteListingAction } from "@/app/_actions/listingActions";
+import { deleteListingAction } from "@/actions/listingActions";
 import { Modal, ModalFooter } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";

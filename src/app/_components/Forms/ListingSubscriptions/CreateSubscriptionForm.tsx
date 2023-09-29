@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useRef } from "react";
-import { createListingSubscriptionAction } from "@/app/_actions/listingSubscriptionActions";
+import { createListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
 import { SubscriptionForm } from "./SubscriptionForm";
 import { convertYearToDateString } from "@/utils/helpers";
 

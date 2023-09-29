@@ -9,7 +9,7 @@ import { convertYearToDateString, transformImagesToPost, getListingTitleFromVehi
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FC, useRef } from "react";
-import { editListingSubscriptionAction } from "@/app/_actions/listingSubscriptionActions";
+import { editListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {

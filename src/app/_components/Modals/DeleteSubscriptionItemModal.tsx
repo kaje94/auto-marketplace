@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import { ListingSubscriptionItem } from "@/utils/types";
-import { deleteListingSubscriptionAction } from "@/app/_actions/listingSubscriptionActions";
+import { deleteListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
 
 interface Props {
     listingSubscriptionItem?: ListingSubscriptionItem;

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { toggleListingSubscriptionAction } from "@/app/_actions/listingSubscriptionActions";
+import { toggleListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
 import { Dates } from "@/utils/constants";
 import { DatePickerController } from "@/app/_components/FormElements/DatePicker";
 

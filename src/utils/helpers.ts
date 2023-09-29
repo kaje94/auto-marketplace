@@ -2,7 +2,7 @@ import { Vehicle, Location, VehicleImageType, ListingItem, VehicleCreate, Listin
 import * as ThumbHash from "thumbhash";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { deleteObjectFromS3, getPresignedS3Url } from "@/app/_actions/imageActions";
+import { deleteObjectFromS3, getPresignedS3Url } from "@/actions/imageActions";
 import imageCompression from "browser-image-compression";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { FastAverageColor } from "fast-average-color";

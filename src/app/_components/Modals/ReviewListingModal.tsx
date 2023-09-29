@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ModalFooter, Modal } from "@/app/_components";
 import { useMutation } from "@tanstack/react-query";
-import { reviewListingAction } from "@/app/_actions/listingActions";
+import { reviewListingAction } from "@/actions/listingActions";
 import toast from "react-hot-toast";
 import { TextAreaController } from "@/app/_components/FormElements/TextArea";
 import { SelectController } from "@/app/_components/FormElements/Select";

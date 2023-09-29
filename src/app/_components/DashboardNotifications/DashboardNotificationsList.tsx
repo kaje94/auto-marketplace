@@ -9,7 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import clsx from "clsx";
 import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
 import { DashboardNotificationItem } from "./DashboardNotificationItem";
-import { setAllNotificationsAsShownActions } from "@/app/_actions/notificationActions";
+import { setAllNotificationsAsShownActions } from "@/actions/notificationActions";
 import { Session } from "next-auth";
 import { useQuery } from "@tanstack/react-query";
 
