@@ -16,7 +16,7 @@ export default async function Page() {
                 <LandingHeroSearch />
             </div>
             <Image
-                src="/cover-image.jpg"
+                src="/images/cover-image.jpg"
                 height={450}
                 width={1246}
                 quality={100}

@@ -31,7 +31,7 @@ export default async function Page() {
                 <h3 className={clsx(displayFont.className, "mb-6 text-center text-2xl lg:text-4xl")}>Why Choose Us?</h3>
                 <div className="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 xl:p-7 2xl:p-8">
                     <Image
-                        src="/features-1.jpg"
+                        src="/images/features-1.jpg"
                         height={400}
                         width={600}
                         alt="feature-1-image"
@@ -66,7 +66,7 @@ export default async function Page() {
                         />
                     </div>
                     <Image
-                        src="/features-2.jpg"
+                        src="/images/features-2.jpg"
                         height={400}
                         width={600}
                         alt="feature-1-image"

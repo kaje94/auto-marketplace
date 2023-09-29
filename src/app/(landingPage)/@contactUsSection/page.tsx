@@ -19,7 +19,7 @@ export default async function Page() {
             {["left-10 top-10", "right-10 top-10", "bottom-10 right-10", "bottom-10 left-10"].map((position) => (
                 <Image
                     key={position}
-                    src="/contact-us-illustration-1.png"
+                    src="/images/contact-us-illustration-1.png"
                     height={100}
                     width={100}
                     alt="contact-us-illustration"
