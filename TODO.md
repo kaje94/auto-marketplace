@@ -16,7 +16,6 @@
 
 -   [] use use-mutation like function yourself instead of using react-query
 -   [] check max length of all strings in schema file
--   [] invalidate notification after admin approves or rejects
 -   [] get vehicle brands and models from API
 -   [] add clearable prop to form elements
 -   [] check if we can have only one provider for searching

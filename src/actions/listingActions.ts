@@ -1,11 +1,12 @@
 "use server";
 import { revalidateTag } from "next/cache";
-import { api, listingItemTags } from "@/utils/api";
+import { api, apiTags, listingItemTags } from "@/utils/api";
 import { CreateListingReq, EditListingReq, ListingIdType, ReportListingReq, ReviewListingReq, UnListListingReq } from "@/utils/types";
 
 export const reviewListingAction = async (req: ReviewListingReq, userId: string) => {
     await api.reviewListing(req);
     listingItemTags(req.listingId, userId).forEach((tag) => revalidateTag(tag));
+    revalidateTag(apiTags.getMyNotifications(userId));
 };
 
 export const unListListingAction = async (req: UnListListingReq, userId: string) => {
