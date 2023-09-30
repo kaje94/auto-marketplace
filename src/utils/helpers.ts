@@ -3,7 +3,7 @@ import { FastAverageColor } from "fast-average-color";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "query-string";
 import * as ThumbHash from "thumbhash";
-import { deleteObjectFromS3, getPresignedS3Url } from "@/actions/imageActions";
+import { deleteObjectFromS3Action, getPresignedS3UrlAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
 import { ListingItem, ListingItems, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
 
@@ -126,14 +126,14 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
                 });
                 const [hash, { url, key, bucket, region }, color] = await Promise.all([
                     previewUrlToHash(item.preview),
-                    getPresignedS3Url(compressedFile.type, compressedFile?.length),
+                    getPresignedS3UrlAction(compressedFile.type, compressedFile?.length),
                     fac.getColorAsync(item.preview),
                 ]);
                 const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
 
                 return { color: `${color.hex}_${hash}`, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
             } else if (item.deleted && item.name && item.url) {
-                await deleteObjectFromS3(item.name);
+                await deleteObjectFromS3Action(item.name);
                 return null;
             }
             return { color: item.color, isThumbnail: item.isThumbnail, name: item.name, url: item.url };

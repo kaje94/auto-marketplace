@@ -34,7 +34,7 @@ export const deleteListingAction = async (listingId: ListingIdType, userId: stri
     listingItemTags(listingId, userId).forEach((tag) => revalidateTag(tag));
 };
 
-export const incrementViews = async (listingId: ListingIdType) => {
+export const incrementViewsAction = async (listingId: ListingIdType) => {
     await api.incrementViews(listingId);
 };
 

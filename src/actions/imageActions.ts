@@ -10,7 +10,7 @@ const client = new S3Client({
     region: env.S3_UPLOAD_REGION,
 });
 
-export const getPresignedS3Url = async (filetype: string, fileSize: number) => {
+export const getPresignedS3UrlAction = async (filetype: string, fileSize: number) => {
     const bucket = env.S3_UPLOAD_BUCKET;
     const region = env.S3_UPLOAD_REGION;
     const session = await getSession();
@@ -32,7 +32,7 @@ export const getPresignedS3Url = async (filetype: string, fileSize: number) => {
     return { url, key, bucket, region };
 };
 
-export const deleteObjectFromS3 = async (imageKey: string) => {
+export const deleteObjectFromS3Action = async (imageKey: string) => {
     const session = await getSession();
     if (!session?.user) {
         throw new Error("User session not found to delete image");

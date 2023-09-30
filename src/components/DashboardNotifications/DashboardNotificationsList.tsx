@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { FC } from "react";
-import { setAllNotificationsAsShownActions } from "@/actions/notificationActions";
+import { setAllNotificationsAsShownAction } from "@/actions/notificationActions";
 import { Empty, Pagination } from "@/components/Common";
 import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
 import { NotificationItems, PaginatedResponse } from "@/utils/types";
@@ -29,7 +29,7 @@ export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoadi
             if (typeof window !== "undefined" && !pageLoading && userClaims && hasNewNotifications) {
                 // mark notifications as read after 5 seconds of page load
                 await new Promise((resolve) => setTimeout(resolve, 5000));
-                await setAllNotificationsAsShownActions(userClaims?.sub);
+                await setAllNotificationsAsShownAction(userClaims?.sub);
             }
         },
         enabled: !pageLoading && userClaims && hasNewNotifications,

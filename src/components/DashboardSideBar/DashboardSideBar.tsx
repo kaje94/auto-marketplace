@@ -66,6 +66,12 @@ const DashboardSideBarItems = ({ userClaims, notificationCount }: { notification
                             label="Manage Subscriptions"
                             regexExp="^/dashboard/subscriptions/(.*?)"
                         />
+                        <NavBarItem
+                            activePaths={["/dashboard/cache-manage"]}
+                            href="/dashboard/cache-manage"
+                            iconName="DatabaseIcon"
+                            label="Manage Cache"
+                        />
                     </>
                 )}
             </ul>
