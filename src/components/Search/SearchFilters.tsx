@@ -14,11 +14,8 @@ import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers"
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { PostedListingsFilterReq } from "@/utils/types";
 
-const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>, callback?: Function) => {
+const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);
-    if (callback) {
-        callback();
-    }
 }, 1000);
 
 const defaultFilter: PostedListingsFilterReq = {
@@ -75,23 +72,9 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
     }, [searchParamStr]);
 
     useEffect(() => {
-        debouncedSearchRedirect(formQueryString, router, () => setNewSearchQuery(formQueryString));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formValues.Title, formValues.MinPrice, formValues.MaxPrice, formValues.City, formValues.Brand, formValues.Model, router]);
-
-    useEffect(() => {
-        router.push(`${window?.location?.pathname}?${formQueryString}`);
         setNewSearchQuery(formQueryString);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        formValues.VehicleType,
-        formValues.Condition,
-        formValues.YomStartDate,
-        formValues.YomEndDate,
-        formValues.Transmission,
-        formValues.FuelType,
-        router,
-    ]);
+        debouncedSearchRedirect(formQueryString, router);
+    }, [formQueryString, router, setNewSearchQuery]);
 
     const onResetClick = useCallback(() => {
         setNewSearchQuery("");

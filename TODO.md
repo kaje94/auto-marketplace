@@ -14,7 +14,6 @@
 
 > Web app todo list
 
--   [] use use-mutation like function yourself instead of using react-query
 -   [] check max length of all strings in schema file
 -   [] get vehicle brands and models from API
 -   [] add clearable prop to form elements
@@ -24,7 +23,21 @@
 -   [] contact us section
 -   [] view more adverts button in featured adverts
 -   [] fix Entire page /search deopted into client-side rendering.
--   [] make auth0 run fully on edge
+
+-   [] fix hydration ui issues in dashboard listing ui items
+-   [] report button showing for user who created the advert
+-   [] reduce input loading opacity
+-   [] checkbox not visible
+-   [] fix scroll when page change (always top)
+-   [] fix picture in image listing
+-   [] move user details above specification in user details
+-   [] show safety tips similar to ikman under item details description
+-   [] subscription create failing
+-   [] modal footer make opacity 1
+-   [] phone number click to call in advert details
+
+> Need to verify
+-   [] loading bug when changing query (while loading type something) (Added a possible fix)
 
 > Web app performance improvements
 
@@ -34,3 +47,21 @@
 -   [] add react memo throughout
 -   [] remove async from components if not needed
 -   [] contact us section?
+-   [] make auth0 run fully on edge
+
+
+//
+UserDto(
+    string UserId,
+    string FirstName,
+    string LastName,
+    string FullName,
+    string Picture,
+    bool IsDealership,
+    Address Address,
+    string UserName,
+    string Email,
+    bool EmailConfirmed,
+    string Phone,
+    bool PhoneConfirmed);
+)
