@@ -1,4 +1,5 @@
 import { Toaster } from "react-hot-toast";
+import { ScrollToTop } from "@/components/Common/ScrollToTop";
 import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
 import { ReactQueryProvider } from "@/providers/query-provider";
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: ChildrenProps) {
     return (
         <html lang="en">
             <body className={standardFont.className}>
+                <ScrollToTop />
                 <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 }, duration: 5000 }} />
                 <ReactQueryProvider>
                     <NavBar />

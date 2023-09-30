@@ -1,6 +1,5 @@
 "use client";
 import { Claims } from "@auth0/nextjs-auth0";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

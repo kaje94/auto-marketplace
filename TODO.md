@@ -20,7 +20,6 @@
 -   [] check if we can have only one provider for searching
 -   [] brand and models needs to come from API
 -   [] try out the date picker package for year select
--   [] contact us section
 -   [] view more adverts button in featured adverts
 -   [] fix Entire page /search deopted into client-side rendering.
 
@@ -28,16 +27,17 @@
 -   [] report button showing for user who created the advert
 -   [] reduce input loading opacity
 -   [] checkbox not visible
--   [] fix scroll when page change (always top)
 -   [] fix picture in image listing
 -   [] move user details above specification in user details
 -   [] show safety tips similar to ikman under item details description
 -   [] subscription create failing
 -   [] modal footer make opacity 1
 -   [] phone number click to call in advert details
+-   [] add web3 forms to contact us
 
 > Need to verify
 -   [] loading bug when changing query (while loading type something) (Added a possible fix)
+-   [] fix scroll when page change (always top)
 
 > Web app performance improvements
 

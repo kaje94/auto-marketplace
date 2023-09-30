@@ -84,7 +84,7 @@ export const ListingsCarousel = (props: Props) => {
                 </>
             )}
 
-            <div className={clsx("absolute right-0 h-full w-8 bg-gradient-to-l to-transparent", bgFromColor)}></div>
+            <div className={clsx("absolute right-0 h-full w-8 bg-gradient-to-l to-transparent", !nextBtnDisabled && bgFromColor)}></div>
         </div>
     );
 };
