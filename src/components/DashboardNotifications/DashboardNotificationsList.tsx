@@ -1,9 +1,9 @@
 "use client";
 
+import { Claims } from "@auth0/nextjs-auth0";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import { Session } from "next-auth";
 import { StringifiableRecord } from "query-string";
 import { FC } from "react";
 import { setAllNotificationsAsShownActions } from "@/actions/notificationActions";
@@ -16,23 +16,23 @@ interface Props {
     basePath?: string;
     notifications?: PaginatedResponse & NotificationItems;
     pageLoading?: boolean;
-    session?: Session | null;
+    userClaims?: Claims;
 }
 
-export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoading, basePath, session }) => {
+export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoading, basePath, userClaims }) => {
     const hasNewNotifications = notifications?.items?.some((item) => !item.isShown);
     const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardMySubscriptionsContext();
     const [parent] = useAutoAnimate();
 
     useQuery({
         queryFn: async () => {
-            if (typeof window !== "undefined" && !pageLoading && session?.user && hasNewNotifications) {
+            if (typeof window !== "undefined" && !pageLoading && userClaims && hasNewNotifications) {
                 // mark notifications as read after 5 seconds of page load
                 await new Promise((resolve) => setTimeout(resolve, 5000));
-                await setAllNotificationsAsShownActions(session?.user?.id);
+                await setAllNotificationsAsShownActions(userClaims?.sub);
             }
         },
-        enabled: !pageLoading && session?.user && hasNewNotifications,
+        enabled: !pageLoading && userClaims && hasNewNotifications,
     });
 
     return (

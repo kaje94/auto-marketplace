@@ -1,7 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
-import { NextAuthProvider } from "@/providers/auth-provider";
 import { ReactQueryProvider } from "@/providers/query-provider";
 import { ChildrenProps } from "@/utils/types";
 import { standardFont } from "./fonts";
@@ -18,11 +17,9 @@ export default function RootLayout({ children }: ChildrenProps) {
             <body className={standardFont.className}>
                 <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 }, duration: 5000 }} />
                 <ReactQueryProvider>
-                    <NextAuthProvider>
-                        <NavBar />
-                        <main>{children}</main>
-                        <Footer />
-                    </NextAuthProvider>
+                    <NavBar />
+                    <main>{children}</main>
+                    <Footer />
                 </ReactQueryProvider>
             </body>
         </html>

@@ -24,6 +24,8 @@
 -   [] try out the date picker package for year select
 -   [] contact us section
 -   [] view more adverts button in featured adverts
+-   [] fix Entire page /search deopted into client-side rendering.
+-   [] make auth0 run fully on edge
 
 > Web app performance improvements
 

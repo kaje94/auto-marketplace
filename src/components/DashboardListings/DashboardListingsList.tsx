@@ -1,8 +1,8 @@
 "use client";
 
+import { Claims } from "@auth0/nextjs-auth0";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { clsx } from "clsx";
-import { Session } from "next-auth";
 import { StringifiableRecord } from "query-string";
 import { Dispatch, FC, SetStateAction } from "react";
 import { Empty, Pagination } from "@/components/Common";
@@ -16,12 +16,12 @@ interface Props {
     hasSearchParams?: boolean;
     listings?: PaginatedResponse & ListingItems;
     pageLoading?: boolean;
-    session?: Session | null;
+    userClaims?: Claims;
 }
 
 export const DashboardListingsList: FC<
     Props & { isLoading: boolean; searchParamsObj: Record<string, string>; setNewSearchQuery: Dispatch<SetStateAction<string>> }
-> = ({ session, listings, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
+> = ({ userClaims, listings, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
     const [parent] = useAutoAnimate();
 
     return (
@@ -43,7 +43,7 @@ export const DashboardListingsList: FC<
             )}
 
             {listings?.items?.map((item) => (
-                <DashboardListingItem key={item.id} basePath={basePath} isAdmin={session?.user?.isAdmin} listingItem={item} />
+                <DashboardListingItem key={item.id} basePath={basePath} isAdmin={userClaims?.isAdmin} listingItem={item} />
             ))}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardListingItem key={`loading-listing-item-${i}`} loading />)}

@@ -1,7 +1,6 @@
+import { getSession } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 import qs from "query-string";
-import { authOptions } from "@/auth/authConfig";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
 import { DashboardMySubscriptionFilter } from "@/components/DashboardListHeader/DashboardMySubscriptionFilter";
 import { DashboardMySubscriptionList } from "@/components/DashboardSubscriptions/DashboardSubscriptionList";
@@ -13,8 +12,8 @@ import { SearchParams } from "@/utils/types";
 export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardMySubscriptionFilterSchema.parse(searchParams);
-    const session = await getServerSession(authOptions);
-    const listingSubscriptions = await api.getMyListingSubscriptions(session?.user?.id!, { PageNumber: Number(page), ...parsedSearchParams });
+    const session = await getSession();
+    const listingSubscriptions = await api.getMyListingSubscriptions(session?.user?.sub!, { PageNumber: Number(page), ...parsedSearchParams });
 
     if (listingSubscriptions.items?.length === 0 && page !== "1") {
         redirect(`/dashboard/my-subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);

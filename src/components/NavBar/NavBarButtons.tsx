@@ -2,27 +2,33 @@
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signIn, signOut } from "next-auth/react";
 import { ReactNode } from "react";
 import { LogoutIcon, SearchIcon } from "@/icons";
 
 export const NavBarLoginButton = () => {
     return (
-        <button
-            className="btn-ghost btn-primary btn px-2 font-semibold capitalize text-secondary hover:text-accent"
-            onClick={() => signIn("duende-identityserver6")}
-        >
+        <a className="btn-ghost btn-primary btn px-2 font-semibold capitalize text-secondary hover:text-accent" href="/api/auth/login">
             Login
-        </button>
+        </a>
     );
 };
 
 export const NavBarLogoutButton = () => {
-    return <NavBarMenuLink icon={<LogoutIcon className="pl-0.5" height={17} />} label="Logout" onClick={() => signOut({ callbackUrl: "/" })} />;
+    return (
+        <a
+            className={clsx({
+                "flex flex-1 items-center justify-between font-medium duration-200 hover:text-accent px-4 py-2": true,
+            })}
+            href="/api/auth/logout"
+        >
+            Logout
+            <LogoutIcon className="pl-0.5" height={17} />
+        </a>
+    );
 };
 
-export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; label: string; link?: string; onClick?: () => void }) => {
-    const { link, label, icon, badgeCount, onClick } = props;
+export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; label: string; link: string }) => {
+    const { link, label, icon, badgeCount } = props;
     const pathname = usePathname();
     const badge = (
         <div className="badge badge-primary badge-md  border-2 border-accent bg-primary p-0.5 px-1 text-xs text-neutral">
@@ -31,33 +37,21 @@ export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; la
     );
     return (
         <li>
-            {link ? (
-                <Link className="flex" href={link}>
-                    <div
-                        className={clsx({
-                            "flex flex-1 items-center justify-between font-medium duration-200 ": true,
-                            "text-accent": pathname === link,
-                            "text-base-300 hover:text-secondary": pathname !== link,
-                        })}
-                    >
-                        <span className="flex gap-2">
-                            {label}
-                            {badgeCount ? badge : null}
-                        </span>
-                        {icon}
-                    </div>
-                </Link>
-            ) : (
-                <div className="flex" onClick={onClick}>
-                    <div className="flex flex-1 items-center justify-between font-medium text-base-300 duration-200 hover:text-secondary">
-                        <span className="flex gap-2">
-                            {label}
-                            {badgeCount ? badge : null}
-                        </span>
-                        {icon}
-                    </div>
+            <Link className="flex" href={link}>
+                <div
+                    className={clsx({
+                        "flex flex-1 items-center justify-between font-medium duration-200 ": true,
+                        "text-accent": pathname === link,
+                        "text-base-300 hover:text-secondary": pathname !== link,
+                    })}
+                >
+                    <span className="flex gap-2">
+                        {label}
+                        {badgeCount ? badge : null}
+                    </span>
+                    {icon}
                 </div>
-            )}
+            </Link>
         </li>
     );
 };

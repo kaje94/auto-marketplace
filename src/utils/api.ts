@@ -1,6 +1,7 @@
-import { getServerSession } from "next-auth/next";
+import { getAccessToken } from "@auth0/nextjs-auth0";
+import { headers as nextHeaders } from "next/headers";
+import { redirect } from "next/navigation";
 import qs from "query-string";
-import { authOptions, redirectToLoginPage } from "@/auth/authConfig";
 import { env } from "@/env.mjs";
 import {
     CreateListingReq,
@@ -60,7 +61,8 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
     } else {
         if (response.status === 401) {
             console.log("getting 401 for api call", endpoint);
-            return redirectToLoginPage();
+            const currentPathname = nextHeaders().get("x-pathname");
+            redirect(`/unauthorized${currentPathname ? `?returnTo=${currentPathname}` : ``}`);
         }
         let errorResponse: any = "";
         const clonedResp = response.clone();
@@ -80,11 +82,16 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
 };
 
 const getConfigWithAuth = async (config: RequestInit = {}): Promise<RequestInit> => {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-        throw new Error("Session not found");
+    try {
+        const { accessToken } = await getAccessToken();
+        if (!accessToken) {
+            throw new Error("Session not found");
+        }
+        return { ...config, headers: { Authorization: `Bearer ${accessToken}`, ...defaultReqHeaders, ...config.headers } };
+    } catch (err) {
+        const currentPathname = nextHeaders().get("x-pathname");
+        redirect(`/unauthorized${currentPathname ? `?returnTo=${currentPathname}` : ``}`);
     }
-    return { ...config, headers: { Authorization: `Bearer ${session?.access_token}`, ...defaultReqHeaders, ...config.headers } };
 };
 
 const fetchApi = {

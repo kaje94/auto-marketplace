@@ -39,3 +39,4 @@ export { BellIcon } from "./BellIcon";
 export { BellOffIcon } from "./BellOffIcon";
 export { ChevronLeftIcon } from "./ChevronLeftIcon";
 export { ChevronRightIcon } from "./ChevronRightIcon";
+export { LoginIcon } from "./LoginIcon";

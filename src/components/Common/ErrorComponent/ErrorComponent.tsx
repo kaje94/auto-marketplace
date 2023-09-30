@@ -1,11 +1,12 @@
 "use client";
 import { clsx } from "clsx";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { ActivityIcon, HomeIcon, RefreshIcon } from "@/icons";
 
 interface Props {
+    children?: ReactNode;
     error?: Error | string;
     reset?: () => void;
     showReset?: boolean;
@@ -14,11 +15,12 @@ interface Props {
     variant?: "sm" | "lg";
 }
 
-export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showReset = true, variant = "lg" }) => {
+export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showReset = true, variant = "lg", children }) => {
     const errorSubTitleText =
-        subTitle || showReset
+        subTitle ||
+        (showReset
             ? "But do not worry, you can either try refreshing this page or go back to our home page and start over."
-            : "But do not worry, you can alway head to our home page and start over.";
+            : "But do not worry, you can alway head to our home page and start over.");
     let errorTitle = title || "Oops, something went wrong";
     if (error instanceof Error && error?.message?.endsWith("(404)")) {
         errorTitle = "Item is not available";
@@ -56,6 +58,7 @@ export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showR
                                 <HomeIcon className="mr-3" /> Home
                             </button>
                         </Link>
+                        {children}
                     </div>
                     {error && <div className="my-4 text-sm font-extralight opacity-50">{`${errorName}${errorMessage && `:${errorMessage}`}`}</div>}
                 </div>

@@ -1,9 +1,8 @@
 "use server";
+import { getSession } from "@auth0/nextjs-auth0";
 import { DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { nanoid } from "nanoid";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth/authConfig";
 import { env } from "@/env.mjs";
 
 const client = new S3Client({
@@ -14,11 +13,11 @@ const client = new S3Client({
 export const getPresignedS3Url = async (filetype: string, fileSize: number) => {
     const bucket = env.S3_UPLOAD_BUCKET;
     const region = env.S3_UPLOAD_REGION;
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
     if (!session?.user) {
         throw new Error("User session not found to generate S3 presigned URL");
     }
-    let key = `images/${session?.user?.id}/${nanoid()}.webp`;
+    let key = `images/${session?.user?.sub?.replace("|", "-")}/${nanoid()}.webp`;
 
     const params: PutObjectCommandInput = {
         Bucket: env.S3_UPLOAD_BUCKET,
@@ -34,11 +33,11 @@ export const getPresignedS3Url = async (filetype: string, fileSize: number) => {
 };
 
 export const deleteObjectFromS3 = async (imageKey: string) => {
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
     if (!session?.user) {
         throw new Error("User session not found to delete image");
     }
-    if (!imageKey.includes(session?.user?.id)) {
+    if (!imageKey.includes(session?.user?.sub?.replace("|", "-"))) {
         throw new Error("User cannot delete this image");
     }
 

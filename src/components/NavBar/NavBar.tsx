@@ -1,7 +1,6 @@
 "use server";
-import { getServerSession } from "next-auth";
+import { getSession } from "@auth0/nextjs-auth0";
 import { Suspense } from "react";
-import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { NavBarClient } from "./NavBarClient";
 
@@ -14,9 +13,16 @@ export const NavBar = async () => {
 };
 
 const NavBarWithSession = async () => {
-    const session = await getServerSession(authOptions);
-    const notifications = await api.getMyNotifications(session?.user?.id!, { PageNumber: 1 });
-    const notificationCount = notifications.items?.filter((item) => !item.isShown)?.length;
+    try {
+        const session = await getSession();
+        if (session) {
+            const notifications = await api.getMyNotifications(session?.user?.sub!, { PageNumber: 1 });
+            const notificationCount = notifications.items?.filter((item) => !item.isShown)?.length;
 
-    return <NavBarClient notificationCount={notificationCount} session={session} />;
+            return <NavBarClient notificationCount={notificationCount} userClaims={session?.user} />;
+        }
+        return <NavBarClient />;
+    } catch {
+        return <NavBarClient />;
+    }
 };

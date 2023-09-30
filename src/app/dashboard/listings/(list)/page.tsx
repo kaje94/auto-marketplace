@@ -1,7 +1,6 @@
+import { getSession } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 import qs from "query-string";
-import { authOptions } from "@/auth/authConfig";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
 import { DashboardAllListFilter } from "@/components/DashboardListHeader/DashboardAllListFilter";
 import { DashboardAllListingsList } from "@/components/DashboardListings/DashboardListingsList";
@@ -15,7 +14,7 @@ export default async function Page({ searchParams }: SearchParams) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
     const [session, listings] = await Promise.all([
-        getServerSession(authOptions),
+        getSession(),
         transformListingsListResponse(await api.getListings({ PageNumber: Number(page), ...parsedSearchParams })),
     ]);
 
@@ -30,7 +29,7 @@ export default async function Page({ searchParams }: SearchParams) {
                 filter={<DashboardAllListFilter />}
                 itemCount={listings.totalCount}
             />
-            <DashboardAllListingsList basePath="/dashboard/listings" listings={listings} session={session} />
+            <DashboardAllListingsList basePath="/dashboard/listings" listings={listings} userClaims={session?.user} />
         </DashboardListingsContextProvider>
     );
 }

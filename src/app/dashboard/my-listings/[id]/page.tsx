@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth/authConfig";
+import { getSession } from "@auth0/nextjs-auth0";
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
 import { api } from "@/utils/api";
@@ -7,10 +6,7 @@ import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
 
 export default async function Page({ params }: ListingIdPathParam) {
-    const [session, itemDetails] = await Promise.all([
-        getServerSession(authOptions),
-        transformListingResponse(await api.getMyListingsItem(params.id)),
-    ]);
+    const [session, itemDetails] = await Promise.all([getSession(), transformListingResponse(await api.getMyListingsItem(params.id))]);
 
     return (
         <>
@@ -22,7 +18,7 @@ export default async function Page({ params }: ListingIdPathParam) {
             <ListingDetails
                 basePath="/dashboard/my-listings"
                 itemDetails={itemDetails}
-                loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
+                loggedInUser={{ email: session?.user?.email, id: session?.user?.sub, isAdmin: session?.user?.isAdmin }}
                 showSellerDetails={false}
                 withinDashboard={true}
             />

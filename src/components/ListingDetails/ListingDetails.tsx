@@ -31,7 +31,6 @@ export const ListingDetails: FC<Props> = ({
     basePath,
 }) => {
     const { price, vehicle, location, user, title, description, status, id, createdOn, hasOnGoingLease } = itemDetails as ListingItem;
-
     return (
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-5" : "lg:col-span-5")}>

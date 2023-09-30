@@ -1,6 +1,5 @@
-import { getServerSession, Session } from "next-auth";
+import { Claims, getSession } from "@auth0/nextjs-auth0";
 import { Suspense } from "react";
-import { authOptions } from "@/auth/authConfig";
 import { api } from "@/utils/api";
 import { NavBarItem } from "./DashboardSideBarItem";
 
@@ -13,13 +12,13 @@ export const DashboardSideBar = async () => {
 };
 
 const DashboardSideBarWithSession = async () => {
-    const session = await getServerSession(authOptions);
-    const notifications = await api.getMyNotifications(session?.user?.id!, { PageNumber: 1 });
+    const session = await getSession();
+    const notifications = await api.getMyNotifications(session?.user?.sub!, { PageNumber: 1 });
     const notificationCount = notifications.items?.filter((item) => !item.isShown)?.length;
-    return <DashboardSideBarItems notificationCount={notificationCount} session={session} />;
+    return <DashboardSideBarItems notificationCount={notificationCount} userClaims={session?.user} />;
 };
 
-const DashboardSideBarItems = ({ session, notificationCount }: { notificationCount?: number; session?: Session | null }) => {
+const DashboardSideBarItems = ({ userClaims, notificationCount }: { notificationCount?: number; userClaims?: Claims }) => {
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
             <ul className="menu rounded-box w-full bg-base-100 p-2 shadow-md">
@@ -51,7 +50,7 @@ const DashboardSideBarItems = ({ session, notificationCount }: { notificationCou
                     iconName="NotificationIcon"
                     label="Notifications"
                 />
-                {session?.user?.isAdmin && (
+                {userClaims?.isAdmin && (
                     <>
                         <NavBarItem
                             activePaths={["/dashboard/listings"]}

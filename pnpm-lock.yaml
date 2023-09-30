@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@auth0/nextjs-auth0': ^3.1.0
   '@aws-sdk/client-s3': ^3.421.0
   '@aws-sdk/s3-request-presigner': ^3.421.0
   '@formkit/auto-animate': ^0.8.0
@@ -36,7 +37,6 @@ specifiers:
   lodash.debounce: ^4.0.8
   nanoid: ^5.0.1
   next: 13.5.3
-  next-auth: ^4.23.1
   postcss: 8.4.23
   prettier: ^3.0.3
   prop-types: ^15.8.1
@@ -54,6 +54,7 @@ specifiers:
   zod: ^3.21.4
 
 dependencies:
+  '@auth0/nextjs-auth0': 3.1.0_next@13.5.3
   '@aws-sdk/client-s3': 3.421.0
   '@aws-sdk/s3-request-presigner': 3.421.0
   '@formkit/auto-animate': 0.8.0
@@ -75,7 +76,6 @@ dependencies:
   lodash.debounce: 4.0.8
   nanoid: 5.0.1
   next: 13.5.3_biqbaboplfbrettd7655fr4n2y
-  next-auth: 4.23.1_vs65xldtmolprftbsqonkgfxyi
   postcss: 8.4.23
   prop-types: 15.8.1
   query-string: 8.1.0
@@ -118,6 +118,26 @@ packages:
   /@alloc/quick-lru/5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  /@auth0/nextjs-auth0/3.1.0_next@13.5.3:
+    resolution: {integrity: sha512-K00wD7hlMRcmDgDVRN5pP/SLV7odBnvAXvput1kJHGRJUp9FwFzg6BEGEWVHhr2YOXcn+VdVMMjXlmWYV+aZ1A==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      next: '>=10'
+    dependencies:
+      '@panva/hkdf': 1.1.1
+      cookie: 0.5.0
+      debug: 4.3.4
+      joi: 17.10.2
+      jose: 4.14.4
+      next: 13.5.3_biqbaboplfbrettd7655fr4n2y
+      oauth4webapi: 2.3.0
+      openid-client: 5.4.2
+      tslib: 2.6.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@aws-crypto/crc32/3.0.0:
     resolution: {integrity: sha512-IzSgsrxUcsrejQbPVilIKy16kAT52EwB6zSaI+M3xxIhKh5+aldEyvI+z6erM7TCLB2BJsFrtHjp6/4/sr+3dA==}
@@ -755,6 +775,16 @@ packages:
     resolution: {integrity: sha512-G8f7489ka0mWyi+1IEZT+xgIwcpWtRMmE2x+IrVoQ+KM1cP6VDj/TbujZjwxdb0P8w8b16/qBfViRmydbYHwMw==}
     dev: false
 
+  /@hapi/hoek/9.3.0:
+    resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
+    dev: false
+
+  /@hapi/topo/5.1.0:
+    resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
+    dependencies:
+      '@hapi/hoek': 9.3.0
+    dev: false
+
   /@headlessui/react/1.7.17_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-4am+tzvkqDSSgiwrsEpGWqgGo9dz8qU5M3znCkC4PgkpY4HcCZzEDEvozltGGGHIKl9jbXbZPSH5TWn4sWJdow==}
     engines: {node: '>=10'}
@@ -954,6 +984,20 @@ packages:
   /@rushstack/eslint-patch/1.4.0:
     resolution: {integrity: sha512-cEjvTPU32OM9lUFegJagO0mRnIn+rbqrG89vV8/xLnLFX0DoR0r1oy5IlTga71Q7uT3Qus7qm7wgeiMT/+Irlg==}
     dev: true
+
+  /@sideway/address/4.1.4:
+    resolution: {integrity: sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==}
+    dependencies:
+      '@hapi/hoek': 9.3.0
+    dev: false
+
+  /@sideway/formula/3.0.1:
+    resolution: {integrity: sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==}
+    dev: false
+
+  /@sideway/pinpoint/2.0.0:
+    resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
+    dev: false
 
   /@smithy/abort-controller/2.0.10:
     resolution: {integrity: sha512-xn7PnFD3m4rQIG00h1lPuDVnC2QMtTFhzRLX3y56KkgFaCysS7vpNevNBgmNUtmJ4eVFc+66Zucwo2KDLdicOg==}
@@ -2033,7 +2077,6 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.2
-    dev: true
 
   /decode-uri-component/0.4.1:
     resolution: {integrity: sha512-+8VxcR21HhTy8nOt6jf20w0c9CADrw1O8d+VZ/YzzCt4bJ3uBjw+D1q2osAB8RnpwwaeYBxy0HyKQxD5JBMuuQ==}
@@ -3376,6 +3419,16 @@ packages:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
 
+  /joi/17.10.2:
+    resolution: {integrity: sha512-hcVhjBxRNW/is3nNLdGLIjkgXetkeGc2wyhydhz8KumG23Aerk4HPjU5zaPAMRqXQFc0xNqXTC7+zQjxr0GlKA==}
+    dependencies:
+      '@hapi/hoek': 9.3.0
+      '@hapi/topo': 5.1.0
+      '@sideway/address': 4.1.4
+      '@sideway/formula': 3.0.1
+      '@sideway/pinpoint': 2.0.0
+    dev: false
+
   /jose/4.14.4:
     resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
     dev: false
@@ -3505,7 +3558,6 @@ packages:
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
-    dev: true
 
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -3536,31 +3588,6 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
-
-  /next-auth/4.23.1_vs65xldtmolprftbsqonkgfxyi:
-    resolution: {integrity: sha512-mL083z8KgRtlrIV6CDca2H1kduWJuK/3pTS0Fe2og15KOm4v2kkLGdSDfc2g+019aEBrJUT0pPW2Xx42ImN1WA==}
-    peerDependencies:
-      next: ^12.2.5 || ^13
-      nodemailer: ^6.6.5
-      react: ^17.0.2 || ^18
-      react-dom: ^17.0.2 || ^18
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.21.5
-      '@panva/hkdf': 1.1.1
-      cookie: 0.5.0
-      jose: 4.14.4
-      next: 13.5.3_biqbaboplfbrettd7655fr4n2y
-      oauth: 0.9.15
-      openid-client: 5.4.2
-      preact: 10.15.1
-      preact-render-to-string: 5.2.6_preact@10.15.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      uuid: 8.3.2
-    dev: false
 
   /next/13.5.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-4Nt4HRLYDW/yRpJ/QR2t1v63UOMS55A38dnWv3UDOWGezuY0ZyFO1ABNbD7mulVzs9qVhgy2+ppjdsANpKP1mg==}
@@ -3629,8 +3656,8 @@ packages:
       path-key: 4.0.0
     dev: true
 
-  /oauth/0.9.15:
-    resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
+  /oauth4webapi/2.3.0:
+    resolution: {integrity: sha512-JGkb5doGrwzVDuHwgrR4nHJayzN4h59VCed6EW8Tql6iHDfZIabCJvg6wtbn5q6pyB2hZruI3b77Nudvq7NmvA==}
     dev: false
 
   /object-assign/4.1.1:
@@ -3906,19 +3933,6 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /preact-render-to-string/5.2.6_preact@10.15.1:
-    resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
-    peerDependencies:
-      preact: '>=10'
-    dependencies:
-      preact: 10.15.1
-      pretty-format: 3.8.0
-    dev: false
-
-  /preact/10.15.1:
-    resolution: {integrity: sha512-qs2ansoQEwzNiV5eAcRT1p1EC/dmEzaATVDJNiB3g2sRDWdA7b7MurXdJjB2+/WQktGWZwxvDrnuRFbWuIr64g==}
-    dev: false
-
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -3936,10 +3950,6 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dev: true
-
-  /pretty-format/3.8.0:
-    resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
-    dev: false
 
   /prop-types/15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -4588,6 +4598,10 @@ packages:
     dependencies:
       punycode: 2.3.0
     dev: true
+
+  /url-join/4.0.1:
+    resolution: {integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==}
+    dev: false
 
   /use-sync-external-store/1.2.0_react@18.2.0:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}

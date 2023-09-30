@@ -25,6 +25,23 @@ import {
     VehicleSchema,
 } from "./schemas";
 
+declare module "@auth0/nextjs-auth0" {
+    interface Claims {
+        email: string;
+        email_verified: boolean;
+        family_name: string;
+        given_name: string;
+        isAdmin?: boolean;
+        locale: string;
+        name: string;
+        nickname: string;
+        picture: string;
+        sid: string;
+        sub: string;
+        updated_at: string;
+    }
+}
+
 export type KeyValue = { [key: string]: string };
 
 export type LabelValue = {

@@ -1,22 +1,15 @@
 "use client";
+import { Claims } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Session } from "next-auth";
 import { NavBarAuth } from "./NavBarAuth";
 import { PostAddLink, SearchLink } from "./NavBarButtons";
 
-export const NavBarClient = ({
-    session,
-    loading,
-    notificationCount,
-}: {
-    loading?: boolean;
-    notificationCount?: number;
-    session?: Session | null;
-}) => {
+export const NavBarClient = ({ userClaims, loading, notificationCount }: { loading?: boolean; notificationCount?: number; userClaims?: Claims }) => {
     const pathName = usePathname();
-    const absolutePosition = ["/", "/auth/login"].includes(pathName);
+    const absolutePosition = ["/"].includes(pathName);
     return (
         <div
             className={clsx({
@@ -36,7 +29,7 @@ export const NavBarClient = ({
                 <div className="flex flex-row items-center gap-0 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                     <SearchLink />
                     <PostAddLink />
-                    <NavBarAuth key={`navbar-auth-${pathName}`} loading={loading} notificationCount={notificationCount} session={session} />
+                    <NavBarAuth key={`navbar-auth-${pathName}`} loading={loading} notificationCount={notificationCount} userClaims={userClaims} />
                 </div>
             </div>
         </div>

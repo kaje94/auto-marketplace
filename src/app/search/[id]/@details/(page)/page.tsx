@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth/authConfig";
+import { getSession } from "@auth0/nextjs-auth0";
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetails } from "@/components/ListingDetails";
 import { api } from "@/utils/api";
@@ -7,10 +6,7 @@ import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdType } from "@/utils/types";
 
 export default async function Page({ params }: { params: { id: ListingIdType } }) {
-    const [session, itemDetails] = await Promise.all([
-        getServerSession(authOptions),
-        transformListingResponse(await api.getPostedListingItem(params.id)),
-    ]);
+    const [session, itemDetails] = await Promise.all([getSession(), transformListingResponse(await api.getPostedListingItem(params.id))]);
 
     api.incrementViews(params.id);
 
@@ -25,7 +21,7 @@ export default async function Page({ params }: { params: { id: ListingIdType } }
             />
             <ListingDetails
                 itemDetails={itemDetails}
-                loggedInUser={{ email: session?.user?.email, id: session?.user?.id, isAdmin: session?.user?.isAdmin }}
+                loggedInUser={{ email: session?.user?.email, id: session?.user?.sub, isAdmin: session?.user?.isAdmin }}
             />
         </>
     );

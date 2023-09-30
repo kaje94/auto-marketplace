@@ -11,6 +11,7 @@
         "format-rest": "npx prettier --ignore-path .gitignore --write \"**/*.{css,md,json,yml}\" \"!package-lock.json\" --print-width 150 --tab-width 4"
     },
     "dependencies": {
+        "@auth0/nextjs-auth0": "^3.1.0",
         "@aws-sdk/client-s3": "^3.421.0",
         "@aws-sdk/s3-request-presigner": "^3.421.0",
         "@formkit/auto-animate": "^0.8.0",
@@ -32,7 +33,6 @@
         "lodash.debounce": "^4.0.8",
         "nanoid": "^5.0.1",
         "next": "13.5.3",
-        "next-auth": "^4.23.1",
         "postcss": "8.4.23",
         "prop-types": "^15.8.1",
         "query-string": "^8.1.0",
