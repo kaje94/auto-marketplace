@@ -7,6 +7,7 @@ import { ListingSubscriptionItem } from "@/utils/types";
 
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {
     loading: () => <ContextMenuLoading />,
+    ssr: false,
 });
 
 interface Props {

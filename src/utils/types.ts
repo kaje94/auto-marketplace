@@ -54,16 +54,18 @@ type Price = z.infer<typeof PriceSchema>;
 export type Location = z.infer<typeof LocationSchema>;
 
 export type ListingUser = {
-    address: Location;
+    address: null | string;
     email: string;
     emailConfirmed: boolean;
     firstName: string;
-    id: string;
+    fullName: string;
     isDealership: boolean;
     lastName: string;
     phone: string;
     phoneConfirmed: boolean;
-    userName: string;
+    picture: string;
+    userId: string;
+    userName: null | string;
 };
 
 export type Vehicle = z.infer<typeof VehicleSchema>;

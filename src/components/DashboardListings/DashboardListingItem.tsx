@@ -10,6 +10,7 @@ import { ListingItem } from "@/utils/types";
 
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
     loading: () => <ContextMenuLoading />,
+    ssr: false,
 });
 
 interface Props {

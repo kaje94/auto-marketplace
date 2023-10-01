@@ -1,10 +1,11 @@
 "use client";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { ReactDatePicker, ReactDatePickerProps } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// eslint-disable-next-line import/no-named-as-default
+import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
+import "react-datepicker/dist/react-datepicker.css";
 
 export interface ControllerProps extends FormFieldControllerProps, Omit<ReactDatePickerProps, "onChange"> {
     control: Control<any>;

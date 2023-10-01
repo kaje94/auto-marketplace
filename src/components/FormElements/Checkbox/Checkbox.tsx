@@ -16,18 +16,21 @@ export interface Props extends Omit<ControllerProps, "fieldName" | "control"> {}
 export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     const { label, checkboxClassNames, loading, ...rest } = props;
     return (
-        <div className="form-control mb-1 mt-2">
-            <label className={clsx("label", !loading && "cursor-pointer")}>
-                <span className="label-text">{label}</span>
-                <input
-                    className={clsx("checkbox", loading && "animate-pulse", checkboxClassNames)}
-                    disabled={loading}
-                    ref={ref}
-                    type="checkbox"
-                    {...rest}
-                />
-            </label>
-        </div>
+        <label
+            className={clsx(
+                "label rounded-lg border-2 border-opacity-50 py-3 duration-200 hover:bg-base-200 hover:bg-opacity-50",
+                !loading && "cursor-pointer",
+            )}
+        >
+            <span className="label-text">{label}</span>
+            <input
+                className={clsx("checkbox checkbox-md border-2", loading && "animate-pulse !bg-base-300", checkboxClassNames)}
+                disabled={loading}
+                ref={ref}
+                type="checkbox"
+                {...rest}
+            />
+        </label>
     );
 });
 Checkbox.displayName = "Checkbox";

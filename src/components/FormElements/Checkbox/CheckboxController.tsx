@@ -7,7 +7,7 @@ export const CheckboxController: FC<ControllerProps> = (props) => {
     const { loading, fieldName, control, ...rest } = props;
     if (loading || !control) {
         return (
-            <div className="form-control mb-1 mt-2">
+            <div className="form-control mb-1">
                 <Checkbox loading={loading} {...rest} ref={undefined} />
             </div>
         );
@@ -18,7 +18,7 @@ export const CheckboxController: FC<ControllerProps> = (props) => {
             control={control}
             name={fieldName}
             render={({ field, fieldState }) => (
-                <div className="form-control mb-1 mt-2">
+                <div className="form-control mb-1">
                     <Checkbox {...rest} {...field} ref={field.ref} />
                 </div>
             )}

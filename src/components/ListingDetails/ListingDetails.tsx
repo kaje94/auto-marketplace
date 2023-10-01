@@ -96,7 +96,7 @@ export const ListingDetails: FC<Props> = ({
                     </div>
                 )}
                 <div className="grid grid-cols-2 gap-4">
-                    {!loading && (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) && (
+                    {!loading && (user?.userId === loggedInUser?.id || loggedInUser?.isAdmin) && (
                         <>
                             <EditButton
                                 basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
@@ -111,16 +111,16 @@ export const ListingDetails: FC<Props> = ({
                     {status === ListingStatusTypes.Posted && !withinDashboard && (
                         <>
                             <ShareButton loading={loading} title={title} />
-                            {loggedInUser?.id !== user?.id && (
+                            {loggedInUser?.id !== user?.userId && (
                                 <ReportButton listingId={id} listingTitle={title} loading={loading} userEmail={loggedInUser?.email} />
                             )}
                         </>
                     )}
                     {!loading && loggedInUser?.isAdmin && (
-                        <DeleteButton isOwner={user?.id === loggedInUser?.id} listingItem={itemDetails as ListingItem} />
+                        <DeleteButton isOwner={user?.userId === loggedInUser?.id} listingItem={itemDetails as ListingItem} />
                     )}
                     {!loading &&
-                        (user?.id === loggedInUser?.id || loggedInUser?.isAdmin) &&
+                        (user?.userId === loggedInUser?.id || loggedInUser?.isAdmin) &&
                         status &&
                         [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
                             <UnListButton listingItem={itemDetails as ListingItem} />

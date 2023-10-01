@@ -17,7 +17,7 @@ export const Modal: FC<PropsWithChildren<Props>> = ({ visible, onVisibleChange, 
                         ✕
                     </button>
                     <div className={clsx("mb-2 text-lg font-bold", titleClassNames)}>{title}</div>
-                    <div className="text-base-content opacity-75">{children}</div>
+                    <div className="text-base-content opacity-90">{children}</div>
                 </div>
                 <label
                     className="modal-backdrop"

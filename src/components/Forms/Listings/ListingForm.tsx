@@ -147,7 +147,12 @@ export const ListingForm: FC<Props> = (props) => {
                             placeholder="Description of the vehicle for sale"
                             required
                         />
-                        <CheckboxController control={control} fieldName="hasOnGoingLease" label="Has Ongoing Lease" loading={isLoading} />
+                        <CheckboxController
+                            control={control}
+                            fieldName="hasOnGoingLease"
+                            label="Is there an active lease for the vehicle?"
+                            loading={isLoading}
+                        />
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
@@ -224,7 +229,12 @@ export const ListingForm: FC<Props> = (props) => {
                             required
                             type="number"
                         />
-                        <CheckboxController control={control} fieldName="price.isPriceNegotiable" label="Negotiable Price" loading={isLoading} />
+                        <CheckboxController
+                            control={control}
+                            fieldName="price.isPriceNegotiable"
+                            label="Is the price negotiable?"
+                            loading={isLoading}
+                        />
                     </div>
                     <div className="stat card bg-base-100 p-4 shadow">
                         <div className="stat-title">Features</div>

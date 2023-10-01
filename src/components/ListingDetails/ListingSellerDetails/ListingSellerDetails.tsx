@@ -1,5 +1,4 @@
 import { clsx } from "clsx";
-import Image from "next/image";
 import { FC } from "react";
 import { Avatar } from "@/components/Common/Avatar";
 import { ListingUser } from "@/utils/types";
@@ -20,12 +19,7 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                         "ring-base-300 animate-pulse": loading,
                     })}
                 >
-                    {user && (
-                        <Avatar
-                            url="https://lh3.googleusercontent.com/a/AAcHTtd7MmSI5uFKspCkopw4j4fnk64GQYhA2zL-EOKSdjTtNxk=s96-c-rg-br100"
-                            width={80}
-                        />
-                    )}
+                    {user && <Avatar url={user?.picture} width={80} />}
                 </div>
             </div>
             {loading ? (
@@ -40,14 +34,14 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                         {user?.firstName} {user?.lastName}
                     </div>
                     <div className="mt-2 flex flex-col items-center gap-1">
-                        <p className="w-full max-w-xs flex-wrap !break-all text-center font-light">
+                        <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`mailto:${user?.email}`}>
                             Email: <span className="font-semibold text-primary-content">{user?.email}</span>
-                        </p>
+                        </a>
                         {user?.phone && (
-                            <p className="w-full max-w-xs flex-wrap !break-all text-center font-light">
+                            <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`tel:${user.phone}`}>
                                 Contact Number:
-                                <span className="font-semibold text-primary-content">{user?.phone}</span>
-                            </p>
+                                <span className="font-semibold text-primary-content">{user.phone}</span>
+                            </a>
                         )}
                         <div className="badge badge-outline badge-lg mt-2">Car Dealer</div>
                     </div>
