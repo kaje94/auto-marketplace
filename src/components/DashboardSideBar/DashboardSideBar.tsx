@@ -52,6 +52,7 @@ const DashboardSideBarItems = ({ userClaims, notificationCount }: { notification
                 />
                 {userClaims?.isAdmin && (
                     <>
+                        <div className=" divider text-center text-sm">Admin functions</div>
                         <NavBarItem
                             activePaths={["/dashboard/listings"]}
                             href="/dashboard/listings"

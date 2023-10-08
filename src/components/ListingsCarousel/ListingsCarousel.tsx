@@ -8,12 +8,14 @@ import { ListingItem as ListingItemType } from "@/utils/types";
 import { NextButton, PrevButton, usePrevNextButtons } from "./ListingsCarouselButtons";
 
 type Props = {
-    bgFromColor?: "from-white" | "from-base-200";
+    bgFromColor?: "from-white" | "from-base-200" | "from-hero";
     emptyPlaceholderSubText?: string;
     emptyPlaceholderText?: string;
     items?: ListingItemType[];
     loading?: boolean;
     loadingItemCount?: number;
+    showEmpty?: boolean;
+    tinted?: boolean;
 };
 
 export const ListingsCarousel = (props: Props) => {
@@ -24,8 +26,10 @@ export const ListingsCarousel = (props: Props) => {
         bgFromColor = "from-white",
         emptyPlaceholderText = "No items to display",
         emptyPlaceholderSubText,
+        showEmpty = true,
+        tinted,
     } = props;
-    const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: true, axis: "x", containScroll: "trimSnaps" }, [Autoplay()]);
+    const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: false, axis: "x", containScroll: "trimSnaps" }, [Autoplay()]);
 
     const onButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
         const { autoplay } = emblaApi.plugins();
@@ -36,21 +40,25 @@ export const ListingsCarousel = (props: Props) => {
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi, onButtonClick);
 
     if (items?.length === 0 && !loading) {
-        return <Empty iconSize="sm" subText={emptyPlaceholderSubText} text={emptyPlaceholderText} />;
+        if (showEmpty) {
+            return <Empty iconSize="sm" subText={emptyPlaceholderSubText} text={emptyPlaceholderText} />;
+        } else {
+            return null;
+        }
     }
 
     return (
-        <div className="relative flex items-center">
+        <div className={clsx("relative flex items-center", loading && "animate-pulse")}>
             <div className="rounded-box relative  flex-1 overflow-hidden px-2 py-5" ref={emblaRef}>
-                <div className="flex h-auto touch-pan-y flex-row">
+                <div className="flex h-auto  flex-row gap-4">
                     {loading ? (
                         <>
                             {new Array(loadingItemCount).fill("").map((_, i) => (
                                 <div
                                     key={`item-${i}`}
-                                    className="relative mr-4 w-[calc(75%)] min-w-0  flex-none sm:w-[calc(60%)] md:w-[calc(39%)] lg:w-[calc(27%)] 2xl:w-[calc(21%)]"
+                                    className="relative w-[calc(75%)] min-w-0 flex-none sm:w-[calc(60%)] md:w-[calc(39%)] lg:w-[calc(27%)] 2xl:w-[calc(21%)]"
                                 >
-                                    <ListingItem loading />
+                                    <ListingItem loading tinted={tinted} />
                                 </div>
                             ))}
                         </>
@@ -59,9 +67,9 @@ export const ListingsCarousel = (props: Props) => {
                             {items?.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="relative mr-4 w-[calc(75%)] min-w-0  flex-none sm:w-[calc(60%)] md:w-[calc(39%)] lg:w-[calc(27%)] 2xl:w-[calc(21%)]"
+                                    className="rounded-box relative h-fit w-[calc(75%)] min-w-0 flex-none shadow duration-300 hover:shadow-lg hover:shadow-neutral sm:w-[calc(60%)] md:w-[calc(39%)] lg:w-[calc(27%)] 2xl:w-[calc(21%)]"
                                 >
-                                    <ListingItem item={item} />
+                                    <ListingItem item={item} tinted={tinted} />
                                 </div>
                             ))}
                         </>
@@ -84,7 +92,10 @@ export const ListingsCarousel = (props: Props) => {
                 </>
             )}
 
-            <div className={clsx("absolute right-0 h-full w-8 bg-gradient-to-l to-transparent", !nextBtnDisabled && bgFromColor)}></div>
+            <div
+                className={clsx("absolute right-0 h-full w-8 bg-gradient-to-l to-transparent", nextBtnDisabled ? "from-transparent" : bgFromColor)}
+            />
+            <div className={clsx("absolute left-0 h-full w-8 bg-gradient-to-r to-transparent", prevBtnDisabled ? "from-transparent" : bgFromColor)} />
         </div>
     );
 };

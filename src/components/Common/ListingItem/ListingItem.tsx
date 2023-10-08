@@ -9,9 +9,10 @@ interface Props {
     detailed?: boolean;
     item?: ListingItemType;
     loading?: boolean;
+    tinted?: boolean;
 }
 
-export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
+export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted }) => {
     const vehicleImages = item?.vehicle?.vehicleImages || [];
     const image = vehicleImages[0];
 
@@ -34,13 +35,15 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                     <div className="aspect-video w-full bg-neutral bg-opacity-50" />
                 )}
 
-                <div className="absolute bottom-0 left-0 flex h-2/3 w-full flex-col justify-end bg-gradient-to-t from-base-content to-transparent px-3 py-0">
+                {tinted && <div className="image-hover-tint absolute h-full w-full bg-hero bg-opacity-20 duration-300" />}
+
+                <div className="absolute bottom-0 left-0 mt-5 flex min-h-fit w-full flex-col justify-end bg-gradient-to-t from-neutral to-transparent  px-3 py-0 pt-6">
                     {item ? (
-                        <div className="badge-hover-translucent badge badge-primary badge-lg font-bold duration-300 image-text-shadow ">
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg font-bold duration-300 image-text-shadow ">
                             {getFormattedCurrency(item?.price?.amount, item?.price?.currency)}
                         </div>
                     ) : (
-                        <div className="badge badge-primary badge-lg w-32 opacity-50" />
+                        <div className="badge badge-accent badge-lg w-32 opacity-50" />
                     )}
 
                     {item ? (
@@ -57,7 +60,12 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
                     )}
                 </div>
             </figure>
-            <div className="card-body flex flex-col gap-0  bg-gradient-to-t from-black to-base-content px-3 pb-2 pt-0">
+            <div
+                className={clsx(
+                    "card-body flex flex-col gap-0  bg-gradient-to-t from-black px-3 pb-2 pt-0",
+                    tinted ? "to-neutral" : "to-base-conten",
+                )}
+            >
                 {item ? (
                     <div className="text-sm font-medium text-base-200">{getLocationString(item?.location)}</div>
                 ) : (
@@ -82,7 +90,10 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading }) => {
     if (item) {
         return (
             <Link
-                className="card h-fit w-full cursor-pointer overflow-hidden bg-base-100 shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg"
+                className={clsx(
+                    "card h-fit w-full cursor-pointer overflow-hidden bg-neutral shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg",
+                    tinted && "opacity-95",
+                )}
                 href={`/search/${item?.id}`}
             >
                 {ListingItemContent}

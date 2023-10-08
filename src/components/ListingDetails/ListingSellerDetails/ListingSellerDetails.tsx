@@ -7,7 +7,7 @@ interface Props {
     loading?: boolean;
     user?: ListingUser;
 }
-
+// change color of email & phone on hover and also underline
 export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
     return (
         <>

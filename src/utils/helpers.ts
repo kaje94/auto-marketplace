@@ -77,10 +77,6 @@ export const getFormattedCurrency = (amount: number, currency: string) =>
         minimumFractionDigits: 0,
     }).format(amount || 0);
 
-export const getListingTags = (location: Location, vehicle: Vehicle) => {
-    return [location.city, unCamelCase(vehicle.condition), `${vehicle.millage} km`];
-};
-
 export const unCamelCase = (str: string = "") => {
     if (typeof str === "string") {
         return str

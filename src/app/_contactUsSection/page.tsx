@@ -22,7 +22,7 @@ export default async function Page() {
                     alt="contact-us-illustration"
                     className={clsx("absolute hidden lg:block", position)}
                     height={100}
-                    src="/images/contact-us-illustration-1.png"
+                    src="/images/contact-us-illustration-1.webp"
                     unoptimized
                     width={100}
                 />

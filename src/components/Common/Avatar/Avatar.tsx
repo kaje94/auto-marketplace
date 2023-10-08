@@ -20,6 +20,7 @@ export const Avatar: FC<Props> = memo(({ url, width, name }) => {
                 className="rounded-full bg-slate-600 object-cover"
                 height={width}
                 onError={() => setHasError(true)}
+                referrerPolicy="no-referrer"
                 src={url}
                 unoptimized
                 width={width}

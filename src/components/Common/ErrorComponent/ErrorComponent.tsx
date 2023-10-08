@@ -9,13 +9,25 @@ interface Props {
     children?: ReactNode;
     error?: Error | string;
     reset?: () => void;
+    showHome?: boolean;
     showReset?: boolean;
     subTitle?: string;
     title?: string;
     variant?: "sm" | "lg";
+    wrapClassnames?: string;
 }
 
-export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showReset = true, variant = "lg", children }) => {
+export const ErrorComponent: FC<Props> = ({
+    reset,
+    error,
+    title,
+    wrapClassnames,
+    subTitle,
+    showReset = true,
+    variant = "lg",
+    showHome = true,
+    children,
+}) => {
     const errorSubTitleText =
         subTitle ||
         (showReset
@@ -28,11 +40,11 @@ export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showR
     const errorName = typeof error === "string" ? "Error" : error?.name ?? "Error";
     const errorMessage = typeof error === "string" ? error : error?.message;
     return (
-        <section className="flex h-full items-center p-16 text-primary-content">
+        <section className={clsx("flex h-full items-center p-16 text-primary-content", wrapClassnames)}>
             <div className="container mx-auto my-8 flex flex-col items-center justify-center px-5">
                 <div className="max-w-lg text-center">
                     {variant === "lg" && (
-                        <h2 className="mb-8 flex justify-center text-9xl font-extrabold dark:text-gray-600">
+                        <h2 className="mb-8 flex justify-center text-9xl font-extrabold">
                             <ActivityIcon height={180} width={180} />
                         </h2>
                     )}
@@ -53,11 +65,13 @@ export const ErrorComponent: FC<Props> = ({ reset, error, title, subTitle, showR
                                 <RefreshIcon className="mr-3" /> Refresh
                             </button>
                         )}
-                        <Link href="/">
-                            <button className="btn-outline  btn">
-                                <HomeIcon className="mr-3" /> Home
-                            </button>
-                        </Link>
+                        {showHome && (
+                            <Link href="/">
+                                <button className="btn-outline  btn">
+                                    <HomeIcon className="mr-3" /> Home
+                                </button>
+                            </Link>
+                        )}
                         {children}
                     </div>
                     {error && <div className="my-4 text-sm font-extralight opacity-50">{`${errorName}${errorMessage && `:${errorMessage}`}`}</div>}

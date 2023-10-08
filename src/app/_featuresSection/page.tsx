@@ -34,7 +34,7 @@ export default async function Page() {
                         alt="feature-1-image"
                         className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"
                         height={400}
-                        src="/images/features-1.jpg"
+                        src="/images/features-1.webp"
                         unoptimized
                         width={600}
                     />
@@ -69,7 +69,7 @@ export default async function Page() {
                         alt="feature-1-image"
                         className="hidden w-full rounded-lg bg-[#7c7262] object-cover lg:block"
                         height={400}
-                        src="/images/features-2.jpg"
+                        src="/images/features-2.webp"
                         unoptimized
                         width={600}
                     />

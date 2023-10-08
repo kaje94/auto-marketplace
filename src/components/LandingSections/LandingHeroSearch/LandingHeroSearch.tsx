@@ -19,7 +19,7 @@ export const LandingHeroSearch = () => {
     const formValues = watch();
 
     return (
-        <div className="mb-8 mt-5 flex flex-col justify-center shadow-xl sm:mb-16 sm:flex-row xl:mb-28 2xl:mb-36">
+        <div className="mb-8 mt-5 flex w-full flex-col justify-center shadow-xl sm:mb-16 sm:w-auto sm:flex-row xl:mb-28 2xl:mb-36">
             <InputController
                 control={control}
                 errorAsTooltip
