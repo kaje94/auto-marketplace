@@ -29,7 +29,10 @@ export const ListingsCarousel = (props: Props) => {
         showEmpty = true,
         tinted,
     } = props;
-    const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: false, axis: "x", containScroll: "trimSnaps" }, [Autoplay()]);
+    const [emblaRef, emblaApi] = useEmblaCarousel(
+        { align: "start", loop: false, axis: "x", containScroll: "trimSnaps", breakpoints: { "(max-width: 786px)": { align: "center" } } },
+        [Autoplay()],
+    );
 
     const onButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
         const { autoplay } = emblaApi.plugins();
