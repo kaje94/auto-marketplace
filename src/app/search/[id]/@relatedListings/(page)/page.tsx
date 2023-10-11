@@ -1,5 +1,6 @@
 import { ListingsCarousel } from "@/components/ListingsCarousel";
 import { api } from "@/utils/api";
+import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdType } from "@/utils/types";
 
 export default async function Page({ params }: { params: { id: ListingIdType } }) {
@@ -8,7 +9,7 @@ export default async function Page({ params }: { params: { id: ListingIdType } }
         <ListingsCarousel
             emptyPlaceholderSubText="Try checking out a different advert"
             emptyPlaceholderText="No related adverts available to display"
-            items={relatedListings}
+            items={relatedListings?.map((item) => transformListingResponse(item))}
         />
     );
 }

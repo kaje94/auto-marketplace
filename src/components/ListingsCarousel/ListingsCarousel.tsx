@@ -56,7 +56,7 @@ export const ListingsCarousel = (props: Props) => {
                             {new Array(loadingItemCount).fill("").map((_, i) => (
                                 <div
                                     key={`item-${i}`}
-                                    className="relative w-[calc(75%)] min-w-0 flex-none sm:w-[calc(60%)] md:w-[calc(39%)] lg:w-[calc(27%)] 2xl:w-[calc(21%)]"
+                                    className="relative w-[calc(75%)] min-w-0 flex-none sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]"
                                 >
                                     <ListingItem loading tinted={tinted} />
                                 </div>
@@ -67,7 +67,10 @@ export const ListingsCarousel = (props: Props) => {
                             {items?.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="rounded-box relative h-fit w-[calc(75%)] min-w-0 flex-none shadow duration-300 hover:shadow-lg hover:shadow-neutral sm:w-[calc(60%)] md:w-[calc(39%)] lg:w-[calc(27%)] 2xl:w-[calc(21%)]"
+                                    className={clsx(
+                                        "rounded-box relative h-fit w-[calc(75%)] min-w-0 flex-none shadow duration-300  hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
+                                        tinted && "hover:shadow-neutral",
+                                    )}
                                 >
                                     <ListingItem item={item} tinted={tinted} />
                                 </div>
