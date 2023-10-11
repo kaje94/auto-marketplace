@@ -13,16 +13,21 @@ interface Props extends Omit<ImageProps, "src" | "alt"> {
 export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest }) => {
     const [blurDataURL, setBlurDataURL] = useState<string | undefined>("");
 
-    useEffect(() => setBlurDataURL(thumbHashToDataUrl(image?.thumbHash)), [image]);
+    useEffect(() => {
+        // todo: remove this error throwing
+        if (!image?.thumbHash) {
+            throw new Error("image?.thumbHash is empty");
+        }
+        setBlurDataURL(thumbHashToDataUrl(image?.thumbHash));
+    }, [image]);
 
     const seoFriendlyName = toSEOFriendlyName(title, location);
 
     return (
         <Image
             alt={seoFriendlyName}
-            blurDataURL={blurDataURL}
             loader={({ src, width, quality }) => convertToSEOFriendlyImageURL(src, seoFriendlyName, quality, width)}
-            placeholder={blurDataURL ? "blur" : "empty"}
+            placeholder={(blurDataURL as `data:image/${string}`) || "empty"}
             priority={false}
             src={image?.name!}
             style={{ background: image?.averageColor }}
