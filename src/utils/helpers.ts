@@ -5,7 +5,7 @@ import qs from "query-string";
 import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3Action, getPresignedS3UrlAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
-import { ListingItem, ListingItems, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
+import { ListingItem, ListingItems, ListingUser, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
 
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;
@@ -317,3 +317,6 @@ export const toSEOFriendlyName = (originalName: string, location?: Location): st
 
     return `${seoName}-for-sale${locationStr ? `-in-${locationStr}` : ""}`;
 };
+
+export const isIncompleteUserProfile = (profile: ListingUser) =>
+    !profile.phone || !profile.address?.city || !profile.address?.state || !profile.address?.country || !profile.address?.postalCode;

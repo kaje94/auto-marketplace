@@ -2,31 +2,51 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { createListingAction } from "@/actions/listingActions";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
 import { convertYearToDateString, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
 import { CreateListingSchema } from "@/utils/schemas";
-import { CreateListingReq, VehicleFeature } from "@/utils/types";
+import { CreateListingReq, ListingUser, VehicleFeature } from "@/utils/types";
 
 interface Props {
     features: VehicleFeature[];
+    profile: ListingUser;
     userId?: string;
 }
 
 export const CreateListingForm = (props: Props) => {
-    const { features, userId } = props;
+    const { features, userId, profile } = props;
     const router = useRouter();
 
     const toastId = useRef<string>();
 
     const form = useForm<CreateListingReq>({
         resolver: zodResolver(CreateListingSchema),
-        defaultValues: { vehicle: { vehicleImages: [], featureIds: [] } },
+        defaultValues: {
+            vehicle: { vehicleImages: [], featureIds: [] },
+            location: {
+                city: profile.address?.city || "",
+                state: profile.address?.state || "",
+                postalCode: profile.address?.postalCode || 0,
+                country: profile?.address?.country || "LK",
+            },
+        },
         mode: "all",
     });
+
+    useEffect(() => {
+        form.reset({
+            location: {
+                city: profile.address?.city || "",
+                state: profile.address?.state || "",
+                postalCode: profile.address?.postalCode || 0,
+                country: profile?.address?.country || "LK",
+            },
+        });
+    }, [profile, form]);
 
     const { mutate: createListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateListingReq) => {
@@ -34,6 +54,7 @@ export const CreateListingForm = (props: Props) => {
 
             const requestBody: CreateListingReq = {
                 ...formValues,
+
                 vehicle: {
                     ...formValues.vehicle,
                     vehicleImages: vehicleImages,

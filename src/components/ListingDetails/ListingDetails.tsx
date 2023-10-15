@@ -72,9 +72,9 @@ export const ListingDetails: FC<Props> = ({
                             <div className="h-8 w-4/6 animate-pulse bg-secondary" />
                         ) : (
                             <>
-                                <p className="line-clamp-1 w-full overflow-hidden truncate text-center text-xl font-extrabold">
+                                <div className="w-full !break-words text-center text-xl font-extrabold">
                                     {getFormattedCurrency(price?.amount, price?.currency)}
-                                </p>
+                                </div>
                                 {price?.isPriceNegotiable && <span className="badge badge-secondary">Negotiable</span>}
                             </>
                         )}

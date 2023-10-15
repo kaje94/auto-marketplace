@@ -1,13 +1,19 @@
 "use client";
 import { clsx } from "clsx";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
 import { LogoutIcon, SearchIcon } from "@/icons";
 
 export const NavBarLoginButton = () => {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
     return (
-        <a className="btn-ghost btn-primary btn px-2 font-semibold capitalize text-secondary hover:text-accent" href="/api/auth/login">
+        <a
+            className="btn btn-primary btn-ghost px-2 font-semibold capitalize text-secondary hover:text-accent"
+            href={`/api/auth/login?returnTo=${pathname}${searchParams.size > 0 ? `?${searchParams.toString()}` : ""}`}
+        >
             Login
         </a>
     );
@@ -77,7 +83,7 @@ export const PostAddLink = () => {
 export const SearchLink = () => {
     return (
         <Link href="/search">
-            <button className="btn-ghost btn px-2 text-base-300 hover:text-accent">
+            <button className="btn btn-ghost px-2 text-base-300 hover:text-accent">
                 <SearchIcon />
             </button>
         </Link>

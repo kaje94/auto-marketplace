@@ -19,6 +19,7 @@ import {
     ReviewListingSchema,
     ToggleSubscriptionSchema,
     UnListListingSchema,
+    UpdateProfileSchema,
     vehicleCreateSchema,
     VehicleFeatureSchema,
     VehicleImageSchema,
@@ -34,6 +35,7 @@ declare module "@auth0/nextjs-auth0" {
         isAdmin?: boolean;
         locale: string;
         name: string;
+        new_user?: boolean;
         nickname: string;
         picture: string;
         sid: string;
@@ -54,7 +56,12 @@ type Price = z.infer<typeof PriceSchema>;
 export type Location = z.infer<typeof LocationSchema>;
 
 export type ListingUser = {
-    address: null | string;
+    address: null | {
+        city?: string;
+        country?: string;
+        postalCode?: number;
+        state?: string;
+    };
     email: string;
     emailConfirmed: boolean;
     firstName: string;
@@ -192,3 +199,5 @@ export type ListingIdType = z.infer<typeof ListingIdField>;
 export type ListingSubscriptionIdType = z.infer<typeof ListingSubscriptionIdField>;
 
 export type ToggleSubscriptionReq = z.infer<typeof ToggleSubscriptionSchema>;
+
+export type UpdateProfileReq = z.infer<typeof UpdateProfileSchema>;

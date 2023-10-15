@@ -9,15 +9,18 @@ interface Props {
         classNames?: string;
         text?: string;
     };
+    showCancel?: boolean;
 }
 
-export const ModalFooter: FC<Props> = ({ onVisibleChange, primaryButton, loading, onSubmit }) => {
+export const ModalFooter: FC<Props> = ({ onVisibleChange, primaryButton, loading, onSubmit, showCancel = true }) => {
     return (
         <div className="mt-6 flex justify-end gap-3">
-            <button className="btn-ghost btn" onClick={() => onVisibleChange(false)}>
-                Cancel
-            </button>
-            <button className={clsx("btn-neutral btn", primaryButton?.classNames)} onClick={onSubmit}>
+            {showCancel && (
+                <button className="btn btn-ghost" onClick={() => onVisibleChange(false)}>
+                    Cancel
+                </button>
+            )}
+            <button className={clsx("btn", primaryButton?.classNames || "!btn-neutral")} disabled={loading} onClick={onSubmit}>
                 {loading && <span className="loading loading-spinner"></span>}
                 {primaryButton?.text}
             </button>

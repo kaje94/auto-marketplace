@@ -1,6 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import { ScrollToTop } from "@/components/Common/ScrollToTop";
 import { Footer } from "@/components/Footer";
+import { WelcomeModal } from "@/components/Modals/WelcomeModal";
 import { NavBar } from "@/components/NavBar";
 import { ReactQueryProvider } from "@/providers/query-provider";
 import { ChildrenProps } from "@/utils/types";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: ChildrenProps) {
                     <NavBar />
                     <main>{children}</main>
                     <Footer />
+                    <WelcomeModal />
                 </ReactQueryProvider>
             </body>
         </html>

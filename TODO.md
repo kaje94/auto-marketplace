@@ -10,7 +10,9 @@
 -   [] add a new field `hash` to image entity and have max length of 100(even though actually needed is less than 25)
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
 -   [] vehicle description needs to be at least 1000 characters?
--   [] make Trim as an optional field
+// new!
+-   [] make postal code into alpha numeric (need to be able to save 00500 as a postal code)
+-   [] make trim as optional
 
 > Web app todo list
 
@@ -22,18 +24,13 @@
 -   [] try out the date picker package for year select
 -   [] view more adverts button in featured adverts
 -   [] fix Entire page /search deopted into client-side rendering.
-
--   [] fix hydration ui issues in dashboard listing ui items
--   [] report button showing for user who created the advert
--   [] reduce input loading opacity
--   [] checkbox not visible
--   [] fix picture in image listing
 -   [] move user details above specification in user details
 -   [] show safety tips similar to ikman under item details description
--   [] subscription create failing
--   [] modal footer make opacity 1
--   [] phone number click to call in advert details
--   [] add web3 forms to contact us
+-   [] add web3 forms or similar to contact us
+-   [] go through all the loading screens and make sure that the parents have animate pulse class
+-   [] add country code as prefix for phone numbers
+-   [] show currency as prefix for price inputs
+-   [] add masking for inputs
 
 > Need to verify
 -   [] loading bug when changing query (while loading type something) (Added a possible fix)
@@ -49,19 +46,3 @@
 -   [] contact us section?
 -   [] make auth0 run fully on edge
 
-
-//
-UserDto(
-    string UserId,
-    string FirstName,
-    string LastName,
-    string FullName,
-    string Picture,
-    bool IsDealership,
-    Address Address,
-    string UserName,
-    string Email,
-    bool EmailConfirmed,
-    string Phone,
-    bool PhoneConfirmed);
-)

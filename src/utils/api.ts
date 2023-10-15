@@ -18,6 +18,7 @@ import {
     ListingSubscriptionIdType,
     ListingSubscriptionItem,
     ListingSubscriptionItems,
+    ListingUser,
     MyListingsFilterReq,
     NotificationItems,
     PaginatedRequest,
@@ -27,6 +28,7 @@ import {
     ReviewListingReq,
     ToggleSubscriptionReq,
     UnListListingReq,
+    UpdateProfileReq,
     VehicleBrand,
     VehicleFeature,
 } from "./types";
@@ -72,12 +74,16 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
         } else if (textRes.status === "fulfilled") {
             errorResponse = textRes.value;
         }
-        console.error("Fetch request failure:", errorResponse || response.statusText);
+        console.error(
+            `\nFetch request failure for ${config.method || "GET"} ${endpoint} with a ${response.status} status code:`,
+            errorResponse || response.statusText,
+        );
         const errorMessage = errorResponse?.title || errorResponse?.toString() || response.statusText || "Failure when calling the endpoint";
+        const truncatedErrorMessage = errorMessage.substring(0, 500);
         if (response.status === 400 && errorResponse?.errors) {
-            throw new Error(extractBadRequestError(errorResponse?.errors) || errorMessage);
+            throw new Error(extractBadRequestError(errorResponse?.errors) || truncatedErrorMessage);
         }
-        throw new Error(`${errorMessage} (${response.status})`);
+        throw new Error(`${truncatedErrorMessage} (${response.status})`);
     }
 };
 
@@ -188,6 +194,12 @@ export const api = {
             { next: { tags: [apiTags.getMyNotifications(listingUserId)], revalidate: revalidationTime.threeHours } },
         ),
     setAllNotificationsAsShown: () => fetchApi.protectedPost<BodyInit, void>(`/v1/Users/me/notifications/set-all-shown`, ""),
+    getMyProfileDetails: (userId: string) =>
+        fetchApi.protectedGet<ListingUser>(`/v1/Users/${userId}`, {
+            next: { tags: [apiTags.getMyProfileDetails(userId)], revalidate: revalidationTime.oneDay },
+        }),
+    updateMyProfileDetails: (body: UpdateProfileReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Users/${body.userId}`, JSON.stringify(body)),
+    closeUserAccount: (userId: string) => fetchApi.protectedDelete<void>(`/v1/Users/${userId}/close-account`),
 };
 
 export const apiTags = {
@@ -207,6 +219,7 @@ export const apiTags = {
     getListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-listing-subscription-item-${id}`,
     getMyListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-my-listing-subscription-item-${id}`,
     getMyNotifications: (listingUserId: string) => `get-my-notifications-${listingUserId}`,
+    getMyProfileDetails: (userId: string) => `get-my-profile-${userId}`,
 };
 
 export const listingItemTags = (id: ListingIdType, listingUserId: string) => [

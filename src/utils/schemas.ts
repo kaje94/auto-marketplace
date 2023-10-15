@@ -19,6 +19,9 @@ const BooleanStringSchema = z.union([
         })
         .transform((value) => value === "true"),
 ]);
+
+const phoneRegex = new RegExp(/^\+[0-9]{1,15}$/);
+
 export const PriceSchema = z.object({
     amount: z.preprocess(Number, z.number().min(1, "Price amount needs to be a positive number")),
     currency: z.string().default("LKR"),
@@ -207,4 +210,16 @@ export const DashboardNotificationsFilterSchema = z.object({
     StartDate: z.string().optional(),
     EndDate: z.string().optional(),
     IsShown: z.union([z.union([z.literal("true").transform(() => true), z.literal("false").transform(() => false)]), z.literal("")]).optional(),
+});
+
+export const UpdateProfileSchema = z.object({
+    userId: z.string(),
+    isDealership: z.boolean(),
+    address: z.object({
+        city: z.string().min(1, "City is required"),
+        state: z.string().min(1, "State is required"),
+        country: z.string().min(1, "Country is required").default("LK"),
+        postalCode: z.preprocess(Number, z.number().min(1, "Postal code needs to be a positive number")),
+    }),
+    phoneNumber: z.string().min(1, "Contact number is required").regex(phoneRegex, "Invalid phone number"),
 });

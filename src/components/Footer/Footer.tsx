@@ -11,6 +11,10 @@ import { FC } from "react";
 // how long will my advert be visible
 // how can i remove an advert
 
+// todo: add following links
+// add promotions https://ikman.lk/en/promotions
+// safety precautions https://ikman.lk/en/stay-safe
+
 export const Footer: FC = () => {
     const pathName = usePathname();
 

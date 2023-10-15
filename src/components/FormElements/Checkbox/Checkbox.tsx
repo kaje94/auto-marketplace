@@ -21,6 +21,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
                 "label rounded-lg border-2 border-opacity-50 py-3 duration-200 hover:bg-base-200 hover:bg-opacity-50",
                 !loading && "cursor-pointer",
             )}
+            onClick={(event) => event.stopPropagation()}
         >
             <span className="label-text">{label}</span>
             <input

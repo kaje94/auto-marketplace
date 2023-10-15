@@ -20,7 +20,7 @@ specifiers:
   browser-image-compression: ^2.0.2
   clsx: ^2.0.0
   csstype: ^3.0.10
-  daisyui: ^3.8.1
+  daisyui: ^3.9.2
   embla-carousel: 8.0.0-rc14
   embla-carousel-autoplay: 8.0.0-rc14
   embla-carousel-react: 8.0.0-rc14
@@ -48,7 +48,7 @@ specifiers:
   react-dropzone: ^14.2.3
   react-hook-form: ^7.45.2
   react-hot-toast: ^2.4.1
-  tailwindcss: 3.3.2
+  tailwindcss: 3.3.3
   thumbhash: ^0.1.1
   typescript: ^5.2.2
   zod: ^3.21.4
@@ -67,7 +67,7 @@ dependencies:
   browser-image-compression: 2.0.2
   clsx: 2.0.0
   csstype: 3.1.2
-  daisyui: 3.8.1
+  daisyui: 3.9.2
   embla-carousel: 8.0.0-rc14
   embla-carousel-autoplay: 8.0.0-rc14_embla-carousel@8.0.0-rc14
   embla-carousel-react: 8.0.0-rc14_react@18.2.0
@@ -86,7 +86,7 @@ dependencies:
   react-dropzone: 14.2.3_react@18.2.0
   react-hook-form: 7.45.2_react@18.2.0
   react-hot-toast: 2.4.1_s7mghcr6idhb4d5ook54gl4n44
-  tailwindcss: 3.3.2
+  tailwindcss: 3.3.3
   thumbhash: 0.1.1
   typescript: 5.2.2
   zod: 3.21.4
@@ -104,7 +104,7 @@ devDependencies:
   eslint-import-resolver-typescript: 3.6.1_3j3omiadvlpv5rpfrjr5lycjfu
   eslint-plugin-import: 2.28.1_7juwwq4lilwvkas6knc4dqepxq
   eslint-plugin-prettier: 5.0.0_aqgyrhchy2rsdk3dpe2whc44ye
-  eslint-plugin-tailwindcss: 3.13.0_tailwindcss@3.3.2
+  eslint-plugin-tailwindcss: 3.13.0_tailwindcss@3.3.3
   eslint-plugin-typescript-sort-keys: 3.0.0_ptdtxirkj6smbsapfa2xu7c5iq
   prettier: 3.0.3
 
@@ -2033,15 +2033,15 @@ packages:
   /csstype/3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
 
-  /daisyui/3.8.1:
-    resolution: {integrity: sha512-4ULfP67PScxnJed5hxV83HLOhk/nVqZYGBz7BLk5KvCTr2Ij1V+xTEhk5Ix1lhbQC4qEL6be/aio2XeEa3920g==}
+  /daisyui/3.9.2:
+    resolution: {integrity: sha512-yJZ1QjHUaL+r9BkquTdzNHb7KIgAJVFh0zbOXql2Wu0r7zx5qZNLxclhjN0WLoIpY+o2h/8lqXg7ijj8oTigOw==}
     engines: {node: '>=16.9.0'}
     dependencies:
       colord: 2.9.3
       css-selector-tokenizer: 0.8.0
       postcss: 8.4.23
       postcss-js: 4.0.1_postcss@8.4.23
-      tailwindcss: 3.3.2
+      tailwindcss: 3.3.3
     transitivePeerDependencies:
       - ts-node
     dev: false
@@ -2648,7 +2648,7 @@ packages:
       string.prototype.matchall: 4.0.8
     dev: true
 
-  /eslint-plugin-tailwindcss/3.13.0_tailwindcss@3.3.2:
+  /eslint-plugin-tailwindcss/3.13.0_tailwindcss@3.3.3:
     resolution: {integrity: sha512-Fcep4KDRLWaK3KmkQbdyKHG0P4GdXFmXdDaweTIPcgOP60OOuWFbh1++dufRT28Q4zpKTKaHwTsXPJ4O/EjU2Q==}
     engines: {node: '>=12.13.0'}
     peerDependencies:
@@ -2656,7 +2656,7 @@ packages:
     dependencies:
       fast-glob: 3.3.1
       postcss: 8.4.23
-      tailwindcss: 3.3.2
+      tailwindcss: 3.3.3
     dev: true
 
   /eslint-plugin-typescript-sort-keys/3.0.0_ptdtxirkj6smbsapfa2xu7c5iq:
@@ -2825,16 +2825,6 @@ packages:
     resolution: {integrity: sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==}
     dev: true
 
-  /fast-glob/3.2.12:
-    resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
-    engines: {node: '>=8.6.0'}
-    dependencies:
-      '@nodelib/fs.stat': 2.0.5
-      '@nodelib/fs.walk': 1.2.8
-      glob-parent: 5.1.2
-      merge2: 1.4.1
-      micromatch: 4.0.5
-
   /fast-glob/3.3.1:
     resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
     engines: {node: '>=8.6.0'}
@@ -2844,7 +2834,6 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
-    dev: true
 
   /fast-json-stable-stringify/2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
@@ -4406,8 +4395,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /tailwindcss/3.3.2:
-    resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
+  /tailwindcss/3.3.3:
+    resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -4416,7 +4405,7 @@ packages:
       chokidar: 3.5.3
       didyoumean: 1.2.2
       dlv: 1.1.3
-      fast-glob: 3.2.12
+      fast-glob: 3.3.1
       glob-parent: 6.0.2
       is-glob: 4.0.3
       jiti: 1.18.2
@@ -4431,7 +4420,6 @@ packages:
       postcss-load-config: 4.0.1_postcss@8.4.23
       postcss-nested: 6.0.1_postcss@8.4.23
       postcss-selector-parser: 6.0.12
-      postcss-value-parser: 4.2.0
       resolve: 1.22.2
       sucrase: 3.32.0
     transitivePeerDependencies:

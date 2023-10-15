@@ -16,10 +16,13 @@ const NavBarWithSession = async () => {
     try {
         const session = await getSession();
         if (session) {
-            const notifications = await api.getMyNotifications(session?.user?.sub!, { PageNumber: 1 });
+            const [notifications, profile] = await Promise.all([
+                api.getMyNotifications(session?.user?.sub!, { PageNumber: 1 }),
+                api.getMyProfileDetails(session?.user?.sub!),
+            ]);
             const notificationCount = notifications.items?.filter((item) => !item.isShown)?.length;
 
-            return <NavBarClient notificationCount={notificationCount} userClaims={session?.user} />;
+            return <NavBarClient notificationCount={notificationCount} userClaims={session?.user} userData={profile} />;
         }
         return <NavBarClient />;
     } catch {
