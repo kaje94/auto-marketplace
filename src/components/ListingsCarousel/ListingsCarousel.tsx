@@ -2,6 +2,7 @@
 import { clsx } from "clsx";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
+import Link from "next/link";
 import React, { useCallback } from "react";
 import { Empty, ListingItem } from "@/components/Common";
 import { ListingItem as ListingItemType } from "@/utils/types";
@@ -9,26 +10,19 @@ import { NextButton, PrevButton, usePrevNextButtons } from "./ListingsCarouselBu
 
 type Props = {
     bgFromColor?: "from-white" | "from-base-200" | "from-hero";
-    emptyPlaceholderSubText?: string;
-    emptyPlaceholderText?: string;
     items?: ListingItemType[];
     loading?: boolean;
     loadingItemCount?: number;
-    showEmpty?: boolean;
     tinted?: boolean;
+    viewMore?: {
+        link: string;
+        subTitle: string;
+        title: string;
+    };
 };
 
 export const ListingsCarousel = (props: Props) => {
-    const {
-        items = [],
-        loading,
-        loadingItemCount = 5,
-        bgFromColor = "from-white",
-        emptyPlaceholderText = "No items to display",
-        emptyPlaceholderSubText,
-        showEmpty = true,
-        tinted,
-    } = props;
+    const { items = [], loading, loadingItemCount = 5, bgFromColor = "from-white", tinted, viewMore } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: "center", loop: false, axis: "x", containScroll: "trimSnaps" }, [Autoplay()]);
 
     const onButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
@@ -38,14 +32,6 @@ export const ListingsCarousel = (props: Props) => {
     }, []);
 
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi, onButtonClick);
-
-    if (items?.length === 0 && !loading) {
-        if (showEmpty) {
-            return <Empty iconSize="sm" subText={emptyPlaceholderSubText} text={emptyPlaceholderText} />;
-        } else {
-            return null;
-        }
-    }
 
     return (
         <div className={clsx("relative flex items-center", loading && "animate-pulse")}>
@@ -75,6 +61,26 @@ export const ListingsCarousel = (props: Props) => {
                                     <ListingItem item={item} tinted={tinted} />
                                 </div>
                             ))}
+                            {viewMore && !loading && (
+                                <div
+                                    key="view-more"
+                                    className={clsx(
+                                        "rounded-box relative w-[calc(75%)] min-w-0 flex-none shadow duration-300  hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
+                                        tinted && "hover:shadow-neutral",
+                                    )}
+                                >
+                                    <Link
+                                        className={clsx(
+                                            "card flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden bg-base-200 bg-opacity-50 p-5 text-neutral shadow  transition duration-300 zoom-inner-image hover:bg-opacity-80 hover:shadow-lg md:p-10",
+                                            tinted && "!bg-neutral !text-white opacity-95",
+                                        )}
+                                        href={viewMore.link}
+                                    >
+                                        <div className="text-2xl font-bold opacity-80 ">{viewMore.title}</div>
+                                        <div className="text-center text-sm opacity-50">{viewMore.subTitle}</div>
+                                    </Link>
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

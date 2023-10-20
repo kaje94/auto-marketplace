@@ -1,5 +1,6 @@
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetails } from "@/components/ListingDetails";
+import { ListingsCarousel } from "@/components/ListingsCarousel";
 
 export default function Loading() {
     return (
@@ -12,6 +13,8 @@ export default function Loading() {
                 ]}
             />
             <ListingDetails loading />
+            <div className="divider mt-16">Related Adverts</div>
+            <ListingsCarousel loading />
         </>
     );
 }

@@ -60,12 +60,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     )}
                 </div>
             </figure>
-            <div
-                className={clsx(
-                    "card-body flex flex-col gap-0  bg-gradient-to-t from-black px-3 pb-2 pt-0",
-                    tinted ? "to-neutral" : "to-base-conten",
-                )}
-            >
+            <div className={clsx("card-body flex flex-col gap-0  bg-gradient-to-t from-black to-neutral px-3 pb-2 pt-0")}>
                 {item ? (
                     <div className="text-sm font-medium text-base-200">{getLocationString(item?.location)}</div>
                 ) : (

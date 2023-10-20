@@ -19,10 +19,10 @@
 -   [] check max length of all strings in schema file
 -   [] get vehicle brands and models from API
 -   [] add clearable prop to form elements
+-   [] form elements with prefix
 -   [] check if we can have only one provider for searching
 -   [] brand and models needs to come from API
 -   [] try out the date picker package for year select
--   [] view more adverts button in featured adverts
 -   [] fix Entire page /search deopted into client-side rendering.
 -   [] move user details above specification in user details
 -   [] show safety tips similar to ikman under item details description
