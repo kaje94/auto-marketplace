@@ -15,6 +15,7 @@ import { ListingImageUploadLoading } from "./ListingImageUpload";
 
 const ListingImageUpload = dynamic(() => import("./ListingImageUpload").then((mod) => mod.ListingImageUpload), {
     loading: () => <ListingImageUploadLoading />,
+    ssr: false,
 });
 
 interface Props {
