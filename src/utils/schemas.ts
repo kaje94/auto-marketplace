@@ -22,14 +22,32 @@ const BooleanStringSchema = z.union([
 
 const phoneRegex = new RegExp(/^\+[0-9]{1,15}$/);
 
+const removeCommas = (input: string) => input.replace(/,/g, "");
+
+const getNumericSchema = (message: string = "Invalid value", minValue: number = 1, defaultVal: string = "") =>
+    z.union([
+        z
+            .string()
+            .transform(removeCommas)
+            .refine(
+                (value) => {
+                    const numberValue = Number(value);
+                    return !isNaN(numberValue) && numberValue >= minValue;
+                },
+                { message },
+            )
+            .default(defaultVal),
+        z.number(),
+    ]);
+
 export const PriceSchema = z.object({
-    amount: z.preprocess(Number, z.number().min(1, "Price amount needs to be a positive number")),
+    amount: getNumericSchema("Price amount needs to be a positive number"),
     currency: z.string().default("LKR"),
     isPriceNegotiable: z.boolean().default(false),
 });
 
 export const OptionalPriceSchema = z.object({
-    amount: z.preprocess(Number, z.number().min(0, "Price amount needs to be a positive number")).default(0),
+    amount: getNumericSchema("Price amount needs to be a positive number", 0, "0"),
     currency: z.string().default("LKR"),
     isPriceNegotiable: z.boolean().default(false),
 });
@@ -39,7 +57,7 @@ export const LocationSchema = z.object({
     city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),
     country: z.string().min(1, "Country is required").default("LK"),
-    postalCode: z.preprocess(Number, z.number().min(1, "Postal code needs to be a positive number")),
+    postalCode: getNumericSchema("Postal code needs to be a positive number"),
 });
 
 export const VehicleImageSchema = z.object({
@@ -80,11 +98,11 @@ export const VehicleSchema = z.object({
     trim: z.string().min(1, "Trim is required"), // todo: remove server side validation and make this optional!
     yearOfManufacture: YearSchema,
     yearOfRegistration: YearSchema,
-    millage: z.preprocess(Number, z.number().min(1, "Milage needs to be a positive number")),
+    millage: getNumericSchema("Mileage needs to be a positive number"),
     condition: z.nativeEnum(VehicleConditionTypes, { invalid_type_error: "Invalid Condition Type" }),
     transmission: z.nativeEnum(TransmissionTypes, { invalid_type_error: "Invalid Transmission Type" }),
     fuelType: z.nativeEnum(FuelTypes, { invalid_type_error: "Invalid Fuel Type" }),
-    engineCapacity: z.preprocess(Number, z.number().min(1, "Engine capacity needs to be a positive number")),
+    engineCapacity: getNumericSchema("Engine capacity needs to be a positive number"),
     vehicleImages: z
         .array(VehicleImageSchema)
         .refine((array) => array.filter((item) => !item.deleted).length > 0, {
@@ -123,12 +141,8 @@ export const CreateSubscriptionSchema = z.object({
     maxYearOfManufacture: z.union([YearSchema, z.literal(""), z.null()]).optional(),
     minYearOfRegistration: z.union([YearSchema, z.literal(""), z.null()]).optional(),
     maxYearOfRegistration: z.union([YearSchema, z.literal(""), z.null()]).optional(),
-    minMillage: z
-        .union([z.preprocess(Number, z.number().min(1, "Minimum milage needs to be a positive number")), z.literal(""), z.null()])
-        .optional(),
-    maxMillage: z
-        .union([z.preprocess(Number, z.number().min(1, "Minimum milage needs to be a positive number")), z.literal(""), z.null()])
-        .optional(),
+    minMillage: z.union([getNumericSchema("Minimum mileage needs to be a positive number"), z.literal(""), z.null()]).optional(),
+    maxMillage: z.union([getNumericSchema("Minimum mileage needs to be a positive number"), z.literal(""), z.null()]).optional(),
     condition: z.union([z.nativeEnum(VehicleConditionTypes, { invalid_type_error: "Invalid Condition Type" }), z.literal(""), z.null()]).optional(),
     minPrice: OptionalPriceSchema.optional(),
     maxPrice: OptionalPriceSchema.optional(),
@@ -140,8 +154,8 @@ export const PostedListingsFilterSchema = z.object({
     Title: z.string().optional(),
     YomStartDate: z.union([z.string(), z.null()]).optional(),
     YomEndDate: z.union([z.string(), z.null()]).optional(),
-    MinPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal(""), z.null()]).optional(),
-    MaxPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal(""), z.null()]).optional(),
+    MinPrice: z.union([getNumericSchema(), z.literal(""), z.null()]).optional(),
+    MaxPrice: z.union([getNumericSchema(), z.literal(""), z.null()]).optional(),
     City: z.string().optional(),
     Brand: z.string().optional(),
     Model: z.string().optional(),
@@ -174,8 +188,8 @@ export const MyListingsFilterSchema = z.object({
 
 export const DashboardListingFilterSchema = MyListingsFilterSchema.extend({
     Title: z.string().optional(),
-    MinPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal("")]).optional(),
-    MaxPrice: z.union([z.preprocess(Number, z.number().positive()), z.literal("")]).optional(),
+    MinPrice: z.union([getNumericSchema(), z.literal("")]).optional(),
+    MaxPrice: z.union([getNumericSchema(), z.literal("")]).optional(),
     City: z.string().optional(),
     Brand: z.string().optional(),
     Model: z.string().optional(),
@@ -219,7 +233,7 @@ export const UpdateProfileSchema = z.object({
         city: z.string().min(1, "City is required"),
         state: z.string().min(1, "State is required"),
         country: z.string().min(1, "Country is required").default("LK"),
-        postalCode: z.preprocess(Number, z.number().min(1, "Postal code needs to be a positive number")),
+        postalCode: getNumericSchema("Postal code needs to be a positive number"),
     }),
     phoneNumber: z.string().min(1, "Contact number is required").regex(phoneRegex, "Invalid phone number"),
 });

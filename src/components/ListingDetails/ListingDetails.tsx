@@ -31,6 +31,7 @@ export const ListingDetails: FC<Props> = ({
     basePath,
 }) => {
     const { price, vehicle, location, user, title, description, status, id, createdOn, hasOnGoingLease } = itemDetails as ListingItem;
+
     return (
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-5" : "lg:col-span-5")}>
@@ -44,7 +45,7 @@ export const ListingDetails: FC<Props> = ({
                         vehicleType={vehicle?.type}
                     />
                 </div>
-                <div className="stat card  bg-base-100 p-3  shadow lg:p-5 xl:p-6">
+                <div className="card stat  bg-base-100 p-3  shadow lg:p-5 xl:p-6">
                     <div className="stat-title">Description</div>
                     <div className="divider" />
                     <p className={clsx({ "mt-2 w-full whitespace-pre-line text-sm font-medium": true, "animate-pulse h-40 bg-base-200": loading })}>
@@ -55,7 +56,7 @@ export const ListingDetails: FC<Props> = ({
             </div>
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-3" : "lg:col-span-3")}>
                 <div className={clsx({ "grid gap-4  xl:gap-7 2xl:gap-8": true, "xl:grid-cols-2": !withinDashboard })}>
-                    <div className="stat card place-items-center bg-base-100 shadow">
+                    <div className="card stat place-items-center bg-base-100 shadow">
                         <div className="stat-title">Location</div>
                         {loading ? (
                             <>
@@ -66,7 +67,7 @@ export const ListingDetails: FC<Props> = ({
                             <div className="mt-2 text-center text-lg font-bold">{getLocationString(location)}</div>
                         )}
                     </div>
-                    <div className="stat card place-items-center bg-primary text-primary-content shadow">
+                    <div className="card stat place-items-center bg-primary text-primary-content shadow">
                         <div className="stat-title text-primary-content">Price</div>
                         {loading ? (
                             <div className="h-8 w-4/6 animate-pulse bg-secondary" />
@@ -81,16 +82,16 @@ export const ListingDetails: FC<Props> = ({
                     </div>
                 </div>
 
-                <div className="stat card place-items-center bg-base-100 shadow">
+                <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Key Specifications</div>
                     <ListingKeySpecifications loading={loading} vehicle={vehicle} />
                 </div>
-                <div className="stat card place-items-center bg-base-100 shadow">
+                <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Features</div>
                     <ListingDetailsFeatures loading={loading} vehicle={vehicle} />
                 </div>
                 {showSellerDetails && (
-                    <div className="stat card place-items-center bg-base-100 shadow">
+                    <div className="card stat place-items-center bg-base-100 shadow">
                         <div className="stat-title">Seller</div>
                         <ListingSellerDetails loading={loading} user={user} />
                     </div>

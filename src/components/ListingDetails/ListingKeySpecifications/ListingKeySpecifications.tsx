@@ -31,7 +31,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
         items.push({ label: "Condition", value: unCamelCase(vehicle?.condition) });
     }
     if (vehicle?.millage) {
-        items.push({ label: "Milage", value: `${numberWithCommas(vehicle?.millage)} km` });
+        items.push({ label: "Mileage", value: `${numberWithCommas(vehicle?.millage)} km` });
     }
     if (vehicle?.transmission) {
         items.push({ label: "Transmission", value: unCamelCase(vehicle?.transmission) });

@@ -66,16 +66,16 @@ export const uploadToS3 = async (file: File, url: string, key: string, bucket: s
     return { url: resultUrl };
 };
 
-export const numberWithCommas = (x: number) => {
+export const numberWithCommas = (x: number | string) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const getFormattedCurrency = (amount: number, currency: string) =>
+export const getFormattedCurrency = (amount: number | string, currency: string) =>
     new Intl.NumberFormat(undefined, {
         style: "currency",
         currency: currency || "LKR",
         minimumFractionDigits: 0,
-    }).format(amount || 0);
+    }).format(typeof amount === "string" ? Number(amount) : amount || 0);
 
 export const unCamelCase = (str: string = "") => {
     if (typeof str === "string") {

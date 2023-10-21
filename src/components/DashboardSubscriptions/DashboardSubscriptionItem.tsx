@@ -74,11 +74,11 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     }
 
     if (minMillage && maxMillage) {
-        subscriptionDetails.push({ label: "Milage Range", value: `${numberWithCommas(minMillage)} km-${numberWithCommas(maxMillage)} km` });
+        subscriptionDetails.push({ label: "Mileage Range", value: `${numberWithCommas(minMillage)} km-${numberWithCommas(maxMillage)} km` });
     } else if (minMillage) {
-        subscriptionDetails.push({ label: "Minimum Milage", value: `${numberWithCommas(minMillage)} km` });
+        subscriptionDetails.push({ label: "Minimum Mileage", value: `${numberWithCommas(minMillage)} km` });
     } else if (maxMillage) {
-        subscriptionDetails.push({ label: "Maximum Milage", value: `${numberWithCommas(maxMillage)} km` });
+        subscriptionDetails.push({ label: "Maximum Mileage", value: `${numberWithCommas(maxMillage)} km` });
     }
 
     if (minYearOfManufacture && maxYearOfManufacture) {

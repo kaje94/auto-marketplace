@@ -27,13 +27,13 @@ interface Props {
 
 export const ListingForm: FC<Props> = (props) => {
     const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, title } = props;
-    const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<CreateListingReq>;
+    const { handleSubmit, formState: { isDirty, errors } = {}, control } = form as UseFormReturn<CreateListingReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
             <div className="grid gap-4 xl:grid-cols-2 xl:gap-7 2xl:gap-8">
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Key Specifications</div>
                         <AutocompleteController
                             control={control}
@@ -93,7 +93,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <InputController
                                 control={control}
                                 fieldName="vehicle.millage"
-                                label="Milage"
+                                label="Mileage"
                                 loading={isLoading}
                                 placeholder="50000"
                                 required
@@ -137,7 +137,7 @@ export const ListingForm: FC<Props> = (props) => {
                             />
                         </div>
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Other details</div>
                         <TextAreaController
                             control={control}
@@ -156,7 +156,7 @@ export const ListingForm: FC<Props> = (props) => {
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">
                             Images <span className="text-error">*</span>
                         </div>
@@ -178,7 +178,7 @@ export const ListingForm: FC<Props> = (props) => {
                             />
                         )}
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Location Details</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
@@ -218,7 +218,7 @@ export const ListingForm: FC<Props> = (props) => {
                             />
                         </div>
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Price Details</div>
                         <InputController
                             control={control}
@@ -236,7 +236,7 @@ export const ListingForm: FC<Props> = (props) => {
                             loading={isLoading}
                         />
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Features</div>
                         <span className="mt-2">
                             <TagSelectController
@@ -252,7 +252,7 @@ export const ListingForm: FC<Props> = (props) => {
             </div>
             <div className="mt-5 flex justify-end">
                 <button
-                    className="btn-neutral btn-wide btn"
+                    className="btn btn-neutral btn-wide"
                     disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
                     type="submit"
                 >

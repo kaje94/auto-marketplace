@@ -27,7 +27,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
             <div className="grid gap-4 xl:grid-cols-2 xl:gap-7 2xl:gap-8">
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Subscription Configurations</div>
                         <InputController
                             control={control}
@@ -57,7 +57,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             />
                         </div>
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Key Specifications</div>
                         <AutocompleteController
                             control={control}
@@ -102,7 +102,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Manufactured Year</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
@@ -127,7 +127,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             />
                         </div>
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Registered Year</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
@@ -152,7 +152,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             />
                         </div>
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
+                    <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Price Range</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
@@ -173,13 +173,13 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             />
                         </div>
                     </div>
-                    <div className="stat card bg-base-100 p-4 shadow">
-                        <div className="stat-title">Milage</div>
+                    <div className="card stat bg-base-100 p-4 shadow">
+                        <div className="stat-title">Mileage</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <InputController
                                 control={control}
                                 fieldName="minMillage"
-                                label="Minimum milage"
+                                label="Minimum Mileage"
                                 loading={isLoading}
                                 placeholder="10000"
                                 type="number"
@@ -187,7 +187,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <InputController
                                 control={control}
                                 fieldName="maxMillage"
-                                label="Maximum milage"
+                                label="Maximum Mileage"
                                 loading={isLoading}
                                 placeholder="1000000"
                                 type="number"
@@ -198,7 +198,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
             </div>
             <div className="mt-5 flex justify-end">
                 <button
-                    className="btn-neutral btn-wide btn"
+                    className="btn btn-neutral btn-wide"
                     disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
                     type="submit"
                 >
