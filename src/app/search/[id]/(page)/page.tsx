@@ -13,7 +13,6 @@ export default async function Page({ params }: { params: { id: ListingIdType } }
         transformListingResponse(await api.getPostedListingItem(params.id)),
         api.getRelatedListings(params.id),
     ]);
-    await new Promise((resolve) => setTimeout(resolve, 10000));
     api.incrementViews(params.id);
 
     return (
