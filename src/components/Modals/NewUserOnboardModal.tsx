@@ -2,11 +2,10 @@
 import { Claims } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { displayFont } from "@/app/fonts";
-import { Modal } from "@/components/Common";
+import { LinkWithLocale, Modal } from "@/components/Common";
 import { CheckCircleIcon } from "@/icons";
 import { ListingUser } from "@/utils/types";
 
@@ -36,11 +35,11 @@ const RedirectLinks = ({ btnTitle, desc, href, closeModal }: { btnTitle: string;
     return (
         <>
             <p className="mb-1 text-center text-sm">{desc}</p>
-            <Link href={href}>
+            <LinkWithLocale href={href}>
                 <button className="btn btn-neutral btn-wide" onClick={closeModal}>
                     {btnTitle}
                 </button>
-            </Link>
+            </LinkWithLocale>
         </>
     );
 };
@@ -48,6 +47,7 @@ const RedirectLinks = ({ btnTitle, desc, href, closeModal }: { btnTitle: string;
 export const NewUserOnboardModal = (props: Props) => {
     const { userClaims, userData } = props;
     const pathname = usePathname();
+    const params = useParams();
     const [modalVisible, setModalVisible] = useState(false);
     const [stepIndex, setStepIndex] = useState(0);
     const [profileModalVisible, setProfileModalVisible] = useState(false);
@@ -64,7 +64,7 @@ export const NewUserOnboardModal = (props: Props) => {
         }
     }, [userClaims]);
 
-    const isUserInHomePage = pathname === "/";
+    const isUserInHomePage = pathname === `/${params.locale}`;
 
     return (
         <>

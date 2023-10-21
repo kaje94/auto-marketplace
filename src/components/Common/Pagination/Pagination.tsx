@@ -1,8 +1,8 @@
 "use client";
 import { clsx } from "clsx";
-import Link from "next/link";
 import qs, { StringifiableRecord } from "query-string";
 import { FC } from "react";
+import { LinkWithLocale } from "../LinkWithLocale";
 
 interface Props {
     basePath?: string;
@@ -23,9 +23,9 @@ export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath
                 {pageNumber > 1 && (
                     <>
                         {loading ? (
-                            <button className={clsx("join-item btn", loading && "cursor-progress")}>«</button>
+                            <button className={clsx("btn join-item", loading && "cursor-progress")}>«</button>
                         ) : (
-                            <Link
+                            <LinkWithLocale
                                 href={`${basePath}?${prevPage}`}
                                 onClick={() => {
                                     if (setNewSearchQuery) {
@@ -33,18 +33,18 @@ export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath
                                     }
                                 }}
                             >
-                                <button className="join-item btn">«</button>
-                            </Link>
+                                <button className="btn join-item">«</button>
+                            </LinkWithLocale>
                         )}
                     </>
                 )}
-                <button className={clsx("join-item btn cursor-default")}>{loading ? "Loading..." : `Page ${pageNumber}`}</button>
+                <button className={clsx("btn join-item cursor-default")}>{loading ? "Loading..." : `Page ${pageNumber}`}</button>
                 {pageNumber < totalPages && (
                     <>
                         {loading ? (
-                            <button className={clsx("join-item btn", loading && "cursor-progress")}>»</button>
+                            <button className={clsx("btn join-item", loading && "cursor-progress")}>»</button>
                         ) : (
-                            <Link
+                            <LinkWithLocale
                                 href={`${basePath}?${nextPage}`}
                                 onClick={() => {
                                     if (setNewSearchQuery) {
@@ -52,8 +52,8 @@ export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath
                                     }
                                 }}
                             >
-                                <button className="join-item btn">»</button>
-                            </Link>
+                                <button className="btn join-item">»</button>
+                            </LinkWithLocale>
                         )}
                     </>
                 )}

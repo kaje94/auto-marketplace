@@ -2,9 +2,8 @@
 import { clsx } from "clsx";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
-import Link from "next/link";
 import React, { useCallback } from "react";
-import { Empty, ListingItem } from "@/components/Common";
+import { LinkWithLocale, ListingItem } from "@/components/Common";
 import { ListingItem as ListingItemType } from "@/utils/types";
 import { NextButton, PrevButton, usePrevNextButtons } from "./ListingsCarouselButtons";
 
@@ -69,7 +68,7 @@ export const ListingsCarousel = (props: Props) => {
                                         tinted && "hover:shadow-neutral",
                                     )}
                                 >
-                                    <Link
+                                    <LinkWithLocale
                                         className={clsx(
                                             "card flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden bg-base-200 bg-opacity-50 p-5 text-neutral shadow  transition duration-300 zoom-inner-image hover:bg-opacity-80 hover:shadow-lg md:p-10",
                                             tinted && "!bg-neutral !text-white opacity-95",
@@ -78,7 +77,7 @@ export const ListingsCarousel = (props: Props) => {
                                     >
                                         <div className="text-2xl font-bold opacity-80 ">{viewMore.title}</div>
                                         <div className="text-center text-sm opacity-50">{viewMore.subTitle}</div>
-                                    </Link>
+                                    </LinkWithLocale>
                                 </div>
                             )}
                         </>

@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -19,6 +19,7 @@ interface Props {
 export const EditSubscriptionForm: FC<Props> = (props) => {
     const { listingSubscriptionItem, successRedirectPath } = props;
     const router = useRouter();
+    const params = useParams();
 
     const toastId = useRef<string>();
 
@@ -62,11 +63,11 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             onSuccess: (_, req) => {
                 if (
                     [
-                        `/dashboard/subscriptions/edit/${req.listingSubscriptionId}`,
-                        `/dashboard/my-subscriptions/edit/${req.listingSubscriptionId}`,
+                        `/${params.locale}/dashboard/subscriptions/edit/${req.listingSubscriptionId}`,
+                        `/${params.locale}/dashboard/my-subscriptions/edit/${req.listingSubscriptionId}`,
                     ].includes(window?.location?.pathname)
                 ) {
-                    router.replace(successRedirectPath);
+                    router.replace(`/${params.locale}${successRedirectPath}`);
                 }
             },
             onMutate: (data) => {

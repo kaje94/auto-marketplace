@@ -1,12 +1,11 @@
 import { Session } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
-import Link from "next/link";
 import { FC } from "react";
+import { Avatar, LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon, EditIcon } from "@/icons";
 import { getRandomItem, isIncompleteUserProfile } from "@/utils/helpers";
 import { ListingUser } from "@/utils/types";
 import { CloseAccountButton } from "./CloseAccountButton";
-import { Avatar } from "../Common";
 
 interface Props {
     loading?: boolean;
@@ -44,9 +43,9 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                         <h3 className="font-bold">Incomplete Profile</h3>
                         <div className="text-xs">To enjoy a seamless experience, please take a moment to update your profile.</div>
                     </div>
-                    <Link href="/dashboard/profile/edit">
+                    <LinkWithLocale href="/dashboard/profile/edit">
                         <button className="btn btn-ghost btn-sm">Update Profile</button>
-                    </Link>
+                    </LinkWithLocale>
                 </div>
             )}
 
@@ -90,12 +89,12 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                 {!loading && profile && (
                     <div className="mt-3 flex w-full flex-wrap justify-end gap-2">
                         <CloseAccountButton userId={profile?.userId} />
-                        <Link href="/dashboard/profile/edit">
+                        <LinkWithLocale href="/dashboard/profile/edit">
                             <button className="btn btn-neutral">
                                 <EditIcon />
                                 Update Profile
                             </button>
-                        </Link>
+                        </LinkWithLocale>
                     </div>
                 )}
             </div>

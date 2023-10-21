@@ -1,9 +1,9 @@
 "use client";
 import { clsx } from "clsx";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 import { AdvertIcon, ClipboardIcon, DatabaseIcon, ListIcon, NotificationIcon, RssIcon, SettingsIcon, UserIcon } from "@/icons";
+import { LinkWithLocale } from "../Common";
 
 interface Props {
     activePaths?: string[];
@@ -16,6 +16,7 @@ interface Props {
 
 export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp, iconName, badgeCount }) => {
     const pathname = usePathname();
+    const params = useParams();
     const badge = (
         <div className="badge badge-primary badge-md  border-2 border-accent bg-primary p-0.5 px-1 text-xs text-neutral">
             {badgeCount && badgeCount > 9 ? `9+` : badgeCount}
@@ -24,11 +25,12 @@ export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp,
 
     return (
         <li>
-            <Link
+            <LinkWithLocale
                 className={clsx({
                     "px-4 py-3": true,
                     "active hover:!bg-base-content hover:!text-base-300":
-                        activePaths.includes(pathname) || (regexExp && new RegExp(regexExp)?.test(pathname)),
+                        activePaths.some((item) => `/${params.locale}${item}` === pathname) ||
+                        (regexExp && new RegExp(`^/${params.locale}${regexExp}`)?.test(pathname)),
                 })}
                 href={href}
             >
@@ -50,7 +52,7 @@ export const NavBarItem: FC<Props> = ({ href, label, activePaths = [], regexExp,
                 )}
                 {label}
                 {badgeCount ? badge : null}
-            </Link>
+            </LinkWithLocale>
         </li>
     );
 };

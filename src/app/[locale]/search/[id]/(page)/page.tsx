@@ -5,9 +5,9 @@ import { ListingDetails } from "@/components/ListingDetails";
 import { ListingsCarousel } from "@/components/ListingsCarousel";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
-import { ListingIdType } from "@/utils/types";
+import { ListingIdPathParam } from "@/utils/types";
 
-export default async function Page({ params }: { params: { id: ListingIdType } }) {
+export default async function Page({ params }: ListingIdPathParam) {
     const [session, itemDetails, relatedListings] = await Promise.all([
         getSession(),
         transformListingResponse(await api.getPostedListingItem(params.id)),

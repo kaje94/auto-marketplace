@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -20,6 +20,7 @@ interface Props {
 export const CreateListingForm = (props: Props) => {
     const { features, userId, profile } = props;
     const router = useRouter();
+    const params = useParams();
 
     const toastId = useRef<string>();
 
@@ -66,8 +67,8 @@ export const CreateListingForm = (props: Props) => {
         },
         {
             onSuccess: (id) => {
-                if (window?.location?.pathname === "/dashboard/new-listing") {
-                    router.replace(`/dashboard/my-listings/${id}`);
+                if (window?.location?.pathname === `/${params.locale}/dashboard/new-listing`) {
+                    router.replace(`/${params.locale}/dashboard/my-listings/${id}`);
                 }
             },
             onMutate: (data) => {

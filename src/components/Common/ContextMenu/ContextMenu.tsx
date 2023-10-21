@@ -1,9 +1,9 @@
 "use client";
 import { clsx } from "clsx";
-import Link from "next/link";
 import { FC, ReactNode, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { MenuIcon } from "@/icons";
+import { LinkWithLocale } from "../LinkWithLocale";
 
 export interface ContextMenuItemProp {
     classNames?: string;
@@ -35,7 +35,7 @@ export const ContextMenu: FC<Props> = ({ menuItems = [] }) => {
             <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
                 <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>
                     <ul
-                        className="dropdown-content menu rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg"
+                        className="menu dropdown-content rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg"
                         onClick={() => setMenuVisible(false)}
                     >
                         {menuItems?.map((item) => <MenuItem key={item.label} {...item} />)}
@@ -50,12 +50,12 @@ const MenuItem: FC<ContextMenuItemProp> = ({ link, label, icon, onClick, classNa
     return (
         <li>
             {link ? (
-                <Link className="flex" href={link}>
+                <LinkWithLocale className="flex" href={link}>
                     <div className={clsx("flex flex-1 items-center justify-between font-medium", classNames)}>
                         {label}
                         {icon}
                     </div>
-                </Link>
+                </LinkWithLocale>
             ) : (
                 <div
                     className={clsx("flex flex-1 items-center justify-between font-medium", classNames)}

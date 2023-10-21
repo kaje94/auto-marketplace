@@ -8,9 +8,9 @@ import { DashboardListingsContextProvider } from "@/providers/dashboard-listings
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
-import { SearchParams } from "@/utils/types";
+import { LocalePathParam, SearchParams } from "@/utils/types";
 
-export default async function Page({ searchParams }: SearchParams) {
+export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
     const [session, listings] = await Promise.all([
@@ -19,7 +19,7 @@ export default async function Page({ searchParams }: SearchParams) {
     ]);
 
     if (listings.items?.length === 0 && page !== "1") {
-        redirect(`/dashboard/listings?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
+        redirect(`/${params.locale}/dashboard/listings?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
 
     return (

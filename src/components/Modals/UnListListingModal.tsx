@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -24,6 +24,7 @@ export const UnListListingModal = (props: Props) => {
     const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
     const toastId = useRef<string>();
     const router = useRouter();
+    const params = useParams();
 
     const { handleSubmit, control } = useForm<UnListListingReq>({
         resolver: zodResolver(UnListListingSchema),
@@ -33,8 +34,8 @@ export const UnListListingModal = (props: Props) => {
 
     const { mutate, isLoading } = useMutation((reqParams: UnListListingReq) => unListListingAction(reqParams, listingUserId!), {
         onSuccess: (_, id) => {
-            if (window?.location?.pathname === `/search/${id}`) {
-                router.replace(`/dashboard/listings/${id}`);
+            if (window?.location?.pathname === `/${params.locale}/search/${id}`) {
+                router.replace(`/${params.locale}/dashboard/listings/${id}`);
             }
         },
         onMutate: () => {

@@ -1,8 +1,8 @@
 "use client";
 import { clsx } from "clsx";
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
+import { LinkWithLocale } from "@/components/Common";
 import { LogoutIcon, SearchIcon } from "@/icons";
 
 export const NavBarLoginButton = () => {
@@ -36,6 +36,7 @@ export const NavBarLogoutButton = () => {
 export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; label: string; link: string }) => {
     const { link, label, icon, badgeCount } = props;
     const pathname = usePathname();
+    const params = useParams();
     const badge = (
         <div className="badge badge-primary badge-md  border-2 border-accent bg-primary p-0.5 px-1 text-xs text-neutral">
             {badgeCount && badgeCount > 9 ? `9+` : badgeCount}
@@ -43,11 +44,11 @@ export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; la
     );
     return (
         <li>
-            <Link className="flex" href={link}>
+            <LinkWithLocale className="flex" href={link}>
                 <div
                     className={clsx({
                         "flex flex-1 items-center justify-between font-medium duration-200 ": true,
-                        "text-accent": pathname === link,
+                        "text-accent": pathname === `/${params.locale}${link}`,
                         "text-base-300 hover:text-secondary": pathname !== link,
                     })}
                 >
@@ -57,16 +58,17 @@ export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; la
                     </span>
                     {icon}
                 </div>
-            </Link>
+            </LinkWithLocale>
         </li>
     );
 };
 
 export const PostAddLink = () => {
     const pathname = usePathname();
-    const active = pathname === "/dashboard/new-listing";
+    const params = useParams();
+    const active = pathname === `/${params.locale}/dashboard/new-listing`;
     return (
-        <Link href="/dashboard/new-listing">
+        <LinkWithLocale href="/dashboard/new-listing">
             <button
                 className={clsx({
                     "btn text-xs capitalize sm:text-sm px-2": true,
@@ -76,16 +78,16 @@ export const PostAddLink = () => {
             >
                 Post your Advert
             </button>
-        </Link>
+        </LinkWithLocale>
     );
 };
 
 export const SearchLink = () => {
     return (
-        <Link href="/search">
+        <LinkWithLocale href="/search">
             <button className="btn btn-ghost px-2 text-base-300 hover:text-accent">
                 <SearchIcon />
             </button>
-        </Link>
+        </LinkWithLocale>
     );
 };

@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { clsx } from "clsx";
 import debounce from "lodash.debounce";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -39,6 +39,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
     const { setNewSearchQuery, hasSearchParams, searchParamsObj, searchParamStr, isLoading } = useSearchContext();
 
     const router = useRouter();
+    const params = useParams();
 
     const { reset, control, watch } = useForm<PostedListingsFilterReq>({
         resolver: zodResolver(PostedListingsFilterSchema),
@@ -80,8 +81,8 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
 
     const onResetClick = useCallback(() => {
         setNewSearchQuery("");
-        router.push("/search");
-    }, [router, setNewSearchQuery]);
+        router.push(`/${params.locale}/search`);
+    }, [router, params, setNewSearchQuery]);
 
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">

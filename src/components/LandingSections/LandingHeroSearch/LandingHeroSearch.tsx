@@ -1,8 +1,8 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
+import { LinkWithLocale } from "@/components/Common";
 import { SearchIcon } from "@/icons";
 import { VehicleTypeList } from "@/utils/constants";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
@@ -37,13 +37,13 @@ export const LandingHeroSearch = () => {
                     selectClassNames="bg-white rounded-none !outline-none sm:!w-36"
                 />
             </div>
-            <Link
-                className="btn-secondary rounded-box join-item btn rounded-t-none sm:rounded-t-box sm:rounded-l-none"
+            <LinkWithLocale
+                className="btn btn-secondary join-item rounded-box rounded-t-none sm:rounded-t-box sm:rounded-l-none"
                 href={qs.stringifyUrl({ url: "/search", query: formValues }, { skipEmptyString: true, skipNull: true })}
             >
                 <SearchIcon />
                 <span className="ml-2">Search</span>
-            </Link>
+            </LinkWithLocale>
         </div>
     );
 };

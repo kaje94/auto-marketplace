@@ -1,0 +1,1 @@
+export { LinkWithLocale } from "./LinkWithLocale";

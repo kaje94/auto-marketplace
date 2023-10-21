@@ -1,12 +1,12 @@
 "use client";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { ModalFooter } from "@/components/Common";
+import { LinkWithLocale, ModalFooter } from "@/components/Common";
 
 const Modal = dynamic(() => import("@/components/Common").then((mod) => mod.Modal), { ssr: false });
 
 // todo: make sure that welcome modal does not appear on does not block the legal screens
+// todo: fix links
 
 export const WelcomeModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -43,13 +43,13 @@ export const WelcomeModal = () => {
 
                     <div className="mt-6 text-sm">
                         By clicking &#39;Agree & Continue,&#39; you acknowledge that you&#39;ve read, understood, and accepted our&nbsp;
-                        <Link className="link" href="/search">
+                        <LinkWithLocale className="link" href="/search">
                             Privacy Policy
-                        </Link>
+                        </LinkWithLocale>
                         , and&nbsp;
-                        <Link className="link" href="/search">
+                        <LinkWithLocale className="link" href="/search">
                             Cookie Policy
-                        </Link>
+                        </LinkWithLocale>
                         .
                     </div>
                     <ModalFooter

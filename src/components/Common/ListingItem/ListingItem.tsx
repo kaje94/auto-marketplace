@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
-import Link from "next/link";
 import { FC } from "react";
-import { ListingImage } from "@/components/Common";
+import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { getFormattedCurrency, getLocationString, getRandomItem, numberWithCommas, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem as ListingItemType } from "@/utils/types";
 
@@ -84,7 +83,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
 
     if (item) {
         return (
-            <Link
+            <LinkWithLocale
                 className={clsx(
                     "card h-fit w-full cursor-pointer overflow-hidden bg-neutral shadow transition-shadow duration-300 zoom-inner-image hover:shadow-lg",
                     tinted && "opacity-95",
@@ -92,7 +91,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                 href={`/search/${item?.id}`}
             >
                 {ListingItemContent}
-            </Link>
+            </LinkWithLocale>
         );
     }
 

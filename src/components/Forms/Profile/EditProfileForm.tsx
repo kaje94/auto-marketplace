@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -18,6 +18,7 @@ interface Props {
 export const EditProfileForm: FC<Props> = (props) => {
     const { userData, successRedirectPath } = props;
     const router = useRouter();
+    const params = useParams();
 
     const toastId = useRef<string>();
 
@@ -41,8 +42,8 @@ export const EditProfileForm: FC<Props> = (props) => {
         async (formValues: UpdateProfileReq) => editProfileAction(formValues),
         {
             onSuccess: () => {
-                if (window?.location?.pathname === "/dashboard/profile/edit") {
-                    router.replace(successRedirectPath);
+                if (window?.location?.pathname === `/${params.locale}/dashboard/profile/edit`) {
+                    router.replace(`/${params.locale}${successRedirectPath}`);
                 }
             },
             onMutate: () => {

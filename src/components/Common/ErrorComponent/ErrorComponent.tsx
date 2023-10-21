@@ -1,9 +1,9 @@
 "use client";
 import { clsx } from "clsx";
-import Link from "next/link";
 import { FC, ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { ActivityIcon, HomeIcon, RefreshIcon } from "@/icons";
+import { LinkWithLocale } from "../LinkWithLocale";
 
 interface Props {
     children?: ReactNode;
@@ -66,11 +66,11 @@ export const ErrorComponent: FC<Props> = ({
                             </button>
                         )}
                         {showHome && (
-                            <Link href="/">
-                                <button className="btn-outline  btn">
+                            <LinkWithLocale href="/">
+                                <button className="btn btn-outline">
                                     <HomeIcon className="mr-3" /> Home
                                 </button>
-                            </Link>
+                            </LinkWithLocale>
                         )}
                         {children}
                     </div>

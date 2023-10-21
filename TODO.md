@@ -19,10 +19,9 @@
 > Web app todo list
 
 -   [] check max length of all strings in schema file
--   [] get vehicle brands and models from API
 -   [] add clearable prop to form elements
 -   [] check if we can have only one provider for searching
--   [] brand and models needs to come from API
+-   [] brand needs to come from API
 -   [] try out the date picker package for year select
 -   [] fix Entire page /search deopted into client-side rendering.
 -   [] move user details above specification in user details
@@ -33,6 +32,7 @@
 -   [] show currency as inputPrefix for price inputs
 -   [] add masking for inputs
 -   [] avoid session?.user?.sub!
+-   [] use a map of turples to maintain the country details within the nextjs app itself
 
 > Need to verify
 -   [] loading bug when changing query (while loading type something) (Added a possible fix)

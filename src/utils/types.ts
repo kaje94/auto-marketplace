@@ -172,6 +172,8 @@ export type ErrorPageProps = { error: Error; reset: () => void };
 
 export type ListingIdPathParam = { params: { id: ListingIdType } };
 
+export type LocalePathParam = { params: { locale: string } };
+
 export type SubscriptionIdPathParam = { params: { id: ListingSubscriptionIdType } };
 
 export type VehicleImageType = z.infer<typeof VehicleImageSchema>;

@@ -7,16 +7,16 @@ import { DashboardMySubscriptionList } from "@/components/DashboardSubscriptions
 import { DashboardSubscriptionsContextProvider } from "@/providers/dashboard-my-subscriptions-provider";
 import { api } from "@/utils/api";
 import { DashboardMySubscriptionFilterSchema } from "@/utils/schemas";
-import { SearchParams } from "@/utils/types";
+import { LocalePathParam, SearchParams } from "@/utils/types";
 
-export default async function Page({ searchParams }: SearchParams) {
+export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardMySubscriptionFilterSchema.parse(searchParams);
     const session = await getSession();
     const listingSubscriptions = await api.getMyListingSubscriptions(session?.user?.sub!, { PageNumber: Number(page), ...parsedSearchParams });
 
     if (listingSubscriptions.items?.length === 0 && page !== "1") {
-        redirect(`/dashboard/my-subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
+        redirect(`/${params.locale}/dashboard/my-subscriptions?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
 
     return (

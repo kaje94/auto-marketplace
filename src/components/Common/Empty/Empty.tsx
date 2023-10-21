@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
-import Link from "next/link";
 import { FC } from "react";
 import { LayersIcon } from "@/icons";
+import { LinkWithLocale } from "../LinkWithLocale";
 
 interface EmptyProps {
     button?: {
@@ -26,13 +26,13 @@ export const Empty: FC<EmptyProps> = ({ iconSize = "lg", button, text = "Nothing
         {button && (
             <>
                 {button.loading ? (
-                    <button className="btn-ghost btn-outline btn-wide btn mt-6" disabled>
+                    <button className="btn btn-ghost btn-outline btn-wide mt-6" disabled>
                         {button?.text}
                     </button>
                 ) : (
-                    <Link className="btn-ghost btn-outline btn-wide btn mt-6" href={button.href} onClick={button.onClick}>
+                    <LinkWithLocale className="btn btn-ghost btn-outline btn-wide mt-6" href={button.href} onClick={button.onClick}>
                         {button?.text}
-                    </Link>
+                    </LinkWithLocale>
                 )}
             </>
         )}

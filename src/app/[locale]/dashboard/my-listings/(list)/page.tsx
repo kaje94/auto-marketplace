@@ -8,16 +8,16 @@ import { DashboardMyListingsContextProvider } from "@/providers/dashboard-my-lis
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { MyListingsFilterSchema } from "@/utils/schemas";
-import { SearchParams } from "@/utils/types";
+import { LocalePathParam, SearchParams } from "@/utils/types";
 
-export default async function Page({ searchParams }: SearchParams) {
+export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = MyListingsFilterSchema.parse(searchParams);
     const session = await getSession();
     const listings = transformListingsListResponse(await api.getMyListings(session?.user?.sub!, { PageNumber: Number(page), ...parsedSearchParams }));
 
     if (listings.items?.length === 0 && page !== "1") {
-        redirect(`/dashboard/my-listings?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
+        redirect(`/${params.locale}/dashboard/my-listings?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
 
     return (

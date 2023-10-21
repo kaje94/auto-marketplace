@@ -7,15 +7,15 @@ import { DashboardNotificationsList } from "@/components/DashboardNotifications"
 import { DashboardNotificationsContextProvider } from "@/providers/dashboard-notifications-provider";
 import { api } from "@/utils/api";
 import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
-import { SearchParams } from "@/utils/types";
+import { LocalePathParam, SearchParams } from "@/utils/types";
 
-export default async function Page({ searchParams }: SearchParams) {
+export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardNotificationsFilterSchema.parse(searchParams);
     const session = await getSession();
     const notifications = await api.getMyNotifications(session?.user?.sub!, { PageNumber: Number(page), ...parsedSearchParams });
     if (notifications.items?.length === 0 && page !== "1") {
-        redirect(`/dashboard/notifications?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
+        redirect(`/${params.locale}/dashboard/notifications?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
 
     return (

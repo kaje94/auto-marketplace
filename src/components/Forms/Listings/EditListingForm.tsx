@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -20,6 +20,7 @@ interface Props {
 export const EditListingForm: FC<Props> = (props) => {
     const { features, listingItem, successRedirectPath } = props;
     const router = useRouter();
+    const params = useParams();
 
     const toastId = useRef<string>();
 
@@ -56,9 +57,12 @@ export const EditListingForm: FC<Props> = (props) => {
         {
             onSuccess: (_, req) => {
                 if (
-                    [`/dashboard/listings/edit/${req.listingId}`, `/dashboard/my-listings/edit/${req.listingId}`].includes(window?.location?.pathname)
+                    [
+                        `/${params.locale}/dashboard/listings/edit/${req.listingId}`,
+                        `/${params.locale}/dashboard/my-listings/edit/${req.listingId}`,
+                    ].includes(window?.location?.pathname)
                 ) {
-                    router.replace(`${successRedirectPath}/${req.listingId}`);
+                    router.replace(`/${params.locale}${successRedirectPath}/${req.listingId}`);
                 }
             },
             onMutate: (data) => {

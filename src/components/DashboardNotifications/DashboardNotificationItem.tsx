@@ -1,9 +1,9 @@
 import { clsx } from "clsx";
-import Link from "next/link";
 import { FC } from "react";
 import { NotificationIcon } from "@/icons";
 import { getRandomItem, timeAgo } from "@/utils/helpers";
 import { NotificationItem } from "@/utils/types";
+import { LinkWithLocale } from "../Common";
 
 interface Props {
     loading?: boolean;
@@ -68,9 +68,12 @@ export const DashboardNotificationItem: FC<Props> = (props) => {
 
     if (redirectUrl) {
         return (
-            <Link className="card mb-3 h-fit cursor-pointer overflow-hidden bg-base-100 shadow transition-all hover:shadow-md" href={redirectUrl}>
+            <LinkWithLocale
+                className="card mb-3 h-fit cursor-pointer overflow-hidden bg-base-100 shadow transition-all hover:shadow-md"
+                href={redirectUrl}
+            >
                 {notificationItemContent}
-            </Link>
+            </LinkWithLocale>
         );
     }
 

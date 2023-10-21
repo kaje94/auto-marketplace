@@ -27,21 +27,21 @@ const DashboardSideBarItems = ({ userClaims, notificationCount }: { notification
                     href="/dashboard/profile"
                     iconName="UserIcon"
                     label="Profile"
-                    regexExp="^/dashboard/profile/(.*?)"
+                    regexExp="/dashboard/profile/(.*?)"
                 />
                 <NavBarItem
                     activePaths={["/dashboard/my-listings", "/dashboard/new-listing"]}
                     href="/dashboard/my-listings"
                     iconName="AdvertIcon"
                     label="My Adverts"
-                    regexExp="^/dashboard/my-listings/(.*?)"
+                    regexExp="/dashboard/my-listings/(.*?)"
                 />
                 <NavBarItem
                     activePaths={["/dashboard/my-subscriptions", "/dashboard/new-subscription"]}
                     href="/dashboard/my-subscriptions"
                     iconName="RssIcon"
                     label="My Subscriptions"
-                    regexExp="^/dashboard/my-subscriptions/(.*?)"
+                    regexExp="/dashboard/my-subscriptions/(.*?)"
                 />
                 <NavBarItem
                     activePaths={["/dashboard/notifications"]}
@@ -58,14 +58,14 @@ const DashboardSideBarItems = ({ userClaims, notificationCount }: { notification
                             href="/dashboard/listings"
                             iconName="ListIcon"
                             label="Manage Adverts"
-                            regexExp="^/dashboard/listings/(.*?)"
+                            regexExp="/dashboard/listings/(.*?)"
                         />
                         <NavBarItem
                             activePaths={["/dashboard/subscriptions"]}
                             href="/dashboard/subscriptions"
                             iconName="ClipboardIcon"
                             label="Manage Subscriptions"
-                            regexExp="^/dashboard/subscriptions/(.*?)"
+                            regexExp="/dashboard/subscriptions/(.*?)"
                         />
                         <NavBarItem
                             activePaths={["/dashboard/cache-manage"]}

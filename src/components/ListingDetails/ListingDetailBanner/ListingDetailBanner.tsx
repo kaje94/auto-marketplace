@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import Link from "next/link";
 import { FC } from "react";
+import { LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon } from "@/icons";
 import { ListingStatusDescriptions } from "@/utils/constants";
 import { ListingStatusTypes } from "@/utils/enum";
@@ -42,9 +43,9 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
             {!loading && (
                 <>
                     {listingStatus === ListingStatusTypes.Posted && (
-                        <Link href={`/search/${listingId}`}>
-                            <button className="btn-ghost btn-sm btn">View</button>
-                        </Link>
+                        <LinkWithLocale href={`/search/${listingId}`}>
+                            <button className="btn btn-ghost btn-sm">View</button>
+                        </LinkWithLocale>
                     )}
                     {userId && isAdmin && listingStatus === ListingStatusTypes.UnderReview && (
                         <ReviewButton listingItem={listingItem as ListingItem} />
@@ -52,7 +53,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
                     {userId && listingStatus === ListingStatusTypes.Expired && <RenewButton listingItem={listingItem as ListingItem} />}
                     {listingStatus === ListingStatusTypes.Declined && (
                         <Link href={`${window?.location?.pathname}/edit/${listingId}`}>
-                            <button className="btn-ghost btn-sm btn">Edit</button>
+                            <button className="btn btn-ghost btn-sm">Edit</button>
                         </Link>
                     )}
                 </>

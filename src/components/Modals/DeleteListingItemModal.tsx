@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import { deleteListingAction } from "@/actions/listingActions";
@@ -19,11 +19,18 @@ export const DeleteListingItemModal = (props: Props) => {
 
     const toastId = useRef<string>();
     const router = useRouter();
+    const params = useParams();
 
     const { mutate, isLoading } = useMutation((id: number) => deleteListingAction(id, listingUserId!), {
         onSuccess: (_, id) => {
-            if ([`/dashboard/listings/${id}`, `/dashboard/my-listings/${id}`, `/search/${id}`].includes(window?.location?.pathname)) {
-                router.replace(successRedirectPath);
+            if (
+                [
+                    `/${params.locale}/dashboard/listings/${id}`,
+                    `/${params.locale}/dashboard/my-listings/${id}`,
+                    `/${params.locale}/search/${id}`,
+                ].includes(window?.location?.pathname)
+            ) {
+                router.replace(`/${params.locale}${successRedirectPath}`);
             }
         },
         onMutate: () => {
