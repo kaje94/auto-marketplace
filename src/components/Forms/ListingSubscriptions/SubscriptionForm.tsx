@@ -4,6 +4,7 @@ import { UseFormReturn } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { DatePickerController } from "@/components/FormElements/DatePicker";
 import { InputController } from "@/components/FormElements/Input";
+import { YearInputController } from "@/components/FormElements/YearInput";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList, YearSelectMinYear } from "@/utils/constants";
 import { CreateSubscriptionReq } from "@/utils/types";
 
@@ -105,50 +106,38 @@ export const SubscriptionForm: FC<Props> = (props) => {
                     <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Manufactured Year</div>
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController
+                            <YearInputController
                                 control={control}
                                 fieldName="minYearOfManufacture"
                                 label="Manufactured after"
                                 loading={isLoading}
-                                max={new Date().getFullYear()}
-                                min={YearSelectMinYear}
                                 placeholder="1990"
-                                type="number"
                             />
-                            <InputController
+                            <YearInputController
                                 control={control}
                                 fieldName="maxYearOfManufacture"
                                 label="Manufactured before"
                                 loading={isLoading}
-                                max={new Date().getFullYear()}
-                                min={YearSelectMinYear}
                                 placeholder="2000"
-                                type="number"
                             />
                         </div>
                     </div>
                     <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Registered Year</div>
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController
+                            <YearInputController
                                 control={control}
                                 fieldName="minYearOfRegistration"
                                 label="Registered after"
                                 loading={isLoading}
-                                max={new Date().getFullYear()}
-                                min={YearSelectMinYear}
                                 placeholder="2010"
-                                type="number"
                             />
-                            <InputController
+                            <YearInputController
                                 control={control}
                                 fieldName="maxYearOfRegistration"
                                 label="Registered before"
                                 loading={isLoading}
-                                max={new Date().getFullYear()}
-                                min={YearSelectMinYear}
                                 placeholder="2020"
-                                type="number"
                             />
                         </div>
                     </div>

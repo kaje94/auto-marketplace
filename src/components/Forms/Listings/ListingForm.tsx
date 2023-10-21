@@ -7,7 +7,8 @@ import { InputController } from "@/components/FormElements/Input";
 import { SelectController } from "@/components/FormElements/Select";
 import { TagSelectController } from "@/components/FormElements/TagSelect";
 import { TextAreaController } from "@/components/FormElements/TextArea";
-import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
+import { YearInputController } from "@/components/FormElements/YearInput";
+import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { CreateListingReq, VehicleFeature } from "@/utils/types";
 import { ListingImageUpload } from "./ListingImageUpload";
 
@@ -68,27 +69,21 @@ export const ListingForm: FC<Props> = (props) => {
                                 loading={isLoading}
                                 placeholder="LX, EX, EX-L, Sport, etc"
                             />
-                            <AutocompleteController
+                            <YearInputController
                                 control={control}
                                 fieldName="vehicle.yearOfManufacture"
-                                gridCols="grid-cols-3"
                                 label="Year of Manufacture"
                                 loading={isLoading}
-                                options={YearRangeList}
                                 placeholder="2000"
                                 required
-                                showSelectedTick={false}
                             />
-                            <AutocompleteController
+                            <YearInputController
                                 control={control}
                                 fieldName="vehicle.yearOfRegistration"
-                                gridCols="grid-cols-3"
                                 label="Year of Registration"
                                 loading={isLoading}
-                                options={YearRangeList}
                                 placeholder="2010"
                                 required
-                                showSelectedTick={false}
                             />
                             <InputController
                                 control={control}

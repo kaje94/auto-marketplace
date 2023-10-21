@@ -9,10 +9,11 @@ import { useForm } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
 import { useSearchContext } from "@/providers/search-provider";
-import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearRangeList } from "@/utils/constants";
+import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { PostedListingsFilterReq } from "@/utils/types";
+import { YearInputController } from "../FormElements/YearInput";
 
 const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);
@@ -142,24 +143,8 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Manufactured Year Range</div>
                     <div className="grid grid-cols-2 gap-2">
-                        <AutocompleteController
-                            control={control}
-                            errorAsTooltip
-                            fieldName="YomStartDate"
-                            loading={pageLoading}
-                            options={YearRangeList}
-                            placeholder="From"
-                            showSelectedTick={false}
-                        />
-                        <AutocompleteController
-                            control={control}
-                            errorAsTooltip
-                            fieldName="YomEndDate"
-                            loading={pageLoading}
-                            options={YearRangeList}
-                            placeholder="To"
-                            showSelectedTick={false}
-                        />
+                        <YearInputController control={control} errorAsTooltip fieldName="YomStartDate" loading={pageLoading} placeholder="From" />
+                        <YearInputController control={control} errorAsTooltip fieldName="YomEndDate" loading={pageLoading} placeholder="To" />
                     </div>
                 </div>
                 <AutocompleteController
@@ -183,7 +168,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     showSelectedTick={false}
                 />
                 <button
-                    className={clsx("btn-accent btn-outline btn col-span-2 mt-3 lg:mt-5", !hasSearchParams && "opacity-50")}
+                    className={clsx("btn btn-accent btn-outline col-span-2 mt-3 lg:mt-5", !hasSearchParams && "opacity-50")}
                     disabled={!hasSearchParams || pageLoading || isLoading}
                     onClick={onResetClick}
                 >
