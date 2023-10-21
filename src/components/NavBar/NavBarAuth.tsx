@@ -1,4 +1,4 @@
-import { Claims } from "@auth0/nextjs-auth0";
+import { Claims } from "@auth0/nextjs-auth0/edge";
 import { Avatar } from "@/components/Common/Avatar";
 import { AdvertIcon, ClipboardIcon, DatabaseIcon, ListIcon, NotificationIcon, RssIcon, UserIcon } from "@/icons";
 import { NavBarLoginButton, NavBarLogoutButton, NavBarMenuLink } from "./NavBarButtons";
@@ -12,7 +12,7 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
                 <>
                     {userClaims ? (
                         <div className="dropdown-end dropdown">
-                            <label className="btn-ghost btn-circle avatar btn" tabIndex={0}>
+                            <label className="avatar btn btn-circle btn-ghost" tabIndex={0}>
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
                                     <Avatar name={userClaims?.name} url={userClaims?.picture} width={40} />
                                     {notificationCount ? (
@@ -24,7 +24,7 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
                             </label>
 
                             <ul
-                                className="dropdown-content menu rounded-box z-20 -mr-1 mt-3 w-60 rounded-tr-none bg-neutral p-2 text-neutral-content shadow-md shadow-black"
+                                className="menu dropdown-content rounded-box z-20 -mr-1 mt-3 w-60 rounded-tr-none bg-neutral p-2 text-neutral-content shadow-md shadow-black"
                                 tabIndex={0}
                             >
                                 <NavBarMenuLink icon={<UserIcon height={18} />} label="Profile" link="/dashboard/profile" />

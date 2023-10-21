@@ -13,6 +13,8 @@
 // new!
 -   [] make postal code into alpha numeric (need to be able to save 00500 as a postal code)
 -   [] make trim as optional
+-   [] only return name for city api call, only return  name and state code for state api call, remove id from country list & detail api call
+
 
 > Web app todo list
 

@@ -26,7 +26,7 @@ import {
     VehicleSchema,
 } from "./schemas";
 
-declare module "@auth0/nextjs-auth0" {
+declare module "@auth0/nextjs-auth0/edge" {
     interface Claims {
         email: string;
         email_verified: boolean;
@@ -144,6 +144,24 @@ export type PaginatedResponse = {
 export type PaginatedRequest = {
     PageNumber?: number;
     PageSize?: number;
+};
+
+export type Country = {
+    countryCode: string;
+    currency: string;
+    emojiU: string;
+    name: string;
+    phoneCode: string;
+    region: string;
+};
+
+export type State = {
+    name: string;
+    stateCode: string;
+};
+
+export type City = {
+    name: string;
 };
 
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };

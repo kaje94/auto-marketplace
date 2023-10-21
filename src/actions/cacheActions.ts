@@ -27,3 +27,5 @@ export const revalidateRelatedListingsAction = async (listingId: ListingIdType) 
 export const revalidateUserNotificationsAction = async (userId: string) => {
     revalidateTag(apiTags.getMyNotifications(userId));
 };
+
+// todo:revalidate profile get, location details

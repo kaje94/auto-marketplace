@@ -1,5 +1,5 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 
 // todo: add a faq page
@@ -17,9 +17,11 @@ import { FC } from "react";
 
 export const Footer: FC = () => {
     const pathName = usePathname();
+    const params = useParams();
+    const isLandingPage = pathName === `/${params.locale}`;
 
     return (
-        <div className={pathName === "/" ? "bg-hero" : "bg-neutral"}>
+        <div className={isLandingPage ? "bg-hero" : "bg-neutral"}>
             <footer className="container mx-auto grid grid-cols-2 gap-8 p-10 text-sm text-neutral-content md:grid-cols-4 md:gap-4">
                 <div className="col-span-2 flex w-full flex-col items-center justify-center gap-3 md:items-start">
                     <svg

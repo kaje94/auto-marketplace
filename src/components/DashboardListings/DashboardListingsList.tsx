@@ -1,6 +1,6 @@
 "use client";
 
-import { Claims } from "@auth0/nextjs-auth0";
+import { Claims } from "@auth0/nextjs-auth0/edge";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";

@@ -1,9 +1,11 @@
-import { getAccessToken } from "@auth0/nextjs-auth0";
+import { getAccessToken } from "@auth0/nextjs-auth0/edge";
 import { headers as nextHeaders } from "next/headers";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 import { env } from "@/env.mjs";
 import {
+    City,
+    Country,
     CreateListingReq,
     CreateSubscriptionReq,
     DashboardListFilterReq,
@@ -26,6 +28,7 @@ import {
     PostedListingsFilterReq,
     ReportListingReq,
     ReviewListingReq,
+    State,
     ToggleSubscriptionReq,
     UnListListingReq,
     UpdateProfileReq,
@@ -79,7 +82,8 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
             errorResponse || response.statusText,
         );
         const errorMessage = errorResponse?.title || errorResponse?.toString() || response.statusText || "Failure when calling the endpoint";
-        const truncatedErrorMessage = errorMessage.substring(0, 500);
+        console.log("truncatedErrorMessage");
+        const truncatedErrorMessage = errorMessage?.substring(0, 500);
         if (response.status === 400 && errorResponse?.errors) {
             throw new Error(extractBadRequestError(errorResponse?.errors) || truncatedErrorMessage);
         }
@@ -115,13 +119,11 @@ const fetchApi = {
 
 export const api = {
     getFeaturesList: () =>
-        fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features", { next: { tags: [apiTags.getFeaturesList()], revalidate: revalidationTime.oneDay } }),
-    getVehicleBrands: () =>
-        fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()], revalidate: revalidationTime.oneDay } }),
-    getVehicleModels: (brandId: string) =>
-        fetchApi.get<VehicleFeature[]>(`/v1/Vehicles/${brandId}/models`, {
-            next: { tags: [apiTags.getVehicleModels()], revalidate: revalidationTime.oneDay },
+        fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features", {
+            next: { tags: [apiTags.getFeaturesList()], revalidate: revalidationTime.oneWeek },
         }),
+    getVehicleBrands: () =>
+        fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()], revalidate: revalidationTime.oneWeek } }),
     getPostedListings: (req?: PaginatedRequest & PostedListingsFilterReq) =>
         fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { revalidate: revalidationTime.thirtyMins, tags: [apiTags.getPostedListings()] },
@@ -200,6 +202,22 @@ export const api = {
         }),
     updateMyProfileDetails: (body: UpdateProfileReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Users/${body.userId}`, JSON.stringify(body)),
     closeUserAccount: (userId: string) => fetchApi.protectedDelete<void>(`/v1/Users/${userId}/close-account`),
+    getCountries: () =>
+        fetchApi.get<Country[]>("/v1/Locations/countries", {
+            next: { tags: [apiTags.getCountries()], revalidate: revalidationTime.oneWeek },
+        }),
+    getCountryByCode: (countryCode: string) =>
+        fetchApi.get<Country>(`/v1/Locations/countries/${countryCode}`, {
+            next: { tags: [apiTags.getCountryByCode()], revalidate: revalidationTime.oneWeek },
+        }),
+    getStates: (countryCode: string) =>
+        fetchApi.get<State[]>(`/v1/Locations/countries/${countryCode}/states`, {
+            next: { tags: [apiTags.getStates()], revalidate: revalidationTime.oneWeek },
+        }),
+    getCities: (countryCode: string, stateCode: string) =>
+        fetchApi.get<City[]>(`/v1/Locations/countries/${countryCode}/states/${stateCode}/cities`, {
+            next: { tags: [apiTags.getCities()], revalidate: revalidationTime.oneWeek },
+        }),
 };
 
 export const apiTags = {
@@ -220,6 +238,10 @@ export const apiTags = {
     getMyListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-my-listing-subscription-item-${id}`,
     getMyNotifications: (listingUserId: string) => `get-my-notifications-${listingUserId}`,
     getMyProfileDetails: (userId: string) => `get-my-profile-${userId}`,
+    getCountries: () => `get-countries`,
+    getCountryByCode: () => `get-country-by-code`,
+    getStates: () => `get-states`,
+    getCities: () => `get-cities`,
 };
 
 export const listingItemTags = (id: ListingIdType, listingUserId: string) => [
@@ -240,11 +262,12 @@ export const subscriptionApiTags = (id: ListingSubscriptionIdType, listingUserId
 
 const revalidationTime = {
     noCache: 0,
-    fifteenMins: 900,
-    thirtyMins: 1800,
-    oneHour: 3600,
-    threeHours: 10800,
-    sixHours: 21600,
-    twelveHours: 43200,
-    oneDay: 86400,
+    fifteenMins: 60 * 15,
+    thirtyMins: 60 * 30,
+    oneHour: 60 * 60,
+    threeHours: 60 * 60 * 3,
+    sixHours: 60 * 60 * 6,
+    twelveHours: 60 * 60 * 12,
+    oneDay: 60 * 60 * 24,
+    oneWeek: 60 * 60 * 24 * 7,
 };

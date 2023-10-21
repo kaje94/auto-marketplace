@@ -1,4 +1,4 @@
-import { Session } from "@auth0/nextjs-auth0";
+import { Session } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { FC } from "react";

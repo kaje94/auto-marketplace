@@ -1,5 +1,5 @@
 "use server";
-import { getSession } from "@auth0/nextjs-auth0";
+import { getSession } from "@auth0/nextjs-auth0/edge";
 import { Suspense } from "react";
 import { api } from "@/utils/api";
 import { NavBarClient } from "./NavBarClient";
