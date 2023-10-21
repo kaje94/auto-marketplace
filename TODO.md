@@ -19,7 +19,6 @@
 -   [] check max length of all strings in schema file
 -   [] get vehicle brands and models from API
 -   [] add clearable prop to form elements
--   [] form elements with prefix
 -   [] check if we can have only one provider for searching
 -   [] brand and models needs to come from API
 -   [] try out the date picker package for year select
@@ -28,9 +27,10 @@
 -   [] show safety tips similar to ikman under item details description
 -   [] add web3 forms or similar to contact us
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
--   [] add country code as prefix for phone numbers
--   [] show currency as prefix for price inputs
+-   [] add country code as inputPrefix for phone numbers
+-   [] show currency as inputPrefix for price inputs
 -   [] add masking for inputs
+-   [] avoid session?.user?.sub!
 
 > Need to verify
 -   [] loading bug when changing query (while loading type something) (Added a possible fix)

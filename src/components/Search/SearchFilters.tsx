@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
 import { YearInputController } from "@/components/FormElements/YearInput";
+import { SearchIcon } from "@/icons";
 import { useSearchContext } from "@/providers/search-provider";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers";
@@ -90,6 +91,7 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     control={control}
                     errorAsTooltip
                     fieldName="Title"
+                    inputSuffix={<SearchIcon />}
                     loading={pageLoading}
                     placeholder="Search..."
                     rootClassName="col-span-2"
@@ -113,16 +115,18 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                             control={control}
                             errorAsTooltip
                             fieldName="MinPrice"
+                            inputPrefix="Rs."
                             loading={pageLoading}
-                            placeholder="Minimum"
+                            placeholder="From"
                             type="number"
                         />
                         <InputController
                             control={control}
                             errorAsTooltip
                             fieldName="MaxPrice"
+                            inputPrefix="Rs."
                             loading={pageLoading}
-                            placeholder="Maximum"
+                            placeholder="To"
                             type="number"
                         />
                     </div>

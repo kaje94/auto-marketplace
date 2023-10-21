@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
@@ -10,7 +11,11 @@ import { TextAreaController } from "@/components/FormElements/TextArea";
 import { YearInputController } from "@/components/FormElements/YearInput";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { CreateListingReq, VehicleFeature } from "@/utils/types";
-import { ListingImageUpload } from "./ListingImageUpload";
+import { ListingImageUploadLoading } from "./ListingImageUpload";
+
+const ListingImageUpload = dynamic(() => import("./ListingImageUpload").then((mod) => mod.ListingImageUpload), {
+    loading: () => <ListingImageUploadLoading />,
+});
 
 interface Props {
     featureOptions?: VehicleFeature[];
@@ -28,7 +33,7 @@ interface Props {
 
 export const ListingForm: FC<Props> = (props) => {
     const { featureOptions = [], isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, title } = props;
-    const { handleSubmit, formState: { isDirty, errors } = {}, control } = form as UseFormReturn<CreateListingReq>;
+    const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<CreateListingReq>;
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -90,9 +95,10 @@ export const ListingForm: FC<Props> = (props) => {
                             <InputController
                                 control={control}
                                 fieldName="vehicle.millage"
+                                inputSuffix="KM"
                                 label="Mileage"
                                 loading={isLoading}
-                                placeholder="50000"
+                                placeholder="50,000"
                                 required
                                 type="number"
                             />
@@ -126,9 +132,10 @@ export const ListingForm: FC<Props> = (props) => {
                             <InputController
                                 control={control}
                                 fieldName="vehicle.engineCapacity"
-                                label="Engine Capacity in CC"
+                                inputSuffix="CC"
+                                label="Engine Capacity"
                                 loading={isLoading}
-                                placeholder="1500"
+                                placeholder="1,500"
                                 required
                                 type="number"
                             />
@@ -158,7 +165,7 @@ export const ListingForm: FC<Props> = (props) => {
                             Images <span className="text-error">*</span>
                         </div>
                         {isLoading ? (
-                            <ListingImageUpload loading={isLoading} />
+                            <ListingImageUploadLoading />
                         ) : (
                             <Controller
                                 control={control}
@@ -220,9 +227,10 @@ export const ListingForm: FC<Props> = (props) => {
                         <InputController
                             control={control}
                             fieldName="price.amount"
+                            inputPrefix="Rs."
                             label="Price"
                             loading={isLoading}
-                            placeholder="40000000"
+                            placeholder="40,000,000"
                             required
                             type="number"
                         />

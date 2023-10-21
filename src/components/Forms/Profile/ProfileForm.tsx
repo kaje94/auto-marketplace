@@ -55,7 +55,14 @@ export const ProfileForm: FC<Props> = (props) => {
                 <div className={clsx("grid w-full gap-4 lg:grid-cols-2", gridClassnames)}>
                     <div className="flex flex-col gap-1">
                         <div className="divider mt-8">User Details</div>
-                        <InputController control={control} fieldName="phoneNumber" label="Contact Number" loading={isLoading} type="tel" />
+                        <InputController
+                            control={control}
+                            fieldName="phoneNumber"
+                            inputPrefix="+94"
+                            label="Contact Number"
+                            loading={isLoading}
+                            type="tel"
+                        />
                         <CheckboxController control={control} fieldName="isDealership" label="Is a vehicle dealership?" loading={isLoading} />
                     </div>
                     <div className="flex flex-col gap-1">

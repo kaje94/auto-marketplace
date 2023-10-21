@@ -151,17 +151,19 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <InputController
                                 control={control}
                                 fieldName="minPrice.amount"
+                                inputPrefix="Rs."
                                 label="Minimum Price"
                                 loading={isLoading}
-                                placeholder="1000000"
+                                placeholder="1,000,000"
                                 type="number"
                             />
                             <InputController
                                 control={control}
                                 fieldName="maxPrice.amount"
+                                inputPrefix="Rs."
                                 label="Maximum Price"
                                 loading={isLoading}
-                                placeholder="1000000"
+                                placeholder="10,000,000"
                                 type="number"
                             />
                         </div>
@@ -172,17 +174,19 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <InputController
                                 control={control}
                                 fieldName="minMillage"
+                                inputSuffix="KM"
                                 label="Minimum Mileage"
                                 loading={isLoading}
-                                placeholder="10000"
+                                placeholder="10,000"
                                 type="number"
                             />
                             <InputController
                                 control={control}
                                 fieldName="maxMillage"
+                                inputSuffix="KM"
                                 label="Maximum Mileage"
                                 loading={isLoading}
-                                placeholder="1000000"
+                                placeholder="1,000,000"
                                 type="number"
                             />
                         </div>

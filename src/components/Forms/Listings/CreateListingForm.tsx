@@ -13,7 +13,7 @@ import { CreateListingReq, ListingUser, VehicleFeature } from "@/utils/types";
 
 interface Props {
     features: VehicleFeature[];
-    profile: ListingUser;
+    profile?: ListingUser;
     userId?: string;
 }
 
@@ -28,9 +28,9 @@ export const CreateListingForm = (props: Props) => {
         defaultValues: {
             vehicle: { vehicleImages: [], featureIds: [] },
             location: {
-                city: profile.address?.city || "",
-                state: profile.address?.state || "",
-                postalCode: profile.address?.postalCode || 0,
+                city: profile?.address?.city || "",
+                state: profile?.address?.state || "",
+                postalCode: profile?.address?.postalCode || 0,
                 country: profile?.address?.country || "LK",
             },
         },
@@ -38,11 +38,11 @@ export const CreateListingForm = (props: Props) => {
     });
 
     useEffect(() => {
-        form.reset({
+        form?.reset({
             location: {
-                city: profile.address?.city || "",
-                state: profile.address?.state || "",
-                postalCode: profile.address?.postalCode || 0,
+                city: profile?.address?.city || "",
+                state: profile?.address?.state || "",
+                postalCode: profile?.address?.postalCode || 0,
                 country: profile?.address?.country || "LK",
             },
         });

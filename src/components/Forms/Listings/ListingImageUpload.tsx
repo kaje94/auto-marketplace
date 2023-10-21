@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import Image from "next/image";
 import { forwardRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { ListingImage } from "@/components/Common";
 import { PlusIcon, XCircleIcon } from "@/icons";
 import { MaxVehicleImageCount } from "@/utils/constants";
@@ -14,19 +14,33 @@ import { Location, VehicleImageType } from "@/utils/types";
 interface Props {
     error?: string;
     files?: VehicleImageType[];
-    loading?: boolean;
-    loadingPlaceholderCount?: number;
     location?: Location;
     setFiles?: (images: VehicleImageType[]) => void;
     title?: string;
 }
 
+export const ListingImageUploadLoading = ({ loadingPlaceholderCount = 1 }: { loadingPlaceholderCount?: number }) => {
+    return (
+        <div className="mt-2 ">
+            <div className="rounded-box flex flex-wrap gap-2 duration-200">
+                {new Array(loadingPlaceholderCount).fill("").map((_, i) => (
+                    <div
+                        key={`${i}`}
+                        className="rounded-box flex aspect-square w-[calc(33%-6px)] animate-pulse cursor-progress flex-col items-center justify-center border border-dashed bg-base-200 sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)]"
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
+
 export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {
-    const { files = [], setFiles = () => {}, loading, error, loadingPlaceholderCount = 1, title, location } = props;
+    const { files = [], setFiles = () => {}, error, title, location } = props;
     const [parent] = useAutoAnimate();
+    // TODO: fix following error during runtime
+    // TypeError: undefined is not a function
     const { getRootProps, getInputProps, open, isDragReject, isDragActive } = useDropzone({
         accept: { "image/*": [] },
-        disabled: loading,
         multiple: true,
         noClick: true,
         noKeyboard: true,
@@ -120,7 +134,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
 
                                 <div className="rounded-box absolute right-0 top-0 z-20 flex h-full w-full items-center justify-center opacity-100 transition-opacity duration-200 hover:opacity-100 xl:opacity-0">
                                     <button
-                                        className="btn-error btn-xs btn-circle btn absolute -right-2 -top-2 z-20 flex items-center justify-center text-error-content hover:text-base-300"
+                                        className="btn btn-circle btn-error btn-xs absolute -right-2 -top-2 z-20 flex items-center justify-center text-error-content hover:text-base-300"
                                         onClick={(event) => {
                                             removeImage(index);
                                             event.preventDefault();
@@ -155,32 +169,19 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                     })}
 
                     <input {...getInputProps()} />
-                    {loading ? (
-                        <>
-                            {new Array(loadingPlaceholderCount).fill("").map((_, i) => (
-                                <div
-                                    key={`${i}`}
-                                    className="rounded-box flex aspect-square w-[calc(33%-6px)] animate-pulse cursor-progress flex-col items-center justify-center border border-dashed bg-base-200 sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)]"
-                                />
-                            ))}
-                        </>
-                    ) : (
-                        <>
-                            {files.filter((item) => !item.deleted).length < MaxVehicleImageCount && (
-                                <div
-                                    className={clsx({
-                                        "rounded-box flex aspect-square w-[calc(33%-6px)] sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)] cursor-pointer flex-col items-center justify-center border border-dashed  bg-base-200 p-0 sm:p-2 duration-150 hover:bg-base-300":
-                                            true,
-                                        "border-error text-error": error,
-                                        "border-base-300 text-opacity-80 text-base-content": !error,
-                                    })}
-                                    onClick={open}
-                                >
-                                    <PlusIcon className="h-10 w-10" />
-                                    <div className="text-center text-xs">Add Images</div>
-                                </div>
-                            )}
-                        </>
+                    {files.filter((item) => !item.deleted).length < MaxVehicleImageCount && (
+                        <div
+                            className={clsx({
+                                "rounded-box flex aspect-square w-[calc(33%-6px)] sm:w-[calc(25%-6px)] md:w-[calc(20%-8px)] xl:w-[calc(25%-6px)] cursor-pointer flex-col items-center justify-center border border-dashed  bg-base-200 p-0 sm:p-2 duration-150 hover:bg-base-300":
+                                    true,
+                                "border-error text-error": error,
+                                "border-base-300 text-opacity-80 text-base-content": !error,
+                            })}
+                            onClick={open}
+                        >
+                            <PlusIcon className="h-10 w-10" />
+                            <div className="text-center text-xs">Add Images</div>
+                        </div>
                     )}
                 </div>
             </div>
