@@ -109,6 +109,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <YearInputController
                                 control={control}
                                 fieldName="minYearOfManufacture"
+                                gridCols="grid-cols-3"
                                 label="Manufactured after"
                                 loading={isLoading}
                                 placeholder="1990"
@@ -116,6 +117,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <YearInputController
                                 control={control}
                                 fieldName="maxYearOfManufacture"
+                                gridCols="grid-cols-3"
                                 label="Manufactured before"
                                 loading={isLoading}
                                 placeholder="2000"
@@ -128,6 +130,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <YearInputController
                                 control={control}
                                 fieldName="minYearOfRegistration"
+                                gridCols="grid-cols-3"
                                 label="Registered after"
                                 loading={isLoading}
                                 placeholder="2010"
@@ -135,6 +138,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <YearInputController
                                 control={control}
                                 fieldName="maxYearOfRegistration"
+                                gridCols="grid-cols-3"
                                 label="Registered before"
                                 loading={isLoading}
                                 placeholder="2020"

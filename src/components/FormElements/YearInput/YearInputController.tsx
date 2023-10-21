@@ -7,7 +7,7 @@ import { InputController } from "@/components/FormElements/Input";
 import { YearRangeList } from "@/utils/constants";
 import { LabelValue } from "@/utils/types";
 
-export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | "options" | "gridCols">> = ({
+export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | "options">> = ({
     loading,
     label,
     placeholder,
@@ -17,6 +17,7 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
     labelClassNames,
     rootClassName,
     fieldName,
+    gridCols,
     disabled,
     errorAsTooltip,
 }) => {
@@ -58,7 +59,7 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
                     <Autocomplete
                         disabled={disabled}
                         error={fieldState.error?.message}
-                        gridCols="grid-cols-3"
+                        gridCols={gridCols}
                         onBlur={field.onBlur}
                         options={years}
                         placeholder={placeholder}

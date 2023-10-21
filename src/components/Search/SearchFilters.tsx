@@ -8,12 +8,12 @@ import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
+import { YearInputController } from "@/components/FormElements/YearInput";
 import { useSearchContext } from "@/providers/search-provider";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { PostedListingsFilterReq } from "@/utils/types";
-import { YearInputController } from "../FormElements/YearInput";
 
 const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);

@@ -72,6 +72,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <YearInputController
                                 control={control}
                                 fieldName="vehicle.yearOfManufacture"
+                                gridCols="grid-cols-3"
                                 label="Year of Manufacture"
                                 loading={isLoading}
                                 placeholder="2000"
@@ -80,6 +81,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <YearInputController
                                 control={control}
                                 fieldName="vehicle.yearOfRegistration"
+                                gridCols="grid-cols-3"
                                 label="Year of Registration"
                                 loading={isLoading}
                                 placeholder="2010"
