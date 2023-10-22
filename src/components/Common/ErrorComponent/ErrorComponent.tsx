@@ -40,7 +40,7 @@ export const ErrorComponent: FC<Props> = ({
     const errorName = typeof error === "string" ? "Error" : error?.name ?? "Error";
     const errorMessage = typeof error === "string" ? error : error?.message;
     return (
-        <section className={clsx("flex h-full items-center p-16 text-primary-content", wrapClassnames)}>
+        <section className={clsx("flex h-full items-center p-0 text-primary-content md:p-8 xl:p-16", wrapClassnames)}>
             <div className="container mx-auto my-8 flex flex-col items-center justify-center px-5">
                 <div className="max-w-lg text-center">
                     {variant === "lg" && (

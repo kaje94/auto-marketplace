@@ -35,19 +35,21 @@ export const NavBarClient = ({
             >
                 <div
                     className={clsx(
-                        "navbar rounded-box relative z-20 min-h-[70px] items-center justify-between gap-8 text-neutral-content shadow shadow-neutral",
+                        "navbar rounded-box relative z-20 min-h-[70px] items-center justify-between gap-0 text-neutral-content shadow shadow-neutral min-[340px]:gap-4",
                         isLandingPage ? "bg-transparent !shadow-xl" : "bg-neutral",
                     )}
                 >
                     <LinkWithLocale className="ml-0 sm:ml-1 md:ml-2" href="/">
-                        <button className="btn btn-ghost hidden px-0 min-[355px]:block">
+                        <button className="btn btn-ghost hidden px-0 min-[340px]:block">
                             <Logo />
                         </button>
                     </LinkWithLocale>
                     <div className="flex flex-row items-center gap-0.5 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                         <SearchLink />
                         <PostAddLink />
-                        <button className="btn btn-square btn-neutral btn-sm">🇦🇲</button>
+                        <button className="btn btn-square btn-neutral btn-sm">
+                            <span className="opacity-60">🇦🇲</span>
+                        </button>
                         <NavBarAuth loading={loading} notificationCount={notificationCount} userClaims={userClaims} />
                     </div>
                 </div>
