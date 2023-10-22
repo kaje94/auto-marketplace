@@ -29,9 +29,13 @@ export interface Props extends Omit<ControllerProps, "label" | "labelClassNames"
 const InputWrap = ({ children, inputPrefix, inputSuffix }: { children: ReactNode; inputPrefix?: ReactNode; inputSuffix?: ReactNode }) => {
     return (
         <div className="join join-horizontal w-full">
-            {inputPrefix && <span className="join-item flex items-center bg-base-200 px-3 py-1">{inputPrefix}</span>}
+            {inputPrefix && (
+                <span className="join-item flex items-center border-[1px] border-r-0 border-base-300 bg-base-200 px-3 py-1">{inputPrefix}</span>
+            )}
             {children}
-            {inputSuffix && <span className="join-item flex items-center bg-base-200 px-3 py-1">{inputSuffix}</span>}
+            {inputSuffix && (
+                <span className="join-item flex items-center border-[1px] border-l-0 border-base-300 bg-base-200 px-3 py-1">{inputSuffix}</span>
+            )}
         </div>
     );
 };

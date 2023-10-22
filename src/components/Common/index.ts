@@ -9,3 +9,4 @@ export { Modal, ModalFooter } from "./Modal";
 export { ContextMenu, ContextMenuLoading } from "./ContextMenu";
 export type { ContextMenuItemProp } from "./ContextMenu";
 export { LinkWithLocale } from "./LinkWithLocale";
+export { Logo } from "./Logo";

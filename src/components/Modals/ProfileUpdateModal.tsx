@@ -28,7 +28,7 @@ export const ProfileUpdateModal = (props: Props) => {
                 city: userData?.address?.city || "",
                 state: userData?.address?.state || "",
                 country: userData?.address?.country || "LK",
-                postalCode: userData?.address?.postalCode,
+                postalCode: userData?.address?.postalCode || "",
             },
             isDealership: userData.isDealership,
             phoneNumber: userData.phone,

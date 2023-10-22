@@ -20,7 +20,7 @@ export const WelcomeModal = () => {
 
     return (
         <>
-            <Modal cancelable={false} onVisibleChange={() => {}} title="Welcome to car sale" visible={modalVisible}>
+            <Modal cancelable={false} onVisibleChange={() => {}} title="Welcome to Targabay" visible={modalVisible}>
                 <form className="grid gap-1">
                     <div>
                         We&#39;re dedicated to making your vehicle buying and selling experience smooth and enjoyable. Here&#39;s what you can do:

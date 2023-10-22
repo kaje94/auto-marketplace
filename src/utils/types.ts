@@ -59,7 +59,7 @@ export type ListingUser = {
     address: null | {
         city?: string;
         country?: string;
-        postalCode?: number;
+        postalCode?: string;
         state?: string;
     };
     email: string;

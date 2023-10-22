@@ -31,7 +31,7 @@ export const CreateListingForm = (props: Props) => {
             location: {
                 city: profile?.address?.city || "",
                 state: profile?.address?.state || "",
-                postalCode: profile?.address?.postalCode || 0,
+                postalCode: profile?.address?.postalCode || "",
                 country: profile?.address?.country || "LK",
             },
         },
@@ -43,7 +43,7 @@ export const CreateListingForm = (props: Props) => {
             location: {
                 city: profile?.address?.city || "",
                 state: profile?.address?.state || "",
-                postalCode: profile?.address?.postalCode || 0,
+                postalCode: profile?.address?.postalCode || "",
                 country: profile?.address?.country || "LK",
             },
         });

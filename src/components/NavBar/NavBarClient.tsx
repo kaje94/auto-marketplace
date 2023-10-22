@@ -3,7 +3,7 @@ import { Claims } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { useParams, usePathname } from "next/navigation";
-import { LinkWithLocale } from "@/components/Common";
+import { LinkWithLocale, Logo } from "@/components/Common";
 import { ListingUser } from "@/utils/types";
 import { NavBarAuth } from "./NavBarAuth";
 import { PostAddLink, SearchLink } from "./NavBarButtons";
@@ -40,11 +40,14 @@ export const NavBarClient = ({
                     )}
                 >
                     <LinkWithLocale className="ml-0 sm:ml-1 md:ml-2" href="/">
-                        <button className="btn btn-ghost px-0 text-xl normal-case">Car Sale</button>
+                        <button className="btn btn-ghost hidden px-0 min-[355px]:block">
+                            <Logo />
+                        </button>
                     </LinkWithLocale>
-                    <div className="flex flex-row items-center gap-0 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
+                    <div className="flex flex-row items-center gap-0.5 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                         <SearchLink />
                         <PostAddLink />
+                        <button className="btn btn-square btn-neutral btn-sm">🇦🇲</button>
                         <NavBarAuth loading={loading} notificationCount={notificationCount} userClaims={userClaims} />
                     </div>
                 </div>

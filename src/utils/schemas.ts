@@ -20,7 +20,7 @@ const BooleanStringSchema = z.union([
         .transform((value) => value === "true"),
 ]);
 
-const phoneRegex = new RegExp(/^\+[0-9]{1,15}$/);
+const phoneRegex = new RegExp(/^[0-9]{7,14}$/);
 
 const removeCommas = (input: string) => input.replace(/,/g, "");
 
@@ -57,7 +57,7 @@ export const LocationSchema = z.object({
     city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),
     country: z.string().min(1, "Country is required").default("LK"),
-    postalCode: getNumericSchema("Postal code needs to be a positive number"),
+    postalCode: z.string().min(1, "Postal code is required"),
 });
 
 export const VehicleImageSchema = z.object({
@@ -95,7 +95,7 @@ export const VehicleSchema = z.object({
     type: z.nativeEnum(VehicleTypes, { invalid_type_error: "Invalid Vehicle Type" }),
     brand: z.string().min(1, "Brand is required"),
     model: z.string().min(1, "Model is required"),
-    trim: z.string().min(1, "Trim is required"), // todo: remove server side validation and make this optional!
+    trim: z.string().optional(),
     yearOfManufacture: YearSchema,
     yearOfRegistration: YearSchema,
     millage: getNumericSchema("Mileage needs to be a positive number"),
@@ -233,7 +233,7 @@ export const UpdateProfileSchema = z.object({
         city: z.string().min(1, "City is required"),
         state: z.string().min(1, "State is required"),
         country: z.string().min(1, "Country is required").default("LK"),
-        postalCode: getNumericSchema("Postal code needs to be a positive number"),
+        postalCode: z.string().min(1, "Postal code is required"),
     }),
     phoneNumber: z.string().min(1, "Contact number is required").regex(phoneRegex, "Invalid phone number"),
 });

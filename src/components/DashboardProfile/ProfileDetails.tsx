@@ -80,7 +80,7 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                         <div className="flex flex-col gap-2">
                             <DetailsItem loading={loading} title="City" value={profile?.address?.city ?? "-"} />
                             <DetailsItem loading={loading} title="State" value={profile?.address?.state ?? "-"} />
-                            <DetailsItem loading={loading} title="Postal Code" value={profile?.address?.postalCode?.toString() ?? "-"} />
+                            <DetailsItem loading={loading} title="Postal Code" value={profile?.address?.postalCode ?? "-"} />
                             <DetailsItem loading={loading} title="Country" value={profile?.address?.country ?? "-"} />
                         </div>
                     </div>
