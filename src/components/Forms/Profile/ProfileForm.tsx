@@ -83,7 +83,6 @@ export const ProfileForm: FC<Props> = (props) => {
                             loading={isLoading}
                             placeholder="00001"
                             required
-                            type="number"
                         />
                         <SelectController
                             control={control}
