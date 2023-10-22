@@ -45,7 +45,7 @@ export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoadi
                             ? "Try adjusting or resetting your search filters"
                             : "You do not have any notifications yet. Try checking out again later"
                     }
-                    text="No notifications to display."
+                    text="No notifications to display"
                 />
             )}
 

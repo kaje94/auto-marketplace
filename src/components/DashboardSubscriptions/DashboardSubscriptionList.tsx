@@ -36,7 +36,7 @@ export const DashboardSubscriptionList: FC<
                             ? "Try adjusting or resetting your search filters"
                             : "By creating a new subscription, you'll receive notifications about any new advertisements that match your interests."
                     }
-                    text="No subscriptions to display."
+                    text="No subscriptions to display"
                 />
             )}
 

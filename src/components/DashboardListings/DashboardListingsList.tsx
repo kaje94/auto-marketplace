@@ -38,7 +38,7 @@ export const DashboardListingsList: FC<
                             ? "Try adjusting or resetting your search filters"
                             : "By creating a new new advertisement, you have the opportunity to showcase the vehicle you want to sell to a wide audience."
                     }
-                    text="No advertisements to display."
+                    text="No advertisements to display"
                 />
             )}
 
