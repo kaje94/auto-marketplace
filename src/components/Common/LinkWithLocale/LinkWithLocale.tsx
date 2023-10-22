@@ -10,5 +10,5 @@ export const LinkWithLocale: FC<
         } & React.RefAttributes<HTMLAnchorElement>
 > = ({ href, ...rest }) => {
     const params = useParams();
-    return <Link {...rest} href={`/${params.locale}${href}`} />;
+    return <Link {...rest} href={`${params.locale ? `/${params.locale}` : ""}${href}`} />;
 };

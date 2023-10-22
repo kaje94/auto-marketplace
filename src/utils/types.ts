@@ -164,6 +164,10 @@ export type City = {
     name: string;
 };
 
+export interface CountryMap {
+    [key: string]: [name: string, currency: string, currencySymbol: string, phoneCode: string, flag: string];
+}
+
 export type SearchParams = { searchParams: { [key: string]: string | string[] | undefined } };
 
 export type ChildrenProps = { children: React.ReactNode };

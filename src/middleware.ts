@@ -1,13 +1,9 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
 import { NextRequest, NextResponse } from "next/server";
-import { api } from "./utils/api";
+import { COUNTRIES } from "./utils/countries";
 
 export async function middleware(request: NextRequest) {
-    // country code should be available only after deployed
-    const userCountryCode = request.geo?.country || "LK";
     const pathname = request.nextUrl.pathname;
-
-    const countries = await api.getCountries();
 
     if (new RegExp("/(dashboard.*)").test(request.nextUrl.pathname)) {
         const session = await getSession();
@@ -16,7 +12,10 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    const matchingLocal = countries.find((item) => pathname.startsWith(`/${item.countryCode}/`) || pathname === `/${item.countryCode}`);
+    // country code should be available only after deployed
+    const userCountryCode = request.geo?.country || "LK";
+    const pathLocale: string = pathname.split("/").filter((item) => item !== "")[0] || "";
+    const matchingLocal = COUNTRIES[pathLocale];
 
     if (!matchingLocal) {
         return NextResponse.redirect(new URL(`/${userCountryCode}/${pathname}`, request.url));
@@ -24,8 +23,8 @@ export async function middleware(request: NextRequest) {
 
     const res = NextResponse.next();
     res.headers.set("x-pathname", request.nextUrl.pathname);
-    res.headers.set("x-locale", matchingLocal.countryCode);
-    res.headers.set("x-country-name", matchingLocal.name);
+    res.headers.set("x-locale", pathLocale);
+    res.headers.set("x-country-name", matchingLocal[0]);
 
     return res;
 }

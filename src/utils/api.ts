@@ -202,14 +202,6 @@ export const api = {
         }),
     updateMyProfileDetails: (body: UpdateProfileReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Users/${body.userId}`, JSON.stringify(body)),
     closeUserAccount: (userId: string) => fetchApi.protectedDelete<void>(`/v1/Users/${userId}/close-account`),
-    getCountries: () =>
-        fetchApi.get<Country[]>("/v1/Locations/countries", {
-            next: { tags: [apiTags.getCountries()], revalidate: revalidationTime.oneWeek },
-        }),
-    getCountryByCode: (countryCode: string) =>
-        fetchApi.get<Country>(`/v1/Locations/countries/${countryCode}`, {
-            next: { tags: [apiTags.getCountryByCode()], revalidate: revalidationTime.oneWeek },
-        }),
     getStates: (countryCode: string) =>
         fetchApi.get<State[]>(`/v1/Locations/countries/${countryCode}/states`, {
             next: { tags: [apiTags.getStates()], revalidate: revalidationTime.oneWeek },
@@ -238,8 +230,6 @@ export const apiTags = {
     getMyListingSubscriptionItem: (id: ListingSubscriptionIdType) => `get-my-listing-subscription-item-${id}`,
     getMyNotifications: (listingUserId: string) => `get-my-notifications-${listingUserId}`,
     getMyProfileDetails: (userId: string) => `get-my-profile-${userId}`,
-    getCountries: () => `get-countries`,
-    getCountryByCode: () => `get-country-by-code`,
     getStates: () => `get-states`,
     getCities: () => `get-cities`,
 };

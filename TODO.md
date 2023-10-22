@@ -30,9 +30,10 @@
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] add country code as inputPrefix for phone numbers
 -   [] show currency as inputPrefix for price inputs
--   [] add masking for inputs
 -   [] avoid session?.user?.sub!
--   [] use a map of turples to maintain the country details within the nextjs app itself
+-   [] if city list is empty, use the selected state name as city
+-   [] verify how emtpy, unauthorized and error component redirects & links work
+-   [] refer create t3 structure and eslint
 
 > Need to verify
 -   [] loading bug when changing query (while loading type something) (Added a possible fix)

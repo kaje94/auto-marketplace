@@ -69,10 +69,12 @@ export const ListingsCarousel = (props: Props) => {
                                     )}
                                 >
                                     <LinkWithLocale
-                                        className={clsx(
-                                            "card flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden bg-base-200 bg-opacity-50 p-5 text-neutral shadow  transition duration-300 zoom-inner-image hover:bg-opacity-80 hover:shadow-lg md:p-10",
-                                            tinted && "!bg-neutral !text-white opacity-95",
-                                        )}
+                                        className={clsx({
+                                            "card flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden  bg-opacity-50 p-5  shadow  transition duration-300 zoom-inner-image hover:bg-opacity-80 hover:shadow-lg md:p-10":
+                                                true,
+                                            "bg-neutral text-white opacity-95 hover:text-accent": tinted,
+                                            "bg-base-200 text-base-content  hover:text-neutral": !tinted,
+                                        })}
                                         href={viewMore.link}
                                     >
                                         <div className="text-2xl font-bold opacity-80 ">{viewMore.title}</div>

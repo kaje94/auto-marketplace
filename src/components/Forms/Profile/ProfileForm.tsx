@@ -58,7 +58,7 @@ export const ProfileForm: FC<Props> = (props) => {
                         <InputController
                             control={control}
                             fieldName="phoneNumber"
-                            inputPrefix="+94"
+                            inputPrefix="94"
                             label="Contact Number"
                             loading={isLoading}
                             type="tel"
