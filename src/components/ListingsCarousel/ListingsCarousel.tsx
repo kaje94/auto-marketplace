@@ -35,7 +35,7 @@ export const ListingsCarousel = (props: Props) => {
     return (
         <div className={clsx("relative flex items-center", loading && "animate-pulse")}>
             <div className="rounded-box relative  flex-1 overflow-hidden px-2 py-5" ref={emblaRef}>
-                <div className="flex h-auto  flex-row gap-4">
+                <div className="flex h-auto flex-row gap-4">
                     {loading ? (
                         <>
                             {new Array(loadingItemCount).fill("").map((_, i) => (
@@ -64,7 +64,7 @@ export const ListingsCarousel = (props: Props) => {
                                 <div
                                     key="view-more"
                                     className={clsx(
-                                        "rounded-box relative w-[calc(75%)] min-w-0 flex-none shadow duration-300  hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
+                                        "rounded-box relative aspect-video w-[calc(75%)] min-w-0 flex-none shadow duration-300  hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
                                         tinted && "hover:shadow-neutral",
                                     )}
                                 >

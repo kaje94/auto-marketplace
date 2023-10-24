@@ -10,6 +10,10 @@ import { PostAddLink, SearchLink } from "./NavBarButtons";
 
 const NewUserOnboardModal = dynamic(() => import("@/components/Modals/NewUserOnboardModal").then((mod) => mod.NewUserOnboardModal), { ssr: false });
 
+const NavBarCountryBtn = dynamic(() => import("./NavBarCountryBtn").then((mod) => mod.NavBarCountryBtn), {
+    loading: () => <button className="btn btn-disabled btn-square btn-sm animate-pulse " />,
+});
+
 export const NavBarClient = ({
     userClaims,
     loading,
@@ -47,9 +51,7 @@ export const NavBarClient = ({
                     <div className="flex flex-row items-center gap-0.5 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                         <SearchLink />
                         <PostAddLink />
-                        <button className="btn btn-square btn-neutral btn-sm">
-                            <span className="opacity-60">🇦🇲</span>
-                        </button>
+                        <NavBarCountryBtn />
                         <NavBarAuth loading={loading} notificationCount={notificationCount} userClaims={userClaims} />
                     </div>
                 </div>
