@@ -11,7 +11,11 @@ import { PostAddLink, SearchLink } from "./NavBarButtons";
 const NewUserOnboardModal = dynamic(() => import("@/components/Modals/NewUserOnboardModal").then((mod) => mod.NewUserOnboardModal), { ssr: false });
 
 const NavBarCountryBtn = dynamic(() => import("./NavBarCountryBtn").then((mod) => mod.NavBarCountryBtn), {
-    loading: () => <button className="btn btn-disabled btn-square btn-sm animate-pulse " />,
+    loading: () => (
+        <button className="btn btn-square !btn-neutral btn-sm animate-pulse opacity-70 " disabled>
+            <span className="loading loading-ring loading-xs" />
+        </button>
+    ),
 });
 
 export const NavBarClient = ({

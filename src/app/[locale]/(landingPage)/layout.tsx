@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <Image
                 alt="cover-image"
-                className="absolute inset-x-0 bottom-0 m-auto hidden w-full opacity-30 md:block md:w-10/12 lg:w-11/12 xl:max-w-7xl"
+                className="absolute inset-x-0 bottom-0 m-auto w-full opacity-20 md:w-10/12 md:opacity-30 lg:w-11/12 xl:max-w-7xl"
                 height={450}
                 priority={false}
                 src="/images/cover-image.webp"

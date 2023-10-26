@@ -12,12 +12,13 @@ import { AutocompleteController } from "../FormElements/AutoComplete";
 
 interface Props {
     currentLocale: string;
+    onNewCountrySelect: (country: string) => void;
     setVisible: (visible: boolean) => void;
     visible: boolean;
 }
 
 export const CountrySelectModal = (props: Props) => {
-    const { currentLocale, setVisible, visible } = props;
+    const { currentLocale, onNewCountrySelect, setVisible, visible } = props;
     const router = useRouter();
     const currentCountry = COUNTRIES[currentLocale]?.[0];
 
@@ -44,6 +45,9 @@ export const CountrySelectModal = (props: Props) => {
         router.replace(`/${pathWithNewLocale}${window.location.search}`);
         toast.success(`Successfully switched to country ${country}`);
         setVisible(false);
+        if (locale) {
+            onNewCountrySelect(locale);
+        }
     };
 
     useEffect(() => {

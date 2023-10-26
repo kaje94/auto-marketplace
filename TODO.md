@@ -49,3 +49,5 @@
 -   [] contact us section?
 -   [] make auth0 run fully on edge
 
+> SEO Todo list
+-   [] https://webmasters.stackexchange.com/questions/104987/how-to-change-which-image-from-website-is-shown-in-google-search-result

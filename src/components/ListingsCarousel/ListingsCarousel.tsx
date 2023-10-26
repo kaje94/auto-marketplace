@@ -64,20 +64,20 @@ export const ListingsCarousel = (props: Props) => {
                                 <div
                                     key="view-more"
                                     className={clsx(
-                                        "rounded-box relative aspect-video w-[calc(75%)] min-w-0 flex-none shadow duration-300  hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
+                                        "rounded-box relative w-[calc(75%)] min-w-0 flex-none shadow  duration-300 hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
                                         tinted && "hover:shadow-neutral",
                                     )}
                                 >
                                     <LinkWithLocale
                                         className={clsx({
-                                            "card flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden  bg-opacity-70 p-5  shadow  transition duration-300 zoom-inner-image hover:bg-opacity-95 hover:shadow-lg md:p-10":
+                                            "card flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden  bg-opacity-70 p-7 shadow  transition duration-300 zoom-inner-image hover:bg-opacity-95 hover:shadow-lg md:p-10":
                                                 true,
                                             "bg-neutral text-white opacity-95 hover:text-secondary": tinted,
                                             "bg-base-200 text-base-content  hover:text-neutral": !tinted,
                                         })}
                                         href={viewMore.link}
                                     >
-                                        <div className="text-2xl font-bold opacity-80 ">{viewMore.title}</div>
+                                        <div className="text-center text-2xl font-bold opacity-80 ">{viewMore.title}</div>
                                         <div className="text-center text-sm opacity-50">{viewMore.subTitle}</div>
                                     </LinkWithLocale>
                                 </div>
