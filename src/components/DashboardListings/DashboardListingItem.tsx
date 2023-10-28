@@ -6,6 +6,7 @@ import { ContextMenuLoading } from "@/components/Common/ContextMenu";
 import { ListingStatusTypes } from "@/utils/enum";
 import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
+import { COUNTRIES } from "@/utils/countries";
 
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
     loading: () => <ContextMenuLoading />,
@@ -22,8 +23,8 @@ interface Props {
 export const DashboardListingItem: FC<Props> = (props) => {
     const { basePath, listingItem = {}, loading, isAdmin } = props;
     const { title, price, description, status, id, vehicle, location, createdOn } = listingItem as ListingItem;
-    const locationStr = getLocationString(location);
-    const priceStr = getFormattedCurrency(price?.amount, price?.currency);
+    const locationStr = getLocationString(location, COUNTRIES[location?.country ?? '']?.[0]);
+    const priceStr = getFormattedCurrency(price?.amount, price?.currencyCode);
 
     const listingItemContent = (
         <div className="grid grid-cols-12 gap-0.5 p-3 md:gap-2 md:p-4 xl:gap-4">

@@ -1,18 +1,22 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
+import { getCitiesOfState, getStatesOfCountry } from "@/actions/localtionActions";
 import { Avatar } from "@/components/Common";
+import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
-import { SelectController } from "@/components/FormElements/Select";
-import { ListingUser, UpdateProfileReq } from "@/utils/types";
+import { COUNTRIES } from "@/utils/countries";
+import { LabelValue, ListingUser, UpdateProfileReq } from "@/utils/types";
 
 interface Props {
     form?: UseFormReturn<UpdateProfileReq>;
     gridClassnames?: string;
     isLoading?: boolean;
     isMutating?: boolean;
+    locationSectionClassnames?: string;
     onMutate?: (values: UpdateProfileReq) => void;
     showFooter?: boolean;
     showHeader?: boolean;
@@ -31,8 +35,57 @@ export const ProfileForm: FC<Props> = (props) => {
         userData,
         wrapClassnames,
         gridClassnames,
+        locationSectionClassnames,
     } = props;
-    const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<UpdateProfileReq>;
+    const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "" } = form as UseFormReturn<UpdateProfileReq>;
+
+    const country = watch("address.country");
+    const state = watch("address.state");
+    const city = watch("address.city");
+
+    const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country);
+    const countryPhoneCode = COUNTRIES[countryCode || ""]?.[3];
+
+    const countryList: LabelValue[] = Object.keys(COUNTRIES).map((key) => ({
+        label: COUNTRIES[key]?.[0]!,
+        value: COUNTRIES[key]?.[0]!,
+    }));
+
+    const {
+        data: states = [],
+        isFetching: isLoadingStates,
+        isError: stateFetchError,
+    } = useQuery({
+        queryFn: () => getStatesOfCountry(countryCode!),
+        enabled: !!countryCode,
+        queryKey: ["country-states", { locale: countryCode }],
+        onSettled: (data, err) => {
+            if (err || !data?.some((item) => item.name === state)) {
+                (form as UseFormReturn<UpdateProfileReq>).setValue("address.state", "");
+                (form as UseFormReturn<UpdateProfileReq>).setValue("address.city", "");
+            }
+        },
+    });
+
+    const stateList = states?.map((item) => ({ label: item.name, value: item.name }) as LabelValue);
+
+    const stateCode = states.find((item) => item.name === state)?.stateCode;
+
+    const {
+        data: cityList = [],
+        isFetching: isLoadingCities,
+        isError: cityFetchError,
+    } = useQuery({
+        queryFn: () => getCitiesOfState(countryCode!, stateCode!),
+        enabled: !!countryCode && !!stateCode,
+        queryKey: ["country-state-cities", { locale: countryCode, stateCode }],
+        select: (data) => data.map((item) => ({ label: item.name, value: item.name }) as LabelValue),
+        onSettled: (data, err) => {
+            if (err || !data?.some((item) => item.label === city)) {
+                (form as UseFormReturn<UpdateProfileReq>).setValue("address.city", "");
+            }
+        },
+    });
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -52,30 +105,60 @@ export const ProfileForm: FC<Props> = (props) => {
                     </div>
                 )}
 
-                <div className={clsx("grid w-full gap-4 lg:grid-cols-2", gridClassnames)}>
-                    <div className="flex flex-col gap-1">
-                        <div className="divider mt-8">User Details</div>
-                        <InputController
+                <div className={clsx("grid w-full gap-1 lg:grid-cols-2 lg:gap-4", gridClassnames)}>
+                    <div className={clsx("grid gap-1", locationSectionClassnames)}>
+                        <div className="divider col-span-full mt-4">Location Details</div>
+                        <AutocompleteController
                             control={control}
-                            fieldName="phoneNumber"
-                            inputPrefix="94"
-                            label="Contact Number"
-                            loading={isLoading}
-                            type="tel"
-                        />
-                        <CheckboxController control={control} fieldName="isDealership" label="Is a vehicle dealership?" loading={isLoading} />
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <div className="divider mt-8">Location Details</div>
-                        <InputController control={control} fieldName="address.city" label="City" loading={isLoading} placeholder="Colombo" required />
-                        <InputController
-                            control={control}
-                            fieldName="address.state"
-                            label="State/Province"
-                            loading={isLoading}
-                            placeholder="Western Province"
+                            fieldName="address.country"
+                            label="Country"
+                            options={countryList}
+                            placeholder="Select Country"
                             required
                         />
+
+                        {stateList?.length > 0 && !stateFetchError ? (
+                            <AutocompleteController
+                                control={control}
+                                fieldName="address.state"
+                                label="State/Province"
+                                loading={isLoadingStates}
+                                options={stateList}
+                                placeholder="Select State"
+                                required
+                            />
+                        ) : (
+                            <InputController
+                                control={control}
+                                fieldName="address.state"
+                                label="State/Province"
+                                loading={isLoading}
+                                placeholder="State or Province"
+                                required
+                            />
+                        )}
+
+                        {cityList.length > 0 && !cityFetchError ? (
+                            <AutocompleteController
+                                control={control}
+                                fieldName="address.city"
+                                label="City"
+                                loading={isLoadingCities}
+                                options={cityList}
+                                placeholder="Select City"
+                                required
+                            />
+                        ) : (
+                            <InputController
+                                control={control}
+                                fieldName="address.city"
+                                label="City"
+                                loading={isLoading}
+                                placeholder="City"
+                                required
+                            />
+                        )}
+
                         <InputController
                             control={control}
                             fieldName="address.postalCode"
@@ -84,15 +167,23 @@ export const ProfileForm: FC<Props> = (props) => {
                             placeholder="00001"
                             required
                         />
-                        <SelectController
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <div className="divider mt-4">User Details</div>
+                        <InputController
                             control={control}
-                            disabled
-                            fieldName="address.country"
-                            label="Country"
+                            fieldName="phoneNumber"
+                            inputPrefix={countryPhoneCode}
+                            label="Phone Number"
                             loading={isLoading}
-                            options={[{ label: "Sri Lanka", value: "LK" }]}
-                            placeholder="Select Country"
-                            required
+                            placeholder="0000000000"
+                            type="tel"
+                        />
+                        <CheckboxController
+                            control={control}
+                            fieldName="isDealership"
+                            label="Are you a vehicle dealer or dealership?"
+                            loading={isLoading}
                         />
                     </div>
                 </div>

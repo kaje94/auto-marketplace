@@ -1,14 +1,15 @@
 import { clsx } from "clsx";
 import { FC } from "react";
-import { getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } from "@/utils/helpers";
+import { getFormattedDistance, getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 
 interface Props {
     loading?: boolean;
     vehicle?: Vehicle;
+    countryCode?: string
 }
 
-export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
+export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryCode }) => {
     const placeholderWidth = ["w-28", "w-32", "w-28", "w-16", "w-24", "w-36", "w-14"];
 
     const items: { label: string; value: string | number }[] = [];
@@ -18,9 +19,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
     if (vehicle?.model) {
         items.push({ label: "Modal", value: vehicle.model });
     }
-    if (vehicle?.trim) {
-        items.push({ label: "Trim / Edition", value: vehicle.trim });
-    }
+        items.push({ label: "Trim / Edition", value: vehicle?.trim || '-' });
     if (vehicle?.yearOfManufacture) {
         items.push({ label: "Manufactured Year", value: getYearFromDateString(vehicle.yearOfManufacture) });
     }
@@ -31,7 +30,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
         items.push({ label: "Condition", value: unCamelCase(vehicle?.condition) });
     }
     if (vehicle?.millage) {
-        items.push({ label: "Mileage", value: `${numberWithCommas(vehicle?.millage)} km` });
+        items.push({ label: "Mileage", value: getFormattedDistance(vehicle?.millage?.distance,countryCode) });
     }
     if (vehicle?.transmission) {
         items.push({ label: "Transmission", value: unCamelCase(vehicle?.transmission) });

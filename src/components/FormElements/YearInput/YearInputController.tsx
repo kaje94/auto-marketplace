@@ -22,6 +22,7 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
     errorAsTooltip,
 }) => {
     const [years, setYears] = useState<LabelValue[]>([]);
+
     useEffect(() => {
         setYears(YearRangeList);
     }, []);

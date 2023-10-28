@@ -7,55 +7,53 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { createListingAction } from "@/actions/listingActions";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
-import { convertYearToDateString, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
+import { COUNTRIES } from "@/utils/countries";
+import { convertYearToDateString, getDistanceUnit, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
 import { CreateListingSchema } from "@/utils/schemas";
-import { CreateListingReq, ListingUser, VehicleFeature } from "@/utils/types";
+import { CreateListingReq, ListingUser, VehicleBrand, VehicleFeature } from "@/utils/types";
 
 interface Props {
+    brands: VehicleBrand[];
     features: VehicleFeature[];
     profile?: ListingUser;
     userId?: string;
 }
 
 export const CreateListingForm = (props: Props) => {
-    const { features, userId, profile } = props;
+    const { features, userId, profile, brands } = props;
     const router = useRouter();
     const params = useParams();
-
     const toastId = useRef<string>();
+    const countryItem = COUNTRIES[profile?.address?.country || ""];
+    const distanceUnit = getDistanceUnit(profile?.address?.country);
 
     const form = useForm<CreateListingReq>({
         resolver: zodResolver(CreateListingSchema),
         defaultValues: {
-            vehicle: { vehicleImages: [], featureIds: [] },
+            vehicle: { vehicleImages: [], featureIds: [], millage: { unit: distanceUnit },trim:"" },
             location: {
                 city: profile?.address?.city || "",
                 state: profile?.address?.state || "",
                 postalCode: profile?.address?.postalCode || "",
-                country: profile?.address?.country || "LK",
+                country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : COUNTRIES[params.locale as string]?.[0],
             },
+            price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
         },
         mode: "all",
     });
-
-    useEffect(() => {
-        form?.reset({
-            location: {
-                city: profile?.address?.city || "",
-                state: profile?.address?.state || "",
-                postalCode: profile?.address?.postalCode || "",
-                country: profile?.address?.country || "LK",
-            },
-        });
-    }, [profile, form]);
 
     const { mutate: createListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
 
+            const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === formValues?.location?.country);
+
             const requestBody: CreateListingReq = {
                 ...formValues,
-
+                location:{
+                    ...formValues.location,
+                    country: countryCode!
+                },
                 vehicle: {
                     ...formValues.vehicle,
                     vehicleImages: vehicleImages,
@@ -92,13 +90,31 @@ export const CreateListingForm = (props: Props) => {
         },
     );
 
+    useEffect(() => {
+        if(form.reset){
+            form.reset({
+                location: {
+                    city: profile?.address?.city || "",
+                    state: profile?.address?.state || "",
+                    postalCode: profile?.address?.postalCode || "",
+                    country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+                },
+                price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
+                vehicle: { millage: { unit: distanceUnit } },
+            });
+        }
+    }, [profile, form, countryItem, distanceUnit]);
+
     return (
         <ListingForm
             featureOptions={features}
             form={form}
             isMutating={isMutating}
             onMutate={createListingsMutation}
+            profile={profile}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
+            vehicleBrands={brands}
+            listingUser={{ email: profile?.email, phoneNumber: profile?.phone, phoneCountryCode: countryItem?.[3] }}
         />
     );
 };

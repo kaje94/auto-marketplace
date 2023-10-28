@@ -1,8 +1,9 @@
 import { Session } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { Avatar, LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon, EditIcon } from "@/icons";
+import { COUNTRIES } from "@/utils/countries";
 import { getRandomItem, isIncompleteUserProfile } from "@/utils/helpers";
 import { ListingUser } from "@/utils/types";
 import { CloseAccountButton } from "./CloseAccountButton";
@@ -13,7 +14,7 @@ interface Props {
     session?: Session | null;
 }
 
-const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: string; value: string }) => (
+const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: string; value: ReactNode }) => (
     <div>
         <div className="text-xs opacity-50">{title}</div>
 
@@ -34,6 +35,9 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
     } else if (session?.user.isAdmin) {
         userType = "Admin";
     }
+
+    const countryPhoneCode = COUNTRIES[profile?.address?.country || ""]?.[3];
+
     return (
         <>
             {!loading && isProfileIncomplete && (
@@ -72,16 +76,25 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                         <div className="text-lg font-bold">Contact Details</div>
                         <div className="flex flex-col gap-2">
                             <DetailsItem loading={loading} title="Email" value={profile?.email ?? "-"} />
-                            <DetailsItem loading={loading} title="Phone Number" value={profile?.phone ?? "-"} />
+                            <DetailsItem
+                                loading={loading}
+                                title="Phone Number"
+                                value={
+                                    <>
+                                        <span className="font-light opacity-70">{countryPhoneCode ? `${countryPhoneCode} ` : ""}</span>
+                                        {profile?.phone ?? "-"}
+                                    </>
+                                }
+                            />
                         </div>
                     </div>
                     <div className="flex flex-col gap-1">
                         <div className="text-lg font-bold">Location Details</div>
                         <div className="flex flex-col gap-2">
-                            <DetailsItem loading={loading} title="City" value={profile?.address?.city ?? "-"} />
+                            <DetailsItem loading={loading} title="Country" value={COUNTRIES[profile?.address?.country!]?.[0] ?? "-"} />
                             <DetailsItem loading={loading} title="State" value={profile?.address?.state ?? "-"} />
+                            <DetailsItem loading={loading} title="City" value={profile?.address?.city ?? "-"} />
                             <DetailsItem loading={loading} title="Postal Code" value={profile?.address?.postalCode ?? "-"} />
-                            <DetailsItem loading={loading} title="Country" value={profile?.address?.country ?? "-"} />
                         </div>
                     </div>
                 </div>

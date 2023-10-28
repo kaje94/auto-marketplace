@@ -1,3 +1,4 @@
+import { getSession } from "@auth0/nextjs-auth0/edge";
 import { BreadCrumbs } from "@/components/Common";
 import { EditListingForm } from "@/components/Forms/Listings/EditListingForm";
 import { api } from "@/utils/api";
@@ -5,7 +6,13 @@ import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
 
 export default async function Page({ params }: ListingIdPathParam) {
-    const [itemDetails, features] = await Promise.all([transformListingResponse(await api.getMyListingsItem(params.id)), api.getFeaturesList()]);
+    const session = await getSession();
+    const [itemDetails, features, brands, profile] = await Promise.all([
+        transformListingResponse(await api.getMyListingsItem(params.id)),
+        api.getFeaturesList(),
+        api.getVehicleBrands(),
+        api.getMyProfileDetails(session?.user?.sub!),
+    ]);
 
     return (
         <>
@@ -21,7 +28,14 @@ export default async function Page({ params }: ListingIdPathParam) {
                     },
                 ]}
             />
-            <EditListingForm features={features} listingItem={itemDetails} successRedirectPath="/dashboard/my-listings" />
+            <EditListingForm
+                brands={brands}
+                features={features}
+                listingItem={itemDetails}
+                profile={profile}
+                successRedirectPath="/dashboard/my-listings"
+                userId={session?.user?.sub}
+            />
         </>
     );
 }

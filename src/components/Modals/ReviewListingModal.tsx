@@ -26,7 +26,7 @@ export const ReviewListingModal = (props: Props) => {
 
     const { handleSubmit, control } = useForm<ReviewListingReq>({
         resolver: zodResolver(ReviewListingSchema),
-        defaultValues: { listingId, status: ListingStatusTypes.Posted },
+        defaultValues: { listingId, status: ListingStatusTypes.Posted, reviewComment:'' },
         mode: "all",
     });
 

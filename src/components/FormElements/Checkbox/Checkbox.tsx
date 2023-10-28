@@ -14,19 +14,20 @@ export interface ControllerProps extends ComponentProps<"input"> {
 export interface Props extends Omit<ControllerProps, "fieldName" | "control"> {}
 
 export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
-    const { label, checkboxClassNames, loading, ...rest } = props;
+    const { label, checkboxClassNames, loading, disabled, ...rest } = props;
     return (
         <label
             className={clsx(
                 "label rounded-lg border-2 border-opacity-50 py-3 duration-200 hover:bg-base-200 hover:bg-opacity-50",
-                !loading && "cursor-pointer",
+                !loading && !disabled && "cursor-pointer",
+                disabled && "opacity-50",
             )}
             onClick={(event) => event.stopPropagation()}
         >
             <span className="label-text">{label}</span>
             <input
                 className={clsx("checkbox checkbox-md border-2", loading && "animate-pulse !bg-base-300", checkboxClassNames)}
-                disabled={loading}
+                disabled={loading || disabled}
                 ref={ref}
                 type="checkbox"
                 {...rest}

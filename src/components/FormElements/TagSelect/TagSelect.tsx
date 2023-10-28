@@ -2,12 +2,13 @@ import { clsx } from "clsx";
 import { FC } from "react";
 
 interface Props {
+    disabled?: boolean;
     onSelect?: (item: number[]) => void;
     selectedTags?: number[];
     tags?: { id: number; name: string }[];
 }
 
-export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], onSelect = () => {} }) => {
+export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], onSelect = () => {}, disabled }) => {
     return (
         <div className="flex flex-wrap gap-1">
             {tags.map((tag) => {
@@ -19,12 +20,15 @@ export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], onSelect = 
                             "badge cursor-pointer p-3 duration-200 select-none": true,
                             "badge-neutral opacity-100 hover:opacity-75": tagSelected,
                             "badge-outline hover:bg-base-300": !tagSelected,
+                            "!opacity-50 btn-disabled": disabled,
                         })}
                         onClick={() => {
-                            if (selectedTags?.includes(tag.id)) {
-                                onSelect(selectedTags?.filter((id) => tag.id !== id));
-                            } else {
-                                onSelect([...selectedTags, tag.id]);
+                            if (!disabled) {
+                                if (selectedTags?.includes(tag.id)) {
+                                    onSelect(selectedTags?.filter((id) => tag.id !== id));
+                                } else {
+                                    onSelect([...selectedTags, tag.id]);
+                                }
                             }
                         }}
                     >

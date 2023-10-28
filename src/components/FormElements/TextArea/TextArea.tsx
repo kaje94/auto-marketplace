@@ -18,7 +18,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
     return (
         <textarea
             className={clsx(
-                "textarea-bordered textarea textarea-md min-h-[140px] w-full bg-transparent",
+                "textarea textarea-bordered textarea-md min-h-[200px] w-full bg-transparent",
                 error && "textarea-error",
                 loading && "animate-pulse",
                 textAreaClassNames,

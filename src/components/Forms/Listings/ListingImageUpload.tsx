@@ -12,6 +12,7 @@ import { MaxVehicleImageCount } from "@/utils/constants";
 import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props {
+    disabled?: boolean;
     error?: string;
     files?: VehicleImageType[];
     location?: Location;
@@ -35,13 +36,14 @@ export const ListingImageUploadLoading = ({ loadingPlaceholderCount = 1 }: { loa
 };
 
 export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {
-    const { files = [], setFiles = () => {}, error, title, location } = props;
+    const { files = [], setFiles = () => {}, error, title, location, disabled = false } = props;
     const [parent] = useAutoAnimate();
     // TODO: fix following error during runtime
     // TypeError: undefined is not a function
     const { getRootProps, getInputProps, open, isDragReject, isDragActive } = useDropzone({
         accept: { "image/*": [] },
         multiple: true,
+        disabled: disabled,
         noClick: true,
         noKeyboard: true,
         onDropRejected: () => toast.error("Unsupported file type"),
@@ -176,6 +178,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                                     true,
                                 "border-error text-error": error,
                                 "border-base-300 text-opacity-80 text-base-content": !error,
+                                "opacity-60 cursor-not-allowed hover:!bg-base-200": disabled,
                             })}
                             onClick={open}
                         >

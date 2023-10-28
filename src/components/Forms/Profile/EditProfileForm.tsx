@@ -6,6 +6,7 @@ import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { editProfileAction } from "@/actions/profileActions";
+import { COUNTRIES } from "@/utils/countries";
 import { UpdateProfileSchema } from "@/utils/schemas";
 import { ListingUser, UpdateProfileReq } from "@/utils/types";
 import { ProfileForm } from "./ProfileForm";
@@ -28,18 +29,28 @@ export const EditProfileForm: FC<Props> = (props) => {
             address: {
                 city: userData?.address?.city || "",
                 state: userData?.address?.state || "",
-                country: userData?.address?.country || "LK",
+                country: userData?.address?.country ? COUNTRIES[userData?.address?.country]?.[0] : COUNTRIES[params.locale as string]?.[0],
                 postalCode: userData?.address?.postalCode || "",
             },
             isDealership: userData.isDealership,
-            phoneNumber: userData.phone,
+            phoneNumber: userData?.phone,
             userId: userData.userId,
         },
         mode: "all",
     });
 
+    const country = form.watch("address.country");
+    const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country);
+
     const { mutate: updateSubscriptionMutation, isLoading: isMutating } = useMutation(
-        async (formValues: UpdateProfileReq) => editProfileAction(formValues),
+        async (formValues: UpdateProfileReq) =>
+            editProfileAction({
+                ...formValues,
+                address: {
+                    ...formValues.address,
+                    country: Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country)!,
+                },
+            }),
         {
             onSuccess: () => {
                 if (window?.location?.pathname === `/${params.locale}/dashboard/profile/edit`) {
@@ -61,5 +72,13 @@ export const EditProfileForm: FC<Props> = (props) => {
         },
     );
 
-    return <ProfileForm form={form} isMutating={isMutating} onMutate={(values) => updateSubscriptionMutation(values)} userData={userData} />;
+    return (
+        <ProfileForm
+            form={form}
+            gridClassnames="pt-4"
+            isMutating={isMutating}
+            onMutate={(values) => updateSubscriptionMutation(values)}
+            userData={userData}
+        />
+    );
 };

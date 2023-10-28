@@ -1,8 +1,9 @@
 import { clsx } from "clsx";
 import { FC } from "react";
 import { LinkWithLocale, ListingImage } from "@/components/Common";
-import { getFormattedCurrency, getLocationString, getRandomItem, numberWithCommas, timeAgo, unCamelCase } from "@/utils/helpers";
+import { getFormattedCurrency, getFormattedDistance, getLocationString, getRandomItem, numberWithCommas, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem as ListingItemType } from "@/utils/types";
+import { COUNTRIES } from "@/utils/countries";
 
 interface Props {
     detailed?: boolean;
@@ -14,6 +15,8 @@ interface Props {
 export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted }) => {
     const vehicleImages = item?.vehicle?.vehicleImages || [];
     const image = vehicleImages[0];
+
+    // todo: check how the white overlay loading screen looks like in landing page
 
     const ListingItemContent = (
         <>
@@ -31,18 +34,18 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                         width={450}
                     />
                 ) : (
-                    <div className="aspect-video w-full bg-neutral bg-opacity-50" />
+                    <div className="aspect-video w-full bg-base-200 bg-opacity-50" />
                 )}
 
                 {tinted && <div className="image-hover-tint absolute h-full w-full bg-hero bg-opacity-20 duration-300" />}
 
-                <div className="absolute bottom-0 left-0 mt-5 flex min-h-fit w-full flex-col justify-end bg-gradient-to-t from-neutral to-transparent  px-3 py-0 pt-6">
+                <div className={clsx("absolute bottom-0 left-0 mt-5 flex min-h-fit w-full flex-col justify-end bg-gradient-to-t to-transparent  px-3 py-0 pt-6", item ? "from-neutral" : "from-base-200")}>
                     {item ? (
                         <div className="badge-hover-translucent badge badge-secondary badge-lg font-bold duration-300 image-text-shadow ">
-                            {getFormattedCurrency(item?.price?.amount, item?.price?.currency)}
+                            {getFormattedCurrency(item?.price?.amount, item?.price?.currencySymbol)}
                         </div>
                     ) : (
-                        <div className="badge badge-accent badge-lg w-32 opacity-50" />
+                        <div className="badge badge-accent badge-lg w-32 opacity-30" />
                     )}
 
                     {item ? (
@@ -55,25 +58,25 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                             {item?.title}
                         </div>
                     ) : (
-                        <div className={clsx("my-2 h-8 bg-white opacity-50", getRandomItem(["w-4/5", "w-5/6", "w-9/12"]))} />
+                        <div className={clsx("my-2 h-8 bg-base-300 opacity-50", getRandomItem(["w-4/5", "w-5/6", "w-9/12"]))} />
                     )}
                 </div>
             </figure>
-            <div className={clsx("card-body flex flex-col gap-0  bg-gradient-to-t from-black to-neutral px-3 pb-2 pt-0")}>
+            <div className={clsx("card-body flex flex-col gap-0 bg-gradient-to-t  px-3 pb-2 pt-0",item ? "from-black to-neutral" :"from-base-300 to-base-200")}>
                 {item ? (
-                    <div className="text-sm font-medium text-base-200">{getLocationString(item?.location)}</div>
+                    <div className="text-sm font-medium text-base-200">{getLocationString(item?.location, COUNTRIES[item?.location?.country ?? '']?.[0])}</div>
                 ) : (
-                    <div className={clsx("mt-2 h-3 bg-base-200 opacity-50", getRandomItem(["w-1/2", "w-4/6", "w-5/12"]))} />
+                    <div className={clsx("mt-2 h-3 bg-base-300 opacity-50", getRandomItem(["w-1/2", "w-4/6", "w-5/12"]))} />
                 )}
                 <div className="flex items-end justify-between text-base-300">
                     {item ? (
                         <div className="line-clamp-1 flex-1 text-sm font-light">
                             {`${unCamelCase(item?.vehicle?.condition)} ${
-                                item?.vehicle?.millage ? `| ${numberWithCommas(item?.vehicle?.millage)} km ` : ""
+                                item?.vehicle?.millage ? `| ${getFormattedDistance(item?.vehicle?.millage.distance,item?.location?.country)} ` : ""
                             }| ${unCamelCase(item?.vehicle?.type)}`}
                         </div>
                     ) : (
-                        <div className={clsx("mt-1 h-3 bg-base-200 opacity-50", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />
+                        <div className={clsx("mt-1 h-3 bg-base-300 opacity-50", getRandomItem(["w-3/5", "w-8/12", "w-4/6"]))} />
                     )}
                     {detailed && item?.createdOn && <div className="text-xs font-extralight">{timeAgo(new Date(item?.createdOn))}</div>}
                 </div>

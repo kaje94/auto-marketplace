@@ -8,6 +8,7 @@ import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
 import { ListingImageCarousel } from "./ListingImageCarousel";
 import { ListingKeySpecifications } from "./ListingKeySpecifications";
 import { ListingSellerDetails } from "./ListingSellerDetails";
+import { COUNTRIES } from "@/utils/countries";
 
 interface Props {
     basePath?: string;
@@ -64,27 +65,27 @@ export const ListingDetails: FC<Props> = ({
                                 <div className="mt-1 h-5 w-4/6 animate-pulse bg-base-200" />
                             </>
                         ) : (
-                            <div className="mt-2 text-center text-lg font-bold">{getLocationString(location)}</div>
+                            <div className="mt-2 text-center text-lg font-bold">{getLocationString(location, COUNTRIES[location?.country ?? '']?.[0])}</div>
                         )}
                     </div>
                     <div className="card stat place-items-center bg-primary text-primary-content shadow">
-                        <div className="stat-title text-primary-content">Price</div>
+                        <div className="stat-title text-primary-content">{price?.currencyCode ? `Price (${price?.currencyCode})` : 'Price'}</div>
                         {loading ? (
-                            <div className="h-8 w-4/6 animate-pulse bg-secondary" />
+                            <div className="h-9 w-4/6 animate-pulse bg-secondary" />
                         ) : (
-                            <>
-                                <div className="w-full !break-words text-center text-xl font-extrabold">
-                                    {getFormattedCurrency(price?.amount, price?.currency)}
+                            <div className="flex flex-col items-center justify-center gap-1">
+                                <div className="w-full !break-words text-center text-2xl font-extrabold">
+                                    {getFormattedCurrency(price?.amount, price?.currencySymbol)}
                                 </div>
                                 {price?.isPriceNegotiable && <span className="badge badge-secondary">Negotiable</span>}
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>
 
                 <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Key Specifications</div>
-                    <ListingKeySpecifications loading={loading} vehicle={vehicle} />
+                    <ListingKeySpecifications loading={loading} vehicle={vehicle} countryCode={location?.country}/>
                 </div>
                 <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Features</div>

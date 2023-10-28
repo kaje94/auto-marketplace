@@ -14,13 +14,17 @@ import { useSearchContext } from "@/providers/search-provider";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
-import { PostedListingsFilterReq } from "@/utils/types";
+import { LabelValue, PostedListingsFilterReq, State, VehicleBrand } from "@/utils/types";
+import { getCitiesOfState } from "@/actions/localtionActions";
+import { useQuery } from "@tanstack/react-query";
+import { COUNTRIES } from "@/utils/countries";
 
 const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);
 }, 1000);
 
 const defaultFilter: PostedListingsFilterReq = {
+    State: "",
     Brand: "",
     City: "",
     Condition: "",
@@ -35,19 +39,27 @@ const defaultFilter: PostedListingsFilterReq = {
     YomStartDate: "",
 };
 
-export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
+export const SearchFilters = ({
+    pageLoading,
+    vehicleBrands = [],
+    states = [],
+}: {
+    pageLoading?: boolean;
+    vehicleBrands?: VehicleBrand[];
+    states?: State[];
+}) => {
     const { setNewSearchQuery, hasSearchParams, searchParamsObj, searchParamStr, isLoading } = useSearchContext();
 
     const router = useRouter();
     const params = useParams();
 
-    const { reset, control, watch } = useForm<PostedListingsFilterReq>({
+    const { reset, control, watch, setValue } = useForm<PostedListingsFilterReq>({
         resolver: zodResolver(PostedListingsFilterSchema),
         defaultValues: {
             ...defaultFilter,
             ...searchParamsObj,
-            YomStartDate: searchParamsObj.YomStartDate ? `${getYearFromDateString(searchParamsObj.YomStartDate)}` : undefined,
-            YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate)}` : undefined,
+            YomStartDate: searchParamsObj.YomStartDate ? `${getYearFromDateString(searchParamsObj.YomStartDate as string)}` : undefined,
+            YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate as string)}` : undefined,
         },
         mode: "onChange",
     });
@@ -61,15 +73,16 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
             YomStartDate: formValues.YomStartDate ? convertYearToDateString(formValues.YomStartDate) : undefined,
             YomEndDate: formValues.YomEndDate ? convertYearToDateString(formValues.YomEndDate) : undefined,
         },
-        { skipEmptyString: true, skipNull: true },
+        { skipEmptyString: true, skipNull: true }
     );
 
+    // todo: check if a use effect is needed
     useEffect(() => {
         reset({
             ...defaultFilter,
             ...searchParamsObj,
-            YomStartDate: searchParamsObj.YomStartDate ? `${getYearFromDateString(searchParamsObj.YomStartDate)}` : undefined,
-            YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate)}` : undefined,
+            YomStartDate: searchParamsObj.YomStartDate ? `${getYearFromDateString(searchParamsObj.YomStartDate as string)}` : undefined,
+            YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate as string)}` : undefined,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParamStr]);
@@ -82,7 +95,37 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
     const onResetClick = useCallback(() => {
         setNewSearchQuery("");
         router.push(`/${params.locale}/search`);
+        reset(defaultFilter);
     }, [router, params, setNewSearchQuery]);
+
+    useEffect(() => {
+        if (!states?.some((item) => item.name === formValues.State)) {
+            setValue("State", "");
+            setValue("City", "");
+        }
+    }, [states]);
+
+    const stateList = states?.map((item) => ({ label: item.name, value: item.name }) as LabelValue);
+
+    const stateCode = states.find((item) => item.name === formValues.State)?.stateCode;
+
+    const currencySymbol = COUNTRIES[typeof params.locale === "string" ? params.locale : ""]?.[2];
+
+    const {
+        data: cityList = [],
+        isFetching: isLoadingCities,
+        isError: cityFetchError,
+    } = useQuery({
+        queryFn: () => getCitiesOfState(params.locale as string, stateCode!),
+        enabled: typeof params.locale === "string" && !!stateCode,
+        queryKey: ["country-state-cities", { locale: params.locale as string, stateCode }],
+        select: (data) => data.map((item) => ({ label: item.name, value: item.name }) as LabelValue),
+        onSettled: (data, err) => {
+            if (err || !data?.some((item) => item.label === formValues.City)) {
+                setValue("City", "");
+            }
+        },
+    });
 
     return (
         <aside className="relative top-0 lg:sticky lg:top-7 2xl:top-8">
@@ -106,32 +149,9 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     loading={pageLoading}
                     options={VehicleTypeList}
                     placeholder="Type"
-                    rootClassName="col-span-2"
                     showSelectedTick={false}
+                    rootClassName="col-span-2"
                 />
-                <div className="col-span-2">
-                    <div className="pb-0.5 pl-1 text-sm opacity-70">Price Range</div>
-                    <div className="grid grid-cols-2 gap-2">
-                        <InputController
-                            control={control}
-                            errorAsTooltip
-                            fieldName="MinPrice"
-                            inputPrefix="Rs."
-                            loading={pageLoading}
-                            placeholder="From"
-                            type="number"
-                        />
-                        <InputController
-                            control={control}
-                            errorAsTooltip
-                            fieldName="MaxPrice"
-                            inputPrefix="Rs."
-                            loading={pageLoading}
-                            placeholder="To"
-                            type="number"
-                        />
-                    </div>
-                </div>
                 <AutocompleteController
                     control={control}
                     errorAsTooltip
@@ -141,10 +161,92 @@ export const SearchFilters = ({ pageLoading }: { pageLoading?: boolean }) => {
                     options={VehicleConditionList}
                     placeholder="Condition"
                     showSelectedTick={false}
+                    rootClassName="col-span-2"
                 />
-                <InputController control={control} errorAsTooltip fieldName="City" label="City" loading={pageLoading} placeholder="City" />
-                <InputController control={control} errorAsTooltip fieldName="Brand" label="Brand" loading={pageLoading} placeholder="Brand" />
+                <AutocompleteController
+                    control={control}
+                    errorAsTooltip
+                    fieldName="Brand"
+                    label="Brand"
+                    loading={pageLoading}
+                    options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
+                    placeholder="Toyota, Nissan, Honda, etc"
+                    showSelectedTick={false}
+                />
                 <InputController control={control} errorAsTooltip fieldName="Model" label="Model" loading={pageLoading} placeholder="Model" />
+
+                <InputController
+                    control={control}
+                    errorAsTooltip
+                    fieldName="MinPrice"
+                    label="Minimum Price"
+                    inputPrefix={currencySymbol}
+                    loading={pageLoading}
+                    placeholder="1,000"
+                    type="number"
+                    min={0}
+                    rootClassName="col-span-2"
+                />
+                <InputController
+                    control={control}
+                    errorAsTooltip
+                    fieldName="MaxPrice"
+                    label="Maximum Price"
+                    inputPrefix={currencySymbol}
+                    loading={pageLoading}
+                    placeholder="100,000,000"
+                    type="number"
+                    min={0}
+                    rootClassName="col-span-2"
+                />
+                {stateList?.length > 0 ? (
+                    <AutocompleteController
+                        control={control}
+                        errorAsTooltip
+                        fieldName="State"
+                        label="State/Province"
+                        loading={pageLoading}
+                        options={stateList}
+                        placeholder="Select State"
+                        showSelectedTick={false}
+                        rootClassName="col-span-2"
+                    />
+                ) : (
+                    <InputController
+                        control={control}
+                        errorAsTooltip
+                        fieldName="State"
+                        label="State/Province"
+                        loading={pageLoading}
+                        placeholder="State or Province"
+                        rootClassName="col-span-2"
+                    />
+                )}
+
+                {cityList.length > 0 && !cityFetchError ? (
+                    <AutocompleteController
+                        control={control}
+                        errorAsTooltip
+                        fieldName="City"
+                        label="City"
+                        loading={pageLoading || isLoadingCities}
+                        options={cityList}
+                        placeholder="Select City"
+                        showSelectedTick={false}
+                        rootClassName="col-span-2"
+                    />
+                ) : (
+                    <InputController
+                        control={control}
+                        errorAsTooltip
+                        fieldName="City"
+                        label="City"
+                        loading={pageLoading || isLoadingCities}
+                        placeholder="City"
+                        rootClassName="col-span-2"
+                    />
+                )}
+
                 <div className="col-span-2">
                     <div className="pb-0.5 pl-1 text-sm opacity-70">Manufactured Year Range</div>
                     <div className="grid grid-cols-2 gap-2">

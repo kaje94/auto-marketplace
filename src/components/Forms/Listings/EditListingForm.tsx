@@ -2,26 +2,29 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { editListingAction } from "@/actions/listingActions";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
-import { convertYearToDateString, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
+import { COUNTRIES } from "@/utils/countries";
+import { convertYearToDateString, getDistanceUnit, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
 import { CreateListingSchema } from "@/utils/schemas";
-import { CreateListingReq, EditListingReq, ListingItem, VehicleFeature } from "@/utils/types";
+import { CreateListingReq, EditListingReq, ListingItem, ListingUser, VehicleBrand, VehicleFeature } from "@/utils/types";
 
 interface Props {
+    brands: VehicleBrand[];
     features: VehicleFeature[];
     listingItem: ListingItem;
+    profile?: ListingUser;
     successRedirectPath: string;
+    userId?: string;
 }
 
 export const EditListingForm: FC<Props> = (props) => {
-    const { features, listingItem, successRedirectPath } = props;
+    const { features, listingItem, successRedirectPath, brands, profile, userId } = props;
     const router = useRouter();
     const params = useParams();
-
     const toastId = useRef<string>();
 
     const form = useForm<CreateListingReq>({
@@ -42,9 +45,15 @@ export const EditListingForm: FC<Props> = (props) => {
         async (formValues: EditListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
 
+            const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === formValues?.location?.country);
+
             const requestBody: EditListingReq = {
                 ...formValues,
                 listingId: listingItem.id,
+                location:{
+                    ...formValues.location,
+                    country: countryCode!
+                },
                 vehicle: {
                     ...formValues.vehicle,
                     vehicleImages: vehicleImages,
@@ -77,8 +86,25 @@ export const EditListingForm: FC<Props> = (props) => {
                     toast.success(`Successfully updated the Advert ${getListingTitleFromVehicle(req.vehicle)}`, { id: toastId?.current });
                 }
             },
-        },
+        }
     );
+
+    useEffect(() => {
+        if (form.reset && listingItem?.userId === userId) {
+            const countryItem = COUNTRIES[profile?.address?.country || ""];
+            const distanceUnit = getDistanceUnit(profile?.address?.country);
+            form.reset({
+                location: {
+                    city: profile?.address?.city || "",
+                    state: profile?.address?.state || "",
+                    postalCode: profile?.address?.postalCode || "",
+                    country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+                },
+                price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
+                vehicle: { millage: { unit: distanceUnit } },
+            });
+        }
+    }, [profile, form]);
 
     return (
         <ListingForm
@@ -86,8 +112,20 @@ export const EditListingForm: FC<Props> = (props) => {
             form={form}
             isMutating={isMutating}
             onMutate={(values) => updateListingsMutation({ ...values, listingId: listingItem.id })}
+            profile={profile}
             submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
             title={listingItem?.title}
+            vehicleBrands={brands}
+            isUpdateProfileEnabled={userId === listingItem?.userId}
+            listingUser={
+                userId === listingItem?.userId
+                    ? { email: profile?.email, phoneNumber: profile?.phone, phoneCountryCode: COUNTRIES[profile?.address?.country || ""]?.[3] }
+                    : {
+                          email: listingItem?.user?.email,
+                          phoneNumber: listingItem?.user?.phone,
+                          phoneCountryCode: COUNTRIES[listingItem?.user?.address?.country || ""]?.[3],
+                      }
+            }
         />
     );
 };

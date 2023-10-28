@@ -7,9 +7,8 @@ export const revalidateFeaturesAction = async () => {
     revalidateTag(apiTags.getFeaturesList());
 };
 
-export const revalidateBrandsAndModelsAction = async () => {
+export const revalidateBrandsAction = async () => {
     revalidateTag(apiTags.getVehicleBrands());
-    revalidateTag(apiTags.getVehicleModels());
 };
 
 export const revalidatePosedListingsAction = async () => {

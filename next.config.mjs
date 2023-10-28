@@ -7,13 +7,9 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 const config = {
     reactStrictMode: true,
-    swcMinify: true,
     images: {
         formats: ["image/avif", "image/webp"],
         domains: ["ik.imagekit.io"],
-    },
-    experimental: {
-        serverActions: true,
     },
 };
 export default config;

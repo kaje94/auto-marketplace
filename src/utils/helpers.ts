@@ -70,12 +70,9 @@ export const numberWithCommas = (x: number | string) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const getFormattedCurrency = (amount: number | string, currency: string) =>
-    new Intl.NumberFormat(undefined, {
-        style: "currency",
-        currency: currency || "LKR",
-        minimumFractionDigits: 0,
-    }).format(typeof amount === "string" ? Number(amount) : amount || 0);
+export const getFormattedCurrency = (amount: number | string = 0, currency: string) => `${currency} ${numberWithCommas(amount)}`;
+
+export const getFormattedDistance = (distance: number | string, countryCode: string | undefined) => `${numberWithCommas(distance)} ${getDistanceUnit(countryCode)}`
 
 export const unCamelCase = (str: string = "") => {
     if (typeof str === "string") {
@@ -193,7 +190,7 @@ export const previewUrlToHash = async (previewUrl: string) => {
     return thumbHash;
 };
 
-export const getLocationString = (location?: Location) => {
+export const getLocationString = (location?: Location, countryName?: string) => {
     const itemsArr = [];
     if (location?.city) {
         itemsArr.push(location.city);
@@ -201,12 +198,10 @@ export const getLocationString = (location?: Location) => {
     if (location?.state) {
         itemsArr.push(location.state);
     }
-    if (location?.country) {
-        if (location?.country === "LK") {
-            itemsArr.push("Sri Lanka");
-        } else {
-            itemsArr.push(location.country);
-        }
+    if (countryName) {
+        itemsArr.push(countryName);
+    }else if(location?.country){
+        itemsArr.push(location?.country);
     }
     return itemsArr.join(", ");
 };
@@ -215,15 +210,6 @@ export function getRandomItem<T>(items: T[]): T | undefined {
     return items[Math.floor(Math.random() * items.length)];
 }
 
-export const searchParamsToObject = (searchParams: ReadonlyURLSearchParams): Record<string, string> => {
-    const searchObject: Record<string, string> = {};
-
-    for (const [key, value] of searchParams.entries()) {
-        searchObject[key] = value;
-    }
-
-    return searchObject;
-};
 
 export const timeAgo = (date: Date): string => {
     const currentDate = new Date();
@@ -320,3 +306,5 @@ export const toSEOFriendlyName = (originalName: string, location?: Location): st
 
 export const isIncompleteUserProfile = (profile: ListingUser) =>
     !profile.phone || !profile.address?.city || !profile.address?.state || !profile.address?.country || !profile.address?.postalCode;
+
+export const getDistanceUnit = (countryCode: string | undefined) => (countryCode === "US" ? "mi" : "km");

@@ -124,10 +124,11 @@ export const api = {
         }),
     getVehicleBrands: () =>
         fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()], revalidate: revalidationTime.oneWeek } }),
-    getPostedListings: (req?: PaginatedRequest & PostedListingsFilterReq) =>
-        fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
+    getPostedListings: (locale: string, req?: PaginatedRequest & PostedListingsFilterReq) =>
+        fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted/${locale}?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { revalidate: revalidationTime.thirtyMins, tags: [apiTags.getPostedListings()] },
         }),
+            // todo: remove locale param and handle this in the UI
     getPostedListingItem: (id: ListingIdType) =>
         fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, {
             next: { tags: [apiTags.getPostedListingItem(id)], revalidate: revalidationTime.oneDay },
@@ -215,7 +216,6 @@ export const api = {
 export const apiTags = {
     getFeaturesList: () => "get-features-list",
     getVehicleBrands: () => "get-vehicle-brands",
-    getVehicleModels: () => "get-vehicle-models",
     getFeaturedListings: () => "get-featured-listings",
     getPostedListings: () => "get-posted-listings",
     getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}`,

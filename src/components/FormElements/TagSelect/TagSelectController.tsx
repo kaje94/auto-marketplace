@@ -6,13 +6,14 @@ import { TagSelect } from "./TagSelect";
 
 interface Props {
     control?: Control<any>;
+    disabled?: boolean;
     fieldName: string;
     loading?: boolean;
     loadingPlaceholderCount?: number;
     tags?: { id: number; name: string }[];
 }
 
-export const TagSelectController: FC<Props> = ({ tags = [], fieldName, loading, loadingPlaceholderCount = 10, control }) => {
+export const TagSelectController: FC<Props> = ({ tags = [], fieldName, loading, loadingPlaceholderCount = 10, control, disabled }) => {
     const placeholderWidth = ["w-44", "w-24", "w-32", "w-40", "w-48", "w-28", "w-16", "w-14", "w-10"];
 
     if (loading || !control) {
@@ -28,7 +29,7 @@ export const TagSelectController: FC<Props> = ({ tags = [], fieldName, loading, 
         <Controller
             control={control}
             name={fieldName}
-            render={({ field: { value = [], onChange } }) => <TagSelect onSelect={onChange} selectedTags={value} tags={tags} />}
+            render={({ field: { value = [], onChange } }) => <TagSelect disabled={disabled} onSelect={onChange} selectedTags={value} tags={tags} />}
         />
     );
 };

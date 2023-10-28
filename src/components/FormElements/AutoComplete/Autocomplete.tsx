@@ -67,7 +67,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                     <Combobox.Button className="w-full bg-transparent" onClick={resetQueryIfNoMatch}>
                         <Combobox.Input
                             className={clsx(
-                                "select-bordered select w-full bg-transparent font-normal",
+                                "select select-bordered w-full bg-transparent font-normal",
                                 error && "select-error",
                                 disabled && "text-opacity-90",
                                 selectClassNames,
@@ -89,7 +89,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                     <div className={clsx("dropdown-end dropdown absolute inset-x-0 bottom-0 w-full", open && "dropdown-open")}>
                         <div
                             className={clsx(
-                                "dropdown-content menu z-[1] mt-1 grid max-h-60 w-full overflow-y-auto rounded rounded-t-none bg-base-200 shadow-lg",
+                                "menu dropdown-content z-[1] mt-1 grid max-h-60 w-full overflow-y-auto rounded rounded-t-none bg-base-200 shadow-lg",
                                 gridCols,
                             )}
                         >
@@ -101,7 +101,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                         key={option.value}
                                         className={({ active, selected }) =>
                                             clsx({
-                                                "hover:bg-base-200": true,
+                                                "hover:bg-base-200 w-full truncate line-clamp-1 overflow-hidden": true,
                                                 "font-bold": selected,
                                                 "bg-base-300 hover:bg-base-300": active,
                                             })

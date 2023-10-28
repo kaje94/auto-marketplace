@@ -26,27 +26,41 @@ export interface ControllerProps extends FormFieldControllerProps, ComponentProp
 
 export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {}
 
-const InputWrap = ({ children, inputPrefix, inputSuffix }: { children: ReactNode; inputPrefix?: ReactNode; inputSuffix?: ReactNode }) => {
+const InputWrap = ({
+    children,
+    inputPrefix,
+    inputSuffix,
+    disabled,
+}: {
+    children: ReactNode;
+    disabled?: boolean;
+    inputPrefix?: ReactNode;
+    inputSuffix?: ReactNode;
+}) => {
     return (
         <div className="join join-horizontal w-full">
             {inputPrefix && (
-                <span className="join-item flex items-center border-[1px] border-r-0 border-base-300 bg-base-200 px-3 py-1">{inputPrefix}</span>
+                <span className={clsx("join-item flex items-center bg-base-200 px-3 py-1", !disabled && "border-[1px] border-r-0 border-base-300")}>
+                    {inputPrefix}
+                </span>
             )}
             {children}
             {inputSuffix && (
-                <span className="join-item flex items-center border-[1px] border-l-0 border-base-300 bg-base-200 px-3 py-1">{inputSuffix}</span>
+                <span className={clsx("join-item flex items-center bg-base-200 px-3 py-1", !disabled && "border-[1px] border-l-0 border-base-300")}>
+                    {inputSuffix}
+                </span>
             )}
         </div>
     );
 };
 
 export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-    const { error, inputClassNames, loading, type, inputPrefix, inputSuffix, ...rest } = props;
+    const { error, inputClassNames, loading, type, inputPrefix, inputSuffix, disabled, ...rest } = props;
 
     if (type === "number") {
         return (
             <NumericFormatLoadingContext.Provider value={{ inputClassNames }}>
-                <InputWrap inputPrefix={inputPrefix} inputSuffix={inputSuffix}>
+                <InputWrap disabled={disabled} inputPrefix={inputPrefix} inputSuffix={inputSuffix}>
                     <NumericFormat
                         className={clsx(
                             "input input-bordered  join-item w-full bg-transparent",
@@ -56,7 +70,7 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
                         )}
                         decimalScale={2}
                         decimalSeparator="."
-                        disabled={loading}
+                        disabled={loading || disabled}
                         getInputRef={ref}
                         thousandSeparator=","
                         {...rest}
@@ -68,7 +82,7 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
         );
     }
     return (
-        <InputWrap inputPrefix={inputPrefix} inputSuffix={inputSuffix}>
+        <InputWrap disabled={disabled} inputPrefix={inputPrefix} inputSuffix={inputSuffix}>
             <input
                 className={clsx(
                     "input input-bordered join-item w-full flex-1 bg-transparent",
@@ -76,7 +90,7 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
                     loading && "animate-pulse",
                     inputClassNames,
                 )}
-                disabled={loading}
+                disabled={loading || disabled}
                 ref={ref}
                 type={type}
                 {...rest}

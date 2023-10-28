@@ -42,14 +42,21 @@ const getNumericSchema = (message: string = "Invalid value", minValue: number = 
 
 export const PriceSchema = z.object({
     amount: getNumericSchema("Price amount needs to be a positive number"),
-    currency: z.string().default("LKR"),
+    currencyCode: z.string().min(1, "Currency code is required"),
+    currencySymbol: z.string().min(1, "Currency symbol is required"),
     isPriceNegotiable: z.boolean().default(false),
 });
 
 export const OptionalPriceSchema = z.object({
     amount: getNumericSchema("Price amount needs to be a positive number", 0, "0"),
-    currency: z.string().default("LKR"),
+    currencyCode: z.string().min(1, "Currency code is required"),
+    currencySymbol: z.string().min(1, "Currency symbol is required"),
     isPriceNegotiable: z.boolean().default(false),
+});
+
+export const MilageSchema = z.object({
+    distance: getNumericSchema("Milage needs to be a positive number"),
+    unit: z.string().min(1, "Milage unit is required"),
 });
 
 // todo: set from user's values as default
@@ -98,7 +105,7 @@ export const VehicleSchema = z.object({
     trim: z.string().optional(),
     yearOfManufacture: YearSchema,
     yearOfRegistration: YearSchema,
-    millage: getNumericSchema("Mileage needs to be a positive number"),
+    millage: MilageSchema,
     condition: z.nativeEnum(VehicleConditionTypes, { invalid_type_error: "Invalid Condition Type" }),
     transmission: z.nativeEnum(TransmissionTypes, { invalid_type_error: "Invalid Transmission Type" }),
     fuelType: z.nativeEnum(FuelTypes, { invalid_type_error: "Invalid Fuel Type" }),
@@ -156,6 +163,7 @@ export const PostedListingsFilterSchema = z.object({
     YomEndDate: z.union([z.string(), z.null()]).optional(),
     MinPrice: z.union([getNumericSchema(), z.literal(""), z.null()]).optional(),
     MaxPrice: z.union([getNumericSchema(), z.literal(""), z.null()]).optional(),
+    State: z.string().optional(),
     City: z.string().optional(),
     Brand: z.string().optional(),
     Model: z.string().optional(),
@@ -188,8 +196,8 @@ export const MyListingsFilterSchema = z.object({
 
 export const DashboardListingFilterSchema = MyListingsFilterSchema.extend({
     Title: z.string().optional(),
-    MinPrice: z.union([getNumericSchema(), z.literal("")]).optional(),
-    MaxPrice: z.union([getNumericSchema(), z.literal("")]).optional(),
+    MinPrice: z.union([getNumericSchema('',0), z.literal("")]).optional(),
+    MaxPrice: z.union([getNumericSchema('',0), z.literal("")]).optional(),
     City: z.string().optional(),
     Brand: z.string().optional(),
     Model: z.string().optional(),
