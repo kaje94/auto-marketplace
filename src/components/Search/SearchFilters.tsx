@@ -1,23 +1,24 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import debounce from "lodash.debounce";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { getCitiesOfState } from "@/actions/localtionActions";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
+import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { YearInputController } from "@/components/FormElements/YearInput";
 import { SearchIcon } from "@/icons";
 import { useSearchContext } from "@/providers/search-provider";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
+import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getYearFromDateString } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { LabelValue, PostedListingsFilterReq, State, VehicleBrand } from "@/utils/types";
-import { getCitiesOfState } from "@/actions/localtionActions";
-import { useQuery } from "@tanstack/react-query";
-import { COUNTRIES } from "@/utils/countries";
 
 const debouncedSearchRedirect = debounce((searchQuery: string, router: ReturnType<typeof useRouter>) => {
     router.push(`${window?.location?.pathname}?${searchQuery}`);
@@ -45,8 +46,8 @@ export const SearchFilters = ({
     states = [],
 }: {
     pageLoading?: boolean;
-    vehicleBrands?: VehicleBrand[];
     states?: State[];
+    vehicleBrands?: VehicleBrand[];
 }) => {
     const { setNewSearchQuery, hasSearchParams, searchParamsObj, searchParamStr, isLoading } = useSearchContext();
 
@@ -73,7 +74,7 @@ export const SearchFilters = ({
             YomStartDate: formValues.YomStartDate ? convertYearToDateString(formValues.YomStartDate) : undefined,
             YomEndDate: formValues.YomEndDate ? convertYearToDateString(formValues.YomEndDate) : undefined,
         },
-        { skipEmptyString: true, skipNull: true }
+        { skipEmptyString: true, skipNull: true },
     );
 
     // todo: check if a use effect is needed
@@ -149,8 +150,8 @@ export const SearchFilters = ({
                     loading={pageLoading}
                     options={VehicleTypeList}
                     placeholder="Type"
-                    showSelectedTick={false}
                     rootClassName="col-span-2"
+                    showSelectedTick={false}
                 />
                 <AutocompleteController
                     control={control}
@@ -160,8 +161,8 @@ export const SearchFilters = ({
                     loading={pageLoading}
                     options={VehicleConditionList}
                     placeholder="Condition"
-                    showSelectedTick={false}
                     rootClassName="col-span-2"
+                    showSelectedTick={false}
                 />
                 <AutocompleteController
                     control={control}
@@ -175,28 +176,26 @@ export const SearchFilters = ({
                 />
                 <InputController control={control} errorAsTooltip fieldName="Model" label="Model" loading={pageLoading} placeholder="Model" />
 
-                <InputController
+                <NumberInputController
                     control={control}
                     errorAsTooltip
                     fieldName="MinPrice"
-                    label="Minimum Price"
                     inputPrefix={currencySymbol}
+                    label="Minimum Price"
                     loading={pageLoading}
-                    placeholder="1,000"
-                    type="number"
                     min={0}
+                    placeholder="1,000"
                     rootClassName="col-span-2"
                 />
-                <InputController
+                <NumberInputController
                     control={control}
                     errorAsTooltip
                     fieldName="MaxPrice"
-                    label="Maximum Price"
                     inputPrefix={currencySymbol}
+                    label="Maximum Price"
                     loading={pageLoading}
-                    placeholder="100,000,000"
-                    type="number"
                     min={0}
+                    placeholder="100,000,000"
                     rootClassName="col-span-2"
                 />
                 {stateList?.length > 0 ? (
@@ -208,8 +207,8 @@ export const SearchFilters = ({
                         loading={pageLoading}
                         options={stateList}
                         placeholder="Select State"
-                        showSelectedTick={false}
                         rootClassName="col-span-2"
+                        showSelectedTick={false}
                     />
                 ) : (
                     <InputController
@@ -232,8 +231,8 @@ export const SearchFilters = ({
                         loading={pageLoading || isLoadingCities}
                         options={cityList}
                         placeholder="Select City"
-                        showSelectedTick={false}
                         rootClassName="col-span-2"
+                        showSelectedTick={false}
                     />
                 ) : (
                     <InputController

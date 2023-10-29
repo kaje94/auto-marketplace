@@ -13,6 +13,7 @@ import { DashboardListingFilterSchema } from "@/utils/schemas";
 import { DashboardListFilterReq, LabelValue, UpdateProfileReq, VehicleBrand } from "@/utils/types";
 import { FilterAutoComplete as AutocompleteController } from "./DashboardFilterAutoComplete";
 import { FilterInput as InputController } from "./DashboardFilterInput";
+import { FilterNumberInput as NumberInputController } from "./DashboardFilterNumberInput";
 import { FilterSelect as SelectController } from "./DashboardFilterSelect";
 import { FilterButton } from "./FilterButton";
 import { useDashboardFilter } from "./FilterHooks";
@@ -177,9 +178,9 @@ export const DashboardAllListFilter: FC<{ vehicleBrands?: VehicleBrand[] }> = ({
                                 placeholder="All status types"
                             />
 
-                            <InputController control={control} fieldName="MinPrice" label="Minimum Price" placeholder="Minimum price" type="number" />
+                            <NumberInputController control={control} fieldName="MinPrice" label="Minimum Price" placeholder="Minimum price" />
 
-                            <InputController control={control} fieldName="MaxPrice" label="Maximum Price" placeholder="Maximum price" type="number" />
+                            <NumberInputController control={control} fieldName="MaxPrice" label="Maximum Price" placeholder="Maximum price" />
 
                             <InputController
                                 control={control}

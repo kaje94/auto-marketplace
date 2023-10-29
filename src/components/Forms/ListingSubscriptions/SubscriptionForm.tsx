@@ -4,6 +4,7 @@ import { UseFormReturn } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { DatePickerController } from "@/components/FormElements/DatePicker";
 import { InputController } from "@/components/FormElements/Input";
+import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { YearInputController } from "@/components/FormElements/YearInput";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList, YearSelectMinYear } from "@/utils/constants";
 import { CreateSubscriptionReq } from "@/utils/types";
@@ -148,46 +149,42 @@ export const SubscriptionForm: FC<Props> = (props) => {
                     <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Price Range</div>
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController
+                            <NumberInputController
                                 control={control}
                                 fieldName="minPrice.amount"
                                 inputPrefix="Rs."
                                 label="Minimum Price"
                                 loading={isLoading}
                                 placeholder="1,000,000"
-                                type="number"
                             />
-                            <InputController
+                            <NumberInputController
                                 control={control}
                                 fieldName="maxPrice.amount"
                                 inputPrefix="Rs."
                                 label="Maximum Price"
                                 loading={isLoading}
                                 placeholder="10,000,000"
-                                type="number"
                             />
                         </div>
                     </div>
                     <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Mileage</div>
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController
+                            <NumberInputController
                                 control={control}
                                 fieldName="minMillage"
                                 inputSuffix="KM"
                                 label="Minimum Mileage"
                                 loading={isLoading}
                                 placeholder="10,000"
-                                type="number"
                             />
-                            <InputController
+                            <NumberInputController
                                 control={control}
                                 fieldName="maxMillage"
                                 inputSuffix="KM"
                                 label="Maximum Mileage"
                                 loading={isLoading}
                                 placeholder="1,000,000"
-                                type="number"
                             />
                         </div>
                     </div>

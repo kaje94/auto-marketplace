@@ -7,6 +7,7 @@ import { LinkWithLocale } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
+import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { SelectController } from "@/components/FormElements/Select";
 import { TagSelectController } from "@/components/FormElements/TagSelect";
 import { TextAreaController } from "@/components/FormElements/TextArea";
@@ -162,7 +163,7 @@ export const ListingForm: FC<Props> = (props) => {
                                     placeholder="2010"
                                     required
                                 />
-                                <InputController
+                                <NumberInputController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.millage.distance"
@@ -171,7 +172,6 @@ export const ListingForm: FC<Props> = (props) => {
                                     loading={isLoading}
                                     placeholder="50,000"
                                     required
-                                    type="number"
                                 />
                                 <AutocompleteController
                                     control={control}
@@ -203,7 +203,7 @@ export const ListingForm: FC<Props> = (props) => {
                                     placeholder="Select Fuel Type"
                                     required
                                 />
-                                <InputController
+                                <NumberInputController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.engineCapacity"
@@ -212,7 +212,6 @@ export const ListingForm: FC<Props> = (props) => {
                                     loading={isLoading}
                                     placeholder="1,500"
                                     required
-                                    type="number"
                                 />
                             </div>
                         </div>
@@ -297,7 +296,7 @@ export const ListingForm: FC<Props> = (props) => {
 
                         <div className="card stat bg-base-100 p-4 shadow">
                             <div className="stat-title">Price Details</div>
-                            <InputController
+                            <NumberInputController
                                 control={control}
                                 disabled={isProfileIncomplete}
                                 fieldName="price.amount"
@@ -306,7 +305,6 @@ export const ListingForm: FC<Props> = (props) => {
                                 loading={isLoading}
                                 placeholder="40,000,000"
                                 required
-                                type="number"
                             />
                             <CheckboxController
                                 control={control}
