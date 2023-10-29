@@ -1,14 +1,17 @@
 import { clsx } from "clsx";
 import { FC } from "react";
 import { Avatar } from "@/components/Common/Avatar";
+import { COUNTRIES } from "@/utils/countries";
 import { ListingUser } from "@/utils/types";
 
 interface Props {
     loading?: boolean;
     user?: ListingUser;
+    // todo: add country code to phone
 }
-// change color of email & phone on hover and also underline
+// todo: change color of email & phone on hover and also underline
 export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
+    const countryPhoneCode = COUNTRIES[user?.address?.country || ""]?.[3];
     return (
         <>
             <div className="avatar my-4">
@@ -40,7 +43,12 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                         {user?.phone && (
                             <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`tel:${user.phone}`}>
                                 Contact Number:
-                                <span className="font-semibold text-primary-content">{user.phone}</span>
+                                <span className="font-semibold text-primary-content">
+                                    <>
+                                        <span className="font-light opacity-70">{countryPhoneCode ? `(${countryPhoneCode}) ` : ""}</span>
+                                        {user?.phone ?? "-"}
+                                    </>
+                                </span>
                             </a>
                         )}
                         <div className="badge badge-outline badge-lg mt-2">Car Dealer</div>

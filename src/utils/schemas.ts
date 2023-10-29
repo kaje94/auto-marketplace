@@ -199,6 +199,8 @@ export const DashboardListingFilterSchema = MyListingsFilterSchema.extend({
     MinPrice: z.union([getNumericSchema('',0), z.literal("")]).optional(),
     MaxPrice: z.union([getNumericSchema('',0), z.literal("")]).optional(),
     City: z.string().optional(),
+    State: z.string().optional(),
+    Country: z.string().optional(),
     Brand: z.string().optional(),
     Model: z.string().optional(),
     VehicleType: z.union([z.nativeEnum(VehicleTypes), z.literal("")]).optional(),

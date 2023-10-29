@@ -62,7 +62,7 @@ export const AutocompleteController: FC<ControllerProps> = ({
                         selectClassNames={selectClassNames}
                         setFieldValue={(value: string | number) => field.onChange(value)}
                         showSelectedTick={showSelectedTick}
-                        value={field.value}
+                        value={options?.find((item) => item.value === field.value)}
                     />
                 </FormFieldControllerWrap>
             )}

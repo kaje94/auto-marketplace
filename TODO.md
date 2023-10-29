@@ -6,18 +6,17 @@
 > https://next-s3-upload.codingvalue.com/setup
 
 > API changes
--   [] purpose of passing location details in the listing create api?
 -   [] add a new field `hash` to image entity and have max length of 100(even though actually needed is less than 25)
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
 -   [] vehicle description needs to be at least 1000 characters?
 // new!
--   [] make postal code into alpha numeric (need to be able to save 00500 as a postal code)
--   [] make trim as optional
 -   [] only return name for city api call, only return name and state code for state api call, remove id from country list & detail api call
 -   [] is lease field really necessary?
 -   [] vehicle brands have duplicate values
 -   [] return empty array instead of 404 if no cities or states found
 -   [] state city sql query should also use like instead of ==
+-   [] featured listing needs a country path param
+-   [] user phone and address null in listing details response
 
 > Web app todo list
 
@@ -31,8 +30,6 @@
 -   [] show safety tips similar to ikman under item details description
 -   [] add web3 forms or similar to contact us
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
--   [] add country code as inputPrefix for phone numbers
--   [] show currency as inputPrefix for price inputs
 -   [] avoid session?.user?.sub!
 -   [] verify how emtpy, unauthorized and error component redirects & links work
 -   [] refer create t3 structure and eslint
@@ -41,6 +38,7 @@
 -   [] having debouncer in search inputs in search screen causes issues when page load during typing
 -   [] show expiry date in listings throughout. specially when renewing listings
 -   [] handle when visting posted listing from different country
+-   [] review all dynamic usage and try to use it at higher levels that in lower level
 
 > Need to verify
 -   [] loading bug when changing query (while loading type something) (Added a possible fix)

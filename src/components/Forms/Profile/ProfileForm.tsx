@@ -59,8 +59,8 @@ export const ProfileForm: FC<Props> = (props) => {
         queryFn: () => getStatesOfCountry(countryCode!),
         enabled: !!countryCode,
         queryKey: ["country-states", { locale: countryCode }],
-        onSettled: (data, err) => {
-            if (err || !data?.some((item) => item.name === state)) {
+        onSettled: (data, _) => {
+            if (!!data?.length && !data?.some((item) => item.name === state)) {
                 (form as UseFormReturn<UpdateProfileReq>).setValue("address.state", "");
                 (form as UseFormReturn<UpdateProfileReq>).setValue("address.city", "");
             }
@@ -80,8 +80,8 @@ export const ProfileForm: FC<Props> = (props) => {
         enabled: !!countryCode && !!stateCode,
         queryKey: ["country-state-cities", { locale: countryCode, stateCode }],
         select: (data) => data.map((item) => ({ label: item.name, value: item.name }) as LabelValue),
-        onSettled: (data, err) => {
-            if (err || !data?.some((item) => item.label === city)) {
+        onSettled: (data, _) => {
+            if (!!data?.length && !data?.some((item) => item.label === city)) {
                 (form as UseFormReturn<UpdateProfileReq>).setValue("address.city", "");
             }
         },

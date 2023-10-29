@@ -13,9 +13,10 @@ import { LocalePathParam, SearchParams } from "@/utils/types";
 export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
-    const [session, listings] = await Promise.all([
+    const [session, listings, brands] = await Promise.all([
         getSession(),
         transformListingsListResponse(await api.getListings({ PageNumber: Number(page), ...parsedSearchParams })),
+        api.getVehicleBrands()
     ]);
 
     if (listings.items?.length === 0 && page !== "1") {
@@ -26,7 +27,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
         <DashboardListingsContextProvider>
             <DashboardListHeader
                 addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
-                filter={<DashboardAllListFilter />}
+                filter={<DashboardAllListFilter vehicleBrands={brands}/>}
                 itemCount={listings.totalCount}
             />
             <DashboardAllListingsList basePath="/dashboard/listings" listings={listings} userClaims={session?.user} />

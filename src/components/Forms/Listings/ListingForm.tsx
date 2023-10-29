@@ -30,6 +30,12 @@ interface Props {
     form?: UseFormReturn<CreateListingReq>;
     isLoading?: boolean;
     isMutating?: boolean;
+    isUpdateProfileEnabled?: boolean;
+    listingUser?: {
+        email?: string;
+        phoneCountryCode?: string;
+        phoneNumber?: string;
+    };
     onMutate?: (values: CreateListingReq) => void;
     profile?: ListingUser;
     submitButton?: {
@@ -39,12 +45,6 @@ interface Props {
     };
     title?: string;
     vehicleBrands?: VehicleBrand[];
-    isUpdateProfileEnabled?: boolean;
-    listingUser?: {
-        email?: string;
-        phoneNumber?: string;
-        phoneCountryCode?: string;
-    }
 }
 
 const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: string; value: ReactNode }) => (
@@ -285,7 +285,9 @@ export const ListingForm: FC<Props> = (props) => {
                                     title="Phone Number"
                                     value={
                                         <>
-                                            <span className="font-light opacity-70">{listingUser?.phoneCountryCode ? `${listingUser?.phoneCountryCode} ` : ""}</span>
+                                            <span className="font-light opacity-70">
+                                                {listingUser?.phoneCountryCode ? `(${listingUser?.phoneCountryCode}) ` : ""}
+                                            </span>
                                             {listingUser?.phoneNumber ?? "-"}
                                         </>
                                     }

@@ -6,7 +6,7 @@ import { Vehicle } from "@/utils/types";
 interface Props {
     loading?: boolean;
     vehicle?: Vehicle;
-    countryCode?: string
+    countryCode?: string;
 }
 
 export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryCode }) => {
@@ -19,7 +19,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryC
     if (vehicle?.model) {
         items.push({ label: "Modal", value: vehicle.model });
     }
-        items.push({ label: "Trim / Edition", value: vehicle?.trim || '-' });
+    items.push({ label: "Trim / Edition", value: vehicle?.trim || "-" });
     if (vehicle?.yearOfManufacture) {
         items.push({ label: "Manufactured Year", value: getYearFromDateString(vehicle.yearOfManufacture) });
     }
@@ -30,7 +30,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryC
         items.push({ label: "Condition", value: unCamelCase(vehicle?.condition) });
     }
     if (vehicle?.millage) {
-        items.push({ label: "Mileage", value: getFormattedDistance(vehicle?.millage?.distance,countryCode) });
+        items.push({ label: "Mileage", value: getFormattedDistance(vehicle?.millage?.distance, countryCode) });
     }
     if (vehicle?.transmission) {
         items.push({ label: "Transmission", value: unCamelCase(vehicle?.transmission) });
@@ -50,7 +50,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryC
                             key={i}
                             className={clsx(
                                 "flex animate-pulse flex-col items-center gap-0.5 lg:md:gap-0.5",
-                                i % 2 === 0 ? "lg:items-start" : "lg:items-end",
+                                i % 2 === 0 ? "lg:items-start" : "lg:items-end"
                             )}
                         >
                             <div className={clsx("h-4 w-11 bg-base-200", getRandomItem(placeholderWidth))} />

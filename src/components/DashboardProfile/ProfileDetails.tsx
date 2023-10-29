@@ -81,7 +81,7 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                                 title="Phone Number"
                                 value={
                                     <>
-                                        <span className="font-light opacity-70">{countryPhoneCode ? `${countryPhoneCode} ` : ""}</span>
+                                        <span className="font-light opacity-70">{countryPhoneCode ? `(${countryPhoneCode}) ` : ""}</span>
                                         {profile?.phone ?? "-"}
                                     </>
                                 }

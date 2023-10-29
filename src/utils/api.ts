@@ -116,6 +116,7 @@ const fetchApi = {
     protectedDelete: <TResponse>(endpoint: string, config: RequestInit = {}) =>
         fetchRequest<TResponse>(endpoint, { method: "DELETE", ...config }, true),
 };
+// todo: review all cache clearing logics(mainly ones specific to country)
 
 export const api = {
     getFeaturesList: () =>
@@ -128,7 +129,6 @@ export const api = {
         fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted/${locale}?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { revalidate: revalidationTime.thirtyMins, tags: [apiTags.getPostedListings()] },
         }),
-            // todo: remove locale param and handle this in the UI
     getPostedListingItem: (id: ListingIdType) =>
         fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, {
             next: { tags: [apiTags.getPostedListingItem(id)], revalidate: revalidationTime.oneDay },
