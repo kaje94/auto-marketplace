@@ -35,6 +35,3 @@ export const config = {
         "/((?!api|_next/static|_next/image|assets|images|favicon.ico).*)",
     ],
 };
-
-// todo: check these examples
-// https://github.com/vercel/next.js/issues/41980

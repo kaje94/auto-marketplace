@@ -22,7 +22,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
     return (
         <select
             className={clsx(
-                "select-bordered select bg-transparent font-normal",
+                "select select-bordered bg-transparent font-normal",
                 error && "select-error",
                 loading && "animate-pulse",
                 selectClassName,

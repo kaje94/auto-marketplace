@@ -43,7 +43,7 @@ export const PrevButton = (props: ComponentProps<"button">) => {
     const { children, ...restProps } = props;
 
     return (
-        <button className="btn-circle btn opacity-80 shadow-md" type="button" {...restProps}>
+        <button className="btn btn-circle opacity-80 shadow-md" type="button" {...restProps}>
             <ChevronLeftIcon className="mr-1" />
             {children}
         </button>
@@ -54,7 +54,7 @@ export const NextButton = (props: ComponentProps<"button">) => {
     const { children, ...restProps } = props;
 
     return (
-        <button className="btn-circle btn opacity-80 shadow-md" type="button" {...restProps}>
+        <button className="btn btn-circle opacity-80 shadow-md" type="button" {...restProps}>
             <ChevronRightIcon className="ml-1" />
             {children}
         </button>

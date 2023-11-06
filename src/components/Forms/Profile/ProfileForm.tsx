@@ -117,47 +117,25 @@ export const ProfileForm: FC<Props> = (props) => {
                             required
                         />
 
-                        {stateList?.length > 0 && !stateFetchError ? (
-                            <AutocompleteController
-                                control={control}
-                                fieldName="address.state"
-                                label="State/Province"
-                                loading={isLoadingStates}
-                                options={stateList}
-                                placeholder="Select State"
-                                required
-                            />
-                        ) : (
-                            <InputController
-                                control={control}
-                                fieldName="address.state"
-                                label="State/Province"
-                                loading={isLoading}
-                                placeholder="State or Province"
-                                required
-                            />
-                        )}
+                        <AutocompleteController
+                            control={control}
+                            fieldName="address.state"
+                            label="State/Province"
+                            loading={isLoadingStates}
+                            options={stateList}
+                            placeholder="State or Province Name"
+                            required
+                        />
 
-                        {cityList.length > 0 && !cityFetchError ? (
-                            <AutocompleteController
-                                control={control}
-                                fieldName="address.city"
-                                label="City"
-                                loading={isLoadingCities}
-                                options={cityList}
-                                placeholder="Select City"
-                                required
-                            />
-                        ) : (
-                            <InputController
-                                control={control}
-                                fieldName="address.city"
-                                label="City"
-                                loading={isLoading}
-                                placeholder="City"
-                                required
-                            />
-                        )}
+                        <AutocompleteController
+                            control={control}
+                            fieldName="address.city"
+                            label="City"
+                            loading={isLoadingCities}
+                            options={cityList}
+                            placeholder="City Name"
+                            required
+                        />
 
                         <InputController
                             control={control}

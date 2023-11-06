@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import { FC } from "react";
 import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
+import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
 import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
-import { COUNTRIES } from "@/utils/countries";
 
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
     loading: () => <ContextMenuLoading />,
@@ -23,7 +23,7 @@ interface Props {
 export const DashboardListingItem: FC<Props> = (props) => {
     const { basePath, listingItem = {}, loading, isAdmin } = props;
     const { title, price, description, status, id, vehicle, location, createdOn } = listingItem as ListingItem;
-    const locationStr = getLocationString(location, COUNTRIES[location?.country ?? '']?.[0]);
+    const locationStr = getLocationString(location, COUNTRIES[location?.country ?? ""]?.[0]);
     const priceStr = getFormattedCurrency(price?.amount, price?.currencyCode);
 
     const listingItemContent = (
@@ -33,7 +33,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
             ) : (
                 <figure className="relative h-full overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
                     <ListingImage
-                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
+                        className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
                         image={vehicle?.vehicleImages[0]}
                         location={location}
@@ -42,7 +42,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
-                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{priceStr}</div>
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg absolute scale-110 duration-300">{priceStr}</div>
                     </div>
                 </figure>
             )}

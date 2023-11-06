@@ -2,9 +2,9 @@ import { getSession } from "@auth0/nextjs-auth0/edge";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardNotificationsFilter } from "@/components/DashboardListHeader/DashboardNotificationsFilter";
+import { DashboardNotificationsFilterButton } from "@/components/DashboardListHeader/DashboardNotificationsFilterButton";
 import { DashboardNotificationsList } from "@/components/DashboardNotifications";
-import { DashboardNotificationsContextProvider } from "@/providers/dashboard-notifications-provider";
+import { DashboardNotificationsContextProvider } from "@/providers/DashboardNotificationsContextProvider";
 import { api } from "@/utils/api";
 import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
 import { LocalePathParam, SearchParams } from "@/utils/types";
@@ -20,7 +20,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
 
     return (
         <DashboardNotificationsContextProvider>
-            <DashboardListHeader filter={<DashboardNotificationsFilter />} itemCount={notifications.totalCount} />
+            <DashboardListHeader filter={<DashboardNotificationsFilterButton />} itemCount={notifications.totalCount} />
             <DashboardNotificationsList basePath="/dashboard/notifications" notifications={notifications} userClaims={session?.user} />
         </DashboardNotificationsContextProvider>
     );

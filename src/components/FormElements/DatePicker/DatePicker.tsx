@@ -22,7 +22,7 @@ export const DatePicker = forwardRef<ReactDatePicker, Props>((props, ref) => {
     const { error, inputClassNames, ...rest } = props;
     return (
         <ReactDatePicker
-            className={clsx("input-bordered input w-full bg-transparent", error && "input-error", inputClassNames)}
+            className={clsx("input input-bordered w-full bg-transparent", error && "input-error", inputClassNames)}
             {...rest}
             ref={ref}
         />

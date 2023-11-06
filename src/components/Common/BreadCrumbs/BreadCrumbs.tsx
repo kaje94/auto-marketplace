@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { LinkWithLocale } from "../LinkWithLocale";
+import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 
 interface Props {
     currentPageTitle: string;

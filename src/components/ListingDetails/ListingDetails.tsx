@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { FC } from "react";
+import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
 import { getFormattedCurrency, getLocationString } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
@@ -8,7 +9,6 @@ import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
 import { ListingImageCarousel } from "./ListingImageCarousel";
 import { ListingKeySpecifications } from "./ListingKeySpecifications";
 import { ListingSellerDetails } from "./ListingSellerDetails";
-import { COUNTRIES } from "@/utils/countries";
 
 interface Props {
     basePath?: string;
@@ -65,11 +65,13 @@ export const ListingDetails: FC<Props> = ({
                                 <div className="mt-1 h-5 w-4/6 animate-pulse bg-base-200" />
                             </>
                         ) : (
-                            <div className="mt-2 text-center text-lg font-bold">{getLocationString(location, COUNTRIES[location?.country ?? '']?.[0])}</div>
+                            <div className="mt-2 text-center text-lg font-bold">
+                                {getLocationString(location, COUNTRIES[location?.country ?? ""]?.[0])}
+                            </div>
                         )}
                     </div>
                     <div className="card stat place-items-center bg-primary text-primary-content shadow">
-                        <div className="stat-title text-primary-content">{price?.currencyCode ? `Price (${price?.currencyCode})` : 'Price'}</div>
+                        <div className="stat-title text-primary-content">{price?.currencyCode ? `Price (${price?.currencyCode})` : "Price"}</div>
                         {loading ? (
                             <div className="h-9 w-4/6 animate-pulse bg-secondary" />
                         ) : (
@@ -85,7 +87,7 @@ export const ListingDetails: FC<Props> = ({
 
                 <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Key Specifications</div>
-                    <ListingKeySpecifications loading={loading} vehicle={vehicle} countryCode={location?.country}/>
+                    <ListingKeySpecifications countryCode={location?.country} loading={loading} vehicle={vehicle} />
                 </div>
                 <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Features</div>

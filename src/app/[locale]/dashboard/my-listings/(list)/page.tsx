@@ -2,9 +2,9 @@ import { getSession } from "@auth0/nextjs-auth0/edge";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardMyListFilter } from "@/components/DashboardListHeader/DashboardMyListFilter";
+import { DashboardMyListFilterButton } from "@/components/DashboardListHeader/DashboardMyListFilterButton";
 import { DashboardMyListingsList } from "@/components/DashboardListings/DashboardListingsList";
-import { DashboardMyListingsContextProvider } from "@/providers/dashboard-my-listings-provider";
+import { DashboardMyListingsContextProvider } from "@/providers/DashboardMyListingsContextProvider";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { MyListingsFilterSchema } from "@/utils/schemas";
@@ -24,7 +24,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
         <DashboardMyListingsContextProvider>
             <DashboardListHeader
                 addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
-                filter={<DashboardMyListFilter />}
+                filter={<DashboardMyListFilterButton />}
                 itemCount={listings.totalCount}
             />
             <DashboardMyListingsList basePath="/dashboard/my-listings" listings={listings} userClaims={session?.user} />

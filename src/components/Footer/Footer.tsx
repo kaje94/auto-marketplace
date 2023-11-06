@@ -1,7 +1,7 @@
 "use client";
 import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
-import { LinkWithLocale, Logo } from "../Common";
+import { LinkWithLocale, Logo } from "@/components/Common";
 
 // todo: add a faq page
 // how do i post an advert?

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
+import { LinkWithLocale } from "@/components/Common";
 import { PlusIcon } from "@/icons";
-import { LinkWithLocale } from "../Common";
 
 interface Props {
     addNewButton?: {

@@ -8,7 +8,7 @@ import { StringifiableRecord } from "query-string";
 import { FC } from "react";
 import { setAllNotificationsAsShownAction } from "@/actions/notificationActions";
 import { Empty, Pagination } from "@/components/Common";
-import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
+import { useDashboardMySubscriptionsContext } from "@/providers/DashboardMySubscriptionsContextProvider";
 import { NotificationItems, PaginatedResponse } from "@/utils/types";
 import { DashboardNotificationItem } from "./DashboardNotificationItem";
 

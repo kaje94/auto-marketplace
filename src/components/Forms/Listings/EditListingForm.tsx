@@ -50,9 +50,9 @@ export const EditListingForm: FC<Props> = (props) => {
             const requestBody: EditListingReq = {
                 ...formValues,
                 listingId: listingItem.id,
-                location:{
+                location: {
                     ...formValues.location,
-                    country: countryCode!
+                    country: countryCode!,
                 },
                 vehicle: {
                     ...formValues.vehicle,
@@ -86,7 +86,7 @@ export const EditListingForm: FC<Props> = (props) => {
                     toast.success(`Successfully updated the Advert ${getListingTitleFromVehicle(req.vehicle)}`, { id: toastId?.current });
                 }
             },
-        }
+        },
     );
 
     useEffect(() => {
@@ -111,11 +111,6 @@ export const EditListingForm: FC<Props> = (props) => {
             featureOptions={features}
             form={form}
             isMutating={isMutating}
-            onMutate={(values) => updateListingsMutation({ ...values, listingId: listingItem.id })}
-            profile={profile}
-            submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
-            title={listingItem?.title}
-            vehicleBrands={brands}
             isUpdateProfileEnabled={userId === listingItem?.userId}
             listingUser={
                 userId === listingItem?.userId
@@ -126,6 +121,11 @@ export const EditListingForm: FC<Props> = (props) => {
                           phoneCountryCode: COUNTRIES[listingItem?.user?.address?.country || ""]?.[3],
                       }
             }
+            onMutate={(values) => updateListingsMutation({ ...values, listingId: listingItem.id })}
+            profile={profile}
+            submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
+            title={listingItem?.title}
+            vehicleBrands={brands}
         />
     );
 };

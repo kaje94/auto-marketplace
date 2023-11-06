@@ -35,7 +35,7 @@ export const RevalidateRelatedListings = () => {
 
     return (
         <>
-            <button className="btn-outline btn" disabled={isLoading} onClick={() => setModalVisible(true)}>
+            <button className="btn btn-outline" disabled={isLoading} onClick={() => setModalVisible(true)}>
                 Revalidate related listings
             </button>
             <Modal onVisibleChange={setModalVisible} title="Revalidate related listings" visible={!!modalVisible}>

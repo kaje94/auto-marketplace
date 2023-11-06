@@ -31,7 +31,6 @@
         "embla-carousel-react": "8.0.0-rc14",
         "fast-average-color": "^9.4.0",
         "fslightbox-react": "^1.7.6",
-        "lodash.debounce": "^4.0.8",
         "nanoid": "^5.0.1",
         "next": "14.0.0",
         "postcss": "8.4.23",
@@ -52,7 +51,6 @@
     },
     "devDependencies": {
         "@types/fslightbox-react": "^1.7.4",
-        "@types/lodash.debounce": "^4.0.7",
         "@types/react": "^18.2.33",
         "@types/react-datepicker": "^4.15.0",
         "@types/react-dom": "^18.2.14",
@@ -66,5 +64,8 @@
         "eslint-plugin-tailwindcss": "^3.13.0",
         "eslint-plugin-typescript-sort-keys": "^3.0.0",
         "prettier": "^3.0.3"
+    },
+    "engines": {
+        "node": ">=20.9.0"
     }
 }

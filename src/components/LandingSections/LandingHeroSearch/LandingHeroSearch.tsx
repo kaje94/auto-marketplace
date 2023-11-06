@@ -3,12 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { LinkWithLocale } from "@/components/Common";
+import { AutocompleteController } from "@/components/FormElements/AutoComplete";
+import { InputController } from "@/components/FormElements/Input";
 import { SearchIcon } from "@/icons";
 import { VehicleTypeList } from "@/utils/constants";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { PostedListingsFilterReq } from "@/utils/types";
-import { AutocompleteController } from "../../FormElements/AutoComplete";
-import { InputController } from "../../FormElements/Input";
 
 export const LandingHeroSearch = () => {
     const { control, watch } = useForm<PostedListingsFilterReq>({
@@ -19,7 +19,7 @@ export const LandingHeroSearch = () => {
     const formValues = watch();
 
     return (
-        <div className="mb-8 mt-5 flex w-full flex-col justify-center px-[5%] shadow-xl sm:mb-16 sm:w-auto sm:flex-row sm:px-0 xl:mb-28 2xl:mb-36">
+        <div className="rounded-box mx-[5%] mb-8 mt-5 flex w-full flex-col justify-center shadow-xl sm:mb-16 sm:w-auto sm:flex-row sm:px-0 xl:mb-28 2xl:mb-36">
             <InputController
                 control={control}
                 errorAsTooltip

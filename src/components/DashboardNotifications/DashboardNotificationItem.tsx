@@ -1,9 +1,9 @@
 import { clsx } from "clsx";
 import { FC } from "react";
+import { LinkWithLocale } from "@/components/Common";
 import { NotificationIcon } from "@/icons";
 import { getRandomItem, timeAgo } from "@/utils/helpers";
 import { NotificationItem } from "@/utils/types";
-import { LinkWithLocale } from "../Common";
 
 interface Props {
     loading?: boolean;

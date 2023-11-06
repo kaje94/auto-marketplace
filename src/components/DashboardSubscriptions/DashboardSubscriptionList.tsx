@@ -5,8 +5,8 @@ import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { Dispatch, FC, SetStateAction } from "react";
 import { Empty, Pagination } from "@/components/Common";
-import { useDashboardMySubscriptionsContext } from "@/providers/dashboard-my-subscriptions-provider";
-import { useDashboardSubscriptionsContext } from "@/providers/dashboard-subscriptions-provider";
+import { useDashboardAllSubscriptionsContext } from "@/providers/DashboardAllSubscriptionsProvider";
+import { useDashboardMySubscriptionsContext } from "@/providers/DashboardMySubscriptionsContextProvider";
 import { ListingSubscriptionItems, PaginatedResponse } from "@/utils/types";
 import { DashboardSubscriptionItem } from "./DashboardSubscriptionItem";
 
@@ -73,7 +73,7 @@ export const DashboardMySubscriptionList: FC<Props> = (props) => {
 };
 
 export const DashboardAllSubscriptionList: FC<Props> = (props) => {
-    const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardSubscriptionsContext();
+    const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardAllSubscriptionsContext();
 
     return (
         <DashboardSubscriptionList

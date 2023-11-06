@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import qs from "query-string";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardAllSubscriptionFilter } from "@/components/DashboardListHeader/DashboardAllSubscriptionFilter";
+import { DashboardAllSubscriptionFilterButton } from "@/components/DashboardListHeader/DashboardAllSubscriptionFilterButton";
 import { DashboardAllSubscriptionList } from "@/components/DashboardSubscriptions/DashboardSubscriptionList";
-import { DashboardSubscriptionsContextProvider } from "@/providers/dashboard-subscriptions-provider";
+import { DashboardAllSubscriptionsProvider } from "@/providers/DashboardAllSubscriptionsProvider";
 import { api } from "@/utils/api";
 import { DashboardSubscriptionFilterSchema } from "@/utils/schemas";
 import { LocalePathParam, SearchParams } from "@/utils/types";
@@ -18,13 +18,13 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     }
 
     return (
-        <DashboardSubscriptionsContextProvider>
+        <DashboardAllSubscriptionsProvider>
             <DashboardListHeader
                 addNewButton={{ label: "New Subscription", path: "/dashboard/new-subscription" }}
-                filter={<DashboardAllSubscriptionFilter />}
+                filter={<DashboardAllSubscriptionFilterButton />}
                 itemCount={listingSubscriptions.totalCount}
             />
             <DashboardAllSubscriptionList basePath="/dashboard/subscriptions" listingSubscriptions={listingSubscriptions} />
-        </DashboardSubscriptionsContextProvider>
+        </DashboardAllSubscriptionsProvider>
     );
 }

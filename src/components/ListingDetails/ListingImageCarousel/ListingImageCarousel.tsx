@@ -73,7 +73,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                         onClick={onOpenLightBox}
                                     >
                                         <button
-                                            className="btn-sm btn-circle btn absolute right-1 top-1 z-10 opacity-75 hover:opacity-100 lg:right-3 lg:top-3"
+                                            className="btn btn-circle btn-sm absolute right-1 top-1 z-10 opacity-75 hover:opacity-100 lg:right-3 lg:top-3"
                                             onClick={onOpenLightBox}
                                         >
                                             <MaximizeIcon height={18} width={18} />

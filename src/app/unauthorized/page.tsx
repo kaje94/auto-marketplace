@@ -10,7 +10,7 @@ export default function Page({ searchParams }: SearchParams) {
             subTitle="Access to the resource is currently restricted. It's possible that your session has expired. Please consider logging in again."
             title="User is not authorized"
         >
-            <a className="btn-neutral btn" href={qs.stringifyUrl({ url: "/api/auth/login", query: searchParams })}>
+            <a className="btn btn-neutral" href={qs.stringifyUrl({ url: "/api/auth/login", query: searchParams })}>
                 <LoginIcon className="mr-3" /> Login
             </a>
         </ErrorComponent>

@@ -2,9 +2,9 @@ import { getSession } from "@auth0/nextjs-auth0/edge";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardMySubscriptionFilter } from "@/components/DashboardListHeader/DashboardMySubscriptionFilter";
+import { DashboardMySubscriptionFilterButton } from "@/components/DashboardListHeader/DashboardMySubscriptionFilterButton";
 import { DashboardMySubscriptionList } from "@/components/DashboardSubscriptions/DashboardSubscriptionList";
-import { DashboardSubscriptionsContextProvider } from "@/providers/dashboard-my-subscriptions-provider";
+import { DashboardMySubscriptionsContextProvider } from "@/providers/DashboardMySubscriptionsContextProvider";
 import { api } from "@/utils/api";
 import { DashboardMySubscriptionFilterSchema } from "@/utils/schemas";
 import { LocalePathParam, SearchParams } from "@/utils/types";
@@ -20,13 +20,13 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     }
 
     return (
-        <DashboardSubscriptionsContextProvider>
+        <DashboardMySubscriptionsContextProvider>
             <DashboardListHeader
                 addNewButton={{ label: "New Subscription", path: "/dashboard/new-subscription" }}
-                filter={<DashboardMySubscriptionFilter />}
+                filter={<DashboardMySubscriptionFilterButton />}
                 itemCount={listingSubscriptions.totalCount}
             />
             <DashboardMySubscriptionList basePath="/dashboard/my-subscriptions" listingSubscriptions={listingSubscriptions} />
-        </DashboardSubscriptionsContextProvider>
+        </DashboardMySubscriptionsContextProvider>
     );
 }

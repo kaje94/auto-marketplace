@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
+import { CloseAccountModal } from "@/components/Modals/CloseAccountModal";
 import { TrashIcon } from "@/icons";
-import { CloseAccountModal } from "../Modals/CloseAccountModal";
 
 export const CloseAccountButton = ({ userId }: { userId: string }) => {
     const [modalVisible, setModalVisible] = useState(false);

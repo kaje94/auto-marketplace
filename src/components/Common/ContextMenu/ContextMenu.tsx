@@ -2,8 +2,8 @@
 import { clsx } from "clsx";
 import { FC, ReactNode, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
+import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 import { MenuIcon } from "@/icons";
-import { LinkWithLocale } from "../LinkWithLocale";
 
 export interface ContextMenuItemProp {
     classNames?: string;
@@ -18,7 +18,11 @@ interface Props {
 }
 
 export const ContextMenuLoading: FC = () => {
-    return <MenuIcon className="animate-pulse cursor-progress opacity-10" />;
+    return (
+        <span className="animate-pulse cursor-progress" onClick={(event) => event.preventDefault()}>
+            <MenuIcon className="opacity-40" />
+        </span>
+    );
 };
 
 export const ContextMenu: FC<Props> = ({ menuItems = [] }) => {

@@ -1,9 +1,11 @@
 import { Claims } from "@auth0/nextjs-auth0/edge";
+import { usePathname } from "next/navigation";
 import { Avatar } from "@/components/Common/Avatar";
 import { AdvertIcon, ClipboardIcon, DatabaseIcon, ListIcon, NotificationIcon, RssIcon, UserIcon } from "@/icons";
 import { NavBarLoginButton, NavBarLogoutButton, NavBarMenuLink } from "./NavBarButtons";
 
 export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading?: boolean; notificationCount?: number; userClaims?: Claims }) => {
+    const pathName = usePathname();
     return (
         <div className="relative flex w-12 items-center justify-center">
             {loading ? (
@@ -11,7 +13,7 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
             ) : (
                 <>
                     {userClaims ? (
-                        <div className="dropdown-end dropdown">
+                        <div key={`navbar-menu-${pathName}`} className="dropdown-end dropdown">
                             <label className="avatar btn btn-circle btn-ghost" tabIndex={0}>
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
                                     <Avatar name={userClaims?.name} url={userClaims?.picture} width={40} />

@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { FC } from "react";
+import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 import { LayersIcon } from "@/icons";
-import { LinkWithLocale } from "../LinkWithLocale";
 
 interface EmptyProps {
     button?: {
@@ -16,12 +16,12 @@ interface EmptyProps {
 }
 
 export const Empty: FC<EmptyProps> = ({ iconSize = "lg", button, text = "Nothing to display", subText = "" }) => (
-    <div className="col-span-full flex h-full w-full flex-col items-center justify-center gap-2 py-16 opacity-50 md:px-10">
+    <div className="col-span-full flex w-full flex-col items-center justify-center gap-2 pt-16 opacity-50 md:px-10">
         <LayersIcon
             className={clsx({
                 "text-base-300 mb-3 aspect-square": true,
-                "h-1/2 w-1/2 lg:h-2/5 lg:w-2/5": iconSize === "lg",
-                "h-1/3 w-1/3 lg:h-1/5 lg:w-1/5": iconSize === "sm",
+                "h-1/2 w-1/2 max-w-xs": iconSize === "lg",
+                "h-1/3 w-1/3 max-w-[250px]": iconSize === "sm",
             })}
             strokeWidth={2}
         />

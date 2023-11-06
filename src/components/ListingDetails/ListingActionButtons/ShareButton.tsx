@@ -21,13 +21,13 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
     };
 
     return (
-        <div className="dropdown-top dropdown-end dropdown">
-            <button className={clsx("!btn-block btn gap-2", loading && "animate-pulse")} disabled={loading} tabIndex={0}>
+        <div className="dropdown-end dropdown-top dropdown">
+            <button className={clsx("btn !btn-block gap-2", loading && "animate-pulse")} disabled={loading} tabIndex={0}>
                 <ShareIcon />
                 Share
             </button>
             <ul
-                className="dropdown-content menu rounded-box mb-2 w-11/12 rounded-br-none border-2 border-base-200 bg-base-100 p-2 shadow-xl"
+                className="menu dropdown-content rounded-box mb-2 w-11/12 rounded-br-none border-2 border-base-200 bg-base-100 p-2 shadow-xl"
                 tabIndex={0}
             >
                 <li className="flex cursor-pointer rounded-lg duration-200 hover:bg-base-200">

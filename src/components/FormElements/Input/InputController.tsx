@@ -5,8 +5,8 @@ import { FormFieldControllerWrap } from "@/components/FormElements/Common";
 import { ControllerProps, Input } from "./Input";
 
 export const InputController: FC<ControllerProps> = (props) => {
-    const { label, labelClassNames, rootClassName, loading, required, fieldName, control, errorAsTooltip, ...rest } = props;
-    if (loading || !control) {
+    const { label, labelClassNames, rootClassName, loading, required, fieldName, control, errorAsTooltip, clearable, ...rest } = props;
+    if (!control) {
         return (
             <FormFieldControllerWrap
                 errorAsTooltip={errorAsTooltip}
@@ -30,6 +30,7 @@ export const InputController: FC<ControllerProps> = (props) => {
                     errorAsTooltip={errorAsTooltip}
                     label={label}
                     labelClassNames={labelClassNames}
+                    onClearClick={clearable && field.value ? () => field.onChange("") : undefined}
                     required={required}
                     rootClassName={rootClassName}
                 >

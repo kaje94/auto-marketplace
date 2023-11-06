@@ -30,7 +30,7 @@ export const CreateListingForm = (props: Props) => {
     const form = useForm<CreateListingReq>({
         resolver: zodResolver(CreateListingSchema),
         defaultValues: {
-            vehicle: { vehicleImages: [], featureIds: [], millage: { unit: distanceUnit },trim:"" },
+            vehicle: { vehicleImages: [], featureIds: [], millage: { unit: distanceUnit }, trim: "" },
             location: {
                 city: profile?.address?.city || "",
                 state: profile?.address?.state || "",
@@ -50,9 +50,9 @@ export const CreateListingForm = (props: Props) => {
 
             const requestBody: CreateListingReq = {
                 ...formValues,
-                location:{
+                location: {
                     ...formValues.location,
-                    country: countryCode!
+                    country: countryCode!,
                 },
                 vehicle: {
                     ...formValues.vehicle,
@@ -91,7 +91,7 @@ export const CreateListingForm = (props: Props) => {
     );
 
     useEffect(() => {
-        if(form.reset){
+        if (form.reset) {
             form.reset({
                 location: {
                     city: profile?.address?.city || "",
@@ -110,11 +110,11 @@ export const CreateListingForm = (props: Props) => {
             featureOptions={features}
             form={form}
             isMutating={isMutating}
+            listingUser={{ email: profile?.email, phoneNumber: profile?.phone, phoneCountryCode: countryItem?.[3] }}
             onMutate={createListingsMutation}
             profile={profile}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
             vehicleBrands={brands}
-            listingUser={{ email: profile?.email, phoneNumber: profile?.phone, phoneCountryCode: countryItem?.[3] }}
         />
     );
 };

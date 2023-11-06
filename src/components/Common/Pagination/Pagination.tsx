@@ -2,7 +2,7 @@
 import { clsx } from "clsx";
 import qs, { StringifiableRecord } from "query-string";
 import { FC } from "react";
-import { LinkWithLocale } from "../LinkWithLocale";
+import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 
 interface Props {
     basePath?: string;

@@ -1,17 +1,17 @@
 "use client";
 
 import React, { ReactNode, useContext } from "react";
-import { DashboardMySubscriptionFilterSchema } from "@/utils/schemas";
-import { FiltersContext, useSearchFilters } from "./common";
+import { FiltersContext, useSearchFilters } from "@/components/Filters/FiltersContext";
+import { DashboardSubscriptionFilterSchema } from "@/utils/schemas";
 
-export const useDashboardMySubscriptionsContext = () => {
+export const useDashboardAllSubscriptionsContext = () => {
     const data = useContext(FiltersContext);
     return data;
 };
 
-export const DashboardSubscriptionsContextProvider = ({ children }: { children: ReactNode }) => {
+export const DashboardAllSubscriptionsProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
-    const hasSearchParams = Object.keys(DashboardMySubscriptionFilterSchema.parse(searchParamsObj)).length > 0;
+    const hasSearchParams = Object.keys(DashboardSubscriptionFilterSchema.parse(searchParamsObj)).length > 0;
 
     return (
         <FiltersContext.Provider value={{ newSearchQuery, isLoading, setNewSearchQuery, searchParamsObj, hasSearchParams, searchParamStr }}>

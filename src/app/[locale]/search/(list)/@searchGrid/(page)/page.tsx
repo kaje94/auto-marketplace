@@ -9,7 +9,9 @@ import { LocalePathParam, SearchParams } from "@/utils/types";
 export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = PostedListingsFilterSchema.parse(searchParams);
-    const listings = transformListingsListResponse(await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams }));
+    const listings = transformListingsListResponse(
+        await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams }),
+    );
 
     if (listings.items?.length === 0 && page !== "1") {
         redirect(`/${params.locale}/search?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);

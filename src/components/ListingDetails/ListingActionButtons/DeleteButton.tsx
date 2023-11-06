@@ -17,7 +17,7 @@ export const DeleteButton: FC<Props> = ({ listingItem, isOwner, loading }) => {
     return (
         <>
             <button
-                className={clsx("btn-block btn gap-2", loading && "animate-pulse")}
+                className={clsx("btn btn-block gap-2", loading && "animate-pulse")}
                 disabled={loading}
                 onClick={() => setDeleteModalVisible(true)}
             >

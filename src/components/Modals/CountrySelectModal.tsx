@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { COUNTRIES } from "@/utils/countries";
 import { LabelValue } from "@/utils/types";
-import { AutocompleteController } from "../FormElements/AutoComplete";
 
 interface Props {
     currentLocale: string;

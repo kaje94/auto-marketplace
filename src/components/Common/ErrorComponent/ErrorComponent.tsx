@@ -2,8 +2,8 @@
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
+import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 import { ActivityIcon, HomeIcon, RefreshIcon } from "@/icons";
-import { LinkWithLocale } from "../LinkWithLocale";
 
 interface Props {
     children?: ReactNode;

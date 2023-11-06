@@ -4,9 +4,9 @@ import { getFormattedDistance, getRandomItem, getYearFromDateString, numberWithC
 import { Vehicle } from "@/utils/types";
 
 interface Props {
+    countryCode?: string;
     loading?: boolean;
     vehicle?: Vehicle;
-    countryCode?: string;
 }
 
 export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryCode }) => {
@@ -50,7 +50,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryC
                             key={i}
                             className={clsx(
                                 "flex animate-pulse flex-col items-center gap-0.5 lg:md:gap-0.5",
-                                i % 2 === 0 ? "lg:items-start" : "lg:items-end"
+                                i % 2 === 0 ? "lg:items-start" : "lg:items-end",
                             )}
                         >
                             <div className={clsx("h-4 w-11 bg-base-200", getRandomItem(placeholderWidth))} />

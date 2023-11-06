@@ -65,12 +65,15 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     if (minPrice && maxPrice) {
         subscriptionDetails.push({
             label: "Price Range",
-            value: `${getFormattedCurrency(minPrice.amount, minPrice.currency)}-${getFormattedCurrency(maxPrice.amount, maxPrice.currency)}`,
+            value: `${getFormattedCurrency(minPrice.amount, minPrice.currencySymbol)}-${getFormattedCurrency(
+                maxPrice.amount,
+                maxPrice.currencySymbol,
+            )}`,
         });
     } else if (minPrice) {
-        subscriptionDetails.push({ label: "Minimum Price", value: getFormattedCurrency(minPrice.amount, minPrice.currency) });
+        subscriptionDetails.push({ label: "Minimum Price", value: getFormattedCurrency(minPrice.amount, minPrice.currencySymbol) });
     } else if (maxPrice) {
-        subscriptionDetails.push({ label: "Maximum Price", value: getFormattedCurrency(maxPrice.amount, maxPrice.currency) });
+        subscriptionDetails.push({ label: "Maximum Price", value: getFormattedCurrency(maxPrice.amount, maxPrice.currencySymbol) });
     }
 
     if (minMillage && maxMillage) {

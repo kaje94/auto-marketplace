@@ -5,22 +5,23 @@ import { FormFieldControllerWrap } from "@/components/FormElements/Common";
 import { InputController } from "@/components/FormElements/Input";
 import { Autocomplete, ControllerProps } from "./Autocomplete";
 
-export const AutocompleteController: FC<ControllerProps> = ({
-    loading,
-    label,
-    placeholder,
-    required,
-    options,
-    control,
-    selectClassNames,
-    labelClassNames,
-    rootClassName,
-    fieldName,
-    gridCols,
-    showSelectedTick,
-    disabled,
-    errorAsTooltip,
-}) => {
+export const AutocompleteController: FC<ControllerProps> = (props) => {
+    const {
+        loading,
+        label,
+        placeholder,
+        required,
+        options,
+        control,
+        selectClassNames,
+        labelClassNames,
+        rootClassName,
+        fieldName,
+        gridCols,
+        showSelectedTick,
+        disabled,
+        errorAsTooltip,
+    } = props;
     if (loading || !control) {
         return (
             <InputController
@@ -38,6 +39,10 @@ export const AutocompleteController: FC<ControllerProps> = ({
         );
     }
 
+    if (options?.length === 0) {
+        return <InputController {...props} inputClassNames={props?.selectClassNames?.includes("select-sm") ? "input-sm" : ""} />;
+    }
+
     return (
         <Controller
             control={control}
@@ -52,6 +57,7 @@ export const AutocompleteController: FC<ControllerProps> = ({
                     rootClassName={rootClassName}
                 >
                     <Autocomplete
+                        key={`auto-complete-${field.value}`}
                         disabled={disabled}
                         error={fieldState.error?.message}
                         gridCols={gridCols}

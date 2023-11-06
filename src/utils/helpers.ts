@@ -72,7 +72,8 @@ export const numberWithCommas = (x: number | string) => {
 
 export const getFormattedCurrency = (amount: number | string = 0, currency: string) => `${currency} ${numberWithCommas(amount)}`;
 
-export const getFormattedDistance = (distance: number | string, countryCode: string | undefined) => `${numberWithCommas(distance)} ${getDistanceUnit(countryCode)}`
+export const getFormattedDistance = (distance: number | string, countryCode: string | undefined) =>
+    `${numberWithCommas(distance)} ${getDistanceUnit(countryCode)}`;
 
 export const unCamelCase = (str: string = "") => {
     if (typeof str === "string") {
@@ -200,7 +201,7 @@ export const getLocationString = (location?: Location, countryName?: string) => 
     }
     if (countryName) {
         itemsArr.push(countryName);
-    }else if(location?.country){
+    } else if (location?.country) {
         itemsArr.push(location?.country);
     }
     return itemsArr.join(", ");
@@ -209,7 +210,6 @@ export const getLocationString = (location?: Location, countryName?: string) => 
 export function getRandomItem<T>(items: T[]): T | undefined {
     return items[Math.floor(Math.random() * items.length)];
 }
-
 
 export const timeAgo = (date: Date): string => {
     const currentDate = new Date();

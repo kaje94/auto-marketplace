@@ -2,8 +2,16 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, useState } from "react";
 import { UseFormReset } from "react-hook-form";
-import { DashboardListFilterReq, DashboardNotificationsFilterReq, DashboardSubscriptionFilterReq, MyListingsFilterReq } from "@/utils/types";
+import { COUNTRIES } from "@/utils/countries";
+import {
+    DashboardListFilterReq,
+    DashboardNotificationsFilterReq,
+    DashboardSubscriptionFilterReq,
+    MyListingsFilterReq,
+    PostedListingsFilterReq,
+} from "@/utils/types";
 
+// todo: revisit this!
 export const useDashboardFilter = ({
     reset,
     defaultFilter,
@@ -12,7 +20,12 @@ export const useDashboardFilter = ({
     setNewSearchQuery,
     isLoading,
 }: {
-    defaultFilter: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq | DashboardNotificationsFilterReq;
+    defaultFilter:
+        | MyListingsFilterReq
+        | DashboardListFilterReq
+        | DashboardSubscriptionFilterReq
+        | DashboardNotificationsFilterReq
+        | PostedListingsFilterReq;
     isLoading: boolean;
     newSearchQuery: string;
     reset: UseFormReset<{}>;
@@ -31,9 +44,19 @@ export const useDashboardFilter = ({
     };
 
     const onApplyFilterClick = (
-        values: MyListingsFilterReq | DashboardListFilterReq | DashboardSubscriptionFilterReq | DashboardNotificationsFilterReq,
+        values:
+            | MyListingsFilterReq
+            | DashboardListFilterReq
+            | DashboardSubscriptionFilterReq
+            | DashboardNotificationsFilterReq
+            | PostedListingsFilterReq,
     ) => {
-        const searchQuery = qs.stringify({ ...searchParamsObj, ...values }, { skipEmptyString: true, skipNull: true });
+        let queryValObj: any = { ...searchParamsObj, ...values };
+        if ("Country" in values) {
+            const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === values.Country);
+            queryValObj = { ...queryValObj, Country: countryCode };
+        }
+        const searchQuery = qs.stringify(queryValObj, { skipEmptyString: true, skipNull: true });
         setDropdownOpen(false);
         if (newSearchQuery !== searchQuery) {
             reset(values);
@@ -42,7 +65,7 @@ export const useDashboardFilter = ({
         }
     };
 
-    const handleFilterOpen = (event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+    const handleFilterOpen = (event: React.MouseEvent<HTMLLabelElement | HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
         if (!isLoading) {
             reset({ ...defaultFilter, ...searchParamsObj });

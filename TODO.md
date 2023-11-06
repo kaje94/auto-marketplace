@@ -6,27 +6,24 @@
 > https://next-s3-upload.codingvalue.com/setup
 
 > API changes
--   [] add a new field `hash` to image entity and have max length of 100(even though actually needed is less than 25)
--   [] always sort images to make the preview image as the first image (specially in the detail screen)
 -   [] vehicle description needs to be at least 1000 characters?
 // new!
--   [] only return name for city api call, only return name and state code for state api call, remove id from country list & detail api call
--   [] is lease field really necessary?
--   [] vehicle brands have duplicate values
--   [] return empty array instead of 404 if no cities or states found
--   [] state city sql query should also use like instead of ==
+// informed
 -   [] featured listing needs a country path param
 -   [] user phone and address null in listing details response
+-   [] return empty array instead of 404 if no cities or states found
+-   [] vehicle brands have duplicate values
+-   [] only return name for city api call, only return name and state code for state api call, remove id from country list & detail api call
+-   [] is lease field really necessary?
+-   [] add a new field `hash` to image entity and have max length of 100(even though actually needed is less than 25)
+-   [] always sort images to make the preview image as the first image (specially in the detail screen)
 
 > Web app todo list
 
 -   [] check max length of all strings in schema file
 -   [] add clearable prop to form elements
--   [] check if we can have only one provider for searching
--   [] brand needs to come from API
 -   [] try out the date picker package for year select
 -   [] fix Entire page /search deopted into client-side rendering.
--   [] move user details above specification in user details
 -   [] show safety tips similar to ikman under item details description
 -   [] add web3 forms or similar to contact us
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
@@ -34,15 +31,9 @@
 -   [] verify how emtpy, unauthorized and error component redirects & links work
 -   [] refer create t3 structure and eslint
 -   [] add watermark to uploaded image
--   [] frequently going fowrard and backward in search screen triggers loading bug
--   [] having debouncer in search inputs in search screen causes issues when page load during typing
 -   [] show expiry date in listings throughout. specially when renewing listings
 -   [] handle when visting posted listing from different country
--   [] review all dynamic usage and try to use it at higher levels that in lower level
-
-> Need to verify
--   [] loading bug when changing query (while loading type something) (Added a possible fix)
--   [] fix scroll when page change (always top)
+-   [] car image disapearing when submitting listing form
 
 > Web app performance improvements
 

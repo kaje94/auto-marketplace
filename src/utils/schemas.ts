@@ -127,7 +127,7 @@ export const VehicleSchema = z.object({
 export const vehicleCreateSchema = VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.number()) }));
 
 export const CreateListingSchema = z.object({
-    description: z.string().min(1, "Description is required").max(500, "Description cannot have more than 500 characters"),
+    description: z.string().min(1, "Description is required").max(2000, "Description cannot have more than 500 characters"),
     price: PriceSchema,
     hasOnGoingLease: z.boolean().default(false),
     location: LocationSchema,
@@ -196,8 +196,8 @@ export const MyListingsFilterSchema = z.object({
 
 export const DashboardListingFilterSchema = MyListingsFilterSchema.extend({
     Title: z.string().optional(),
-    MinPrice: z.union([getNumericSchema('',0), z.literal("")]).optional(),
-    MaxPrice: z.union([getNumericSchema('',0), z.literal("")]).optional(),
+    MinPrice: z.union([getNumericSchema("", 0), z.literal("")]).optional(),
+    MaxPrice: z.union([getNumericSchema("", 0), z.literal("")]).optional(),
     City: z.string().optional(),
     State: z.string().optional(),
     Country: z.string().optional(),

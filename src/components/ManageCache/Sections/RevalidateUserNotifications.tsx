@@ -35,7 +35,7 @@ export const RevalidateUserNotifications = () => {
 
     return (
         <>
-            <button className="btn-outline btn" disabled={isLoading} onClick={() => setModalVisible(true)}>
+            <button className="btn btn-outline" disabled={isLoading} onClick={() => setModalVisible(true)}>
                 Revalidate user notifications
             </button>
             <Modal onVisibleChange={setModalVisible} title="Revalidate user notifications" visible={!!modalVisible}>

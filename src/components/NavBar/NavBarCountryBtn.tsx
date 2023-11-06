@@ -15,7 +15,7 @@ export const NavBarCountryBtn = () => {
     return (
         <>
             <button
-                className="btn btn-square !btn-neutral btn-sm opacity-70 hover:opacity-100"
+                className="btn btn-square !btn-neutral btn-sm p-0 text-base opacity-95 hover:opacity-100"
                 disabled={!countryFlag || !!loading}
                 onClick={() => setCountrySelectModalVisible(true)}
             >

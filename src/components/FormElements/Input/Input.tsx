@@ -5,6 +5,7 @@ import { Control } from "react-hook-form";
 import { FormFieldControllerProps, InputPrefixSuffixWrap } from "@/components/FormElements/Common";
 
 export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"input"> {
+    clearable?: boolean;
     control?: Control<any>;
     fieldName: string;
     inputClassNames?: string;

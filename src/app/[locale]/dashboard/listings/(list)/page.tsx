@@ -2,9 +2,9 @@ import { getSession } from "@auth0/nextjs-auth0/edge";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardAllListFilter } from "@/components/DashboardListHeader/DashboardAllListFilter";
+import { DashboardAllListFilterButton } from "@/components/DashboardListHeader/DashboardAllListFilterButton";
 import { DashboardAllListingsList } from "@/components/DashboardListings/DashboardListingsList";
-import { DashboardListingsContextProvider } from "@/providers/dashboard-listings-provider";
+import { DashboardAllListingsContextProvider } from "@/providers/DashboardAllListingsContextProvider";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
@@ -16,7 +16,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     const [session, listings, brands] = await Promise.all([
         getSession(),
         transformListingsListResponse(await api.getListings({ PageNumber: Number(page), ...parsedSearchParams })),
-        api.getVehicleBrands()
+        api.getVehicleBrands(),
     ]);
 
     if (listings.items?.length === 0 && page !== "1") {
@@ -24,13 +24,13 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     }
 
     return (
-        <DashboardListingsContextProvider>
+        <DashboardAllListingsContextProvider>
             <DashboardListHeader
                 addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
-                filter={<DashboardAllListFilter vehicleBrands={brands}/>}
+                filter={<DashboardAllListFilterButton vehicleBrands={brands} />}
                 itemCount={listings.totalCount}
             />
             <DashboardAllListingsList basePath="/dashboard/listings" listings={listings} userClaims={session?.user} />
-        </DashboardListingsContextProvider>
+        </DashboardAllListingsContextProvider>
     );
 }

@@ -1,6 +1,6 @@
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import React, { createContext, useMemo, useState } from "react";
 import queryString from "query-string";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 
 export interface FiltersContextProps {
     hasSearchParams: boolean;
@@ -32,12 +32,15 @@ const searchParamsToObject = (searchParams: ReadonlyURLSearchParams): Record<str
     return searchObject;
 };
 
+// todo: move out?
 export const useSearchFilters = () => {
     const searchParams = useSearchParams();
     const searchParamsObj = searchParamsToObject(searchParams);
-    const searchParamStr = useMemo(() => queryString.stringify(searchParamsObj),[searchParamsObj]);
+    const searchParamStr = useMemo(() => queryString.stringify(searchParamsObj), [searchParamsObj]);
     const [newSearchQuery, setNewSearchQuery] = useState(searchParamStr);
     const isLoading = searchParamStr !== newSearchQuery;
+
+    useEffect(() => setNewSearchQuery(searchParamStr), [searchParamStr]);
 
     return { searchParams, isLoading, searchParamStr, searchParamsObj, newSearchQuery, setNewSearchQuery };
 };

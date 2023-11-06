@@ -2,8 +2,8 @@
 import { clsx } from "clsx";
 import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
+import { LinkWithLocale } from "@/components/Common";
 import { AdvertIcon, ClipboardIcon, DatabaseIcon, ListIcon, NotificationIcon, RssIcon, SettingsIcon, UserIcon } from "@/icons";
-import { LinkWithLocale } from "../Common";
 
 interface Props {
     activePaths?: string[];

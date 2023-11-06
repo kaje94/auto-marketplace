@@ -13,7 +13,7 @@ export default async function Page() {
                     <InputController fieldName="name" inputClassNames="bg-white" label="Name" placeholder="Name" />
                     <InputController fieldName="email" inputClassNames="bg-white" label="Email" placeholder="user@email.com" />
                     <TextAreaController fieldName="message" label="Message" placeholder="Your message..." textAreaClassNames="bg-white" />
-                    <button className="btn-neutral btn mt-6 w-full">Submit</button>
+                    <button className="btn btn-neutral mt-6 w-full">Submit</button>
                 </div>
             </div>
             {["left-10 top-10", "right-10 top-10", "bottom-10 right-10", "bottom-10 left-10"].map((position) => (

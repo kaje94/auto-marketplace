@@ -1,17 +1,17 @@
 "use client";
 
 import React, { ReactNode, useContext } from "react";
-import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
-import { FiltersContext, useSearchFilters } from "./common";
+import { FiltersContext, useSearchFilters } from "@/components/Filters/FiltersContext";
+import { MyListingsFilterSchema } from "@/utils/schemas";
 
-export const useNotificationsContext = () => {
+export const useDashboardMyListingsContext = () => {
     const data = useContext(FiltersContext);
     return data;
 };
 
-export const DashboardNotificationsContextProvider = ({ children }: { children: ReactNode }) => {
+export const DashboardMyListingsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
-    const hasSearchParams = Object.keys(DashboardNotificationsFilterSchema.parse(searchParamsObj)).length > 0;
+    const hasSearchParams = Object.keys(MyListingsFilterSchema.parse(searchParamsObj)).length > 0;
 
     return (
         <FiltersContext.Provider value={{ newSearchQuery, isLoading, setNewSearchQuery, searchParamsObj, hasSearchParams, searchParamStr }}>

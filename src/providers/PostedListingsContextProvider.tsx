@@ -1,15 +1,15 @@
 "use client";
 
 import React, { ReactNode, useContext } from "react";
+import { FiltersContext, useSearchFilters } from "@/components/Filters/FiltersContext";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
-import { FiltersContext, useSearchFilters } from "./common";
 
-export const useSearchContext = () => {
+export const usePostedListingsContext = () => {
     const data = useContext(FiltersContext);
     return data;
 };
 
-export const SearchContextProvider = ({ children }: { children: ReactNode }) => {
+export const PostedListingsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
     const hasSearchParams = Object.keys(PostedListingsFilterSchema.parse(searchParamsObj)).length > 0;
 

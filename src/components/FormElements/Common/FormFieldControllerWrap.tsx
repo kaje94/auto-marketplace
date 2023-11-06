@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
-import { AlertCircleIcon } from "@/icons";
+import { AlertCircleIcon, XCircleIcon } from "@/icons";
 
 export interface FormFieldControllerProps {
     children?: ReactNode;
@@ -8,6 +8,7 @@ export interface FormFieldControllerProps {
     errorAsTooltip?: boolean;
     label?: string;
     labelClassNames?: string;
+    onClearClick?: () => void;
     required?: boolean;
     rootClassName?: string;
 }
@@ -20,8 +21,9 @@ export const FormFieldControllerWrap: FC<FormFieldControllerProps> = ({
     required,
     error,
     errorAsTooltip,
+    onClearClick,
 }) => (
-    <div className={clsx("form-control w-full", rootClassName, !error && !errorAsTooltip && "mb-4")}>
+    <div className={clsx("form-control relative w-full", rootClassName, !error && !errorAsTooltip && "mb-4")}>
         {label && (
             <label className={clsx("label py-0.5", labelClassNames)}>
                 <span className="label-text opacity-70">
@@ -44,6 +46,11 @@ export const FormFieldControllerWrap: FC<FormFieldControllerProps> = ({
             </label>
         )}
 
+        {onClearClick && (
+            <button className="btn btn-circle btn-ghost btn-xs absolute inset-y-0 right-1 my-auto opacity-50 hover:opacity-90" onClick={onClearClick}>
+                <XCircleIcon className="h-5 w-5 text-neutral" />
+            </button>
+        )}
         {children}
 
         {error && !errorAsTooltip && (
