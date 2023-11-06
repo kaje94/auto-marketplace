@@ -152,7 +152,7 @@ export const SearchFilters = ({
                     disabled={isLoading || pageLoading}
                     onClick={handleFilterOpen}
                 >
-                    {applyingFilters ? <span className="loading loading-spinner" /> : <FilterIcon className="ml-1" />}
+                    {applyingFilters ? <span className="loading loading-spinner" /> : <FilterIcon className="-ml-1" />}
                     <span className="ml-2 flex flex-col items-start justify-start">
                         <span>Filters</span>
                         {hasFilters && <span className="text-xs font-light capitalize">Applied</span>}
