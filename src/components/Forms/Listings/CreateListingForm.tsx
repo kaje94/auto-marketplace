@@ -92,16 +92,19 @@ export const CreateListingForm = (props: Props) => {
 
     useEffect(() => {
         if (form.reset) {
-            form.reset({
-                location: {
-                    city: profile?.address?.city || "",
-                    state: profile?.address?.state || "",
-                    postalCode: profile?.address?.postalCode || "",
-                    country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+            form.reset(
+                {
+                    location: {
+                        city: profile?.address?.city || "",
+                        state: profile?.address?.state || "",
+                        postalCode: profile?.address?.postalCode || "",
+                        country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+                    },
+                    price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
+                    vehicle: { millage: { unit: distanceUnit } },
                 },
-                price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
-                vehicle: { millage: { unit: distanceUnit } },
-            });
+                { keepValues: true },
+            );
         }
     }, [profile, form, countryItem, distanceUnit]);
 

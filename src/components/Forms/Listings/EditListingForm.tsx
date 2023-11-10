@@ -93,18 +93,21 @@ export const EditListingForm: FC<Props> = (props) => {
         if (form.reset && listingItem?.userId === userId) {
             const countryItem = COUNTRIES[profile?.address?.country || ""];
             const distanceUnit = getDistanceUnit(profile?.address?.country);
-            form.reset({
-                location: {
-                    city: profile?.address?.city || "",
-                    state: profile?.address?.state || "",
-                    postalCode: profile?.address?.postalCode || "",
-                    country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+            form.reset(
+                {
+                    location: {
+                        city: profile?.address?.city || "",
+                        state: profile?.address?.state || "",
+                        postalCode: profile?.address?.postalCode || "",
+                        country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+                    },
+                    price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
+                    vehicle: { millage: { unit: distanceUnit } },
                 },
-                price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
-                vehicle: { millage: { unit: distanceUnit } },
-            });
+                { keepValues: true },
+            );
         }
-    }, [profile, form]);
+    }, [profile, form, listingItem?.userId, userId]);
 
     return (
         <ListingForm
