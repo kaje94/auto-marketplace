@@ -26,6 +26,8 @@ export const CreateListingForm = (props: Props) => {
     const toastId = useRef<string>();
     const countryItem = COUNTRIES[profile?.address?.country || ""];
     const distanceUnit = getDistanceUnit(profile?.address?.country);
+    const countryCurrencyCode = countryItem?.[1];
+    const countryCurrencySymbol = countryItem?.[2];
 
     const form = useForm<CreateListingReq>({
         resolver: zodResolver(CreateListingSchema),
@@ -37,10 +39,12 @@ export const CreateListingForm = (props: Props) => {
                 postalCode: profile?.address?.postalCode || "",
                 country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : COUNTRIES[params.locale as string]?.[0],
             },
-            price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
+            price: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
         },
         mode: "all",
     });
+
+    console.log("form", form.watch());
 
     const { mutate: createListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateListingReq) => {
@@ -100,13 +104,13 @@ export const CreateListingForm = (props: Props) => {
                         postalCode: profile?.address?.postalCode || "",
                         country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
                     },
-                    price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
+                    price: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
                     vehicle: { millage: { unit: distanceUnit } },
                 },
                 { keepValues: true },
             );
         }
-    }, [profile, form, countryItem, distanceUnit]);
+    }, [profile, form, countryCurrencyCode, countryCurrencySymbol, distanceUnit]);
 
     return (
         <ListingForm

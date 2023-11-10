@@ -26,6 +26,10 @@ export const EditListingForm: FC<Props> = (props) => {
     const router = useRouter();
     const params = useParams();
     const toastId = useRef<string>();
+    const countryItem = COUNTRIES[profile?.address?.country || ""];
+    const distanceUnit = getDistanceUnit(profile?.address?.country);
+    const countryCurrencyCode = countryItem?.[1];
+    const countryCurrencySymbol = countryItem?.[2];
 
     const form = useForm<CreateListingReq>({
         resolver: zodResolver(CreateListingSchema),
@@ -44,7 +48,6 @@ export const EditListingForm: FC<Props> = (props) => {
     const { mutate: updateListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: EditListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
-
             const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === formValues?.location?.country);
 
             const requestBody: EditListingReq = {
@@ -91,23 +94,21 @@ export const EditListingForm: FC<Props> = (props) => {
 
     useEffect(() => {
         if (form.reset && listingItem?.userId === userId) {
-            const countryItem = COUNTRIES[profile?.address?.country || ""];
-            const distanceUnit = getDistanceUnit(profile?.address?.country);
             form.reset(
                 {
                     location: {
                         city: profile?.address?.city || "",
                         state: profile?.address?.state || "",
                         postalCode: profile?.address?.postalCode || "",
-                        country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+                        country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "", // check this
                     },
-                    price: { currencyCode: countryItem?.[1], currencySymbol: countryItem?.[2] },
+                    price: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
                     vehicle: { millage: { unit: distanceUnit } },
                 },
                 { keepValues: true },
             );
         }
-    }, [profile, form, listingItem?.userId, userId]);
+    }, [profile, form, listingItem?.userId, userId, countryCurrencyCode, distanceUnit, countryCurrencySymbol]);
 
     return (
         <ListingForm

@@ -30,7 +30,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryC
         items.push({ label: "Condition", value: unCamelCase(vehicle?.condition) });
     }
     if (vehicle?.millage) {
-        items.push({ label: "Mileage", value: getFormattedDistance(vehicle?.millage?.distance, countryCode) });
+        items.push({ label: "Mileage", value: getFormattedDistance(vehicle?.millage?.distance, vehicle?.millage?.unit) });
     }
     if (vehicle?.transmission) {
         items.push({ label: "Transmission", value: unCamelCase(vehicle?.transmission) });

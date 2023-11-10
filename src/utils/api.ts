@@ -143,8 +143,8 @@ export const api = {
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { tags: [apiTags.getListings()], revalidate: revalidationTime.oneDay },
         }),
-    getFeaturedListings: () =>
-        fetchApi.get<ListingItem[]>("/v1/Listings/featured-listings", {
+    getFeaturedListings: (countryCode: string) =>
+        fetchApi.get<ListingItem[]>(`/v1/Listings/featured-listings/${countryCode}`, {
             next: { tags: [apiTags.getFeaturedListings()], revalidate: revalidationTime.twelveHours },
         }),
     getMyListings: (listingUserId: string, req?: PaginatedRequest & MyListingsFilterReq) =>

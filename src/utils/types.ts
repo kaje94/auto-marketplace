@@ -12,6 +12,7 @@ import {
     ListingIdField,
     ListingSubscriptionIdField,
     LocationSchema,
+    MilageSchema,
     MyListingsFilterSchema,
     PostedListingsFilterSchema,
     PriceSchema,
@@ -53,6 +54,8 @@ export type LabelValue = {
 
 type Price = z.infer<typeof PriceSchema>;
 
+type Milage = z.infer<typeof MilageSchema>;
+
 export type Location = z.infer<typeof LocationSchema>;
 
 export type ListingUser = {
@@ -81,7 +84,6 @@ export type ListingItem = {
     createdOn: string;
     description: string;
     expiryDate: string;
-    hasOnGoingLease: boolean;
     id: ListingIdType;
     location: Location;
     price: Price;
@@ -100,11 +102,11 @@ export type ListingSubscriptionItem = {
     createdOn: string;
     displayName: string;
     id: ListingSubscriptionIdType;
-    maxMillage?: number;
+    maxMillage?: Milage;
     maxPrice?: Price;
     maxYearOfManufacture?: string;
     maxYearOfRegistration?: string;
-    minMillage?: number;
+    minMillage?: Milage;
     minPrice?: Price;
     minYearOfManufacture?: string;
     minYearOfRegistration?: string;
@@ -120,7 +122,7 @@ export type ListingSubscriptionItem = {
 export type NotificationItem = {
     body: string;
     createdOn: string;
-    id: number;
+    id: string;
     isShown: boolean;
     redirectUrl: string;
     title: string;
@@ -156,11 +158,13 @@ export type Country = {
 };
 
 export type State = {
+    id: string;
     name: string;
     stateCode: string;
 };
 
 export type City = {
+    id: string;
     name: string;
 };
 

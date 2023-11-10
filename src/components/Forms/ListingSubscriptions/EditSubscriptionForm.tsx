@@ -2,11 +2,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { editListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
-import { convertYearToDateString } from "@/utils/helpers";
+import { COUNTRIES } from "@/utils/countries";
+import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
 import { CreateSubscriptionReq, EditSubscriptionReq, ListingSubscriptionItem } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
@@ -14,12 +15,17 @@ import { SubscriptionForm } from "./SubscriptionForm";
 interface Props {
     listingSubscriptionItem: ListingSubscriptionItem;
     successRedirectPath: string;
+    userId?: string;
 }
 
 export const EditSubscriptionForm: FC<Props> = (props) => {
-    const { listingSubscriptionItem, successRedirectPath } = props;
+    const { listingSubscriptionItem, successRedirectPath, userId } = props;
     const router = useRouter();
     const params = useParams();
+    const countryItem = COUNTRIES[(params.locale as string) || ""];
+    const distanceUnit = getDistanceUnit(params.locale as string);
+    const countryCurrencyCode = countryItem?.[1];
+    const countryCurrencySymbol = countryItem?.[2];
 
     const toastId = useRef<string>();
 
@@ -38,6 +44,20 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
         mode: "all",
     });
 
+    useEffect(() => {
+        if (form?.reset && listingSubscriptionItem?.userId === userId) {
+            form.reset(
+                {
+                    maxPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+                    minPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+                    minMillage: { unit: distanceUnit },
+                    maxMillage: { unit: distanceUnit },
+                },
+                { keepValues: true },
+            );
+        }
+    }, [form, countryItem, userId, listingSubscriptionItem, countryCurrencyCode, countryCurrencySymbol, distanceUnit]);
+
     const { mutate: updateSubscriptionMutation, isLoading: isMutating } = useMutation(
         async (formValues: EditSubscriptionReq) => {
             const requestBody: EditSubscriptionReq = {
@@ -54,8 +74,8 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
                 model: formValues?.model || undefined,
                 trim: formValues?.trim || undefined,
                 condition: formValues?.condition || undefined,
-                maxMillage: formValues?.maxMillage || undefined,
-                minMillage: formValues.minMillage || undefined,
+                maxMillage: formValues?.maxMillage?.distance ? formValues.maxMillage : undefined,
+                minMillage: formValues?.minMillage?.distance ? formValues.minMillage : undefined,
             };
             return editListingSubscriptionAction(requestBody, listingSubscriptionItem?.userId!);
         },
@@ -87,6 +107,8 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
 
     return (
         <SubscriptionForm
+            countryCurrencySymbol={countryCurrencySymbol}
+            distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
             onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: listingSubscriptionItem.id })}

@@ -226,13 +226,6 @@ export const ListingForm: FC<Props> = (props) => {
                                 placeholder="Description of the vehicle for sale"
                                 required
                             />
-                            <CheckboxController
-                                control={control}
-                                disabled={isProfileIncomplete}
-                                fieldName="hasOnGoingLease"
-                                label="Is there an active lease for the vehicle?"
-                                loading={isLoading}
-                            />
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">

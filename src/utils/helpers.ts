@@ -1,6 +1,5 @@
 import imageCompression from "browser-image-compression";
 import { FastAverageColor } from "fast-average-color";
-import { ReadonlyURLSearchParams } from "next/navigation";
 import qs from "query-string";
 import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3Action, getPresignedS3UrlAction } from "@/actions/imageActions";
@@ -72,8 +71,7 @@ export const numberWithCommas = (x: number | string) => {
 
 export const getFormattedCurrency = (amount: number | string = 0, currency: string) => `${currency} ${numberWithCommas(amount)}`;
 
-export const getFormattedDistance = (distance: number | string, countryCode: string | undefined) =>
-    `${numberWithCommas(distance)} ${getDistanceUnit(countryCode)}`;
+export const getFormattedDistance = (distance: number | string, unit: string) => `${numberWithCommas(distance)} ${unit}`;
 
 export const unCamelCase = (str: string = "") => {
     if (typeof str === "string") {
@@ -125,12 +123,12 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
                 ]);
                 const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
 
-                return { color: `${color.hex}_${hash}`, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
+                return { color: color.hex, hash, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
             } else if (item.deleted && item.name && item.url) {
                 await deleteObjectFromS3Action(item.name);
                 return null;
             }
-            return { color: item.color, isThumbnail: item.isThumbnail, name: item.name, url: item.url };
+            return { color: item.color, hash: item.hash, isThumbnail: item.isThumbnail, name: item.name, url: item.url };
         }),
     );
     return images.filter((item) => !!item?.url) as VehicleImageType[];
@@ -148,8 +146,8 @@ export const transformListingResponse = (itemDetails: ListingItem): ListingItem 
             vehicleImages: sortVehicleImages(
                 itemDetails.vehicle.vehicleImages.map((imageItem) => ({
                     ...imageItem,
-                    averageColor: imageItem?.color?.includes("_") ? imageItem?.color.split("_")[0] : "",
-                    thumbHash: imageItem?.color?.includes("_") ? imageItem?.color.split("_")[1] : imageItem?.color,
+                    averageColor: imageItem?.color,
+                    hash: imageItem?.hash,
                     deleted: false,
                 })),
             ),

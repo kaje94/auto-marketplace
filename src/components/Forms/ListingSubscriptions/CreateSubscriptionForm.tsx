@@ -2,11 +2,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { createListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
-import { convertYearToDateString } from "@/utils/helpers";
+import { COUNTRIES } from "@/utils/countries";
+import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
 import { CreateSubscriptionReq } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
@@ -19,14 +20,36 @@ export const CreateSubscriptionForm = (props: Props) => {
     const { userId } = props;
     const router = useRouter();
     const params = useParams();
-
+    const countryItem = COUNTRIES[(params.locale as string) || ""];
+    const distanceUnit = getDistanceUnit(params.locale as string);
+    const countryCurrencyCode = countryItem?.[1];
+    const countryCurrencySymbol = countryItem?.[2];
     const toastId = useRef<string>();
 
     const form = useForm<CreateSubscriptionReq>({
         resolver: zodResolver(CreateSubscriptionSchema),
-        defaultValues: {},
+        defaultValues: {
+            maxPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+            minPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+            minMillage: { unit: distanceUnit },
+            maxMillage: { unit: distanceUnit },
+        },
         mode: "all",
     });
+
+    useEffect(() => {
+        if (form?.reset) {
+            form.reset(
+                {
+                    maxPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+                    minPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+                    minMillage: { unit: distanceUnit },
+                    maxMillage: { unit: distanceUnit },
+                },
+                { keepValues: true },
+            );
+        }
+    }, [form, countryItem, countryCurrencyCode, countryCurrencySymbol, distanceUnit]);
 
     const { mutate: createSubscriptionMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateSubscriptionReq) => {
@@ -43,8 +66,8 @@ export const CreateSubscriptionForm = (props: Props) => {
                 model: formValues?.model || undefined,
                 trim: formValues?.trim || undefined,
                 condition: formValues?.condition || undefined,
-                maxMillage: formValues?.maxMillage || undefined,
-                minMillage: formValues.minMillage || undefined,
+                maxMillage: formValues?.maxMillage?.distance ? formValues.maxMillage : undefined,
+                minMillage: formValues.minMillage?.distance ? formValues.minMillage : undefined,
             };
 
             return createListingSubscriptionAction(requestBody, userId!);
@@ -73,6 +96,8 @@ export const CreateSubscriptionForm = (props: Props) => {
 
     return (
         <SubscriptionForm
+            countryCurrencySymbol={countryCurrencySymbol}
+            distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
             onMutate={createSubscriptionMutation}

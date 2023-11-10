@@ -3,9 +3,9 @@ import { FC } from "react";
 
 interface Props {
     disabled?: boolean;
-    onSelect?: (item: number[]) => void;
-    selectedTags?: number[];
-    tags?: { id: number; name: string }[];
+    onSelect?: (item: string[]) => void;
+    selectedTags?: string[];
+    tags?: { id: string; name: string }[];
 }
 
 export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], onSelect = () => {}, disabled }) => {

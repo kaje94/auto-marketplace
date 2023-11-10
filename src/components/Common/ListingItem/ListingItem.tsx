@@ -2,15 +2,7 @@ import { clsx } from "clsx";
 import { FC } from "react";
 import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { COUNTRIES } from "@/utils/countries";
-import {
-    getFormattedCurrency,
-    getFormattedDistance,
-    getLocationString,
-    getRandomItem,
-    numberWithCommas,
-    timeAgo,
-    unCamelCase,
-} from "@/utils/helpers";
+import { getFormattedCurrency, getFormattedDistance, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem as ListingItemType } from "@/utils/types";
 
 interface Props {
@@ -92,7 +84,9 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     {item ? (
                         <div className="flex-1 truncate text-sm font-light">
                             {`${unCamelCase(item?.vehicle?.condition)} ${
-                                item?.vehicle?.millage ? `| ${getFormattedDistance(item?.vehicle?.millage.distance, item?.location?.country)} ` : ""
+                                item?.vehicle?.millage
+                                    ? `| ${getFormattedDistance(item?.vehicle?.millage.distance, item?.vehicle?.millage.unit)} `
+                                    : ""
                             }| ${unCamelCase(item?.vehicle?.type)}`}
                         </div>
                     ) : (

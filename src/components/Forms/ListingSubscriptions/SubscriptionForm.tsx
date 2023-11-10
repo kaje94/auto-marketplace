@@ -6,10 +6,12 @@ import { DatePickerController } from "@/components/FormElements/DatePicker";
 import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { YearInputController } from "@/components/FormElements/YearInput";
-import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList, YearSelectMinYear } from "@/utils/constants";
+import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { CreateSubscriptionReq } from "@/utils/types";
 
 interface Props {
+    countryCurrencySymbol?: string;
+    distanceUnit?: string;
     form?: UseFormReturn<CreateSubscriptionReq>;
     isLoading?: boolean;
     isMutating?: boolean;
@@ -22,7 +24,7 @@ interface Props {
 }
 
 export const SubscriptionForm: FC<Props> = (props) => {
-    const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {} } = props;
+    const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, countryCurrencySymbol, distanceUnit } = props;
     const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<CreateSubscriptionReq>;
 
     return (
@@ -152,7 +154,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <NumberInputController
                                 control={control}
                                 fieldName="minPrice.amount"
-                                inputPrefix="Rs."
+                                inputPrefix={countryCurrencySymbol}
                                 label="Minimum Price"
                                 loading={isLoading}
                                 placeholder="1,000,000"
@@ -160,7 +162,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <NumberInputController
                                 control={control}
                                 fieldName="maxPrice.amount"
-                                inputPrefix="Rs."
+                                inputPrefix={countryCurrencySymbol}
                                 label="Maximum Price"
                                 loading={isLoading}
                                 placeholder="10,000,000"
@@ -172,16 +174,16 @@ export const SubscriptionForm: FC<Props> = (props) => {
                         <div className="grid gap-1 sm:grid-cols-2">
                             <NumberInputController
                                 control={control}
-                                fieldName="minMillage"
-                                inputSuffix="KM"
+                                fieldName="minMillage.distance"
+                                inputSuffix={distanceUnit}
                                 label="Minimum Mileage"
                                 loading={isLoading}
                                 placeholder="10,000"
                             />
                             <NumberInputController
                                 control={control}
-                                fieldName="maxMillage"
-                                inputSuffix="KM"
+                                fieldName="maxMillage.distance"
+                                inputSuffix={distanceUnit}
                                 label="Maximum Mileage"
                                 loading={isLoading}
                                 placeholder="1,000,000"

@@ -59,6 +59,11 @@ export const MilageSchema = z.object({
     unit: z.string().min(1, "Milage unit is required"),
 });
 
+export const OptionalMilageSchema = z.object({
+    distance: getNumericSchema("Milage needs to be a positive number", 0, "0"),
+    unit: z.string().min(1, "Milage unit is required"),
+});
+
 // todo: set from user's values as default
 export const LocationSchema = z.object({
     city: z.string().min(1, "City is required"),
@@ -68,21 +73,21 @@ export const LocationSchema = z.object({
 });
 
 export const VehicleImageSchema = z.object({
-    id: z.number().optional(),
+    id: z.string().optional(),
     name: z.string().min(1).optional(),
     url: z.string().url().optional(),
     color: z.string().min(1).optional(),
+    hash: z.string().optional(),
     isThumbnail: z.boolean().optional(),
     // locale file properties
     file: z.any().optional(),
     preview: z.string().optional(),
     averageColor: z.string().optional(),
-    thumbHash: z.string().optional(),
     deleted: z.boolean().default(false).optional(),
 });
 
 export const VehicleFeatureSchema = z.object({
-    id: z.number(),
+    id: z.string(),
     name: z.string().min(1),
 });
 
@@ -94,8 +99,8 @@ const YearSchema = z.string().refine(
     { message: `Year must be between ${YearSelectMinYear} and ${new Date().getFullYear()}` },
 );
 
-export const ListingIdField = z.number();
-export const ListingSubscriptionIdField = z.number();
+export const ListingIdField = z.string();
+export const ListingSubscriptionIdField = z.string();
 
 export const VehicleSchema = z.object({
     id: ListingIdField.optional(),
@@ -124,12 +129,11 @@ export const VehicleSchema = z.object({
     features: z.array(VehicleFeatureSchema),
 });
 
-export const vehicleCreateSchema = VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.number()) }));
+export const vehicleCreateSchema = VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.string()) }));
 
 export const CreateListingSchema = z.object({
     description: z.string().min(1, "Description is required").max(2000, "Description cannot have more than 500 characters"),
     price: PriceSchema,
-    hasOnGoingLease: z.boolean().default(false),
     location: LocationSchema,
     vehicle: vehicleCreateSchema,
 });
@@ -148,8 +152,8 @@ export const CreateSubscriptionSchema = z.object({
     maxYearOfManufacture: z.union([YearSchema, z.literal(""), z.null()]).optional(),
     minYearOfRegistration: z.union([YearSchema, z.literal(""), z.null()]).optional(),
     maxYearOfRegistration: z.union([YearSchema, z.literal(""), z.null()]).optional(),
-    minMillage: z.union([getNumericSchema("Minimum mileage needs to be a positive number"), z.literal(""), z.null()]).optional(),
-    maxMillage: z.union([getNumericSchema("Minimum mileage needs to be a positive number"), z.literal(""), z.null()]).optional(),
+    minMillage: OptionalMilageSchema.optional(),
+    maxMillage: OptionalMilageSchema.optional(),
     condition: z.union([z.nativeEnum(VehicleConditionTypes, { invalid_type_error: "Invalid Condition Type" }), z.literal(""), z.null()]).optional(),
     minPrice: OptionalPriceSchema.optional(),
     maxPrice: OptionalPriceSchema.optional(),

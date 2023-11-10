@@ -64,7 +64,7 @@ export const ListingsCarousel = (props: Props) => {
                                 <div
                                     key="view-more"
                                     className={clsx(
-                                        "rounded-box relative w-[calc(75%)] min-w-0 flex-none shadow  duration-300 hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
+                                        "rounded-box relative min-h-[200px] w-[calc(75%)] min-w-0 flex-none shadow  duration-300 hover:shadow-lg sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]",
                                         tinted && "hover:shadow-neutral",
                                     )}
                                 >

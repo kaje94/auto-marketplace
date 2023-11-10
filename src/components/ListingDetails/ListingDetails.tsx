@@ -31,7 +31,7 @@ export const ListingDetails: FC<Props> = ({
     showSellerDetails = true,
     basePath,
 }) => {
-    const { price, vehicle, location, user, title, description, status, id, createdOn, hasOnGoingLease } = itemDetails as ListingItem;
+    const { price, vehicle, location, user, title, description, status, id, createdOn } = itemDetails as ListingItem;
 
     return (
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
@@ -52,7 +52,6 @@ export const ListingDetails: FC<Props> = ({
                     <p className={clsx({ "mt-2 w-full whitespace-pre-line text-sm font-medium": true, "animate-pulse h-40 bg-base-200": loading })}>
                         {description}
                     </p>
-                    {hasOnGoingLease && <div className="badge badge-ghost badge-sm mt-4">Has Ongoing Lease</div>}
                 </div>
             </div>
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-3" : "lg:col-span-3")}>

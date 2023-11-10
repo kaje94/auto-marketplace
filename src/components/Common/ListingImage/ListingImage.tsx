@@ -15,10 +15,10 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
 
     useEffect(() => {
         // todo: remove this error throwing
-        if (!image?.thumbHash) {
+        if (!image?.hash) {
             throw new Error("image?.thumbHash is empty");
         }
-        setBlurDataURL(thumbHashToDataUrl(image?.thumbHash));
+        setBlurDataURL(thumbHashToDataUrl(image?.hash));
     }, [image]);
 
     const seoFriendlyName = toSEOFriendlyName(title, location);

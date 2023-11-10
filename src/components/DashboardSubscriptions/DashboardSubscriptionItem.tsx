@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
-import { getFormattedCurrency, getRandomItem, getRandomNumber, numberWithCommas, timeAgo, unCamelCase } from "@/utils/helpers";
+import { getFormattedCurrency, getFormattedDistance, getRandomItem, getRandomNumber, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingSubscriptionItem } from "@/utils/types";
 
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {
@@ -76,12 +76,15 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
         subscriptionDetails.push({ label: "Maximum Price", value: getFormattedCurrency(maxPrice.amount, maxPrice.currencySymbol) });
     }
 
-    if (minMillage && maxMillage) {
-        subscriptionDetails.push({ label: "Mileage Range", value: `${numberWithCommas(minMillage)} km-${numberWithCommas(maxMillage)} km` });
-    } else if (minMillage) {
-        subscriptionDetails.push({ label: "Minimum Mileage", value: `${numberWithCommas(minMillage)} km` });
-    } else if (maxMillage) {
-        subscriptionDetails.push({ label: "Maximum Mileage", value: `${numberWithCommas(maxMillage)} km` });
+    if (minMillage?.distance && maxMillage?.distance) {
+        subscriptionDetails.push({
+            label: "Mileage Range",
+            value: `${getFormattedDistance(minMillage.distance, minMillage.unit)}-${getFormattedDistance(maxMillage.distance, maxMillage.unit)}`,
+        });
+    } else if (minMillage?.distance) {
+        subscriptionDetails.push({ label: "Minimum Mileage", value: getFormattedDistance(minMillage.distance, minMillage.unit) });
+    } else if (maxMillage?.distance) {
+        subscriptionDetails.push({ label: "Maximum Mileage", value: getFormattedDistance(maxMillage.distance, maxMillage.unit) });
     }
 
     if (minYearOfManufacture && maxYearOfManufacture) {
