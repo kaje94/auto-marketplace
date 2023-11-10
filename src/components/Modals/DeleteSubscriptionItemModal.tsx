@@ -17,7 +17,7 @@ export const DeleteSubscriptionItemModal = (props: Props) => {
 
     const toastId = useRef<string>();
 
-    const { mutate, isLoading } = useMutation((id: number) => deleteListingSubscriptionAction(id, userId!), {
+    const { mutate, isLoading } = useMutation((id: string) => deleteListingSubscriptionAction(id, userId!), {
         onMutate: () => {
             setVisible(false);
             toastId.current = toast.loading(`Deleting subscription ${displayName}...`);

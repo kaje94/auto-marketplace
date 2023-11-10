@@ -21,7 +21,7 @@ export const DeleteListingItemModal = (props: Props) => {
     const router = useRouter();
     const params = useParams();
 
-    const { mutate, isLoading } = useMutation((id: number) => deleteListingAction(id, listingUserId!), {
+    const { mutate, isLoading } = useMutation((id: string) => deleteListingAction(id, listingUserId!), {
         onSuccess: (_, id) => {
             if (
                 [

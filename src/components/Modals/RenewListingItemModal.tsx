@@ -16,7 +16,7 @@ export const RenewListingItemModal = (props: Props) => {
     const { id: listingId, title: listingTitle, userId } = listingItem as ListingItem;
     const toastId = useRef<string>();
 
-    const { mutate, isLoading } = useMutation((id: number) => renewListingAction(id, userId!), {
+    const { mutate, isLoading } = useMutation((id: string) => renewListingAction(id, userId!), {
         onMutate: () => {
             setVisible(false);
             toastId.current = toast.loading(`Renewing advert ${listingTitle}...`);
