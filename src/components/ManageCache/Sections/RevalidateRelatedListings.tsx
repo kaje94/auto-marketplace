@@ -10,7 +10,7 @@ import { revalidateRelatedListingsAction } from "@/actions/cacheActions";
 import { Modal, ModalFooter } from "@/components/Common";
 import { InputController } from "@/components/FormElements/Input";
 
-const RevalidateRelatedListingsSchema = z.object({ listingId: z.coerce.number() });
+const RevalidateRelatedListingsSchema = z.object({ listingId: z.coerce.string() });
 
 type RevalidateRelatedListingsReq = z.infer<typeof RevalidateRelatedListingsSchema>;
 
