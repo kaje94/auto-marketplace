@@ -31,7 +31,8 @@ export const Footer: FC = () => {
                     <p className="w-full text-center text-sm font-light opacity-90 md:text-left">Connecting Car Enthusiasts since 2023</p>
                 </div>
                 <div className="flex flex-col items-start gap-1 text-left opacity-90 md:items-end md:text-right">
-                    <div className="footer-title">Company</div>\ <a className="link-hover link">About us</a>
+                    <div className="footer-title">Company</div>
+                    <a className="link-hover link">About us</a>
                     <a className="link-hover link">Contact us</a>
                     <LinkWithLocale className="link-hover link" href="/key-features">
                         Key Features
