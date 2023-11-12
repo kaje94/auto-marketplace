@@ -37,7 +37,7 @@ export const NavBarClient = ({
         <>
             <div
                 className={clsx({
-                    "container mx-auto p-4 xl:p-7 2xl:p-8 flex items-center justify-center !pb-0": true,
+                    "container mx-auto p-4 xl:p-7 2xl:p-8 flex items-center justify-center !pb-2": true,
                     "absolute top-0 left-0 right-0": isLandingPage,
                 })}
             >

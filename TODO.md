@@ -33,7 +33,8 @@
 -   [] add watermark to uploaded image
 -   [] show expiry date in listings throughout. specially when renewing listings
 -   [] handle when visting posted listing from different country
--   [] car image disapearing when submitting listing form
+-   [] brandNew is shown as camel case in create form
+-   [] show counter in textarea listing create
 
 > Web app performance improvements
 
