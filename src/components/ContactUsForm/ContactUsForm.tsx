@@ -81,6 +81,7 @@ export const ContactUsForm = ({ session }: { session?: Session | null }) => {
                 inputClassNames="bg-white"
                 label="Email"
                 placeholder="user@email.com"
+                type="email"
             />
             <InputController
                 control={control}
