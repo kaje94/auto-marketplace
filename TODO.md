@@ -34,8 +34,7 @@
 -   [] show expiry date in listings throughout. specially when renewing listings
 -   [] handle when visting posted listing from different country
 -   [] show counter in textarea listing create
--   [] brandNew is shown as camel case in create form
--   [] Failed to update the advert Alfa Romeo Teset 2010. 'Country' must not be empty.
+-   [] brind "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
 
 > Web app performance improvements
 

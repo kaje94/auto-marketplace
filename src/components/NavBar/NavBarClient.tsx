@@ -37,13 +37,13 @@ export const NavBarClient = ({
         <>
             <div
                 className={clsx({
-                    "container mx-auto p-4 xl:p-7 2xl:p-8 flex items-center justify-center !pb-2": true,
+                    "container mx-auto p-0 sm:p-2 xl:p-7 2xl:p-8 flex items-center justify-center !pb-2": true,
                     "absolute top-0 left-0 right-0": isLandingPage,
                 })}
             >
                 <div
                     className={clsx(
-                        "navbar rounded-box relative z-20 min-h-[70px] items-center justify-between gap-0 text-neutral-content shadow shadow-neutral min-[360px]:gap-4",
+                        "navbar relative z-20 min-h-[70px] items-center justify-between gap-0 rounded-none text-neutral-content shadow shadow-neutral sm:rounded-box min-[360px]:gap-4",
                         isLandingPage ? "bg-transparent !shadow-xl" : "bg-neutral",
                     )}
                 >

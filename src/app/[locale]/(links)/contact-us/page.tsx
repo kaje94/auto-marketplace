@@ -20,10 +20,10 @@ export default async function Page() {
     const session = await getSession();
 
     return (
-        <div className="container relative mx-auto mb-5 px-2 py-8 md:px-4 lg:px-10">
-            <div className="container grid w-full gap-4 xl:grid-cols-3">
-                <div className="p-4 xl:col-span-2 ">
-                    <h3 className={clsx(displayFont.className, "text-2xl lg:text-4xl xl:mb-6")}>Contact Us</h3>
+        <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
+            <div className="grid w-full gap-4 md:gap-6 xl:grid-cols-3 xl:gap-8">
+                <div className="xl:col-span-2 ">
+                    <h3 className={clsx(displayFont.className, "mb-4 text-2xl lg:text-4xl xl:mb-6")}>Contact Us</h3>
                     <p className="opacity-70">
                         Please use the form below to reach out to us. We&quot;ll get back to you as soon as possible. You can also directly get in
                         touch with us by dropping us a message at&nbsp;
@@ -34,7 +34,7 @@ export default async function Page() {
                     </p>
                     <ContactUsForm session={session} />
                 </div>
-                <div className="flex flex-col justify-center gap-2 p-4">
+                <div className="flex flex-col justify-center gap-2">
                     <ContactUsItem
                         desc="Our team is committed to providing you with exceptional service and support. Whether you have a question, need assistance, or
                         want to share your feedback, we're here for you."

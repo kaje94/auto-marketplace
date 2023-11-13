@@ -24,11 +24,11 @@ const FeatureItem = ({
     </div>
 );
 
-export default async function Page() {
+export default function Page() {
     return (
-        <div className="container mx-auto mb-5 px-2 py-8 md:px-4 lg:px-10 ">
-            <h3 className={clsx(displayFont.className, "p-4 py-2 text-2xl md:p-4 lg:text-center lg:text-4xl xl:mb-6")}>Key Features</h3>
-            <div className="grid grid-cols-1 gap-8 p-4 lg:grid-cols-2 ">
+        <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
+            <h3 className={clsx(displayFont.className, "mb-4 text-2xl lg:text-center lg:text-4xl xl:mb-6")}>Key Features</h3>
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
                 <Image
                     alt="feature-1-image"
                     className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"

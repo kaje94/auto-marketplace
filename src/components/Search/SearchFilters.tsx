@@ -106,7 +106,7 @@ export const SearchFilters = ({
         <div className={clsx("flex flex-col items-center gap-2 pt-4 lg:pt-8", pageLoading && "animate-pulse")}>
             <div
                 className={clsx(
-                    "rounded-box relative flex w-full flex-col items-end justify-end shadow-2xl sm:w-auto sm:flex-row sm:px-0",
+                    "rounded-box relative flex w-full flex-col items-end justify-end sm:w-auto sm:flex-row sm:px-0",
                     pageLoading && "opacity-50",
                 )}
             >
