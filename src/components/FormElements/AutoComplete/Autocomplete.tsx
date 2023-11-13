@@ -9,7 +9,14 @@ import { CheckIcon } from "@/icons";
 import { unCamelCase } from "@/utils/helpers";
 import { LabelValue } from "@/utils/types";
 
-const Virtuoso = dynamic(() => import("react-virtuoso").then((mod) => mod.Virtuoso));
+const Virtuoso = dynamic(() => import("react-virtuoso").then((mod) => mod.Virtuoso), {
+    loading: () => (
+        <div className="flex h-24 items-center justify-center">
+            <span className="loading loading-spinner" />
+        </div>
+    ),
+    ssr: false,
+});
 
 export interface ControllerProps extends FormFieldControllerProps {
     control: Control<any>;
@@ -85,7 +92,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                 ) : (
                                     <Combobox.Options className="h-fit">
                                         <Virtuoso
-                                            className="!h-60 overflow-y-auto"
+                                            className="overflow-y-auto"
                                             itemContent={(index) => {
                                                 const option = filteredOptions[index];
                                                 if (option === undefined) {
@@ -122,6 +129,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                                     </Combobox.Option>
                                                 );
                                             }}
+                                            style={{ height: filteredOptions.length > 6 ? 240 : 36 * filteredOptions.length }}
                                             totalCount={filteredOptions.length}
                                         />
                                     </Combobox.Options>
