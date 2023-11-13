@@ -1,9 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useReCaptcha } from "next-recaptcha-v3";
 import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { reportListingAction } from "@/actions/listingActions";
+import { validateRecaptchaAction } from "@/actions/recaptchaActions";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { InputController } from "@/components/FormElements/Input";
 import { SelectController } from "@/components/FormElements/Select";
@@ -22,6 +24,7 @@ interface Props {
 }
 
 export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail, setVisible = () => {} }: Props) => {
+    const { executeRecaptcha } = useReCaptcha();
     const toastId = useRef<string>();
     const defaultForm = useMemo<ReportListingReq>(
         () => ({ listingId: listingId!, message: "", reason: ListingReportReason.Spam, emailAddress: userEmail ?? "" }),
@@ -35,7 +38,9 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
     });
 
     const { mutate, isLoading } = useMutation(
-        (req: ReportListingReq) => {
+        async (req: ReportListingReq) => {
+            const token = await executeRecaptcha("report_listing_form_submit");
+            await validateRecaptchaAction(token);
             return reportListingAction(req);
         },
         {
