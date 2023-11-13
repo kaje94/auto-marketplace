@@ -12,7 +12,7 @@ export const validateRecaptchaAction = async (token: string) => {
     });
     const responseJson: RecaptchaErrorResponse | RecaptchaSuccessResponse = await res.json();
 
-    if (responseJson.success && responseJson.score >= 0.8) {
+    if (responseJson.success && responseJson.score >= 0.7) {
         return true;
     }
     throw new Error("Failed to validate with Recaptcha");
