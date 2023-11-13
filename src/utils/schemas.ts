@@ -132,7 +132,7 @@ export const VehicleSchema = z.object({
 export const vehicleCreateSchema = VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.string()) }));
 
 export const CreateListingSchema = z.object({
-    description: z.string().min(1, "Description is required").max(2000, "Description cannot have more than 500 characters"),
+    description: z.string().min(1, "Description is required").max(2000, "Description cannot have more than 2000 characters"),
     price: PriceSchema,
     location: LocationSchema,
     vehicle: vehicleCreateSchema,
@@ -250,4 +250,11 @@ export const UpdateProfileSchema = z.object({
         postalCode: z.string().min(1, "Postal code is required"),
     }),
     phoneNumber: z.string().min(1, "Contact number is required").regex(phoneRegex, "Invalid phone number"),
+});
+
+export const ContactUsSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    email: z.string().min(1, "Email is required").email(),
+    subject: z.string().min(1, "Subject is required").max(300, "Subject cannot have more than 300 characters"),
+    message: z.string().min(1, "Message is required").max(5000, "Message cannot have more than 5000 characters"),
 });

@@ -1,3 +1,4 @@
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 import { Toaster } from "react-hot-toast";
 import { ScrollToTop } from "@/components/Common/ScrollToTop";
 import { Footer } from "@/components/Footer";
@@ -6,6 +7,7 @@ import { NavBar } from "@/components/NavBar";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ChildrenProps } from "@/utils/types";
 import { standardFont } from "./fonts";
+
 import "./globals.css";
 
 export const runtime = "edge";
@@ -23,7 +25,9 @@ export default function RootLayout({ children }: ChildrenProps) {
                 <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 }, duration: 5000 }} />
                 <ReactQueryProvider>
                     <NavBar />
-                    <main>{children}</main>
+                    <ReCaptchaProvider>
+                        <main>{children}</main>
+                    </ReCaptchaProvider>
                     <Footer />
                     <WelcomeModal />
                 </ReactQueryProvider>

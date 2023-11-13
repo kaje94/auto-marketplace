@@ -43,7 +43,7 @@ export const NavBarClient = ({
             >
                 <div
                     className={clsx(
-                        "navbar rounded-box relative z-20 min-h-[70px] items-center justify-between gap-0 text-neutral-content shadow shadow-neutral min-[340px]:gap-4",
+                        "navbar rounded-box relative z-20 min-h-[70px] items-center justify-between gap-0 text-neutral-content shadow shadow-neutral min-[360px]:gap-4",
                         isLandingPage ? "bg-transparent !shadow-xl" : "bg-neutral",
                     )}
                 >

@@ -17,6 +17,7 @@
 -   [] is lease field really necessary?
 -   [] add a new field `hash` to image entity and have max length of 100(even though actually needed is less than 25)
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
+-   [] bot detection in auth0 enabled(recaptcha)
 
 > Web app todo list
 
@@ -25,7 +26,6 @@
 -   [] try out the date picker package for year select
 -   [] fix Entire page /search deopted into client-side rendering.
 -   [] show safety tips similar to ikman under item details description
--   [] add web3 forms or similar to contact us
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] avoid session?.user?.sub!
 -   [] verify how emtpy, unauthorized and error component redirects & links work
@@ -35,6 +35,7 @@
 -   [] handle when visting posted listing from different country
 -   [] brandNew is shown as camel case in create form
 -   [] show counter in textarea listing create
+-   [] hCAPTCHA or recaptcha for contact us, report ads, and login
 
 > Web app performance improvements
 

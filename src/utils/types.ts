@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { ListingStatusTypes, NotificationTypes, SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "./enum";
 import {
+    ContactUsSchema,
     CreateListingSchema,
     CreateSubscriptionSchema,
     DashboardListingFilterSchema,
@@ -229,3 +230,5 @@ export type ListingSubscriptionIdType = z.infer<typeof ListingSubscriptionIdFiel
 export type ToggleSubscriptionReq = z.infer<typeof ToggleSubscriptionSchema>;
 
 export type UpdateProfileReq = z.infer<typeof UpdateProfileSchema>;
+
+export type ContactUsSchemaReq = z.infer<typeof ContactUsSchema>;
