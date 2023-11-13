@@ -33,9 +33,9 @@
 -   [] add watermark to uploaded image
 -   [] show expiry date in listings throughout. specially when renewing listings
 -   [] handle when visting posted listing from different country
--   [] brandNew is shown as camel case in create form
 -   [] show counter in textarea listing create
--   [] hCAPTCHA or recaptcha for contact us, report ads, and login
+-   [] brandNew is shown as camel case in create form
+-   [] Failed to update the advert Alfa Romeo Teset 2010. 'Country' must not be empty.
 
 > Web app performance improvements
 

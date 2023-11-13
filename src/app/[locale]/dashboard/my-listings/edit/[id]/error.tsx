@@ -10,7 +10,7 @@ export default function Error(props: ErrorPageProps) {
                 links={[
                     { href: "/", title: "Home" },
                     { title: "Dashboard" },
-                    { title: "My Adverts", href: "/dashboard/ny-listings" },
+                    { title: "My Adverts", href: "/dashboard/my-listings" },
                     { title: "Advert Item" },
                 ]}
             />

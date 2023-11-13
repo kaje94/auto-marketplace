@@ -28,6 +28,13 @@ export interface Props extends Pick<ControllerProps, "selectClassNames" | "place
     value?: LabelValue;
 }
 
+/*
+todo:
+useAutocomplete.js:210 MUI: The value provided to useAutocomplete is invalid.
+None of the options match with `"2010"`.
+You can use the `isOptionEqualToValue` prop to customize the equality test.
+*/
+
 export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => {
     const {
         error,

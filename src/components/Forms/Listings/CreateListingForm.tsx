@@ -44,8 +44,6 @@ export const CreateListingForm = (props: Props) => {
         mode: "all",
     });
 
-    console.log("form", form.watch());
-
     const { mutate: createListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);

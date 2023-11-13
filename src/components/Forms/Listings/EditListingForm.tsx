@@ -35,6 +35,10 @@ export const EditListingForm: FC<Props> = (props) => {
         resolver: zodResolver(CreateListingSchema),
         defaultValues: {
             ...listingItem,
+            location: {
+                ...listingItem.location,
+                country: listingItem.location?.country ? COUNTRIES[listingItem.location?.country]?.[0] : COUNTRIES[params.locale as string]?.[0],
+            },
             vehicle: {
                 ...listingItem.vehicle,
                 yearOfManufacture: new Date(new Date(listingItem.vehicle.yearOfManufacture).getFullYear(), 0, 1).getFullYear().toString(),
