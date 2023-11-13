@@ -57,7 +57,6 @@ export const AutocompleteController: FC<ControllerProps> = (props) => {
                     rootClassName={rootClassName}
                 >
                     <Autocomplete
-                        key={`auto-complete-${field.value}`}
                         disabled={disabled}
                         error={fieldState.error?.message}
                         gridCols={gridCols}
@@ -68,7 +67,7 @@ export const AutocompleteController: FC<ControllerProps> = (props) => {
                         selectClassNames={selectClassNames}
                         setFieldValue={(value: string | number) => field.onChange(value)}
                         showSelectedTick={showSelectedTick}
-                        value={options?.find((item) => item.value === field.value)}
+                        value={field.value}
                     />
                 </FormFieldControllerWrap>
             )}
