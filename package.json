@@ -13,8 +13,6 @@
     },
     "dependencies": {
         "@auth0/nextjs-auth0": "^3.1.0",
-        "@aws-sdk/client-s3": "^3.421.0",
-        "@aws-sdk/s3-request-presigner": "^3.421.0",
         "@formkit/auto-animate": "^0.8.0",
         "@headlessui/react": "^1.7.17",
         "@hookform/resolvers": "^3.1.1",

@@ -258,3 +258,13 @@ export const ContactUsSchema = z.object({
     subject: z.string().min(1, "Subject is required").max(300, "Subject cannot have more than 300 characters"),
     message: z.string().min(1, "Message is required").max(5000, "Message cannot have more than 5000 characters"),
 });
+
+export const GenerateS3SignedUrl = z.object({
+    imageMetaDatas: z.array(
+        z.object({
+            key: z.string(),
+            fileType: z.string(),
+            fileSize: z.number(),
+        }),
+    ),
+});

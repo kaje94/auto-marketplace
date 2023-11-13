@@ -2,7 +2,7 @@ import imageCompression from "browser-image-compression";
 import { FastAverageColor } from "fast-average-color";
 import qs from "query-string";
 import * as ThumbHash from "thumbhash";
-import { deleteObjectFromS3Action, getPresignedS3UrlAction } from "@/actions/imageActions";
+import { deleteObjectFromS3Action, getPresignedS3UrlsAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
 import { ListingItem, ListingItems, ListingUser, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
 
@@ -38,7 +38,7 @@ export const getYearFromDateString = (dateStr: string) => {
     return new Date(dateStr).getFullYear();
 };
 
-export const uploadToS3 = async (file: File, url: string, key: string, bucket: string, region: string, previewUrl: string) => {
+export const uploadToS3 = async (file: File, url: string, key: string, bucket: string, region: string) => {
     const buffer = await file.arrayBuffer();
 
     await new Promise<void>((resolve, reject) => {
@@ -106,32 +106,68 @@ export const thumbHashToDataUrl = (thumbHash?: string) => {
 };
 
 export const transformImagesToPost = async (files: VehicleImageType[]): Promise<VehicleImageType[]> => {
-    const images = await Promise.all(
-        files.map(async (item) => {
-            if (item.file && item.preview && !item.deleted) {
-                const fac = new FastAverageColor();
-                const compressedFile = await imageCompression(item.file as File, {
+    const filesToUpload: VehicleImageType[] = [];
+    const filesToDelete: VehicleImageType[] = [];
+    const existingFiles: VehicleImageType[] = [];
+    const uploadedFiles: VehicleImageType[] = [];
+
+    files.forEach((item) => {
+        if (item.file && item.preview && !item.deleted) {
+            filesToUpload.push(item);
+        } else if (item.deleted && item.name && item.url) {
+            filesToDelete.push(item);
+        } else {
+            existingFiles.push({ color: item.color, hash: item.hash, isThumbnail: item.isThumbnail, name: item.name, url: item.url });
+        }
+    });
+
+    if (filesToDelete.length > 0) {
+        await deleteObjectFromS3Action(filesToDelete.map((item) => item.name!));
+    }
+    if (filesToUpload.length > 0) {
+        const fac = new FastAverageColor();
+        const imageHashesAndColors = await Promise.all(
+            filesToUpload.map((item) => Promise.all([previewUrlToHash(item.preview!), fac.getColorAsync(item.preview!)])),
+        );
+        const compressedFiles: File[] = await Promise.all(
+            filesToUpload.map((item) =>
+                imageCompression(item.file as File, {
                     fileType: "image/webp",
                     initialQuality: 0.7,
                     maxWidthOrHeight: 1920,
                     maxSizeMB: 0.5,
-                });
-                const [hash, { url, key, bucket, region }, color] = await Promise.all([
-                    previewUrlToHash(item.preview),
-                    getPresignedS3UrlAction(compressedFile.type, compressedFile?.length),
-                    fac.getColorAsync(item.preview),
-                ]);
-                const uploadedResp = await uploadToS3(compressedFile, url, key, bucket, region, item.preview);
+                }),
+            ),
+        );
+        const presignedUrlRes = await getPresignedS3UrlsAction(compressedFiles.map((item) => ({ fileSize: item.length, filetype: item.type })));
+        const uploadedUrls = await Promise.all(
+            compressedFiles.map((item, index) => {
+                const presignedRes = presignedUrlRes[index];
+                if (!presignedRes) {
+                    throw new Error("Failed to find presigned url for image");
+                }
+                return uploadToS3(item, presignedRes.url!, presignedRes.key, presignedRes?.bucket!, presignedRes?.region!);
+            }),
+        );
 
-                return { color: color.hex, hash, isThumbnail: item.isThumbnail, name: key, url: uploadedResp.url };
-            } else if (item.deleted && item.name && item.url) {
-                await deleteObjectFromS3Action(item.name);
-                return null;
+        compressedFiles.forEach((_item, index) => {
+            const fileToUpload = filesToUpload[index];
+            const presignedRes = presignedUrlRes[index];
+            const uploadedUrl = uploadedUrls[index];
+            const colorAndHash = imageHashesAndColors[index];
+            if (!colorAndHash || !uploadedUrl || !presignedRes || !fileToUpload) {
+                throw new Error("Failed to find presigned url for image");
             }
-            return { color: item.color, hash: item.hash, isThumbnail: item.isThumbnail, name: item.name, url: item.url };
-        }),
-    );
-    return images.filter((item) => !!item?.url) as VehicleImageType[];
+            uploadedFiles.push({
+                color: colorAndHash[1].hex,
+                hash: colorAndHash[0],
+                isThumbnail: fileToUpload.isThumbnail,
+                name: presignedRes.key,
+                url: uploadedUrl.url,
+            });
+        });
+    }
+    return [...existingFiles, ...uploadedFiles];
 };
 
 export const transformListingsListResponse = (listings: PaginatedResponse & ListingItems): PaginatedResponse & ListingItems => {

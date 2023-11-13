@@ -14,6 +14,8 @@ import {
     DashboardSubscriptionFilterReq,
     EditListingReq,
     EditSubscriptionReq,
+    GenerateS3SignedUrlReq,
+    GetPresignedS3UrlsResponse,
     ListingIdType,
     ListingItem,
     ListingItems,
@@ -211,6 +213,9 @@ export const api = {
         fetchApi.get<City[]>(`/v1/Locations/countries/${countryCode}/states/${stateCode}/cities`, {
             next: { tags: [apiTags.getCities()], revalidate: revalidationTime.oneWeek },
         }),
+    generateS3SignedUrls: (body: GenerateS3SignedUrlReq) =>
+        fetchApi.protectedPost<BodyInit, GetPresignedS3UrlsResponse>(`/v1/Images/generate-signed-urls`, JSON.stringify(body)),
+    deleteS3Image: (imageKey: string) => fetchApi.protectedDelete<void>(`/v1/Images/${imageKey}`),
 };
 
 export const apiTags = {
