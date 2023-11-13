@@ -17,7 +17,6 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
     labelClassNames,
     rootClassName,
     fieldName,
-    gridCols,
     disabled,
     errorAsTooltip,
 }) => {
@@ -60,7 +59,6 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
                     <Autocomplete
                         disabled={disabled}
                         error={fieldState.error?.message}
-                        gridCols={gridCols}
                         onBlur={field.onBlur}
                         options={years}
                         placeholder={placeholder}

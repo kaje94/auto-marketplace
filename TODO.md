@@ -36,7 +36,6 @@
 -   [] show counter in textarea listing create
 -   [] brandNew is shown as camel case in create form
 -   [] Failed to update the advert Alfa Romeo Teset 2010. 'Country' must not be empty.
--   [] add virtualization to autocomplete
 
 > Web app performance improvements
 

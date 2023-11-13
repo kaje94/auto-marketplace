@@ -17,7 +17,6 @@ export const AutocompleteController: FC<ControllerProps> = (props) => {
         labelClassNames,
         rootClassName,
         fieldName,
-        gridCols,
         showSelectedTick,
         disabled,
         errorAsTooltip,
@@ -59,7 +58,6 @@ export const AutocompleteController: FC<ControllerProps> = (props) => {
                     <Autocomplete
                         disabled={disabled}
                         error={fieldState.error?.message}
-                        gridCols={gridCols}
                         onBlur={field.onBlur}
                         options={options}
                         placeholder={placeholder}
