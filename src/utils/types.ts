@@ -8,6 +8,7 @@ import {
     DashboardMySubscriptionFilterSchema,
     DashboardNotificationsFilterSchema,
     DashboardSubscriptionFilterSchema,
+    DeleteS3Images,
     EditListingSchema,
     EditSubscriptionSchema,
     GenerateS3SignedUrl,
@@ -146,9 +147,11 @@ export type PaginatedResponse = {
 };
 
 export type GetPresignedS3UrlsResponse = {
-    bucket: "string";
-    region: "string";
-    url: "string";
+    bucket: string;
+    expiryTime: string;
+    key: string;
+    region: string;
+    url: string;
 }[];
 
 export type PaginatedRequest = {
@@ -241,3 +244,5 @@ export type UpdateProfileReq = z.infer<typeof UpdateProfileSchema>;
 export type ContactUsSchemaReq = z.infer<typeof ContactUsSchema>;
 
 export type GenerateS3SignedUrlReq = z.infer<typeof GenerateS3SignedUrl>;
+
+export type DeleteS3ImagesReq = z.infer<typeof DeleteS3Images>;

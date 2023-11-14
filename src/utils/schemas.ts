@@ -268,3 +268,7 @@ export const GenerateS3SignedUrl = z.object({
         }),
     ),
 });
+
+export const DeleteS3Images = z.object({
+    keys: z.array(z.string()),
+});

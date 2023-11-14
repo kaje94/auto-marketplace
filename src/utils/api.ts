@@ -12,6 +12,7 @@ import {
     DashboardMySubscriptionFilterReq,
     DashboardNotificationsFilterReq,
     DashboardSubscriptionFilterReq,
+    DeleteS3ImagesReq,
     EditListingReq,
     EditSubscriptionReq,
     GenerateS3SignedUrlReq,
@@ -115,8 +116,8 @@ const fetchApi = {
         fetchRequest<TResponse>(endpoint, { method: "POST", body, ...config }, true),
     protectedPut: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody, config: RequestInit = {}) =>
         fetchRequest<TResponse>(endpoint, { method: "PUT", body, ...config }, true),
-    protectedDelete: <TResponse>(endpoint: string, config: RequestInit = {}) =>
-        fetchRequest<TResponse>(endpoint, { method: "DELETE", ...config }, true),
+    protectedDelete: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody, config: RequestInit = {}) =>
+        fetchRequest<TResponse>(endpoint, { method: "DELETE", body, ...config }, true),
 };
 // todo: review all cache clearing logics(mainly ones specific to country)
 
@@ -161,7 +162,7 @@ export const api = {
         fetchApi.protectedGet<ListingItem>(`/v1/Users/me/listings/${id}`, {
             next: { tags: [apiTags.getMyListingsItem(id)], revalidate: revalidationTime.oneDay },
         }),
-    deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<void>(`/v1/Listings/${listingId}`),
+    deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Listings/${listingId}`, JSON.stringify({})),
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
     unListListing: (body: UnListListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/unlist`, JSON.stringify(body)),
     renewListing: (listingId: ListingIdType) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${listingId}/renew`, JSON.stringify({})),
@@ -190,7 +191,8 @@ export const api = {
         fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/Users/me/listing-subscriptions/${id}`, {
             next: { tags: [apiTags.getMyListingSubscriptionItem(id)], revalidate: revalidationTime.oneDay },
         }),
-    deleteListingSubscriptions: (id: ListingSubscriptionIdType) => fetchApi.protectedDelete<void>(`/v1/ListingSubscriptions/${id}`),
+    deleteListingSubscriptions: (id: ListingSubscriptionIdType) =>
+        fetchApi.protectedDelete<BodyInit, void>(`/v1/ListingSubscriptions/${id}`, JSON.stringify({})),
     toggleListingSubscription: (body: ToggleSubscriptionReq) =>
         fetchApi.protectedPost<BodyInit, string>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}/toggle-activation`, JSON.stringify(body)),
     getMyNotifications: (listingUserId: string, req?: PaginatedRequest & DashboardNotificationsFilterReq) =>
@@ -204,7 +206,7 @@ export const api = {
             next: { tags: [apiTags.getMyProfileDetails(userId)], revalidate: revalidationTime.oneDay },
         }),
     updateMyProfileDetails: (body: UpdateProfileReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Users/${body.userId}`, JSON.stringify(body)),
-    closeUserAccount: (userId: string) => fetchApi.protectedDelete<void>(`/v1/Users/${userId}/close-account`),
+    closeUserAccount: (userId: string) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Users/${userId}/close-account`, JSON.stringify({})),
     getStates: (countryCode: string) =>
         fetchApi.get<State[]>(`/v1/Locations/countries/${countryCode}/states`, {
             next: { tags: [apiTags.getStates()], revalidate: revalidationTime.oneWeek },
@@ -215,7 +217,7 @@ export const api = {
         }),
     generateS3SignedUrls: (body: GenerateS3SignedUrlReq) =>
         fetchApi.protectedPost<BodyInit, GetPresignedS3UrlsResponse>(`/v1/Images/generate-signed-urls`, JSON.stringify(body)),
-    deleteS3Image: (imageKey: string) => fetchApi.protectedDelete<void>(`/v1/Images/${imageKey}`),
+    deleteS3Image: (body: DeleteS3ImagesReq) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Images/delete`, JSON.stringify(body)),
 };
 
 export const apiTags = {

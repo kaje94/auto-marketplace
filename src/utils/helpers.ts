@@ -46,6 +46,7 @@ export const uploadToS3 = async (file: File, url: string, key: string, bucket: s
         xhr.open("PUT", url, true);
         xhr.setRequestHeader("Content-Type", file.type);
         xhr.setRequestHeader("Cache-Control", "max-age=630720000");
+        // xhr.setRequestHeader("Protocol", "HTTPS");
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {

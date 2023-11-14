@@ -16,12 +16,7 @@ export const getPresignedS3UrlsAction = async (fileList: { fileSize: number; fil
     };
     const response = await api.generateS3SignedUrls(req);
 
-    return req.imageMetaDatas.map((item, index) => ({
-        ...item,
-        bucket: response[index]?.bucket,
-        region: response[index]?.region,
-        url: response[index]?.url,
-    }));
+    return response;
 };
 
 export const deleteObjectFromS3Action = async (imageKeys: string[]) => {
@@ -33,5 +28,5 @@ export const deleteObjectFromS3Action = async (imageKeys: string[]) => {
         throw new Error("User cannot delete this image");
     }
 
-    await Promise.all(imageKeys.map((item) => api.deleteS3Image(item)));
+    await Promise.all(imageKeys.map((item) => api.deleteS3Image({ keys: imageKeys })));
 };
