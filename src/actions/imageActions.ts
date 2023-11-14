@@ -10,6 +10,8 @@ const client = new S3Client({
     region: env.S3_UPLOAD_REGION,
 });
 
+// TODO: convert these 2 functions into bulk actions
+// refer s3 migrate branch
 export const getPresignedS3UrlAction = async (filetype: string, fileSize: number) => {
     const bucket = env.S3_UPLOAD_BUCKET;
     const region = env.S3_UPLOAD_REGION;

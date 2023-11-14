@@ -27,7 +27,7 @@ const FeatureItem = ({
 export default function Page() {
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
-            <h3 className={clsx(displayFont.className, "mb-4 text-2xl lg:text-center lg:text-4xl xl:mb-6")}>Key Features</h3>
+            <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>Why Choose Us</h3>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
                 <Image
                     alt="feature-1-image"

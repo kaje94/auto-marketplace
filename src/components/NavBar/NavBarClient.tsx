@@ -16,6 +16,7 @@ const NavBarCountryBtn = dynamic(() => import("./NavBarCountryBtn").then((mod) =
             <span className="loading loading-ring loading-xs" />
         </button>
     ),
+    ssr: false,
 });
 
 export const NavBarClient = ({
