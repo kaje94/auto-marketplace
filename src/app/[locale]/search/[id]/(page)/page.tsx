@@ -11,6 +11,7 @@ export default async function Page({ params }: ListingIdPathParam) {
     const [session, itemDetails, relatedListings] = await Promise.all([
         getSession(),
         transformListingResponse(await api.getPostedListingItem(params.id)),
+        // TODO: load related listings lazily!
         api.getRelatedListings(params.id),
     ]);
     api.incrementViews(params.id);
