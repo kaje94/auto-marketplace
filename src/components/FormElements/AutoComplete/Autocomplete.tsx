@@ -86,7 +86,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
 
                     {open && (
                         <div className={clsx("dropdown-end dropdown-open dropdown absolute inset-x-0 bottom-0 w-full")}>
-                            <div className={clsx("menu dropdown-content z-20 mt-1 grid w-full rounded rounded-t-none bg-base-200 p-0 shadow-lg")}>
+                            <div className={clsx("menu dropdown-content z-20 mt-0.5 grid w-full rounded rounded-t-none bg-base-200 p-0 shadow-lg")}>
                                 {filteredOptions.length === 0 && query !== "" ? (
                                     <div className="relative cursor-default select-none px-4 py-2 text-neutral">Nothing found.</div>
                                 ) : (
