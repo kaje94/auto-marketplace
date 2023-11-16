@@ -6,16 +6,6 @@
 > https://next-s3-upload.codingvalue.com/setup
 
 > API changes
--   [] vehicle description needs to be at least 1000 characters?
-// new!
-// informed
--   [] featured listing needs a country path param
--   [] user phone and address null in listing details response
--   [] return empty array instead of 404 if no cities or states found
--   [] vehicle brands have duplicate values
--   [] only return name for city api call, only return name and state code for state api call, remove id from country list & detail api call
--   [] is lease field really necessary?
--   [] add a new field `hash` to image entity and have max length of 100(even though actually needed is less than 25)
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
 -   [] bot detection in auth0 enabled(recaptcha)
 
@@ -34,7 +24,12 @@
 -   [] show expiry date in listings throughout. specially when renewing listings
 -   [] handle when visting posted listing from different country
 -   [] show counter in textarea listing create
--   [] brind "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
+-   [] bring "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
+-   [] toast auto closes, if it takes too long!
+-   [] fix nested form errors
+-   [] datepicker in activate subscription form not working
+-   [] lazily load calender and combobox?
+-   [] use links instead of router push ?
 
 > Web app performance improvements
 
@@ -53,7 +48,6 @@
 > Update next 14
 -   https://nextjs.org/blog/next-14
 -   https://nextjs.org/blog/security-nextjs-server-components-actions
--   https://nextjs.org/docs/app/api-reference/functions/generate-viewport
 -   https://www.google.com/search?q=useOptimistic+nextjs&sca_esv=577069831&sxsrf=AM9HkKl0JJWRR2DdtSSLbVHT4AmJA5u_aw%3A1698382865056&ei=EUQ7ZbyLA_XCkPIPyYSlwAI&ved=0ahUKEwj81_SauZWCAxV1IUQIHUlCCSgQ4dUDCBA&uact=5&oq=useOptimistic+nextjs&gs_lp=Egxnd3Mtd2l6LXNlcnAiFHVzZU9wdGltaXN0aWMgbmV4dGpzMgUQABiABDIIEAAYFhgeGAoyCBAAGBYYHhgKSMgNUMACWL8McAF4AZABAJgB7AKgAeQNqgEDMy01uAEDyAEA-AEBwgIKEAAYRxjWBBiwA8ICChAAGIoFGLADGEPCAgcQABiABBgKwgIGEAAYHhgKwgIIEAAYBRgeGAriAwQYACBBiAYBkAYK&sclient=gws-wiz-serp
 -   https://www.google.com/search?q=useformstate+nextjs&sca_esv=577069831&sxsrf=AM9HkKlXzXTdtiS0i24ryrvOEp6sfjRWpw%3A1698382869133&ei=FUQ7ZcvkB9_AkPIP6__W6Qo&oq=useFormState+ne&gs_lp=Egxnd3Mtd2l6LXNlcnAiD3VzZUZvcm1TdGF0ZSBuZSoCCAAyBRAAGIAESOczUOoEWJEHcAF4AZABAJgB6gKgAakIqgEDMy0zuAEDyAEA-AEBwgIKEAAYRxjWBBiwA8ICChAAGIoFGLADGEPCAgoQABiABBgUGIcCwgIHEAAYigUYQ8ICBhAAGBYYHuIDBBgAIEGIBgGQBgk&sclient=gws-wiz-serp
 -   https://www.google.com/search?q=useFormStatus+nextjs&sca_esv=577069831&sxsrf=AM9HkKkgd25RRusBkihkQcRbdAx9pu63Sw%3A1698382873110&ei=GUQ7ZbWwBpfvkPIP8q6OyAk&ved=0ahUKEwj1oOCeuZWCAxWXN0QIHXKXA5kQ4dUDCBA&uact=5&oq=useFormStatus+nextjs&gs_lp=Egxnd3Mtd2l6LXNlcnAiFHVzZUZvcm1TdGF0dXMgbmV4dGpzMgcQABiABBgKMggQABgWGB4YCkjAFlC0AVjHC3ABeAGQAQCYAYUDoAH6E6oBAzMtN7gBA8gBAPgBAcICChAAGEcY1gQYsAPCAgoQABiKBRiwAxhDwgIFEAAYgATiAwQYACBBiAYBkAYJ&sclient=gws-wiz-serp

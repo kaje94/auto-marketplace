@@ -1,13 +1,11 @@
 import { clsx } from "clsx";
-import Image from "next/image";
 import { displayFont } from "@/app/fonts";
-import { DropletIcon, FilterIcon, NotificationIcon, TagIcon, UserIcon, ZapIcon } from "@/icons";
 
 export default function Page() {
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
             <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>About Us</h3>
-            <div className="mx-auto flex max-w-4xl flex-col gap-1">
+            <div className="mx-auto flex flex-col gap-1">
                 <p>
                     Welcome to Targabay, where automotive dreams come to life. Targabay is not just an online vehicle marketplace; it&apos;s a vibrant
                     community and a gateway to an extraordinary world of cars. Our mission is to redefine your automotive experience by providing a

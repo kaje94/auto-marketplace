@@ -3,15 +3,6 @@ import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 import { LinkWithLocale, Logo } from "@/components/Common";
 
-// todo: add a faq page
-// how do i post an advert?
-// how much does it cost to post an advert
-// how long does it take to review an advert
-// what safety precautions do i need to take
-// how could i be notified of a new advert
-// how long will my advert be visible
-// how can i remove an advert
-
 // todo: add following links
 // add promotions https://ikman.lk/en/promotions
 // safety precautions https://ikman.lk/en/stay-safe
@@ -51,7 +42,9 @@ export const Footer: FC = () => {
                         Contact Us
                     </LinkWithLocale>
                     <a className="link-hover link">Safety Tips</a>
-                    <a className="link-hover link">FAQs</a>
+                    <LinkWithLocale className="link-hover link" href="/faqs">
+                        FAQs
+                    </LinkWithLocale>
                 </div>
                 <div className="flex flex-col items-end gap-1 text-right opacity-90  md:text-right">
                     <div className="footer-title">Legal</div>
