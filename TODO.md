@@ -25,7 +25,6 @@
 -   [] handle when visting posted listing from different country
 -   [] show counter in textarea listing create
 -   [] bring "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
--   [] toast auto closes, if it takes too long!
 -   [] fix nested form errors
 -   [] datepicker in activate subscription form not working
 -   [] lazily load calender and combobox?

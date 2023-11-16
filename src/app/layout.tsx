@@ -22,7 +22,7 @@ export default function RootLayout({ children }: ChildrenProps) {
         <html lang="en">
             <body className={standardFont.className}>
                 <ScrollToTop />
-                <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 }, duration: 5000 }} />
+                <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 } }} />
                 <ReactQueryProvider>
                     <NavBar />
                     <ReCaptchaProvider>
