@@ -21,6 +21,15 @@ body {
     background-color: hsl(var(--nf));
 }
 
-.grecaptcha-badge { 
+.grecaptcha-badge {
     visibility: hidden !important;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

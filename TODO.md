@@ -28,6 +28,7 @@
 -   [] fix nested form errors
 -   [] datepicker in activate subscription form not working
 -   [] lazily load calender and combobox?
+-   [] laziliy load filters
 -   [] use links instead of router push ?
 
 > Web app performance improvements
