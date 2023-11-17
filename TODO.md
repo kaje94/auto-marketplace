@@ -29,6 +29,7 @@
 -   [] datepicker in activate subscription form not working
 -   [] lazily load calender and combobox?
 -   [] laziliy load filters
+-   [] lazily load landing searchbar?
 -   [] use links instead of router push ?
 
 > Web app performance improvements

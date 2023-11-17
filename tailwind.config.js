@@ -22,6 +22,7 @@ module.exports = {
                     [`&:hover .image-hover-tint`]: { opacity: 0 },
                 },
                 ".animate-fadeIn-300": {
+                    opacity: 0,
                     animation: "fadeIn 300ms ease-in-out",
                     "animation-fill-mode": "forwards" /* Keeps the final state of the animation */,
                 },

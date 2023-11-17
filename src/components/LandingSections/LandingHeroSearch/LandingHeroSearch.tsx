@@ -19,7 +19,7 @@ export const LandingHeroSearch = () => {
     const formValues = watch();
 
     return (
-        <div className="rounded-box mx-[5%] mb-8 mt-5 flex w-full flex-col justify-center opacity-0 shadow-xl animate-fadeIn-300 animate-delay-400 sm:mb-16 sm:w-auto sm:flex-row sm:px-0 xl:mb-28 2xl:mb-36">
+        <span className="rounded-box flex w-full flex-col justify-center shadow-xl sm:w-fit sm:flex-row">
             <InputController
                 control={control}
                 errorAsTooltip
@@ -44,6 +44,6 @@ export const LandingHeroSearch = () => {
                 <SearchIcon />
                 <span className="ml-2">Search</span>
             </LinkWithLocale>
-        </div>
+        </span>
     );
 };
