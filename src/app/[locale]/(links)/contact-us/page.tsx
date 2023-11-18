@@ -5,6 +5,7 @@ import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common";
 import { ContactUsForm } from "@/components/ContactUsForm";
 import { env } from "@/env.mjs";
+import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
 
 const ContactUsItem = ({ title, desc, subTitle }: { desc: string | ReactNode; subTitle?: string; title: string }) => {
     return (
@@ -32,7 +33,9 @@ export default async function Page() {
                         </a>
                         . We value your inquiries and are committed to providing swift assistance.
                     </p>
-                    <ContactUsForm session={session} />
+                    <RecaptchaProvider>
+                        <ContactUsForm session={session} />
+                    </RecaptchaProvider>
                 </div>
                 <div className="flex flex-col justify-center gap-2">
                     <ContactUsItem

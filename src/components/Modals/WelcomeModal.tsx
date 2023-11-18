@@ -6,7 +6,8 @@ import { LinkWithLocale, ModalFooter } from "@/components/Common";
 const Modal = dynamic(() => import("@/components/Common").then((mod) => mod.Modal), { ssr: false });
 
 // todo: make sure that welcome modal does not appear on does not block the legal screens
-// todo: fix links
+
+// todo: verify clicking on links
 
 export const WelcomeModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -43,11 +44,11 @@ export const WelcomeModal = () => {
 
                     <div className="mt-6 text-sm">
                         By clicking &#39;Agree & Continue,&#39; you acknowledge that you&#39;ve read, understood, and accepted our&nbsp;
-                        <LinkWithLocale className="link" href="/search">
+                        <LinkWithLocale className="link" href="/privacy-policy">
                             Privacy Policy
                         </LinkWithLocale>
                         , and&nbsp;
-                        <LinkWithLocale className="link" href="/search">
+                        <LinkWithLocale className="link" href="/cookie-policy">
                             Cookie Policy
                         </LinkWithLocale>
                         .
@@ -58,7 +59,7 @@ export const WelcomeModal = () => {
                             setModalVisible(false);
                         }}
                         onVisibleChange={() => {}}
-                        primaryButton={{ text: "Agree & Continue", classNames: "btn-block" }}
+                        primaryButton={{ text: "Agree & Continue", classNames: "btn-block btn-neutral" }}
                         showCancel={false}
                     />
                 </form>

@@ -14,6 +14,8 @@ interface Props {
     userData?: ListingUser;
 }
 
+// todo: verify clicking on links
+
 const ProfileUpdateModal = dynamic(() => import("./ProfileUpdateModal").then((mod) => mod.ProfileUpdateModal), { ssr: false });
 
 const SectionWrap = ({ children, isOpen, onClick }: { children: ReactNode; isOpen: boolean; onClick: () => void }) => (
@@ -196,8 +198,15 @@ export const NewUserOnboardModal = (props: Props) => {
                     </div>
 
                     <div className="mt-6 text-sm opacity-70">
-                        Got Questions? We&#39;re here to help. Check out our <span className="link">FAQs</span> or reach us out through our &#39;
-                        <span className="link">Contact us</span>&#39; page
+                        Got Questions? We&#39;re here to help. Check out our{" "}
+                        <LinkWithLocale className="link-hover link font-semibold text-neutral" href="/faqs">
+                            FAQs
+                        </LinkWithLocale>{" "}
+                        or reach us out through our &#39;
+                        <LinkWithLocale className="link-hover link font-semibold text-neutral" href="/contact-us">
+                            Contact Us
+                        </LinkWithLocale>
+                        &#39; page
                     </div>
                 </div>
             </Modal>

@@ -8,11 +8,11 @@
 > API changes
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
 -   [] bot detection in auth0 enabled(recaptcha)
+-   [] check max length of all strings in schema file
 
 > Web app todo list
 
--   [] check max length of all strings in schema file
--   [] add clearable prop to form elements
+-   [] add/remove clearable prop to form elements
 -   [] try out the date picker package for year select
 -   [] fix Entire page /search deopted into client-side rendering.
 -   [] show safety tips similar to ikman under item details description
@@ -31,6 +31,11 @@
 -   [] laziliy load filters
 -   [] lazily load landing searchbar?
 -   [] use links instead of router push ?
+-   [] optimistic updates for profile details?
+-   [] update manifest https://web.dev/articles/add-manifest
+-   [] minify manifest after changes!
+-   [] fix chrome third party cookies blocked warning
+
 
 > Web app performance improvements
 
@@ -44,6 +49,9 @@
 
 > SEO Todo list
 -   [] https://webmasters.stackexchange.com/questions/104987/how-to-change-which-image-from-website-is-shown-in-google-search-result
+-   [] add sitemap
+-   [] add open grapgh and twitter tags
+-   [] search box in google
 
 
 > Update next 14

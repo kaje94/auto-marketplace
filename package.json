@@ -3,9 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
+        "dev": "next dev --turbo",
         "build": "next build",
-        "start": "next start --turbo",
+        "start": "next start",
         "lint": "next lint",
         "lint:fix": "next lint --fix",
         "format-rest": "npx prettier --ignore-path .gitignore --write \"**/*.{css,md,json,yml}\" \"!package-lock.json\" --print-width 150 --tab-width 4",

@@ -1,11 +1,9 @@
 import { clsx } from "clsx";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
-import { LinkWithLocale } from "@/components/Common";
-import { env } from "@/env.mjs";
 
 const SafetyTipSection = ({ children, title }: { children: ReactNode; title: string }) => (
-    <div className="">
+    <div>
         <h3 className="mb-3 mt-4 text-2xl font-bold">{title}</h3>
         <div className="flex flex-col gap-2">{children}</div>
     </div>
@@ -27,8 +25,8 @@ export default function Page() {
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
             <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>Safety Tips</h3>
             <p>
-                Welcome to Targabay, where your safety is our priority. We are committed to providing a secure online marketplace. Please follow these
-                safety tips for a worry-free experience.
+                At Targabay, your safety is our priority. We are committed to providing a secure online marketplace. Please follow these safety tips
+                for a worry-free experience.
             </p>
             <div className="mx-auto flex flex-col gap-3">
                 <SafetyTipSection title="General Safety Tips:">

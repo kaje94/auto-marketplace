@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { ReportListingModal } from "@/components/Modals/ReportListingModal";
 import { InfoIcon } from "@/icons";
+import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
 import { ListingIdType } from "@/utils/types";
 
 interface Props {
@@ -25,13 +26,15 @@ export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle, user
                 Report
             </button>
             {!loading && (
-                <ReportListingModal
-                    listingId={listingId}
-                    listingTitle={listingTitle}
-                    setVisible={setModalVisible}
-                    userEmail={userEmail}
-                    visible={modalVisible}
-                />
+                <RecaptchaProvider>
+                    <ReportListingModal
+                        listingId={listingId}
+                        listingTitle={listingTitle}
+                        setVisible={setModalVisible}
+                        userEmail={userEmail}
+                        visible={modalVisible}
+                    />
+                </RecaptchaProvider>
             )}
         </>
     );

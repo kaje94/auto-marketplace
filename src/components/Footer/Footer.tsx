@@ -3,10 +3,6 @@ import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 import { LinkWithLocale, Logo } from "@/components/Common";
 
-// todo: add following links
-// add promotions https://ikman.lk/en/promotions
-// safety precautions https://ikman.lk/en/stay-safe
-
 export const Footer: FC = () => {
     const pathName = usePathname();
     const params = useParams();
@@ -50,9 +46,15 @@ export const Footer: FC = () => {
                 </div>
                 <div className="flex flex-col items-end gap-1 text-right opacity-90  md:text-right">
                     <div className="footer-title">Legal</div>
-                    <a className="link-hover link">Terms of use</a>
-                    <a className="link-hover link">Privacy policy</a>
-                    <a className="link-hover link">Cookie policy</a>
+                    <LinkWithLocale className="link-hover link" href="/terms-of-use">
+                        Terms Of Use
+                    </LinkWithLocale>
+                    <LinkWithLocale className="link-hover link" href="/privacy-policy">
+                        Privacy Policy
+                    </LinkWithLocale>
+                    <LinkWithLocale className="link-hover link" href="/cookie-policy">
+                        Cookie Policy
+                    </LinkWithLocale>
                 </div>
             </footer>
         </div>

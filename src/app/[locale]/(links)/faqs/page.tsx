@@ -5,7 +5,7 @@ import { LinkWithLocale } from "@/components/Common";
 import { env } from "@/env.mjs";
 
 const QuestionSection = ({ children, title }: { children: ReactNode; title: string }) => (
-    <div className="">
+    <div>
         <h3 className="mb-3 mt-4 text-2xl font-bold">{title}</h3>
         <div className="flex flex-col gap-2">{children}</div>
     </div>

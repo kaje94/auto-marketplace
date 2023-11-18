@@ -321,11 +321,23 @@ export const ListingForm: FC<Props> = (props) => {
                         <div className="card stat bg-base-100 p-4 shadow">
                             <div className="stat-title">Safety Tips</div>
                             {isLoading ? (
-                                <div className="h-16 w-full animate-pulse bg-base-200" />
+                                <>
+                                    <div className="h-16 w-full animate-pulse bg-base-200" />
+                                    <div className="mt-1 h-7 w-1/3 animate-pulse bg-base-200" />
+                                </>
                             ) : (
-                                <p className="mt-1 text-sm">
-                                    Please prioritize safety. Avoid sharing sensitive information. A secure marketplace benefits us all.
-                                </p>
+                                <>
+                                    <p className="mt-1 text-sm">
+                                        Please prioritize safety. Avoid sharing sensitive information. A secure marketplace benefits us all.
+                                    </p>
+                                    <LinkWithLocale
+                                        className="link-neutral btn btn-link btn-sm justify-start px-0"
+                                        href="/safety-tips"
+                                        target="_blank"
+                                    >
+                                        View all safety Tips
+                                    </LinkWithLocale>
+                                </>
                             )}
                         </div>
                     </div>
