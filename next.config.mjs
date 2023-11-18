@@ -11,9 +11,8 @@ const config = {
         formats: ["image/avif", "image/webp"],
         domains: ["ik.imagekit.io"],
     },
-    // TODO: verify PPR
-    // experimental: {
-    //     ppr: true,
-    // },
+    experimental: {
+        ppr: true,
+    },
 };
 export default config;
