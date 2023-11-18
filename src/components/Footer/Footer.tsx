@@ -41,7 +41,9 @@ export const Footer: FC = () => {
                     <LinkWithLocale className="link-hover link" href="/contact-us">
                         Contact Us
                     </LinkWithLocale>
-                    <a className="link-hover link">Safety Tips</a>
+                    <LinkWithLocale className="link-hover link" href="/safety-tips">
+                        Safety Tips
+                    </LinkWithLocale>
                     <LinkWithLocale className="link-hover link" href="/faqs">
                         FAQs
                     </LinkWithLocale>
