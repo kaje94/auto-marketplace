@@ -9,6 +9,7 @@ import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
 import { ListingImageCarousel } from "./ListingImageCarousel";
 import { ListingKeySpecifications } from "./ListingKeySpecifications";
 import { ListingSellerDetails } from "./ListingSellerDetails";
+import { LinkWithLocale } from "../Common";
 
 interface Props {
     basePath?: string;
@@ -98,6 +99,28 @@ export const ListingDetails: FC<Props> = ({
                         <ListingSellerDetails loading={loading} user={user} />
                     </div>
                 )}
+                {!withinDashboard && (
+                    <div className="card stat place-items-center bg-base-100 shadow">
+                        <div className="stat-title">Safety Tips</div>
+                        {loading ? (
+                            <>
+                                <div className="h-16 w-full animate-pulse bg-base-200" />
+                                <div className="mt-1 h-7 w-1/3 animate-pulse bg-base-200" />
+                            </>
+                        ) : (
+                            <>
+                                <p className="mt-1 text-center text-sm">
+                                    Protect yourself online. Never share sensitive information like credit/debit card details and OTPs with third
+                                    parties for a secure vehicle marketplace.
+                                </p>
+                                <LinkWithLocale href="/safety-tips">
+                                    <button className="link-neutral btn btn-link btn-sm">View all safety Tips</button>
+                                </LinkWithLocale>
+                            </>
+                        )}
+                    </div>
+                )}
+
                 <div className="grid grid-cols-2 gap-4">
                     {!loading && (user?.userId === loggedInUser?.id || loggedInUser?.isAdmin) && (
                         <>

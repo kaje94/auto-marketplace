@@ -318,6 +318,16 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                             </span>
                         </div>
+                        <div className="card stat bg-base-100 p-4 shadow">
+                            <div className="stat-title">Safety Tips</div>
+                            {isLoading ? (
+                                <div className="h-16 w-full animate-pulse bg-base-200" />
+                            ) : (
+                                <p className="mt-1 text-sm">
+                                    Please prioritize safety. Avoid sharing sensitive information. A secure marketplace benefits us all.
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="mt-5 flex justify-end">
