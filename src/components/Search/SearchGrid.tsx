@@ -34,7 +34,7 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                 )}
             >
                 {pageLoading ? (
-                    <div className="h-5 w-28 animate-pulse bg-base-300" />
+                    <div className="h-5 w-28 animate-pulse rounded bg-base-300" />
                 ) : (
                     <>
                         {listings?.totalCount} results found
