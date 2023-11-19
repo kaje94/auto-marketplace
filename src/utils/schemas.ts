@@ -109,7 +109,7 @@ export const VehicleSchema = z.object({
     model: z.string().min(1, "Model is required"),
     trim: z.string().optional(),
     yearOfManufacture: YearSchema,
-    yearOfRegistration: z.union([z.literal(""), YearSchema]).optional(),
+    yearOfRegistration: z.union([z.literal(""), z.null(), YearSchema]).optional(),
     millage: MilageSchema,
     condition: z.nativeEnum(VehicleConditionTypes, { invalid_type_error: "Invalid Condition Type" }),
     transmission: z.nativeEnum(TransmissionTypes, { invalid_type_error: "Invalid Transmission Type" }),
