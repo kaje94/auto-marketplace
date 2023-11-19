@@ -44,14 +44,14 @@ export const PriceSchema = z.object({
     amount: getNumericSchema("Price amount needs to be a positive number"),
     currencyCode: z.string().min(1, "Currency code is required"),
     currencySymbol: z.string().min(1, "Currency symbol is required"),
-    isPriceNegotiable: z.boolean().default(false),
+    isPriceNegotiable: z.boolean().default(true),
 });
 
 export const OptionalPriceSchema = z.object({
-    amount: getNumericSchema("Price amount needs to be a positive number", 0, "0"),
-    currencyCode: z.string().min(1, "Currency code is required"),
-    currencySymbol: z.string().min(1, "Currency symbol is required"),
-    isPriceNegotiable: z.boolean().default(false),
+    amount: z.union([getNumericSchema("Price amount needs to be a positive number", 0, "0"), z.null()]),
+    currencyCode: z.string().min(1, "Currency code is required").optional(),
+    currencySymbol: z.string().min(1, "Currency symbol is required").optional(),
+    isPriceNegotiable: z.boolean().default(true).optional(),
 });
 
 export const MilageSchema = z.object({

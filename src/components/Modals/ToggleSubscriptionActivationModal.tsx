@@ -31,21 +31,26 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
         mode: "all",
     });
 
-    const { mutate, isLoading } = useMutation((reqParams: ToggleSubscriptionReq) => toggleListingSubscriptionAction(reqParams, userId!), {
-        onMutate: () => {
-            setVisible(false);
-            toastId.current = toast.loading(`${active ? "Deactivating" : "Activating"} subscription ${displayName}...`);
+    const { mutate, isLoading } = useMutation(
+        (reqParams: ToggleSubscriptionReq) => {
+            return toggleListingSubscriptionAction({ ...reqParams, subscriptionExpiryDate: new Date(reqParams.subscriptionExpiryDate) }, userId!);
         },
-        onSettled: (_data, err) => {
-            if (err) {
-                toast.error(`Failed to update the status of the subscription ${displayName}. ${(err as Error)?.message ?? ""}`, {
-                    id: toastId?.current,
-                });
-            } else {
-                toast.success(`Successfully updated the subscription ${displayName}`, { id: toastId?.current });
-            }
+        {
+            onMutate: () => {
+                setVisible(false);
+                toastId.current = toast.loading(`${active ? "Deactivating" : "Activating"} subscription ${displayName}...`);
+            },
+            onSettled: (_data, err, variables) => {
+                if (err) {
+                    toast.error(`Failed to update the status of the subscription ${displayName}. ${(err as Error)?.message ?? ""}`, {
+                        id: toastId?.current,
+                    });
+                } else {
+                    toast.success(`Successfully updated the subscription ${displayName}`, { id: toastId?.current });
+                }
+            },
         },
-    });
+    );
 
     return (
         <Modal onVisibleChange={setVisible} title={`${active ? "Deactivate" : "Activate"} Subscription`} visible={visible}>

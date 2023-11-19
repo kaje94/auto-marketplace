@@ -33,6 +33,10 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
         resolver: zodResolver(CreateSubscriptionSchema),
         defaultValues: {
             ...listingSubscriptionItem,
+            maxPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+            minPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
+            minMillage: { unit: distanceUnit },
+            maxMillage: { unit: distanceUnit },
             // todo: check update functionality once the backend API issues are fixed
             // vehicle: {
             //     ...listingItem.vehicle,
@@ -68,14 +72,22 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
                 maxYearOfManufacture: formValues.maxYearOfManufacture ? convertYearToDateString(formValues.maxYearOfManufacture) : undefined,
                 minYearOfRegistration: formValues.minYearOfRegistration ? convertYearToDateString(formValues.minYearOfRegistration) : undefined,
                 maxYearOfRegistration: formValues.maxYearOfRegistration ? convertYearToDateString(formValues.maxYearOfRegistration) : undefined,
-                maxPrice: formValues.maxPrice?.amount ? formValues.maxPrice : undefined,
-                minPrice: formValues.minPrice?.amount ? formValues.minPrice : undefined,
+                maxPrice:
+                    Number(formValues.maxPrice?.amount) > 0 ? { ...formValues.maxPrice, amount: Number(formValues.maxPrice?.amount) } : undefined,
+                minPrice:
+                    Number(formValues.minPrice?.amount) > 0 ? { ...formValues.minPrice, amount: Number(formValues.minPrice?.amount) } : undefined,
                 brand: formValues?.brand || undefined,
                 model: formValues?.model || undefined,
                 trim: formValues?.trim || undefined,
                 condition: formValues?.condition || undefined,
-                maxMillage: formValues?.maxMillage?.distance ? formValues.maxMillage : undefined,
-                minMillage: formValues?.minMillage?.distance ? formValues.minMillage : undefined,
+                maxMillage:
+                    Number(formValues?.maxMillage?.distance) > 0
+                        ? { unit: formValues.maxMillage?.unit!, distance: Number(formValues?.maxMillage?.distance) }
+                        : undefined,
+                minMillage:
+                    Number(formValues?.minMillage?.distance) > 0
+                        ? { unit: formValues.minMillage?.unit!, distance: Number(formValues?.minMillage?.distance) }
+                        : undefined,
             };
             return editListingSubscriptionAction(requestBody, listingSubscriptionItem?.userId!);
         },

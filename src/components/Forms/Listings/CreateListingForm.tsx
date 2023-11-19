@@ -60,7 +60,9 @@ export const CreateListingForm = (props: Props) => {
                     ...formValues.vehicle,
                     vehicleImages: vehicleImages,
                     yearOfManufacture: convertYearToDateString(formValues.vehicle.yearOfManufacture),
-                    yearOfRegistration: convertYearToDateString(formValues.vehicle.yearOfRegistration),
+                    yearOfRegistration: formValues.vehicle.yearOfRegistration
+                        ? convertYearToDateString(formValues.vehicle.yearOfRegistration)
+                        : undefined,
                 },
             };
             return createListingAction(requestBody, userId!);

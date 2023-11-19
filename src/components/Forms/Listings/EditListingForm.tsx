@@ -42,7 +42,9 @@ export const EditListingForm: FC<Props> = (props) => {
             vehicle: {
                 ...listingItem.vehicle,
                 yearOfManufacture: new Date(new Date(listingItem.vehicle.yearOfManufacture).getFullYear(), 0, 1).getFullYear().toString(),
-                yearOfRegistration: new Date(new Date(listingItem.vehicle.yearOfRegistration).getFullYear(), 0, 1).getFullYear().toString(),
+                yearOfRegistration: listingItem.vehicle.yearOfRegistration
+                    ? new Date(new Date(listingItem.vehicle.yearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
+                    : undefined,
                 featureIds: listingItem.vehicle.features.map((item) => item.id),
             },
         },
@@ -65,7 +67,9 @@ export const EditListingForm: FC<Props> = (props) => {
                     ...formValues.vehicle,
                     vehicleImages: vehicleImages,
                     yearOfManufacture: convertYearToDateString(formValues.vehicle.yearOfManufacture),
-                    yearOfRegistration: convertYearToDateString(formValues.vehicle.yearOfRegistration),
+                    yearOfRegistration: formValues.vehicle.yearOfRegistration
+                        ? convertYearToDateString(formValues.vehicle.yearOfRegistration)
+                        : undefined,
                 },
             };
             return editListingAction(requestBody, listingItem?.userId!);
