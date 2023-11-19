@@ -159,7 +159,6 @@ export const ListingForm: FC<Props> = (props) => {
                                     label="Year of Registration"
                                     loading={isLoading}
                                     placeholder="2010"
-                                    required
                                 />
                                 <NumberInputController
                                     control={control}
