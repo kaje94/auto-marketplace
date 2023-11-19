@@ -12,16 +12,28 @@ import "./globals.css";
 
 export const runtime = "edge";
 
+const title = "Targabay - Your Ultimate Vehicle Marketplace";
+const description =
+    "Welcome to Targabay, the ultimate hub for automotive enthusiasts exploring a journey of discovery, buying, and selling. Explore a diverse range of vehicles, from sleek cars to rugged trucks. As your premier destination for automotive engagement, Targabay provides a seamless platform connecting buyers and sellers, ensuring a personalized and secure experience for every automotive adventure.";
+
 export const metadata: Metadata = {
-    title: "Targabay - Your Ultimate Vehicle Marketplace",
-    description:
-        "Welcome to Targabay, where automotive enthusiasts converge to embark on a journey of discovery, purchasing, and selling. Uncover a diverse array of vehicles, from sleek cars to rugged trucks and beyond. As your ultimate destination for automotive transactions, Targabay offers a seamless platform to connect buyers and sellers, ensuring a personalized and secure experience for every automotive adventure.",
+    title,
+    description,
     icons: [
         { rel: "icon", url: "/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
         { rel: "icon", url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
         { rel: "apple-touch-icon", url: "/favicons/favicon-180x180.png", sizes: "180x180" },
     ],
     manifest: "/manifest.json",
+    openGraph: {
+        type: "website",
+        url: "https://targabay.com",
+        title,
+        description,
+        siteName: "Targabay",
+        images: [{ url: "/banner.jpg", alt: "Targabay banner", width: 1200, height: 630 }],
+    },
+    twitter: { card: "summary_large_image", images: "/banner.jpg", title, description },
     keywords: [
         "Automotive Marketplace",
         "Buy and Sell Cars Online",

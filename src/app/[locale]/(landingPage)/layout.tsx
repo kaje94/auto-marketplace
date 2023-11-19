@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <span className="animate-fadeIn-300 animate-delay-200">Dreams</span>
                     </h1>
                     <h4 className="text-center text-base font-extralight text-white animate-fadeIn-300 animate-delay-300 md:text-lg lg:text-xl">
-                        Find your perfect vehicle, fast and easy, at our online vehicle marketplace
+                        Effortlessly buy or sell your vehicle on our seamless online marketplace.
                     </h4>
                     <span className="mx-[5%] mb-8 mt-5 flex w-full flex-col items-center justify-center animate-fadeIn-300 animate-delay-400 sm:mb-16 sm:px-0 xl:mb-28 2xl:mb-36">
                         <LandingHeroSearch />
