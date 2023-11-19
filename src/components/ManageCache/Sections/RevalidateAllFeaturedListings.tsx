@@ -2,10 +2,10 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { revalidateFeaturedListingsAction } from "@/actions/cacheActions";
+import { revalidateAllFeaturedListingsAction } from "@/actions/cacheActions";
 
-export const RevalidateFeaturedListings = () => {
-    const { mutate, isLoading } = useMutation(async () => revalidateFeaturedListingsAction(), {
+export const RevalidateAllFeaturedListings = () => {
+    const { mutate, isLoading } = useMutation(async () => revalidateAllFeaturedListingsAction(), {
         onSuccess: () => toast.success(`Successfully revalidated featured listings`),
         onError: () => toast.error(`Failed to revalidate featured listings`),
     });

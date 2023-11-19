@@ -51,7 +51,7 @@ const extractBadRequestError = (errors: { [key: string]: string[] }): string | v
     }
 };
 
-const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, withAuth = false): Promise<TResponse> => {
+const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, withAuth = false, firstAttempt = true): Promise<TResponse> => {
     let response: Response;
     if (withAuth) {
         const configWithAuth = await getConfigWithAuth(config);
@@ -69,6 +69,9 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
     } else {
         if (response.status === 401) {
             console.log("getting 401 for api call", endpoint);
+            if (firstAttempt) {
+                return fetchRequest(endpoint, config, withAuth, false);
+            }
             const currentPathname = nextHeaders().get("x-pathname");
             redirect(`/unauthorized${currentPathname ? `?returnTo=${currentPathname}` : ``}`);
         }
@@ -119,7 +122,6 @@ const fetchApi = {
     protectedDelete: <TBody extends BodyInit, TResponse>(endpoint: string, body: TBody, config: RequestInit = {}) =>
         fetchRequest<TResponse>(endpoint, { method: "DELETE", body, ...config }, true),
 };
-// todo: review all cache clearing logics(mainly ones specific to country)
 
 export const api = {
     getFeaturesList: () =>
@@ -130,7 +132,7 @@ export const api = {
         fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()], revalidate: revalidationTime.oneWeek } }),
     getPostedListings: (locale: string, req?: PaginatedRequest & PostedListingsFilterReq) =>
         fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted/${locale}?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
-            next: { revalidate: revalidationTime.thirtyMins, tags: [apiTags.getPostedListings()] },
+            next: { revalidate: revalidationTime.thirtyMins, tags: [apiTags.getPostedListings(), apiTags.getPostedListingsByCountry(locale)] },
         }),
     getPostedListingItem: (id: ListingIdType) =>
         fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, {
@@ -148,7 +150,10 @@ export const api = {
         }),
     getFeaturedListings: (countryCode: string) =>
         fetchApi.get<ListingItem[]>(`/v1/Listings/featured-listings/${countryCode}`, {
-            next: { tags: [apiTags.getFeaturedListings()], revalidate: revalidationTime.twelveHours },
+            next: {
+                tags: [apiTags.getFeaturedListings(), apiTags.getFeatureListingsByCountry(countryCode)],
+                revalidate: revalidationTime.twelveHours,
+            },
         }),
     getMyListings: (listingUserId: string, req?: PaginatedRequest & MyListingsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
@@ -224,7 +229,9 @@ export const apiTags = {
     getFeaturesList: () => "get-features-list",
     getVehicleBrands: () => "get-vehicle-brands",
     getFeaturedListings: () => "get-featured-listings",
+    getFeatureListingsByCountry: (countryCode: string) => `get-featured-listings-country-${countryCode}`,
     getPostedListings: () => "get-posted-listings",
+    getPostedListingsByCountry: (countryCode: string) => `get-posted-listings-country-${countryCode}`,
     getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}`,
     getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}`,
     getListings: () => `get-admin-listings`,

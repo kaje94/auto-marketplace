@@ -64,7 +64,6 @@ export const OptionalMilageSchema = z.object({
     unit: z.string().min(1, "Milage unit is required"),
 });
 
-// todo: set from user's values as default
 export const LocationSchema = z.object({
     city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),

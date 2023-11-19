@@ -35,6 +35,14 @@
 -   [] update manifest https://web.dev/articles/add-manifest
 -   [] minify manifest after changes!
 -   [] fix chrome third party cookies blocked warning
+-   [] share new s3 credentials with Gayan
+
+> After deploy
+-   [] Add sentry
+-   [] Add monitors
+
+> for domain register 4,359.42
+
 
 
 > Web app performance improvements

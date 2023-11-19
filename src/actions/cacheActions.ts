@@ -11,12 +11,20 @@ export const revalidateBrandsAction = async () => {
     revalidateTag(apiTags.getVehicleBrands());
 };
 
-export const revalidatePosedListingsAction = async () => {
+export const revalidateAllPosedListingsAction = async () => {
     revalidateTag(apiTags.getPostedListings());
 };
 
-export const revalidateFeaturedListingsAction = async () => {
+export const revalidatePosedListingsByCountryAction = async (countryCode: string) => {
+    revalidateTag(apiTags.getPostedListingsByCountry(countryCode));
+};
+
+export const revalidateAllFeaturedListingsAction = async () => {
     revalidateTag(apiTags.getFeaturedListings());
+};
+
+export const revalidateFeaturedListingsByCountryAction = async (countryCode: string) => {
+    revalidateTag(apiTags.getFeatureListingsByCountry(countryCode));
 };
 
 export const revalidateRelatedListingsAction = async (listingId: ListingIdType) => {
@@ -27,4 +35,11 @@ export const revalidateUserNotificationsAction = async (userId: string) => {
     revalidateTag(apiTags.getMyNotifications(userId));
 };
 
-// todo:revalidate profile get, location details
+export const revalidateCityAndStatesAction = async () => {
+    revalidateTag(apiTags.getStates());
+    revalidateTag(apiTags.getCities());
+};
+
+export const revalidateUserProfileDetails = async (userId: string) => {
+    revalidateTag(apiTags.getMyProfileDetails(userId));
+};

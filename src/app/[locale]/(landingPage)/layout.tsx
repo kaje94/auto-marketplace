@@ -4,7 +4,6 @@ import React from "react";
 import { displayFont } from "@/app/fonts";
 import { LandingHeroSearch } from "@/components/LandingSections/LandingHeroSearch";
 
-// todo: move features and contact us to separate pages
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <section className="relative flex min-h-screen flex-col bg-gradient-to-b from-neutral to-hero pt-24">
