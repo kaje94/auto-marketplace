@@ -5,10 +5,6 @@ import { LinkWithLocale, ModalFooter } from "@/components/Common";
 
 const Modal = dynamic(() => import("@/components/Common").then((mod) => mod.Modal), { ssr: false });
 
-// todo: make sure that welcome modal does not appear on does not block the legal screens
-
-// todo: verify clicking on links
-
 export const WelcomeModal = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -44,11 +40,11 @@ export const WelcomeModal = () => {
 
                     <div className="mt-6 text-sm">
                         By clicking &#39;Agree & Continue,&#39; you acknowledge that you&#39;ve read, understood, and accepted our&nbsp;
-                        <LinkWithLocale className="link" href="/privacy-policy">
+                        <LinkWithLocale className="link" href="/privacy-policy" onClick={() => setModalVisible(false)}>
                             Privacy Policy
                         </LinkWithLocale>
                         , and&nbsp;
-                        <LinkWithLocale className="link" href="/cookie-policy">
+                        <LinkWithLocale className="link" href="/cookie-policy" onClick={() => setModalVisible(false)}>
                             Cookie Policy
                         </LinkWithLocale>
                         .

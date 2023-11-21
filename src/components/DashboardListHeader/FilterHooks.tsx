@@ -11,7 +11,6 @@ import {
     PostedListingsFilterReq,
 } from "@/utils/types";
 
-// todo: revisit this!
 export const useDashboardFilter = ({
     reset,
     defaultFilter,

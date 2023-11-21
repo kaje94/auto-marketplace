@@ -32,7 +32,6 @@ const searchParamsToObject = (searchParams: ReadonlyURLSearchParams): Record<str
     return searchObject;
 };
 
-// todo: move out?
 export const useSearchFilters = () => {
     const searchParams = useSearchParams();
     const searchParamsObj = searchParamsToObject(searchParams);

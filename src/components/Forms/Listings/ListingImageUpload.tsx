@@ -38,8 +38,7 @@ export const ListingImageUploadLoading = ({ loadingPlaceholderCount = 1 }: { loa
 export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, formRef) => {
     const { files = [], setFiles = () => {}, error, title, location, disabled = false } = props;
     const [parent] = useAutoAnimate();
-    // TODO: fix following error during runtime
-    // TypeError: undefined is not a function
+
     const { getRootProps, getInputProps, open, isDragReject, isDragActive } = useDropzone({
         accept: { "image/*": [] },
         multiple: true,
