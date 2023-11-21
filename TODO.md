@@ -31,7 +31,6 @@
 -   [] fix chrome third party cookies blocked warning
 -   [] subscription edit data not getting populated https://github.com/kaje94/auto-store-client/issues/4
 -   [] fix date format offsets
--   [] remove s3 env keys
 
 > After deploy
 -   [] Add sentry
