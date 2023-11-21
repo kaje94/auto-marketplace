@@ -12,7 +12,6 @@
 
 > Web app todo list
 
--   [] add/remove clearable prop to form elements
 -   [] try out the date picker package for year select
 -   [] fix Entire page /search deopted into client-side rendering.
 -   [] show safety tips similar to ikman under item details description
