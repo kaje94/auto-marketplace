@@ -11,20 +11,16 @@
 -   [] check max length of all strings in schema file
 
 > Web app todo list
-
+-   [] handle when visting posted listing from different country
+-   [] bring "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
+-   [] fix nested form errors
 -   [] try out the date picker package for year select
--   [] fix Entire page /search deopted into client-side rendering.
--   [] show safety tips similar to ikman under item details description
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
--   [] avoid session?.user?.sub!
 -   [] verify how emtpy, unauthorized and error component redirects & links work
 -   [] refer create t3 structure and eslint
 -   [] add watermark to uploaded image
 -   [] show expiry date in listings throughout. specially when renewing listings
--   [] handle when visting posted listing from different country
 -   [] show counter in textarea listing create
--   [] bring "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
--   [] fix nested form errors
 -   [] datepicker in activate subscription form not working
 -   [] lazily load calender and combobox?
 -   [] laziliy load filters
@@ -33,9 +29,9 @@
 -   [] update manifest https://web.dev/articles/add-manifest
 -   [] minify manifest after changes!
 -   [] fix chrome third party cookies blocked warning
--   [] share new s3 credentials with Gayan
 -   [] subscription edit data not getting populated https://github.com/kaje94/auto-store-client/issues/4
 -   [] fix date format offsets
+-   [] remove s3 env keys
 
 > After deploy
 -   [] Add sentry
