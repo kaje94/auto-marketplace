@@ -1,14 +1,13 @@
 "use client";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
-import { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, ReactNode, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { LinkWithLocale } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
-import { SelectController } from "@/components/FormElements/Select";
 import { TagSelectController } from "@/components/FormElements/TagSelect";
 import { TextAreaController } from "@/components/FormElements/TextArea";
 import { YearInputController } from "@/components/FormElements/YearInput";
@@ -16,7 +15,7 @@ import { AlertCircleIcon } from "@/icons";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
 import { getDistanceUnit, getRandomItem, isIncompleteUserProfile } from "@/utils/helpers";
-import { CreateListingReq, LabelValue, ListingUser, VehicleBrand, VehicleFeature } from "@/utils/types";
+import { CreateListingReq, ListingUser, VehicleBrand, VehicleFeature } from "@/utils/types";
 import { ListingImageUploadLoading } from "./ListingImageUpload";
 
 const ProfileUpdateModal = dynamic(() => import("@/components/Modals/ProfileUpdateModal").then((mod) => mod.ProfileUpdateModal), { ssr: false });
@@ -74,7 +73,7 @@ export const ListingForm: FC<Props> = (props) => {
         isUpdateProfileEnabled = true,
         listingUser,
     } = props;
-    const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "" } = form as UseFormReturn<CreateListingReq>;
+    const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "", setValue } = form as UseFormReturn<CreateListingReq>;
     const [profileModalVisible, setProfileModalVisible] = useState(false);
     const country = watch("location.country");
     const state = watch("location.state");
@@ -82,9 +81,26 @@ export const ListingForm: FC<Props> = (props) => {
     const postalCode = watch("location.postalCode");
     const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country);
     const distanceUnit = getDistanceUnit(countryCode);
-    const isProfileIncomplete = profile ? isIncompleteUserProfile(profile) : false;
     const countryItem = COUNTRIES[countryCode || ""];
     const currencySymbol = countryItem?.[2];
+    const phoneCode = countryItem?.[3];
+
+    const [optimisticProfile, addOptimisticProfile] = React.useOptimistic(profile, (state, newState: Partial<ListingUser>) =>
+        state ? { ...state, ...newState } : undefined,
+    );
+
+    const isProfileIncomplete = optimisticProfile ? isIncompleteUserProfile(optimisticProfile) : false;
+
+    const onProfileUpdate = (data: Partial<ListingUser>) => {
+        setProfileModalVisible(false);
+        addOptimisticProfile(data);
+        if (setValue) {
+            setValue("location.city", data.address?.city!);
+            setValue("location.state", data.address?.state!);
+            setValue("location.postalCode", data.address?.postalCode!);
+            setValue("location.country", data.address?.country!);
+        }
+    };
 
     return (
         <>
@@ -254,7 +270,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 <div className="stat-title">Location & Contact Details</div>
                                 <button
                                     className="btn btn-ghost btn-sm"
-                                    disabled={!profile || isLoading || !isUpdateProfileEnabled}
+                                    disabled={!optimisticProfile || isLoading || !isUpdateProfileEnabled}
                                     onClick={(event) => {
                                         event.preventDefault();
                                         setProfileModalVisible(true);
@@ -269,15 +285,13 @@ export const ListingForm: FC<Props> = (props) => {
                                 <DetailsItem title="City" value={(city as string) || "-"} />
                                 <DetailsItem title="Postal Code" value={(postalCode as string) || "-"} />
                                 <div className="divider col-span-full -mt-2 mb-0 opacity-50" />
-                                <DetailsItem title="Email" value={listingUser?.email || "-"} />
+                                <DetailsItem title="Email" value={optimisticProfile?.email || "-"} />
                                 <DetailsItem
                                     title="Phone Number"
                                     value={
                                         <>
-                                            <span className="font-light opacity-70">
-                                                {listingUser?.phoneCountryCode ? `(${listingUser?.phoneCountryCode}) ` : ""}
-                                            </span>
-                                            {listingUser?.phoneNumber ?? "-"}
+                                            <span className="font-light opacity-70">{phoneCode ? `(${phoneCode}) ` : ""}</span>
+                                            {optimisticProfile?.phone ?? "-"}
                                         </>
                                     }
                                 />
@@ -351,11 +365,11 @@ export const ListingForm: FC<Props> = (props) => {
                     </button>
                 </div>
             </form>
-            {profile && (
+            {optimisticProfile && (
                 <ProfileUpdateModal
-                    onSuccess={() => setProfileModalVisible(false)}
+                    onSuccess={onProfileUpdate}
                     setVisible={setProfileModalVisible}
-                    userData={profile}
+                    userData={optimisticProfile}
                     visible={profileModalVisible}
                 />
             )}

@@ -4,6 +4,7 @@ import { ScrollToTop } from "@/components/Common/ScrollToTop";
 import { Footer } from "@/components/Footer";
 import { WelcomeModal } from "@/components/Modals/WelcomeModal";
 import { NavBar } from "@/components/NavBar";
+import { env } from "@/env.mjs";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ChildrenProps } from "@/utils/types";
 import { standardFont } from "./fonts";
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
         { rel: "icon", url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
         { rel: "apple-touch-icon", url: "/favicons/favicon-180x180.png", sizes: "180x180" },
     ],
+    metadataBase: new URL(env.VERCEL_URL),
     manifest: "/manifest.json",
     openGraph: {
         type: "website",

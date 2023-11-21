@@ -12,7 +12,7 @@ import { UpdateProfileSchema } from "@/utils/schemas";
 import { ListingUser, UpdateProfileReq } from "@/utils/types";
 
 interface Props {
-    onSuccess?: () => void;
+    onSuccess?: (data: Partial<ListingUser>) => void;
     setVisible?: (visible: boolean) => void;
     userData: ListingUser;
     visible?: boolean;
@@ -46,7 +46,6 @@ export const ProfileUpdateModal = (props: Props) => {
     });
 
     const country = form.watch("address.country");
-    const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country);
 
     const { mutate: updateSubscriptionMutation, isLoading: isMutating } = useMutation(
         async (formValues: UpdateProfileReq) => {
@@ -59,7 +58,12 @@ export const ProfileUpdateModal = (props: Props) => {
             });
         },
         {
-            onSuccess,
+            onSuccess: (data, variables) =>
+                onSuccess({
+                    address: variables.address,
+                    phone: variables.phoneNumber,
+                    isDealership: variables.isDealership,
+                }),
             onMutate: () => {
                 toastId.current = toast.loading(`Updating the user profile...`);
             },

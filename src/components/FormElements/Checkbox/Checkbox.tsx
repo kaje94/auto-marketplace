@@ -20,7 +20,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
             className={clsx(
                 "label rounded-lg border-2 border-opacity-50 py-3 duration-200 hover:bg-base-200 hover:bg-opacity-50",
                 !loading && !disabled && "cursor-pointer",
-                disabled && "opacity-50",
+                disabled && "cursor-not-allowed opacity-50",
             )}
             onClick={(event) => event.stopPropagation()}
         >

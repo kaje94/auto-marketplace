@@ -19,6 +19,7 @@ export const env = createEnv({
         AUTH0_CLIENT_SECRET: z.string().min(1),
         NEXT_CONTACT_US_FORM_KEY: z.string().optional(),
         RECAPTCHA_SITE_SECRET: z.string().optional(),
+        VERCEL_URL: z.string().min(1),
     },
 
     /**
@@ -52,6 +53,7 @@ export const env = createEnv({
         NEXT_CONTACT_US_FORM_KEY: process.env.NEXT_CONTACT_US_FORM_KEY,
         NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
         RECAPTCHA_SITE_SECRET: process.env.RECAPTCHA_SITE_SECRET,
+        VERCEL_URL: process.env.VERCEL_URL,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

@@ -31,11 +31,12 @@
 -   [] laziliy load filters
 -   [] lazily load landing searchbar?
 -   [] use links instead of router push ?
--   [] optimistic updates for profile details?
 -   [] update manifest https://web.dev/articles/add-manifest
 -   [] minify manifest after changes!
 -   [] fix chrome third party cookies blocked warning
 -   [] share new s3 credentials with Gayan
+-   [] subscription edit data not getting populated https://github.com/kaje94/auto-store-client/issues/4
+-   [] fix date format offsets
 
 > After deploy
 -   [] Add sentry

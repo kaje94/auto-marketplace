@@ -88,7 +88,6 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
             errorResponse || response.statusText,
         );
         const errorMessage = errorResponse?.title || errorResponse?.toString() || response.statusText || "Failure when calling the endpoint";
-        console.log("truncatedErrorMessage");
         const truncatedErrorMessage = errorMessage?.substring(0, 500);
         if (response.status === 400 && errorResponse?.errors) {
             throw new Error(extractBadRequestError(errorResponse?.errors) || truncatedErrorMessage);

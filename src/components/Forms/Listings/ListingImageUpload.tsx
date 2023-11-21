@@ -178,7 +178,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                                     true,
                                 "border-error text-error": error,
                                 "border-base-300 text-opacity-80 text-base-content": !error,
-                                "opacity-60 cursor-not-allowed hover:!bg-base-200": disabled,
+                                "opacity-60 !cursor-not-allowed hover:!bg-base-200": disabled,
                             })}
                             onClick={open}
                         >

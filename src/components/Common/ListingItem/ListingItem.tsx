@@ -16,8 +16,6 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
     const vehicleImages = item?.vehicle?.vehicleImages || [];
     const image = vehicleImages[0];
 
-    // todo: check how the white overlay loading screen looks like in landing page
-
     const ListingItemContent = (
         <>
             <figure className="relative">

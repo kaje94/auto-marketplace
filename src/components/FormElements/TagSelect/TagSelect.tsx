@@ -20,7 +20,7 @@ export const TagSelect: FC<Props> = ({ tags = [], selectedTags = [], onSelect = 
                             "badge cursor-pointer p-3 duration-200 select-none": true,
                             "badge-neutral opacity-100 hover:opacity-75": tagSelected,
                             "badge-outline hover:bg-base-300": !tagSelected,
-                            "!opacity-50 btn-disabled": disabled,
+                            "!opacity-50 btn-disabled !cursor-not-allowed": disabled,
                         })}
                         onClick={() => {
                             if (!disabled) {
