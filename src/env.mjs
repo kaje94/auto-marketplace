@@ -8,10 +8,6 @@ export const env = createEnv({
      */
     server: {
         API_BASE_URL: z.string().min(1),
-        S3_UPLOAD_KEY: z.string().min(1),
-        S3_UPLOAD_SECRET: z.string().min(1),
-        S3_UPLOAD_BUCKET: z.string().min(1),
-        S3_UPLOAD_REGION: z.string().min(1),
         AUTH0_SECRET: z.string().min(1),
         AUTH0_BASE_URL: z.string().min(1),
         AUTH0_ISSUER_BASE_URL: z.string().min(1),
@@ -39,10 +35,6 @@ export const env = createEnv({
      */
     runtimeEnv: {
         API_BASE_URL: process.env.API_BASE_URL,
-        S3_UPLOAD_KEY: process.env.S3_UPLOAD_KEY,
-        S3_UPLOAD_SECRET: process.env.S3_UPLOAD_SECRET,
-        S3_UPLOAD_BUCKET: process.env.S3_UPLOAD_BUCKET,
-        S3_UPLOAD_REGION: process.env.S3_UPLOAD_REGION,
         AUTH0_SECRET: process.env.S3_UPLOAD_REGION,
         AUTH0_BASE_URL: process.env.S3_UPLOAD_REGION,
         AUTH0_ISSUER_BASE_URL: process.env.S3_UPLOAD_REGION,
