@@ -31,10 +31,15 @@
 -   [] fix chrome third party cookies blocked warning
 -   [] subscription edit data not getting populated https://github.com/kaje94/auto-store-client/issues/4
 -   [] fix date format offsets
+-   [] update displayname and signature in zoho mail
 
 > After deploy
 -   [] Add sentry
 -   [] Add monitors
+
+> optional tod list
+-   [] add pwa?
+
 
 > for domain register 4,359.42
 
