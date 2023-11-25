@@ -27,6 +27,16 @@ export const convertYearToDateString = (year: string | number): string => {
     return formattedDate;
 };
 
+export const formatHumanFriendlyDate = (date: Date): string => {
+    const options: Intl.DateTimeFormatOptions = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    };
+
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+};
+
 export const getListingTitleFromVehicle = (vehicle: Vehicle | VehicleCreate) => {
     if (vehicle.trim) {
         return `${vehicle.brand} ${vehicle.model} ${vehicle.trim} ${vehicle.yearOfManufacture}`;

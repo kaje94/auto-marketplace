@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { FC } from "react";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import { getFormattedCurrency, getLocationString } from "@/utils/helpers";
+import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 import { DeleteButton, EditButton, RenewButton, ReportButton, ShareButton, UnListButton } from "./ListingActionButtons";
 import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
@@ -128,6 +128,9 @@ export const ListingDetails: FC<Props> = ({
                                 basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
                                 listingItem={itemDetails as ListingItem}
                             />
+                            <div className="alert col-span-full rounded-lg text-sm text-opacity-80">
+                                {`Advert will expire on ${formatHumanFriendlyDate(new Date((itemDetails as ListingItem)?.expiryDate))}`}
+                            </div>
                             {status &&
                                 [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (
                                     <RenewButton listingItem={itemDetails as ListingItem} />

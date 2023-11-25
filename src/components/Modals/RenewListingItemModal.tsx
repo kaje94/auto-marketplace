@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import { renewListingAction } from "@/actions/listingActions";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { formatHumanFriendlyDate } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 
 export const RenewListingItemModal = (props: Props) => {
     const { listingItem = {}, visible, setVisible = () => {} } = props;
-    const { id: listingId, title: listingTitle, userId } = listingItem as ListingItem;
+    const { id: listingId, title: listingTitle, userId, expiryDate } = listingItem as ListingItem;
     const toastId = useRef<string>();
 
     const { mutate, isLoading } = useMutation((id: string) => renewListingAction(id, userId!), {
@@ -34,7 +35,9 @@ export const RenewListingItemModal = (props: Props) => {
     return (
         <>
             <Modal onVisibleChange={setVisible} title="Renew Advert" visible={!!visible}>
-                <div>Are you sure you want to renew the advert {listingTitle}</div>
+                <div>
+                    This listing advert will expire on {formatHumanFriendlyDate(new Date(expiryDate))}. Are you sure you want to renew the advert?
+                </div>
                 <ModalFooter
                     loading={isLoading}
                     onSubmit={listingId ? () => mutate(listingId) : undefined}

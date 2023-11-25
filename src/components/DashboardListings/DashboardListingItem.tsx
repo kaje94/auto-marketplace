@@ -5,7 +5,7 @@ import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import { getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
+import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
@@ -22,7 +22,7 @@ interface Props {
 
 export const DashboardListingItem: FC<Props> = (props) => {
     const { basePath, listingItem = {}, loading, isAdmin } = props;
-    const { title, price, description, status, id, vehicle, location, createdOn } = listingItem as ListingItem;
+    const { title, price, description, status, id, vehicle, location, createdOn, expiryDate } = listingItem as ListingItem;
     const locationStr = getLocationString(location, COUNTRIES[location?.country ?? ""]?.[0]);
     const priceStr = getFormattedCurrency(price?.amount, price?.currencyCode);
 
@@ -70,6 +70,10 @@ export const DashboardListingItem: FC<Props> = (props) => {
                         </div>
                         <DashboardListingItemMenu key={id} basePath={basePath} isAdmin={isAdmin} listingItem={listingItem as ListingItem} />
                     </div>
+                )}
+
+                {!loading && status === ListingStatusTypes.Posted && (
+                    <span className="text-sm font-light">Expires on {formatHumanFriendlyDate(new Date(expiryDate))}</span>
                 )}
 
                 {loading ? (

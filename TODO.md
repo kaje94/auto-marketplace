@@ -13,7 +13,6 @@
 
 > Web app todo list
 -   [] fix date format offsets
--   [] show expiry date in listings throughout. specially when renewing listings
 -   [] try out the date picker package for year select
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] verify how empty, unauthorized and error component redirects & links work
@@ -25,7 +24,6 @@
 -   [] lazily load landing searchbar?
 -   [] use links instead of router push ?
 -   [] fix chrome third party cookies blocked warning
--   [] subscription edit data not getting populated https://github.com/kaje94/auto-store-client/issues/4
 -   [] update displayname and signature in zoho mail
 -   [] theme color not working in dark mode in mobile after deployment
 -   [] fix meta tags in all pages
