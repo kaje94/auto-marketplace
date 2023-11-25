@@ -16,7 +16,7 @@ jobs:
         with:
             node-version: 20.9.0
       - name: Install pnpm
-        run: npm install --global pnpm@7.30.0
+        run: npm install --global pnpm@8.11.0
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
