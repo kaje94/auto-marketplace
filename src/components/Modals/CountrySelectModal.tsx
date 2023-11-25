@@ -12,7 +12,7 @@ import { LabelValue } from "@/utils/types";
 
 interface Props {
     currentLocale: string;
-    onNewCountrySelect: (country: string) => void;
+    onNewCountrySelect?: (country: string) => void;
     setVisible: (visible: boolean) => void;
     visible: boolean;
 }
@@ -45,7 +45,7 @@ export const CountrySelectModal = (props: Props) => {
         router.replace(`/${pathWithNewLocale}${window.location.search}`);
         toast.success(`Successfully switched to country ${country}`);
         setVisible(false);
-        if (locale) {
+        if (locale && onNewCountrySelect) {
             onNewCountrySelect(locale);
         }
     };

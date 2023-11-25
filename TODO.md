@@ -12,7 +12,6 @@
 -   [] an api for contact us form (name, email, subject & message)
 
 > Web app todo list
--   [] handle when visting posted listing from different country
 -   [] bring "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
 -   [] fix nested form errors
 -   [] try out the date picker package for year select
@@ -27,8 +26,6 @@
 -   [] laziliy load filters
 -   [] lazily load landing searchbar?
 -   [] use links instead of router push ?
--   [] update manifest https://web.dev/articles/add-manifest
--   [] minify manifest after changes!
 -   [] fix chrome third party cookies blocked warning
 -   [] subscription edit data not getting populated https://github.com/kaje94/auto-store-client/issues/4
 -   [] fix date format offsets
@@ -37,13 +34,11 @@
 > After deploy
 -   [] Add sentry
 -   [] Add monitors
+-   [] minify manifest after changes!
 
 > optional tod list
 -   [] add pwa?
-
-
-> for domain register 4,359.42
-
+-   [] update manifest https://web.dev/articles/add-manifest
 
 
 > Web app performance improvements
