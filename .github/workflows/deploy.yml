@@ -9,7 +9,7 @@ on:
 jobs:
   Deploy-Production:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     env:
         AUTH0_SECRET: ${{secrets.PROD_ENV_AUTH0_SECRET}}
         AUTH0_BASE_URL: ${{secrets.PROD_ENV_AUTH0_BASE_URL}}
