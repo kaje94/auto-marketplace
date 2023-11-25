@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
     if (new RegExp("/(dashboard.*)").test(request.nextUrl.pathname)) {
         const session = await getSession();
         if (!session) {
-            return NextResponse.redirect(new URL(`/api/auth/login?returnTo=${request.nextUrl.pathname}`, request.url));
+            return NextResponse.rewrite(new URL(`/api/auth/login?returnTo=${request.nextUrl.pathname}`, request.url));
         }
     }
 
