@@ -7,9 +7,8 @@ import { ListingUser } from "@/utils/types";
 interface Props {
     loading?: boolean;
     user?: ListingUser;
-    // todo: add country code to phone
 }
-// todo: change color of email & phone on hover and also underline
+
 export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
     const countryPhoneCode = COUNTRIES[user?.address?.country || ""]?.[3];
     return (
@@ -38,12 +37,12 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                     </div>
                     <div className="mt-2 flex flex-col items-center gap-1">
                         <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`mailto:${user?.email}`}>
-                            Email: <span className="font-semibold text-primary-content">{user?.email}</span>
+                            Email: <span className="link-hover link font-semibold text-primary-content">{user?.email}</span>
                         </a>
                         {user?.phone && (
                             <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`tel:${user.phone}`}>
                                 Contact Number:
-                                <span className="font-semibold text-primary-content">
+                                <span className="link-hover link font-semibold text-primary-content">
                                     <>
                                         <span className="font-light opacity-70">{countryPhoneCode ? `(${countryPhoneCode}) ` : ""}</span>
                                         {user?.phone ?? "-"}
