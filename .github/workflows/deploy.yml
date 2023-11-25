@@ -9,6 +9,7 @@ on:
 jobs:
   Deploy-Production:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
         AUTH0_SECRET: ${{secrets.PROD_ENV_AUTH0_SECRET}}
         AUTH0_BASE_URL: ${{secrets.PROD_ENV_AUTH0_BASE_URL}}
@@ -23,6 +24,7 @@ jobs:
         NEXT_CONTACT_US_FORM_KEY: ${{secrets.PROD_ENV_NEXT_CONTACT_US_FORM_KEY}}
         NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{secrets.PROD_ENV_NEXT_PUBLIC_RECAPTCHA_SITE_KEY}}
         RECAPTCHA_SITE_SECRET: ${{secrets.PROD_ENV_RECAPTCHA_SITE_SECRET}}
+        NODE_OPTIONS: "--max_old_space_size=4096"
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node.js 20.9.0
