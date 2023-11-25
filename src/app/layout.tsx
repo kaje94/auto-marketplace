@@ -33,9 +33,9 @@ export const metadata: Metadata = {
         title,
         description,
         siteName: "Targabay",
-        images: [{ url: "/banner.jpg", alt: "Targabay banner", width: 1200, height: 630 }],
+        images: [{ url: "/images/banner.jpg", alt: "Targabay banner", width: 1200, height: 630 }],
     },
-    twitter: { card: "summary_large_image", images: "/banner.jpg", title, description },
+    twitter: { card: "summary_large_image", images: "/images/banner.jpg", title, description },
     keywords: [
         "Automotive Marketplace",
         "Buy and Sell Cars Online",
