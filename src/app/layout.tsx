@@ -25,7 +25,7 @@ export const metadata: Metadata = {
         { rel: "icon", url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
         { rel: "apple-touch-icon", url: "/favicons/favicon-180x180.png", sizes: "180x180" },
     ],
-    metadataBase: new URL(env.VERCEL_URL),
+    metadataBase: new URL(env.AUTH0_BASE_URL),
     manifest: "/manifest.json",
     openGraph: {
         type: "website",

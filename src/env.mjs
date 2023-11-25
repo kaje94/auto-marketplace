@@ -15,7 +15,6 @@ export const env = createEnv({
         AUTH0_CLIENT_SECRET: z.string().min(1),
         NEXT_CONTACT_US_FORM_KEY: z.string().optional(),
         RECAPTCHA_SITE_SECRET: z.string().optional(),
-        VERCEL_URL: z.string().min(1),
     },
 
     /**

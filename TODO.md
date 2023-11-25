@@ -9,6 +9,7 @@
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
 -   [] bot detection in auth0 enabled(recaptcha)
 -   [] check max length of all strings in schema file
+-   [] an api for contact us form (name, email, subject & message)
 
 > Web app todo list
 -   [] handle when visting posted listing from different country
