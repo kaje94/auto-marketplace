@@ -4,43 +4,27 @@ import { getFormattedDistance, getRandomItem, getYearFromDateString, numberWithC
 import { Vehicle } from "@/utils/types";
 
 interface Props {
-    countryCode?: string;
     loading?: boolean;
     vehicle?: Vehicle;
 }
 
-export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryCode }) => {
+export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
     const placeholderWidth = ["w-28", "w-32", "w-28", "w-16", "w-24", "w-36", "w-14"];
 
     const items: { label: string; value: string | number }[] = [];
-    if (vehicle?.brand) {
-        items.push({ label: "Brand", value: vehicle.brand });
-    }
-    if (vehicle?.model) {
-        items.push({ label: "Modal", value: vehicle.model });
-    }
+    items.push({ label: "Brand", value: vehicle?.brand || "-" });
+    items.push({ label: "Modal", value: vehicle?.model || "-" });
     items.push({ label: "Trim / Edition", value: vehicle?.trim || "-" });
-    if (vehicle?.yearOfManufacture) {
-        items.push({ label: "Manufactured Year", value: getYearFromDateString(vehicle.yearOfManufacture) });
-    }
-    if (vehicle?.yearOfRegistration) {
-        items.push({ label: "Registered Year", value: getYearFromDateString(vehicle.yearOfRegistration) });
-    }
-    if (vehicle?.condition) {
-        items.push({ label: "Condition", value: unCamelCase(vehicle?.condition) });
-    }
-    if (vehicle?.millage) {
-        items.push({ label: "Mileage", value: getFormattedDistance(vehicle?.millage?.distance, vehicle?.millage?.unit) });
-    }
-    if (vehicle?.transmission) {
-        items.push({ label: "Transmission", value: unCamelCase(vehicle?.transmission) });
-    }
-    if (vehicle?.fuelType) {
-        items.push({ label: "Fuel Type", value: unCamelCase(vehicle?.fuelType) });
-    }
-    if (vehicle?.engineCapacity) {
-        items.push({ label: "Engine Capacity", value: `${numberWithCommas(vehicle?.engineCapacity)}CC` });
-    }
+    items.push({ label: "Manufactured Year", value: vehicle?.yearOfManufacture ? getYearFromDateString(vehicle.yearOfManufacture) : "-" });
+    items.push({ label: "Registered Year", value: vehicle?.yearOfRegistration ? getYearFromDateString(vehicle.yearOfRegistration) : "-" });
+    items.push({ label: "Condition", value: vehicle?.condition ? unCamelCase(vehicle?.condition) : "-" });
+    items.push({
+        label: "Mileage",
+        value: vehicle?.millage?.distance ? getFormattedDistance(vehicle?.millage?.distance, vehicle?.millage?.unit) : "-",
+    });
+    items.push({ label: "Transmission", value: vehicle?.transmission ? unCamelCase(vehicle?.transmission) : "-" });
+    items.push({ label: "Fuel Type", value: vehicle?.fuelType ? unCamelCase(vehicle?.fuelType) : "-" });
+    items.push({ label: "Engine Capacity", value: vehicle?.engineCapacity ? `${numberWithCommas(vehicle?.engineCapacity)}CC` : "-" });
     return (
         <div className="mt-2 grid w-full gap-1 lg:grid-cols-2">
             {loading ? (

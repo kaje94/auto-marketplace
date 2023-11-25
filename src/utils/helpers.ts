@@ -72,7 +72,7 @@ export const numberWithCommas = (x: number | string) => {
 
 export const getFormattedCurrency = (amount: number | string = 0, currency: string) => `${currency} ${numberWithCommas(amount)}`;
 
-export const getFormattedDistance = (distance: number | string, unit: string) => `${numberWithCommas(distance)} ${unit}`;
+export const getFormattedDistance = (distance: number | string, unit: string = "km") => `${numberWithCommas(distance)} ${unit}`;
 
 export const unCamelCase = (str: string = "") => {
     if (typeof str === "string") {

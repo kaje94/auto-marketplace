@@ -87,7 +87,7 @@ export const ListingDetails: FC<Props> = ({
 
                 <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Key Specifications</div>
-                    <ListingKeySpecifications countryCode={location?.country} loading={loading} vehicle={vehicle} />
+                    <ListingKeySpecifications loading={loading} vehicle={vehicle} />
                 </div>
                 <div className="card stat place-items-center bg-base-100 shadow">
                     <div className="stat-title">Features</div>
