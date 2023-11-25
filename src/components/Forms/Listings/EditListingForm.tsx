@@ -124,15 +124,6 @@ export const EditListingForm: FC<Props> = (props) => {
             form={form}
             isMutating={isMutating}
             isUpdateProfileEnabled={userId === listingItem?.userId}
-            listingUser={
-                userId === listingItem?.userId
-                    ? { email: profile?.email, phoneNumber: profile?.phone, phoneCountryCode: COUNTRIES[profile?.address?.country || ""]?.[3] }
-                    : {
-                          email: listingItem?.user?.email,
-                          phoneNumber: listingItem?.user?.phone,
-                          phoneCountryCode: COUNTRIES[listingItem?.user?.address?.country || ""]?.[3],
-                      }
-            }
             onMutate={(values) => updateListingsMutation({ ...values, listingId: listingItem.id })}
             profile={profile}
             submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}

@@ -9,15 +9,16 @@ import { createListingSubscriptionAction } from "@/actions/listingSubscriptionAc
 import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
-import { CreateSubscriptionReq } from "@/utils/types";
+import { CreateSubscriptionReq, VehicleBrand } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {
+    brands: VehicleBrand[];
     userId?: string;
 }
 
 export const CreateSubscriptionForm = (props: Props) => {
-    const { userId } = props;
+    const { userId, brands } = props;
     const router = useRouter();
     const params = useParams();
     const countryItem = COUNTRIES[(params.locale as string) || ""];
@@ -110,6 +111,7 @@ export const CreateSubscriptionForm = (props: Props) => {
             isMutating={isMutating}
             onMutate={createSubscriptionMutation}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
+            vehicleBrands={brands}
         />
     );
 };

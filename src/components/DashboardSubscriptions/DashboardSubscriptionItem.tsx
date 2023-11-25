@@ -2,7 +2,15 @@ import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
-import { getFormattedCurrency, getFormattedDistance, getRandomItem, getRandomNumber, timeAgo, unCamelCase } from "@/utils/helpers";
+import {
+    getFormattedCurrency,
+    getFormattedDistance,
+    getRandomItem,
+    getRandomNumber,
+    getYearFromDateString,
+    timeAgo,
+    unCamelCase,
+} from "@/utils/helpers";
 import { ListingSubscriptionItem } from "@/utils/types";
 
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {
@@ -88,19 +96,25 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     }
 
     if (minYearOfManufacture && maxYearOfManufacture) {
-        subscriptionDetails.push({ label: "Manufactured between", value: `${minYearOfManufacture}-${maxYearOfManufacture}` });
+        subscriptionDetails.push({
+            label: "Manufactured between",
+            value: `${getYearFromDateString(minYearOfManufacture)}-${getYearFromDateString(maxYearOfManufacture)}`,
+        });
     } else if (minYearOfManufacture) {
-        subscriptionDetails.push({ label: "Manufactured after", value: minYearOfManufacture });
+        subscriptionDetails.push({ label: "Manufactured after", value: getYearFromDateString(minYearOfManufacture) });
     } else if (maxYearOfManufacture) {
-        subscriptionDetails.push({ label: "Manufactured before", value: maxYearOfManufacture });
+        subscriptionDetails.push({ label: "Manufactured before", value: getYearFromDateString(maxYearOfManufacture) });
     }
 
     if (minYearOfRegistration && maxYearOfRegistration) {
-        subscriptionDetails.push({ label: "Registered between", value: `${minYearOfRegistration}-${maxYearOfRegistration}` });
+        subscriptionDetails.push({
+            label: "Registered between",
+            value: `${getYearFromDateString(minYearOfRegistration)}-${getYearFromDateString(maxYearOfRegistration)}`,
+        });
     } else if (minYearOfRegistration) {
-        subscriptionDetails.push({ label: "Registered after", value: minYearOfRegistration });
+        subscriptionDetails.push({ label: "Registered after", value: getYearFromDateString(minYearOfRegistration) });
     } else if (maxYearOfRegistration) {
-        subscriptionDetails.push({ label: "Registered before", value: maxYearOfRegistration });
+        subscriptionDetails.push({ label: "Registered before", value: getYearFromDateString(maxYearOfRegistration) });
     }
 
     const placeholderWidth = ["w-32", "w-40", "w-44", "w-28", "w-36"];

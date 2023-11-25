@@ -4,7 +4,7 @@ import { api } from "@/utils/api";
 import { SubscriptionIdPathParam } from "@/utils/types";
 
 export default async function Page({ params }: SubscriptionIdPathParam) {
-    const subscriptionDetails = await api.getListingSubscriptionItem(params.id);
+    const [subscriptionDetails, vehicleBrands] = await Promise.all([api.getMyListingSubscriptionItem(params.id), api.getVehicleBrands()]);
 
     return (
         <>
@@ -12,7 +12,11 @@ export default async function Page({ params }: SubscriptionIdPathParam) {
                 currentPageTitle="Edit"
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Manage Subscriptions", href: "/dashboard/subscriptions" }]}
             />
-            <EditSubscriptionForm listingSubscriptionItem={subscriptionDetails} successRedirectPath="/dashboard/subscriptions" />
+            <EditSubscriptionForm
+                brands={vehicleBrands}
+                listingSubscriptionItem={subscriptionDetails}
+                successRedirectPath="/dashboard/subscriptions"
+            />
         </>
     );
 }

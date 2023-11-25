@@ -9,17 +9,18 @@ import { editListingSubscriptionAction } from "@/actions/listingSubscriptionActi
 import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
-import { CreateSubscriptionReq, EditSubscriptionReq, ListingSubscriptionItem } from "@/utils/types";
+import { CreateSubscriptionReq, EditSubscriptionReq, ListingSubscriptionItem, VehicleBrand } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {
+    brands: VehicleBrand[];
     listingSubscriptionItem: ListingSubscriptionItem;
     successRedirectPath: string;
     userId?: string;
 }
 
 export const EditSubscriptionForm: FC<Props> = (props) => {
-    const { listingSubscriptionItem, successRedirectPath, userId } = props;
+    const { listingSubscriptionItem, successRedirectPath, userId, brands } = props;
     const router = useRouter();
     const params = useParams();
     const countryItem = COUNTRIES[(params.locale as string) || ""];
@@ -33,17 +34,18 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
         resolver: zodResolver(CreateSubscriptionSchema),
         defaultValues: {
             ...listingSubscriptionItem,
-            maxPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
-            minPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
-            minMillage: { unit: distanceUnit },
-            maxMillage: { unit: distanceUnit },
-            // todo: check update functionality once the backend API issues are fixed
-            // vehicle: {
-            //     ...listingItem.vehicle,
-            //     yearOfManufacture: new Date(new Date(listingItem.vehicle.yearOfManufacture).getFullYear(), 0, 1).getFullYear().toString(),
-            //     yearOfRegistration: new Date(new Date(listingItem.vehicle.yearOfRegistration).getFullYear(), 0, 1).getFullYear().toString(),
-            //     featureIds: listingItem.vehicle.features.map((item) => item.id),
-            // },
+            minYearOfManufacture: listingSubscriptionItem.minYearOfManufacture
+                ? new Date(new Date(listingSubscriptionItem.minYearOfManufacture).getFullYear(), 0, 1).getFullYear().toString()
+                : undefined,
+            maxYearOfManufacture: listingSubscriptionItem.maxYearOfManufacture
+                ? new Date(new Date(listingSubscriptionItem.maxYearOfManufacture).getFullYear(), 0, 1).getFullYear().toString()
+                : undefined,
+            minYearOfRegistration: listingSubscriptionItem.minYearOfRegistration
+                ? new Date(new Date(listingSubscriptionItem.minYearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
+                : undefined,
+            maxYearOfRegistration: listingSubscriptionItem.maxYearOfRegistration
+                ? new Date(new Date(listingSubscriptionItem.maxYearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
+                : undefined,
         },
         mode: "all",
     });
@@ -125,6 +127,7 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             isMutating={isMutating}
             onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: listingSubscriptionItem.id })}
             submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
+            vehicleBrands={brands}
         />
     );
 };

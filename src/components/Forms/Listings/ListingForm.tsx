@@ -31,11 +31,6 @@ interface Props {
     isLoading?: boolean;
     isMutating?: boolean;
     isUpdateProfileEnabled?: boolean;
-    listingUser?: {
-        email?: string;
-        phoneCountryCode?: string;
-        phoneNumber?: string;
-    };
     onMutate?: (values: CreateListingReq) => void;
     profile?: ListingUser;
     submitButton?: {
@@ -71,7 +66,6 @@ export const ListingForm: FC<Props> = (props) => {
         vehicleBrands = [],
         profile,
         isUpdateProfileEnabled = true,
-        listingUser,
     } = props;
     const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "", setValue } = form as UseFormReturn<CreateListingReq>;
     const [profileModalVisible, setProfileModalVisible] = useState(false);

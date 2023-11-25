@@ -117,7 +117,6 @@ export const CreateListingForm = (props: Props) => {
             featureOptions={features}
             form={form}
             isMutating={isMutating}
-            listingUser={{ email: profile?.email, phoneNumber: profile?.phone, phoneCountryCode: countryItem?.[3] }}
             onMutate={createListingsMutation}
             profile={profile}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}

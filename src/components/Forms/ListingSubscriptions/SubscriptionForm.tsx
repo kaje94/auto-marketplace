@@ -7,7 +7,7 @@ import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { YearInputController } from "@/components/FormElements/YearInput";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
-import { CreateSubscriptionReq } from "@/utils/types";
+import { CreateSubscriptionReq, VehicleBrand } from "@/utils/types";
 
 interface Props {
     countryCurrencySymbol?: string;
@@ -21,10 +21,20 @@ interface Props {
         mutatingText?: string;
         text?: string;
     };
+    vehicleBrands?: VehicleBrand[];
 }
 
 export const SubscriptionForm: FC<Props> = (props) => {
-    const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, countryCurrencySymbol, distanceUnit } = props;
+    const {
+        isMutating,
+        isLoading,
+        form = {},
+        onMutate = () => {},
+        submitButton = {},
+        countryCurrencySymbol,
+        distanceUnit,
+        vehicleBrands = [],
+    } = props;
     const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<CreateSubscriptionReq>;
 
     return (
@@ -73,11 +83,12 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             required
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <InputController
+                            <AutocompleteController
                                 control={control}
                                 fieldName="brand"
                                 label="Brand"
                                 loading={isLoading}
+                                options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
                                 placeholder="Toyota, Nissan, Honda, etc"
                             />
                             <InputController
