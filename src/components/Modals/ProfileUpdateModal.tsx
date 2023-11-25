@@ -88,7 +88,7 @@ export const ProfileUpdateModal = (props: Props) => {
     return (
         <>
             <Modal childrenClassnames="!p-0" modalClassnames="!max-w-3xl" onVisibleChange={setVisible} title="Update Profile" visible={!!visible}>
-                <form className="flex max-h-[80vh] flex-col ">
+                <div className="flex max-h-[80vh] flex-col ">
                     <div className="flex-1 overflow-auto px-4 py-2 lg:px-6">
                         <ProfileForm
                             form={form}
@@ -110,7 +110,7 @@ export const ProfileUpdateModal = (props: Props) => {
                             primaryButton={{ text: "Update" }}
                         />
                     </div>
-                </form>
+                </div>
             </Modal>
         </>
     );

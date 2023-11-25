@@ -12,15 +12,13 @@
 -   [] an api for contact us form (name, email, subject & message)
 
 > Web app todo list
--   [] bring "container mx-auto mb-5 p-4 px-2 py-8 md:px-4 lg:px-10" to layout
--   [] fix nested form errors
+-   [] fix date format offsets
+-   [] show expiry date in listings throughout. specially when renewing listings
 -   [] try out the date picker package for year select
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
--   [] verify how emtpy, unauthorized and error component redirects & links work
+-   [] verify how empty, unauthorized and error component redirects & links work
 -   [] refer create t3 structure and eslint
 -   [] add watermark to uploaded image
--   [] show expiry date in listings throughout. specially when renewing listings
--   [] show counter in textarea listing create
 -   [] datepicker in activate subscription form not working
 -   [] lazily load calender and combobox?
 -   [] laziliy load filters
@@ -28,8 +26,9 @@
 -   [] use links instead of router push ?
 -   [] fix chrome third party cookies blocked warning
 -   [] subscription edit data not getting populated https://github.com/kaje94/auto-store-client/issues/4
--   [] fix date format offsets
 -   [] update displayname and signature in zoho mail
+-   [] theme color not working in dark mode in mobile after deployment
+-   [] fix meta tags in all pages
 
 > After deploy
 -   [] Add sentry
@@ -39,6 +38,8 @@
 > optional tod list
 -   [] add pwa?
 -   [] update manifest https://web.dev/articles/add-manifest
+-   [] show counter in textarea listing create
+-   [] welcome modal is too obtrusive
 
 
 > Web app performance improvements
