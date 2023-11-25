@@ -1,5 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/LayoutElements/Footer";
 import { NavBar } from "@/components/LayoutElements/NavBar";
 import { ScrollToTop } from "@/components/LayoutElements/ScrollToTop";
@@ -60,6 +60,10 @@ export const metadata: Metadata = {
         "Vehicle Classified Ads",
         "Auto Auction Site",
     ],
+};
+
+export const viewport: Viewport = {
+    themeColor: "#000033",
 };
 
 export default function RootLayout({ children }: ChildrenProps) {
