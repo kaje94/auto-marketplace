@@ -11,7 +11,7 @@ export const RevalidateFeatures = () => {
     });
 
     return (
-        <button className="btn-outline btn" disabled={isLoading} onClick={() => mutate()}>
+        <button className="btn btn-outline" disabled={isLoading} onClick={() => mutate()}>
             Revalidate Features
         </button>
     );
