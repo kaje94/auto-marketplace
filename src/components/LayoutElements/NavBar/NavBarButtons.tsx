@@ -63,23 +63,27 @@ export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; la
     );
 };
 
-export const PostAddLink = () => {
+export const PostAddLink = (props: { isLoggedIn: boolean }) => {
     const pathname = usePathname();
     const params = useParams();
     const active = pathname === `/${params.locale}/dashboard/new-listing`;
-    return (
-        <LinkWithLocale href="/dashboard/new-listing">
-            <button
-                className={clsx({
-                    "btn text-xs capitalize sm:text-sm px-2": true,
-                    "btn-link text-secondary cursor-default": active,
-                    "btn-ghost text-base-300 hover:text-accent": !active,
-                })}
-            >
-                Post your Advert
-            </button>
-        </LinkWithLocale>
+
+    const PostAdvertBtn = (
+        <button
+            className={clsx({
+                "btn text-xs capitalize sm:text-sm px-2": true,
+                "btn-link text-secondary cursor-default": active,
+                "btn-ghost text-base-300 hover:text-accent": !active,
+            })}
+        >
+            Post your Advert
+        </button>
     );
+
+    if (!props.isLoggedIn) {
+        return <a href={params.locale ? `/${params.locale}/dashboard/new-listing` : "/dashboard/new-listing"}>{PostAdvertBtn}</a>;
+    }
+    return <LinkWithLocale href="/dashboard/new-listing">{PostAdvertBtn}</LinkWithLocale>;
 };
 
 export const SearchLink = () => {

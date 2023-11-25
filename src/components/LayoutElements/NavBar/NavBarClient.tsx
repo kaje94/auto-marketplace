@@ -55,7 +55,7 @@ export const NavBarClient = ({
                     </LinkWithLocale>
                     <div className="flex flex-row items-center gap-0.5 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                         <SearchLink />
-                        <PostAddLink />
+                        <PostAddLink isLoggedIn={!!userClaims} />
                         <NavBarCountryBtn />
                         <NavBarAuth loading={loading} notificationCount={notificationCount} userClaims={userClaims} />
                     </div>
