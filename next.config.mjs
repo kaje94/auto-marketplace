@@ -12,7 +12,8 @@ const config = {
         domains: ["ik.imagekit.io"],
     },
     experimental: {
-        ppr: true,
+        // Enable once its available in next.js stage release
+        // ppr: true,
     },
 };
 export default config;
