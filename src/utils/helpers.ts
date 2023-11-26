@@ -4,7 +4,8 @@ import qs from "query-string";
 import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3Action, getPresignedS3UrlsAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
-import { ListingItem, ListingItems, ListingUser, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
+import { YearSelectMinYear } from "./constants";
+import { LabelValue, ListingItem, ListingItems, ListingUser, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
 
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;
