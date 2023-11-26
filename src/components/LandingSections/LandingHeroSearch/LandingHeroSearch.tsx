@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { LinkWithLocale } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
+import { SelectController } from "@/components/FormElements/Select";
 import { SearchIcon } from "@/icons";
 import { VehicleTypeList } from "@/utils/constants";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
@@ -28,13 +29,14 @@ export const LandingHeroSearch = () => {
                 placeholder="Search..."
             />
             <div className="relative sm:w-36">
-                <AutocompleteController
+                <SelectController
                     control={control}
                     errorAsTooltip
                     fieldName="VehicleType"
                     options={VehicleTypeList}
-                    placeholder="Type"
-                    selectClassNames="bg-white rounded-none !outline-none sm:!w-36"
+                    placeholder="All Types"
+                    selectClassName="bg-white rounded-none !outline-none sm:!w-36"
+                    selectablePlaceholder
                 />
             </div>
             <LinkWithLocale

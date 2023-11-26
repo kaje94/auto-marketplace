@@ -4,8 +4,9 @@ import { Controller } from "react-hook-form";
 import { Autocomplete, ControllerProps } from "@/components/FormElements/AutoComplete/Autocomplete";
 import { FormFieldControllerWrap } from "@/components/FormElements/Common";
 import { InputController } from "@/components/FormElements/Input";
-import { YearRangeList } from "@/utils/constants";
+import { getYearRangeList } from "@/utils/helpers";
 import { LabelValue } from "@/utils/types";
+import { DatePicker, DatePickerController } from "../DatePicker";
 
 export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | "options">> = ({
     loading,
@@ -19,12 +20,14 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
     fieldName,
     disabled,
     errorAsTooltip,
+    minYear,
+    maxYear,
 }) => {
     const [years, setYears] = useState<LabelValue[]>([]);
 
     useEffect(() => {
-        setYears(YearRangeList);
-    }, []);
+        setYears(getYearRangeList(minYear, maxYear));
+    }, [minYear, maxYear]);
 
     if (loading || !control) {
         return (

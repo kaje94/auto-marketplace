@@ -27,6 +27,7 @@
 -   [] update displayname and signature in zoho mail
 -   [] theme color not working in dark mode in mobile after deployment
 -   [] fix meta tags in all pages
+-   [] when selecting range, need to validate
 
 > After deploy
 -   [] Add sentry

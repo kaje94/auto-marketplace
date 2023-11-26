@@ -2,9 +2,9 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
-import { DatePickerController } from "@/components/FormElements/DatePicker";
 import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
+import { SelectController } from "@/components/FormElements/Select";
 import { YearInputController } from "@/components/FormElements/YearInput";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { CreateSubscriptionReq, VehicleBrand } from "@/utils/types";
@@ -35,7 +35,11 @@ export const SubscriptionForm: FC<Props> = (props) => {
         distanceUnit,
         vehicleBrands = [],
     } = props;
-    const { handleSubmit, formState: { isDirty } = {}, control } = form as UseFormReturn<CreateSubscriptionReq>;
+    const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "" } = form as UseFormReturn<CreateSubscriptionReq>;
+    const maxYearOfManufacture = watch("maxYearOfManufacture");
+    const minYearOfManufacture = watch("minYearOfManufacture");
+    const minYearOfRegistration = watch("minYearOfRegistration");
+    const maxYearOfRegistration = watch("maxYearOfRegistration");
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -49,9 +53,10 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             label="Display Name"
                             loading={isLoading}
                             placeholder="Name of the subscription"
+                            required
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
-                            <AutocompleteController
+                            <SelectController
                                 control={control}
                                 fieldName="notificationFrequency"
                                 label="Subscription Frequency"
@@ -59,21 +64,23 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 options={SubscriptFrequenciesList}
                                 placeholder="Select Frequency"
                                 required
+                                selectablePlaceholder
                             />
-                            <DatePickerController
+                            <InputController
                                 control={control}
                                 fieldName="subscriptionExpiryDate"
                                 label="Subscription expiry date"
                                 loading={isLoading}
-                                minDate={Dates.Days_7_from_now}
-                                placeholderText="01/01/2025"
+                                min={Dates.Days_7_from_now.toISOString().split("T")[0]}
+                                placeholder="01/01/2025"
                                 required
+                                type="date"
                             />
                         </div>
                     </div>
                     <div className="card stat bg-base-100 p-4 shadow">
                         <div className="stat-title">Key Specifications</div>
-                        <AutocompleteController
+                        <SelectController
                             control={control}
                             fieldName="type"
                             label="Type"
@@ -81,6 +88,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             options={VehicleTypeList}
                             placeholder="Select Type"
                             required
+                            selectablePlaceholder
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <AutocompleteController
@@ -105,13 +113,14 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 loading={isLoading}
                                 placeholder="LX, EX, EX-L, Sport, etc"
                             />
-                            <AutocompleteController
+                            <SelectController
                                 control={control}
                                 fieldName="condition"
                                 label="Condition"
                                 loading={isLoading}
                                 options={VehicleConditionList}
                                 placeholder="Select Condition"
+                                selectablePlaceholder
                             />
                         </div>
                     </div>
@@ -125,6 +134,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 fieldName="minYearOfManufacture"
                                 label="Manufactured after"
                                 loading={isLoading}
+                                maxYear={maxYearOfManufacture ? Number(maxYearOfManufacture) : undefined}
                                 placeholder="1990"
                             />
                             <YearInputController
@@ -132,6 +142,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 fieldName="maxYearOfManufacture"
                                 label="Manufactured before"
                                 loading={isLoading}
+                                minYear={minYearOfManufacture ? Number(minYearOfManufacture) : undefined}
                                 placeholder="2000"
                             />
                         </div>
@@ -144,6 +155,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 fieldName="minYearOfRegistration"
                                 label="Registered after"
                                 loading={isLoading}
+                                maxYear={maxYearOfRegistration ? Number(maxYearOfRegistration) : undefined}
                                 placeholder="2010"
                             />
                             <YearInputController
@@ -151,6 +163,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 fieldName="maxYearOfRegistration"
                                 label="Registered before"
                                 loading={isLoading}
+                                minYear={minYearOfRegistration ? Number(minYearOfRegistration) : undefined}
                                 placeholder="2020"
                             />
                         </div>

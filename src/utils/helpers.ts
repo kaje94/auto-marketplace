@@ -353,3 +353,13 @@ export const isIncompleteUserProfile = (profile: ListingUser) =>
     !profile.phone || !profile.address?.city || !profile.address?.state || !profile.address?.country || !profile.address?.postalCode;
 
 export const getDistanceUnit = (countryCode: string | undefined) => (countryCode === "US" ? "mi" : "km");
+
+export const getYearRangeList = (startYear = YearSelectMinYear, endYear = new Date().getFullYear()): LabelValue[] => {
+    return Array.from({ length: endYear - startYear + 1 }, (_, index) => {
+        const year = endYear - index;
+        return {
+            value: year.toString(),
+            label: year.toString(),
+        };
+    });
+};

@@ -8,6 +8,7 @@ import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
+import { SelectController } from "@/components/FormElements/Select";
 import { TagSelectController } from "@/components/FormElements/TagSelect";
 import { TextAreaController } from "@/components/FormElements/TextArea";
 import { YearInputController } from "@/components/FormElements/YearInput";
@@ -115,7 +116,7 @@ export const ListingForm: FC<Props> = (props) => {
                     <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                         <div className="card stat bg-base-100 p-4 shadow">
                             <div className="stat-title">Key Specifications</div>
-                            <AutocompleteController
+                            <SelectController
                                 control={control}
                                 disabled={isProfileIncomplete}
                                 fieldName="vehicle.type"
@@ -124,6 +125,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 options={VehicleTypeList}
                                 placeholder="Select Type"
                                 required
+                                selectablePlaceholder
                             />
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <AutocompleteController
@@ -180,7 +182,7 @@ export const ListingForm: FC<Props> = (props) => {
                                     placeholder="50,000"
                                     required
                                 />
-                                <AutocompleteController
+                                <SelectController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.condition"
@@ -189,8 +191,9 @@ export const ListingForm: FC<Props> = (props) => {
                                     options={VehicleConditionList}
                                     placeholder="Select Condition"
                                     required
+                                    selectablePlaceholder
                                 />
-                                <AutocompleteController
+                                <SelectController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.transmission"
@@ -199,8 +202,9 @@ export const ListingForm: FC<Props> = (props) => {
                                     options={TransmissionTypeList}
                                     placeholder="Select Type"
                                     required
+                                    selectablePlaceholder
                                 />
-                                <AutocompleteController
+                                <SelectController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.fuelType"
@@ -209,6 +213,7 @@ export const ListingForm: FC<Props> = (props) => {
                                     options={FuelTypeList}
                                     placeholder="Select Fuel Type"
                                     required
+                                    selectablePlaceholder
                                 />
                                 <NumberInputController
                                     control={control}

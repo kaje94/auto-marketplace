@@ -23,6 +23,8 @@ export interface ControllerProps extends FormFieldControllerProps {
     disabled?: boolean;
     fieldName: string;
     loading?: boolean;
+    maxYear?: number;
+    minYear?: number;
     options?: LabelValue[];
     placeholder?: string;
     selectClassNames?: string;
