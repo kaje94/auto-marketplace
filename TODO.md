@@ -26,6 +26,7 @@
 -   [] fix meta tags in all pages
 -   [] when selecting range, need to validate
 -   [] make sure meta tags are from layouts
+-   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
 
 > After deploy
 -   [] Add sentry
