@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 
@@ -19,6 +20,22 @@ const SafetyTipItem = ({ tips = [], title }: { tips: (string | ReactNode)[]; tit
         </ul>
     </div>
 );
+
+export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+
+    const title = "Targabay - Safety Tips";
+    const description =
+        "Explore Targabay's Safety Tips to ensure a secure and confident experience on our online marketplace. Discover valuable insights and guidelines for buying and selling cars, bikes, and more. Prioritize safety in every transaction with our expert tips and recommendations. Targabay – Your trusted destination for a safe and enjoyable automotive journey.";
+
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title, description },
+        twitter: { ...previousTwitter, title, description },
+    };
+}
 
 export default function Page() {
     return (

@@ -24,7 +24,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
     });
     items.push({ label: "Transmission", value: vehicle?.transmission ? unCamelCase(vehicle?.transmission) : "-" });
     items.push({ label: "Fuel Type", value: vehicle?.fuelType ? unCamelCase(vehicle?.fuelType) : "-" });
-    items.push({ label: "Engine Capacity", value: vehicle?.engineCapacity ? `${numberWithCommas(vehicle?.engineCapacity)}CC` : "-" });
+    items.push({ label: "Engine Capacity", value: vehicle?.engineCapacity ? `${numberWithCommas(vehicle?.engineCapacity)} CC` : "-" });
     return (
         <div className="mt-2 grid w-full gap-1 lg:grid-cols-2">
             {loading ? (

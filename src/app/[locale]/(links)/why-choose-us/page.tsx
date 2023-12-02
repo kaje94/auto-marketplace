@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { displayFont } from "@/app/fonts";
 import { DropletIcon, FilterIcon, NotificationIcon, TagIcon, UserIcon, ZapIcon } from "@/icons";
@@ -24,6 +25,21 @@ const FeatureItem = ({
     </div>
 );
 
+export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+
+    const title = "Targabay - Why Choose Us";
+    const description =
+        "Discover why Targabay stands out as your premier choice in the world of online automotive marketplaces. Explore our commitment to a seamless buying and selling experience for cars, bikes, and more. From a diverse vehicle selection to secure transactions, find out what sets Targabay apart and makes us the preferred destination for automotive enthusiasts.";
+
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title, description },
+        twitter: { ...previousTwitter, title, description },
+    };
+}
 export default function Page() {
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">

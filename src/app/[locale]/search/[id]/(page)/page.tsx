@@ -1,11 +1,66 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
+import { Metadata, ResolvingMetadata } from "next";
 import { BreadCrumbs, ErrorComponent } from "@/components/Common";
 import { ListingDetails, RelatedListingsCarousel } from "@/components/ListingDetails";
 import { ListingDetailsCountrySelectBtn } from "@/components/ListingDetails/CountrySelectButton";
 import { api } from "@/utils/api";
 import { COUNTRIES } from "@/utils/countries";
-import { transformListingResponse } from "@/utils/helpers";
-import { ListingIdPathParam, LocalePathParam } from "@/utils/types";
+import {
+    convertToSEOFriendlyImageURL,
+    getFormattedCurrency,
+    getLocationString,
+    toSEOFriendlyTitleUrl,
+    transformListingResponse,
+    unCamelCase,
+} from "@/utils/helpers";
+import { ListingIdPathParam, ListingItem, LocalePathParam } from "@/utils/types";
+
+const getListingDescriptionMetadata = (item: ListingItem): string => {
+    const desc = `Explore the ${item.title} listing on Targabay. Located in ${getLocationString(item.location)}, this ${unCamelCase(
+        item.vehicle.condition,
+    )} vehicle is priced at ${getFormattedCurrency(item.price.amount, item.price.currencySymbol)} (${
+        item.price.currencyCode
+    }). With a manufacturing year of ${item.vehicle.yearOfManufacture}${
+        item.vehicle.yearOfRegistration ? ` and registration in ${item.vehicle.yearOfRegistration}` : ""
+    }, it boasts a ${unCamelCase(item.vehicle.transmission)} transmission, ${unCamelCase(item.vehicle.fuelType)} fuel type, and a ${
+        item.vehicle.engineCapacity
+    } CC engine capacity.${
+        item.vehicle.features?.length > 0 ? ` The vehicle comes with features such as ${item.vehicle.features.join(",")}.` : ""
+    } Discover detailed specifications and pricing for a seamless buying experience. Targabay – Your trusted online marketplace for cars, bikes, and more.`;
+
+    return desc;
+};
+
+const getTitleMetadata = (item: ListingItem): string => {
+    return `${item.title} for Sale in ${getLocationString(item.location)}`;
+};
+
+export async function generateMetadata({ params }: ListingIdPathParam, parent: ResolvingMetadata): Promise<Metadata> {
+    const itemDetails = transformListingResponse(await api.getPostedListingItem(params.id));
+    const image = itemDetails?.vehicle.vehicleImages?.find((item) => item.isThumbnail === true);
+    const seoFriendlyImageName = toSEOFriendlyTitleUrl(itemDetails.title, itemDetails.location);
+    const imageUrl = convertToSEOFriendlyImageURL(image?.name!, seoFriendlyImageName);
+    const title = `Targabay - ${getTitleMetadata(itemDetails)}`;
+    const description = getListingDescriptionMetadata(itemDetails);
+    const previousKeywords = (await parent).keywords || [];
+    const previousImages = (await parent).openGraph?.images || [];
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+    const images = [...previousImages, { url: imageUrl, alt: `${getTitleMetadata(itemDetails)} image` }];
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title: getTitleMetadata(itemDetails), description, images },
+        twitter: { ...previousTwitter, images, title: getTitleMetadata(itemDetails), description },
+        keywords: [
+            ...previousKeywords,
+            itemDetails.title,
+            itemDetails.vehicle.brand,
+            itemDetails.vehicle.model,
+            getLocationString(itemDetails.location),
+        ],
+    };
+}
 
 export default async function Page({ params }: ListingIdPathParam & LocalePathParam) {
     const [session, itemDetails] = await Promise.all([getSession(), transformListingResponse(await api.getPostedListingItem(params.id))]);

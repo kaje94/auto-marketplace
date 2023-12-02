@@ -1,7 +1,7 @@
 "use client";
 import Image, { ImageProps } from "next/image";
 import { FC, useEffect, useState } from "react";
-import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyName } from "@/utils/helpers";
+import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyTitleUrl } from "@/utils/helpers";
 import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props extends Omit<ImageProps, "src" | "alt"> {
@@ -19,7 +19,7 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
         }
     }, [image]);
 
-    const seoFriendlyName = toSEOFriendlyName(title, location);
+    const seoFriendlyName = toSEOFriendlyTitleUrl(title, location);
 
     return (
         <Image

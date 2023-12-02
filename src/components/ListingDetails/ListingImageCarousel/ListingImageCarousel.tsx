@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ListingImage } from "@/components/Common";
 import { MaximizeIcon } from "@/icons";
 import { VehicleTypes } from "@/utils/enum";
-import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyName, unCamelCase } from "@/utils/helpers";
+import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyTitleUrl, unCamelCase } from "@/utils/helpers";
 import { Location, VehicleImageType } from "@/utils/types";
 import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails";
 
@@ -132,7 +132,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                     onClose={() => setLightBoxOpen(false)}
                     openOnMount
                     sourceIndex={selectedIndex}
-                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyName(title, location as Location), 100))}
+                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyTitleUrl(title, location as Location), 100))}
                     toggler={isLightBoxOpen}
                     type="image"
                 />

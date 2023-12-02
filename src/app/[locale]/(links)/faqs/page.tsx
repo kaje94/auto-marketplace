@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common";
@@ -17,6 +18,22 @@ const QuestionItem = ({ answer, question }: { answer: string | ReactNode; questi
         <p>{answer}</p>
     </div>
 );
+
+export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+
+    const title = "Targabay - Frequently Asked Questions";
+    const description =
+        "Find answers to common queries on Targabay's FAQ page. Explore comprehensive information about buying, selling, and navigating our online marketplace for cars, bikes, and more. Streamline your experience with insights into our policies, transactions, and everything you need to know. Targabay – Your go-to resource for a seamless automotive journey.";
+
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title, description },
+        twitter: { ...previousTwitter, title, description },
+    };
+}
 
 export default function Page() {
     return (

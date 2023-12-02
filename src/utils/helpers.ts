@@ -5,7 +5,19 @@ import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3Action, getPresignedS3UrlsAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
 import { YearSelectMinYear } from "./constants";
-import { LabelValue, ListingItem, ListingItems, ListingUser, Location, PaginatedResponse, Vehicle, VehicleCreate, VehicleImageType } from "./types";
+import { COUNTRIES } from "./countries";
+import {
+    LabelValue,
+    ListingItem,
+    ListingItems,
+    ListingUser,
+    Location,
+    PaginatedResponse,
+    PostedListingsFilterReq,
+    Vehicle,
+    VehicleCreate,
+    VehicleImageType,
+} from "./types";
 
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;
@@ -203,6 +215,20 @@ export const transformListingResponse = (itemDetails: ListingItem): ListingItem 
     };
 };
 
+export const toSEOFriendlyTitleUrl = (originalName: string, location?: Location): string => {
+    const seoName = originalName
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "");
+
+    const locationStr = getLocationString(location)
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "");
+
+    return `${seoName}-for-sale${locationStr ? `-in-${locationStr}` : ""}`;
+};
+
 export const sortVehicleImages = (images: VehicleImageType[]) =>
     images.sort((a, b) => {
         if (a.isThumbnail && !b.isThumbnail) {
@@ -237,7 +263,7 @@ export const previewUrlToHash = async (previewUrl: string) => {
     return thumbHash;
 };
 
-export const getLocationString = (location?: Location, countryName?: string) => {
+export const getLocationString = (location?: Partial<Location>, countryName?: string) => {
     const itemsArr = [];
     if (location?.city) {
         itemsArr.push(location.city);
@@ -307,7 +333,7 @@ export const generateInitialsFromName = (name?: string): string => {
     return initials;
 };
 
-export const convertToSEOFriendlyImageURL = (src: string, seoFriendlyName: string, quality: number = 75, width?: number): string => {
+export const convertToSEOFriendlyImageURL = (src: string, seoFriendlyName: string, quality: number = 75, width: number = 640): string => {
     const fileExtension = getFileExtension(src);
     return `${env.NEXT_PUBLIC_IMAGE_CDN_BASE}/ik-seo/${src?.replace(fileExtension, "")}/${seoFriendlyName}${fileExtension}?${qs.stringify({
         tr: width ? `w-${width}` : undefined,
@@ -334,20 +360,6 @@ const getFileExtension = (filePath: string): string => {
     }
     // If there's no valid file extension, return null or an appropriate default value
     return "";
-};
-
-export const toSEOFriendlyName = (originalName: string, location?: Location): string => {
-    const seoName = originalName
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w\-]+/g, "");
-
-    const locationStr = getLocationString(location)
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w\-]+/g, "");
-
-    return `${seoName}-for-sale${locationStr ? `-in-${locationStr}` : ""}`;
 };
 
 export const isIncompleteUserProfile = (profile: ListingUser) =>

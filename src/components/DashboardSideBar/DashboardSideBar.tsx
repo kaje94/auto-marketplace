@@ -26,7 +26,7 @@ const DashboardSideBarItems = ({ userClaims, notificationCount }: { notification
                     activePaths={["/dashboard/profile"]}
                     href="/dashboard/profile"
                     iconName="UserIcon"
-                    label="Profile"
+                    label="My Profile"
                     regexExp="/dashboard/profile/(.*?)"
                 />
                 <NavBarItem

@@ -1,7 +1,10 @@
+import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
 import { EditSubscriptionForm } from "@/components/Forms/ListingSubscriptions/EditSubscriptionForm";
 import { api } from "@/utils/api";
 import { SubscriptionIdPathParam } from "@/utils/types";
+
+export const metadata: Metadata = { title: "Targabay - Edit Subscription" };
 
 export default async function Page({ params }: SubscriptionIdPathParam) {
     const [subscriptionDetails, vehicleBrands] = await Promise.all([api.getMyListingSubscriptionItem(params.id), api.getVehicleBrands()]);

@@ -13,21 +13,19 @@
 
 > Web app todo list
 -   [] fix date format offsets
--   [] try out the date picker package for year select
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] verify how empty, unauthorized and error component redirects & links work
 -   [] refer create t3 structure and eslint
 -   [] add watermark to uploaded image
--   [] datepicker in activate subscription form not working
 -   [] lazily load calender and combobox?
 -   [] laziliy load filters
 -   [] lazily load landing searchbar?
 -   [] use links instead of router push ?
 -   [] fix chrome third party cookies blocked warning
 -   [] update displayname and signature in zoho mail
--   [] theme color not working in dark mode in mobile after deployment
 -   [] fix meta tags in all pages
 -   [] when selecting range, need to validate
+-   [] make sure meta tags are from layouts
 
 > After deploy
 -   [] Add sentry
@@ -56,6 +54,38 @@
 -   [] add sitemap
 -   [] add open grapgh and twitter tags
 -   [] search box in google
+-   [] static metadata needs to be in layout. only dynamic metadata needs to be in page.tsx
+-   [] webp images should not be used in opengraph(search list and item details page)
+
+> Meta tags & sitemap
+- [] Landing
+- [] About Us
+- [] Why choose Us
+- [] Contact Us
+- [] Safety tips
+- [] FAQs
+- [] Terms of us
+- [] Privacy Policy
+- [] Cookie Policy
+- [] Posted listing search
+- [] Posted listing item
+- [] Profile
+- [] Update Profile
+- [] Create new advert
+- [] My Advert list
+- [] Manage/view my advert
+- [] Edit my advert item
+- [] All adverts list
+- [] Manage/view advert
+- [] Edit advert
+- [] My subscription list
+- [] Create new subscription
+- [] Edit my subscription
+- [] All subscription list
+- [] Edit subscription item
+- [] View notifications
+- [] Manage cache
+
 
 
 > Update next 14
@@ -67,3 +97,8 @@
 -   https://nextjs.org/docs/app/api-reference/functions/generate-viewport
 -   https://nextjs.org/docs/app/api-reference/functions/unstable_cache
 
+
+> Update auth welcome text to one of the following
+Select your preferred login method to access Targabay
+Choose your login method to access Targabay
+Select how you want to log in to Targabay.

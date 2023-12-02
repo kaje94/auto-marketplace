@@ -26,16 +26,21 @@ export const metadata: Metadata = {
         { rel: "apple-touch-icon", url: "/favicons/favicon-180x180.png", sizes: "180x180" },
     ],
     metadataBase: new URL(env.AUTH0_BASE_URL),
-    manifest: "/manifest.json",
+    manifest: `/manifest.json`,
     openGraph: {
         type: "website",
         url: "https://targabay.com",
         title,
         description,
         siteName: "Targabay",
-        images: [{ url: "/images/banner.jpg", alt: "Targabay banner", width: 1200, height: 630 }],
+        images: [{ url: `/images/banner.jpg`, alt: "Targabay banner", width: 1200, height: 630 }],
     },
-    twitter: { card: "summary_large_image", images: "/images/banner.jpg", title, description },
+    twitter: {
+        card: "summary_large_image",
+        images: [{ url: `/images/banner.jpg`, alt: "Targabay banner", width: 1200, height: 630 }],
+        title,
+        description,
+    },
     keywords: [
         "Automotive Marketplace",
         "Buy and Sell Cars Online",
@@ -62,9 +67,7 @@ export const metadata: Metadata = {
     ],
 };
 
-export const viewport: Viewport = {
-    themeColor: "#18182F",
-};
+export const viewport: Viewport = { themeColor: "#18182F" };
 
 export default function RootLayout({ children }: ChildrenProps) {
     return (

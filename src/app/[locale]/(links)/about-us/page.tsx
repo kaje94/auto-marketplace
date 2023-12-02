@@ -1,5 +1,22 @@
 import { clsx } from "clsx";
+import { Metadata, ResolvingMetadata } from "next";
 import { displayFont } from "@/app/fonts";
+
+export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+
+    const title = "Targabay - About Us";
+    const description =
+        "Learn more about Targabay, the premier online marketplace for automotive enthusiasts. Discover our journey, mission, and commitment to providing a seamless platform for buying and selling cars, bikes, and more. Join us in the passion for all things automotive.";
+
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title, description },
+        twitter: { ...previousTwitter, title, description },
+    };
+}
 
 export default function Page() {
     return (

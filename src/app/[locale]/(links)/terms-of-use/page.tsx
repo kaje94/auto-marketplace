@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common";
@@ -16,6 +17,22 @@ const TermsOfUseItem = ({ content = [], title }: { content: string | ReactNode; 
         <p>{content}</p>
     </div>
 );
+
+export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+
+    const title = "Targabay - Terms of Use";
+    const description =
+        "Review Targabay's Terms of Use to understand the guidelines governing your engagement with our online automotive marketplace. Learn about the rules, responsibilities, and agreements that ensure a fair and secure platform for buying and selling cars, bikes, and more. Targabay – Your trusted destination for transparent and mutually beneficial transactions in the world of vehicles.";
+
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title, description },
+        twitter: { ...previousTwitter, title, description },
+    };
+}
 
 export default function Page() {
     return (

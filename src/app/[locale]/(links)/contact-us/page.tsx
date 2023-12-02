@@ -1,5 +1,6 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
+import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common";
@@ -17,6 +18,21 @@ const ContactUsItem = ({ title, desc, subTitle }: { desc: string | ReactNode; su
     );
 };
 
+export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+
+    const title = "Targabay - Contact Us";
+    const description =
+        "Get in touch with Targabay! Whether you have questions, feedback, or partnership inquiries, our team is here to assist you. Reach out to us for a seamless and personalized experience in your automotive journey. Contact Targabay – your go-to online marketplace for buying and selling cars, bikes, and more.";
+
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title, description },
+        twitter: { ...previousTwitter, title, description },
+    };
+}
 export default async function Page() {
     const session = await getSession();
 

@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common";
@@ -24,6 +25,22 @@ const PrivacyPolicyItem = ({ content, items = [], title }: { content?: string | 
         )}
     </div>
 );
+
+export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
+
+    const title = "Targabay - Privacy Policy";
+    const description =
+        "Understand how Targabay prioritizes your privacy with our detailed Privacy Policy. Learn about the collection, use, and safeguarding of your personal information as you engage with our online marketplace. Explore our commitment to providing a secure and personalized platform for buying and selling cars, bikes, and more. Your trust is our priority at Targabay.";
+
+    return {
+        title,
+        description,
+        openGraph: { ...previousOpenGraph, title, description },
+        twitter: { ...previousTwitter, title, description },
+    };
+}
 
 export default function Page() {
     return (
