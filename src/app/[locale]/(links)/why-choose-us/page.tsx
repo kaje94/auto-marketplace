@@ -49,7 +49,7 @@ export default function Page() {
                     alt="feature-1-image"
                     className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"
                     height={400}
-                    src="/images/features-1.webp"
+                    src="/images/site/features-1.webp"
                     unoptimized
                     width={600}
                 />
@@ -83,7 +83,7 @@ export default function Page() {
                     alt="feature-1-image"
                     className="hidden w-full rounded-lg bg-[#7c7262] object-cover lg:block"
                     height={400}
-                    src="/images/features-2.webp"
+                    src="/images/site/features-2.webp"
                     unoptimized
                     width={600}
                 />
@@ -91,7 +91,7 @@ export default function Page() {
                     alt="feature-1-image"
                     className="hidden w-full rounded-lg bg-[#8e999f] object-cover lg:block"
                     height={400}
-                    src="/images/features-3.webp"
+                    src="/images/site/features-3.webp"
                     unoptimized
                     width={600}
                 />

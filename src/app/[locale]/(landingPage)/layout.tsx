@@ -27,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 className="absolute inset-x-0 bottom-0 m-auto w-full opacity-20 md:w-10/12 md:opacity-30 lg:w-11/12 xl:max-w-7xl"
                 height={450}
                 priority={false}
-                src="/images/cover-image.webp"
+                src="/images/site/cover-image.webp"
                 unoptimized
                 width={1246}
             />
