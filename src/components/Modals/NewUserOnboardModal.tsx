@@ -68,7 +68,7 @@ export const NewUserOnboardModal = (props: Props) => {
 
     return (
         <>
-            <Modal modalClassnames="!max-w-4xl" onVisibleChange={setModalVisible} visible={!!modalVisible}>
+            <Modal modalClassnames="!max-w-4xl" visible={!!modalVisible} onVisibleChange={setModalVisible}>
                 <div className="flex flex-col gap-1">
                     <div className={clsx("text-3xl xl:text-4xl", displayFont.className)}>Welcome {userData?.firstName}!</div>
                     <div className="opacity-90">
@@ -215,6 +215,9 @@ export const NewUserOnboardModal = (props: Props) => {
 
             {userData && (
                 <ProfileUpdateModal
+                    setVisible={setProfileModalVisible}
+                    userData={userData}
+                    visible={profileModalVisible}
                     onSuccess={() => {
                         setStepIndex(1);
                         setProfileStepComplete(true);
@@ -223,9 +226,6 @@ export const NewUserOnboardModal = (props: Props) => {
                             setModalVisible(false);
                         }
                     }}
-                    setVisible={setProfileModalVisible}
-                    userData={userData}
-                    visible={profileModalVisible}
                 />
             )}
         </>

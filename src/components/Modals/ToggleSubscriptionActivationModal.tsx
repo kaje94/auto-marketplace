@@ -53,7 +53,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
     );
 
     return (
-        <Modal onVisibleChange={setVisible} title={`${active ? "Deactivate" : "Activate"} Subscription`} visible={visible}>
+        <Modal title={`${active ? "Deactivate" : "Activate"} Subscription`} visible={visible} onVisibleChange={setVisible}>
             <div className="mb-2 mt-4 text-sm">
                 {active
                     ? "By deactivating the subscription, you will stop receiving notifications related to your subscription criteria"
@@ -64,17 +64,17 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
                     <DatePickerController
                         control={control}
                         fieldName="subscriptionExpiryDate"
-                        inline
                         label="Expiry date"
                         minDate={new Date(new Date().setHours(new Date().getHours() + 24 * 7))}
+                        inline
                         required
                     />
                 )}
                 <ModalFooter
                     loading={isLoading}
+                    primaryButton={{ text: active ? "Deactivate" : "Activate" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
                     onVisibleChange={setVisible}
-                    primaryButton={{ text: active ? "Deactivate" : "Activate" }}
                 />
             </form>
         </Modal>

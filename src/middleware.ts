@@ -25,6 +25,7 @@ export async function middleware(request: NextRequest) {
     res.headers.set("x-pathname", request.nextUrl.pathname);
     res.headers.set("x-locale", pathLocale);
     res.headers.set("x-country-name", matchingLocal[0]);
+    res.headers.set("Locale", "en");
 
     return res;
 }

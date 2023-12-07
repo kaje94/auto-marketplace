@@ -2,10 +2,13 @@ import { Claims } from "@auth0/nextjs-auth0/edge";
 import { usePathname } from "next/navigation";
 import { Avatar } from "@/components/Common/Avatar";
 import { AdvertIcon, ClipboardIcon, DatabaseIcon, ListIcon, NotificationIcon, RssIcon, UserIcon } from "@/icons";
+import { useScopedI18n } from "@/locales/client";
 import { NavBarLoginButton, NavBarLogoutButton, NavBarMenuLink } from "./NavBarButtons";
 
 export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading?: boolean; notificationCount?: number; userClaims?: Claims }) => {
     const pathName = usePathname();
+    const tNav = useScopedI18n("nav");
+
     return (
         <div className="relative flex w-12 items-center justify-center">
             {loading ? (
@@ -29,25 +32,29 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
                                 className="menu dropdown-content rounded-box z-20 -mr-1 mt-3 w-60 rounded-tr-none bg-neutral p-2 text-neutral-content shadow-md shadow-black"
                                 tabIndex={0}
                             >
-                                <NavBarMenuLink icon={<UserIcon height={18} />} label="Profile" link="/dashboard/profile" />
+                                <NavBarMenuLink icon={<UserIcon height={18} />} label={tNav("profile")} link="/dashboard/profile" />
                                 <NavBarMenuLink
                                     badgeCount={notificationCount}
                                     icon={<NotificationIcon height={18} />}
-                                    label="Notifications"
+                                    label={tNav("notifications")}
                                     link="/dashboard/notifications"
                                 />
-                                <NavBarMenuLink icon={<AdvertIcon height={18} />} label="My Adverts" link="/dashboard/my-listings" />
-                                <NavBarMenuLink icon={<RssIcon height={18} />} label="My Subscriptions" link="/dashboard/my-subscriptions" />
+                                <NavBarMenuLink icon={<AdvertIcon height={18} />} label={tNav("myListing")} link="/dashboard/my-listings" />
+                                <NavBarMenuLink icon={<RssIcon height={18} />} label={tNav("mySubscriptions")} link="/dashboard/my-subscriptions" />
                                 {userClaims?.isAdmin && (
                                     <>
                                         <div className="divider mx-3 my-1 h-0.5 rounded bg-gray-800" />
-                                        <NavBarMenuLink icon={<ListIcon height={18} />} label="Manage Adverts" link="/dashboard/listings" />
+                                        <NavBarMenuLink icon={<ListIcon height={18} />} label={tNav("manageListings")} link="/dashboard/listings" />
                                         <NavBarMenuLink
                                             icon={<ClipboardIcon height={18} />}
-                                            label="Manage Subscriptions"
+                                            label={tNav("manageListings")}
                                             link="/dashboard/subscriptions"
                                         />
-                                        <NavBarMenuLink icon={<DatabaseIcon height={18} />} label="Manage Cache" link="/dashboard/cache-manage" />
+                                        <NavBarMenuLink
+                                            icon={<DatabaseIcon height={18} />}
+                                            label={tNav("manageCache")}
+                                            link="/dashboard/cache-manage"
+                                        />
                                     </>
                                 )}
                                 <div className="divider mx-3 my-1 h-0.5 rounded bg-gray-800" />

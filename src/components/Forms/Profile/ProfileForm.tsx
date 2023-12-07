@@ -172,8 +172,8 @@ export const ProfileForm: FC<Props> = (props) => {
                     <button
                         className="btn btn-neutral btn-wide"
                         disabled={isMutating || isLoading || !isDirty}
-                        onClick={() => handleSubmit((values) => onMutate(values))}
                         type="submit"
+                        onClick={() => handleSubmit((values) => onMutate(values))}
                     >
                         {isMutating ? "Updating..." : "Update"}
                     </button>

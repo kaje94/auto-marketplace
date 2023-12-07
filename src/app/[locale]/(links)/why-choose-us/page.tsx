@@ -3,6 +3,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { displayFont } from "@/app/fonts";
 import { DropletIcon, FilterIcon, NotificationIcon, TagIcon, UserIcon, ZapIcon } from "@/icons";
+import { getScopedI18n } from "@/locales/server";
 
 const FeatureItem = ({
     title,
@@ -40,43 +41,42 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
         twitter: { ...previousTwitter, title, description },
     };
 }
-export default function Page() {
+export default async function Page() {
+    const tWhyChooseUsPages = await getScopedI18n("whyChooseUsPage");
+    const tNav = await getScopedI18n("nav");
+
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
-            <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>Why Choose Us</h3>
+            <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>{tNav("links.company.whyChooseUs")}</h3>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
                 <Image
                     alt="feature-1-image"
                     className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"
                     height={400}
                     src="/images/site/features-1.webp"
-                    unoptimized
                     width={600}
+                    unoptimized
                 />
                 <div className="flex flex-col justify-center gap-8">
+                    <FeatureItem description={tWhyChooseUsPages("section1.content")} icon={<ZapIcon />} title={tWhyChooseUsPages("section1.title")} />
                     <FeatureItem
-                        description="Rest assured that every vehicle listing on our platform undergoes a thorough verification process, providing you with accurate and reliable information about the condition, history, and specifications of each vehicle."
-                        icon={<ZapIcon />}
-                        title="Confidence in Every Detail"
-                    />
-                    <FeatureItem
-                        description="We believe in keeping things simple and transparent. Our user-friendly interface and intuitive search tools make it easy for you to navigate, compare, and make informed decisions, saving you time and effort in your vehicle buying journey"
+                        description={tWhyChooseUsPages("section2.content")}
                         icon={<DropletIcon />}
-                        title="Simplify Your Vehicle Buying Experience"
+                        title={tWhyChooseUsPages("section2.title")}
                     />
                 </div>
                 <div className="flex flex-col justify-center gap-8">
                     <FeatureItem
-                        alignRight
-                        description="We provide our services at no cost to you. You can access our wide selection, verified listings, and user-friendly platform without incurring any fees, making it even more convenient for you to find your dream vehicle."
+                        description={tWhyChooseUsPages("section3.content")}
                         icon={<TagIcon />}
-                        title="Enjoy the Benefits Without Any Fees"
+                        title={tWhyChooseUsPages("section3.title")}
+                        alignRight
                     />
                     <FeatureItem
-                        alignRight
-                        description="Our dedicated customer support team is here for you at every step of your buying or selling journey. Whether you have questions, need assistance, or encounter any issues, count on us for timely and helpful support to ensure a smooth and confident experience"
+                        description={tWhyChooseUsPages("section4.content")}
                         icon={<UserIcon />}
-                        title="Responsive Customer Support"
+                        title={tWhyChooseUsPages("section4.title")}
+                        alignRight
                     />
                 </div>
                 <Image
@@ -84,27 +84,27 @@ export default function Page() {
                     className="hidden w-full rounded-lg bg-[#7c7262] object-cover lg:block"
                     height={400}
                     src="/images/site/features-2.webp"
-                    unoptimized
                     width={600}
+                    unoptimized
                 />
                 <Image
                     alt="feature-1-image"
                     className="hidden w-full rounded-lg bg-[#8e999f] object-cover lg:block"
                     height={400}
                     src="/images/site/features-3.webp"
-                    unoptimized
                     width={600}
+                    unoptimized
                 />
                 <div className="flex flex-col justify-center gap-8">
                     <FeatureItem
-                        description="Refine your search effortlessly using our extensive range of filters. From specific brands and models to preferred price ranges and mileage limits, our comprehensive search options empower you to discover the perfect vehicle that aligns precisely with your preferences."
+                        description={tWhyChooseUsPages("section5.content")}
                         icon={<FilterIcon />}
-                        title="Comprehensive Search Filters"
+                        title={tWhyChooseUsPages("section5.title")}
                     />
                     <FeatureItem
-                        description="Stay effortlessly informed about car advertisements that match your interests. Customize your preferences and receive personalized alerts, ensuring you're always updated on relevant listings."
+                        description={tWhyChooseUsPages("section6.content")}
                         icon={<NotificationIcon />}
-                        title="Personalized Advert Alerts"
+                        title={tWhyChooseUsPages("section6.title")}
                     />
                 </div>
             </div>

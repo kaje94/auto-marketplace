@@ -112,10 +112,12 @@ export const SearchFilters = ({
             >
                 <InputController
                     control={control}
-                    errorAsTooltip
                     fieldName="Title"
                     inputClassNames="bg-white !border-neutral sm:border-r-0 rounded-box rounded-b-none sm:rounded-b-box sm:rounded-r-none"
                     loading={isLoading || pageLoading}
+                    placeholder="Search..."
+                    rootClassName="xl:w-80"
+                    errorAsTooltip
                     onKeyUp={(event) => {
                         if (event.key === "Enter" && hasNewSearchText) {
                             setNewSearchQuery(newSearchBtnQuery);
@@ -123,8 +125,6 @@ export const SearchFilters = ({
                             router.push(`/${countryCode}/search${newSearchBtnQuery ? `?${newSearchBtnQuery}` : ""}`);
                         }
                     }}
-                    placeholder="Search..."
-                    rootClassName="xl:w-80"
                 />
                 <LinkWithLocale
                     className={clsx(
@@ -165,11 +165,11 @@ export const SearchFilters = ({
                         dropdownOpen={dropdownOpen}
                         form={form}
                         hasFilters={hasFilters}
-                        onApplyFilterClick={onApplyFilterClick}
                         searchParams={searchParams}
                         setDropdownOpen={setDropdownOpen}
                         states={states}
                         vehicleBrands={vehicleBrands}
+                        onApplyFilterClick={onApplyFilterClick}
                     />
                 )}
             </div>

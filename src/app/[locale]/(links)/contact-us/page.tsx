@@ -6,6 +6,7 @@ import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common";
 import { ContactUsForm } from "@/components/ContactUsForm";
 import { env } from "@/env.mjs";
+import { getScopedI18n } from "@/locales/server";
 import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
 
 const ContactUsItem = ({ title, desc, subTitle }: { desc: string | ReactNode; subTitle?: string; title: string }) => {
@@ -35,51 +36,45 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
 }
 export default async function Page() {
     const session = await getSession();
+    const tNav = await getScopedI18n("nav");
+    const tContactUsPage = await getScopedI18n("contactUsPage");
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
             <div className="grid w-full gap-4 md:gap-6 xl:grid-cols-3 xl:gap-8">
                 <div className="xl:col-span-2 ">
-                    <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-4xl xl:mb-6")}>Contact Us</h3>
+                    <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-4xl xl:mb-6")}>{tNav("links.support.contactUs")}</h3>
                     <p className="opacity-70">
-                        Please use the form below to reach out to us. We&quot;ll get back to you as soon as possible. You can also directly get in
-                        touch with us by dropping us a message at&nbsp;
-                        <a className="link-hover link font-semibold" href={`mailto:${env.NEXT_PUBLIC_SUPPORT_EMAIL}`}>
-                            {env.NEXT_PUBLIC_SUPPORT_EMAIL}
-                        </a>
-                        . We value your inquiries and are committed to providing swift assistance.
+                        {tContactUsPage("desc", {
+                            email: (
+                                <a className="link-hover link font-semibold" href={`mailto:${env.NEXT_PUBLIC_SUPPORT_EMAIL}`}>
+                                    {env.NEXT_PUBLIC_SUPPORT_EMAIL}
+                                </a>
+                            ),
+                        })}
                     </p>
                     <RecaptchaProvider>
                         <ContactUsForm session={session} />
                     </RecaptchaProvider>
                 </div>
                 <div className="flex flex-col justify-center gap-2">
+                    <ContactUsItem desc={tContactUsPage("additionalInfo.section1.content")} title={tContactUsPage("additionalInfo.section1.title")} />
                     <ContactUsItem
-                        desc="Our team is committed to providing you with exceptional service and support. Whether you have a question, need assistance, or
-                        want to share your feedback, we're here for you."
-                        title="Get in Touch"
+                        desc={tContactUsPage("additionalInfo.section2.content")}
+                        subTitle={tContactUsPage("additionalInfo.section2.subTitle")}
+                        title={tContactUsPage("additionalInfo.section2.title")}
                     />
                     <ContactUsItem
-                        desc="Monday - Friday: 8.00 AM - 8.00 PM"
-                        subTitle="Our dedicated support team is available to assist you during the following hours:"
-                        title="Customer Support Hours"
-                    />
-                    <ContactUsItem
-                        desc={
-                            <span>
-                                Before reaching out, check our&nbsp;
+                        desc={tContactUsPage("additionalInfo.section3.content", {
+                            faq: (
                                 <LinkWithLocale className="link-hover link font-semibold text-neutral" href="/faq">
-                                    FAQ
+                                    {tNav("links.support.faqs")}
                                 </LinkWithLocale>
-                                &nbsp; section for quick answers to common questions.
-                            </span>
-                        }
-                        title="Frequently Asked Questions"
+                            ),
+                        })}
+                        title={tContactUsPage("additionalInfo.section3.title")}
                     />
-                    <ContactUsItem
-                        desc="We respect your privacy. Your information will only be used for the purpose of responding to your inquiry."
-                        title="Privacy Assurance"
-                    />
+                    <ContactUsItem desc={tContactUsPage("additionalInfo.section4.content")} title={tContactUsPage("additionalInfo.section4.title")} />
                 </div>
             </div>
         </div>

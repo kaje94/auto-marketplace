@@ -61,7 +61,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
     };
 
     return (
-        <Combobox disabled={disabled} nullable onChange={setSelectedValue} value={value}>
+        <Combobox disabled={disabled} value={value} nullable onChange={setSelectedValue}>
             {({ open }) => (
                 <div className="relative">
                     <Combobox.Button className="w-full bg-transparent" onClick={resetQueryIfNoMatch}>
@@ -73,6 +73,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                 selectClassNames,
                             )}
                             displayValue={(option: any) => (option && option !== "" ? unCamelCase(option as string) : query)}
+                            placeholder={placeholder}
+                            ref={ref}
                             onBlur={(event) => {
                                 setTimeout(() => {
                                     if (onBlur) {
@@ -81,8 +83,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                 }, 200);
                             }}
                             onChange={(event) => setQuery(event.target.value)}
-                            placeholder={placeholder}
-                            ref={ref}
                         />
                     </Combobox.Button>
 
@@ -110,11 +110,11 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                                                 "bg-base-300 hover:bg-base-300": active,
                                                             })
                                                         }
+                                                        value={option.value}
                                                         onClick={(event) => {
                                                             event.stopPropagation();
                                                             setSelectedValue(option.value);
                                                         }}
-                                                        value={option.value}
                                                     >
                                                         {({ selected }) => (
                                                             <div className="flex flex-1 items-center justify-between">

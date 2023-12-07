@@ -28,6 +28,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Delete robots.prod.txt in dev env
         run: rm public/robots.prod.txt
+      - name: Add edge runtime
+        run: echo '' >> src/app/layout.tsx && echo 'export const runtime = "edge";' >> src/app/layout.tsx
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:

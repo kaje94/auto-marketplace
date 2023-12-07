@@ -1,3 +1,4 @@
+"use client";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { CountrySelectModal } from "@/components/Modals/CountrySelectModal";
@@ -23,9 +24,9 @@ export const NavBarCountryBtn = () => {
             </button>
             <CountrySelectModal
                 currentLocale={params.locale as string}
-                onNewCountrySelect={(locale) => setSelectedCountry(locale)}
                 setVisible={setCountrySelectModalVisible}
                 visible={CountrySelectModalVisible}
+                onNewCountrySelect={(locale) => setSelectedCountry(locale)}
             />
         </>
     );

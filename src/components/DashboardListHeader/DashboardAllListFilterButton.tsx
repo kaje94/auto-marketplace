@@ -55,10 +55,10 @@ export const DashboardAllListFilterButton = ({ vehicleBrands = [] }: { vehicleBr
                 form={form}
                 hasSearchParams={hasSearchParams}
                 isLoading={isLoading}
-                onApplyFilterClick={onApplyFilterClick}
-                onResetClick={onResetClick}
                 setDropdownOpen={setDropdownOpen}
                 vehicleBrands={vehicleBrands}
+                onApplyFilterClick={onApplyFilterClick}
+                onResetClick={onResetClick}
             />
         </div>
     );

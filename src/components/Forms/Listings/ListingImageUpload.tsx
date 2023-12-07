@@ -118,8 +118,8 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                                             className="box-border block h-full w-full overflow-hidden bg-base-300 object-cover"
                                             height={100}
                                             src={file.preview}
-                                            unoptimized
                                             width={100}
+                                            unoptimized
                                         />
                                     ) : (
                                         <ListingImage

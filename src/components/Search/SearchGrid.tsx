@@ -49,7 +49,7 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                 )}
                 ref={parent}
             >
-                {listings?.items?.map((item) => <ListingItem key={item.id} detailed item={item} />)}
+                {listings?.items?.map((item) => <ListingItem key={item.id} item={item} detailed />)}
 
                 {pageLoading && new Array(12).fill("").map((_, i) => <ListingItem key={`loading-listing-item-${i}`} loading />)}
 

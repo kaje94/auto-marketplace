@@ -9,12 +9,16 @@ import { toast } from "react-hot-toast";
 import { submitContactUsFormAction } from "@/actions/contactUsActions";
 import { validateRecaptchaAction } from "@/actions/recaptchaActions";
 import { AlertCircleIcon, CheckIcon } from "@/icons";
+import { useScopedI18n } from "@/locales/client";
 import { ContactUsSchema } from "@/utils/schemas";
 import { ContactUsSchemaReq } from "@/utils/types";
 import { InputController } from "../FormElements/Input";
 import { TextAreaController } from "../FormElements/TextArea";
 
 export const ContactUsForm = ({ session }: { session?: Session | null }) => {
+    const tContactUsForm = useScopedI18n("contactUsPage.form");
+    const tForm = useScopedI18n("form");
+
     const { executeRecaptcha } = useReCaptcha();
     const toastId = useRef<string>();
 
@@ -32,13 +36,13 @@ export const ContactUsForm = ({ session }: { session?: Session | null }) => {
         },
         {
             onMutate: () => {
-                toastId.current = toast.loading(`Submitting contact us form`);
+                toastId.current = toast.loading(tContactUsForm("toast.loading"));
             },
             onSettled: (_data, err) => {
                 if (err) {
-                    toast.error(`Failed to submit your message. Please try again in a while`, { id: toastId?.current });
+                    toast.error(tContactUsForm("toast.error"), { id: toastId?.current });
                 } else {
-                    toast.success(`Successfully submitted your message. Our team will get in touch with you soon.`, { id: toastId?.current });
+                    toast.success(tContactUsForm("toast.success"), { id: toastId?.current });
                 }
             },
         },
@@ -52,8 +56,8 @@ export const ContactUsForm = ({ session }: { session?: Session | null }) => {
                 <div className="alert alert-error mb-5">
                     <AlertCircleIcon />
                     <div>
-                        <div className="font-bold">Failed to submit form</div>
-                        <div className="text-sm opacity-80">Oops, we encountered an unexpected error. Please try again in a while</div>
+                        <div className="font-bold">{tContactUsForm("banner.error.title")}</div>
+                        <div className="text-sm opacity-80">{tContactUsForm("banner.error.subTitle")}</div>
                     </div>
                 </div>
             )}
@@ -61,8 +65,8 @@ export const ContactUsForm = ({ session }: { session?: Session | null }) => {
                 <div className="alert alert-success mb-5">
                     <CheckIcon />
                     <div>
-                        <div className="font-bold">Successfully submitted your message</div>
-                        <div className="text-sm opacity-80">Our team will get in touch with you soon</div>
+                        <div className="font-bold">{tContactUsForm("banner.success.title")}</div>
+                        <div className="text-sm opacity-80">{tContactUsForm("banner.success.subTitle")}</div>
                     </div>
                 </div>
             )}
@@ -71,16 +75,16 @@ export const ContactUsForm = ({ session }: { session?: Session | null }) => {
                 disabled={!!session || submitted}
                 fieldName="name"
                 inputClassNames="bg-white"
-                label="Name"
-                placeholder="Name"
+                label={tForm("name.label")}
+                placeholder={tForm("name.placeholder")}
             />
             <InputController
                 control={control}
                 disabled={!!session || submitted}
                 fieldName="email"
                 inputClassNames="bg-white"
-                label="Email"
-                placeholder="user@email.com"
+                label={tForm("email.label")}
+                placeholder={tForm("email.placeholder")}
                 type="email"
             />
             <InputController
@@ -88,19 +92,19 @@ export const ContactUsForm = ({ session }: { session?: Session | null }) => {
                 disabled={submitted}
                 fieldName="subject"
                 inputClassNames="bg-white"
-                label="Subject"
-                placeholder="Subject"
+                label={tForm("subject.label")}
+                placeholder={tForm("subject.placeholder")}
             />
             <TextAreaController
                 control={control}
                 disabled={submitted}
                 fieldName="message"
-                label="Message"
-                placeholder="Your message..."
+                label={tForm("message.label")}
+                placeholder={tForm("message.placeholder")}
                 textAreaClassNames="bg-white"
             />
             <button className="btn btn-neutral mt-6 w-full" disabled={isLoading || submitted} onClick={handleSubmit((values) => mutate(values))}>
-                {isLoading ? "Submitting..." : "Submit"}
+                {isLoading ? tForm("buttons.submit.loading") : tForm("buttons.submit.label")}
             </button>
         </form>
     );
