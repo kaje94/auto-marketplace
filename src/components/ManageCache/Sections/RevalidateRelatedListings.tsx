@@ -9,6 +9,7 @@ import { z } from "zod";
 import { revalidateRelatedListingsAction } from "@/actions/cacheActions";
 import { Modal, ModalFooter } from "@/components/Common";
 import { InputController } from "@/components/FormElements/Input";
+import { useScopedI18n } from "@/locales/client";
 
 const RevalidateRelatedListingsSchema = z.object({ listingId: z.coerce.string() });
 
@@ -22,28 +23,38 @@ export const RevalidateRelatedListings = () => {
         mode: "all",
     });
 
+    const tRevalidateRelatedListings = useScopedI18n("components.manageCache.revalidateRelatedListings");
+    const tCommon = useScopedI18n("common");
+    const tForm = useScopedI18n("form");
+
     const { mutate, isLoading } = useMutation(
         (req: RevalidateRelatedListingsReq) => {
             return revalidateRelatedListingsAction(req.listingId);
         },
         {
             onMutate: () => setModalVisible(false),
-            onSuccess: () => toast.success(`Successfully revalidated related listings`),
-            onError: () => toast.error(`Failed to revalidate related listings`),
+            onSuccess: () => toast.success(tRevalidateRelatedListings("toast.success")),
+            onError: () => toast.error(tRevalidateRelatedListings("toast.error")),
         },
     );
 
     return (
         <>
             <button className="btn btn-outline" disabled={isLoading} onClick={() => setModalVisible(true)}>
-                Revalidate related listings
+                {tRevalidateRelatedListings("buttonText")}
             </button>
-            <Modal title="Revalidate related listings" visible={!!modalVisible} onVisibleChange={setModalVisible}>
+            <Modal title={tRevalidateRelatedListings("buttonText")} visible={!!modalVisible} onVisibleChange={setModalVisible}>
                 <form className="grid gap-1">
-                    <InputController control={control} fieldName="listingId" label="Listing ID" placeholder="Listing ID" required />
+                    <InputController
+                        control={control}
+                        fieldName="listingId"
+                        label={tForm("listingId.label")}
+                        placeholder={tForm("listingId.placeholder")}
+                        required
+                    />
                     <ModalFooter
                         loading={isLoading}
-                        primaryButton={{ text: "Proceed" }}
+                        primaryButton={{ text: tCommon("proceed") }}
                         onSubmit={handleSubmit((values) => mutate(values))}
                         onVisibleChange={setModalVisible}
                     />

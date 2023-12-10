@@ -6,6 +6,7 @@ import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { SelectController } from "@/components/FormElements/Select";
 import { YearInputController } from "@/components/FormElements/YearInput";
+import { useScopedI18n } from "@/locales/client";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { CreateSubscriptionReq, VehicleBrand } from "@/utils/types";
 
@@ -41,52 +42,55 @@ export const SubscriptionForm: FC<Props> = (props) => {
     const minYearOfRegistration = watch("minYearOfRegistration");
     const maxYearOfRegistration = watch("maxYearOfRegistration");
 
+    const tSubscriptionForm = useScopedI18n("components.forms.subscriptions.form");
+    const tForm = useScopedI18n("form");
+
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
             <div className="grid gap-4 xl:grid-cols-2 xl:gap-7 2xl:gap-8">
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="card stat bg-base-100 p-4 shadow">
-                        <div className="stat-title">Subscription Configurations</div>
+                        <div className="stat-title">{tSubscriptionForm("configurationsText")}</div>
                         <InputController
                             control={control}
                             fieldName="displayName"
-                            label="Display Name"
+                            label={tForm("subscriptionDisplayName.label")}
                             loading={isLoading}
-                            placeholder="Name of the subscription"
+                            placeholder={tForm("subscriptionDisplayName.placeholder")}
                             required
                         />
                         <div className="grid gap-1 sm:grid-cols-2">
                             <SelectController
                                 control={control}
                                 fieldName="notificationFrequency"
-                                label="Subscription Frequency"
+                                label={tForm("subscriptionFrequency.label")}
                                 loading={isLoading}
                                 options={SubscriptFrequenciesList}
-                                placeholder="Select Frequency"
+                                placeholder={tForm("subscriptionFrequency.placeholder")}
                                 required
                                 selectablePlaceholder
                             />
                             <InputController
                                 control={control}
                                 fieldName="subscriptionExpiryDate"
-                                label="Subscription expiry date"
+                                label={tForm("subscriptionExpiry.label")}
                                 loading={isLoading}
                                 min={Dates.Days_7_from_now.toISOString().split("T")[0]}
-                                placeholder="01/01/2025"
+                                placeholder={tForm("subscriptionExpiry.placeholder")}
                                 type="date"
                                 required
                             />
                         </div>
                     </div>
                     <div className="card stat bg-base-100 p-4 shadow">
-                        <div className="stat-title">Key Specifications</div>
+                        <div className="stat-title">{tSubscriptionForm("keySpecificationsText")}</div>
                         <SelectController
                             control={control}
                             fieldName="type"
-                            label="Type"
+                            label={tForm("vehicleType.label")}
                             loading={isLoading}
                             options={VehicleTypeList}
-                            placeholder="Select Type"
+                            placeholder={tForm("vehicleType.placeholder")}
                             required
                             selectablePlaceholder
                         />
@@ -94,32 +98,32 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <AutocompleteController
                                 control={control}
                                 fieldName="brand"
-                                label="Brand"
+                                label={tForm("brand.label")}
                                 loading={isLoading}
                                 options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
-                                placeholder="Toyota, Nissan, Honda, etc"
+                                placeholder={tForm("brand.placeholder")}
                             />
                             <InputController
                                 control={control}
                                 fieldName="model"
-                                label="Model"
+                                label={tForm("model.label")}
                                 loading={isLoading}
-                                placeholder="Civic, Sunny, Swift, etc"
+                                placeholder={tForm("model.placeholder")}
                             />
                             <InputController
                                 control={control}
                                 fieldName="trim"
-                                label="Trim"
+                                label={tForm("trim.label")}
                                 loading={isLoading}
-                                placeholder="LX, EX, EX-L, Sport, etc"
+                                placeholder={tForm("transmissionType.placeholder")}
                             />
                             <SelectController
                                 control={control}
                                 fieldName="condition"
-                                label="Condition"
+                                label={tForm("condition.label")}
                                 loading={isLoading}
                                 options={VehicleConditionList}
-                                placeholder="Select Condition"
+                                placeholder={tForm("condition.placeholder")}
                                 selectablePlaceholder
                             />
                         </div>
@@ -127,23 +131,23 @@ export const SubscriptionForm: FC<Props> = (props) => {
                 </div>
                 <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                     <div className="card stat bg-base-100 p-4 shadow">
-                        <div className="stat-title">Manufactured Year</div>
+                        <div className="stat-title">{tSubscriptionForm("manufacturedYearText")}</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <YearInputController
                                 control={control}
                                 fieldName="minYearOfManufacture"
-                                label="Manufactured after"
+                                label={tForm("yomStartDate.label")}
                                 loading={isLoading}
                                 maxYear={maxYearOfManufacture ? Number(maxYearOfManufacture) : undefined}
-                                placeholder="1990"
+                                placeholder={tForm("yomStartDate.placeholderYear")}
                             />
                             <YearInputController
                                 control={control}
                                 fieldName="maxYearOfManufacture"
-                                label="Manufactured before"
+                                label={tForm("yomEndDate.label")}
                                 loading={isLoading}
                                 minYear={minYearOfManufacture ? Number(minYearOfManufacture) : undefined}
-                                placeholder="2000"
+                                placeholder={tForm("yomEndDate.placeholderYear")}
                             />
                         </div>
                     </div>
@@ -153,60 +157,60 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <YearInputController
                                 control={control}
                                 fieldName="minYearOfRegistration"
-                                label="Registered after"
+                                label={tForm("yearOfRegistrationStart.label")}
                                 loading={isLoading}
                                 maxYear={maxYearOfRegistration ? Number(maxYearOfRegistration) : undefined}
-                                placeholder="2010"
+                                placeholder={tForm("yearOfRegistrationStart.placeholderYear")}
                             />
                             <YearInputController
                                 control={control}
                                 fieldName="maxYearOfRegistration"
-                                label="Registered before"
+                                label={tForm("yearOfRegistrationEnd.label")}
                                 loading={isLoading}
                                 minYear={minYearOfRegistration ? Number(minYearOfRegistration) : undefined}
-                                placeholder="2020"
+                                placeholder={tForm("yearOfRegistrationEnd.placeholder")}
                             />
                         </div>
                     </div>
                     <div className="card stat bg-base-100 p-4 shadow">
-                        <div className="stat-title">Price Range</div>
+                        <div className="stat-title">{tSubscriptionForm("priceRangeText")}</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <NumberInputController
                                 control={control}
                                 fieldName="minPrice.amount"
                                 inputPrefix={countryCurrencySymbol}
-                                label="Minimum Price"
+                                label={tForm("minPrice.label")}
                                 loading={isLoading}
-                                placeholder="1,000,000"
+                                placeholder={tForm("minPrice.placeholderNum")}
                             />
                             <NumberInputController
                                 control={control}
                                 fieldName="maxPrice.amount"
                                 inputPrefix={countryCurrencySymbol}
-                                label="Maximum Price"
+                                label={tForm("maxPrice.label")}
                                 loading={isLoading}
-                                placeholder="10,000,000"
+                                placeholder={tForm("maxPrice.placeholderNum")}
                             />
                         </div>
                     </div>
                     <div className="card stat bg-base-100 p-4 shadow">
-                        <div className="stat-title">Mileage</div>
+                        <div className="stat-title">{tSubscriptionForm("mileageRangeText")}</div>
                         <div className="grid gap-1 sm:grid-cols-2">
                             <NumberInputController
                                 control={control}
                                 fieldName="minMillage.distance"
                                 inputSuffix={distanceUnit}
-                                label="Minimum Mileage"
+                                label={tForm("mileageMin.label")}
                                 loading={isLoading}
-                                placeholder="10,000"
+                                placeholder={tForm("mileageMin.placeholderNum")}
                             />
                             <NumberInputController
                                 control={control}
                                 fieldName="maxMillage.distance"
                                 inputSuffix={distanceUnit}
-                                label="Maximum Mileage"
+                                label={tForm("mileageMax.label")}
                                 loading={isLoading}
-                                placeholder="1,000,000"
+                                placeholder={tForm("mileageMax.placeholder")}
                             />
                         </div>
                     </div>
@@ -218,7 +222,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                     disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
                     type="submit"
                 >
-                    {isMutating ? submitButton.mutatingText ?? "Loading..." : submitButton.text ?? "Submit"}
+                    {isMutating ? submitButton.mutatingText ?? tForm("buttons.submit.loading") : submitButton.text ?? tForm("subject.label")}
                 </button>
             </div>
         </form>

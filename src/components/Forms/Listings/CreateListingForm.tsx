@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { createListingAction } from "@/actions/listingActions";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
+import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getDistanceUnit, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
 import { CreateListingSchema } from "@/utils/schemas";
@@ -44,6 +45,10 @@ export const CreateListingForm = (props: Props) => {
         mode: "all",
     });
 
+    const tCreateListingForm = useScopedI18n("components.forms.listing.create");
+    const tCommon = useScopedI18n("common");
+    const tForm = useScopedI18n("form");
+
     const { mutate: createListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
@@ -74,21 +79,20 @@ export const CreateListingForm = (props: Props) => {
                 }
             },
             onMutate: (data) => {
-                toastId.current = toast.loading(`Creating new Advert for ${getListingTitleFromVehicle(data.vehicle)}...`);
+                toastId.current = toast.loading(tCreateListingForm("toast.loading", { title: getListingTitleFromVehicle(data.vehicle) }));
             },
             onSettled: (_data, err, variables) => {
                 if (err) {
-                    console.error("Failed to create advert", JSON.stringify(variables), err);
-                    toast.error(`Failed to create advert for ${getListingTitleFromVehicle(variables.vehicle)}. ${(err as Error)?.message ?? ""}`, {
+                    toast.error(
+                        tCreateListingForm("toast.error", { title: getListingTitleFromVehicle(variables.vehicle), error: (err as Error)?.message }),
+                        {
+                            id: toastId?.current,
+                        },
+                    );
+                } else {
+                    toast.success(tCreateListingForm("toast.success", { title: getListingTitleFromVehicle(variables.vehicle) }), {
                         id: toastId?.current,
                     });
-                } else {
-                    toast.success(
-                        `Your advertisement, ${getListingTitleFromVehicle(
-                            variables.vehicle,
-                        )}, has been successfully submitted for review. We will notify you once the review process is complete.`,
-                        { id: toastId?.current },
-                    );
                 }
             },
         },
@@ -118,7 +122,7 @@ export const CreateListingForm = (props: Props) => {
             form={form}
             isMutating={isMutating}
             profile={profile}
-            submitButton={{ text: "Create", mutatingText: "Creating..." }}
+            submitButton={{ text: tForm("buttons.create.label"), mutatingText: tForm("buttons.create.label") }}
             vehicleBrands={brands}
             onMutate={createListingsMutation}
         />

@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
+import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { LabelValue } from "@/utils/types";
 
@@ -22,8 +23,12 @@ export const CountrySelectModal = (props: Props) => {
     const router = useRouter();
     const currentCountry = COUNTRIES[currentLocale]?.[0];
 
+    const tCommon = useScopedI18n("common");
+    const tForm = useScopedI18n("form");
+    const tCountrySelectModal = useScopedI18n("components.modals.countrySelectModal");
+
     const { handleSubmit, control, reset } = useForm<{ country: string }>({
-        resolver: zodResolver(z.object({ country: z.string().min(1, "Country is required") })),
+        resolver: zodResolver(z.object({ country: z.string().min(1, tCountrySelectModal("countryRequired")) })),
         defaultValues: { country: currentCountry },
         mode: "all",
     });
@@ -43,7 +48,7 @@ export const CountrySelectModal = (props: Props) => {
             .join("/");
 
         router.replace(`/${pathWithNewLocale}${window.location.search}`);
-        toast.success(`Successfully switched to country ${country}`);
+        toast.success(tCountrySelectModal("toast.success", { country }));
         setVisible(false);
         if (locale && onNewCountrySelect) {
             onNewCountrySelect(locale);
@@ -57,22 +62,19 @@ export const CountrySelectModal = (props: Props) => {
     }, [currentCountry, visible, reset]);
 
     return (
-        <Modal title="Switch Country" visible={visible} onVisibleChange={setVisible}>
+        <Modal title={tCountrySelectModal("title")} visible={visible} onVisibleChange={setVisible}>
             <form className="grid gap-1">
                 <AutocompleteController
                     control={control}
                     fieldName="country"
-                    label="Country"
+                    label={tForm("country.label")}
                     options={countryList}
-                    placeholder="Select Country"
+                    placeholder={tForm("country.placeholder")}
                     required
                 />
-                <div className="mb-24 mt-2 text-sm">
-                    Switching your country lets you see vehicle availability in diverse locations, broadening your options for finding the perfect
-                    vehicle.
-                </div>
+                <div className="mb-24 mt-2 text-sm">{tCountrySelectModal("desc")}</div>
                 <ModalFooter
-                    primaryButton={{ text: "Apply" }}
+                    primaryButton={{ text: tCommon("apply") }}
                     onSubmit={handleSubmit((values) => handleLocaleChange(values.country))}
                     onVisibleChange={setVisible}
                 />

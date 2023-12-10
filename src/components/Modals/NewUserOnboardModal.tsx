@@ -7,6 +7,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale, Modal } from "@/components/Common";
 import { CheckCircleIcon } from "@/icons";
+import { useScopedI18n } from "@/locales/client";
 import { ListingUser } from "@/utils/types";
 
 interface Props {
@@ -54,6 +55,10 @@ export const NewUserOnboardModal = (props: Props) => {
     const [profileStepComplete, setProfileStepComplete] = useState(false);
     const [interests, setInterests] = useState<"buyer" | "seller" | "">("");
 
+    const tCommon = useScopedI18n("common");
+    const tNav = useScopedI18n("nav");
+    const tNewUserOnboardModal = useScopedI18n("components.modals.newUserOnboardModal");
+
     useEffect(() => {
         if (userClaims?.new_user) {
             const onboardShown = window.localStorage.getItem(`user-onboard-shown-${userClaims.sub}-v1`);
@@ -70,19 +75,16 @@ export const NewUserOnboardModal = (props: Props) => {
         <>
             <Modal modalClassnames="!max-w-4xl" visible={!!modalVisible} onVisibleChange={setModalVisible}>
                 <div className="flex flex-col gap-1">
-                    <div className={clsx("text-3xl xl:text-4xl", displayFont.className)}>Welcome {userData?.firstName}!</div>
-                    <div className="opacity-90">
-                        We&#39;re thrilled to have you on board and excited to help you find the perfect vehicle or connect with buyers if you&#39;re
-                        selling.
+                    <div className={clsx("text-3xl xl:text-4xl", displayFont.className)}>
+                        {tNewUserOnboardModal("title", { firstName: userData?.firstName })}
                     </div>
+                    <div className="opacity-90">{tNewUserOnboardModal("desc")}</div>
 
                     <div className="join join-vertical w-full">
                         <SectionWrap isOpen={stepIndex === 0} onClick={() => setStepIndex(0)}>
-                            <SectionTitle showSuccess={profileStepComplete} title="Set Up Your Profile" />
+                            <SectionTitle showSuccess={profileStepComplete} title={tNewUserOnboardModal("section1.title")} />
                             <div className="collapse-content">
-                                <div className="text-center font-semibold">
-                                    Before we begin, please take a moment to complete your profile details
-                                </div>
+                                <div className="text-center font-semibold">{tNewUserOnboardModal("section1.desc")}</div>
                                 <div className="mt-2 flex flex-wrap justify-center gap-2">
                                     <button
                                         className="btn btn-neutral btn-wide"
@@ -91,7 +93,7 @@ export const NewUserOnboardModal = (props: Props) => {
                                             setProfileModalVisible(true);
                                         }}
                                     >
-                                        Update Profile
+                                        {tCommon("updateProfile")}
                                     </button>
                                     <button
                                         className="btn btn-ghost"
@@ -103,7 +105,7 @@ export const NewUserOnboardModal = (props: Props) => {
                                             }
                                         }}
                                     >
-                                        Skip
+                                        {tCommon("skip")}
                                     </button>
                                 </div>
                             </div>
@@ -111,9 +113,9 @@ export const NewUserOnboardModal = (props: Props) => {
                         {isUserInHomePage && (
                             <>
                                 <SectionWrap isOpen={stepIndex === 1} onClick={() => setStepIndex(1)}>
-                                    <SectionTitle showSuccess={interests !== ""} title="Select Your Interests" />
+                                    <SectionTitle showSuccess={interests !== ""} title={tNewUserOnboardModal("section2.title")} />
                                     <div className="collapse-content">
-                                        <div className="text-center font-semibold">Please let us know what you are interested in</div>
+                                        <div className="text-center font-semibold">{tNewUserOnboardModal("section2.desc")}</div>
                                         <div className="mt-2 flex flex-wrap justify-center gap-2">
                                             <button
                                                 className={clsx("btn btn-wide", interests === "buyer" ? "btn-neutral" : "btn-outline")}
@@ -123,7 +125,7 @@ export const NewUserOnboardModal = (props: Props) => {
                                                     setInterests("buyer");
                                                 }}
                                             >
-                                                Buying a Vehicle
+                                                {tNewUserOnboardModal("section2.buyingBtn")}
                                             </button>
                                             <button
                                                 className={clsx("btn btn-wide", interests === "seller" ? "btn-neutral" : "btn-outline")}
@@ -133,7 +135,7 @@ export const NewUserOnboardModal = (props: Props) => {
                                                     setInterests("seller");
                                                 }}
                                             >
-                                                Selling a Vehicle
+                                                {tNewUserOnboardModal("section2.sellingBtn")}\{" "}
                                             </button>
                                         </div>
                                     </div>
@@ -149,24 +151,27 @@ export const NewUserOnboardModal = (props: Props) => {
                                 >
                                     <SectionTitle
                                         disabled={interests === ""}
-                                        title={`Begin Your Journey ${interests !== "" && `as a ${interests}`}`}
+                                        title={
+                                            interests !== ""
+                                                ? tNewUserOnboardModal("section3.title", { interests })
+                                                : tNewUserOnboardModal("section3.titleWithoutInterest")
+                                        }
                                     />
                                     <div className="collapse-content">
                                         <div className="mt-2 flex flex-col items-center gap-2">
                                             {interests === "buyer" && (
                                                 <>
                                                     <RedirectLinks
-                                                        btnTitle="Browse adverts"
+                                                        btnTitle={tNewUserOnboardModal("section3.buyer.browseAdvertBtn")}
                                                         closeModal={() => setModalVisible(false)}
-                                                        desc="Explore our extensive collection of verified vehicle advertisements"
+                                                        desc={tNewUserOnboardModal("section3.buyer.browseAdvertDesc")}
                                                         href="/search"
                                                     />
-                                                    <div className="divider">OR</div>
+                                                    <div className="divider">{tCommon("or")}</div>
                                                     <RedirectLinks
-                                                        btnTitle="Create subscriptions"
+                                                        btnTitle={tNewUserOnboardModal("section3.buyer.createSubscriptionBtn")}
                                                         closeModal={() => setModalVisible(false)}
-                                                        desc="Subscribe to advertisements that interest you and receive notifications whenever new listings match your
-                                        preferences"
+                                                        desc={tNewUserOnboardModal("section3.buyer.createSubscriptionDesc")}
                                                         href="/dashboard/new-subscription"
                                                     />
                                                 </>
@@ -174,16 +179,16 @@ export const NewUserOnboardModal = (props: Props) => {
                                             {interests === "seller" && (
                                                 <>
                                                     <RedirectLinks
-                                                        btnTitle="Create an Advert"
+                                                        btnTitle={tNewUserOnboardModal("section3.seller.createAdvertBtn")}
                                                         closeModal={() => setModalVisible(false)}
-                                                        desc="Create an advert for your vehicle and watch it sell in no time!"
+                                                        desc={tNewUserOnboardModal("section3.seller.createAdvertDesc")}
                                                         href="/dashboard/new-listing"
                                                     />
                                                     <div className="divider">OR</div>
                                                     <RedirectLinks
-                                                        btnTitle="Browse adverts"
+                                                        btnTitle={tNewUserOnboardModal("section3.seller.browseAdvertBtn")}
                                                         closeModal={() => setModalVisible(false)}
-                                                        desc="Explore existing vehicle advertisements"
+                                                        desc={tNewUserOnboardModal("section3.seller.browseAdvertDesc")}
                                                         href="/search"
                                                     />
                                                 </>
@@ -196,19 +201,26 @@ export const NewUserOnboardModal = (props: Props) => {
                     </div>
 
                     <div className="mt-6 text-sm opacity-70">
-                        Got Questions? We&#39;re here to help. Check out our{" "}
-                        <LinkWithLocale className="link-hover link font-semibold text-neutral" href="/faqs" onClick={() => setModalVisible(false)}>
-                            FAQs
-                        </LinkWithLocale>{" "}
-                        or reach us out through our &#39;
-                        <LinkWithLocale
-                            className="link-hover link font-semibold text-neutral"
-                            href="/contact-us"
-                            onClick={() => setModalVisible(false)}
-                        >
-                            Contact Us
-                        </LinkWithLocale>
-                        &#39; page
+                        {tNewUserOnboardModal("footer", {
+                            contactUs: (
+                                <LinkWithLocale
+                                    className="link-hover link font-semibold text-neutral"
+                                    href="/contact-us"
+                                    onClick={() => setModalVisible(false)}
+                                >
+                                    {tNav("links.support.contactUs")}
+                                </LinkWithLocale>
+                            ),
+                            FAQs: (
+                                <LinkWithLocale
+                                    className="link-hover link font-semibold text-neutral"
+                                    href="/faqs"
+                                    onClick={() => setModalVisible(false)}
+                                >
+                                    {tNav("links.support.faqs")}
+                                </LinkWithLocale>
+                            ),
+                        })}
                     </div>
                 </div>
             </Modal>

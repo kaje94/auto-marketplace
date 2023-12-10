@@ -28,6 +28,7 @@
 -   [] make sure meta tags are from layouts
 -   [] update all docs about how featured adverts work
 -   [] get consent from footer
+-   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
 -   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
 
 > After deploy

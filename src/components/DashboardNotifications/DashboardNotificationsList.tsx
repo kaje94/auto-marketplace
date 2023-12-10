@@ -8,6 +8,7 @@ import { StringifiableRecord } from "query-string";
 import { FC } from "react";
 import { setAllNotificationsAsShownAction } from "@/actions/notificationActions";
 import { Empty, Pagination } from "@/components/Common";
+import { useScopedI18n } from "@/locales/client";
 import { useDashboardMySubscriptionsContext } from "@/providers/DashboardMySubscriptionsContextProvider";
 import { NotificationItems, PaginatedResponse } from "@/utils/types";
 import { DashboardNotificationItem } from "./DashboardNotificationItem";
@@ -23,6 +24,8 @@ export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoadi
     const hasNewNotifications = notifications?.items?.some((item) => !item.isShown);
     const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardMySubscriptionsContext();
     const [parent] = useAutoAnimate();
+    const tCommon = useScopedI18n("common");
+    const tDashboardNotificationsList = useScopedI18n("components.dashboardNotificationList");
 
     useQuery({
         queryFn: async () => {
@@ -39,13 +42,13 @@ export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoadi
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
             {!pageLoading && notifications?.totalCount === 0 && (
                 <Empty
-                    button={hasSearchParams ? { text: "Reset Filters", href: basePath!, onClick: () => setNewSearchQuery("") } : undefined}
+                    button={hasSearchParams ? { text: tCommon("resetFilter"), href: basePath!, onClick: () => setNewSearchQuery("") } : undefined}
                     subText={
                         hasSearchParams
-                            ? "Try adjusting or resetting your search filters"
-                            : "You do not have any notifications yet. Try checking out again later"
+                            ? tDashboardNotificationsList("noNotificationsSubTextWithFilters")
+                            : tDashboardNotificationsList("noNotificationsSubText")
                     }
-                    text="No notifications to display"
+                    text={tDashboardNotificationsList("noNotificationsText")}
                 />
             )}
 

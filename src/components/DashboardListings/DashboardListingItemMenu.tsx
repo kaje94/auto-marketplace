@@ -6,6 +6,7 @@ import { RenewListingItemModal } from "@/components/Modals/RenewListingItemModal
 import { ReviewListingModal } from "@/components/Modals/ReviewListingModal";
 import { UnListListingModal } from "@/components/Modals/UnListListingModal";
 import { CheckCircleIcon, EditIcon, EyeIcon, EyeOffIcon, RefreshIcon, TrashIcon } from "@/icons";
+import { useScopedI18n } from "@/locales/client";
 import { ListingStatusTypes } from "@/utils/enum";
 import { ListingItem } from "@/utils/types";
 
@@ -24,37 +25,39 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
 
     const menuItems: ContextMenuItemProp[] = [];
 
+    const tCommon = useScopedI18n("common");
+
     if (status && status === ListingStatusTypes.Posted) {
         menuItems.push({
             icon: <EyeIcon height={18} />,
             link: `/search/${listingId}`,
-            label: "View Advert",
+            label: tCommon("viewAd"),
         });
     }
     menuItems.push({
         icon: <EditIcon height={18} />,
         link: `${basePath}/edit/${listingId}`,
-        label: "Edit",
+        label: tCommon("edit"),
     });
     if (status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status)) {
         menuItems.push({
             icon: <RefreshIcon height={17} />,
             onClick: () => setRenewModalVisible(true),
-            label: "Renew",
+            label: tCommon("renew"),
         });
     }
     if (isAdmin && status === ListingStatusTypes.UnderReview) {
         menuItems.push({
             icon: <CheckCircleIcon height={18} />,
             onClick: () => setReviewModalVisible(true),
-            label: "Review",
+            label: tCommon("review"),
         });
     }
     if (status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status)) {
         menuItems.push({
             icon: <EyeOffIcon height={17} />,
             onClick: () => setUnListModalVisible(true),
-            label: "Unlist",
+            label: tCommon("unlist"),
             classNames: "text-error hover:!bg-error hover:!text-error-content",
         });
     }
@@ -62,7 +65,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
         menuItems.push({
             icon: <TrashIcon height={18} />,
             onClick: () => setDeleteModalVisible(true),
-            label: "Delete",
+            label: tCommon("delete"),
             classNames: "text-error hover:!bg-error hover:!text-error-content",
         });
     }

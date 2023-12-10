@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { editProfileAction } from "@/actions/profileActions";
 import { Modal, ModalFooter } from "@/components/Common";
 import { ProfileForm } from "@/components/Forms/Profile/ProfileForm";
+import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { UpdateProfileSchema } from "@/utils/schemas";
 import { ListingUser, UpdateProfileReq } from "@/utils/types";
@@ -23,6 +24,9 @@ export const ProfileUpdateModal = (props: Props) => {
     const params = useParams();
 
     const toastId = useRef<string>();
+
+    const tCommon = useScopedI18n("common");
+    const tProfileUpdateModal = useScopedI18n("components.modals.profileUpdateModal");
 
     const defaultValues = useMemo(
         () => ({
@@ -65,15 +69,15 @@ export const ProfileUpdateModal = (props: Props) => {
                     isDealership: variables.isDealership,
                 }),
             onMutate: () => {
-                toastId.current = toast.loading(`Updating the user profile...`);
+                toastId.current = toast.loading(tProfileUpdateModal("toast.loading"));
             },
             onSettled: (_, err) => {
                 if (err) {
-                    toast.error(`Failed to update the user profile. ${(err as Error)?.message ?? ""}`, {
+                    toast.error(tProfileUpdateModal("toast.error", { error: (err as Error)?.message }), {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(`Successfully updated the user profile`, { id: toastId?.current });
+                    toast.success(tProfileUpdateModal("toast.success"), { id: toastId?.current });
                 }
             },
         },
@@ -87,7 +91,13 @@ export const ProfileUpdateModal = (props: Props) => {
 
     return (
         <>
-            <Modal childrenClassnames="!p-0" modalClassnames="!max-w-3xl" title="Update Profile" visible={!!visible} onVisibleChange={setVisible}>
+            <Modal
+                childrenClassnames="!p-0"
+                modalClassnames="!max-w-3xl"
+                title={tCommon("updateProfile")}
+                visible={!!visible}
+                onVisibleChange={setVisible}
+            >
                 <div className="flex max-h-[80vh] flex-col ">
                     <div className="flex-1 overflow-auto px-4 py-2 lg:px-6">
                         <ProfileForm
@@ -105,7 +115,7 @@ export const ProfileUpdateModal = (props: Props) => {
                     <div className="p-4 lg:p-6">
                         <ModalFooter
                             loading={isMutating}
-                            primaryButton={{ text: "Update" }}
+                            primaryButton={{ text: tCommon("update") }}
                             onSubmit={form.handleSubmit((values) => updateSubscriptionMutation(values))}
                             onVisibleChange={setVisible}
                         />

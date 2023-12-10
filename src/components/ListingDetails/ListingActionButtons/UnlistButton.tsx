@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { UnListListingModal } from "@/components/Modals/UnListListingModal";
 import { EyeOffIcon } from "@/icons";
+import { useScopedI18n } from "@/locales/client";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
@@ -13,6 +14,8 @@ interface Props {
 export const UnListButton: FC<Props> = ({ listingItem, loading }) => {
     const [unListModalVisible, setUnListModalVisible] = useState(false);
 
+    const tCommon = useScopedI18n("common");
+
     return (
         <>
             <button
@@ -21,7 +24,7 @@ export const UnListButton: FC<Props> = ({ listingItem, loading }) => {
                 onClick={() => setUnListModalVisible(true)}
             >
                 <EyeOffIcon />
-                Unlist
+                {tCommon("unlist")}
             </button>
             <UnListListingModal listingItem={listingItem} setVisible={setUnListModalVisible} visible={unListModalVisible} />
         </>

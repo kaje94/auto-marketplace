@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
+import { useScopedI18n } from "@/locales/client";
 import { ListingTypeList } from "@/utils/constants";
 import { MyListingsFilterReq } from "@/utils/types";
 import { FilterInput as InputController } from "./FilterFormElements/DashboardFilterInput";
@@ -27,6 +28,8 @@ export const DashboardMyListFilter: FC<Props> = ({
 }) => {
     const { handleSubmit, control } = form as UseFormReturn<MyListingsFilterReq>;
 
+    const tForm = useScopedI18n("form");
+
     return (
         <FilterWrap
             dropdownOpen={dropdownOpen}
@@ -40,14 +43,26 @@ export const DashboardMyListFilter: FC<Props> = ({
                 <SelectController
                     control={control}
                     fieldName="ListingStatus"
-                    label="Status"
+                    label={tForm("listingStatus.label")}
                     options={ListingTypeList}
-                    placeholder="All status types"
+                    placeholder={tForm("listingStatus.optionalPlaceholder")}
                 />
             </div>
 
-            <InputController control={control} fieldName="StartCreatedDate" label="Created After" placeholder="Created after date" type="date" />
-            <InputController control={control} fieldName="EndCreatedDate" label="Created Before" placeholder="Created before date" type="date" />
+            <InputController
+                control={control}
+                fieldName="StartCreatedDate"
+                label={tForm("startCreatedDate.label")}
+                placeholder={tForm("startCreatedDate.placeholder")}
+                type="date"
+            />
+            <InputController
+                control={control}
+                fieldName="EndCreatedDate"
+                label={tForm("endCreatedDate.label")}
+                placeholder={tForm("endCreatedDate.placeholder")}
+                type="date"
+            />
         </FilterWrap>
     );
 };

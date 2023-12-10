@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { toggleListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { DatePickerController } from "@/components/FormElements/DatePicker";
+import { useScopedI18n } from "@/locales/client";
 import { Dates } from "@/utils/constants";
 import { ToggleSubscriptionSchema } from "@/utils/schemas";
 import { ListingSubscriptionItem, ToggleSubscriptionReq } from "@/utils/types";
@@ -31,6 +32,9 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
         mode: "all",
     });
 
+    const tToggleSubscriptionActivationModal = useScopedI18n("components.modals.toggleSubscriptionActivationModal");
+    const tCommon = useScopedI18n("common");
+
     const { mutate, isLoading } = useMutation(
         (reqParams: ToggleSubscriptionReq) => {
             return toggleListingSubscriptionAction({ ...reqParams, subscriptionExpiryDate: new Date(reqParams.subscriptionExpiryDate) }, userId!);
@@ -38,33 +42,40 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
         {
             onMutate: () => {
                 setVisible(false);
-                toastId.current = toast.loading(`${active ? "Deactivating" : "Activating"} subscription ${displayName}...`);
+                toastId.current = toast.loading(
+                    tToggleSubscriptionActivationModal("toast.loading", {
+                        displayName,
+                        state: active ? tToggleSubscriptionActivationModal("deactivating") : tToggleSubscriptionActivationModal("activating"),
+                    }),
+                );
             },
-            onSettled: (_data, err, variables) => {
+            onSettled: (_data, err) => {
                 if (err) {
-                    toast.error(`Failed to update the status of the subscription ${displayName}. ${(err as Error)?.message ?? ""}`, {
+                    toast.error(tToggleSubscriptionActivationModal("toast.error", { displayName, error: (err as Error)?.message }), {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(`Successfully updated the subscription ${displayName}`, { id: toastId?.current });
+                    toast.success(tToggleSubscriptionActivationModal("toast.success", { displayName }), { id: toastId?.current });
                 }
             },
         },
     );
 
     return (
-        <Modal title={`${active ? "Deactivate" : "Activate"} Subscription`} visible={visible} onVisibleChange={setVisible}>
+        <Modal
+            title={tToggleSubscriptionActivationModal("title", { state: active ? tCommon("deactivate") : tCommon("activate") })}
+            visible={visible}
+            onVisibleChange={setVisible}
+        >
             <div className="mb-2 mt-4 text-sm">
-                {active
-                    ? "By deactivating the subscription, you will stop receiving notifications related to your subscription criteria"
-                    : "By Re-activating the subscription, you will start to receive notifications related to your subscription criteria until the subscription expiry date"}
+                {active ? tToggleSubscriptionActivationModal("deactivateDesc") : tToggleSubscriptionActivationModal("activateDesc")}
             </div>
             <form className="grid gap-1">
                 {!active && (
                     <DatePickerController
                         control={control}
                         fieldName="subscriptionExpiryDate"
-                        label="Expiry date"
+                        label={tToggleSubscriptionActivationModal("formExpiryDateLabel")}
                         minDate={new Date(new Date().setHours(new Date().getHours() + 24 * 7))}
                         inline
                         required
@@ -72,7 +83,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
                 )}
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: active ? "Deactivate" : "Activate" }}
+                    primaryButton={{ text: active ? tCommon("deactivate") : tCommon("activate") }}
                     onSubmit={handleSubmit((values) => mutate(values))}
                     onVisibleChange={setVisible}
                 />

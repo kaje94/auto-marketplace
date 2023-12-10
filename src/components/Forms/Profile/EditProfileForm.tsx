@@ -6,6 +6,7 @@ import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { editProfileAction } from "@/actions/profileActions";
+import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { UpdateProfileSchema } from "@/utils/schemas";
 import { ListingUser, UpdateProfileReq } from "@/utils/types";
@@ -22,6 +23,8 @@ export const EditProfileForm: FC<Props> = (props) => {
     const params = useParams();
 
     const toastId = useRef<string>();
+
+    const tEditProfile = useScopedI18n("components.forms.profile.edit");
 
     const form = useForm<UpdateProfileReq>({
         resolver: zodResolver(UpdateProfileSchema),
@@ -40,7 +43,6 @@ export const EditProfileForm: FC<Props> = (props) => {
     });
 
     const country = form.watch("address.country");
-    const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country);
 
     const { mutate: updateSubscriptionMutation, isLoading: isMutating } = useMutation(
         async (formValues: UpdateProfileReq) =>
@@ -58,15 +60,15 @@ export const EditProfileForm: FC<Props> = (props) => {
                 }
             },
             onMutate: () => {
-                toastId.current = toast.loading(`Updating the user profile...`);
+                toastId.current = toast.loading(tEditProfile("toast.loading"));
             },
             onSettled: (_, err) => {
                 if (err) {
-                    toast.error(`Failed to update the user profile. ${(err as Error)?.message ?? ""}`, {
+                    toast.error(tEditProfile("toast.error", { error: (err as Error)?.message }), {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(`Successfully updated the user profile`, { id: toastId?.current });
+                    toast.success(tEditProfile("toast.success"), { id: toastId?.current });
                 }
             },
         },

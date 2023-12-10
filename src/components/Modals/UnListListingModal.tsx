@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import { unListListingAction } from "@/actions/listingActions";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { SelectController } from "@/components/FormElements/Select";
+import { useScopedI18n } from "@/locales/client";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
 import { UnListListingSchema } from "@/utils/schemas";
@@ -32,6 +33,9 @@ export const UnListListingModal = (props: Props) => {
         mode: "all",
     });
 
+    const tUnListListingModal = useScopedI18n("components.modals.unListListingModal");
+    const tForm = useScopedI18n("form");
+
     const { mutate, isLoading } = useMutation((reqParams: UnListListingReq) => unListListingAction(reqParams, listingUserId!), {
         onSuccess: (_, id) => {
             if (window?.location?.pathname === `/${params.locale}/search/${id}`) {
@@ -40,13 +44,13 @@ export const UnListListingModal = (props: Props) => {
         },
         onMutate: () => {
             setVisible(false);
-            toastId.current = toast.loading(`Unlisting advert ${listingTitle}...`);
+            toastId.current = toast.loading(tUnListListingModal("toast.loading", { listingTitle }));
         },
         onSettled: (_data, err) => {
             if (err) {
-                toast.error(`Failed to update the status of the advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
+                toast.error(tUnListListingModal("toast.error", { listingTitle, error: (err as Error)?.message }), { id: toastId?.current });
             } else {
-                toast.success(`Successfully updated the status of the advert ${listingTitle}`, { id: toastId?.current });
+                toast.success(tUnListListingModal("toast.success", { listingTitle }), { id: toastId?.current });
             }
         },
     });
@@ -61,22 +65,20 @@ export const UnListListingModal = (props: Props) => {
     );
 
     return (
-        <Modal title="Unlist Advert" titleClassNames="text-error" visible={visible} onVisibleChange={setVisible}>
-            <div className="mb-2 mt-4 text-sm">
-                By Unlisting or withdrawing the advert, the advertisement will no longer be visible to the public.
-            </div>
+        <Modal title={tUnListListingModal("title")} titleClassNames="text-error" visible={visible} onVisibleChange={setVisible}>
+            <div className="mb-2 mt-4 text-sm">{tUnListListingModal("desc")} </div>
             <form className="grid gap-1">
                 <SelectController
                     control={control}
                     fieldName="listingStatus"
-                    label="Status"
+                    label={tUnListListingModal("formStatusLabel")}
                     options={selectOptions}
                     selectablePlaceholder={false}
                     required
                 />
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: "Submit", classNames: "btn-error" }}
+                    primaryButton={{ text: tForm("buttons.submit.label"), classNames: "btn-error" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
                     onVisibleChange={setVisible}
                 />

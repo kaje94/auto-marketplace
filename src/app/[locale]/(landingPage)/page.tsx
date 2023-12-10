@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: LocalePathParam, parent: Reso
 
 export default async function Page({ params }: LocalePathParam) {
     const featuredListings = await api.getFeaturedListings(params.locale);
-    const tLandingPage = await getScopedI18n("landingPage");
+    const tLandingPage = await getScopedI18n("appRouter.landingRoute");
 
     return (
         <ListingsCarousel

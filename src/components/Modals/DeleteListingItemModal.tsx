@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import { deleteListingAction } from "@/actions/listingActions";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { useScopedI18n } from "@/locales/client";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
@@ -21,6 +22,9 @@ export const DeleteListingItemModal = (props: Props) => {
     const router = useRouter();
     const params = useParams();
 
+    const tCommon = useScopedI18n("common");
+    const tDeleteListingItemModal = useScopedI18n("components.modals.deleteListingItemModal");
+
     const { mutate, isLoading } = useMutation((id: string) => deleteListingAction(id, listingUserId!), {
         onSuccess: (_, id) => {
             if (
@@ -35,25 +39,25 @@ export const DeleteListingItemModal = (props: Props) => {
         },
         onMutate: () => {
             setVisible(false);
-            toastId.current = toast.loading(`Deleting advert ${listingTitle}...`);
+            toastId.current = toast.loading(tDeleteListingItemModal("toast.loading", { listingTitle }));
         },
         onSettled: (_data, err) => {
             setVisible(false);
             if (err) {
-                toast.error(`Failed to delete advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
+                toast.error(tDeleteListingItemModal("toast.error", { listingTitle, error: (err as Error)?.message }), { id: toastId?.current });
             } else {
-                toast.success(`Successfully deleted the Advert ${listingTitle}`, { id: toastId?.current });
+                toast.success(tDeleteListingItemModal("toast.success", { listingTitle }), { id: toastId?.current });
             }
         },
     });
 
     return (
         <>
-            <Modal title="Delete Advert" titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
-                <div>Are you sure you want to delete this advert? This action is not reversible.</div>
+            <Modal title={tDeleteListingItemModal("title")} titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
+                <div>{tDeleteListingItemModal("desc")}</div>
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: "Delete", classNames: "btn-error" }}
+                    primaryButton={{ text: tCommon("delete"), classNames: "btn-error" }}
                     onSubmit={listingId ? () => mutate(listingId) : undefined}
                     onVisibleChange={setVisible}
                 />

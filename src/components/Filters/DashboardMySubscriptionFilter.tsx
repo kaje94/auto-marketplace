@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
+import { useScopedI18n } from "@/locales/client";
 import { SubscriptFrequenciesList } from "@/utils/constants";
 import { DashboardMySubscriptionFilterReq } from "@/utils/types";
 import { FilterSelect as SelectController } from "./FilterFormElements/DashboardFilterSelect";
@@ -26,6 +27,9 @@ export const DashboardMySubscriptionFilter: FC<Props> = ({
 }) => {
     const { handleSubmit, control } = form as UseFormReturn<DashboardMySubscriptionFilterReq>;
 
+    const tForm = useScopedI18n("form");
+    const tCommon = useScopedI18n("common");
+
     return (
         <FilterWrap
             dropdownOpen={dropdownOpen}
@@ -38,19 +42,19 @@ export const DashboardMySubscriptionFilter: FC<Props> = ({
             <SelectController
                 control={control}
                 fieldName="Active"
-                label="Active/Inactive"
+                label={tForm("subscriptionActive.label")}
                 options={[
-                    { label: "Active", value: "true" },
-                    { label: "Inactive", value: "false" },
+                    { label: tCommon("active"), value: "true" },
+                    { label: tCommon("inactive"), value: "false" },
                 ]}
-                placeholder="All status types"
+                placeholder={tForm("subscriptionActive.optionalPlaceholder")}
             />
             <SelectController
                 control={control}
                 fieldName="NotificationFrequency"
-                label="Notification Frequency"
+                label={tForm("subscriptionFrequency.label")}
                 options={SubscriptFrequenciesList}
-                placeholder="All frequency types"
+                placeholder={tForm("subscriptionFrequency.optionalPlaceholder")}
             />
         </FilterWrap>
     );

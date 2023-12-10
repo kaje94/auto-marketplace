@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { Dispatch, FC, SetStateAction } from "react";
 import { Empty, Pagination } from "@/components/Common";
+import { useScopedI18n } from "@/locales/client";
 import { useDashboardAllSubscriptionsContext } from "@/providers/DashboardAllSubscriptionsProvider";
 import { useDashboardMySubscriptionsContext } from "@/providers/DashboardMySubscriptionsContextProvider";
 import { ListingItems, PaginatedResponse } from "@/utils/types";
@@ -23,6 +24,8 @@ export const DashboardListingsList: FC<
     Props & { isLoading: boolean; searchParamsObj: Record<string, string>; setNewSearchQuery: Dispatch<SetStateAction<string>> }
 > = ({ userClaims, listings, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
     const [parent] = useAutoAnimate();
+    const tCommon = useScopedI18n("common");
+    const tDashboardListingsList = useScopedI18n("components.dashboardListings.dashboardListingList");
 
     return (
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
@@ -30,15 +33,11 @@ export const DashboardListingsList: FC<
                 <Empty
                     button={
                         hasSearchParams
-                            ? { text: "Reset Filters", href: basePath!, onClick: () => setNewSearchQuery("") }
-                            : { text: "Create New", href: "/dashboard/new-listing" }
+                            ? { text: tCommon("resetFilterBtn"), href: basePath!, onClick: () => setNewSearchQuery("") }
+                            : { text: tCommon("createBtn"), href: "/dashboard/new-listing" }
                     }
-                    subText={
-                        hasSearchParams
-                            ? "Try adjusting or resetting your search filters"
-                            : "By creating a new new advertisement, you have the opportunity to showcase the vehicle you want to sell to a wide audience."
-                    }
-                    text="No advertisements to display"
+                    subText={hasSearchParams ? tDashboardListingsList("noAdsSubTextWithFilters") : tDashboardListingsList("noAdsSubText")}
+                    text={tDashboardListingsList("noAdsText")}
                 />
             )}
 

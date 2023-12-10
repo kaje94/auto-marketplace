@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
+import { useScopedI18n } from "@/locales/client";
 import { DashboardNotificationsFilterReq } from "@/utils/types";
 import { FilterInput as InputController } from "./FilterFormElements/DashboardFilterInput";
 import { FilterSelect as SelectController } from "./FilterFormElements/DashboardFilterSelect";
@@ -26,6 +27,8 @@ export const DashboardNotificationsFilter: FC<Props> = ({
 }) => {
     const { handleSubmit, control } = form as UseFormReturn<DashboardNotificationsFilterReq>;
 
+    const tForm = useScopedI18n("form");
+
     return (
         <FilterWrap
             dropdownOpen={dropdownOpen}
@@ -39,16 +42,28 @@ export const DashboardNotificationsFilter: FC<Props> = ({
                 <SelectController
                     control={control}
                     fieldName="IsShown"
-                    label="Type"
+                    label={tForm("notificationIsShown.label")}
                     options={[
-                        { label: "Seen notifications", value: "true" },
-                        { label: "New notifications", value: "false" },
+                        { label: tForm("notificationIsShown.seen"), value: "true" },
+                        { label: tForm("notificationIsShown.new"), value: "false" },
                     ]}
-                    placeholder="All notifications"
+                    placeholder={tForm("notificationIsShown.optionalPlaceholder")}
                 />
             </div>
-            <InputController control={control} fieldName="StartDate" label="From" placeholder="Notifications from date" type="date" />
-            <InputController control={control} fieldName="EndDate" label="To" placeholder="Notifications to date" type="date" />
+            <InputController
+                control={control}
+                fieldName="StartDate"
+                label={tForm("startNotifications.label")}
+                placeholder={tForm("startNotifications.placeholder")}
+                type="date"
+            />
+            <InputController
+                control={control}
+                fieldName="EndDate"
+                label={tForm("endNotifications.label")}
+                placeholder={tForm("endNotifications.placeholder")}
+                type="date"
+            />
         </FilterWrap>
     );
 };

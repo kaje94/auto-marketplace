@@ -9,6 +9,7 @@ import { z } from "zod";
 import { revalidateUserProfileDetails } from "@/actions/cacheActions";
 import { Modal, ModalFooter } from "@/components/Common";
 import { InputController } from "@/components/FormElements/Input";
+import { useScopedI18n } from "@/locales/client";
 
 const RevalidateUserProfileSchema = z.object({ userId: z.string() });
 
@@ -22,28 +23,38 @@ export const RevalidateUserProfileDetails = () => {
         mode: "all",
     });
 
+    const tRevalidateUserProfile = useScopedI18n("components.manageCache.revalidateUserProfile");
+    const tForm = useScopedI18n("form");
+    const tCommon = useScopedI18n("common");
+
     const { mutate, isLoading } = useMutation(
         (req: RevalidateUserProfileSchemaReq) => {
             return revalidateUserProfileDetails(req.userId);
         },
         {
             onMutate: () => setModalVisible(false),
-            onSuccess: () => toast.success(`Successfully revalidated user profile`),
-            onError: () => toast.error(`Failed to revalidate user profile`),
+            onSuccess: () => toast.success(tRevalidateUserProfile("toast.success")),
+            onError: () => toast.error(tRevalidateUserProfile("toast.error")),
         },
     );
 
     return (
         <>
             <button className="btn btn-outline" disabled={isLoading} onClick={() => setModalVisible(true)}>
-                Revalidate user profile details
+                {tRevalidateUserProfile("buttonText")}
             </button>
-            <Modal title="Revalidate user profile details" visible={!!modalVisible} onVisibleChange={setModalVisible}>
+            <Modal title={tRevalidateUserProfile("buttonText")} visible={!!modalVisible} onVisibleChange={setModalVisible}>
                 <form className="grid gap-1">
-                    <InputController control={control} fieldName="userId" label="User ID" placeholder="User ID" required />
+                    <InputController
+                        control={control}
+                        fieldName="userId"
+                        label={tForm("userId.label")}
+                        placeholder={tForm("userId.placeholder")}
+                        required
+                    />
                     <ModalFooter
                         loading={isLoading}
-                        primaryButton={{ text: "Proceed" }}
+                        primaryButton={{ text: tCommon("proceed") }}
                         onSubmit={handleSubmit((values) => mutate(values))}
                         onVisibleChange={setModalVisible}
                     />

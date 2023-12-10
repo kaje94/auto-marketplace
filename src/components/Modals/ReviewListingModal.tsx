@@ -8,6 +8,7 @@ import { reviewListingAction } from "@/actions/listingActions";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { SelectController } from "@/components/FormElements/Select";
 import { TextAreaController } from "@/components/FormElements/TextArea";
+import { useScopedI18n } from "@/locales/client";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
 import { ReviewListingSchema } from "@/utils/schemas";
@@ -30,27 +31,29 @@ export const ReviewListingModal = (props: Props) => {
         mode: "all",
     });
 
+    const tReviewListingModal = useScopedI18n("components.modals.reviewListingModal");
+
     const { mutate, isLoading } = useMutation((reqParams: ReviewListingReq) => reviewListingAction(reqParams, listingUserId!), {
         onMutate: () => {
             setVisible(false);
-            toastId.current = toast.loading(`Submitting review for advert ${listingTitle}...`);
+            toastId.current = toast.loading(tReviewListingModal("toast.loading", { listingTitle }));
         },
         onSettled: (_data, err) => {
             if (err) {
-                toast.error(`Failed to update the status of the advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
+                toast.error(tReviewListingModal("toast.error", { listingTitle, error: (err as Error)?.message }), { id: toastId?.current });
             } else {
-                toast.success(`Successfully updated the status of the advert ${listingTitle}`, { id: toastId?.current });
+                toast.success(tReviewListingModal("toast.success", { listingTitle }), { id: toastId?.current });
             }
         },
     });
 
     return (
-        <Modal title="Review Advert" visible={visible} onVisibleChange={setVisible}>
+        <Modal title={tReviewListingModal("title")} visible={visible} onVisibleChange={setVisible}>
             <form className="grid gap-1">
                 <SelectController
                     control={control}
                     fieldName="status"
-                    label="Review Status"
+                    label={tReviewListingModal("formReviewStatusLabel")}
                     options={[
                         { label: unCamelCase(ListingStatusTypes.Posted), value: ListingStatusTypes.Posted },
                         { label: unCamelCase(ListingStatusTypes.Declined), value: ListingStatusTypes.Declined },
@@ -61,13 +64,13 @@ export const ReviewListingModal = (props: Props) => {
                 <TextAreaController
                     control={control}
                     fieldName="reviewComment"
-                    label="Review comment"
-                    placeholder="Additional details related to the advert review"
+                    label={tReviewListingModal("formReviewCommentLabel")}
+                    placeholder={tReviewListingModal("formReviewCommentPlaceholder")}
                     required
                 />
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: "Submit Review" }}
+                    primaryButton={{ text: tReviewListingModal("submitButtonText") }}
                     onSubmit={handleSubmit((values) => mutate(values))}
                     onVisibleChange={setVisible}
                 />

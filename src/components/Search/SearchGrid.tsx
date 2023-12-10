@@ -3,6 +3,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { Empty, ListingItem, Pagination } from "@/components/Common";
+import { useScopedI18n } from "@/locales/client";
 import { usePostedListingsContext } from "@/providers/PostedListingsContextProvider";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { ListingItems, PaginatedResponse } from "@/utils/types";
@@ -10,6 +11,8 @@ import { ListingItems, PaginatedResponse } from "@/utils/types";
 export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResponse & ListingItems; pageLoading?: boolean }) => {
     const { setNewSearchQuery, isLoading, searchParamsObj, hasSearchParams } = usePostedListingsContext();
     const [parent] = useAutoAnimate();
+    const tCommon = useScopedI18n("common");
+    const tSearchGrid = useScopedI18n("components.search.searchGrid");
 
     const newSearchFiltersParamsObj = { ...searchParamsObj };
     delete newSearchFiltersParamsObj["Title"];
@@ -18,11 +21,11 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
 
     let filterText = "";
     if (hasTitleFilter && hasFilters) {
-        filterText = "Filtered by Title & Advanced filters";
+        filterText = tSearchGrid("hasFilterAndTitle");
     } else if (hasFilters) {
-        filterText = "Filtered results";
+        filterText = tSearchGrid("hasOnlyFilters");
     } else if (hasTitleFilter) {
-        filterText = "Filtered by Title";
+        filterText = tSearchGrid("hasOnlyTitleFilter");
     }
 
     return (
@@ -37,7 +40,7 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                     <div className="h-5 w-28 animate-pulse rounded bg-base-300" />
                 ) : (
                     <>
-                        {listings?.totalCount} results found
+                        {tCommon("results", { count: listings?.totalCount ?? 0 })}
                         {filterText && <div className="badge badge-outline badge-md ml-2 w-max">{filterText}</div>}
                     </>
                 )}
@@ -58,11 +61,11 @@ export const SearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResp
                         <Empty
                             button={
                                 hasSearchParams
-                                    ? { text: "Reset Filter", href: "/search", onClick: () => setNewSearchQuery(""), loading: isLoading }
+                                    ? { text: tCommon("resetFilter"), href: "/search", onClick: () => setNewSearchQuery(""), loading: isLoading }
                                     : undefined
                             }
-                            subText="You can try refining or resetting your search criteria or check again later"
-                            text="No adverts to display"
+                            subText={tSearchGrid("noAdsSubTitle")}
+                            text={tSearchGrid("noAdsTitle")}
                         />
                     </div>
                 )}

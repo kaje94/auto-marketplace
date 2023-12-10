@@ -4,6 +4,7 @@ import { FC, ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 import { ActivityIcon, HomeIcon, RefreshIcon } from "@/icons";
+import { useScopedI18n } from "@/locales/client";
 
 interface Props {
     children?: ReactNode;
@@ -28,14 +29,13 @@ export const ErrorComponent: FC<Props> = ({
     showHome = true,
     children,
 }) => {
-    const errorSubTitleText =
-        subTitle ||
-        (showReset
-            ? "But do not worry, you can either try refreshing this page or go back to our home page and start over."
-            : "But do not worry, you can alway head to our home page and start over.");
-    let errorTitle = title || "Oops, something went wrong";
+    const tCommon = useScopedI18n("common");
+    const tErrorComponent = useScopedI18n("components.common.errorComponent");
+
+    const errorSubTitleText = subTitle || showReset ? tErrorComponent("genericSubTitleWithReset") : tErrorComponent("genericSubTitle");
+    let errorTitle = title || tErrorComponent("genericTitle");
     if (error instanceof Error && error?.message?.endsWith("(404)")) {
-        errorTitle = "Item is not available";
+        errorTitle = tErrorComponent("notFoundMessage");
     }
     const errorName = typeof error === "string" ? "Error" : error?.name ?? "Error";
     const errorMessage = typeof error === "string" ? error : error?.message;
@@ -62,13 +62,13 @@ export const ErrorComponent: FC<Props> = ({
                     <div className="flex flex-wrap justify-center gap-3">
                         {showReset && reset && (
                             <button className="btn" onClick={reset}>
-                                <RefreshIcon className="mr-3" /> Refresh
+                                <RefreshIcon className="mr-3" /> {tCommon("refresh")}
                             </button>
                         )}
                         {showHome && (
                             <LinkWithLocale href="/">
                                 <button className="btn btn-outline">
-                                    <HomeIcon className="mr-3" /> Home
+                                    <HomeIcon className="mr-3" /> {tCommon("home")}
                                 </button>
                             </LinkWithLocale>
                         )}

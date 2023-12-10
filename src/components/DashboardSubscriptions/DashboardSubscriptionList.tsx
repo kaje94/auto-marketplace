@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { Dispatch, FC, SetStateAction } from "react";
 import { Empty, Pagination } from "@/components/Common";
+import { useScopedI18n } from "@/locales/client";
 import { useDashboardAllSubscriptionsContext } from "@/providers/DashboardAllSubscriptionsProvider";
 import { useDashboardMySubscriptionsContext } from "@/providers/DashboardMySubscriptionsContextProvider";
 import { ListingSubscriptionItems, PaginatedResponse } from "@/utils/types";
@@ -22,21 +23,22 @@ export const DashboardSubscriptionList: FC<
 > = ({ listingSubscriptions, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
     const [parent] = useAutoAnimate();
 
+    const tCommon = useScopedI18n("common");
+    const tDashboardSubscriptions = useScopedI18n("components.dashboardSubscriptions");
+
     return (
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
             {!pageLoading && listingSubscriptions?.totalCount === 0 && (
                 <Empty
                     button={
                         hasSearchParams
-                            ? { text: "Reset Filters", href: basePath!, onClick: () => setNewSearchQuery("") }
-                            : { text: "Create New", href: "/dashboard/new-subscription" }
+                            ? { text: tCommon("resetFilter"), href: basePath!, onClick: () => setNewSearchQuery("") }
+                            : { text: tCommon("createBtn"), href: "/dashboard/new-subscription" }
                     }
                     subText={
-                        hasSearchParams
-                            ? "Try adjusting or resetting your search filters"
-                            : "By creating a new subscription, you'll receive notifications about any new advertisements that match your interests."
+                        hasSearchParams ? tDashboardSubscriptions("noSubscriptionsDescWithFilter") : tDashboardSubscriptions("noSubscriptionsDesc")
                     }
-                    text="No subscriptions to display"
+                    text={tDashboardSubscriptions("noSubscriptionsTitle")}
                 />
             )}
 

@@ -9,6 +9,7 @@ import { z } from "zod";
 import { revalidateFeaturedListingsByCountryAction } from "@/actions/cacheActions";
 import { Modal, ModalFooter } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
+import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { LabelValue } from "@/utils/types";
 
@@ -24,6 +25,10 @@ export const RevalidateFeaturedListingsByCountry = () => {
         mode: "all",
     });
 
+    const tCommon = useScopedI18n("common");
+    const tRevalidateAllFeaturedListings = useScopedI18n("components.manageCache.revalidateAllFeaturedListings");
+    const tForm = useScopedI18n("form");
+
     const { mutate, isLoading } = useMutation(
         (req: RevalidateFeaturedListingsByCountryReq) => {
             const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === req.country);
@@ -31,8 +36,8 @@ export const RevalidateFeaturedListingsByCountry = () => {
         },
         {
             onMutate: () => setModalVisible(false),
-            onSuccess: () => toast.success(`Successfully revalidated featured listings`),
-            onError: () => toast.error(`Failed to revalidate featured listings`),
+            onSuccess: () => toast.success(tRevalidateAllFeaturedListings("toast.success")),
+            onError: () => toast.error(tRevalidateAllFeaturedListings("toast.error")),
         },
     );
 
@@ -44,22 +49,22 @@ export const RevalidateFeaturedListingsByCountry = () => {
     return (
         <>
             <button className="btn btn-outline" disabled={isLoading} onClick={() => setModalVisible(true)}>
-                Revalidate featured listings by country
+                {tRevalidateAllFeaturedListings("buttonText")}
             </button>
-            <Modal title="Revalidate featured listings by country" visible={!!modalVisible} onVisibleChange={setModalVisible}>
+            <Modal title={tRevalidateAllFeaturedListings("buttonText")} visible={!!modalVisible} onVisibleChange={setModalVisible}>
                 <form className="grid gap-1">
                     <AutocompleteController
                         control={control}
                         fieldName="country"
-                        label="Country"
+                        label={tForm("country.label")}
                         options={countryList}
-                        placeholder="Select Country"
+                        placeholder={tForm("country.placeholder")}
                         required
                     />
                     <div className="h-36" />
                     <ModalFooter
                         loading={isLoading}
-                        primaryButton={{ text: "Proceed" }}
+                        primaryButton={{ text: tCommon("proceed") }}
                         onSubmit={handleSubmit((values) => mutate(values))}
                         onVisibleChange={setModalVisible}
                     />

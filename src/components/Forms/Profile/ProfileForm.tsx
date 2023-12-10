@@ -8,6 +8,7 @@ import { Avatar } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
+import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { LabelValue, ListingUser, UpdateProfileReq } from "@/utils/types";
 
@@ -51,11 +52,7 @@ export const ProfileForm: FC<Props> = (props) => {
         value: COUNTRIES[key]?.[0]!,
     }));
 
-    const {
-        data: states = [],
-        isFetching: isLoadingStates,
-        isError: stateFetchError,
-    } = useQuery({
+    const { data: states = [], isFetching: isLoadingStates } = useQuery({
         queryFn: () => getStatesOfCountry(countryCode!),
         enabled: !!countryCode,
         queryKey: ["country-states", { locale: countryCode }],
@@ -71,11 +68,7 @@ export const ProfileForm: FC<Props> = (props) => {
 
     const stateCode = states.find((item) => item.name === state)?.stateCode;
 
-    const {
-        data: cityList = [],
-        isFetching: isLoadingCities,
-        isError: cityFetchError,
-    } = useQuery({
+    const { data: cityList = [], isFetching: isLoadingCities } = useQuery({
         queryFn: () => getCitiesOfState(countryCode!, stateCode!),
         enabled: !!countryCode && !!stateCode,
         queryKey: ["country-state-cities", { locale: countryCode, stateCode }],
@@ -86,6 +79,9 @@ export const ProfileForm: FC<Props> = (props) => {
             }
         },
     });
+
+    const tProfileForm = useScopedI18n("components.forms.profile.form");
+    const tForm = useScopedI18n("form");
 
     return (
         <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
@@ -107,62 +103,57 @@ export const ProfileForm: FC<Props> = (props) => {
 
                 <div className={clsx("grid w-full gap-1 lg:grid-cols-2 lg:gap-4", gridClassnames)}>
                     <div className={clsx("grid gap-1", locationSectionClassnames)}>
-                        <div className="divider col-span-full mt-4">Location Details</div>
+                        <div className="divider col-span-full mt-4">{tProfileForm("LocationDetailsText")}</div>
                         <AutocompleteController
                             control={control}
                             fieldName="address.country"
-                            label="Country"
+                            label={tForm("country.label")}
                             options={countryList}
-                            placeholder="Select Country"
+                            placeholder={tForm("country.placeholder")}
                             required
                         />
 
                         <AutocompleteController
                             control={control}
                             fieldName="address.state"
-                            label="State/Province"
+                            label={tForm("state.label")}
                             loading={isLoadingStates}
                             options={stateList}
-                            placeholder="State or Province Name"
+                            placeholder={tForm("state.placeholder")}
                             required
                         />
 
                         <AutocompleteController
                             control={control}
                             fieldName="address.city"
-                            label="City"
+                            label={tForm("city.label")}
                             loading={isLoadingCities}
                             options={cityList}
-                            placeholder="City Name"
+                            placeholder={tForm("city.placeholder")}
                             required
                         />
 
                         <InputController
                             control={control}
                             fieldName="address.postalCode"
-                            label="Postal Code"
+                            label={tForm("postalCode.label")}
                             loading={isLoading}
-                            placeholder="00001"
+                            placeholder={tForm("postalCode.placeholder")}
                             required
                         />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <div className="divider mt-4">User Details</div>
+                        <div className="divider mt-4">{tProfileForm("userDetailsText")}</div>
                         <InputController
                             control={control}
                             fieldName="phoneNumber"
                             inputPrefix={countryPhoneCode}
-                            label="Phone Number"
+                            label={tForm("phoneNumber.label")}
                             loading={isLoading}
-                            placeholder="0000000000"
+                            placeholder={tForm("phoneNumber.placeholder")}
                             type="tel"
                         />
-                        <CheckboxController
-                            control={control}
-                            fieldName="isDealership"
-                            label="Are you a vehicle dealer or dealership?"
-                            loading={isLoading}
-                        />
+                        <CheckboxController control={control} fieldName="isDealership" label={tProfileForm("isDealershipText")} loading={isLoading} />
                     </div>
                 </div>
             </div>
@@ -175,7 +166,7 @@ export const ProfileForm: FC<Props> = (props) => {
                         type="submit"
                         onClick={() => handleSubmit((values) => onMutate(values))}
                     >
-                        {isMutating ? "Updating..." : "Update"}
+                        {isMutating ? tForm("buttons.update.loading") : tForm("buttons.update.label")}
                     </button>
                 </div>
             )}

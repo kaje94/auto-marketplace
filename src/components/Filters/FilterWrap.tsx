@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
 import ClickAwayListener from "react-click-away-listener";
+import { useScopedI18n } from "@/locales/client";
 
 interface Props {
     children: ReactNode;
@@ -13,19 +14,22 @@ interface Props {
 }
 
 export const FilterWrap: FC<Props> = ({ children, setDropdownOpen, onApplyFilterClick, isLoading, dropdownOpen, hasFilters, onResetClick }) => {
+    const tFilters = useScopedI18n("components.filters");
+
     if (!dropdownOpen) {
         return null;
     }
+
     return (
-        <span className={clsx("dropdown dropdown-end absolute  flex justify-end", dropdownOpen && "dropdown-open")}>
+        <span className={clsx("dropdown-end dropdown absolute  flex justify-end", dropdownOpen && "dropdown-open")}>
             <ClickAwayListener onClickAway={() => setDropdownOpen(false)}>
                 <div className="menu dropdown-content rounded-box z-[1] w-max !overflow-visible rounded-tr-none border-2 border-base-300 bg-base-200 p-0 shadow-lg md:max-w-md">
                     <form className="flex flex-col">
                         <div className="flex items-center justify-between gap-2 p-2 md:p-3">
-                            <div className="text-sm font-semibold">Filters</div>
+                            <div className="text-sm font-semibold">{tFilters("label")}</div>
                             {hasFilters && (
                                 <button className="btn btn-accent btn-outline btn-xs" disabled={isLoading} onClick={onResetClick}>
-                                    Reset Applied Filters
+                                    {tFilters("resetBtn")}
                                 </button>
                             )}
                         </div>
@@ -37,7 +41,7 @@ export const FilterWrap: FC<Props> = ({ children, setDropdownOpen, onApplyFilter
                             disabled={isLoading}
                             onClick={onApplyFilterClick}
                         >
-                            {isLoading ? "Applying Filters..." : "Apply Filters"}
+                            {isLoading ? tFilters("applyingFilters") : tFilters("applyFilters")}
                         </button>
                     </form>
                 </div>

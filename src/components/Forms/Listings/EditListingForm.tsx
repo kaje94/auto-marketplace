@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { editListingAction } from "@/actions/listingActions";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
+import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getDistanceUnit, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
 import { CreateListingSchema } from "@/utils/schemas";
@@ -51,6 +52,10 @@ export const EditListingForm: FC<Props> = (props) => {
         mode: "all",
     });
 
+    const tEditListingForm = useScopedI18n("components.forms.listing.edit");
+    const tCommon = useScopedI18n("common");
+    const tForm = useScopedI18n("form");
+
     const { mutate: updateListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: EditListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
@@ -86,15 +91,15 @@ export const EditListingForm: FC<Props> = (props) => {
                 }
             },
             onMutate: (data) => {
-                toastId.current = toast.loading(`Updating the Advert ${getListingTitleFromVehicle(data.vehicle)}...`);
+                toastId.current = toast.loading(tEditListingForm("toast.loading", { title: getListingTitleFromVehicle(data.vehicle) }));
             },
             onSettled: (_, err, req) => {
                 if (err) {
-                    toast.error(`Failed to update the advert ${getListingTitleFromVehicle(req.vehicle)}. ${(err as Error)?.message ?? ""}`, {
+                    toast.error(tEditListingForm("toast.error", { title: getListingTitleFromVehicle(req.vehicle), error: (err as Error)?.message }), {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(`Successfully updated the Advert ${getListingTitleFromVehicle(req.vehicle)}`, { id: toastId?.current });
+                    toast.success(tEditListingForm("toast.success", { title: getListingTitleFromVehicle(req.vehicle) }), { id: toastId?.current });
                 }
             },
         },
@@ -108,7 +113,7 @@ export const EditListingForm: FC<Props> = (props) => {
                         city: profile?.address?.city || "",
                         state: profile?.address?.state || "",
                         postalCode: profile?.address?.postalCode || "",
-                        country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "", // check this
+                        country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "", // todo:check this
                     },
                     price: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
                     vehicle: { millage: { unit: distanceUnit } },
@@ -125,7 +130,7 @@ export const EditListingForm: FC<Props> = (props) => {
             isMutating={isMutating}
             isUpdateProfileEnabled={userId === listingItem?.userId}
             profile={profile}
-            submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
+            submitButton={{ text: tForm("buttons.update.label"), mutatingText: tForm("buttons.update.loading"), disableIfCleanForm: true }}
             title={listingItem?.title}
             vehicleBrands={brands}
             onMutate={(values) => updateListingsMutation({ ...values, listingId: listingItem.id })}

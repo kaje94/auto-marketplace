@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { DeleteListingItemModal } from "@/components/Modals/DeleteListingItemModal";
 import { TrashIcon } from "@/icons";
+import { useScopedI18n } from "@/locales/client";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
 export const DeleteButton: FC<Props> = ({ listingItem, isOwner, loading }) => {
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
+    const tCommon = useScopedI18n("common");
+
     return (
         <>
             <button
@@ -22,7 +25,7 @@ export const DeleteButton: FC<Props> = ({ listingItem, isOwner, loading }) => {
                 onClick={() => setDeleteModalVisible(true)}
             >
                 <TrashIcon />
-                Delete
+                {tCommon("delete")}
             </button>
             <DeleteListingItemModal
                 listingItem={listingItem}

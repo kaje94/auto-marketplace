@@ -7,7 +7,7 @@ import { LandingHeroSearch } from "@/components/LandingSections/LandingHeroSearc
 import { getScopedI18n } from "@/locales/server";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-    const tLandingPage = await getScopedI18n("landingPage");
+    const tLandingPage = await getScopedI18n("appRouter.landingRoute");
 
     return (
         <>
