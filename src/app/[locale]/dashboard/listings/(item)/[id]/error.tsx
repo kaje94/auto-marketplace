@@ -9,12 +9,11 @@ export default function Error(props: ErrorPageProps) {
     return (
         <>
             <BreadCrumbs
-                currentPageTitle={tBreadcrumbs("edit")}
+                currentPageTitle={tBreadcrumbs("advertItem")}
                 links={[
                     { href: "/", title: tBreadcrumbs("home") },
                     { title: tBreadcrumbs("dashboard") },
                     { title: tBreadcrumbs("manageAdverts"), href: "/dashboard/listings" },
-                    { title: tBreadcrumbs("advertItem") },
                 ]}
             />
             <ErrorComponent {...props} />

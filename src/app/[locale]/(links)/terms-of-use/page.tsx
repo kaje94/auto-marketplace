@@ -20,12 +20,14 @@ const TermsOfUseItem = ({ content = [], title }: { content: string | ReactNode; 
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const previousTwitter = (await parent).twitter || {};
-    const previousOpenGraph = (await parent).openGraph || {};
+    const [previousTwitter, previousOpenGraph, tTermsOfUsePage] = await Promise.all([
+        (await parent).twitter || {},
+        (await parent).openGraph || {},
+        getScopedI18n("metadata.termsOfUseRoute"),
+    ]);
 
-    const title = "Targabay - Terms of Use";
-    const description =
-        "Review Targabay's Terms of Use to understand the guidelines governing your engagement with our online automotive marketplace. Learn about the rules, responsibilities, and agreements that ensure a fair and secure platform for buying and selling cars, bikes, and more. Targabay – Your trusted destination for transparent and mutually beneficial transactions in the world of vehicles.";
+    const title = tTermsOfUsePage("title");
+    const description = tTermsOfUsePage("desc");
 
     return {
         title,
@@ -36,64 +38,66 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
 }
 
 export default async function Page() {
-    const tNav = await getScopedI18n("nav");
-    const tFaqsPage = await getScopedI18n("termsOfUsePage");
+    const [tNav, tTermsOfUsePage] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.termsOfUseRoute")]);
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
             <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>{tNav("links.legal.termsOfUse")}</h3>
-            <p className="opacity-70">{tFaqsPage("updatedTime")}</p>
-            <p>{tFaqsPage("intro")}</p>
+            <p className="opacity-70">{tTermsOfUsePage("updatedTime")}</p>
+            <p>{tTermsOfUsePage("intro")}</p>
             <div className="mx-auto flex flex-col gap-3">
-                <TermsOfUseSection title={tFaqsPage("section1.title")}>
-                    <p>{tFaqsPage("section1.desc")}</p>
+                <TermsOfUseSection title={tTermsOfUsePage("section1.title")}>
+                    <p>{tTermsOfUsePage("section1.desc")}</p>
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section2.title")}>
-                    <TermsOfUseItem content={tFaqsPage("section2.subSection1.content")} title={tFaqsPage("section2.subSection1.title")} />
-                    <TermsOfUseItem content={tFaqsPage("section2.subSection2.content")} title={tFaqsPage("section2.subSection2.title")} />
-                    <TermsOfUseItem content={tFaqsPage("section2.subSection3.content")} title={tFaqsPage("section2.subSection3.title")} />
+                <TermsOfUseSection title={tTermsOfUsePage("section2.title")}>
+                    <TermsOfUseItem content={tTermsOfUsePage("section2.subSection1.content")} title={tTermsOfUsePage("section2.subSection1.title")} />
+                    <TermsOfUseItem content={tTermsOfUsePage("section2.subSection2.content")} title={tTermsOfUsePage("section2.subSection2.title")} />
+                    <TermsOfUseItem content={tTermsOfUsePage("section2.subSection3.content")} title={tTermsOfUsePage("section2.subSection3.title")} />
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section3.title")}>
-                    <TermsOfUseItem content={tFaqsPage("section3.subSection1.content")} title={tFaqsPage("section3.subSection1.title")} />
+                <TermsOfUseSection title={tTermsOfUsePage("section3.title")}>
+                    <TermsOfUseItem content={tTermsOfUsePage("section3.subSection1.content")} title={tTermsOfUsePage("section3.subSection1.title")} />
                     <TermsOfUseItem
-                        content={tFaqsPage("section3.subSection2.content", {
+                        content={tTermsOfUsePage("section3.subSection2.content", {
                             safetyTips: (
                                 <LinkWithLocale className="link-hover link font-medium" href="/safety-tips">
                                     {tNav("links.support.safetyTips")}
                                 </LinkWithLocale>
                             ),
                         })}
-                        title={tFaqsPage("section3.subSection2.title")}
+                        title={tTermsOfUsePage("section3.subSection2.title")}
                     />
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section4.title")}>
-                    <p>{tFaqsPage("section4.desc")}</p>
-                    <TermsOfUseItem content={tFaqsPage("section4.subSection1.content")} title={tFaqsPage("section4.subSection1.title")} />
+                <TermsOfUseSection title={tTermsOfUsePage("section4.title")}>
+                    <p>{tTermsOfUsePage("section4.desc")}</p>
+                    <TermsOfUseItem content={tTermsOfUsePage("section4.subSection1.content")} title={tTermsOfUsePage("section4.subSection1.title")} />
                     <TermsOfUseItem
-                        content={tFaqsPage("section4.subSection2.content", {
+                        content={tTermsOfUsePage("section4.subSection2.content", {
                             safetyTips: (
                                 <LinkWithLocale className="link-hover link font-medium" href="/safety-tips">
                                     {tNav("links.support.safetyTips")}
                                 </LinkWithLocale>
                             ),
                         })}
-                        title={tFaqsPage("section4.subSection2.title")}
+                        title={tTermsOfUsePage("section4.subSection2.title")}
                     />
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section5.title")}>
-                    <p>{tFaqsPage("section5.desc")}</p>
-                    <TermsOfUseItem content={tFaqsPage("section5.subSection1.content")} title={tFaqsPage("section5.subSection1.title")} />
-                    <TermsOfUseItem content={tFaqsPage("section5.subSection2.content")} title={tFaqsPage("section5.subSection2.title")} />
+                <TermsOfUseSection title={tTermsOfUsePage("section5.title")}>
+                    <p>{tTermsOfUsePage("section5.desc")}</p>
+                    <TermsOfUseItem content={tTermsOfUsePage("section5.subSection1.content")} title={tTermsOfUsePage("section5.subSection1.title")} />
+                    <TermsOfUseItem content={tTermsOfUsePage("section5.subSection2.content")} title={tTermsOfUsePage("section5.subSection2.title")} />
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section6.title")}>
-                    <p>{tFaqsPage("section6.desc")}</p>
-                    <TermsOfUseItem content={tFaqsPage("section6.subSection1.content")} title={tFaqsPage("section6.subSection1.title")} />
-                    <TermsOfUseItem content={tFaqsPage("section6.subSection2.content.line1")} title={tFaqsPage("section6.subSection2.title")} />
-                    <p>{tFaqsPage("section6.subSection2.content.line2")}</p>
+                <TermsOfUseSection title={tTermsOfUsePage("section6.title")}>
+                    <p>{tTermsOfUsePage("section6.desc")}</p>
+                    <TermsOfUseItem content={tTermsOfUsePage("section6.subSection1.content")} title={tTermsOfUsePage("section6.subSection1.title")} />
+                    <TermsOfUseItem
+                        content={tTermsOfUsePage("section6.subSection2.content.line1")}
+                        title={tTermsOfUsePage("section6.subSection2.title")}
+                    />
+                    <p>{tTermsOfUsePage("section6.subSection2.content.line2")}</p>
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section7.title")}>
+                <TermsOfUseSection title={tTermsOfUsePage("section7.title")}>
                     <p>
-                        {tFaqsPage("section7.desc", {
+                        {tTermsOfUsePage("section7.desc", {
                             privacyPolicy: (
                                 <LinkWithLocale className="link-hover link font-medium" href="/privacy-policy">
                                     {tNav("links.legal.privacyPolicy")}
@@ -102,16 +106,16 @@ export default async function Page() {
                         })}
                     </p>
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section8.title")}>
-                    <p>{tFaqsPage("section8.desc1")}</p>
-                    <p>{tFaqsPage("section8.desc2")}</p>
+                <TermsOfUseSection title={tTermsOfUsePage("section8.title")}>
+                    <p>{tTermsOfUsePage("section8.desc1")}</p>
+                    <p>{tTermsOfUsePage("section8.desc2")}</p>
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section9.title")}>
-                    <TermsOfUseItem content={tFaqsPage("section9.subSection1.content")} title={tFaqsPage("section9.subSection1.title")} />
-                    <TermsOfUseItem content={tFaqsPage("section9.subSection2.content")} title={tFaqsPage("section9.subSection2.title")} />
+                <TermsOfUseSection title={tTermsOfUsePage("section9.title")}>
+                    <TermsOfUseItem content={tTermsOfUsePage("section9.subSection1.content")} title={tTermsOfUsePage("section9.subSection1.title")} />
+                    <TermsOfUseItem content={tTermsOfUsePage("section9.subSection2.content")} title={tTermsOfUsePage("section9.subSection2.title")} />
                 </TermsOfUseSection>
-                <TermsOfUseSection title={tFaqsPage("section10.title")}>
-                    <p>{tFaqsPage("section10.desc")}</p>
+                <TermsOfUseSection title={tTermsOfUsePage("section10.title")}>
+                    <p>{tTermsOfUsePage("section10.desc")}</p>
                 </TermsOfUseSection>
             </div>
         </div>

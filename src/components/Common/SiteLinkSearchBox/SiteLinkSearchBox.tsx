@@ -24,3 +24,5 @@ const structuredData = {
 export const SiteLinkSearchBox: FC = () => {
     return <Script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} id="site-link-search" type="application/ld+json" />;
 };
+
+// todo: get strings from lang file?

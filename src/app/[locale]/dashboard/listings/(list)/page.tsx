@@ -4,6 +4,7 @@ import qs from "query-string";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
 import { DashboardAllListFilterButton } from "@/components/DashboardListHeader/DashboardAllListFilterButton";
 import { DashboardAllListingsList } from "@/components/DashboardListings/DashboardListingsList";
+import { getScopedI18n } from "@/locales/server";
 import { DashboardAllListingsContextProvider } from "@/providers/DashboardAllListingsContextProvider";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
@@ -13,10 +14,11 @@ import { LocalePathParam, SearchParams } from "@/utils/types";
 export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
-    const [session, listings, brands] = await Promise.all([
+    const [session, listings, brands, tBreadcrumbs] = await Promise.all([
         getSession(),
         transformListingsListResponse(await api.getListings({ PageNumber: Number(page), ...parsedSearchParams })),
         api.getVehicleBrands(),
+        getScopedI18n("breadcrumbs"),
     ]);
 
     if (listings.items?.length === 0 && page !== "1") {
@@ -26,7 +28,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     return (
         <DashboardAllListingsContextProvider>
             <DashboardListHeader
-                addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
+                addNewButton={{ label: tBreadcrumbs("newListing"), path: "/dashboard/new-listing" }}
                 filter={<DashboardAllListFilterButton vehicleBrands={brands} />}
                 itemCount={listings.totalCount}
             />

@@ -1,15 +1,26 @@
 import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
+import { getScopedI18n } from "@/locales/server";
 import { ChildrenProps } from "@/utils/types";
 
-export const metadata: Metadata = { title: "Targabay - Update Profile" };
+export async function generateMetadata(): Promise<Metadata> {
+    const tEditProfile = await getScopedI18n("metadata.profileEditRoute");
+    const title = tEditProfile("title");
+    return { title };
+}
 
-export default function Layout({ children }: ChildrenProps) {
+export default async function Layout({ children }: ChildrenProps) {
+    const tBreadcrumbs = await getScopedI18n("breadcrumbs");
+
     return (
         <>
             <BreadCrumbs
-                currentPageTitle="Update Profile"
-                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Profile", href: "/dashboard/profile" }]}
+                currentPageTitle={tBreadcrumbs("updateProfile")}
+                links={[
+                    { href: "/", title: tBreadcrumbs("home") },
+                    { title: tBreadcrumbs("dashboard") },
+                    { title: tBreadcrumbs("profile"), href: "/dashboard/profile" },
+                ]}
             />
             {children}
         </>

@@ -1,23 +1,23 @@
 "use client";
 import { BreadCrumbs } from "@/components/Common";
-import { ListingForm } from "@/components/Forms/Listings/ListingForm";
+import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
 import { useScopedI18n } from "@/locales/client";
 
 export default function Loading() {
     const tBreadcrumbs = useScopedI18n("breadcrumbs");
-
+    const tCommon = useScopedI18n("common");
     return (
         <>
             <BreadCrumbs
-                currentPageTitle={tBreadcrumbs("edit")}
+                currentPageTitle={tCommon("loading")}
                 links={[
                     { href: "/", title: tBreadcrumbs("home") },
                     { title: tBreadcrumbs("dashboard") },
                     { title: tBreadcrumbs("myAdverts"), href: "/dashboard/my-listings" },
-                    { title: tBreadcrumbs("advertItem") },
                 ]}
             />
-            <ListingForm isLoading />
+            <ListingDetailBanner loading={true} />
+            <ListingDetails showSellerDetails={false} withinDashboard={true} loading />
         </>
     );
 }

@@ -21,12 +21,14 @@ const QuestionItem = ({ answer, question }: { answer: string | ReactNode; questi
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const previousTwitter = (await parent).twitter || {};
-    const previousOpenGraph = (await parent).openGraph || {};
+    const [previousTwitter, previousOpenGraph, tFaqsPage] = await Promise.all([
+        (await parent).twitter || {},
+        (await parent).openGraph || {},
+        getScopedI18n("metadata.faqsRoute"),
+    ]);
 
-    const title = "Targabay - Frequently Asked Questions";
-    const description =
-        "Find answers to common queries on Targabay's FAQ page. Explore comprehensive information about buying, selling, and navigating our online marketplace for cars, bikes, and more. Streamline your experience with insights into our policies, transactions, and everything you need to know. Targabay – Your go-to resource for a seamless automotive journey.";
+    const title = tFaqsPage("title");
+    const description = tFaqsPage("desc");
 
     return {
         title,
@@ -37,8 +39,7 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
 }
 
 export default async function Page() {
-    const tNav = await getScopedI18n("nav");
-    const tFaqsPage = await getScopedI18n("faqsPage");
+    const [tNav, tFaqsPage] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.faqsRoute")]);
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
