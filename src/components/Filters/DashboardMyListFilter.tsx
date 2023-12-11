@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useScopedI18n } from "@/locales/client";

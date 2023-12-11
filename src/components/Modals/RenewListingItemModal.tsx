@@ -1,3 +1,4 @@
+"use client";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { toast } from "react-hot-toast";

@@ -1,3 +1,4 @@
+"use client";
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
 import ClickAwayListener from "react-click-away-listener";

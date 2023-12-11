@@ -1,3 +1,4 @@
+"use client";
 import { Session } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
