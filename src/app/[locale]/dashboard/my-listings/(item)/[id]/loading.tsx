@@ -1,11 +1,10 @@
-"use client";
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
-import { useScopedI18n } from "@/locales/client";
+import { getScopedI18n } from "@/locales/server";
 
-export default function Loading() {
-    const tBreadcrumbs = useScopedI18n("breadcrumbs");
-    const tCommon = useScopedI18n("common");
+export default async function Loading() {
+    const [tBreadcrumbs, tCommon] = await Promise.all([getScopedI18n("breadcrumbs"), getScopedI18n("common")]);
+
     return (
         <>
             <BreadCrumbs
