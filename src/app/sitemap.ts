@@ -1,21 +1,22 @@
 import { MetadataRoute } from "next";
 import queryString from "query-string";
 import { env } from "@/env.mjs";
-import { api } from "@/utils/api";
+// todo : recheck this
+// import { api } from "@/utils/api";
 import { VehicleTypeList } from "@/utils/constants";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const searchMaps: MetadataRoute.Sitemap = [];
-    const brands = await api.getVehicleBrands();
+    // const brands = await api.getVehicleBrands();
 
-    for (const brand of brands) {
-        searchMaps.push({
-            url: `${env.AUTH0_BASE_URL}/search?${queryString.stringify({ Brand: brand.name })}`,
-            lastModified: new Date(),
-            changeFrequency: "hourly",
-            priority: 0.1,
-        });
-    }
+    // for (const brand of brands) {
+    //     searchMaps.push({
+    //         url: `${env.AUTH0_BASE_URL}/search?${queryString.stringify({ Brand: brand.name })}`,
+    //         lastModified: new Date(),
+    //         changeFrequency: "hourly",
+    //         priority: 0.1,
+    //     });
+    // }
 
     for (const vehicleType of VehicleTypeList) {
         searchMaps.push({
