@@ -1,4 +1,3 @@
-"use client";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { LinkWithLocale } from "@/components/Common";

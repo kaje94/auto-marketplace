@@ -1,4 +1,3 @@
-"use client";
 import { Claims } from "@auth0/nextjs-auth0/edge";
 import { usePathname } from "next/navigation";
 import { Avatar } from "@/components/Common/Avatar";

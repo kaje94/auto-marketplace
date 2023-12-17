@@ -1,4 +1,3 @@
-"use client";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
