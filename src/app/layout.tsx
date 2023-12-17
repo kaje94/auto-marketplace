@@ -3,13 +3,15 @@ import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/LayoutElements/Footer";
 import { NavBar } from "@/components/LayoutElements/NavBar";
 import { ScrollToTop } from "@/components/LayoutElements/ScrollToTop";
+import { WelcomeModal } from "@/components/Modals/WelcomeModal";
 import { env } from "@/env.mjs";
-import { I18nProvider } from "@/providers/I18nProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ChildrenProps } from "@/utils/types";
 import { standardFont } from "./fonts";
 
 import "./globals.css";
+
+export const runtime = "edge";
 
 const title = "Targabay - Your Ultimate Vehicle Marketplace";
 const description =
@@ -73,13 +75,12 @@ export default function RootLayout({ children }: ChildrenProps) {
             <body className={standardFont.className}>
                 <ScrollToTop />
                 <Toaster position="bottom-right" toastOptions={{ error: { duration: 10000 } }} />
-                <I18nProvider>
-                    <ReactQueryProvider>
-                        <NavBar />
-                        <main>{children}</main>
-                        <Footer />
-                    </ReactQueryProvider>
-                </I18nProvider>
+                <ReactQueryProvider>
+                    <NavBar />
+                    <main>{children}</main>
+                    <Footer />
+                    <WelcomeModal />
+                </ReactQueryProvider>
             </body>
         </html>
     );

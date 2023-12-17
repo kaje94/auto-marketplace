@@ -3,7 +3,6 @@ import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { ReportListingModal } from "@/components/Modals/ReportListingModal";
 import { InfoIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
 import { ListingIdType } from "@/utils/types";
 
@@ -16,8 +15,6 @@ interface Props {
 
 export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle, userEmail }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const tCommon = useScopedI18n("common");
-
     return (
         <>
             <button
@@ -26,7 +23,7 @@ export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle, user
                 onClick={() => setModalVisible(true)}
             >
                 <InfoIcon />
-                {tCommon("report")}
+                Report
             </button>
             {!loading && (
                 <RecaptchaProvider>

@@ -1,8 +1,6 @@
-"use client";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { FilterIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 
 interface Props {
     dropdownOpen: boolean;
@@ -12,12 +10,9 @@ interface Props {
 }
 
 export const FilterButton: FC<Props> = ({ loading, hasSearchParams, dropdownOpen, handleFilterOpen }) => {
-    const tCommon = useScopedI18n("common");
     return (
         <label className="flex  flex-row items-center gap-2" onClick={handleFilterOpen}>
-            {hasSearchParams && (
-                <div className={clsx("badge badge-outline badge-md w-max", !loading && "cursor-pointer")}>{tCommon("filtersApplied")}</div>
-            )}
+            {hasSearchParams && <div className={clsx("badge badge-outline badge-md w-max", !loading && "cursor-pointer")}>Filters Applied</div>}
             {loading ? (
                 <span className="loading loading-ring h-8 w-8" />
             ) : (

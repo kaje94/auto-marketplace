@@ -1,9 +1,7 @@
-"use client";
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { getCitiesOfState, getStatesOfCountry } from "@/actions/localtionActions";
-import { useScopedI18n } from "@/locales/client";
 import { FuelTypeList, ListingTypeList, VehicleTypeList } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
 import { DashboardListFilterReq, LabelValue, VehicleBrand } from "@/utils/types";
@@ -80,8 +78,6 @@ export const DashboardAllListFilter: FC<Props> = ({
         },
     });
 
-    const tForm = useScopedI18n("form");
-
     return (
         <FilterWrap
             dropdownOpen={dropdownOpen}
@@ -92,86 +88,40 @@ export const DashboardAllListFilter: FC<Props> = ({
             onResetClick={onResetClick}
         >
             <div className="col-span-full">
-                <InputController control={control} fieldName="Title" label={tForm("title.label")} placeholder={tForm("title.placeholder")} />
+                <InputController control={control} fieldName="Title" label="Title" placeholder="Advert Title" />
             </div>
-            <AutocompleteController
-                control={control}
-                fieldName="Country"
-                label={tForm("country.label")}
-                options={countryList}
-                placeholder={tForm("country.placeholder")}
-            />
+            <AutocompleteController control={control} fieldName="Country" label="Country" options={countryList} placeholder="Select Country" />
             <AutocompleteController
                 control={control}
                 fieldName="State"
-                label={tForm("state.label")}
+                label="State/Province"
                 loading={isLoadingStates}
                 options={stateList}
-                placeholder={tForm("state.placeholder")}
+                placeholder="State or Province Name"
             />
             <AutocompleteController
                 control={control}
                 fieldName="City"
-                label={tForm("city.label")}
+                label="City"
                 loading={isLoadingCities}
                 options={cityList}
-                placeholder={tForm("city.placeholder")}
+                placeholder="City Name"
             />
             <AutocompleteController
                 control={control}
                 fieldName="Brand"
-                label={tForm("brand.label")}
+                label="Brand"
                 options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
-                placeholder={tForm("brand.placeholder")}
+                placeholder="Toyota, Nissan, Honda, etc"
             />
-            <InputController control={control} fieldName="Model" label={tForm("model.label")} placeholder={tForm("model.placeholder")} />
-            <SelectController
-                control={control}
-                fieldName="ListingStatus"
-                label={tForm("listingStatus.label")}
-                options={ListingTypeList}
-                placeholder={tForm("listingStatus.optionalPlaceholder")}
-            />
-            <NumberInputController
-                control={control}
-                fieldName="MinPrice"
-                label={tForm("minPrice.label")}
-                placeholder={tForm("minPrice.placeholder")}
-            />
-            <NumberInputController
-                control={control}
-                fieldName="MaxPrice"
-                label={tForm("maxPrice.label")}
-                placeholder={tForm("maxPrice.placeholder")}
-            />
-            <InputController
-                control={control}
-                fieldName="StartCreatedDate"
-                label={tForm("startCreatedDate.label")}
-                placeholder={tForm("startCreatedDate.placeholder")}
-                type="date"
-            />
-            <InputController
-                control={control}
-                fieldName="EndCreatedDate"
-                label={tForm("endCreatedDate.label")}
-                placeholder={tForm("endCreatedDate.placeholder")}
-                type="date"
-            />
-            <SelectController
-                control={control}
-                fieldName="VehicleType"
-                label={tForm("vehicleType.label")}
-                options={VehicleTypeList}
-                placeholder={tForm("vehicleType.optionalPlaceholder")}
-            />
-            <SelectController
-                control={control}
-                fieldName="FuelType"
-                label={tForm("fuelType.label")}
-                options={FuelTypeList}
-                placeholder={tForm("fuelType.optionalPlaceholder")}
-            />
+            <InputController control={control} fieldName="Model" label="Model" placeholder="Civic, Sunny, Swift, etc" />
+            <SelectController control={control} fieldName="ListingStatus" label="Status" options={ListingTypeList} placeholder="All status types" />
+            <NumberInputController control={control} fieldName="MinPrice" label="Minimum Price" placeholder="Minimum price" />
+            <NumberInputController control={control} fieldName="MaxPrice" label="Maximum Price" placeholder="Maximum price" />
+            <InputController control={control} fieldName="StartCreatedDate" label="Created After" placeholder="Created after date" type="date" />
+            <InputController control={control} fieldName="EndCreatedDate" label="Created Before" placeholder="Created before date" type="date" />
+            <SelectController control={control} fieldName="VehicleType" label="Vehicle Type" options={VehicleTypeList} placeholder="All Types" />
+            <SelectController control={control} fieldName="FuelType" label="Fuel Type" options={FuelTypeList} placeholder="All fuel types" />
         </FilterWrap>
     );
 };

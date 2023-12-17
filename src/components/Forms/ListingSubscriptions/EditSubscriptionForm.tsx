@@ -6,7 +6,6 @@ import { FC, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { editListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
-import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
@@ -30,9 +29,6 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
     const countryCurrencySymbol = countryItem?.[2];
 
     const toastId = useRef<string>();
-
-    const tEditSubscription = useScopedI18n("components.forms.subscriptions.edit");
-    const tForm = useScopedI18n("form");
 
     const form = useForm<CreateSubscriptionReq>({
         resolver: zodResolver(CreateSubscriptionSchema),
@@ -109,15 +105,15 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
                 }
             },
             onMutate: (data) => {
-                toastId.current = toast.loading(tEditSubscription("toast.loading", { displayName: data.displayName }));
+                toastId.current = toast.loading(`Updating the Subscription ${data.displayName}...`);
             },
             onSettled: (_, err, req) => {
                 if (err) {
-                    toast.error(tEditSubscription("toast.error", { displayName: req.displayName, error: (err as Error)?.message }), {
+                    toast.error(`Failed to update the Subscription ${req.displayName}. ${(err as Error)?.message ?? ""}`, {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(tEditSubscription("toast.success", { displayName: req.displayName }), { id: toastId?.current });
+                    toast.success(`Successfully updated the Subscription ${req.displayName}`, { id: toastId?.current });
                 }
             },
         },
@@ -129,7 +125,7 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
-            submitButton={{ text: tForm("buttons.update.label"), mutatingText: tForm("buttons.update.loading"), disableIfCleanForm: true }}
+            submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
             vehicleBrands={brands}
             onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: listingSubscriptionItem.id })}
         />

@@ -1,7 +1,7 @@
 {
     "framework": "nextjs",
     "installCommand": "pnpm install",
-    "buildCommand": "npm run build",
+    "buildCommand": "pnpm build",
     "devCommand": "pnpm dev",
     "git": {
         "deploymentEnabled": false

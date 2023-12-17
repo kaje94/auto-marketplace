@@ -1,5 +1,5 @@
 {
-    "plugins": ["prettier", "typescript-sort-keys", "spellcheck"],
+    "plugins": ["prettier", "typescript-sort-keys"],
     "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended", "prettier", "plugin:prettier/recommended", "plugin:import/recommended"],
     "rules": {
         "max-lines": ["warn", 300],

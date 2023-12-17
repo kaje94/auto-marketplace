@@ -3,7 +3,6 @@ import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { env } from "@/env.mjs";
-import { getScopedI18n } from "@/locales/server";
 
 const CookiePolicySection = ({ children, title }: { children: ReactNode; title: string }) => (
     <div>
@@ -20,14 +19,12 @@ const CookiePolicyItem = ({ content, title }: { content?: string | ReactNode; ti
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tCookiePolicyPage] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.cookiePolicyRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tCookiePolicyPage("title");
-    const description = tCookiePolicyPage("desc");
+    const title = "Targabay - Cookie Policy";
+    const description =
+        "Explore Targabay's Cookie Policy to understand how we use cookies and similar technologies on our online marketplace. Learn about the types of cookies we employ and how they enhance your experience. Discover how we prioritize your privacy while providing a seamless and secure platform for buying and selling cars, bikes, and more.";
 
     return {
         title,
@@ -37,54 +34,69 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
     };
 }
 
-export default async function Page() {
-    const [tNav, tCookiePolicyPage] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.cookiePolicyRoute")]);
-
+export default function Page() {
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
-            <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>{tNav("links.legal.cookiePolicy")}</h3>
-            <p className="opacity-70">{tCookiePolicyPage("updatedTime")}</p>
-            <p>{tCookiePolicyPage("intro")}</p>
+            <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>Cookie Policy</h3>
+            <p className="opacity-70">Last Updated: 18/11/2023</p>
+            <p>
+                This Cookie Policy explains how we use cookies and similar technologies on our online vehicle marketplace. By using Targabay, you
+                agree to the use of cookies as described in this policy.
+            </p>
             <div className="mx-auto flex flex-col gap-3">
-                <CookiePolicySection title={tCookiePolicyPage("section1.title")}>
-                    <p>{tCookiePolicyPage("section1.content")}</p>
-                </CookiePolicySection>
-                <CookiePolicySection title={tCookiePolicyPage("section2.title")}>
-                    <CookiePolicyItem
-                        content={tCookiePolicyPage("section2.subSection1.content")}
-                        title={tCookiePolicyPage("section2.subSection1.title")}
-                    />
-                    <CookiePolicyItem
-                        content={tCookiePolicyPage("section2.subSection2.content")}
-                        title={tCookiePolicyPage("section2.subSection2.title")}
-                    />
-                    <CookiePolicyItem
-                        content={tCookiePolicyPage("section2.subSection3.content")}
-                        title={tCookiePolicyPage("section2.subSection3.title")}
-                    />
-                    <CookiePolicyItem
-                        content={tCookiePolicyPage("section2.subSection4.content")}
-                        title={tCookiePolicyPage("section2.subSection4.title")}
-                    />
-                </CookiePolicySection>
-                <CookiePolicySection title={tCookiePolicyPage("section3.title")}>
-                    <p>{tCookiePolicyPage("section3.content")}</p>
-                </CookiePolicySection>
-                <CookiePolicySection title={tCookiePolicyPage("section4.title")}>
-                    <p>{tCookiePolicyPage("section4.content")}</p>
-                </CookiePolicySection>
-                <CookiePolicySection title={tCookiePolicyPage("section5.title")}>
-                    <p>{tCookiePolicyPage("section5.content")}</p>
-                </CookiePolicySection>
-                <CookiePolicySection title={tCookiePolicyPage("section6.title")}>
+                <CookiePolicySection title="1. What Are Cookies?">
                     <p>
-                        {tCookiePolicyPage("section6.content", {
-                            email: (
-                                <a className="link-hover link font-semibold" href={`mailto:${env.NEXT_PUBLIC_SUPPORT_EMAIL}`}>
-                                    {env.NEXT_PUBLIC_SUPPORT_EMAIL}
-                                </a>
-                            ),
-                        })}
+                        Cookies are small text files that are stored on your device (computer, tablet, smartphone) when you visit a website. They are
+                        created by the website&apos;s server and can only be read by that server. Cookies serve various purposes, such as remembering
+                        your preferences, analyzing how you interact with the site, and delivering personalized content.
+                    </p>
+                </CookiePolicySection>
+                <CookiePolicySection title="2. How We Use Cookies">
+                    <CookiePolicyItem
+                        content="These cookies are necessary for the proper functioning of Targabay. They enable you to navigate our website and use its features, such as accessing secure areas or making transactions. Without these cookies, Targabay may not function properly."
+                        title="2.1 Essential Cookies"
+                    />
+                    <CookiePolicyItem
+                        content="We use performance cookies to collect information about how visitors use our website. This includes data such as the pages you visit most frequently, the type of device you use, and any error messages you encounter. This information helps us analyze and improve the performance of the website, enhance the user experience, and understand which pages are most and least popular."
+                        title="2.2 Performance Cookies"
+                    />
+                    <CookiePolicyItem
+                        content="Functionality cookies allow the website to remember choices you make (such as your username, language, or region) and provide enhanced, more personalized features. For example, they may remember your login details or the region you are in to provide you with locally relevant content."
+                        title="2.3 Functionality Cookies"
+                    />
+                    <CookiePolicyItem
+                        content="These cookies are used to deliver advertisements that are more relevant to you and your interests. They may be placed on our website by advertising partners and help limit the number of times you see an advertisement. Additionally, they assist in measuring the effectiveness of our advertising campaigns."
+                        title="2.4 Advertising/Targeting Cookies"
+                    />
+                </CookiePolicySection>
+                <CookiePolicySection title="3. Third-Party Cookies">
+                    <p>
+                        Targabay may use third-party services, such as analytics tools or advertising networks, which may set their own cookies. These
+                        cookies are governed by the privacy policies of the respective third parties. We do not have control over these cookies, and
+                        they are used to provide services such as analytics and targeted advertising.
+                    </p>
+                </CookiePolicySection>
+                <CookiePolicySection title="4. Managing Cookies">
+                    <p>
+                        Most web browsers allow you to control cookies through their settings preferences. You can typically find these settings in
+                        the &quot;Options&quot; or &quot;Preferences&quot; menu of your browser. However, please note that limiting the ability of
+                        websites to set cookies may affect your overall user experience, and certain features of Targabay may not function correctly.
+                    </p>
+                </CookiePolicySection>
+                <CookiePolicySection title="5. Changes to This Cookie Policy">
+                    <p>
+                        We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or
+                        regulatory reasons. Any changes will be posted on this page, and the &quot;Last Updated&quot; date will be revised
+                        accordingly. We encourage you to check this page periodically for the latest information on our use of cookies.
+                    </p>
+                </CookiePolicySection>
+                <CookiePolicySection title="6. Contact Us">
+                    <p>
+                        If you have any questions, concerns, or requests regarding this Cookie Policy, please contact us at{" "}
+                        <a className="link-hover link font-semibold" href={`mailto:${env.NEXT_PUBLIC_SUPPORT_EMAIL}`}>
+                            {env.NEXT_PUBLIC_SUPPORT_EMAIL}
+                        </a>
+                        .
                     </p>
                 </CookiePolicySection>
             </div>

@@ -4,25 +4,22 @@ import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
 import { LinkWithLocale } from "@/components/Common";
 import { LogoutIcon, SearchIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 
 export const NavBarLoginButton = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const tNav = useScopedI18n("nav");
 
     return (
         <a
             className="btn btn-primary btn-ghost px-2 font-semibold capitalize text-secondary hover:text-accent"
             href={`/api/auth/login?returnTo=${pathname}${searchParams.size > 0 ? `?${searchParams.toString()}` : ""}`}
         >
-            {tNav("login")}
+            Login
         </a>
     );
 };
 
 export const NavBarLogoutButton = () => {
-    const tNav = useScopedI18n("nav");
     return (
         <a
             className={clsx({
@@ -30,7 +27,7 @@ export const NavBarLogoutButton = () => {
             })}
             href="/api/auth/logout"
         >
-            {tNav("logout")}
+            Logout
             <LogoutIcon className="pl-0.5" height={17} />
         </a>
     );
@@ -67,7 +64,6 @@ export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; la
 };
 
 export const PostAddLink = (props: { isLoggedIn: boolean }) => {
-    const tNav = useScopedI18n("nav");
     const pathname = usePathname();
     const params = useParams();
     const active = pathname === `/${params.locale}/dashboard/new-listing`;
@@ -80,7 +76,7 @@ export const PostAddLink = (props: { isLoggedIn: boolean }) => {
                 "btn-ghost text-base-300 hover:text-accent": !active,
             })}
         >
-            {tNav("postYourAdvert")}
+            Post your Advert
         </button>
     );
 

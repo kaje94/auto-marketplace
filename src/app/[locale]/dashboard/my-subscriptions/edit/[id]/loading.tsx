@@ -1,19 +1,12 @@
 import { BreadCrumbs } from "@/components/Common";
 import { SubscriptionForm } from "@/components/Forms/ListingSubscriptions/SubscriptionForm";
-import { getScopedI18n } from "@/locales/server";
 
-export default async function Loading() {
-    const tBreadcrumbs = await getScopedI18n("breadcrumbs");
-
+export default function Loading() {
     return (
         <>
             <BreadCrumbs
-                currentPageTitle={tBreadcrumbs("edit")}
-                links={[
-                    { href: "/", title: tBreadcrumbs("home") },
-                    { title: tBreadcrumbs("dashboard") },
-                    { title: tBreadcrumbs("mySubscriptions"), href: "/dashboard/my-subscriptions" },
-                ]}
+                currentPageTitle="Edit"
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "My Subscriptions", href: "/dashboard/my-subscriptions" }]}
             />
             <SubscriptionForm isLoading />
         </>

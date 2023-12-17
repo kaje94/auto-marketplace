@@ -1,42 +1,25 @@
-# Next.js Project
-
-This project is built using [Next.js](https://nextjs.org/), a powerful React framework, and was bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+To run dependencies
+```bash
+pnpm install
+```
 
-Follow these steps to set up the development environment:
+To run development server:
 
-1. **Install Dependencies**
+```bash
+pnpm dev
+```
 
-    Run the following command to install the necessary dependencies:
+To run build & run production server:
 
-    ```bash
-    pnpm install
-    ```
+```bash
+pnpm build
+pnpm start
+```
 
-2. **Start the Development Server**
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-    Use the following command to start the development server:
 
-    ```bash
-    pnpm dev
-    ```
-
-    The server runs on port 3000. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-3. **Build and Run the Production Server**
-
-    To create a production build of the application, run:
-
-    ```bash
-    pnpm build
-    ```
-
-    After the build is complete, start the production server with:
-
-    ```bash
-    pnpm start
-    ```
-
-    The production server also runs on port 3000.
 

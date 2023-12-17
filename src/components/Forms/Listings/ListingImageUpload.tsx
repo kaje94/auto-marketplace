@@ -8,7 +8,6 @@ import { useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
 import { ListingImage } from "@/components/Common";
 import { PlusIcon, XCircleIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { MaxVehicleImageCount } from "@/utils/constants";
 import { Location, VehicleImageType } from "@/utils/types";
 
@@ -40,15 +39,13 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
     const { files = [], setFiles = () => {}, error, title, location, disabled = false } = props;
     const [parent] = useAutoAnimate();
 
-    const tListingImageUpload = useScopedI18n("components.forms.listing.imageUpload");
-
     const { getRootProps, getInputProps, open, isDragReject, isDragActive } = useDropzone({
         accept: { "image/*": [] },
         multiple: true,
         disabled: disabled,
         noClick: true,
         noKeyboard: true,
-        onDropRejected: () => toast.error(tListingImageUpload("unsupportedTypeToastMsg")),
+        onDropRejected: () => toast.error("Unsupported file type"),
         onDrop: (acceptedFiles) => {
             const newFileList: VehicleImageType[] = [
                 ...files,
@@ -158,14 +155,14 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                                             }}
                                         >
                                             <span className="rounded-box absolute inset-x-0 bottom-0 rounded-t-none bg-base-content bg-opacity-70 py-1 text-center text-xs font-medium text-base-100 xl:bg-opacity-90 ">
-                                                {tListingImageUpload("setAsThumbnail")}
+                                                Set as Thumbnail
                                             </span>
                                         </button>
                                     )}
                                 </div>
                                 {file.isThumbnail && (
                                     <span className="rounded-box absolute inset-x-0 bottom-0 rounded-t-none bg-secondary bg-opacity-80 py-1 text-center text-xs  font-bold text-secondary-content xl:bg-opacity-90">
-                                        {tListingImageUpload("isThumbnail")}
+                                        Thumbnail
                                     </span>
                                 )}
                             </div>
@@ -185,7 +182,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
                             onClick={open}
                         >
                             <PlusIcon className="h-10 w-10" />
-                            <div className="text-center text-xs">{tListingImageUpload("addImages")}</div>
+                            <div className="text-center text-xs">Add Images</div>
                         </div>
                     )}
                 </div>

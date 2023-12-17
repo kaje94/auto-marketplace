@@ -13,7 +13,6 @@ import { TagSelectController } from "@/components/FormElements/TagSelect";
 import { TextAreaController } from "@/components/FormElements/TextArea";
 import { YearInputController } from "@/components/FormElements/YearInput";
 import { AlertCircleIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
 import { getDistanceUnit, getRandomItem, isIncompleteUserProfile } from "@/utils/helpers";
@@ -98,21 +97,17 @@ export const ListingForm: FC<Props> = (props) => {
         }
     };
 
-    const tListingForm = useScopedI18n("components.forms.listing.form");
-    const tCommon = useScopedI18n("common");
-    const tForm = useScopedI18n("form");
-
     return (
         <>
             {!isLoading && isProfileIncomplete && (
                 <div className="alert alert-warning mb-6 mt-4 shadow-lg md:mt-1">
                     <AlertCircleIcon />
                     <div>
-                        <h3 className="font-bold">{tListingForm("incompleteProfileTitle")}</h3>
-                        <div className="text-xs">{tListingForm("incompleteProfileDesc")}</div>
+                        <h3 className="font-bold">Incomplete Profile</h3>
+                        <div className="text-xs">Please update your profile to create an advertisement for your vehicle</div>
                     </div>
                     <button className="btn btn-ghost btn-sm" onClick={() => setProfileModalVisible(true)}>
-                        {tCommon("updateProfile")}
+                        Update Profile
                     </button>
                 </div>
             )}
@@ -120,15 +115,15 @@ export const ListingForm: FC<Props> = (props) => {
                 <div className="grid gap-4 xl:grid-cols-2 xl:gap-7 2xl:gap-8">
                     <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                         <div className="card stat bg-base-100 p-4 shadow">
-                            <div className="stat-title">{tListingForm("sections.keySpecifications")}</div>
+                            <div className="stat-title">Key Specifications</div>
                             <SelectController
                                 control={control}
                                 disabled={isProfileIncomplete}
                                 fieldName="vehicle.type"
-                                label={tForm("vehicleType.label")}
+                                label="Type"
                                 loading={isLoading}
                                 options={VehicleTypeList}
-                                placeholder={tForm("vehicleType.placeholder")}
+                                placeholder="Select Type"
                                 required
                                 selectablePlaceholder
                             />
@@ -137,64 +132,64 @@ export const ListingForm: FC<Props> = (props) => {
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.brand"
-                                    label={tForm("brand.label")}
+                                    label="Brand"
                                     loading={isLoading}
                                     options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
-                                    placeholder={tForm("brand.placeholder")}
+                                    placeholder="Toyota, Nissan, Honda, etc"
                                     required
                                 />
                                 <InputController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.model"
-                                    label={tForm("model.label")}
+                                    label="Model"
                                     loading={isLoading}
-                                    placeholder={tForm("model.placeholder")}
+                                    placeholder="Civic, Sunny, Swift, etc"
                                     required
                                 />
                                 <InputController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.trim"
-                                    label={tForm("trim.label")}
+                                    label="Trim"
                                     loading={isLoading}
-                                    placeholder={tForm("trim.placeholder")}
+                                    placeholder="LX, EX, EX-L, Sport, etc"
                                 />
                                 <YearInputController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.yearOfManufacture"
-                                    label={tForm("yom.label")}
+                                    label="Year of Manufacture"
                                     loading={isLoading}
-                                    placeholder={tForm("yom.placeholder")}
+                                    placeholder="2000"
                                     required
                                 />
                                 <YearInputController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.yearOfRegistration"
-                                    label={tForm("yearOfRegistration.label")}
+                                    label="Year of Registration"
                                     loading={isLoading}
-                                    placeholder={tForm("yearOfRegistration.placeholder")}
+                                    placeholder="2010"
                                 />
                                 <NumberInputController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.millage.distance"
                                     inputSuffix={distanceUnit}
-                                    label={tForm("mileage.label")}
+                                    label="Mileage"
                                     loading={isLoading}
-                                    placeholder={tForm("mileage.placeholder")}
+                                    placeholder="50,000"
                                     required
                                 />
                                 <SelectController
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.condition"
-                                    label={tForm("condition.label")}
+                                    label="Condition"
                                     loading={isLoading}
                                     options={VehicleConditionList}
-                                    placeholder={tForm("condition.placeholder")}
+                                    placeholder="Select Condition"
                                     required
                                     selectablePlaceholder
                                 />
@@ -202,10 +197,10 @@ export const ListingForm: FC<Props> = (props) => {
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.transmission"
-                                    label={tForm("transmissionType.label")}
+                                    label="Transmission Type"
                                     loading={isLoading}
                                     options={TransmissionTypeList}
-                                    placeholder={tForm("transmissionType.placeholder")}
+                                    placeholder="Select Type"
                                     required
                                     selectablePlaceholder
                                 />
@@ -213,10 +208,10 @@ export const ListingForm: FC<Props> = (props) => {
                                     control={control}
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.fuelType"
-                                    label={tForm("fuelType.label")}
+                                    label="Fuel Type"
                                     loading={isLoading}
                                     options={FuelTypeList}
-                                    placeholder={tForm("fuelType.placeholder")}
+                                    placeholder="Select Fuel Type"
                                     required
                                     selectablePlaceholder
                                 />
@@ -225,22 +220,22 @@ export const ListingForm: FC<Props> = (props) => {
                                     disabled={isProfileIncomplete}
                                     fieldName="vehicle.engineCapacity"
                                     inputSuffix="CC"
-                                    label={tForm("engineCapacity.label")}
+                                    label="Engine Capacity"
                                     loading={isLoading}
-                                    placeholder={tForm("engineCapacity.placeholder")}
+                                    placeholder="1,500"
                                     required
                                 />
                             </div>
                         </div>
                         <div className="card stat bg-base-100 p-4 shadow">
-                            <div className="stat-title">{tListingForm("sections.otherDetails")}</div>
+                            <div className="stat-title">Other details</div>
                             <TextAreaController
                                 control={control}
                                 disabled={isProfileIncomplete}
                                 fieldName="description"
-                                label={tForm("listingDescription.label")}
+                                label="Description"
                                 loading={isLoading}
-                                placeholder={tForm("listingDescription.placeholder")}
+                                placeholder="Description of the vehicle for sale"
                                 required
                             />
                         </div>
@@ -248,7 +243,7 @@ export const ListingForm: FC<Props> = (props) => {
                     <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
                         <div className="card stat bg-base-100 p-4 shadow">
                             <div className="stat-title">
-                                {tListingForm("sections.images")} <span className="text-error">*</span>
+                                Images <span className="text-error">*</span>
                             </div>
                             {isLoading ? (
                                 <ListingImageUploadLoading />
@@ -263,7 +258,7 @@ export const ListingForm: FC<Props> = (props) => {
                                             files={field.value}
                                             ref={field.ref}
                                             setFiles={(images) => field.onChange(images)}
-                                            title={title || tListingForm("sections.imageSectionTitle")}
+                                            title={title || "New Advert Image"}
                                         />
                                     )}
                                 />
@@ -271,7 +266,7 @@ export const ListingForm: FC<Props> = (props) => {
                         </div>
                         <div className="card stat bg-base-100 p-4 shadow">
                             <div className="flex items-center justify-between">
-                                <div className="stat-title">{tListingForm("sections.locationAndContact")}</div>
+                                <div className="stat-title">Location & Contact Details</div>
                                 <button
                                     className="btn btn-ghost btn-sm"
                                     disabled={!optimisticProfile || isLoading || !isUpdateProfileEnabled}
@@ -280,18 +275,18 @@ export const ListingForm: FC<Props> = (props) => {
                                         setProfileModalVisible(true);
                                     }}
                                 >
-                                    {tCommon("update")}
+                                    Update
                                 </button>
                             </div>
                             <div className="grid gap-1 pt-2 sm:grid-cols-2">
-                                <DetailsItem title={tForm("country.label")} value={(country as string) || "-"} />
-                                <DetailsItem title={tForm("state.label")} value={(state as string) || "-"} />
-                                <DetailsItem title={tForm("city.label")} value={(city as string) || "-"} />
-                                <DetailsItem title={tForm("postalCode.label")} value={(postalCode as string) || "-"} />
+                                <DetailsItem title="Country" value={(country as string) || "-"} />
+                                <DetailsItem title="State/Province" value={(state as string) || "-"} />
+                                <DetailsItem title="City" value={(city as string) || "-"} />
+                                <DetailsItem title="Postal Code" value={(postalCode as string) || "-"} />
                                 <div className="divider col-span-full -mt-2 mb-0 opacity-50" />
-                                <DetailsItem title={tForm("email.label")} value={optimisticProfile?.email || "-"} />
+                                <DetailsItem title="Email" value={optimisticProfile?.email || "-"} />
                                 <DetailsItem
-                                    title={tForm("phoneNumber.label")}
+                                    title="Phone Number"
                                     value={
                                         <>
                                             <span className="font-light opacity-70">{phoneCode ? `(${phoneCode}) ` : ""}</span>
@@ -303,27 +298,27 @@ export const ListingForm: FC<Props> = (props) => {
                         </div>
 
                         <div className="card stat bg-base-100 p-4 shadow">
-                            <div className="stat-title">{tListingForm("sections.price")}</div>
+                            <div className="stat-title">Price Details</div>
                             <NumberInputController
                                 control={control}
                                 disabled={isProfileIncomplete}
                                 fieldName="price.amount"
                                 inputPrefix={currencySymbol}
-                                label={tForm("price.label")}
+                                label="Price"
                                 loading={isLoading}
-                                placeholder={tForm("price.placeholder")}
+                                placeholder="40,000,000"
                                 required
                             />
                             <CheckboxController
                                 control={control}
                                 disabled={isProfileIncomplete}
                                 fieldName="price.isPriceNegotiable"
-                                label={tForm("priceNegotiable.label")}
+                                label="Is the price negotiable?"
                                 loading={isLoading}
                             />
                         </div>
                         <div className="card stat bg-base-100 p-4 shadow">
-                            <div className="stat-title">{tListingForm("sections.features")}</div>
+                            <div className="stat-title">Features</div>
                             <span className="mt-2">
                                 <TagSelectController
                                     control={control}
@@ -336,7 +331,7 @@ export const ListingForm: FC<Props> = (props) => {
                             </span>
                         </div>
                         <div className="card stat bg-base-100 p-4 shadow">
-                            <div className="stat-title">{tListingForm("sections.safetyTips.title")}</div>
+                            <div className="stat-title">Safety Tips</div>
                             {isLoading ? (
                                 <>
                                     <div className="h-16 w-full animate-pulse bg-base-200" />
@@ -344,13 +339,15 @@ export const ListingForm: FC<Props> = (props) => {
                                 </>
                             ) : (
                                 <>
-                                    <p className="mt-1 text-sm">{tListingForm("sections.safetyTips.desc")}</p>
+                                    <p className="mt-1 text-sm">
+                                        Please prioritize safety. Avoid sharing sensitive information. A secure marketplace benefits us all.
+                                    </p>
                                     <LinkWithLocale
                                         className="link-neutral btn btn-link btn-sm justify-start px-0"
                                         href="/safety-tips"
                                         target="_blank"
                                     >
-                                        {tListingForm("sections.safetyTips.viewAllLink")}
+                                        View all safety Tips
                                     </LinkWithLocale>
                                 </>
                             )}
@@ -363,7 +360,7 @@ export const ListingForm: FC<Props> = (props) => {
                         disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
                         type="submit"
                     >
-                        {isMutating ? submitButton.mutatingText ?? tCommon("loading") : submitButton.text ?? tForm("buttons.submit.label")}
+                        {isMutating ? submitButton.mutatingText ?? "Loading..." : submitButton.text ?? "Submit"}
                     </button>
                 </div>
             </form>

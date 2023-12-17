@@ -1,10 +1,8 @@
-"use client";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
-import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
 import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
@@ -28,9 +26,6 @@ export const DashboardListingItem: FC<Props> = (props) => {
     const locationStr = getLocationString(location, COUNTRIES[location?.country ?? ""]?.[0]);
     const priceStr = getFormattedCurrency(price?.amount, price?.currencyCode);
 
-    const tDashboardListingItem = useScopedI18n("components.dashboardListings.dashboardListingItem");
-    const tCommon = useScopedI18n("common");
-
     const listingItemContent = (
         <div className="grid grid-cols-12 gap-0.5 p-3 md:gap-2 md:p-4 xl:gap-4">
             {loading ? (
@@ -38,7 +33,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
             ) : (
                 <figure className="relative h-full overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
                     <ListingImage
-                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
+                        className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
                         image={vehicle?.vehicleImages[0]}
                         location={location}
@@ -47,7 +42,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
-                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{priceStr}</div>
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg absolute scale-110 duration-300">{priceStr}</div>
                     </div>
                 </figure>
             )}
@@ -78,16 +73,14 @@ export const DashboardListingItem: FC<Props> = (props) => {
                 )}
 
                 {!loading && status === ListingStatusTypes.Posted && (
-                    <span className="text-sm font-light">
-                        {tDashboardListingItem("expiredOn", { date: formatHumanFriendlyDate(new Date(expiryDate)) })}
-                    </span>
+                    <span className="text-sm font-light">Expires on {formatHumanFriendlyDate(new Date(expiryDate))}</span>
                 )}
 
                 {loading ? (
                     <div className="block h-5 w-44 bg-base-200 md:hidden" />
                 ) : (
                     <div className="block text-base md:hidden">
-                        {tDashboardListingItem("price", { price: <span className="font-medium">{priceStr}</span> })}
+                        Price: <span className="font-medium">{priceStr}</span>
                     </div>
                 )}
 
@@ -95,7 +88,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     <div className={clsx("h-6 bg-base-200", getRandomItem(["w-52", "w-60", "w-72"]))} />
                 ) : (
                     <div className="text-base">
-                        {tDashboardListingItem("location", { location: <span className="font-medium">{locationStr}</span> })}
+                        Location: <span className="font-medium">{locationStr}</span>
                     </div>
                 )}
 
@@ -111,7 +104,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     {loading ? (
                         <div className="h-4 w-32 bg-base-200" />
                     ) : (
-                        <div className="text-xs text-neutral-400">{tCommon("created", { ago: timeAgo(new Date(createdOn)) })}</div>
+                        <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdOn))}</div>
                     )}
                 </div>
             </div>

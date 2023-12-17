@@ -1,4 +1,3 @@
-"use client";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { CountrySelectModal } from "@/components/Modals/CountrySelectModal";

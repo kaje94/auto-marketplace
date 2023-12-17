@@ -4,7 +4,6 @@ import { ContextMenu } from "@/components/Common/ContextMenu";
 import { DeleteSubscriptionItemModal } from "@/components/Modals/DeleteSubscriptionItemModal";
 import { ToggleSubscriptionActivationModal } from "@/components/Modals/ToggleSubscriptionActivationModal";
 import { BellIcon, BellOffIcon, EditIcon, TrashIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { ListingSubscriptionItem } from "@/utils/types";
 
 interface Props {
@@ -17,8 +16,6 @@ export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionIt
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [activationModalVisible, setActivationModalVisible] = useState(false);
 
-    const tCommon = useScopedI18n("common");
-
     return (
         <>
             <ContextMenu
@@ -26,17 +23,17 @@ export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionIt
                     {
                         icon: <EditIcon height={18} />,
                         link: `${basePath}/edit/${id}`,
-                        label: tCommon("edit"),
+                        label: "Edit",
                     },
                     {
                         icon: active ? <BellOffIcon height={18} /> : <BellIcon height={18} />,
                         onClick: () => setActivationModalVisible(true),
-                        label: active ? tCommon("deactivate") : tCommon("activate"),
+                        label: active ? "Deactivate" : "Activate",
                     },
                     {
                         icon: <TrashIcon height={18} />,
                         onClick: () => setDeleteModalVisible(true),
-                        label: tCommon("delete"),
+                        label: "Delete",
                         classNames: "text-error hover:!bg-error hover:!text-error-content",
                     },
                 ]}

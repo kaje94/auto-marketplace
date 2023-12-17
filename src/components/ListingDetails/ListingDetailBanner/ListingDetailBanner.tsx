@@ -1,10 +1,8 @@
-"use client";
 import { clsx } from "clsx";
 import Link from "next/link";
 import { FC } from "react";
 import { LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { ListingStatusDescriptions } from "@/utils/constants";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
@@ -20,9 +18,6 @@ interface Props {
 
 export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAdmin }) => {
     const { status: listingStatus, id: listingId, userId, reviewComment } = listingItem as ListingItem;
-
-    const tCommon = useScopedI18n("common");
-
     return (
         <div
             className={clsx({
@@ -36,7 +31,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
         >
             <AlertCircleIcon />
             <div>
-                <h3 className={clsx({ "font-bold": true, "opacity-50": loading })}>{loading ? tCommon("loading") : unCamelCase(listingStatus)}</h3>
+                <h3 className={clsx({ "font-bold": true, "opacity-50": loading })}>{loading ? "Loading..." : unCamelCase(listingStatus)}</h3>
                 <div className={clsx({ "text-xs": true, "opacity-50": loading })}>
                     {loading
                         ? "Loading description of the listing status..."
@@ -49,7 +44,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
                 <>
                     {listingStatus === ListingStatusTypes.Posted && (
                         <LinkWithLocale href={`/search/${listingId}`}>
-                            <button className="btn btn-ghost btn-sm">{tCommon("view")}</button>
+                            <button className="btn btn-ghost btn-sm">View</button>
                         </LinkWithLocale>
                     )}
                     {userId && isAdmin && listingStatus === ListingStatusTypes.UnderReview && (
@@ -58,7 +53,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
                     {userId && listingStatus === ListingStatusTypes.Expired && <RenewButton listingItem={listingItem as ListingItem} />}
                     {listingStatus === ListingStatusTypes.Declined && (
                         <Link href={`${window?.location?.pathname}/edit/${listingId}`}>
-                            <button className="btn btn-ghost btn-sm">{tCommon("edit")}</button>
+                            <button className="btn btn-ghost btn-sm">Edit</button>
                         </Link>
                     )}
                 </>

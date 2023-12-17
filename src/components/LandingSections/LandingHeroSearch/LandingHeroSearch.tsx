@@ -3,17 +3,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { LinkWithLocale } from "@/components/Common";
+import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
 import { SelectController } from "@/components/FormElements/Select";
 import { SearchIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { VehicleTypeList } from "@/utils/constants";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { PostedListingsFilterReq } from "@/utils/types";
 
 export const LandingHeroSearch = () => {
-    const tCommon = useScopedI18n("common");
-
     const { control, watch } = useForm<PostedListingsFilterReq>({
         resolver: zodResolver(PostedListingsFilterSchema),
         mode: "onChange",
@@ -27,7 +25,7 @@ export const LandingHeroSearch = () => {
                 control={control}
                 fieldName="Title"
                 inputClassNames="bg-white rounded-box rounded-b-none sm:rounded-b-box sm:rounded-r-none"
-                placeholder={tCommon("searchPlaceholder")}
+                placeholder="Search..."
                 errorAsTooltip
             />
             <div className="relative sm:w-36">
@@ -35,7 +33,7 @@ export const LandingHeroSearch = () => {
                     control={control}
                     fieldName="VehicleType"
                     options={VehicleTypeList}
-                    placeholder={tCommon("allTypes")}
+                    placeholder="All Types"
                     selectClassName="bg-white rounded-none !outline-none sm:!w-36"
                     errorAsTooltip
                     selectablePlaceholder
@@ -46,7 +44,7 @@ export const LandingHeroSearch = () => {
                 href={qs.stringifyUrl({ url: "/search", query: formValues }, { skipEmptyString: true, skipNull: true })}
             >
                 <SearchIcon />
-                <span className="ml-2">{tCommon("search")}</span>
+                <span className="ml-2">Search</span>
             </LinkWithLocale>
         </span>
     );

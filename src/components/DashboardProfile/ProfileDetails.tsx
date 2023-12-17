@@ -1,10 +1,8 @@
-"use client";
 import { Session } from "@auth0/nextjs-auth0/edge";
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
 import { Avatar, LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon, EditIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { getRandomItem, isIncompleteUserProfile } from "@/utils/helpers";
 import { ListingUser } from "@/utils/types";
@@ -31,15 +29,11 @@ const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: stri
 export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
     const isProfileIncomplete = profile ? isIncompleteUserProfile(profile) : false;
 
-    const tCommon = useScopedI18n("common");
-    const tForm = useScopedI18n("form");
-    const tDashboardProfile = useScopedI18n("components.dashboardProfile");
-
-    let userType = tDashboardProfile("standardUser");
+    let userType = "User";
     if (profile?.isDealership) {
-        userType = tDashboardProfile("carDealer");
+        userType = "Car Dealership";
     } else if (session?.user.isAdmin) {
-        userType = tDashboardProfile("adminUser");
+        userType = "Admin";
     }
 
     const countryPhoneCode = COUNTRIES[profile?.address?.country || ""]?.[3];
@@ -50,11 +44,11 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                 <div className="alert alert-warning mb-6 mt-4 shadow-lg md:mt-1">
                     <AlertCircleIcon />
                     <div>
-                        <h3 className="font-bold">{tDashboardProfile("incompleteProfileTitle")}</h3>
-                        <div className="text-xs">{tDashboardProfile("incompleteProfileDesc")}</div>
+                        <h3 className="font-bold">Incomplete Profile</h3>
+                        <div className="text-xs">To enjoy a seamless experience, please take a moment to update your profile.</div>
                     </div>
                     <LinkWithLocale href="/dashboard/profile/edit">
-                        <button className="btn btn-ghost btn-sm">{tCommon("updateProfile")}</button>
+                        <button className="btn btn-ghost btn-sm">Update Profile</button>
                     </LinkWithLocale>
                 </div>
             )}
@@ -79,12 +73,12 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                 </div>
                 <div className="grid w-full gap-4 lg:grid-cols-2 xl:gap-7 2xl:gap-8">
                     <div className="flex flex-col gap-1">
-                        <div className="text-lg font-bold">{tDashboardProfile("contactDetailsText")}</div>
+                        <div className="text-lg font-bold">Contact Details</div>
                         <div className="flex flex-col gap-2">
-                            <DetailsItem loading={loading} title={tForm("email.label")} value={profile?.email ?? "-"} />
+                            <DetailsItem loading={loading} title="Email" value={profile?.email ?? "-"} />
                             <DetailsItem
                                 loading={loading}
-                                title={tForm("phoneNumber.label")}
+                                title="Phone Number"
                                 value={
                                     <>
                                         <span className="font-light opacity-70">{countryPhoneCode ? `(${countryPhoneCode}) ` : ""}</span>
@@ -95,12 +89,12 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                         </div>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <div className="text-lg font-bold">{tDashboardProfile("locationDetailsText")}</div>
+                        <div className="text-lg font-bold">Location Details</div>
                         <div className="flex flex-col gap-2">
-                            <DetailsItem loading={loading} title={tForm("country.label")} value={COUNTRIES[profile?.address?.country!]?.[0] ?? "-"} />
-                            <DetailsItem loading={loading} title={tForm("state.label")} value={profile?.address?.state ?? "-"} />
-                            <DetailsItem loading={loading} title={tForm("city.label")} value={profile?.address?.city ?? "-"} />
-                            <DetailsItem loading={loading} title={tForm("postalCode.label")} value={profile?.address?.postalCode ?? "-"} />
+                            <DetailsItem loading={loading} title="Country" value={COUNTRIES[profile?.address?.country!]?.[0] ?? "-"} />
+                            <DetailsItem loading={loading} title="State" value={profile?.address?.state ?? "-"} />
+                            <DetailsItem loading={loading} title="City" value={profile?.address?.city ?? "-"} />
+                            <DetailsItem loading={loading} title="Postal Code" value={profile?.address?.postalCode ?? "-"} />
                         </div>
                     </div>
                 </div>
@@ -111,7 +105,7 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                         <LinkWithLocale href="/dashboard/profile/edit">
                             <button className="btn btn-neutral">
                                 <EditIcon />
-                                {tCommon("updateProfile")}
+                                Update Profile
                             </button>
                         </LinkWithLocale>
                     </div>

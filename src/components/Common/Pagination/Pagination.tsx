@@ -3,7 +3,6 @@ import { clsx } from "clsx";
 import qs, { StringifiableRecord } from "query-string";
 import { FC } from "react";
 import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
-import { useScopedI18n } from "@/locales/client";
 
 interface Props {
     basePath?: string;
@@ -17,7 +16,6 @@ interface Props {
 export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath = "/", searchParams = {}, setNewSearchQuery, loading = false }) => {
     const prevPage = qs.stringify({ ...searchParams, PageNumber: pageNumber - 1 }, { skipNull: true, skipEmptyString: true });
     const nextPage = qs.stringify({ ...searchParams, PageNumber: pageNumber + 1 }, { skipNull: true, skipEmptyString: true });
-    const tCommon = useScopedI18n("common");
 
     return (
         <div className="mt-16 flex justify-center">
@@ -40,7 +38,7 @@ export const Pagination: FC<Props> = ({ totalPages = 0, pageNumber = 1, basePath
                         )}
                     </>
                 )}
-                <button className={clsx("btn join-item cursor-default")}>{loading ? tCommon("loading") : tCommon("page", { pageNumber })}</button>
+                <button className={clsx("btn join-item cursor-default")}>{loading ? "Loading..." : `Page ${pageNumber}`}</button>
                 {pageNumber < totalPages && (
                     <>
                         {loading ? (

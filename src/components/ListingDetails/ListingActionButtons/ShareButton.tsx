@@ -4,7 +4,6 @@ import queryString from "query-string";
 import { FC } from "react";
 import { toast } from "react-hot-toast";
 import { CopyIcon, FacebookIcon, ShareIcon, TwitterIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 
 interface Props {
     loading?: boolean;
@@ -21,13 +20,11 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
         return `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
     };
 
-    const tListingDetails = useScopedI18n("components.listingDetails");
-
     return (
         <div className="dropdown-end dropdown dropdown-top">
             <button className={clsx("btn !btn-block gap-2", loading && "animate-pulse")} disabled={loading} tabIndex={0}>
                 <ShareIcon />
-                {tListingDetails("share.buttonText")}
+                Share
             </button>
             <ul
                 className="menu dropdown-content rounded-box mb-2 w-11/12 rounded-br-none border-2 border-base-200 bg-base-100 p-2 shadow-xl"
@@ -37,33 +34,33 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
                     <button
                         onClick={() => {
                             navigator.clipboard.writeText(window?.location?.href);
-                            toast.success(tListingDetails("share.copySuccessToast"));
+                            toast.success("Link successfully copied to clipboard");
                         }}
                     >
-                        <CopyIcon /> {tListingDetails("share.copyLink")}
+                        <CopyIcon /> Copy Link
                     </button>
                 </li>
                 <li className="flex cursor-pointer rounded-lg duration-200 hover:bg-base-200">
                     <button
                         onClick={() => {
                             const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${window?.location?.href}`;
-                            window?.open(facebookShareUrl, tListingDetails("share.shareFB"), popupWindowFeatures());
+                            window?.open(facebookShareUrl, "Share on Facebook", popupWindowFeatures());
                         }}
                     >
-                        <FacebookIcon /> {tListingDetails("share.shareFB")}
+                        <FacebookIcon /> Share on Facebook
                     </button>
                 </li>
                 <li className="flex cursor-pointer rounded-lg duration-200 hover:bg-base-200">
                     <button
                         onClick={() => {
                             const twitterShareUrl = `https://twitter.com/intent/tweet?${queryString.stringify({
-                                text: title ?? tListingDetails("share.genericTwitterShareTitle"),
+                                text: title ?? "Vehicle for Sales",
                                 url: window?.location?.href,
                             })}`;
-                            window?.open(twitterShareUrl, tListingDetails("share.shareTwitter"), popupWindowFeatures());
+                            window?.open(twitterShareUrl, "Share on Twitter", popupWindowFeatures());
                         }}
                     >
-                        <TwitterIcon /> {tListingDetails("share.shareTwitter")}
+                        <TwitterIcon /> Share on Twitter
                     </button>
                 </li>
             </ul>

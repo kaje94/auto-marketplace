@@ -4,7 +4,6 @@ import qs from "query-string";
 import { DashboardListHeader } from "@/components/DashboardListHeader";
 import { DashboardMyListFilterButton } from "@/components/DashboardListHeader/DashboardMyListFilterButton";
 import { DashboardMyListingsList } from "@/components/DashboardListings/DashboardListingsList";
-import { getScopedI18n } from "@/locales/server";
 import { DashboardMyListingsContextProvider } from "@/providers/DashboardMyListingsContextProvider";
 import { api } from "@/utils/api";
 import { transformListingsListResponse } from "@/utils/helpers";
@@ -14,7 +13,7 @@ import { LocalePathParam, SearchParams } from "@/utils/types";
 export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = MyListingsFilterSchema.parse(searchParams);
-    const [session, tBreadcrumbs] = await Promise.all([getSession(), getScopedI18n("breadcrumbs")]);
+    const session = await getSession();
     const listings = transformListingsListResponse(await api.getMyListings(session?.user?.sub!, { PageNumber: Number(page), ...parsedSearchParams }));
 
     if (listings.items?.length === 0 && page !== "1") {
@@ -24,7 +23,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     return (
         <DashboardMyListingsContextProvider>
             <DashboardListHeader
-                addNewButton={{ label: tBreadcrumbs("newListing"), path: "/dashboard/new-listing" }}
+                addNewButton={{ label: "New Advert", path: "/dashboard/new-listing" }}
                 filter={<DashboardMyListFilterButton />}
                 itemCount={listings.totalCount}
             />

@@ -1,19 +1,16 @@
 import { BreadCrumbs } from "@/components/Common";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
-import { getScopedI18n } from "@/locales/server";
 
-export default async function Loading() {
-    const tBreadcrumbs = await getScopedI18n("breadcrumbs");
-
+export default function Loading() {
     return (
         <>
             <BreadCrumbs
-                currentPageTitle={tBreadcrumbs("edit")}
+                currentPageTitle="Edit"
                 links={[
-                    { href: "/", title: tBreadcrumbs("home") },
-                    { title: tBreadcrumbs("dashboard") },
-                    { title: tBreadcrumbs("myAdverts"), href: "/dashboard/my-listings" },
-                    { title: tBreadcrumbs("advertItem") },
+                    { href: "/", title: "Home" },
+                    { title: "Dashboard" },
+                    { title: "My Adverts", href: "/dashboard/my-listings" },
+                    { title: "Advert Item" },
                 ]}
             />
             <ListingForm isLoading />

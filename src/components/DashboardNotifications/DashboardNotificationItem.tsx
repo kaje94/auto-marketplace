@@ -1,9 +1,7 @@
-"use client";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { LinkWithLocale } from "@/components/Common";
 import { NotificationIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { getRandomItem, timeAgo } from "@/utils/helpers";
 import { NotificationItem } from "@/utils/types";
 
@@ -15,7 +13,6 @@ interface Props {
 export const DashboardNotificationItem: FC<Props> = (props) => {
     const { notificationItem = {}, loading } = props;
     const { title, body, createdOn, isShown, redirectUrl, id } = notificationItem as NotificationItem;
-    const tCommon = useScopedI18n("common");
 
     const notificationItemContent = (
         <div
@@ -39,7 +36,7 @@ export const DashboardNotificationItem: FC<Props> = (props) => {
                                         "badge badge-lg badge-secondary": true,
                                     })}
                                 >
-                                    {tCommon("new")}
+                                    New
                                 </span>
                             )}
                         </div>
@@ -59,7 +56,7 @@ export const DashboardNotificationItem: FC<Props> = (props) => {
                 {loading ? (
                     <div className="h-4 w-32 bg-base-200" />
                 ) : (
-                    <div className="text-xs text-neutral-400">{tCommon("created", { ago: timeAgo(new Date(createdOn)) })}</div>
+                    <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdOn))}</div>
                 )}
             </div>
         </div>

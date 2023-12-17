@@ -1,25 +1,19 @@
+import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
 import { EditSubscriptionForm } from "@/components/Forms/ListingSubscriptions/EditSubscriptionForm";
-import { getScopedI18n } from "@/locales/server";
 import { api } from "@/utils/api";
 import { SubscriptionIdPathParam } from "@/utils/types";
 
+export const metadata: Metadata = { title: "Targabay - Edit Subscription" };
+
 export default async function Page({ params }: SubscriptionIdPathParam) {
-    const [subscriptionDetails, vehicleBrands, tBreadcrumbs] = await Promise.all([
-        api.getMyListingSubscriptionItem(params.id),
-        api.getVehicleBrands(),
-        getScopedI18n("breadcrumbs"),
-    ]);
+    const [subscriptionDetails, vehicleBrands] = await Promise.all([api.getMyListingSubscriptionItem(params.id), api.getVehicleBrands()]);
 
     return (
         <>
             <BreadCrumbs
-                currentPageTitle={tBreadcrumbs("edit")}
-                links={[
-                    { href: "/", title: tBreadcrumbs("home") },
-                    { title: tBreadcrumbs("dashboard") },
-                    { title: tBreadcrumbs("manageSubscriptions"), href: "/dashboard/subscriptions" },
-                ]}
+                currentPageTitle="Edit"
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Manage Subscriptions", href: "/dashboard/subscriptions" }]}
             />
             <EditSubscriptionForm
                 brands={vehicleBrands}

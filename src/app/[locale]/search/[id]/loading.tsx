@@ -1,26 +1,19 @@
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetails } from "@/components/ListingDetails";
 import { ListingsCarousel } from "@/components/ListingsCarousel";
-import { getScopedI18n } from "@/locales/server";
 
-export default async function Loading() {
-    const [tCommon, tBreadcrumbs, tPostedListItem] = await Promise.all([
-        getScopedI18n("common"),
-        getScopedI18n("breadcrumbs"),
-        getScopedI18n("appRouter.postedListItemRoute"),
-    ]);
-
+export default function Loading() {
     return (
         <>
             <BreadCrumbs
-                currentPageTitle={tCommon("loading")}
+                currentPageTitle="Loading..."
                 links={[
-                    { href: "/", title: tBreadcrumbs("home") },
-                    { href: "/search", title: tBreadcrumbs("search") },
+                    { href: "/", title: "Home" },
+                    { href: "/search", title: "Search" },
                 ]}
             />
             <ListingDetails loading />
-            <div className="divider mt-16">{tPostedListItem("relatedAdvertsTitle")}</div>
+            <div className="divider mt-16">Related Adverts</div>
             <ListingsCarousel loading />
         </>
     );

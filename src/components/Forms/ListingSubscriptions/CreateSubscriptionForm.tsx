@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { createListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
-import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
@@ -27,9 +26,6 @@ export const CreateSubscriptionForm = (props: Props) => {
     const countryCurrencyCode = countryItem?.[1];
     const countryCurrencySymbol = countryItem?.[2];
     const toastId = useRef<string>();
-
-    const tCreateSubscription = useScopedI18n("components.forms.subscriptions.create");
-    const tForm = useScopedI18n("form");
 
     const form = useForm<CreateSubscriptionReq>({
         resolver: zodResolver(CreateSubscriptionSchema),
@@ -92,15 +88,16 @@ export const CreateSubscriptionForm = (props: Props) => {
                 }
             },
             onMutate: (data) => {
-                toastId.current = toast.loading(tCreateSubscription("toast.loading", { displayName: data.displayName }));
+                toastId.current = toast.loading(`Creating new subscription ${data.displayName}...`);
             },
             onSettled: (_data, err, variables) => {
                 if (err) {
-                    toast.error(tCreateSubscription("toast.error", { displayName: variables.displayName, error: (err as Error)?.message }), {
+                    console.error("Failed to create subscription", JSON.stringify(variables), err);
+                    toast.error(`Failed to create subscription ${variables.displayName}. ${(err as Error)?.message ?? ""}`, {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(tCreateSubscription("toast.success", { displayName: variables.displayName }), { id: toastId?.current });
+                    toast.success(`Successfully created a new subscription ${variables.displayName}`, { id: toastId?.current });
                 }
             },
         },
@@ -112,7 +109,7 @@ export const CreateSubscriptionForm = (props: Props) => {
             distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
-            submitButton={{ text: tForm("buttons.create.label"), mutatingText: tForm("buttons.create.loading") }}
+            submitButton={{ text: "Create", mutatingText: "Creating..." }}
             vehicleBrands={brands}
             onMutate={createSubscriptionMutation}
         />

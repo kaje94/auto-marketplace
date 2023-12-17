@@ -1,7 +1,5 @@
-"use client";
 import { clsx } from "clsx";
 import { FC } from "react";
-import { useScopedI18n } from "@/locales/client";
 import { getRandomItem } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 
@@ -12,8 +10,6 @@ interface Props {
 
 export const ListingDetailsFeatures: FC<Props> = ({ vehicle, loading }) => {
     const placeholderWidth = ["w-44", "w-24", "w-32", "w-40", "w-48", "w-28", "w-16", "w-14"];
-
-    const tListingDetails = useScopedI18n("components.listingDetails");
 
     return (
         <div className="mt-4 flex flex-wrap items-center justify-center gap-1">
@@ -30,9 +26,7 @@ export const ListingDetailsFeatures: FC<Props> = ({ vehicle, loading }) => {
                             {item.name}
                         </span>
                     ))}
-                    {vehicle?.features?.length === 0 && (
-                        <span className="mt-2 text-sm text-gray-500 opacity-70">{tListingDetails("noFeaturesAvailable")}</span>
-                    )}
+                    {vehicle?.features?.length === 0 && <span className="mt-2 text-sm text-gray-500 opacity-70">No features available</span>}
                 </>
             )}
         </div>

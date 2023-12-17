@@ -3,7 +3,6 @@ import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { displayFont } from "@/app/fonts";
 import { DropletIcon, FilterIcon, NotificationIcon, TagIcon, UserIcon, ZapIcon } from "@/icons";
-import { getScopedI18n } from "@/locales/server";
 
 const FeatureItem = ({
     title,
@@ -27,14 +26,12 @@ const FeatureItem = ({
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tWhyChooseUsPages] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.whyChooseUsRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tWhyChooseUsPages("title");
-    const description = tWhyChooseUsPages("desc");
+    const title = "Targabay - Why Choose Us";
+    const description =
+        "Discover why Targabay stands out as your premier choice in the world of online automotive marketplaces. Explore our commitment to a seamless buying and selling experience for cars, bikes, and more. From a diverse vehicle selection to secure transactions, find out what sets Targabay apart and makes us the preferred destination for automotive enthusiasts.";
 
     return {
         title,
@@ -43,13 +40,10 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
         twitter: { ...previousTwitter, title, description },
     };
 }
-
-export default async function Page() {
-    const [tNav, tWhyChooseUsPages] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.whyChooseUsRoute")]);
-
+export default function Page() {
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
-            <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>{tNav("links.company.whyChooseUs")}</h3>
+            <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>Why Choose Us</h3>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
                 <Image
                     alt="feature-1-image"
@@ -60,24 +54,28 @@ export default async function Page() {
                     unoptimized
                 />
                 <div className="flex flex-col justify-center gap-8">
-                    <FeatureItem description={tWhyChooseUsPages("section1.content")} icon={<ZapIcon />} title={tWhyChooseUsPages("section1.title")} />
                     <FeatureItem
-                        description={tWhyChooseUsPages("section2.content")}
+                        description="Rest assured that every vehicle listing on our platform undergoes a thorough verification process, providing you with accurate and reliable information about the condition, history, and specifications of each vehicle."
+                        icon={<ZapIcon />}
+                        title="Confidence in Every Detail"
+                    />
+                    <FeatureItem
+                        description="We believe in keeping things simple and transparent. Our user-friendly interface and intuitive search tools make it easy for you to navigate, compare, and make informed decisions, saving you time and effort in your vehicle buying journey"
                         icon={<DropletIcon />}
-                        title={tWhyChooseUsPages("section2.title")}
+                        title="Simplify Your Vehicle Buying Experience"
                     />
                 </div>
                 <div className="flex flex-col justify-center gap-8">
                     <FeatureItem
-                        description={tWhyChooseUsPages("section3.content")}
+                        description="We provide our services at no cost to you. You can access our wide selection, verified listings, and user-friendly platform without incurring any fees, making it even more convenient for you to find your dream vehicle."
                         icon={<TagIcon />}
-                        title={tWhyChooseUsPages("section3.title")}
+                        title="Enjoy the Benefits Without Any Fees"
                         alignRight
                     />
                     <FeatureItem
-                        description={tWhyChooseUsPages("section4.content")}
+                        description="Our dedicated customer support team is here for you at every step of your buying or selling journey. Whether you have questions, need assistance, or encounter any issues, count on us for timely and helpful support to ensure a smooth and confident experience"
                         icon={<UserIcon />}
-                        title={tWhyChooseUsPages("section4.title")}
+                        title="Responsive Customer Support"
                         alignRight
                     />
                 </div>
@@ -99,14 +97,14 @@ export default async function Page() {
                 />
                 <div className="flex flex-col justify-center gap-8">
                     <FeatureItem
-                        description={tWhyChooseUsPages("section5.content")}
+                        description="Refine your search effortlessly using our extensive range of filters. From specific brands and models to preferred price ranges and mileage limits, our comprehensive search options empower you to discover the perfect vehicle that aligns precisely with your preferences."
                         icon={<FilterIcon />}
-                        title={tWhyChooseUsPages("section5.title")}
+                        title="Comprehensive Search Filters"
                     />
                     <FeatureItem
-                        description={tWhyChooseUsPages("section6.content")}
+                        description="Stay effortlessly informed about car advertisements that match your interests. Customize your preferences and receive personalized alerts, ensuring you're always updated on relevant listings."
                         icon={<NotificationIcon />}
-                        title={tWhyChooseUsPages("section6.title")}
+                        title="Personalized Advert Alerts"
                     />
                 </div>
             </div>
