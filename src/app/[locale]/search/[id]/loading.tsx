@@ -4,11 +4,9 @@ import { ListingsCarousel } from "@/components/ListingsCarousel";
 import { getScopedI18n } from "@/locales/server";
 
 export default async function Loading() {
-    const [tCommon, tBreadcrumbs, tPostedListItem] = await Promise.all([
-        getScopedI18n("common"),
-        getScopedI18n("breadcrumbs"),
-        getScopedI18n("appRouter.postedListItemRoute"),
-    ]);
+    const tCommon = await getScopedI18n("common");
+    const tBreadcrumbs = await getScopedI18n("breadcrumbs");
+    const tPostedListItem = await getScopedI18n("appRouter.postedListItemRoute");
 
     return (
         <>

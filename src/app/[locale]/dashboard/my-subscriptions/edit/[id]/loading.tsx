@@ -1,9 +1,10 @@
+"use client";
 import { BreadCrumbs } from "@/components/Common";
 import { SubscriptionForm } from "@/components/Forms/ListingSubscriptions/SubscriptionForm";
-import { getScopedI18n } from "@/locales/server";
+import { useScopedI18n } from "@/locales/client";
 
-export default async function Loading() {
-    const tBreadcrumbs = await getScopedI18n("breadcrumbs");
+export default function Loading() {
+    const tBreadcrumbs = useScopedI18n("breadcrumbs");
 
     return (
         <>

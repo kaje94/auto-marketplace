@@ -40,21 +40,21 @@ export default {
     },
     breadcrumbs: {
         home: "Home",
-        edit: "Edit",
-        dashboard: "Dashboard",
+        edit:"Edit",
+        dashboard:"Dashboard",
         search: "Search",
         advert: "Advert",
-        manageCache: "Manage Cache",
-        manageSubscriptions: "Manage Subscriptions",
-        manageAdverts: "Manage Adverts",
-        profile: "Profile",
-        updateProfile: "Update Profile",
-        notifications: "Notifications",
-        newSubscription: "New Subscription",
-        mySubscriptions: "My Subscriptions",
+        manageCache:"Manage Cache",
+        manageSubscriptions:"Manage Subscriptions",
+        manageAdverts:"Manage Adverts",
+        profile:"Profile",
+        updateProfile:"Update Profile",
+        notifications:"Notifications",
+        newSubscription:"New Subscription",
+        mySubscriptions:"My Subscriptions",
         newListing: "New Advert",
-        myAdverts: "My Adverts",
-        advertItem: "Advert Item",
+        myAdverts:"My Adverts",
+        advertItem:"Advert Item"
     },
     components: {
         search: {
@@ -453,87 +453,87 @@ export default {
             },
         },
     },
-    metadata: {
-        manageCacheRoute: {
-            title: "Targabay - Manage Subscriptions",
+    metadata:{
+        manageCacheRoute:{
+            title: "Targabay - Manage Subscriptions"
         },
-        manageSubscriptionListRoute: {
-            title: "Targabay - Manage Subscriptions",
+        manageSubscriptionListRoute:{
+            title: "Targabay - Manage Subscriptions"
         },
-        editSubscriptionRoute: {
-            title: "Targabay - Edit Subscription",
+        editSubscriptionRoute:{
+            title:"Targabay - Edit Subscription"
         },
-        profileDetailsRoute: {
-            title: "Targabay - My Profile",
+        profileDetailsRoute:{
+            title:"Targabay - My Profile"
         },
-        profileEditRoute: {
-            title: "Targabay - Update Profile",
+        profileEditRoute:{
+            title:"Targabay - Update Profile"
         },
-        notificationsRoute: {
-            title: "Targabay - My Notifications",
+        notificationsRoute:{
+            title:"Targabay - My Notifications"
         },
-        createSubscriptionRoute: {
-            title: "Targabay - Create new Subscription",
+        createSubscriptionRoute:{
+            title:"Targabay - Create new Subscription",
         },
-        createListingRoute: {
-            title: "Targabay - Create a New Listing",
+        createListingRoute:{
+            title:"Targabay - Create a New Listing",
         },
-        editMySubscriptionRoute: {
-            title: "Targabay - Edit My Subscription",
+        editMySubscriptionRoute:{
+            title:"Targabay - Edit My Subscription"
         },
-        mySubscriptionList: {
-            title: "Targabay - My Subscriptions",
+        mySubscriptionList:{
+            title: "Targabay - My Subscriptions"
         },
-        editMyListing: {
-            title: "Targabay - Edit My Advert",
+        editMyListing:{
+            title: "Targabay - Edit My Advert"
         },
-        myListings: {
-            title: "Targabay - My Adverts",
+        myListings:{
+            title: "Targabay - My Adverts"
         },
-        myAdvertDetails: {
-            title: "Targabay - My Advert Details",
+        myAdvertDetails:{
+            title:"Targabay - My Advert Details"
         },
-        editListing: {
-            title: "Targabay - Edit Listing Item Details",
+        editListing:{
+            title:"Targabay - Edit Listing Item Details"
         },
-        manageListings: {
-            title: "Targabay - Manage Listing Adverts",
+        manageListings:{
+            title:"Targabay - Manage Listing Adverts"
         },
-        manageListingItem: {
-            title: "Targabay - Manage Listing Item",
+        manageListingItem:{
+            title:"Targabay - Manage Listing Item" 
         },
-        aboutUsRoute: {
+        aboutUsRoute:{
             title: "Targabay - About Us",
             desc: "Learn more about Targabay, the premier online marketplace for automotive enthusiasts. Discover our journey, mission, and commitment to providing a seamless platform for buying and selling cars, bikes, and more. Join us in the passion for all things automotive.",
         },
-        contactUsRoute: {
+        contactUsRoute:{
             title: "Targabay - Contact Us",
             desc: "Get in touch with Targabay! Whether you have questions, feedback, or partnership inquiries, our team is here to assist you. Reach out to us for a seamless and personalized experience in your automotive journey. Contact Targabay – your go-to online marketplace for buying and selling cars, bikes, and more.",
         },
-        cookiePolicyRoute: {
+        cookiePolicyRoute:{
             title: "Targabay - Cookie Policy",
             desc: "Explore Targabay's Cookie Policy to understand how we use cookies and similar technologies on our online marketplace. Learn about the types of cookies we employ and how they enhance your experience. Discover how we prioritize your privacy while providing a seamless and secure platform for buying and selling cars, bikes, and more.",
         },
-        faqsRoute: {
+        faqsRoute:{
             title: "Targabay - Frequently Asked Questions",
             desc: "Find answers to common queries on Targabay's FAQ page. Explore comprehensive information about buying, selling, and navigating our online marketplace for cars, bikes, and more. Streamline your experience with insights into our policies, transactions, and everything you need to know. Targabay – Your go-to resource for a seamless automotive journey.",
         },
-        privacyPolicyRoute: {
-            title: "Targabay - Privacy Policy",
-            desc: "Understand how Targabay prioritizes your privacy with our detailed Privacy Policy. Learn about the collection, use, and safeguarding of your personal information as you engage with our online marketplace. Explore our commitment to providing a secure and personalized platform for buying and selling cars, bikes, and more. Your trust is our priority at Targabay.",
+        privacyPolicyRoute:{
+            title:"Targabay - Privacy Policy",
+            desc:"Understand how Targabay prioritizes your privacy with our detailed Privacy Policy. Learn about the collection, use, and safeguarding of your personal information as you engage with our online marketplace. Explore our commitment to providing a secure and personalized platform for buying and selling cars, bikes, and more. Your trust is our priority at Targabay."
         },
-        safetyTipsRoute: {
-            title: "Targabay - Safety Tips",
-            desc: "Explore Targabay's Safety Tips to ensure a secure and confident experience on our online marketplace. Discover valuable insights and guidelines for buying and selling cars, bikes, and more. Prioritize safety in every transaction with our expert tips and recommendations. Targabay – Your trusted destination for a safe and enjoyable automotive journey.",
+        safetyTipsRoute:{
+            title:"Targabay - Safety Tips",
+            desc:"Explore Targabay's Safety Tips to ensure a secure and confident experience on our online marketplace. Discover valuable insights and guidelines for buying and selling cars, bikes, and more. Prioritize safety in every transaction with our expert tips and recommendations. Targabay – Your trusted destination for a safe and enjoyable automotive journey."
         },
-        termsOfUseRoute: {
-            title: "Targabay - Terms of Use",
-            desc: "Review Targabay's Terms of Use to understand the guidelines governing your engagement with our online automotive marketplace. Learn about the rules, responsibilities, and agreements that ensure a fair and secure platform for buying and selling cars, bikes, and more. Targabay – Your trusted destination for transparent and mutually beneficial transactions in the world of vehicles.",
+        termsOfUseRoute:{
+            title:"Targabay - Terms of Use",
+            desc:"Review Targabay's Terms of Use to understand the guidelines governing your engagement with our online automotive marketplace. Learn about the rules, responsibilities, and agreements that ensure a fair and secure platform for buying and selling cars, bikes, and more. Targabay – Your trusted destination for transparent and mutually beneficial transactions in the world of vehicles."
         },
-        whyChooseUsRoute: {
-            title: "Targabay - Why Choose Us",
-            desc: "Discover why Targabay stands out as your premier choice in the world of online automotive marketplaces. Explore our commitment to a seamless buying and selling experience for cars, bikes, and more. From a diverse vehicle selection to secure transactions, find out what sets Targabay apart and makes us the preferred destination for automotive enthusiasts.",
-        },
+        whyChooseUsRoute:{
+            title:"Targabay - Why Choose Us",
+            desc:"Discover why Targabay stands out as your premier choice in the world of online automotive marketplaces. Explore our commitment to a seamless buying and selling experience for cars, bikes, and more. From a diverse vehicle selection to secure transactions, find out what sets Targabay apart and makes us the preferred destination for automotive enthusiasts."
+        }
     },
     appRouter: {
         landingRoute: {
@@ -547,6 +547,8 @@ export default {
             viewMoreTitle: "View More",
             viewMoreSubTitle: "View advertisements that are similar to {title}",
         },
+
+  
 
         aboutUsRoute: {
             intro: "Welcome to Targabay, where automotive dreams come to life. Targabay is not just an online vehicle marketplace. it's a vibrant community and a gateway to an extraordinary world of cars. Our mission is to redefine your automotive experience by providing a seamless, transparent, and enjoyable platform for buyers and sellers alike.",
@@ -1178,5 +1180,5 @@ export default {
             support: { title: "Support", contactUs: "Contact Us", safetyTips: "Safety Tips", faqs: "FAQs" },
             legal: { title: "Legal", termsOfUse: "Terms Of Use", privacyPolicy: "Privacy Policy", cookiePolicy: "Cookie Policy" },
         },
-    },
+    },   
 } as const;

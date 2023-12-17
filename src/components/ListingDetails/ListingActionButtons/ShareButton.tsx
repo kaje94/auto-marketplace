@@ -24,7 +24,7 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
     const tListingDetails = useScopedI18n("components.listingDetails");
 
     return (
-        <div className="dropdown-end dropdown dropdown-top">
+        <div className="dropdown-end dropdown-top dropdown">
             <button className={clsx("btn !btn-block gap-2", loading && "animate-pulse")} disabled={loading} tabIndex={0}>
                 <ShareIcon />
                 {tListingDetails("share.buttonText")}
