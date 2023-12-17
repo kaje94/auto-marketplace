@@ -17,7 +17,7 @@ export const WelcomeModal = () => {
 
     return (
         <>
-            <Modal cancelable={false} onVisibleChange={() => {}} title="Welcome to Targabay" visible={modalVisible}>
+            <Modal cancelable={false} title="Welcome to Targabay" visible={modalVisible} onVisibleChange={() => {}}>
                 <form className="grid gap-1">
                     <div>
                         We&#39;re dedicated to making your vehicle buying and selling experience smooth and enjoyable. Here&#39;s what you can do:
@@ -50,13 +50,13 @@ export const WelcomeModal = () => {
                         .
                     </div>
                     <ModalFooter
+                        primaryButton={{ text: "Agree & Continue", classNames: "btn-block btn-neutral" }}
+                        showCancel={false}
                         onSubmit={() => {
                             window?.localStorage?.setItem("user-consent-v1", "true");
                             setModalVisible(false);
                         }}
                         onVisibleChange={() => {}}
-                        primaryButton={{ text: "Agree & Continue", classNames: "btn-block btn-neutral" }}
-                        showCancel={false}
                     />
                 </form>
             </Modal>

@@ -31,13 +31,13 @@ export const CloseAccountModal = (props: Props) => {
 
     return (
         <>
-            <Modal onVisibleChange={setVisible} title="Close user account" titleClassNames="text-error" visible={!!visible}>
+            <Modal title="Close user account" titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
                 <div>Are you sure you want to close your account. This action will permanently delete your account and is not reversible</div>
                 <ModalFooter
                     loading={isLoading}
+                    primaryButton={{ text: "Close Account", classNames: "btn-error" }}
                     onSubmit={() => mutate()}
                     onVisibleChange={setVisible}
-                    primaryButton={{ text: "Close Account", classNames: "btn-error" }}
                 />
             </Modal>
         </>

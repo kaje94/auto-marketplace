@@ -117,10 +117,10 @@ export const CreateListingForm = (props: Props) => {
             featureOptions={features}
             form={form}
             isMutating={isMutating}
-            onMutate={createListingsMutation}
             profile={profile}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
             vehicleBrands={brands}
+            onMutate={createListingsMutation}
         />
     );
 };

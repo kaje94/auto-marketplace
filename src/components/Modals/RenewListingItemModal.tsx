@@ -34,15 +34,15 @@ export const RenewListingItemModal = (props: Props) => {
 
     return (
         <>
-            <Modal onVisibleChange={setVisible} title="Renew Advert" visible={!!visible}>
+            <Modal title="Renew Advert" visible={!!visible} onVisibleChange={setVisible}>
                 <div>
                     This listing advert will expire on {formatHumanFriendlyDate(new Date(expiryDate))}. Are you sure you want to renew the advert?
                 </div>
                 <ModalFooter
                     loading={isLoading}
+                    primaryButton={{ text: "Renew" }}
                     onSubmit={listingId ? () => mutate(listingId) : undefined}
                     onVisibleChange={setVisible}
-                    primaryButton={{ text: "Renew" }}
                 />
             </Modal>
         </>

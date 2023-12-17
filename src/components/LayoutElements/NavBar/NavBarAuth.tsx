@@ -13,7 +13,7 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
             ) : (
                 <>
                     {userClaims ? (
-                        <div key={`navbar-menu-${pathName}`} className="dropdown-end dropdown">
+                        <div key={`navbar-menu-${pathName}`} className="dropdown dropdown-end">
                             <label className="avatar btn btn-circle btn-ghost" tabIndex={0}>
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
                                     <Avatar name={userClaims?.name} url={userClaims?.picture} width={40} />

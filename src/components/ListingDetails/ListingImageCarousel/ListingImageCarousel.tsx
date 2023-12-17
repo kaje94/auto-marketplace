@@ -116,9 +116,9 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                           key={imageItem.id}
                                           image={imageItem}
                                           location={location as Location}
-                                          onClick={() => onThumbClick(index)}
                                           selected={index === selectedIndex}
                                           title={title}
+                                          onClick={() => onThumbClick(index)}
                                       />
                                   ))}
                         </div>
@@ -127,14 +127,14 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
             </div>
             {isLightBoxOpen && (
                 <FsLightbox
-                    disableSlideSwiping
-                    exitFullscreenOnClose
-                    onClose={() => setLightBoxOpen(false)}
-                    openOnMount
                     sourceIndex={selectedIndex}
                     sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyTitleUrl(title, location as Location), 100))}
                     toggler={isLightBoxOpen}
                     type="image"
+                    disableSlideSwiping
+                    exitFullscreenOnClose
+                    openOnMount
+                    onClose={() => setLightBoxOpen(false)}
                 />
             )}
         </>

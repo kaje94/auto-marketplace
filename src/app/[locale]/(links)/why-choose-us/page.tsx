@@ -50,8 +50,8 @@ export default function Page() {
                     className="hidden w-full rounded-lg bg-[#4f5f67] object-cover lg:block"
                     height={400}
                     src="/images/site/features-1.webp"
-                    unoptimized
                     width={600}
+                    unoptimized
                 />
                 <div className="flex flex-col justify-center gap-8">
                     <FeatureItem
@@ -67,16 +67,16 @@ export default function Page() {
                 </div>
                 <div className="flex flex-col justify-center gap-8">
                     <FeatureItem
-                        alignRight
                         description="We provide our services at no cost to you. You can access our wide selection, verified listings, and user-friendly platform without incurring any fees, making it even more convenient for you to find your dream vehicle."
                         icon={<TagIcon />}
                         title="Enjoy the Benefits Without Any Fees"
+                        alignRight
                     />
                     <FeatureItem
-                        alignRight
                         description="Our dedicated customer support team is here for you at every step of your buying or selling journey. Whether you have questions, need assistance, or encounter any issues, count on us for timely and helpful support to ensure a smooth and confident experience"
                         icon={<UserIcon />}
                         title="Responsive Customer Support"
+                        alignRight
                     />
                 </div>
                 <Image
@@ -84,16 +84,16 @@ export default function Page() {
                     className="hidden w-full rounded-lg bg-[#7c7262] object-cover lg:block"
                     height={400}
                     src="/images/site/features-2.webp"
-                    unoptimized
                     width={600}
+                    unoptimized
                 />
                 <Image
                     alt="feature-1-image"
                     className="hidden w-full rounded-lg bg-[#8e999f] object-cover lg:block"
                     height={400}
                     src="/images/site/features-3.webp"
-                    unoptimized
                     width={600}
+                    unoptimized
                 />
                 <div className="flex flex-col justify-center gap-8">
                     <FeatureItem

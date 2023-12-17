@@ -30,12 +30,12 @@ export default async function Page({ params }: LocalePathParam) {
         <ListingsCarousel
             bgFromColor="from-hero"
             items={featuredListings.map((item) => transformListingResponse(item))}
-            tinted
             viewMore={{
                 link: "/search",
                 title: "View All",
                 subTitle: "View all vehicle advertisements available at Targabay",
             }}
+            tinted
         />
     );
 }

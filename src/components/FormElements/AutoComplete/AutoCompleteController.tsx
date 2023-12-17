@@ -58,7 +58,6 @@ export const AutocompleteController: FC<ControllerProps> = (props) => {
                     <Autocomplete
                         disabled={disabled}
                         error={fieldState.error?.message}
-                        onBlur={field.onBlur}
                         options={options}
                         placeholder={placeholder}
                         ref={field.ref}
@@ -66,6 +65,7 @@ export const AutocompleteController: FC<ControllerProps> = (props) => {
                         setFieldValue={(value: string | number) => field.onChange(value)}
                         showSelectedTick={showSelectedTick}
                         value={field.value}
+                        onBlur={field.onBlur}
                     />
                 </FormFieldControllerWrap>
             )}

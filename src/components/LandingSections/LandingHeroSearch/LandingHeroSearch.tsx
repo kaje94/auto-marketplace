@@ -23,19 +23,19 @@ export const LandingHeroSearch = () => {
         <span className="rounded-box flex w-full flex-col justify-center shadow-xl sm:w-fit sm:flex-row">
             <InputController
                 control={control}
-                errorAsTooltip
                 fieldName="Title"
                 inputClassNames="bg-white rounded-box rounded-b-none sm:rounded-b-box sm:rounded-r-none"
                 placeholder="Search..."
+                errorAsTooltip
             />
             <div className="relative sm:w-36">
                 <SelectController
                     control={control}
-                    errorAsTooltip
                     fieldName="VehicleType"
                     options={VehicleTypeList}
                     placeholder="All Types"
                     selectClassName="bg-white rounded-none !outline-none sm:!w-36"
+                    errorAsTooltip
                     selectablePlaceholder
                 />
             </div>

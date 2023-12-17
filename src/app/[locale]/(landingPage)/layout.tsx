@@ -31,8 +31,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     height={450}
                     priority={false}
                     src="/images/site/cover-image.webp"
-                    unoptimized
                     width={1246}
+                    unoptimized
                 />
             </section>
         </>

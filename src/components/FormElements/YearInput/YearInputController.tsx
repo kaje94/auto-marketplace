@@ -62,7 +62,6 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
                     <Autocomplete
                         disabled={disabled}
                         error={fieldState.error?.message}
-                        onBlur={field.onBlur}
                         options={years}
                         placeholder={placeholder}
                         ref={field.ref}
@@ -70,6 +69,7 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
                         setFieldValue={(value: string | number) => field.onChange(value)}
                         showSelectedTick={false}
                         value={field.value}
+                        onBlur={field.onBlur}
                     />
                 </FormFieldControllerWrap>
             )}

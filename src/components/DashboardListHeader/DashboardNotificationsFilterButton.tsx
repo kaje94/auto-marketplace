@@ -40,9 +40,9 @@ export const DashboardNotificationsFilterButton = () => {
                 form={form}
                 hasSearchParams={hasSearchParams}
                 isLoading={isLoading}
+                setDropdownOpen={setDropdownOpen}
                 onApplyFilterClick={onApplyFilterClick}
                 onResetClick={onResetClick}
-                setDropdownOpen={setDropdownOpen}
             />
         </div>
     );
