@@ -6,13 +6,8 @@ export default function Error(props: ErrorPageProps) {
     return (
         <>
             <BreadCrumbs
-                currentPageTitle="Edit"
-                links={[
-                    { href: "/", title: "Home" },
-                    { title: "Dashboard" },
-                    { title: "My Adverts", href: "/dashboard/my-listings" },
-                    { title: "Advert Item" },
-                ]}
+                currentPageTitle="Advert Item"
+                links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Manage Adverts", href: "/dashboard/listings" }]}
             />
             <ErrorComponent {...props} />
         </>

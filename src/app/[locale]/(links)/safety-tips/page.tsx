@@ -23,14 +23,12 @@ const SafetyTipItem = ({ tips = [], title }: { tips: (string | ReactNode)[]; tit
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tSafetyTipsPage] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.safetyTipsRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tSafetyTipsPage("title");
-    const description = tSafetyTipsPage("desc");
+    const title = "Targabay - Safety Tips";
+    const description =
+        "Explore Targabay's Safety Tips to ensure a secure and confident experience on our online marketplace. Discover valuable insights and guidelines for buying and selling cars, bikes, and more. Prioritize safety in every transaction with our expert tips and recommendations. Targabay – Your trusted destination for a safe and enjoyable automotive journey.";
 
     return {
         title,
@@ -41,8 +39,8 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
 }
 
 export default async function Page() {
-    const [tNav, tSafetyTipsPage] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.safetyTipsRoute")]);
-
+    const tNav = await getScopedI18n("nav");
+    const tSafetyTipsPage = await getScopedI18n("safetyTipsPage");
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
             <h3 className={clsx(displayFont.className, "mb-4 text-3xl lg:text-center lg:text-4xl xl:mb-6")}>{tNav("links.support.safetyTips")}</h3>

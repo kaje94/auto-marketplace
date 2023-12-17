@@ -20,14 +20,12 @@ const ContactUsItem = ({ title, desc, subTitle }: { desc: string | ReactNode; su
 };
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tContactUsPage] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.contactUsRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tContactUsPage("title");
-    const description = tContactUsPage("desc");
+    const title = "Targabay - Contact Us";
+    const description =
+        "Get in touch with Targabay! Whether you have questions, feedback, or partnership inquiries, our team is here to assist you. Reach out to us for a seamless and personalized experience in your automotive journey. Contact Targabay – your go-to online marketplace for buying and selling cars, bikes, and more.";
 
     return {
         title,
@@ -37,7 +35,9 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
     };
 }
 export default async function Page() {
-    const [session, tNav, tContactUsPage] = await Promise.all([getSession(), getScopedI18n("nav"), getScopedI18n("appRouter.contactUsRoute")]);
+    const session = await getSession();
+    const tNav = await getScopedI18n("nav");
+    const tContactUsPage = await getScopedI18n("contactUsPage");
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">

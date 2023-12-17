@@ -20,14 +20,12 @@ const CookiePolicyItem = ({ content, title }: { content?: string | ReactNode; ti
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tCookiePolicyPage] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.cookiePolicyRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tCookiePolicyPage("title");
-    const description = tCookiePolicyPage("desc");
+    const title = "Targabay - Cookie Policy";
+    const description =
+        "Explore Targabay's Cookie Policy to understand how we use cookies and similar technologies on our online marketplace. Learn about the types of cookies we employ and how they enhance your experience. Discover how we prioritize your privacy while providing a seamless and secure platform for buying and selling cars, bikes, and more.";
 
     return {
         title,
@@ -38,7 +36,8 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
 }
 
 export default async function Page() {
-    const [tNav, tCookiePolicyPage] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.cookiePolicyRoute")]);
+    const tNav = await getScopedI18n("nav");
+    const tCookiePolicyPage = await getScopedI18n("cookiePolicyPage");
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">

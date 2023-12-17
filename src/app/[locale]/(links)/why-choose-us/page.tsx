@@ -27,14 +27,12 @@ const FeatureItem = ({
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tWhyChooseUsPages] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.whyChooseUsRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tWhyChooseUsPages("title");
-    const description = tWhyChooseUsPages("desc");
+    const title = "Targabay - Why Choose Us";
+    const description =
+        "Discover why Targabay stands out as your premier choice in the world of online automotive marketplaces. Explore our commitment to a seamless buying and selling experience for cars, bikes, and more. From a diverse vehicle selection to secure transactions, find out what sets Targabay apart and makes us the preferred destination for automotive enthusiasts.";
 
     return {
         title,
@@ -43,9 +41,9 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
         twitter: { ...previousTwitter, title, description },
     };
 }
-
 export default async function Page() {
-    const [tNav, tWhyChooseUsPages] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.whyChooseUsRoute")]);
+    const tWhyChooseUsPages = await getScopedI18n("whyChooseUsPage");
+    const tNav = await getScopedI18n("nav");
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">

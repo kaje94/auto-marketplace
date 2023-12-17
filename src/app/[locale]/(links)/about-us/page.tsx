@@ -4,14 +4,12 @@ import { displayFont } from "@/app/fonts";
 import { getScopedI18n } from "@/locales/server";
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tAboutUs] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.aboutUsRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tAboutUs("title");
-    const description = tAboutUs("desc");
+    const title = "Targabay - About Us";
+    const description =
+        "Learn more about Targabay, the premier online marketplace for automotive enthusiasts. Discover our journey, mission, and commitment to providing a seamless platform for buying and selling cars, bikes, and more. Join us in the passion for all things automotive.";
 
     return {
         title,
@@ -22,7 +20,8 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
 }
 
 export default async function Page() {
-    const [tAboutUs, tNav] = await Promise.all([getScopedI18n("appRouter.aboutUsRoute"), getScopedI18n("nav")]);
+    const tAboutUs = await getScopedI18n("aboutUsPage");
+    const tNav = await getScopedI18n("nav");
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">

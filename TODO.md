@@ -1,5 +1,6 @@
 > await new Promise((resolve) => setTimeout(resolve, 10000));
 
+> admin user id: 'c1485d4a-0f38-4b11-bd06-7b428288dedd'
 
 > Setting up s3
 > https://next-s3-upload.codingvalue.com/setup
@@ -9,13 +10,16 @@
 -   [] bot detection in auth0 enabled(recaptcha)
 -   [] check max length of all strings in schema file
 -   [] an api for contact us form (name, email, subject & message)
--   [] contact us email should be moved to api layer
 
 > Web app todo list
 -   [] fix date format offsets
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
+-   [] verify how empty, unauthorized and error component redirects & links work
 -   [] refer create t3 structure and eslint
 -   [] add watermark to uploaded image
+-   [] lazily load calender and combobox?
+-   [] laziliy load filters
+-   [] lazily load landing searchbar?
 -   [] use links instead of router push ?
 -   [] fix chrome third party cookies blocked warning
 -   [] update displayname and signature in zoho mail
@@ -23,12 +27,9 @@
 -   [] when selecting range, need to validate
 -   [] make sure meta tags are from layouts
 -   [] update all docs about how featured adverts work
--   [] get consent from footer above
--   [] move all links to command util function
+-   [] get consent from footer
 -   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
 -   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
--   [] subscription update not working & expiry date not showing
--   [] fix token not refreshing
 
 > After deploy
 -   [] Add sentry
@@ -39,9 +40,8 @@
 -   [] add pwa?
 -   [] update manifest https://web.dev/articles/add-manifest
 -   [] show counter in textarea listing create
--   [] lazily load calender and combobox?
--   [] laziliy load filters?
--   [] lazily load landing searchbar?
+-   [] welcome modal is too obtrusive
+
 
 > Web app performance improvements
 
@@ -50,6 +50,8 @@
 -   [] https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading
 -   [] add react memo throughout
 -   [] remove async from components if not needed
+-   [] contact us section?
+-   [] make auth0 run fully on edge
 
 > SEO Todo list
 -   [] https://webmasters.stackexchange.com/questions/104987/how-to-change-which-image-from-website-is-shown-in-google-search-result
@@ -57,32 +59,32 @@
 
 > Meta tags & sitemap
 - [] Landing
-- [x] About Us
-- [x] Why choose Us
-- [x] Contact Us
-- [x] Safety tips
-- [x] FAQs
-- [x] Terms of us
-- [x] Privacy Policy
-- [x] Cookie Policy
+- [] About Us
+- [] Why choose Us
+- [] Contact Us
+- [] Safety tips
+- [] FAQs
+- [] Terms of us
+- [] Privacy Policy
+- [] Cookie Policy
 - [] Posted listing search
 - [] Posted listing item
-- [x] Profile
-- [x] Update Profile
-- [x] Create new advert
-- [x] My Advert list
-- [x] Manage/view my advert
-- [x] Edit my advert item
-- [x] All adverts list
-- [x] Manage/view advert
-- [x] Edit advert
-- [x] My subscription list
-- [x] Create new subscription
-- [x] Edit my subscription
-- [x] All subscription list
-- [x] Edit subscription item
-- [x] View notifications
-- [x] Manage cache
+- [] Profile
+- [] Update Profile
+- [] Create new advert
+- [] My Advert list
+- [] Manage/view my advert
+- [] Edit my advert item
+- [] All adverts list
+- [] Manage/view advert
+- [] Edit advert
+- [] My subscription list
+- [] Create new subscription
+- [] Edit my subscription
+- [] All subscription list
+- [] Edit subscription item
+- [] View notifications
+- [] Manage cache
 
 
 

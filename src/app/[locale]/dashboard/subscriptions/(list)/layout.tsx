@@ -1,23 +1,13 @@
 import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
-import { getScopedI18n } from "@/locales/server";
 import { ChildrenProps } from "@/utils/types";
 
-export async function generateMetadata(): Promise<Metadata> {
-    const tManageSubscriptionListRoute = await getScopedI18n("metadata.manageSubscriptionListRoute");
-    const title = tManageSubscriptionListRoute("title");
-    return { title };
-}
+export const metadata: Metadata = { title: "Targabay - Manage Subscriptions" };
 
-export default async function Layout({ children }: ChildrenProps) {
-    const tBreadcrumbs = await getScopedI18n("breadcrumbs");
-
+export default function Layout({ children }: ChildrenProps) {
     return (
         <>
-            <BreadCrumbs
-                currentPageTitle={tBreadcrumbs("manageSubscriptions")}
-                links={[{ href: "/", title: tBreadcrumbs("home") }, { title: tBreadcrumbs("dashboard") }]}
-            />
+            <BreadCrumbs currentPageTitle="Manage Subscriptions" links={[{ href: "/", title: "Home" }, { title: "Dashboard" }]} />
             {children}
         </>
     );

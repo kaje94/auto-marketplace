@@ -30,7 +30,6 @@ export const ErrorComponent: FC<Props> = ({
     children,
 }) => {
     const tCommon = useScopedI18n("common");
-    const tBreadcrumbs = useScopedI18n("breadcrumbs");
     const tErrorComponent = useScopedI18n("components.common.errorComponent");
 
     const errorSubTitleText = subTitle || showReset ? tErrorComponent("genericSubTitleWithReset") : tErrorComponent("genericSubTitle");
@@ -69,7 +68,7 @@ export const ErrorComponent: FC<Props> = ({
                         {showHome && (
                             <LinkWithLocale href="/">
                                 <button className="btn btn-outline">
-                                    <HomeIcon className="mr-3" /> {tBreadcrumbs("home")}
+                                    <HomeIcon className="mr-3" /> {tCommon("home")}
                                 </button>
                             </LinkWithLocale>
                         )}

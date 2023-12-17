@@ -28,14 +28,12 @@ const PrivacyPolicyItem = ({ content, items = [], title }: { content?: string | 
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const [previousTwitter, previousOpenGraph, tPrivacyPolicyPage] = await Promise.all([
-        (await parent).twitter || {},
-        (await parent).openGraph || {},
-        getScopedI18n("metadata.privacyPolicyRoute"),
-    ]);
+    const previousTwitter = (await parent).twitter || {};
+    const previousOpenGraph = (await parent).openGraph || {};
 
-    const title = tPrivacyPolicyPage("title");
-    const description = tPrivacyPolicyPage("desc");
+    const title = "Targabay - Privacy Policy";
+    const description =
+        "Understand how Targabay prioritizes your privacy with our detailed Privacy Policy. Learn about the collection, use, and safeguarding of your personal information as you engage with our online marketplace. Explore our commitment to providing a secure and personalized platform for buying and selling cars, bikes, and more. Your trust is our priority at Targabay.";
 
     return {
         title,
@@ -46,7 +44,8 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
 }
 
 export default async function Page() {
-    const [tNav, tPrivacyPolicyPage] = await Promise.all([getScopedI18n("nav"), getScopedI18n("appRouter.privacyPolicyRoute")]);
+    const tNav = await getScopedI18n("nav");
+    const tPrivacyPolicyPage = await getScopedI18n("privacyPolicyPage");
 
     return (
         <div className="container relative mx-auto mb-5 px-4 py-8 md:px-4 lg:px-10">
