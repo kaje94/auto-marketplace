@@ -4,11 +4,8 @@ import React from "react";
 import { displayFont } from "@/app/fonts";
 import { SiteLinkSearchBox } from "@/components/Common/SiteLinkSearchBox";
 import { LandingHeroSearch } from "@/components/LandingSections/LandingHeroSearch";
-import { getScopedI18n } from "@/locales/server";
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
-    const tLandingPage = await getScopedI18n("landingPage");
-
+export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <SiteLinkSearchBox />
@@ -16,12 +13,11 @@ export default async function Layout({ children }: { children: React.ReactNode }
                 <div className="container relative z-10 mx-auto flex h-full flex-1 flex-col items-center justify-evenly gap-10 p-4 !pt-[5%]  xl:p-7 2xl:p-8">
                     <div className="flex flex-1 flex-col items-center justify-center gap-2">
                         <h1 className={clsx(displayFont.className, "text-center text-5xl text-white sm:text-7xl md:text-8xl xl:text-9xl ")}>
-                            <span className="animate-fadeIn-300">{tLandingPage("header.line1")}</span>{" "}
-                            <span className="animate-fadeIn-300 animate-delay-100">{tLandingPage("header.line2")}</span>{" "}
-                            <span className="animate-fadeIn-300 animate-delay-200">{tLandingPage("header.line3")}</span>
+                            <span className="animate-fadeIn-300">Drive</span> <span className="animate-fadeIn-300 animate-delay-100">Your</span>{" "}
+                            <span className="animate-fadeIn-300 animate-delay-200">Dreams</span>
                         </h1>
                         <h4 className="text-center text-base font-extralight text-white animate-fadeIn-300 animate-delay-300 md:text-lg lg:text-xl">
-                            {tLandingPage("subHeader")}
+                            Effortlessly buy or sell your vehicle on our seamless online marketplace.
                         </h4>
                         <span className="z-10 mx-[5%] mb-8 mt-5 flex w-full flex-col items-center justify-center animate-fadeIn-300 animate-delay-400 sm:mb-16 sm:px-0 xl:mb-28 2xl:mb-36">
                             <LandingHeroSearch />
@@ -35,8 +31,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
                     height={450}
                     priority={false}
                     src="/images/site/cover-image.webp"
-                    width={1246}
                     unoptimized
+                    width={1246}
                 />
             </section>
         </>

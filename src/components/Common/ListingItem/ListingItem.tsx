@@ -22,7 +22,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                 {item ? (
                     <ListingImage
                         className={clsx(
-                            "aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear zoomable-image",
+                            "zoomable-image aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear",
                             loading && "opacity-50",
                         )}
                         height={300}
@@ -35,7 +35,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     <div className={clsx("aspect-video w-full bg-hero bg-opacity-50", tinted ? "bg-hero" : "bg-base-200")} />
                 )}
 
-                {tinted && <div className="absolute h-full w-full bg-hero bg-opacity-20 duration-300 image-hover-tint" />}
+                {tinted && <div className="image-hover-tint absolute h-full w-full bg-hero bg-opacity-20 duration-300" />}
 
                 <div
                     className={clsx(
@@ -44,7 +44,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     )}
                 >
                     {item ? (
-                        <div className="badge badge-secondary badge-lg font-bold duration-300 badge-hover-translucent image-text-shadow ">
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg font-bold duration-300 image-text-shadow ">
                             {getFormattedCurrency(item?.price?.amount, item?.price?.currencySymbol)}
                         </div>
                     ) : (
@@ -54,7 +54,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     {item ? (
                         <div
                             className={clsx(
-                                "line-clamp-2 font-bold text-base-100 duration-300 badge-hover-translucent image-text-shadow",
+                                "badge-hover-translucent line-clamp-2 font-bold text-base-100 duration-300 image-text-shadow",
                                 detailed ? "text-2xl" : "text-xl",
                             )}
                         >

@@ -17,7 +17,7 @@ export const FilterWrap: FC<Props> = ({ children, setDropdownOpen, onApplyFilter
         return null;
     }
     return (
-        <span className={clsx("dropdown dropdown-end absolute  flex justify-end", dropdownOpen && "dropdown-open")}>
+        <span className={clsx("dropdown-end dropdown absolute  flex justify-end", dropdownOpen && "dropdown-open")}>
             <ClickAwayListener onClickAway={() => setDropdownOpen(false)}>
                 <div className="menu dropdown-content rounded-box z-[1] w-max !overflow-visible rounded-tr-none border-2 border-base-300 bg-base-200 p-0 shadow-lg md:max-w-md">
                     <form className="flex flex-col">

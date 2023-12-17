@@ -87,7 +87,7 @@ export const ProfileUpdateModal = (props: Props) => {
 
     return (
         <>
-            <Modal childrenClassnames="!p-0" modalClassnames="!max-w-3xl" title="Update Profile" visible={!!visible} onVisibleChange={setVisible}>
+            <Modal childrenClassnames="!p-0" modalClassnames="!max-w-3xl" onVisibleChange={setVisible} title="Update Profile" visible={!!visible}>
                 <div className="flex max-h-[80vh] flex-col ">
                     <div className="flex-1 overflow-auto px-4 py-2 lg:px-6">
                         <ProfileForm
@@ -95,19 +95,19 @@ export const ProfileUpdateModal = (props: Props) => {
                             gridClassnames="lg:!grid-cols-1"
                             isMutating={isMutating}
                             locationSectionClassnames="lg:grid-cols-2"
+                            onMutate={(values) => updateSubscriptionMutation(values)}
                             showFooter={false}
                             showHeader={false}
                             userData={userData}
                             wrapClassnames="!p-0 !shadow-none"
-                            onMutate={(values) => updateSubscriptionMutation(values)}
                         />
                     </div>
                     <div className="p-4 lg:p-6">
                         <ModalFooter
                             loading={isMutating}
-                            primaryButton={{ text: "Update" }}
                             onSubmit={form.handleSubmit((values) => updateSubscriptionMutation(values))}
                             onVisibleChange={setVisible}
+                            primaryButton={{ text: "Update" }}
                         />
                     </div>
                 </div>

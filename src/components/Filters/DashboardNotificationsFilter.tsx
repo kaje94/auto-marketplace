@@ -31,9 +31,9 @@ export const DashboardNotificationsFilter: FC<Props> = ({
             dropdownOpen={dropdownOpen}
             hasFilters={hasSearchParams}
             isLoading={isLoading}
-            setDropdownOpen={setDropdownOpen}
             onApplyFilterClick={handleSubmit(onApplyFilterClick)}
             onResetClick={onResetClick}
+            setDropdownOpen={setDropdownOpen}
         >
             <div className="col-span-full">
                 <SelectController

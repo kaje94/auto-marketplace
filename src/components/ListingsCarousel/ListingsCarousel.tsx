@@ -43,7 +43,7 @@ export const ListingsCarousel = (props: Props) => {
                                     key={`item-${i}`}
                                     className="relative w-[calc(75%)] min-w-0 flex-none sm:w-[calc(60%)] md:w-[calc(45%)] lg:w-[calc(38%)] xl:w-[calc(29%)] 2xl:w-[calc(23%)]"
                                 >
-                                    <ListingItem tinted={tinted} loading />
+                                    <ListingItem loading tinted={tinted} />
                                 </div>
                             ))}
                         </>

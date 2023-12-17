@@ -66,17 +66,17 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
     }, [visible, reset, defaultForm]);
 
     return (
-        <Modal title="Report Advert" titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
+        <Modal onVisibleChange={setVisible} title="Report Advert" titleClassNames="text-error" visible={!!visible}>
             <form className="grid gap-1">
                 <SelectController
                     control={control}
                     fieldName="status"
                     label="Reason"
                     options={ListingReportReasonList}
-                    selectablePlaceholder={false}
                     required
+                    selectablePlaceholder={false}
                 />
-                <InputController control={control} fieldName="emailAddress" label="Email" placeholder="user@gmail.com" type="email" required />
+                <InputController control={control} fieldName="emailAddress" label="Email" placeholder="user@gmail.com" required type="email" />
                 <TextAreaController
                     control={control}
                     fieldName="message"
@@ -86,9 +86,9 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
                 />
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: "Report Advert" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
                     onVisibleChange={setVisible}
+                    primaryButton={{ text: "Report Advert" }}
                 />
             </form>
         </Modal>

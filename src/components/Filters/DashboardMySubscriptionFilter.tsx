@@ -31,9 +31,9 @@ export const DashboardMySubscriptionFilter: FC<Props> = ({
             dropdownOpen={dropdownOpen}
             hasFilters={hasSearchParams}
             isLoading={isLoading}
-            setDropdownOpen={setDropdownOpen}
             onApplyFilterClick={handleSubmit(onApplyFilterClick)}
             onResetClick={onResetClick}
+            setDropdownOpen={setDropdownOpen}
         >
             <SelectController
                 control={control}

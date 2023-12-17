@@ -69,9 +69,9 @@ export const PostedListSearchFilters: FC<Props> = ({
             dropdownOpen={dropdownOpen}
             hasFilters={hasFilters}
             isLoading={isLoading}
-            setDropdownOpen={setDropdownOpen}
             onApplyFilterClick={onApplyFilterClick && handleSubmit ? handleSubmit(onApplyFilterClick) : undefined}
             onResetClick={onApplyFilterClick ? () => onApplyFilterClick({ ...defaultFilter, Title: searchParams?.get("Title") || "" }) : undefined}
+            setDropdownOpen={setDropdownOpen}
         >
             <AutocompleteController control={control} fieldName="State" label="State/Province" options={stateList} placeholder="State Name" />
             <AutocompleteController

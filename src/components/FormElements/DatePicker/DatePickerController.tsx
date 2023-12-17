@@ -25,10 +25,10 @@ export const DatePickerController: FC<ControllerProps> = ({
                 inputClassNames={inputClassNames}
                 label={label}
                 labelClassNames={labelClassNames}
+                loading
                 placeholder={placeholderText}
                 required={required}
                 rootClassName={rootClassName}
-                loading
             />
         );
     }
@@ -48,12 +48,12 @@ export const DatePickerController: FC<ControllerProps> = ({
                 >
                     <DatePicker
                         error={fieldState.error?.message}
+                        onBlur={field.onBlur}
                         placeholderText={placeholderText}
                         selected={field.value ? new Date(field.value) : null}
-                        onBlur={field.onBlur}
                         {...rest}
-                        ref={field.ref}
                         onChange={(date) => field.onChange(date?.toString())}
+                        ref={field.ref}
                     />
                 </FormFieldControllerWrap>
             )}

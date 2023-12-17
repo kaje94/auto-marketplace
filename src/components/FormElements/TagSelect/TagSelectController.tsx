@@ -29,7 +29,7 @@ export const TagSelectController: FC<Props> = ({ tags = [], fieldName, loading, 
         <Controller
             control={control}
             name={fieldName}
-            render={({ field: { value = [], onChange } }) => <TagSelect disabled={disabled} selectedTags={value} tags={tags} onSelect={onChange} />}
+            render={({ field: { value = [], onChange } }) => <TagSelect disabled={disabled} onSelect={onChange} selectedTags={value} tags={tags} />}
         />
     );
 };

@@ -38,14 +38,14 @@ export const RevalidateUserNotifications = () => {
             <button className="btn btn-outline" disabled={isLoading} onClick={() => setModalVisible(true)}>
                 Revalidate user notifications
             </button>
-            <Modal title="Revalidate user notifications" visible={!!modalVisible} onVisibleChange={setModalVisible}>
+            <Modal onVisibleChange={setModalVisible} title="Revalidate user notifications" visible={!!modalVisible}>
                 <form className="grid gap-1">
                     <InputController control={control} fieldName="userId" label="User ID" placeholder="User ID" required />
                     <ModalFooter
                         loading={isLoading}
-                        primaryButton={{ text: "Proceed" }}
                         onSubmit={handleSubmit((values) => mutate(values))}
                         onVisibleChange={setModalVisible}
+                        primaryButton={{ text: "Proceed" }}
                     />
                 </form>
             </Modal>

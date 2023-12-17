@@ -34,8 +34,8 @@ export const ListingImageCarouselThumbnails: FC<Props> = (props) => {
                         "rounded-box m-0 block w-full cursor-pointer touch-manipulation overflow-hidden bg-transparent p-0 transition-opacity duration-200",
                         selected ? "opacity-100" : "opacity-20 hover:opacity-30",
                     )}
-                    type="button"
                     onClick={onClick}
+                    type="button"
                 >
                     <ListingImage
                         className="block h-16 w-16 bg-base-200 object-cover sm:h-20 sm:w-20 lg:h-24 lg:w-36"

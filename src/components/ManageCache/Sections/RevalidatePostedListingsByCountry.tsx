@@ -46,7 +46,7 @@ export const RevalidatePostedListingsByCountry = () => {
             <button className="btn btn-outline" disabled={isLoading} onClick={() => setModalVisible(true)}>
                 Revalidate posted listings by country
             </button>
-            <Modal title="Revalidate posted listings by country" visible={!!modalVisible} onVisibleChange={setModalVisible}>
+            <Modal onVisibleChange={setModalVisible} title="Revalidate posted listings by country" visible={!!modalVisible}>
                 <form className="grid gap-1">
                     <AutocompleteController
                         control={control}
@@ -59,9 +59,9 @@ export const RevalidatePostedListingsByCountry = () => {
                     <div className="h-36" />
                     <ModalFooter
                         loading={isLoading}
-                        primaryButton={{ text: "Proceed" }}
                         onSubmit={handleSubmit((values) => mutate(values))}
                         onVisibleChange={setModalVisible}
+                        primaryButton={{ text: "Proceed" }}
                     />
                 </form>
             </Modal>

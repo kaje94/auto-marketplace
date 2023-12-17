@@ -77,8 +77,8 @@ export const EditProfileForm: FC<Props> = (props) => {
             form={form}
             gridClassnames="pt-4"
             isMutating={isMutating}
-            userData={userData}
             onMutate={(values) => updateSubscriptionMutation(values)}
+            userData={userData}
         />
     );
 };

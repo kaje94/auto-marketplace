@@ -2,10 +2,8 @@
 import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 import { LinkWithLocale, Logo } from "@/components/Common";
-import { useScopedI18n } from "@/locales/client";
 
 export const Footer: FC = () => {
-    const tNav = useScopedI18n("nav");
     const pathName = usePathname();
     const params = useParams();
     const isLandingPage = pathName === `/${params.locale}`;
@@ -17,45 +15,45 @@ export const Footer: FC = () => {
                     <LinkWithLocale href="/">
                         <Logo fontsize="text-3xl" />
                     </LinkWithLocale>
-                    <p className="w-full text-center text-sm font-light opacity-90 md:text-left">{tNav("footerSubtitle")}</p>
+                    <p className="w-full text-center text-sm font-light opacity-90 md:text-left">Connecting Car Enthusiasts since 2023</p>
                 </div>
 
                 <div className="flex flex-col items-start gap-1 text-left opacity-90  md:items-end md:text-right">
-                    <div className="footer-title">{tNav("links.social.title")}</div>
-                    <a className="cursor-not-allowed opacity-80">{tNav("links.social.facebook")}</a>
-                    <a className="cursor-not-allowed opacity-80">{tNav("links.social.instagram")}</a>
+                    <div className="footer-title">Social</div>
+                    <a className="cursor-not-allowed opacity-80">Facebook</a>
+                    <a className="cursor-not-allowed opacity-80">Instagram</a>
                 </div>
                 <div className="flex flex-col items-end gap-1 text-right opacity-90  md:text-left ">
-                    <div className="footer-title">{tNav("links.company.title")}</div>
+                    <div className="footer-title">Company</div>
                     <LinkWithLocale className="link-hover link" href="/about-us">
-                        {tNav("links.company.aboutUs")}
+                        About Us
                     </LinkWithLocale>
                     <LinkWithLocale className="link-hover link" href="/why-choose-us">
-                        {tNav("links.company.whyChooseUs")}
+                        Why Choose Us
                     </LinkWithLocale>
                 </div>
                 <div className="flex flex-col items-start gap-1 text-left opacity-90  md:items-end md:text-right">
-                    <div className="footer-title">{tNav("links.support.title")}</div>
+                    <div className="footer-title">Support</div>
                     <LinkWithLocale className="link-hover link" href="/contact-us">
-                        {tNav("links.support.contactUs")}
+                        Contact Us
                     </LinkWithLocale>
                     <LinkWithLocale className="link-hover link" href="/safety-tips">
-                        {tNav("links.support.safetyTips")}
+                        Safety Tips
                     </LinkWithLocale>
                     <LinkWithLocale className="link-hover link" href="/faqs">
-                        {tNav("links.support.faqs")}
+                        FAQs
                     </LinkWithLocale>
                 </div>
                 <div className="flex flex-col items-end gap-1 text-right opacity-90  md:text-right">
-                    <div className="footer-title"> {tNav("links.legal.title")}</div>
+                    <div className="footer-title">Legal</div>
                     <LinkWithLocale className="link-hover link" href="/terms-of-use">
-                        {tNav("links.legal.termsOfUse")}
+                        Terms Of Use
                     </LinkWithLocale>
                     <LinkWithLocale className="link-hover link" href="/privacy-policy">
-                        {tNav("links.legal.privacyPolicy")}
+                        Privacy Policy
                     </LinkWithLocale>
                     <LinkWithLocale className="link-hover link" href="/cookie-policy">
-                        {tNav("links.legal.cookiePolicy")}
+                        Cookie Policy
                     </LinkWithLocale>
                 </div>
             </footer>

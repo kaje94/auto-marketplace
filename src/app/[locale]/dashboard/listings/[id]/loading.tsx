@@ -9,7 +9,7 @@ export default function Loading() {
                 links={[{ href: "/", title: "Home" }, { title: "Dashboard" }, { title: "Manage Adverts", href: "/dashboard/listings" }]}
             />
             <ListingDetailBanner loading={true} />
-            <ListingDetails withinDashboard={true} loading />
+            <ListingDetails loading withinDashboard={true} />
         </>
     );
 }

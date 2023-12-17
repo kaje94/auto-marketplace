@@ -26,8 +26,6 @@
 -   [] fix meta tags in all pages
 -   [] when selecting range, need to validate
 -   [] make sure meta tags are from layouts
--   [] update all docs about how featured adverts work
--   [] get consent from footer
 -   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
 
 > After deploy
@@ -54,7 +52,11 @@
 
 > SEO Todo list
 -   [] https://webmasters.stackexchange.com/questions/104987/how-to-change-which-image-from-website-is-shown-in-google-search-result
-
+-   [] add sitemap
+-   [] add open grapgh and twitter tags
+-   [] search box in google
+-   [] static metadata needs to be in layout. only dynamic metadata needs to be in page.tsx
+-   [] webp images should not be used in opengraph(search list and item details page)
 
 > Meta tags & sitemap
 - [] Landing
@@ -101,8 +103,3 @@
 Select your preferred login method to access Targabay
 Choose your login method to access Targabay
 Select how you want to log in to Targabay.
-
-
-> Analytics
-https://posthog.com/
-https://plausible.io/#pricing

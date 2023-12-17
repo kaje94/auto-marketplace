@@ -73,8 +73,8 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 loading={isLoading}
                                 min={Dates.Days_7_from_now.toISOString().split("T")[0]}
                                 placeholder="01/01/2025"
-                                type="date"
                                 required
+                                type="date"
                             />
                         </div>
                     </div>

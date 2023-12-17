@@ -57,7 +57,7 @@ export const CountrySelectModal = (props: Props) => {
     }, [currentCountry, visible, reset]);
 
     return (
-        <Modal title="Switch Country" visible={visible} onVisibleChange={setVisible}>
+        <Modal onVisibleChange={setVisible} title="Switch Country" visible={visible}>
             <form className="grid gap-1">
                 <AutocompleteController
                     control={control}
@@ -72,9 +72,9 @@ export const CountrySelectModal = (props: Props) => {
                     vehicle.
                 </div>
                 <ModalFooter
-                    primaryButton={{ text: "Apply" }}
                     onSubmit={handleSubmit((values) => handleLocaleChange(values.country))}
                     onVisibleChange={setVisible}
+                    primaryButton={{ text: "Apply" }}
                 />
             </form>
         </Modal>

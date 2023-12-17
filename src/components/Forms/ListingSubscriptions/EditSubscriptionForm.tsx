@@ -125,9 +125,9 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
+            onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: listingSubscriptionItem.id })}
             submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
             vehicleBrands={brands}
-            onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: listingSubscriptionItem.id })}
         />
     );
 };

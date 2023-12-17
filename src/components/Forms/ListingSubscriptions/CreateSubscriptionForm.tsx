@@ -109,9 +109,9 @@ export const CreateSubscriptionForm = (props: Props) => {
             distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
+            onMutate={createSubscriptionMutation}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
             vehicleBrands={brands}
-            onMutate={createSubscriptionMutation}
         />
     );
 };
