@@ -8,9 +8,10 @@ on:
       - main
   workflow_dispatch:
 jobs:
-  Deploy-Dev:
+  deployment:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: development
     env:
       AUTH0_SECRET: ${{secrets.DEV_ENV_AUTH0_SECRET}}
       AUTH0_BASE_URL: ${{secrets.DEV_ENV_AUTH0_BASE_URL}}

@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/LayoutElements/Footer";
 import { NavBar } from "@/components/LayoutElements/NavBar";
 import { ScrollToTop } from "@/components/LayoutElements/ScrollToTop";
-import { WelcomeModal } from "@/components/Modals/WelcomeModal";
 import { env } from "@/env.mjs";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ChildrenProps } from "@/utils/types";
@@ -79,7 +78,6 @@ export default function RootLayout({ children }: ChildrenProps) {
                     <NavBar />
                     <main>{children}</main>
                     <Footer />
-                    <WelcomeModal />
                 </ReactQueryProvider>
             </body>
         </html>

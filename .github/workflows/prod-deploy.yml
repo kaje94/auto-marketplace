@@ -5,9 +5,10 @@ env:
 on:
   workflow_dispatch:
 jobs:
-  Deploy-Prod:
+  deployment:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: production
     env:
       AUTH0_SECRET: ${{secrets.PROD_ENV_AUTH0_SECRET}}
       AUTH0_BASE_URL: ${{secrets.PROD_ENV_AUTH0_BASE_URL}}
