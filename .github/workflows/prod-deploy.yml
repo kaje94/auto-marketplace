@@ -1,0 +1,59 @@
+name: Prod Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  workflow_dispatch:
+jobs:
+  Deploy-Prod:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      AUTH0_SECRET: ${{secrets.PROD_ENV_AUTH0_SECRET}}
+      AUTH0_BASE_URL: ${{secrets.PROD_ENV_AUTH0_BASE_URL}}
+      AUTH0_ISSUER_BASE_URL: ${{secrets.PROD_ENV_AUTH0_ISSUER_BASE_URL}}
+      AUTH0_CLIENT_ID: ${{secrets.PROD_ENV_AUTH0_CLIENT_ID}}
+      AUTH0_CLIENT_SECRET: ${{secrets.PROD_ENV_AUTH0_CLIENT_SECRET}}
+      AUTH0_AUDIENCE: ${{secrets.PROD_ENV_AUTH0_AUDIENCE}}
+      AUTH0_SCOPE: "openid profile email offline_access"
+      API_BASE_URL: ${{secrets.PROD_ENV_API_BASE_URL}}
+      NEXT_PUBLIC_IMAGE_CDN_BASE: ${{secrets.PROD_ENV_NEXT_PUBLIC_IMAGE_CDN_BASE}}
+      NEXT_PUBLIC_SUPPORT_EMAIL: "support@targabay.com"
+      NEXT_CONTACT_US_FORM_KEY: ${{secrets.PROD_ENV_NEXT_CONTACT_US_FORM_KEY}}
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{secrets.PROD_ENV_NEXT_PUBLIC_RECAPTCHA_SITE_KEY}}
+      RECAPTCHA_SITE_SECRET: ${{secrets.PROD_ENV_RECAPTCHA_SITE_SECRET}}
+      NODE_OPTIONS: "--max_old_space_size=4096"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Update robots.txt
+        run: mv public/robots.prod.txt public/robots.txt
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.9.0
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - uses: actions/checkout@v2
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --force --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
