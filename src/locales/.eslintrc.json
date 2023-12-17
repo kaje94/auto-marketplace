@@ -1,7 +1,7 @@
 {
     "plugins": ["spellcheck"],
     "rules": {
-        "spellcheck/spell-checker": ["warn", { "identifiers": false, "skipWords": ["Targabay", "Qs", "Centric", "faq"] }]
+        "spellcheck/spell-checker": ["warn", { "identifiers": false, "skipWords": ["Targabay", "Qs", "Centric","faq",] }]
     },
     "settings": { "import/resolver": { "typescript": true, "node": true } }
 }
