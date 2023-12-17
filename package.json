@@ -9,9 +9,7 @@
         "lint": "next lint",
         "lint:fix": "next lint --fix",
         "format-rest": "npx prettier --ignore-path .gitignore --write \"**/*.{css,md,json,yml}\" \"!package-lock.json\" --print-width 150 --tab-width 4",
-        "tsc": "tsc --noEmit --incremental",
-        "prebuild": "echo \"export const runtime = \\\"edge\\\";\" >> src/app/layout.tsx",
-        "postbuild": "sed -i '/export const runtime = \"edge\";/d' src/app/layout.tsx"
+        "tsc": "tsc --noEmit --incremental"
     },
     "dependencies": {
         "@auth0/nextjs-auth0": "^3.3.0",
