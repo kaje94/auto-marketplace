@@ -16,7 +16,7 @@ import { InputController } from "../FormElements/Input";
 import { TextAreaController } from "../FormElements/TextArea";
 
 export const ContactUsForm = ({ session }: { session?: Session | null }) => {
-    const tContactUsForm = useScopedI18n("components.contactUsForm");
+    const tContactUsForm = useScopedI18n("contactUsPage.form");
     const tForm = useScopedI18n("form");
 
     const { executeRecaptcha } = useReCaptcha();

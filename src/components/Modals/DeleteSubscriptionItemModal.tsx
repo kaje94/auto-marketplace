@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import { deleteListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
 import { Modal, ModalFooter } from "@/components/Common/Modal";
-import { useScopedI18n } from "@/locales/client";
 import { ListingSubscriptionItem } from "@/utils/types";
 
 interface Props {
@@ -18,31 +17,28 @@ export const DeleteSubscriptionItemModal = (props: Props) => {
 
     const toastId = useRef<string>();
 
-    const tCommon = useScopedI18n("common");
-    const tDeleteSubscriptionModal = useScopedI18n("components.modals.deleteSubscriptionModal");
-
     const { mutate, isLoading } = useMutation((id: string) => deleteListingSubscriptionAction(id, userId!), {
         onMutate: () => {
             setVisible(false);
-            toastId.current = toast.loading(tDeleteSubscriptionModal("toast.loading", { displayName }));
+            toastId.current = toast.loading(`Deleting subscription ${displayName}...`);
         },
         onSettled: (_data, err) => {
             setVisible(false);
             if (err) {
-                toast.error(tDeleteSubscriptionModal("toast.error", { displayName, error: (err as Error)?.message }), { id: toastId?.current });
+                toast.error(`Failed to delete subscription ${displayName}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
             } else {
-                toast.success(tDeleteSubscriptionModal("toast.success", { displayName }), { id: toastId?.current });
+                toast.success(`Successfully deleted the subscription ${displayName}`, { id: toastId?.current });
             }
         },
     });
 
     return (
         <>
-            <Modal title={tDeleteSubscriptionModal("title")} titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
-                <div>{tDeleteSubscriptionModal("desc")}</div>
+            <Modal title="Delete Subscription" titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
+                <div>Are you sure you want to delete this advert subscription? This action is not reversible.</div>
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: tCommon("delete"), classNames: "btn-error" }}
+                    primaryButton={{ text: "Delete", classNames: "btn-error" }}
                     onSubmit={id ? () => mutate(id) : undefined}
                     onVisibleChange={setVisible}
                 />

@@ -10,7 +10,6 @@ import { Modal, ModalFooter } from "@/components/Common/Modal";
 import { InputController } from "@/components/FormElements/Input";
 import { SelectController } from "@/components/FormElements/Select";
 import { TextAreaController } from "@/components/FormElements/TextArea";
-import { useScopedI18n } from "@/locales/client";
 import { ListingReportReasonList } from "@/utils/constants";
 import { ListingReportReason } from "@/utils/enum";
 import { ReportListingSchema } from "@/utils/schemas";
@@ -38,9 +37,6 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
         mode: "all",
     });
 
-    const tReportListingModal = useScopedI18n("components.modals.reportListingModal");
-    const tForm = useScopedI18n("form");
-
     const { mutate, isLoading } = useMutation(
         async (req: ReportListingReq) => {
             const token = await executeRecaptcha("report_listing_form_submit");
@@ -50,14 +46,14 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
         {
             onMutate: () => {
                 setVisible(false);
-                toastId.current = toast.loading(tReportListingModal("toast.loading", { listingTitle }));
+                toastId.current = toast.loading(`Reporting advert ${listingTitle}...`);
             },
             onSettled: (_data, err) => {
                 setVisible(false);
                 if (err) {
-                    toast.error(tReportListingModal("toast.error", { listingTitle, error: (err as Error)?.message }), { id: toastId?.current });
+                    toast.error(`Failed to report advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
                 } else {
-                    toast.success(tReportListingModal("toast.success", { listingTitle }), { id: toastId?.current });
+                    toast.success(`Successfully reported the Advert ${listingTitle}`, { id: toastId?.current });
                 }
             },
         },
@@ -70,34 +66,27 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
     }, [visible, reset, defaultForm]);
 
     return (
-        <Modal title={tReportListingModal("title")} titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
+        <Modal title="Report Advert" titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
             <form className="grid gap-1">
                 <SelectController
                     control={control}
                     fieldName="status"
-                    label={tReportListingModal("formReasonLabel")}
+                    label="Reason"
                     options={ListingReportReasonList}
                     selectablePlaceholder={false}
                     required
                 />
-                <InputController
-                    control={control}
-                    fieldName="emailAddress"
-                    label={tForm("email.label")}
-                    placeholder={tForm("email.placeholder")}
-                    type="email"
-                    required
-                />
+                <InputController control={control} fieldName="emailAddress" label="Email" placeholder="user@gmail.com" type="email" required />
                 <TextAreaController
                     control={control}
                     fieldName="message"
-                    label={tForm("message.label")}
-                    placeholder={tReportListingModal("formMessagePlaceholder")}
+                    label="Message"
+                    placeholder="Additional details on why you are reporting this advert"
                     required
                 />
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: tReportListingModal("reportBtnText") }}
+                    primaryButton={{ text: "Report Advert" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
                     onVisibleChange={setVisible}
                 />

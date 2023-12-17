@@ -33,21 +33,21 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
                                 tabIndex={0}
                             >
                                 <NavBarMenuLink icon={<UserIcon height={18} />} label={tNav("profile")} link="/dashboard/profile" />
-                                <NavBarMenuLink icon={<AdvertIcon height={18} />} label={tNav("myListing")} link="/dashboard/my-listings" />
-                                <NavBarMenuLink icon={<RssIcon height={18} />} label={tNav("mySubscriptions")} link="/dashboard/my-subscriptions" />
                                 <NavBarMenuLink
                                     badgeCount={notificationCount}
                                     icon={<NotificationIcon height={18} />}
                                     label={tNav("notifications")}
                                     link="/dashboard/notifications"
                                 />
+                                <NavBarMenuLink icon={<AdvertIcon height={18} />} label={tNav("myListing")} link="/dashboard/my-listings" />
+                                <NavBarMenuLink icon={<RssIcon height={18} />} label={tNav("mySubscriptions")} link="/dashboard/my-subscriptions" />
                                 {userClaims?.isAdmin && (
                                     <>
                                         <div className="divider mx-3 my-1 h-0.5 rounded bg-gray-800" />
                                         <NavBarMenuLink icon={<ListIcon height={18} />} label={tNav("manageListings")} link="/dashboard/listings" />
                                         <NavBarMenuLink
                                             icon={<ClipboardIcon height={18} />}
-                                            label={tNav("manageSubscriptions")}
+                                            label={tNav("manageListings")}
                                             link="/dashboard/subscriptions"
                                         />
                                         <NavBarMenuLink

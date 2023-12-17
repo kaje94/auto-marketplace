@@ -1,7 +1,5 @@
-"use client";
 import { clsx } from "clsx";
 import { FC } from "react";
-import { useScopedI18n } from "@/locales/client";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
 import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString } from "@/utils/helpers";
@@ -36,8 +34,6 @@ export const ListingDetails: FC<Props> = ({
 }) => {
     const { price, vehicle, location, user, title, description, status, id, createdOn } = itemDetails as ListingItem;
 
-    const tListingDetails = useScopedI18n("components.listingDetails");
-
     return (
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-5" : "lg:col-span-5")}>
@@ -52,7 +48,7 @@ export const ListingDetails: FC<Props> = ({
                     />
                 </div>
                 <div className="card stat  bg-base-100 p-3  shadow lg:p-5 xl:p-6">
-                    <div className="stat-title">{tListingDetails("details.description")}</div>
+                    <div className="stat-title">Description</div>
                     <div className="divider" />
                     <p className={clsx({ "mt-2 w-full whitespace-pre-line text-sm font-medium": true, "animate-pulse h-40 bg-base-200": loading })}>
                         {description}
@@ -62,7 +58,7 @@ export const ListingDetails: FC<Props> = ({
             <div className={clsx("col-span-8 flex flex-col gap-4 xl:gap-7 2xl:gap-8", withinDashboard ? "xl:col-span-3" : "lg:col-span-3")}>
                 <div className={clsx({ "grid gap-4  xl:gap-7 2xl:gap-8": true, "xl:grid-cols-2": !withinDashboard })}>
                     <div className="card stat place-items-center bg-base-100 shadow">
-                        <div className="stat-title">{tListingDetails("details.location")}</div>
+                        <div className="stat-title">Location</div>
                         {loading ? (
                             <>
                                 <div className="h-5 w-1/2 animate-pulse bg-base-200" />
@@ -75,11 +71,7 @@ export const ListingDetails: FC<Props> = ({
                         )}
                     </div>
                     <div className="card stat place-items-center bg-primary text-primary-content shadow">
-                        <div className="stat-title text-primary-content">
-                            {price?.currencyCode
-                                ? tListingDetails("details.priceWithCode", { code: price?.currencyCode })
-                                : tListingDetails("details.price")}
-                        </div>
+                        <div className="stat-title text-primary-content">{price?.currencyCode ? `Price (${price?.currencyCode})` : "Price"}</div>
                         {loading ? (
                             <div className="h-9 w-4/6 animate-pulse bg-secondary" />
                         ) : (
@@ -87,29 +79,29 @@ export const ListingDetails: FC<Props> = ({
                                 <div className="w-full !break-words text-center text-2xl font-extrabold">
                                     {getFormattedCurrency(price?.amount, price?.currencySymbol)}
                                 </div>
-                                {price?.isPriceNegotiable && <span className="badge badge-secondary">{tListingDetails("details.negotiable")}</span>}
+                                {price?.isPriceNegotiable && <span className="badge badge-secondary">Negotiable</span>}
                             </div>
                         )}
                     </div>
                 </div>
 
                 <div className="card stat place-items-center bg-base-100 shadow">
-                    <div className="stat-title">{tListingDetails("details.keySpecs")}</div>
+                    <div className="stat-title">Key Specifications</div>
                     <ListingKeySpecifications loading={loading} vehicle={vehicle} />
                 </div>
                 <div className="card stat place-items-center bg-base-100 shadow">
-                    <div className="stat-title">{tListingDetails("details.features")}</div>
+                    <div className="stat-title">Features</div>
                     <ListingDetailsFeatures loading={loading} vehicle={vehicle} />
                 </div>
                 {showSellerDetails && (
                     <div className="card stat place-items-center bg-base-100 shadow">
-                        <div className="stat-title">{tListingDetails("details.seller")}</div>
+                        <div className="stat-title">Seller</div>
                         <ListingSellerDetails loading={loading} user={user} />
                     </div>
                 )}
                 {!withinDashboard && (
                     <div className="card stat place-items-center bg-base-100 shadow">
-                        <div className="stat-title">{tListingDetails("details.safetyTips")}</div>
+                        <div className="stat-title">Safety Tips</div>
                         {loading ? (
                             <>
                                 <div className="h-16 w-full animate-pulse bg-base-200" />
@@ -117,9 +109,12 @@ export const ListingDetails: FC<Props> = ({
                             </>
                         ) : (
                             <>
-                                <p className="mt-1 text-center text-sm">{tListingDetails("details.safetyTipsDesc")}</p>
+                                <p className="mt-1 text-center text-sm">
+                                    Protect yourself online. Never share sensitive information like credit/debit card details and OTPs with third
+                                    parties for a secure vehicle marketplace.
+                                </p>
                                 <LinkWithLocale href="/safety-tips">
-                                    <button className="link-neutral btn btn-link btn-sm">{tListingDetails("details.safetyTipsLink")}</button>
+                                    <button className="link-neutral btn btn-link btn-sm">View all safety Tips</button>
                                 </LinkWithLocale>
                             </>
                         )}
@@ -134,9 +129,7 @@ export const ListingDetails: FC<Props> = ({
                                 listingItem={itemDetails as ListingItem}
                             />
                             <div className="alert col-span-full rounded-lg text-sm text-opacity-80">
-                                {tListingDetails("details.expiryText", {
-                                    date: formatHumanFriendlyDate(new Date((itemDetails as ListingItem)?.expiryDate)),
-                                })}
+                                {`Advert will expire on ${formatHumanFriendlyDate(new Date((itemDetails as ListingItem)?.expiryDate))}`}
                             </div>
                             {status &&
                                 [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status) && (

@@ -9,7 +9,6 @@ import { LinkWithLocale } from "@/components/Common";
 import { FilterInput as InputController } from "@/components/Filters/FilterFormElements/DashboardFilterInput";
 import { PostedListSearchFilters } from "@/components/Filters/PostedListSearchFilters";
 import { FilterIcon, SearchIcon } from "@/icons";
-import { useScopedI18n } from "@/locales/client";
 import { usePostedListingsContext } from "@/providers/PostedListingsContextProvider";
 import { getYearFromDateString } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
@@ -48,7 +47,6 @@ export const SearchFilters = ({
     const searchParams = useSearchParams();
     const countryCode = params.locale as string;
     const titleSearchParam = searchParams.get("Title") || "";
-    const tCommon = useScopedI18n("common");
 
     const { setNewSearchQuery, searchParamsObj, isLoading, newSearchQuery } = usePostedListingsContext();
 
@@ -143,7 +141,7 @@ export const SearchFilters = ({
                     }}
                 >
                     {applyingSearch ? <span className="loading loading-spinner ml-1 opacity-40" /> : <SearchIcon className="ml-1" />}
-                    <span className="w-20">{tCommon("search")}</span>
+                    <span className="w-20">Search</span>
                 </LinkWithLocale>
                 <button
                     className={clsx(
@@ -156,8 +154,8 @@ export const SearchFilters = ({
                 >
                     {applyingFilters ? <span className="loading loading-spinner -ml-1 opacity-40" /> : <FilterIcon className="-ml-1" />}
                     <span className="ml-2 flex flex-col items-start justify-start">
-                        <span>{tCommon("filters")}</span>
-                        {hasFilters && <span className="text-xs font-light capitalize">{tCommon("applied")}</span>}
+                        <span>Filters</span>
+                        {hasFilters && <span className="text-xs font-light capitalize">Applied</span>}
                     </span>
                 </button>
                 {!pageLoading && (

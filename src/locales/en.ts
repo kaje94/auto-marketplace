@@ -3,507 +3,18 @@ export default {
     common: {
         allTypes: "All Types",
         search: "Search",
-        filters: "Filters",
-        applied: "Applied",
         searchPlaceholder: "Search...",
-        resetFilter: "Reset Filters",
-        filtersApplied: "Filters Applied",
-        loading: "Loading...",
-        home: "Home",
-        refresh: "Refresh",
-        edit: "Edit",
-        update: "Update",
-        renew: "Renew",
-        review: "Review",
-        unlist: "Unlist",
-        report:"Report",
-        delete: "Delete",
-        activate: "Activate",
-        deactivate: "Deactivate",
-        viewAd: "View Advert",
-        page: "Page {pageNumber}",
-        created: "Created {ago}",
-        new: "New",
-        apply: "Apply",       
-        proceed: "Proceed",    
-        resetFilterBtn: "Reset Filters",
-        createBtn: "Create New",
-        updateProfile: "Update Profile",
-        skip: "Skip",
-        view:"View",
-        or: "Or",
-        active:"Active",
-        inactive:"Inactive",
-        notApplicable:"N/A",
-        'results#zero': 'No results found',
-        'results#one': '1 result found',
-        'results#other': '{count} results found'
     },
-    breadcrumbs: {
-        home: "Home",
-        search: "Search",
-        advert: "Advert"
-    },
-    components: {
-        search: {
-            searchGrid: {
-                hasFilterAndTitle: "Filtered by Title & Advanced filters",
-                hasOnlyFilters: "Filtered results",
-                hasOnlyTitleFilter: "Filtered by Title",
-                noAdsTitle: "No adverts to display",
-                noAdsSubTitle: "You can try refining or resetting your search criteria or check again later"
-            }
-        },
-        common: {
-            errorComponent: {
-                genericTitle: "Oops, something went wrong",
-                genericSubTitleWithReset: "But do not worry, you can either try refreshing this page or go back to our home page and start over.",
-                genericSubTitle: "But do not worry, you can alway head to our home page and start over.",
-                notFoundMessage: "Item is not available"
-            }
-        },
-        contactUsForm: {
-            toast: {
-                loading: "Submitting contact us form",
-                error: "Failed to submit your message. Please try again in a while",
-                success: "Successfully submitted your message. Our team will get in touch with you soon.",
-            },
-            banner: {
-                success: {
-                    title: "Successfully submitted your message",
-                    subTitle: "Our team will get in touch with you soon",
-                },
-                error: {
-                    title: "Failed to submit form",
-                    subTitle: "Oops, we encountered an unexpected error. Please try again in a while",
-                },
-            },
-        },
-        dashboardListings: {
-            dashboardListingItem: {
-                expiredOn: "Expires on {date}",
-                price: "Price: {price}",
-                location: "Location {location}",
-            },
-            dashboardListingList: {
-                noAdsText: "No advertisements to display",
-                noAdsSubText: "By creating a new new advertisement, you have the opportunity to showcase the vehicle you want to sell to a wide audience.",
-                noAdsSubTextWithFilters: "Try adjusting or resetting your search filters",
-            }
-        },
-        dashboardSubscriptions:{
-            noSubscriptionsTitle:"No subscriptions to display",
-            noSubscriptionsDescWithFilter:"Try adjusting or resetting your search filters",
-            noSubscriptionsDesc:"By creating a new subscription, you'll receive notifications about any new advertisements that match your interests.",
-            criteria:"Criteria:",
-            expiresOn:"Expires on:",
-            manufacturedBetween:"Manufactured between",
-            registeredBetween:"Registered between"
-        },
-        dashboardNotificationList: {
-            noNotificationsText: "No notifications to display",
-            noNotificationsSubTextWithFilters: "Try adjusting or resetting your search filters",
-            noNotificationsSubText: "You do not have any notifications yet. Try checking out again later"
-        },
-        dashboardProfile: {
-            closeAccount: "Close Account",
-            incompleteProfileTitle:"Incomplete Profile",
-            incompleteProfileDesc:"To enjoy a seamless experience, please take a moment to update your profile.",
-            standardUser:"User",
-            carDealer:"Car Dealership",
-            adminUser:"Admin",
-            contactDetailsText:"Contact Details",
-            locationDetailsText:"Location Details"
-        },
-        modals: {
-            closeAccountModal: {
-                title: "Close user account",
-                desc: "Are you sure you want to close your account. This action will permanently delete your account and is not reversible",
-                btnText: "Close Account",
-                toast: {
-                    loading: "Closing user account...",
-                    error: "Failed to closed user account. {error}",
-                    success: "Successfully closed user account"
-                }
-            },
-            countrySelectModal: {
-                title: "Switch Country",
-                desc: "Switching your country lets you see vehicle availability in diverse locations, broadening your options for finding the perfect vehicle.",
-                countryRequired: "Country is required",
-                toast: {
-                    success: "Successfully switched to country {country}"
-                }
-            },
-            deleteListingItemModal: {
-                title: "Delete Advert",
-                desc: "Are you sure you want to delete this advert? This action is not reversible.",
-                toast: {
-                    loading: "Deleting advert {listingTitle}...",
-                    success: "Successfully deleted the Advert {listingTitle}",
-                    error: "Failed to delete advert {listingTitle}. {error}"
-                }
-            },
-            deleteSubscriptionModal: {
-                title: "Delete Subscription",
-                desc: "Are you sure you want to delete this advert subscription? This action is not reversible.",
-                toast: {
-                    loading: "Deleting subscription {displayName}...",
-                    success: "Successfully deleted the subscription {displayName}",
-                    error: "Failed to delete subscription {displayName}. {error}"
-                }
-            },
-            newUserOnboardModal: {
-                title: "Welcome {firstName}!",
-                desc: "We're thrilled to have you on board and excited to help you find the perfect vehicle or connect with buyers if you're selling.",
-                section1: {
-                    title: "Set Up Your Profile",
-                    desc: "Before we begin, please take a moment to complete your profile details",
-                },
-                section2: {
-                    title: "Select Your Interests",
-                    desc: "Please let us know what you are interested in",
-                    buyingBtn: "Buying a Vehicle",
-                    sellingBtn: "Selling a Vehicle"
-                },
-                section3: {
-                    titleWithoutInterest: "Begin Your Journey",
-                    title: "Begin Your Journey as a {interests}",
-                    buyer: {
-                        browseAdvertDesc: "Explore our extensive collection of verified vehicle advertisements",
-                        browseAdvertBtn: "Browse Adverts",
-                        createSubscriptionDesc: "Subscribe to advertisements that interest you and receive notifications whenever new listings match your preferences",
-                        createSubscriptionBtn: "Create Subscriptions"
-                    },
-                    seller: {
-                        createAdvertDesc: "Create an advert for your vehicle and watch it sell in no time!",
-                        createAdvertBtn: "Create an Advert",
-                        browseAdvertDesc: "Explore existing vehicle advertisements",
-                        browseAdvertBtn: "Browse Adverts"
-                    }
-                },
-                footer: "Got Questions? We're here to help. Check out our {FAQs} or reach us out through our {contactUs} page"
-            },
-            profileUpdateModal: {
-                toast: {
-                    loading: "Updating the user profile...",
-                    error: "Failed to update the user profile. {error}",
-                    success: "Successfully updated the user profile"
-                },
-            },
-            renewListingModal: {
-                title: "Renew Advert",
-                desc: "This listing advert will expire on {date}. Are you sure you want to renew the advert?",
-                toast: {
-                    loading: "Renewing advert {listingTitle}...",
-                    error: "Failed to renew advert {listingTitle}. {error}",
-                    success: "Successfully renewed the Advert {listingTitle}"
-                }
-            },
-            reportListingModal: {
-                title: "Report Advert",
-                reportBtnText: "Report Advert",
-                formMessagePlaceholder: "Additional details on why you are reporting this advert",
-                formReasonLabel: "Reason",
-                toast: {
-                    loading: "Reporting advert {listingTitle}...",
-                    error: "Failed to report advert {listingTitle}. {error}",
-                    success: "Successfully reported the Advert {listingTitle}"
-                }
-            },
-            reviewListingModal: {
-                title: "Review Advert",
-                formReviewStatusLabel: "Review Status",
-                formReviewCommentLabel: "Review comment",
-                formReviewCommentPlaceholder: "Additional details related to the advert review",
-                submitButtonText: "Submit Review",
-                toast: {
-                    loading: "Submitting review for advert {listingTitle}...",
-                    error: "Failed to update the status of the advert {listingTitle}. {error}",
-                    success: "Successfully updated the status of the advert {listingTitle}"
-                }
-            },
-            toggleSubscriptionActivationModal: {
-                title: "{state} Subscription",
-                activating: "Activating",
-                deactivating: "Deactivating",
-                deactivateDesc: "By deactivating the subscription, you will stop receiving notifications related to your subscription criteria",
-                activateDesc: "By Re-activating the subscription, you will start to receive notifications related to your subscription criteria until the subscription expiry date",
-                formExpiryDateLabel: "Expiry date",
-                toast: {
-                    loading: "{state} subscription {displayName}...",
-                    error: "Failed to update the status of the subscription {displayName}. {error}",
-                    success: "Successfully updated the subscription {displayName}"
-                }
-            },
-            unListListingModal: {
-                title: "Unlist Advert",
-                desc: "By Unlisting or withdrawing the advert, the advertisement will no longer be visible to the public.",
-                formStatusLabel: "Status",
-                toast: {
-                    loading: "Unlisting advert {listingTitle}...",
-                    error: "Failed to update the status of the advert {listingTitle}. {error}",
-                    success: "Successfully updated the status of the advert {listingTitle}"
-                }
-            }
-        },
-        manageCache: {
-            revalidateAllFeaturedListings: {
-                buttonText: "Revalidate featured listings",
-                toast: {
-                    success: "Successfully revalidated featured listings",
-                    error: "Failed to revalidate featured listings"
-                }
-            },
-            revalidateAllPostedListings: {
-                buttonText: "Revalidate all posted listings",
-                toast: {
-                    success: "Successfully revalidated all posted listings",
-                    error: "Failed to revalidate all posted listings"
-                }
-            },
-            revalidateCitiesAndStates: {
-                buttonText: "Revalidate Cities & States",
-                toast: {
-                    success: "Successfully revalidated cities and states",
-                    error: "Failed to revalidate cities and states"
-                }
-            },
-            revalidateFeaturedListingsByCountry: {
-                buttonText: "Revalidate featured listings by country",
-                toast: {
-                    success: "Successfully revalidated featured listings",
-                    error: "Failed to revalidate featured listings"
-                }
-            },
-            revalidateFeatures: {
-                buttonText: "Revalidate Features",
-                toast: {
-                    success: "Successfully revalidated features",
-                    error: "Failed to revalidate Features"
-                }
-            },
-            revalidatePostedListingsByCountry: {
-                buttonText: "Revalidate posted listings by country",
-                toast: {
-                    success: "Successfully revalidated posted listings",
-                    error: "Failed to revalidate posted listings"
-                }
-            },
-            revalidateRelatedListings: {
-                buttonText: "Revalidate related listings",
-                toast: {
-                    success: "Successfully revalidated related listings",
-                    error: "Failed to revalidate related listings"
-                }
-            },
-            revalidateUserNotifications: {
-                buttonText: "Revalidate user notifications",
-                toast: {
-                    success: "Successfully revalidated user notifications",
-                    error: "Failed to revalidate user notifications"
-                }
-            },
-            revalidateUserProfile: {
-                buttonText: "Revalidate user profile details",
-                toast: {
-                    success: "Successfully revalidated user profile",
-                    error: "Failed to revalidate user profile"
-                }
-            },
-            revalidateVehicleBrands: {
-                buttonText: "Revalidate Vehicle Brands",
-                toast: {
-                    success: "Successfully revalidated vehicle brands",
-                    error: "Failed to revalidate vehicle brands"
-                }
-            }
-        },
-        forms: {
-            listing: {
-                create: {
-                    toast: {
-                        loading: "Creating new Advert for {title}...",
-                        error: "Failed to create advert for {title}. {error}",
-                        success: "Your advertisement for {title}, has been successfully submitted for review. We will notify you once the review process is complete."
-                    }
-                },
-                edit: {
-                    toast: {
-                        loading: "Updating the Advert {title}...",
-                        error: "Failed to update the advert {title}. {error}",
-                        success: "Successfully updated the Advert {title}."
-                    }
-                },
-                imageUpload: {
-                    unsupportedTypeToastMsg: "Unsupported file type",
-                    setAsThumbnail: "Set as Thumbnail",
-                    isThumbnail: "Thumbnail",
-                    addImages: "Add Images"
-                },
-                form: {
-                    incompleteProfileTitle: "Incomplete Profile",
-                    incompleteProfileDesc: "Please update your profile to create an advertisement for your vehicle",
-                    sections: {
-                        keySpecifications: "Key Specifications",
-                        otherDetails: "Other details",
-                        images: "Images",
-                        imageSectionTitle: "New Advert Image",
-                        locationAndContact: "Location & Contact Details",
-                        price: "Price Details",
-                        features: "Features",
-                        safetyTips: {
-                            title: "Safety Tips",
-                            desc: "Please prioritize safety. Avoid sharing sensitive information. A secure marketplace benefits us all.",
-                            viewAllLink: "View all safety Tips"
-                        }
-                    }
-                }
-            },
-            subscriptions:{
-                create:{
-                    toast:{
-                        loading:"Creating new subscription {displayName}...",
-                        error:"Failed to create subscription {displayName}. {error}",
-                        success:"Successfully created a new subscription {displayName}."
-                    }
-                },
-                edit:{
-                    toast:{
-                        loading:"Updating the Subscription {displayName}...",
-                        error:"Failed to update the Subscription {displayName}. {error}",
-                        success:"Successfully updated the Subscription {displayName}."
-                    }
-                },
-                form:{
-                    configurationsText:"Subscription Configurations",
-                    keySpecificationsText:"Key Specifications",
-                    manufacturedYearText:"Manufactured Year",
-                    priceRangeText:"Price Range",
-                    mileageRangeText:"Mileage Range"
-                }
-            },
-            profile:{
-                edit:{
-                    toast:{
-                        loading:"Updating the user profile...",
-                        error:"Failed to update the user profile. {error}",
-                        success:"Successfully updated the user profile"
-                    }
-                },
-                form:{
-                    LocationDetailsText:"Location Details",
-                    userDetailsText:"User Details",
-                    isDealershipText:"Are you a vehicle dealer or dealership?"
-                }
-            }
-        },
-        filters:{
-            label:"Filters",
-            resetBtn:"Reset Applied Filters",
-            applyFilters:"Apply Filters",
-            applyingFilters:"Applying Filters..."
-        },
-        listingDetails:{
-            viewMore: "View More",
-            viewMoreSimilarTo:"View advertisements that are similar to {title}`",
-            changeCountryBtn:"Change Country",
-            share:{
-                buttonText:"Share",
-                copyLink:" Copy Link",
-                copySuccessToast:"Link successfully copied to clipboard",
-                shareFB:"Share on Facebook",
-                shareTwitter:"Share on Twitter",
-                genericTwitterShareTitle:"Vehicle for Sales"
-            },
-            noFeaturesAvailable:"No features available",
-            details:{
-                email:"Email:",
-                contactNum:"Contact Number:",
-                carDealer:"Car Dealer",
-                description:"Description",
-                location:"Location",
-                price:"Price",
-                priceWithCode:"Price ({code})",
-                negotiable:"Negotiable",
-                keySpecs:"Key Specifications",
-                features:"Features",
-                seller:"Seller",
-                safetyTips:"Safety Tips",
-                safetyTipsDesc:"Protect yourself online. Never share sensitive information like credit/debit card details and OTPs with third parties for a secure vehicle marketplace.",
-                safetyTipsLink:"View all safety Tips",
-                expiryText:"Advert will expire on {date}"
-            }
-        }
-    },
-    appRouter: {
-        landingRoute: {
-            header: { line1: "Drive", line2: "Your", line3: "Dreams" },
-            subHeader: "Effortlessly buy or sell your vehicle on our seamless online marketplace.",
-            viewAllTitle: "View All",
-            viewAllSubtitle: "View all vehicle advertisements available at Targabay",
-        },
-        postedListItemRoute: {
-            relatedAdvertsTitle: "Related Adverts",
-            viewMoreTitle: "View More",
-            viewMoreSubTitle: "View advertisements that are similar to {title}",
-        },
-
-    },
-
-
     form: {
-        title: { label: "Title", placeholder: "Advert Title" },
         name: { label: "Name", placeholder: "Enter your name" },
         email: { label: "Email", placeholder: "user@email.com" },
-        phoneNumber: { label: "Phone Number", placeholder: "0000000000" },
         subject: { label: "Subject", placeholder: "Briefly describe the purpose of your message or inquiry" },
         message: { label: "Message", placeholder: "Type your message or inquiry..." },
-        country: { label: "Country", placeholder: "Select Country" },
-        state: { label: "State/Province", placeholder: "State or Province Name" },
-        city: { label: "City", placeholder: "City Name" },
-        postalCode: { label: "Postal Code", placeholder: "00001" },
-        brand: { label: "Brand", placeholder: "Toyota, Nissan, Honda, etc" },
-        model: { label: "Model", placeholder: "Civic, Sunny, Swift, etc" },
-        trim: { label: "Trim", placeholder: "LX, EX, EX-L, Sport, etc" },
-        minPrice: { label: "Minimum Price", placeholder: "Minimum price",placeholderNum:"1,000,000" },
-        price: { label: "Price", placeholder: "40,000,000" },
-        maxPrice: { label: "Maximum Price", placeholder: "Maximum Price", placeholderNum:"10,000,000" },
-        priceNegotiable: { label: "Is the price negotiable?" },
-        yomStartDate: { label: "Manufactured After", placeholder: "Manufactured after date",placeholderYear:"1990" },
-        yom: { label: "Year of Manufacture", placeholder: "2000" },
-        yomEndDate: { label: "Manufactured Before", placeholder: "Manufactured before date",placeholderYear:"2000" },
-        vehicleType: { label: "Vehicle Type", placeholder: "Select Type", optionalPlaceholder: "All Types" },
-        fuelType: { label: "Fuel Type", placeholder: "Select Fuel Type", optionalPlaceholder: "All fuel types" },
-        condition: { label: "Vehicle Condition", placeholder: "Select Condition", optionalPlaceholder: "All" },
-        transmissionType: { label: "Transmission Type", placeholder: "Select Type", optionalPlaceholder: "All Types" },
-        listingId: { label: "Listing ID", placeholder: "Listing ID" },
-        userId: { label: "User ID", placeholder: "User ID" },
-        yearOfRegistrationStart: { label: "Registered after", placeholderYear: "2010" },
-        yearOfRegistration: { label: "Year of Registration", placeholder: "2010" },
-        yearOfRegistrationEnd: { label: "Registered before", placeholder: "2020" },
-        mileageMin: { label: "Minimum Mileage", placeholderNum: "10,000" },
-        mileage: { label: "Mileage", placeholder: "50,000" },
-        mileageMax: { label: "Maximum Mileage", placeholder: "1,000,000" },
-        engineCapacity: { label: "Engine Capacity", placeholder: "1,500" },
-        listingDescription: { label: "Description", placeholder: "Share more about your vehicle. Highlight its unique features, history, or any additional information that would help potential buyers make an informed decision." },
-        listingStatus:{label:"Status", optionalPlaceholder:"All status types"},
-        startCreatedDate:{label:"Created After", placeholder:" Created after date"},
-        endCreatedDate:{label:"Created Before", placeholder:"Created before date"},
-        subscriptionDisplayName:{label:"Display Name", placeholder:"Name of the subscription"},
-        subscriptionFrequency:{label:"Notification Frequency",placeholder:"Select Frequency",optionalPlaceholder:"All frequencies"},
-        subscriptionExpiry:{label:"Subscription expiry date",placeholder:"01/01/2025"},
-        subscriptionActive:{label:"Active/Inactive",optionalPlaceholder:"All status types"},
-        notificationIsShown:{label:"Type", optionalPlaceholder:"All Notifications", new:"New Notifications", seen:"Seen Notifications"},
-        startNotifications:{label:"From",placeholder:"Notifications from date"},
-        endNotifications:{label:"To",placeholder:"Notifications to date"},
         buttons: {
             submit: { label: "Submit", loading: "Submitting" },
-            create: { label: "Create", loading: "Creating" },
-            update: { label: "Update", loading: "Updating" },
         },
     },
     nav: {
-        home: "Home",
         login: "Login",
         profile: "Profile",
         notifications: "Notifications",
@@ -515,7 +26,6 @@ export default {
         logout: "Logout",
         postYourAdvert: "Post Your Advert",
         footerSubtitle: "Connecting Car Enthusiasts since 2023",
-        adminFunctions: "Admin functions",
         links: {
             social: { title: "Social", facebook: "Facebook", instagram: "Instagram" },
             company: { title: "Company", aboutUs: "About Us", whyChooseUs: "Why Choose Us" },
@@ -523,8 +33,12 @@ export default {
             legal: { title: "Legal", termsOfUse: "Terms Of Use", privacyPolicy: "Privacy Policy", cookiePolicy: "Cookie Policy" },
         },
     },
-
-    // todo: move all below inside app router!
+    landingPage: {
+        header: { line1: "Drive", line2: "Your", line3: "Dreams" },
+        subHeader: "Effortlessly buy or sell your vehicle on our seamless online marketplace.",
+        viewAllTitle: "View All",
+        viewAllSubtitle: "View all vehicle advertisements available at Targabay",
+    },
     aboutUsPage: {
         intro: "Welcome to Targabay, where automotive dreams come to life. Targabay is not just an online vehicle marketplace. it's a vibrant community and a gateway to an extraordinary world of cars. Our mission is to redefine your automotive experience by providing a seamless, transparent, and enjoyable platform for buyers and sellers alike.",
         ourMission: {
@@ -600,7 +114,23 @@ export default {
     },
     contactUsPage: {
         desc: "Please use the form below to reach out to us. We'll get back to you as soon as possible. You can also directly get in touch with us by dropping us a message at {email}. We value your inquiries and are committed to providing swift assistance.",
-
+        form: {
+            toast: {
+                loading: "Submitting contact us form",
+                error: "Failed to submit your message. Please try again in a while",
+                success: "Successfully submitted your message. Our team will get in touch with you soon.",
+            },
+            banner: {
+                success: {
+                    title: "Successfully submitted your message",
+                    subTitle: "Our team will get in touch with you soon",
+                },
+                error: {
+                    title: "Failed to submit form",
+                    subTitle: "Oops, we encountered an unexpected error. Please try again in a while",
+                },
+            },
+        },
         additionalInfo: {
             section1: {
                 title: "Get in Touch",
@@ -831,237 +361,237 @@ export default {
             },
         },
     },
-    termsOfUsePage: {
-        updatedTime: "Last Updated: 18/11/2023",
-        intro: "By accessing and using our online vehicle marketplace, you agree to comply with and be bound by the following terms and conditions. If you do not agree with these terms, please do not use Targabay.",
-        section1: {
-            title: "1. User Agreement",
-            desc: "By using Targabay, you acknowledge that you have read, understood, and agree to be bound by these Terms of Use. If you are using the platform on behalf of a business or other legal entity, you represent that you have the authority to bind that entity to these terms.",
+    termsOfUsePage:{
+        updatedTime:"Last Updated: 18/11/2023",
+        intro:"By accessing and using our online vehicle marketplace, you agree to comply with and be bound by the following terms and conditions. If you do not agree with these terms, please do not use Targabay.",
+        section1:{
+            title:"1. User Agreement",
+            desc:"By using Targabay, you acknowledge that you have read, understood, and agree to be bound by these Terms of Use. If you are using the platform on behalf of a business or other legal entity, you represent that you have the authority to bind that entity to these terms.",
         },
-        section2: {
-            title: "2. Account Creation and Security",
-            subSection1: {
-                title: "2.1 Account Creation",
-                content: "To access certain features of Targabay, such as creating listings or subscriptions, you may be required to log in. Targabay provides the convenience of social logins, including options like Google, to streamline the login process. During your first-ever login, you will be asked to complete your profile details. Please provide this information to ensure a seamless experience with Targabay.",
+        section2:{
+            title:"2. Account Creation and Security",
+            subSection1:{
+                title:"2.1 Account Creation",
+                content:"To access certain features of Targabay, such as creating listings or subscriptions, you may be required to log in. Targabay provides the convenience of social logins, including options like Google, to streamline the login process. During your first-ever login, you will be asked to complete your profile details. Please provide this information to ensure a seamless experience with Targabay.",
             },
-            subSection2: {
-                title: "2.2 Account Security",
-                content: "You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account. Notify us immediately of any unauthorized use of your account or any other breach of security.",
+            subSection2:{
+                title:"2.2 Account Security",
+                content:"You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account. Notify us immediately of any unauthorized use of your account or any other breach of security.",
             },
-            subSection3: {
-                title: "2.3 Account Termination",
-                content: "Targabay reserves the right to terminate or suspend accounts that violate these Terms of Use. Users may appeal account decisions by contacting us. Users also have the right to close their account voluntarily. If you wish to close your account, please reach out to us through the designated contact channels or follow the account closure procedures available on the platform.",
+            subSection3:{
+                title:"2.3 Account Termination",
+                content:"Targabay reserves the right to terminate or suspend accounts that violate these Terms of Use. Users may appeal account decisions by contacting us. Users also have the right to close their account voluntarily. If you wish to close your account, please reach out to us through the designated contact channels or follow the account closure procedures available on the platform.",
             }
         },
-        section3: {
-            title: "3. Listings and Selling",
-            subSection1: {
-                title: "3.1 Listing Policies",
-                content: "Users may list vehicles for sale on Targabay, subject to our listing policies. By creating a listing, you agree to provide accurate and truthful information about the vehicle.",
+        section3:{
+            title:"3. Listings and Selling",
+            subSection1:{
+                title:"3.1 Listing Policies",
+                content:"Users may list vehicles for sale on Targabay, subject to our listing policies. By creating a listing, you agree to provide accurate and truthful information about the vehicle.",
             },
-            subSection2: {
-                title: "3.2 Transaction Process",
-                content: "Users selling vehicles are responsible for carrying out the transactions with the buyer on their own. Targabay facilitates the connection between buyers and sellers but is not responsible for the actual transaction process. Sellers must adhere to the terms specified in their listings and conduct transactions in accordance with applicable laws. Targabay is not responsible for any disputes that may arise between buyers and sellers, and users are encouraged to resolve issues amicably. If disputes cannot be resolved, users may refer to our {safetyTips} for guidance or contact us if needed.",
+            subSection2:{
+                title:"3.2 Transaction Process",
+                content:"Users selling vehicles are responsible for carrying out the transactions with the buyer on their own. Targabay facilitates the connection between buyers and sellers but is not responsible for the actual transaction process. Sellers must adhere to the terms specified in their listings and conduct transactions in accordance with applicable laws. Targabay is not responsible for any disputes that may arise between buyers and sellers, and users are encouraged to resolve issues amicably. If disputes cannot be resolved, users may refer to our {safetyTips} for guidance or contact us if needed.",
             }
         },
-        section4: {
-            title: "4. Buying",
-            desc: "When purchasing a vehicle on Targabay, users agree to:",
-            subSection1: {
-                title: "4.1 Payment",
-                content: "Buyers are responsible for making payments to sellers in a secure manner. Targabay is not involved in the payment process and does not hold any responsibility for financial transactions between buyers and sellers.",
+        section4:{
+            title:"4. Buying",
+            desc:"When purchasing a vehicle on Targabay, users agree to:",
+            subSection1:{
+                title:"4.1 Payment",
+                content:"Buyers are responsible for making payments to sellers in a secure manner. Targabay is not involved in the payment process and does not hold any responsibility for financial transactions between buyers and sellers.",
             },
-            subSection2: {
-                title: "4.2 Disputes",
-                content: "Targabay is not responsible for any disputes that may arise between buyers and sellers during or after the transaction. Users are encouraged to communicate effectively and resolve issues amicably. In case disputes cannot be resolved, users may refer to our {safetyTips} for guidance or contact us if needed.",
+            subSection2:{
+                title:"4.2 Disputes",
+                content:"Targabay is not responsible for any disputes that may arise between buyers and sellers during or after the transaction. Users are encouraged to communicate effectively and resolve issues amicably. In case disputes cannot be resolved, users may refer to our {safetyTips} for guidance or contact us if needed.",
             }
         },
-        section5: {
-            title: "5. Prohibited Activities",
-            desc: "Users are prohibited from engaging in activities that violate applicable laws or these Terms of Use. Prohibited activities include but are not limited to:",
-            subSection1: {
-                title: "5.1 Fraud",
-                content: "Any form of fraudulent activity, including misrepresentation of vehicle details.",
+        section5:{
+            title:"5. Prohibited Activities",
+            desc:"Users are prohibited from engaging in activities that violate applicable laws or these Terms of Use. Prohibited activities include but are not limited to:",
+            subSection1:{
+                title:"5.1 Fraud",
+                content:"Any form of fraudulent activity, including misrepresentation of vehicle details.",
             },
-            subSection2: {
-                title: "5.2 Illegal Activities",
-                content: "Engaging in any illegal activities through the use of Targabay.",
+            subSection2:{
+                title:"5.2 Illegal Activities",
+                content:"Engaging in any illegal activities through the use of Targabay.",
             }
         },
-        section6: {
-            title: "6. Intellectual Property",
-            desc: "Targabay retains ownership of all intellectual property rights related to the platform, including but not limited to:",
-            subSection1: {
-                title: "6.1 Trademarks",
-                content: "Targabay's name, logos, and any other trademarks associated with the platform.",
+        section6:{
+            title:"6. Intellectual Property",
+            desc:"Targabay retains ownership of all intellectual property rights related to the platform, including but not limited to:",
+            subSection1:{
+                title:"6.1 Trademarks",
+                content:"Targabay's name, logos, and any other trademarks associated with the platform.",
             },
-            subSection2: {
-                title: "6.2 Content",
-                content: {
-                    line1: "All content provided on the platform, including text, images, and graphics.",
-                    line2: "Users are not authorized to use Targabay's branding or content without explicit permission."
+            subSection2:{
+                title:"6.2 Content",
+                content:{
+                    line1:"All content provided on the platform, including text, images, and graphics.",
+                    line2:"Users are not authorized to use Targabay's branding or content without explicit permission."
                 },
             }
         },
-        section7: {
-            title: "7. Privacy Policy",
-            desc: "By using Targabay, you agree to the terms outlined in our {privacyPolicy}, which details the collection, use, and protection of user data.",
+        section7:{
+            title:"7. Privacy Policy",
+            desc:"By using Targabay, you agree to the terms outlined in our {privacyPolicy}, which details the collection, use, and protection of user data.",
         },
-        section8: {
-            title: "8. Termination of Accounts",
-            desc1: "Targabay reserves the right to terminate or suspend user accounts for violations of these Terms of Use. Users may appeal account decisions by contacting us. Users also have the right to close their account voluntarily.",
-            desc2: "If you wish to close your account, please reach out to us through the designated contact channels or follow the account closure procedures available on the platform."
+        section8:{
+            title:"8. Termination of Accounts",
+            desc1:"Targabay reserves the right to terminate or suspend user accounts for violations of these Terms of Use. Users may appeal account decisions by contacting us. Users also have the right to close their account voluntarily.",
+            desc2:"If you wish to close your account, please reach out to us through the designated contact channels or follow the account closure procedures available on the platform."
         },
-        section9: {
-            title: "9. Limitation of Liability",
-            subSection1: {
-                title: "9.1 Disclaimer",
-                content: "Targabay is not liable for any damages arising from the use of the platform. We do not warrant the accuracy, completeness, or usefulness of information on the platform.",
+        section9:{
+            title:"9. Limitation of Liability",
+            subSection1:{
+                title:"9.1 Disclaimer",
+                content:"Targabay is not liable for any damages arising from the use of the platform. We do not warrant the accuracy, completeness, or usefulness of information on the platform.",
             },
-            subSection2: {
-                title: "9.2 Indemnification",
-                content: "Users agree to indemnify and hold Targabay and its affiliates harmless from any claims, losses, or damages.",
+            subSection2:{
+                title:"9.2 Indemnification",
+                content:"Users agree to indemnify and hold Targabay and its affiliates harmless from any claims, losses, or damages.",
             }
         },
-        section10: {
-            title: "10. Changes to Terms",
-            desc: "Targabay may update these Terms of Use from time to time. Users will be notified of any changes, and continued use of the platform constitutes acceptance of the revised terms.",
+        section10:{
+            title:"10. Changes to Terms",
+            desc:"Targabay may update these Terms of Use from time to time. Users will be notified of any changes, and continued use of the platform constitutes acceptance of the revised terms.",
         },
     },
-    privacyPolicyPage: {
-        updatedTime: "Last Updated: 18/11/2023",
-        intro: "This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information when you use our online vehicle marketplace. By accessing or using Targabay, you agree to the terms of this Privacy Policy.",
-        section1: {
-            title: "1. Information We Collect",
-            subSection1: {
-                title: "1.1 Personal Information",
-                desc: "We collect personal information that you voluntarily provide when you create an account, update your profile, or engage in transactions on Targabay. This information may include, but is not limited to:",
-                items: [
+    privacyPolicyPage:{
+        updatedTime:"Last Updated: 18/11/2023",
+        intro:"This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information when you use our online vehicle marketplace. By accessing or using Targabay, you agree to the terms of this Privacy Policy.",
+        section1:{
+            title:"1. Information We Collect",
+            subSection1:{
+                title:"1.1 Personal Information",
+                desc:"We collect personal information that you voluntarily provide when you create an account, update your profile, or engage in transactions on Targabay. This information may include, but is not limited to:",
+                items:[
                     "Name: To personalize your Targabay experience.",
                     "Email address: For communication and account verification.",
                     "Contact information: Facilitate transactions and provide customer support.",
                     "Profile details: Enhance your user experience on the platform."
                 ]
             },
-            subSection2: {
-                title: "1.2 Automatically Collected Information",
-                desc: "We may automatically collect certain information when you use Targabay, including:",
-                items: [
+            subSection2:{
+                title:"1.2 Automatically Collected Information",
+                desc:"We may automatically collect certain information when you use Targabay, including:",
+                items:[
                     "Device information: Understand the devices accessing Targabay for optimization.",
                     "Usage data: Analyze how users interact with the platform for improvements.",
                     "Cookies and similar technologies: Enhance user experience and track preferences. For more details on how we use cookies, please refer to our {cookiePolicy}."
                 ]
             }
         },
-        section2: {
-            title: "2. How We Use Your Information",
-            desc: "We use the collected information for the following purposes:",
-            subSection1: {
-                title: "2.1 Providing and Improving Services",
-                items: [
+        section2:{
+            title:"2. How We Use Your Information",
+            desc:"We use the collected information for the following purposes:",
+            subSection1:{
+                title:"2.1 Providing and Improving Services",
+                items:[
                     "Facilitating transactions between buyers and sellers by sharing necessary information.",
                     "Enhancing and customizing user experience based on preferences.",
                     "Developing new features and services to improve the platform."
                 ]
             },
-            subSection2: {
-                title: "2.2 Communication",
-                items: [
+            subSection2:{
+                title:"2.2 Communication",
+                items:[
                     "Sending transaction notifications to keep users informed about their activities on Targabay.",
                     "Providing customer support and responding to inquiries.",
                     "Sending promotional and marketing communications (with user consent) to keep users informed about new features and promotions."
                 ]
             },
-            subSection3: {
-                title: "2.3 Legal Compliance",
-                items: [
+            subSection3:{
+                title:"2.3 Legal Compliance",
+                items:[
                     "Complying with legal obligations and responding to law enforcement requests.",
                     "Enforcing our Terms of Use to ensure a secure and trustworthy platform.",
                 ]
             }
         },
-        section3: {
-            title: "3. Information Sharing",
-            desc: "We may share your information with:",
-            items: [
+        section3:{
+            title:"3. Information Sharing",
+            desc:"We may share your information with:",
+            items:[
                 "Other users as necessary for transactions to occur.",
                 "Third-party service providers assisting in platform operations, such as payment processors.",
                 "Legal authorities to comply with legal requirements."
             ]
         },
-        section4: {
-            title: "4. Data Security",
-            desc: "We take reasonable measures to protect your personal information from unauthorized access, disclosure, alteration, and destruction. These measures include encryption, secure server configurations, and routine security assessments.",
+        section4:{
+            title:"4. Data Security",
+            desc:"We take reasonable measures to protect your personal information from unauthorized access, disclosure, alteration, and destruction. These measures include encryption, secure server configurations, and routine security assessments.",
         },
-        section5: {
-            title: "5. Your Choices",
-            subSection1: {
-                title: "5.1 Account Information",
-                content: "You can update or delete your account information at any time through the account settings on Targabay."
+        section5:{
+            title:"5. Your Choices",
+            subSection1:{
+                title:"5.1 Account Information",
+                content:"You can update or delete your account information at any time through the account settings on Targabay."
             },
-            subSection2: {
-                title: "5.2 Marketing Communications",
-                content: "You can opt out of receiving promotional emails by following the unsubscribe instructions included in the emails."
+            subSection2:{
+                title:"5.2 Marketing Communications",
+                content:"You can opt out of receiving promotional emails by following the unsubscribe instructions included in the emails."
             }
         },
-        section6: {
-            title: "6. Third-Party Links and Services",
-            desc: "Targabay may contain links to third-party websites or services. We are not responsible for their privacy practices, and we encourage you to review their privacy policies before interacting with them.",
+        section6:{
+            title:"6. Third-Party Links and Services",
+            desc:"Targabay may contain links to third-party websites or services. We are not responsible for their privacy practices, and we encourage you to review their privacy policies before interacting with them.",
         },
-        section7: {
-            title: "7. Children's Privacy",
-            desc: "Targabay is not directed to individuals under the age of 13. If you are aware that a child under 13 has provided us with personal information, please contact us, and we will take steps to delete such information.",
+        section7:{
+            title:"7. Children's Privacy",
+            desc:"Targabay is not directed to individuals under the age of 13. If you are aware that a child under 13 has provided us with personal information, please contact us, and we will take steps to delete such information.",
         },
-        section8: {
-            title: "8. Changes to this Privacy Policy",
-            desc: "We may update this Privacy Policy periodically. We will notify users of any material changes by posting the updated policy on Targabay and updating the 'Last Updated' date.",
+        section8:{
+            title:"8. Changes to this Privacy Policy",
+            desc:"We may update this Privacy Policy periodically. We will notify users of any material changes by posting the updated policy on Targabay and updating the 'Last Updated' date.",
         },
-        section9: {
-            title: "9. Contact Us",
-            desc: "If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us at {email}.",
+        section9:{
+            title:"9. Contact Us",
+            desc:"If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us at {email}.",
         },
     },
-    cookiePolicyPage: {
-        updatedTime: "Last Updated: 18/11/2023",
-        intro: "This Cookie Policy explains how we use cookies and similar technologies on our online vehicle marketplace. By using Targabay, you agree to the use of cookies as described in this policy.",
-        section1: {
-            title: "1. What Are Cookies?",
-            content: "Cookies are small text files that are stored on your device (computer, tablet, smartphone) when you visit a website. They are created by the website's server and can only be read by that server. Cookies serve various purposes, such as remembering your preferences, analyzing how you interact with the site, and delivering personalized content."
+    cookiePolicyPage:{
+        updatedTime:"Last Updated: 18/11/2023",
+        intro:"This Cookie Policy explains how we use cookies and similar technologies on our online vehicle marketplace. By using Targabay, you agree to the use of cookies as described in this policy.",
+        section1:{
+            title:"1. What Are Cookies?",
+            content:"Cookies are small text files that are stored on your device (computer, tablet, smartphone) when you visit a website. They are created by the website's server and can only be read by that server. Cookies serve various purposes, such as remembering your preferences, analyzing how you interact with the site, and delivering personalized content."
         },
-        section2: {
-            title: "2. How We Use Cookies",
-            subSection1: {
-                title: "2.1 Essential Cookies",
-                content: "These cookies are necessary for the proper functioning of Targabay. They enable you to navigate our website and use its features, such as accessing secure areas or making transactions. Without these cookies, Targabay may not function properly."
+        section2:{
+            title:"2. How We Use Cookies",
+            subSection1:{
+                title:"2.1 Essential Cookies",
+                content:"These cookies are necessary for the proper functioning of Targabay. They enable you to navigate our website and use its features, such as accessing secure areas or making transactions. Without these cookies, Targabay may not function properly."
             },
-            subSection2: {
-                title: "2.2 Performance Cookies",
-                content: "We use performance cookies to collect information about how visitors use our website. This includes data such as the pages you visit most frequently, the type of device you use, and any error messages you encounter. This information helps us analyze and improve the performance of the website, enhance the user experience, and understand which pages are most and least popular."
+            subSection2:{
+                title:"2.2 Performance Cookies",
+                content:"We use performance cookies to collect information about how visitors use our website. This includes data such as the pages you visit most frequently, the type of device you use, and any error messages you encounter. This information helps us analyze and improve the performance of the website, enhance the user experience, and understand which pages are most and least popular."
             },
-            subSection3: {
-                title: "2.3 Functionality Cookies",
-                content: "Functionality cookies allow the website to remember choices you make (such as your username, language, or region) and provide enhanced, more personalized features. For example, they may remember your login details or the region you are in to provide you with locally relevant content."
+            subSection3:{
+                title:"2.3 Functionality Cookies",
+                content:"Functionality cookies allow the website to remember choices you make (such as your username, language, or region) and provide enhanced, more personalized features. For example, they may remember your login details or the region you are in to provide you with locally relevant content."
             },
-            subSection4: {
-                title: "2.4 Advertising/Targeting Cookies",
-                content: "These cookies are used to deliver advertisements that are more relevant to you and your interests. They may be placed on our website by advertising partners and help limit the number of times you see an advertisement. Additionally, they assist in measuring the effectiveness of our advertising campaigns."
+            subSection4:{
+                title:"2.4 Advertising/Targeting Cookies",
+                content:"These cookies are used to deliver advertisements that are more relevant to you and your interests. They may be placed on our website by advertising partners and help limit the number of times you see an advertisement. Additionally, they assist in measuring the effectiveness of our advertising campaigns."
             }
         },
-        section3: {
-            title: "3. Third-Party Cookies",
-            content: "Targabay may use third-party services, such as analytics tools or advertising networks, which may set their own cookies. These cookies are governed by the privacy policies of the respective third parties. We do not have control over these cookies, and they are used to provide services such as analytics and targeted advertising."
+        section3:{
+            title:"3. Third-Party Cookies",
+            content:"Targabay may use third-party services, such as analytics tools or advertising networks, which may set their own cookies. These cookies are governed by the privacy policies of the respective third parties. We do not have control over these cookies, and they are used to provide services such as analytics and targeted advertising."
         },
-        section4: {
-            title: "4. Managing Cookies",
-            content: "Most web browsers allow you to control cookies through their settings preferences. You can typically find these settings in the 'Options' or 'Preferences' menu of your browser. However, please note that limiting the ability of websites to set cookies may affect your overall user experience, and certain features of Targabay may not function correctly."
+        section4:{
+            title:"4. Managing Cookies",
+            content:"Most web browsers allow you to control cookies through their settings preferences. You can typically find these settings in the 'Options' or 'Preferences' menu of your browser. However, please note that limiting the ability of websites to set cookies may affect your overall user experience, and certain features of Targabay may not function correctly."
         },
-        section5: {
-            title: "5. Changes to This Cookie Policy",
-            content: "We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Any changes will be posted on this page, and the 'Last Updated' date will be revised accordingly. We encourage you to check this page periodically for the latest information on our use of cookies."
+        section5:{
+            title:"5. Changes to This Cookie Policy",
+            content:"We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Any changes will be posted on this page, and the 'Last Updated' date will be revised accordingly. We encourage you to check this page periodically for the latest information on our use of cookies."
         },
-        section6: {
-            title: "6. Contact Us",
-            content: "If you have any questions, concerns, or requests regarding this Cookie Policy, please contact us at {email}."
+        section6:{
+            title:"6. Contact Us",
+            content:"If you have any questions, concerns, or requests regarding this Cookie Policy, please contact us at {email}."
         },
     }
 
