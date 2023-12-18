@@ -29,6 +29,8 @@
 -   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
 -   [] subscription update not working & expiry date not showing
 -   [] fix token not refreshing
+-   [] have `rm public/robots.prod.txt` and `mv public/robots.prod.txt public/robots.txt` to npm scripts
+-   [] show view counter in listings (for owner and admins)
 
 > After deploy
 -   [] Add sentry

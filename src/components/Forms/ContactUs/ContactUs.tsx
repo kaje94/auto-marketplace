@@ -11,9 +11,10 @@ import { validateRecaptchaAction } from "@/actions/recaptchaActions";
 import { AlertCircleIcon, CheckIcon } from "@/icons";
 import { ContactUsSchema } from "@/utils/schemas";
 import { ContactUsSchemaReq } from "@/utils/types";
-import { InputController } from "../FormElements/Input";
-import { TextAreaController } from "../FormElements/TextArea";
+import { InputController } from "../../FormElements/Input";
+import { TextAreaController } from "../../FormElements/TextArea";
 
+/** Contact us form to be used in the contact us page */
 export const ContactUsForm = ({ session }: { session?: Session | null }) => {
     const { executeRecaptcha } = useReCaptcha();
     const toastId = useRef<string>();

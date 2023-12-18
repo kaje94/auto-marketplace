@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 "use client";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
@@ -55,6 +56,7 @@ const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: stri
     </div>
 );
 
+/** Form used to create or edit listing adverts */
 export const ListingForm: FC<Props> = (props) => {
     const {
         featureOptions = [],
@@ -68,6 +70,7 @@ export const ListingForm: FC<Props> = (props) => {
         profile,
         isUpdateProfileEnabled = true,
     } = props;
+
     const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "", setValue } = form as UseFormReturn<CreateListingReq>;
     const [profileModalVisible, setProfileModalVisible] = useState(false);
     const country = watch("location.country");

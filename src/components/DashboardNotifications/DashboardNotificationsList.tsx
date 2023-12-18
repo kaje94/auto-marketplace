@@ -13,12 +13,17 @@ import { NotificationItems, PaginatedResponse } from "@/utils/types";
 import { DashboardNotificationItem } from "./DashboardNotificationItem";
 
 interface Props {
+    /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** Paginated list of notifications to be shown */
     notifications?: PaginatedResponse & NotificationItems;
+    /** To show placeholder notifications during initial render without any data */
     pageLoading?: boolean;
+    /** User details */
     userClaims?: Claims;
 }
 
+/** List of notifications items to be shown in the dashboard */
 export const DashboardNotificationsList: FC<Props> = ({ notifications, pageLoading, basePath, userClaims }) => {
     const hasNewNotifications = notifications?.items?.some((item) => !item.isShown);
     const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardMySubscriptionsContext();

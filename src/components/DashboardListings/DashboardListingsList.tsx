@@ -6,19 +6,25 @@ import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { Dispatch, FC, SetStateAction } from "react";
 import { Empty, Pagination } from "@/components/Common";
-import { useDashboardAllSubscriptionsContext } from "@/providers/DashboardAllSubscriptionsProvider";
-import { useDashboardMySubscriptionsContext } from "@/providers/DashboardMySubscriptionsContextProvider";
+import { useDashboardAllListingsContext } from "@/providers/DashboardAllListingsContextProvider";
+import { useDashboardMyListingsContext } from "@/providers/DashboardMyListingsContextProvider";
 import { ListingItems, PaginatedResponse } from "@/utils/types";
 import { DashboardListingItem } from "./DashboardListingItem";
 
 interface Props {
+    /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** Boolean field to change the text to be shown within the empty component */
     hasSearchParams?: boolean;
+    /** Paginated list of listings to be shown */
     listings?: PaginatedResponse & ListingItems;
+    /** To show placeholder listings during initial render without any data */
     pageLoading?: boolean;
+    /** User details to figure enable/disable author and admin functionalities */
     userClaims?: Claims;
 }
 
+/** List of listing items to be shown in the dashboard */
 export const DashboardListingsList: FC<
     Props & { isLoading: boolean; searchParamsObj: Record<string, string>; setNewSearchQuery: Dispatch<SetStateAction<string>> }
 > = ({ userClaims, listings, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
@@ -60,8 +66,9 @@ export const DashboardListingsList: FC<
     );
 };
 
+/** DashboardListingsList bound with my listing context */
 export const DashboardMyListingsList: FC<Props> = (props) => {
-    const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardMySubscriptionsContext();
+    const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardMyListingsContext();
 
     return (
         <DashboardListingsList
@@ -74,8 +81,9 @@ export const DashboardMyListingsList: FC<Props> = (props) => {
     );
 };
 
+/** DashboardListingsList bound with all listing context */
 export const DashboardAllListingsList: FC<Props> = (props) => {
-    const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardAllSubscriptionsContext();
+    const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardAllListingsContext();
 
     return (
         <DashboardListingsList

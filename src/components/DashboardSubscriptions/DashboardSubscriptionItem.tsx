@@ -13,17 +13,22 @@ import {
 } from "@/utils/helpers";
 import { ListingSubscriptionItem } from "@/utils/types";
 
+/** Lazily loaded context menu */
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {
     loading: () => <ContextMenuLoading />,
     ssr: false,
 });
 
 interface Props {
+    /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** Details of a particular subscription item */
     listingSubscriptionItem?: ListingSubscriptionItem;
+    /** Whether or not to show the placeholder data */
     loading?: boolean;
 }
 
+/** To represent an individual subscription item within the subscription list */
 export const DashboardSubscriptionItem: FC<Props> = (props) => {
     const { listingSubscriptionItem = {}, loading, basePath } = props;
     const {

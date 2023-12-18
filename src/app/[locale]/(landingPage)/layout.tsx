@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { displayFont } from "@/app/fonts";
 import { SiteLinkSearchBox } from "@/components/Common/SiteLinkSearchBox";
-import { LandingHeroSearch } from "@/components/LandingSections/LandingHeroSearch";
+import { LandingHeroSearch } from "@/components/Forms/LandingHeroSearch";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (

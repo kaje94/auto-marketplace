@@ -51,11 +51,7 @@ export const ProfileForm: FC<Props> = (props) => {
         value: COUNTRIES[key]?.[0]!,
     }));
 
-    const {
-        data: states = [],
-        isFetching: isLoadingStates,
-        isError: stateFetchError,
-    } = useQuery({
+    const { data: states = [], isFetching: isLoadingStates } = useQuery({
         queryFn: () => getStatesOfCountry(countryCode!),
         enabled: !!countryCode,
         queryKey: ["country-states", { locale: countryCode }],
@@ -71,11 +67,7 @@ export const ProfileForm: FC<Props> = (props) => {
 
     const stateCode = states.find((item) => item.name === state)?.stateCode;
 
-    const {
-        data: cityList = [],
-        isFetching: isLoadingCities,
-        isError: cityFetchError,
-    } = useQuery({
+    const { data: cityList = [], isFetching: isLoadingCities } = useQuery({
         queryFn: () => getCitiesOfState(countryCode!, stateCode!),
         enabled: !!countryCode && !!stateCode,
         queryKey: ["country-state-cities", { locale: countryCode, stateCode }],

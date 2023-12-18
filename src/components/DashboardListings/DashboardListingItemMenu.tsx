@@ -10,11 +10,15 @@ import { ListingStatusTypes } from "@/utils/enum";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
+    /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** To enable admin functions */
     isAdmin?: boolean;
+    /** Details of a particular listing item */
     listingItem?: ListingItem;
 }
 
+/** Context menu attached to a listing item */
 export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin, basePath }) => {
     const { id: listingId, status } = listingItem as ListingItem;
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);

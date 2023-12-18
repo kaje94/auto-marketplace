@@ -6,10 +6,13 @@ import { getRandomItem, timeAgo } from "@/utils/helpers";
 import { NotificationItem } from "@/utils/types";
 
 interface Props {
+    /** Whether or not to show the placeholder data */
     loading?: boolean;
+    /** Details of a particular notification item */
     notificationItem?: NotificationItem;
 }
 
+/** To represent an individual notification item within the notification list */
 export const DashboardNotificationItem: FC<Props> = (props) => {
     const { notificationItem = {}, loading } = props;
     const { title, body, createdOn, isShown, redirectUrl, id } = notificationItem as NotificationItem;

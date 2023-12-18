@@ -28,7 +28,7 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
             placeholder={(blurDataURL as `data:image/${string}`) || "empty"}
             priority={false}
             src={image?.name!}
-            style={{ background: image?.averageColor }}
+            style={{ background: image?.color }}
             width={width}
             {...rest}
         />

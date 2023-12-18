@@ -81,7 +81,6 @@ export const VehicleImageSchema = z.object({
     // locale file properties
     file: z.any().optional(),
     preview: z.string().optional(),
-    averageColor: z.string().optional(),
     deleted: z.boolean().default(false).optional(),
 });
 

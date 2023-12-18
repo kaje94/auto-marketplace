@@ -8,18 +8,24 @@ import { ListingStatusTypes } from "@/utils/enum";
 import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 
+/** Lazily loaded context menu */
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
     loading: () => <ContextMenuLoading />,
     ssr: false,
 });
 
 interface Props {
+    /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** To enable admin functions */
     isAdmin?: boolean;
+    /** Details of a particular listing item */
     listingItem?: ListingItem;
+    /** Whether or not to show the placeholder data */
     loading?: boolean;
 }
 
+/** To represent an individual listing item within the listing list */
 export const DashboardListingItem: FC<Props> = (props) => {
     const { basePath, listingItem = {}, loading, isAdmin } = props;
     const { title, price, description, status, id, vehicle, location, createdOn, expiryDate } = listingItem as ListingItem;

@@ -11,12 +11,17 @@ import { ListingSubscriptionItems, PaginatedResponse } from "@/utils/types";
 import { DashboardSubscriptionItem } from "./DashboardSubscriptionItem";
 
 interface Props {
+    /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** Boolean field to change the text to be shown within the empty component */
     hasSearchParams?: boolean;
+    /** Paginated list of subscriptions to be shown */
     listingSubscriptions?: PaginatedResponse & ListingSubscriptionItems;
+    /** To show placeholder subscriptions during initial render without any data */
     pageLoading?: boolean;
 }
 
+/** List of subscription items to be shown in the dashboard */
 export const DashboardSubscriptionList: FC<
     Props & { isLoading: boolean; searchParamsObj: Record<string, string>; setNewSearchQuery: Dispatch<SetStateAction<string>> }
 > = ({ listingSubscriptions, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
@@ -58,6 +63,7 @@ export const DashboardSubscriptionList: FC<
     );
 };
 
+/** DashboardListingsList bound with my subscription context */
 export const DashboardMySubscriptionList: FC<Props> = (props) => {
     const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardMySubscriptionsContext();
 
@@ -72,6 +78,7 @@ export const DashboardMySubscriptionList: FC<Props> = (props) => {
     );
 };
 
+/** DashboardListingsList bound with all subscription context */
 export const DashboardAllSubscriptionList: FC<Props> = (props) => {
     const { isLoading, searchParamsObj, setNewSearchQuery, hasSearchParams } = useDashboardAllSubscriptionsContext();
 

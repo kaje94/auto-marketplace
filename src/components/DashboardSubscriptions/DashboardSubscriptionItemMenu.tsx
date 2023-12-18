@@ -7,10 +7,13 @@ import { BellIcon, BellOffIcon, EditIcon, TrashIcon } from "@/icons";
 import { ListingSubscriptionItem } from "@/utils/types";
 
 interface Props {
+    /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** Details of a particular subscription item */
     listingSubscriptionItem?: ListingSubscriptionItem;
 }
 
+/** Context menu attached to a subscription item */
 export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionItem = {}, basePath }) => {
     const { id, active } = listingSubscriptionItem as ListingSubscriptionItem;
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);

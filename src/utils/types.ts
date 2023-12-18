@@ -96,6 +96,7 @@ export type ListingItem = {
     user?: ListingUser;
     userId?: string;
     vehicle: Vehicle;
+    views?: number;
 };
 
 export type ListingSubscriptionItem = {

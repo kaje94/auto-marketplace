@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { LinkWithLocale } from "@/components/Common";
-import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { InputController } from "@/components/FormElements/Input";
 import { SelectController } from "@/components/FormElements/Select";
 import { SearchIcon } from "@/icons";
