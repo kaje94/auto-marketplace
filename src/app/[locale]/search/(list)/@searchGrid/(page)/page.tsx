@@ -1,7 +1,7 @@
 import { Metadata, ResolvingMetadata } from "next";
 import { redirect } from "next/navigation";
 import qs from "query-string";
-import { SearchGrid } from "@/components/Search";
+import { SearchGrid } from "@/components/Listings/PostedListingsSearchGrid";
 import { api } from "@/utils/api";
 import { COUNTRIES } from "@/utils/countries";
 import {

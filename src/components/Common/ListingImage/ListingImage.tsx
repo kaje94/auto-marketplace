@@ -1,6 +1,7 @@
 "use client";
 import Image, { ImageProps } from "next/image";
 import { FC, useEffect, useState } from "react";
+import { AlertCircleIcon } from "@/icons";
 import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyTitleUrl } from "@/utils/helpers";
 import { Location, VehicleImageType } from "@/utils/types";
 
@@ -12,6 +13,7 @@ interface Props extends Omit<ImageProps, "src" | "alt"> {
 
 export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest }) => {
     const [blurDataURL, setBlurDataURL] = useState<string | undefined>("");
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         if (image?.hash) {
@@ -22,15 +24,26 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
     const seoFriendlyName = toSEOFriendlyTitleUrl(title, location);
 
     return (
-        <Image
-            alt={seoFriendlyName}
-            loader={({ src, width, quality }) => convertToSEOFriendlyImageURL(src, seoFriendlyName, quality, width)}
-            placeholder={(blurDataURL as `data:image/${string}`) || "empty"}
-            priority={false}
-            src={image?.name!}
-            style={{ background: image?.averageColor }}
-            width={width}
-            {...rest}
-        />
+        <span className="relative flex h-full w-full items-center justify-center">
+            <Image
+                alt={seoFriendlyName}
+                loader={({ src, width, quality }) => convertToSEOFriendlyImageURL(src, seoFriendlyName, quality, width)}
+                placeholder={(blurDataURL as `data:image/${string}`) || "empty"}
+                priority={false}
+                src={hasError && blurDataURL ? blurDataURL : image?.name!}
+                style={{ background: image?.color }}
+                width={width}
+                onError={() => setHasError(true)}
+                {...rest}
+            />
+            {hasError && (
+                <div className="absolute flex flex-col items-center justify-center gap-2 opacity-75">
+                    <AlertCircleIcon height={(width as number) * 0.2} width={(width as number) * 0.2} />
+                    <span className="font-semibold" style={{ fontSize: (width as number) * 0.05 }}>
+                        Image Unavailable
+                    </span>
+                </div>
+            )}
+        </span>
     );
 };

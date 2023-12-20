@@ -1,5 +1,5 @@
 import { BreadCrumbs } from "@/components/Common";
-import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
+import { ListingDetailBanner, ListingDetails } from "@/components/Listings/ListingDetails";
 
 export default function Loading() {
     return (

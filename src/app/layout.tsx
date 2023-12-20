@@ -1,8 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import type { Metadata, Viewport } from "next";
-import { Footer } from "@/components/LayoutElements/Footer";
-import { NavBar } from "@/components/LayoutElements/NavBar";
-import { ScrollToTop } from "@/components/LayoutElements/ScrollToTop";
+import { Footer, ScrollToTop } from "@/components/Common";
+import { NavBar } from "@/components/Common/NavBar";
 import { env } from "@/env.mjs";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ChildrenProps } from "@/utils/types";

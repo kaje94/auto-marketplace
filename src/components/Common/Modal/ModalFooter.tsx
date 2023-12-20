@@ -4,7 +4,7 @@ import { FC } from "react";
 interface Props {
     loading?: boolean;
     onSubmit?: () => void;
-    onVisibleChange: (visible: boolean) => void;
+    onVisibleChange?: (visible: boolean) => void;
     primaryButton?: {
         classNames?: string;
         text?: string;
@@ -16,7 +16,14 @@ export const ModalFooter: FC<Props> = ({ onVisibleChange, primaryButton, loading
     return (
         <div className="mt-6 flex justify-end gap-3">
             {showCancel && (
-                <button className="btn btn-ghost" onClick={() => onVisibleChange(false)}>
+                <button
+                    className="btn btn-ghost"
+                    onClick={() => {
+                        if (onVisibleChange) {
+                            onVisibleChange(false);
+                        }
+                    }}
+                >
                     Cancel
                 </button>
             )}

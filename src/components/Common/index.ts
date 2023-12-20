@@ -9,4 +9,7 @@ export { Modal, ModalFooter } from "./Modal";
 export { ContextMenu, ContextMenuLoading } from "./ContextMenu";
 export { LinkWithLocale } from "./LinkWithLocale";
 export { Logo } from "./Logo";
+export { Footer } from "./Footer";
+export { ScrollToTop } from "./ScrollToTop";
+
 export type { ContextMenuItemProp } from "./ContextMenu";

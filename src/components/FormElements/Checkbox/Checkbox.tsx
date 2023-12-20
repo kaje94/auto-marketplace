@@ -24,7 +24,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
             )}
             onClick={(event) => event.stopPropagation()}
         >
-            <span className="label-text">{label}</span>
+            <span className="label-text mr-1">{label}</span>
             <input
                 className={clsx("checkbox checkbox-md border-2", loading && "animate-pulse !bg-base-300", checkboxClassNames)}
                 disabled={loading || disabled}

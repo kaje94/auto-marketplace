@@ -8,7 +8,7 @@ interface Props {
     onVisibleChange: (visible: boolean) => void;
     title?: string;
     titleClassNames?: string;
-    visible: boolean;
+    visible?: boolean;
 }
 
 export const Modal: FC<PropsWithChildren<Props>> = ({

@@ -1,9 +1,9 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
 import { redirect } from "next/navigation";
 import qs from "query-string";
-import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardNotificationsFilterButton } from "@/components/DashboardListHeader/DashboardNotificationsFilterButton";
-import { DashboardNotificationsList } from "@/components/DashboardNotifications";
+import { DashboardListHeader } from "@/components/Dashboard/DashboardListHeader";
+import { DashboardNotificationsFilterButton } from "@/components/Dashboard/DashboardListHeader/DashboardNotificationsFilterButton";
+import { DashboardNotificationsList } from "@/components/Dashboard/DashboardNotifications";
 import { DashboardNotificationsContextProvider } from "@/providers/DashboardNotificationsContextProvider";
 import { api } from "@/utils/api";
 import { DashboardNotificationsFilterSchema } from "@/utils/schemas";

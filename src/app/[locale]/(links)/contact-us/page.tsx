@@ -4,7 +4,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale } from "@/components/Common";
-import { ContactUsForm } from "@/components/ContactUsForm";
+import { ContactUsForm } from "@/components/Forms/ContactUs";
 import { env } from "@/env.mjs";
 import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
 

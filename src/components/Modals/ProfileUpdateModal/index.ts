@@ -1,0 +1,1 @@
+export { ProfileUpdateModal } from "./ProfileUpdateModal";
