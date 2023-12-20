@@ -9,6 +9,7 @@ import {
     VehicleTypes,
 } from "./enum";
 import {
+    LabelValue,
     ListingItem,
     ListingItems,
     ListingSubscriptionItem,
@@ -24,6 +25,23 @@ import {
 } from "./types";
 
 export const mockProfilePic = "https://picsum.photos/id/64/200/200";
+
+export const mockUserLocation: Location = { city: "Colombo", state: "Western Province", postalCode: "00001", country: "LK" };
+
+export const mockProfileData: ListingUser = {
+    userId: "abc",
+    firstName: "UserFirstName",
+    lastName: "UserLastName",
+    fullName: "FirstName LastName",
+    picture: mockProfilePic,
+    isDealership: false,
+    address: mockUserLocation,
+    userName: null,
+    email: "user@gmail.com",
+    phone: "0123456789",
+    emailConfirmed: true,
+    phoneConfirmed: true,
+};
 
 export const mockVehicleImage1: VehicleImageType = {
     id: "a510d79d-4f91-4423-b47d-8861ab93460a",
@@ -78,6 +96,7 @@ export const mockListingItem: ListingItem = {
     userId: "google-oauth2|102660616863297459617",
     createdOn: "2023-12-17T12:37:40.502928+00:00",
     views: 2,
+    user: mockProfileData,
 };
 
 export const mockListingsResponse: PaginatedResponse & ListingItems = {
@@ -221,19 +240,8 @@ export const mockVehicleFeatures: VehicleFeature[] = [
     { id: "ce66066e-b3af-48d7-8ff7-6711c0b6ac3d", name: "WINKER MIRRORS" },
 ];
 
-export const mockUserLocation: Location = { city: "Colombo", state: "Western Province", postalCode: "00001", country: "LK" };
-
-export const mockProfileData: ListingUser = {
-    userId: "abc",
-    firstName: "UserFirstName",
-    lastName: "UserLastName",
-    fullName: "FirstName LastName",
-    picture: mockProfilePic,
-    isDealership: false,
-    address: mockUserLocation,
-    userName: null,
-    email: "user@gmail.com",
-    phone: "0123456789",
-    emailConfirmed: true,
-    phoneConfirmed: true,
-};
+export const mockLabelValue: LabelValue[] = [
+    { label: "Option 1", value: "Option 1" },
+    { label: "Option 2", value: "Option 2" },
+    { label: "Option 3", value: "Option 3" },
+];

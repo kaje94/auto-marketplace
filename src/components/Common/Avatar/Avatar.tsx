@@ -42,7 +42,7 @@ export const Avatar: FC<Props> = memo(({ url, width, name, loading }) => {
             <div className={clsx("avatar placeholder absolute inset-0 h-full w-full overflow-hidden", hasError || !url ? "block" : "hidden")}>
                 <div className={clsx("h-full w-full rounded-full bg-neutral-800 text-neutral-content", loading && "animate-pulse bg-opacity-20")}>
                     {name ? (
-                        <span style={{ fontSize: width * 0.6 }}>{generateInitialsFromName(name)}</span>
+                        <span style={{ fontSize: width * 0.45 }}>{generateInitialsFromName(name)}</span>
                     ) : (
                         <UserIcon style={{ width: width * 0.6, height: width * 0.6 }} />
                     )}

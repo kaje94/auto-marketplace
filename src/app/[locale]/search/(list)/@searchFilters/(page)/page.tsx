@@ -1,4 +1,4 @@
-import { SearchFilters } from "@/components/Search";
+import { SearchFilters } from "@/components/Listings/PostedListingsSearchFilters";
 import { api } from "@/utils/api";
 import { LocalePathParam } from "@/utils/types";
 

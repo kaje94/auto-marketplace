@@ -1,7 +1,7 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
 import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
-import { ListingDetailBanner, ListingDetails } from "@/components/ListingDetails";
+import { ListingDetailBanner, ListingDetails } from "@/components/Listings/ListingDetails";
 import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";

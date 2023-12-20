@@ -1,6 +1,6 @@
 import { BreadCrumbs } from "@/components/Common";
-import { ListingDetails } from "@/components/ListingDetails";
-import { ListingsCarousel } from "@/components/ListingsCarousel";
+import { ListingDetails } from "@/components/Listings/ListingDetails";
+import { ListingsCarousel } from "@/components/Listings/ListingsCarousel";
 
 export default function Loading() {
     return (

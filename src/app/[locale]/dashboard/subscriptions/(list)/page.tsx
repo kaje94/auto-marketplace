@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import qs from "query-string";
-import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardAllSubscriptionFilterButton } from "@/components/DashboardListHeader/DashboardAllSubscriptionFilterButton";
-import { DashboardAllSubscriptionList } from "@/components/DashboardSubscriptions/DashboardSubscriptionList";
+import { DashboardListHeader } from "@/components/Dashboard/DashboardListHeader";
+import { DashboardAllSubscriptionFilterButton } from "@/components/Dashboard/DashboardListHeader/DashboardAllSubscriptionFilterButton";
+import { DashboardAllSubscriptionList } from "@/components/Dashboard/DashboardSubscriptions/DashboardSubscriptionList";
 import { DashboardAllSubscriptionsProvider } from "@/providers/DashboardAllSubscriptionsProvider";
 import { api } from "@/utils/api";
 import { DashboardSubscriptionFilterSchema } from "@/utils/schemas";
