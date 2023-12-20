@@ -4,7 +4,7 @@ import { mockListingItem } from "@/utils/mockData";
 import { ListingDetails } from "./ListingDetails";
 
 const meta = {
-    title: "Listings/Details",
+    title: "Listings/ListingDetails",
     component: ListingDetails,
     tags: ["autodocs"],
     parameters: {
