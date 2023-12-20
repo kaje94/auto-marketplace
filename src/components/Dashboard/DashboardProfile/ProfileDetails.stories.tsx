@@ -7,12 +7,6 @@ const meta = {
     title: "Dashboard/ProfileDetails",
     component: ProfileDetails,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-    },
 } satisfies Meta<typeof ProfileDetails>;
 
 export default meta;

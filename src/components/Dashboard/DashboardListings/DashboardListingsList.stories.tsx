@@ -7,12 +7,6 @@ const meta = {
     title: "Dashboard/ListingsList",
     component: DashboardListingsList,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-    },
 } satisfies Meta<typeof DashboardListingsList>;
 
 export default meta;

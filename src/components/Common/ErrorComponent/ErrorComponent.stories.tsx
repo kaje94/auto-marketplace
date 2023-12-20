@@ -7,13 +7,7 @@ const meta = {
     title: "Common/ErrorComponent",
     component: ErrorComponent,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
 } satisfies Meta<typeof ErrorComponent>;
 
 export default meta;

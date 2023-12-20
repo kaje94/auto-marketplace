@@ -7,13 +7,7 @@ const meta = {
     title: "Listings/ListingDetails",
     component: ListingDetails,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "fullscreen",
-    },
+    parameters: { layout: "fullscreen" },
     decorators: [(Story) => <div className="p-5">{Story()}</div>],
 } satisfies Meta<typeof ListingDetails>;
 

@@ -7,13 +7,7 @@ const meta = {
     title: "Common/NavBar",
     component: NavBarClient,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "fullscreen",
-    },
+    parameters: { layout: "fullscreen" },
 } satisfies Meta<typeof NavBarClient>;
 
 export default meta;

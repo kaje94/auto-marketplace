@@ -6,13 +6,7 @@ const meta = {
     title: "Common/Pagination",
     component: Pagination,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
     decorators: [(Story) => <div className="h-60 w-80">{Story()}</div>],
 } satisfies Meta<typeof Pagination>;
 

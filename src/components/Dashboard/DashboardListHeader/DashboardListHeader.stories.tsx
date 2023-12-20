@@ -7,12 +7,6 @@ const meta = {
     title: "Dashboard/ListHeader",
     component: DashboardListHeader,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-    },
     decorators: [
         (Story, ctx) => {
             return (

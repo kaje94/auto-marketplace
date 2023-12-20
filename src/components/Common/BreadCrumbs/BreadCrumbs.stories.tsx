@@ -7,13 +7,7 @@ const meta = {
     title: "Common/BreadCrumbs",
     component: BreadCrumbs,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
 } satisfies Meta<typeof BreadCrumbs>;
 
 export default meta;

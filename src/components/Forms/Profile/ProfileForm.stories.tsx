@@ -22,12 +22,6 @@ const meta = {
             return <Story args={{ ...ctx.args, form: form }} />;
         },
     ],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-    },
 } satisfies Meta<typeof ProfileForm>;
 
 export default meta;

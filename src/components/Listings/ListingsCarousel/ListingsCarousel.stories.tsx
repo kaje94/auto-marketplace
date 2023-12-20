@@ -7,13 +7,7 @@ const meta = {
     title: "Listings/ListingsCarousel",
     component: ListingsCarousel,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "fullscreen",
-    },
+    parameters: { layout: "fullscreen" },
     decorators: [(Story) => <div className="p-5">{Story()}</div>],
 } satisfies Meta<typeof ListingsCarousel>;
 

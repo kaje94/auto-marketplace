@@ -7,13 +7,7 @@ const meta = {
     title: "Dashboard/DashboardSideBar",
     component: DashboardSideBarItems,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
 } satisfies Meta<typeof DashboardSideBarItems>;
 
 export default meta;

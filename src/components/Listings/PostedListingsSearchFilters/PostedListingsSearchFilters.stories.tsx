@@ -7,13 +7,7 @@ const meta = {
     title: "Listings/PostedListingsSearchFilters",
     component: PostedListingsSearchFilters,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
     decorators: [(Story) => <div className="p-5">{Story()}</div>],
 } satisfies Meta<typeof PostedListingsSearchFilters>;
 

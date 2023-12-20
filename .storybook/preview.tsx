@@ -13,6 +13,10 @@ const preview: Preview = {
                 date: /Date$/i,
             },
         },
+        nextjs: {
+            appDirectory: true,
+            navigation: { segments: [["locale", "LK"]] },
+        },
     },
     decorators: [(Story) => <div className={standardFont.className}>{Story()}</div>, (Story) => <ReactQueryProvider>{Story()}</ReactQueryProvider>],
 };

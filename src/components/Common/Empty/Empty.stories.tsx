@@ -7,13 +7,7 @@ const meta = {
     title: "Common/Empty",
     component: Empty,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
 } satisfies Meta<typeof Empty>;
 
 export default meta;

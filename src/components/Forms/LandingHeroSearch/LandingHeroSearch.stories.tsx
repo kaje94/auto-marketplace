@@ -6,13 +6,7 @@ const meta = {
     title: "Forms/LandingHeroSearch",
     component: LandingHeroSearch,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "centered",
-    },
+    parameters: { layout: "centered" },
 } satisfies Meta<typeof LandingHeroSearch>;
 
 export default meta;

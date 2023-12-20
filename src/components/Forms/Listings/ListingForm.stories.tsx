@@ -26,12 +26,6 @@ const meta = {
             return <Story args={{ ...ctx.args, form: form, featureOptions: mockVehicleFeatures, vehicleBrands: mockVehicleBrands }} />;
         },
     ],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-    },
 } satisfies Meta<typeof ListingForm>;
 
 export default meta;

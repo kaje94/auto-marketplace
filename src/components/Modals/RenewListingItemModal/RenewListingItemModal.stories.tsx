@@ -7,13 +7,7 @@ const meta = {
     title: "Modals/RenewListingItemModal",
     component: RenewListingItemModal,
     tags: ["autodocs"],
-    parameters: {
-        nextjs: {
-            appDirectory: true,
-            navigation: { segments: [["locale", "LK"]] },
-        },
-        layout: "fullscreen",
-    },
+    parameters: { layout: "fullscreen" },
     decorators: [(Story) => <div className="h-[50vh] w-[50vw]">{Story()}</div>],
 } satisfies Meta<typeof RenewListingItemModal>;
 
