@@ -3,7 +3,9 @@
 Welcome to the Auto Marketplace Client project! This platform is designed to provide users with a seamless and intuitive experience for buying and selling vehicles online.
 
 <p align="center">
-    <img alt="preview-image" src="public/images/banner.jpg" width="1024">
+    <a href="https://auto-marketplace.vercel.app">
+      <img alt="preview-image" src="public/images/banner.jpg" width="1024">
+    </a>
 </p>
 
 ## Features
@@ -49,7 +51,7 @@ To run the project locally, you need to have the backend set up separately. For 
 
 ## Contributing
 
-We welcome contributions! If you'd like to contribute to the client-side code or have questions about the project, please follow our [contribution guidelines](CONTRIBUTING.md).
+We welcome contributions! If you'd like to contribute to the client-side code or have questions about the project, please follow our [contribution guidelines](.github/CONTRIBUTING.md).
 
 ## License
 
