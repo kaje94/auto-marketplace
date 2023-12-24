@@ -8,7 +8,7 @@ Please note that this project follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Reporting Issues
 
-If you encounter a bug, have a suggestion for improvement, or any other issue, please [open an issue](https://github.com/your-username/auto-marketplace-client/issues) on GitHub. Provide detailed information about the problem, including steps to reproduce it.
+If you encounter a bug, have a suggestion for improvement, or any other issue, please [open an issue](https://github.com/kaje94/auto-marketplace-client/issues) on GitHub. Provide detailed information about the problem, including steps to reproduce it.
 
 ## Feature Requests
 
@@ -16,7 +16,7 @@ If you have an idea for a new feature, please open an issue to discuss it. We va
 
 ## Development Setup
 
-To set up the project locally for development, follow the steps outlined in the [Getting Started](README.md#getting-started) section of the README.
+To set up the project locally for development, follow the steps outlined in the [Getting Started](../README.md#getting-started) section of the README.
 
 ### Development Workflow
 
@@ -46,6 +46,6 @@ Please adhere to the existing code style in the project. If there's a specific s
 
 ## License
 
-By contributing to this project, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+By contributing to this project, you agree that your contributions will be licensed under the [MIT License](../LICENSE).
 
 Thank you for contributing! 🚀
