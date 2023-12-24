@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { api } from "@/utils/api";
 import { NavBarClient } from "./NavBarClient";
 
+/** Navbar component with data fetched within a suspense wrapper */
 export const NavBar = async () => {
     return (
         <Suspense fallback={<NavBarClient loading />}>
@@ -12,6 +13,7 @@ export const NavBar = async () => {
     );
 };
 
+/** Navbar component with data fetched from the server side and will fallback to default navbar if user is not logged in or an error is encountered */
 const NavBarWithSession = async () => {
     try {
         const session = await getSession();

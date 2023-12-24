@@ -3,6 +3,7 @@ import Link, { LinkProps } from "next/link";
 import { useParams } from "next/navigation";
 import { FC } from "react";
 
+/** Custom link component that will always redirect to the country specific route within the webapp */
 export const LinkWithLocale: FC<
     React.AnchorHTMLAttributes<HTMLAnchorElement> &
         LinkProps & {

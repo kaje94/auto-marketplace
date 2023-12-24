@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CountrySelectModal } from "@/components/Modals/CountrySelectModal";
 import { COUNTRIES } from "@/utils/countries";
 
+/** Country select button shown in the nav bar */
 export const NavBarCountryBtn = () => {
     const [CountrySelectModalVisible, setCountrySelectModalVisible] = useState(false);
     const params = useParams();

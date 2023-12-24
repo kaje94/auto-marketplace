@@ -8,8 +8,10 @@ import { ListingUser } from "@/utils/types";
 import { NavBarAuth } from "./NavBarAuth";
 import { PostAddLink, SearchLink } from "./NavBarButtons";
 
+/** Lazily loaded new user onboard modal */
 const NewUserOnboardModal = dynamic(() => import("@/components/Modals/NewUserOnboardModal").then((mod) => mod.NewUserOnboardModal), { ssr: false });
 
+/** Lazily loaded country select button */
 const NavBarCountryBtn = dynamic(() => import("./NavBarCountryBtn").then((mod) => mod.NavBarCountryBtn), {
     loading: () => (
         <button className="btn btn-square !btn-neutral btn-sm animate-pulse opacity-70 " disabled>
@@ -19,15 +21,20 @@ const NavBarCountryBtn = dynamic(() => import("./NavBarCountryBtn").then((mod) =
     ssr: false,
 });
 
+/** Nav bar component used throughout the web app */
 export const NavBarClient = ({
     userClaims,
     loading,
     notificationCount,
     userData,
 }: {
+    /** Indicate whether user details are being loaded */
     loading?: boolean;
+    /** Notification count shown in the navbar */
     notificationCount?: number;
+    /** User claims is needed to figure out whether its a new user or not and show the new user onboard modal. */
     userClaims?: Claims;
+    /** Details of the logged in user */
     userData?: ListingUser;
 }) => {
     const params = useParams();

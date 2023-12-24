@@ -21,6 +21,7 @@ const structuredData = {
         "Effortlessly find your perfect vehicle on Targabay's marketplace. Explore diverse cars, bikes, and more with our intuitive search. Targabay simplifies the search for a seamless and personalized experience.",
 };
 
+/** Site search link to be used by search engines */
 export const SiteLinkSearchBox: FC = () => {
     return <Script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} id="site-link-search" type="application/ld+json" />;
 };

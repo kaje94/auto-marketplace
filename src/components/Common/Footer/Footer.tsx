@@ -3,6 +3,7 @@ import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 import { LinkWithLocale, Logo } from "@/components/Common";
 
+/** Common footer layout component that will be shown throughout the webapp */
 export const Footer: FC = () => {
     const pathName = usePathname();
     const params = useParams();

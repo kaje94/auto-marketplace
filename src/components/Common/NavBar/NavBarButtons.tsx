@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { LinkWithLocale } from "@/components/Common";
 import { LogoutIcon, SearchIcon } from "@/icons";
 
+/** Login button to be used in the nav bar */
 export const NavBarLoginButton = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -19,6 +20,7 @@ export const NavBarLoginButton = () => {
     );
 };
 
+/** Logout button to be used in the nav bar */
 export const NavBarLogoutButton = () => {
     return (
         <a
@@ -33,6 +35,7 @@ export const NavBarLogoutButton = () => {
     );
 };
 
+/** Links used within the context menu once the user is logged in */
 export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; label: string; link: string }) => {
     const { link, label, icon, badgeCount } = props;
     const pathname = usePathname();
@@ -63,6 +66,7 @@ export const NavBarMenuLink = (props: { badgeCount?: number; icon: ReactNode; la
     );
 };
 
+/** Post advert or create advert button shown in the nav bar */
 export const PostAddLink = (props: { isLoggedIn: boolean }) => {
     const pathname = usePathname();
     const params = useParams();
@@ -86,6 +90,7 @@ export const PostAddLink = (props: { isLoggedIn: boolean }) => {
     return <LinkWithLocale href="/dashboard/new-listing">{PostAdvertBtn}</LinkWithLocale>;
 };
 
+/** Search icon link shown in the nav bar */
 export const SearchLink = () => {
     return (
         <LinkWithLocale href="/search">

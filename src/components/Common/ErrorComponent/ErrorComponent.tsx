@@ -6,17 +6,30 @@ import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 import { ActivityIcon, HomeIcon, RefreshIcon } from "@/icons";
 
 interface Props {
+    /** Optional content to be rendered inside the ErrorComponent. */
     children?: ReactNode;
+    /** The error object or error message to be displayed. */
     error?: Error | string;
+    /** A function to be called when the reset button is clicked. */
     reset?: () => void;
+    /** Determines whether to show the home button. */
     showHome?: boolean;
+    /** Determines whether to show the reset button. */
     showReset?: boolean;
+    /** The subtitle to be displayed. */
     subTitle?: string;
+    /** The title to be displayed. */
     title?: string;
+    /**
+     * The variant of the ErrorComponent.
+     * Possible values are "sm" (small) and "lg" (large).
+     */
     variant?: "sm" | "lg";
+    /** Additional class names to be applied to the ErrorComponent wrapper. */
     wrapClassnames?: string;
 }
 
+/** Error component to be displayed when ever there is a server error or when on 401 or 404 pages */
 export const ErrorComponent: FC<Props> = ({
     reset,
     error,

@@ -2,15 +2,26 @@ import { clsx } from "clsx";
 import { FC, PropsWithChildren } from "react";
 
 interface Props {
+    /** Determines if the modal can be canceled or not. */
     cancelable?: boolean;
+    /** Additional classnames for the children of the modal. */
     childrenClassnames?: string;
+    /** Additional classnames for the modal. */
     modalClassnames?: string;
+    /**
+     * Callback function called when the visibility of the modal changes.
+     * @param visible - Indicates if the modal is visible or not.
+     */
     onVisibleChange: (visible: boolean) => void;
+    /** The title of the modal. */
     title?: string;
+    /** Additional classnames for the title of the modal. */
     titleClassNames?: string;
+    /** Determines if the modal is visible or not. */
     visible?: boolean;
 }
 
+/** Modal component to be used for all modals throughout the webapp */
 export const Modal: FC<PropsWithChildren<Props>> = ({
     visible,
     onVisibleChange,

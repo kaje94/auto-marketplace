@@ -6,11 +6,19 @@ import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyTitleUrl
 import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props extends Omit<ImageProps, "src" | "alt"> {
+    /** Properties of a listing image such as URL, color, hash, etc */
     image?: VehicleImageType;
+    /** Location details of the listing will be used for SEO */
     location: Location;
+    /** Title of the listing will also be used for SEO */
     title: string;
 }
 
+/**
+ * Component that will load uploaded listing images via a CDN.
+ * This component will also handle image load failures and show an error icon.
+ * A placeholder image will also be displayed while the actual image is loaded.
+ */
 export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest }) => {
     const [blurDataURL, setBlurDataURL] = useState<string | undefined>("");
     const [hasError, setHasError] = useState(false);

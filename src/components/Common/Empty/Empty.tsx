@@ -4,17 +4,26 @@ import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 import { LayersIcon } from "@/icons";
 
 interface EmptyProps {
+    /** Action button to be shown within the Empty component. */
     button?: {
+        /** The URL to navigate to when the button is clicked. */
         href: string;
+        /** Specifies whether the button should be in a loading state. */
         loading?: boolean;
+        /** Callback function to be executed when the button is clicked. */
         onClick?: () => void;
+        /** The text to be displayed on the button. */
         text: string;
     };
+    /** The size of the icon within the empty component. */
     iconSize?: "sm" | "lg";
+    /** The subtext to be displayed below the main text. */
     subText?: string;
+    /** The main text to be displayed. */
     text?: string;
 }
 
+/** Component to be shown whenever the number of items to display is zero */
 export const Empty: FC<EmptyProps> = ({ iconSize = "lg", button, text = "Nothing to display", subText = "" }) => (
     <div className="col-span-full flex w-full flex-col items-center justify-center gap-2 pt-16 opacity-50 md:px-10">
         <LayersIcon

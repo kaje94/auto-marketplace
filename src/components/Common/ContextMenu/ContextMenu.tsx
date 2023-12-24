@@ -6,17 +6,24 @@ import { LinkWithLocale } from "@/components/Common/LinkWithLocale";
 import { MenuIcon } from "@/icons";
 
 export interface ContextMenuItemProp {
+    /** String of classnames for an item in the context menu */
     classNames?: string;
+    /**The icon element for the context menu item */
     icon: ReactNode;
+    /** The label text for the context menu item */
     label: string;
+    /** The link URL for the context menu item */
     link?: string;
+    /** The click event handler for the context menu item */
     onClick?: () => void;
 }
 
 interface Props {
+    /** Items within the context menu */
     menuItems: ContextMenuItemProp[];
 }
 
+/** Placeholder component to show while context menu is hydrated */
 export const ContextMenuLoading: FC = () => {
     return (
         <span className="animate-pulse cursor-progress" onClick={(event) => event.preventDefault()}>
@@ -25,6 +32,7 @@ export const ContextMenuLoading: FC = () => {
     );
 };
 
+/** Context menu to be used throughout the app */
 export const ContextMenu: FC<Props> = ({ menuItems = [] }) => {
     const [menuVisible, setMenuVisible] = useState(false);
     return (

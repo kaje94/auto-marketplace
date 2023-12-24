@@ -15,6 +15,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** Default behavior with a valid image */
 export const Default: Story = {
     args: {
         location: mockUserLocation,
@@ -25,6 +26,7 @@ export const Default: Story = {
     },
 };
 
+/** Behavior when the image could not be found */
 export const ImageNotFound: Story = {
     args: {
         location: mockUserLocation,

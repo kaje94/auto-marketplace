@@ -13,14 +13,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** When user is not logged in */
 export const Default: Story = {
     args: {},
 };
 
+/** When user details are loaded */
 export const Loading: Story = {
     args: { loading: true },
 };
 
+/** When user is logged in */
 export const LoggedIn: Story = {
     args: {
         userClaims: mockUserClaims,
@@ -28,6 +31,7 @@ export const LoggedIn: Story = {
     },
 };
 
+/** When logged in user also has notifications */
 export const WithNotifications: Story = {
     args: {
         userClaims: mockUserClaims,
