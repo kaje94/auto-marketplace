@@ -6,12 +6,17 @@ import { UserIcon } from "@/icons";
 import { generateInitialsFromName } from "@/utils/helpers";
 
 interface Props {
+    /** Indicates whether the data for the avatar is currently loading. */
     loading?: boolean;
+    /** The name of the user which will be used as a fallback if image load fails */
     name?: string;
+    /** The URL of the avatar image. */
     url?: string;
+    /** The width of the avatar. The height will be the same as width */
     width: number;
 }
 
+/** Avatar component to represent user's profile picture in navbar as well as in listings */
 export const Avatar: FC<Props> = memo(({ url, width, name, loading }) => {
     const [hasError, setHasError] = useState(false);
     return (
@@ -37,7 +42,7 @@ export const Avatar: FC<Props> = memo(({ url, width, name, loading }) => {
             <div className={clsx("avatar placeholder absolute inset-0 h-full w-full overflow-hidden", hasError || !url ? "block" : "hidden")}>
                 <div className={clsx("h-full w-full rounded-full bg-neutral-800 text-neutral-content", loading && "animate-pulse bg-opacity-20")}>
                     {name ? (
-                        <span className="text-xl">{generateInitialsFromName(name)}</span>
+                        <span style={{ fontSize: width * 0.45 }}>{generateInitialsFromName(name)}</span>
                     ) : (
                         <UserIcon style={{ width: width * 0.6, height: width * 0.6 }} />
                     )}

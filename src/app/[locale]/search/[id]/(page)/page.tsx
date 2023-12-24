@@ -1,8 +1,8 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
 import { Metadata, ResolvingMetadata } from "next";
 import { BreadCrumbs, ErrorComponent } from "@/components/Common";
-import { ListingDetails, RelatedListingsCarousel } from "@/components/ListingDetails";
-import { ListingDetailsCountrySelectBtn } from "@/components/ListingDetails/CountrySelectButton";
+import { ListingDetails, RelatedListingsCarousel } from "@/components/Listings/ListingDetails";
+import { ListingDetailsCountrySelectBtn } from "@/components/Listings/ListingDetails/CountrySelectButton";
 import { api } from "@/utils/api";
 import { COUNTRIES } from "@/utils/countries";
 import {

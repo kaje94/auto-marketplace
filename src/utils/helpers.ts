@@ -197,8 +197,6 @@ export const transformListingResponse = (itemDetails: ListingItem): ListingItem 
             vehicleImages: sortVehicleImages(
                 itemDetails.vehicle.vehicleImages.map((imageItem) => ({
                     ...imageItem,
-                    averageColor: imageItem?.color,
-                    hash: imageItem?.hash,
                     deleted: false,
                 })),
             ),

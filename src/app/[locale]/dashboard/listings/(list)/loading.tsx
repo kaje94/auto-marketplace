@@ -1,5 +1,5 @@
-import { DashboardListHeader } from "@/components/DashboardListHeader";
-import { DashboardAllListingsList } from "@/components/DashboardListings";
+import { DashboardListHeader } from "@/components/Dashboard/DashboardListHeader";
+import { DashboardAllListingsList } from "@/components/Dashboard/DashboardListings";
 
 export default function Loading() {
     return (

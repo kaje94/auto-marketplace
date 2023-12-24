@@ -1,5 +1,5 @@
 import { Metadata, ResolvingMetadata } from "next";
-import { ListingsCarousel } from "@/components/ListingsCarousel";
+import { ListingsCarousel } from "@/components/Listings/ListingsCarousel";
 import { api } from "@/utils/api";
 import { COUNTRIES } from "@/utils/countries";
 import { transformListingResponse } from "@/utils/helpers";
