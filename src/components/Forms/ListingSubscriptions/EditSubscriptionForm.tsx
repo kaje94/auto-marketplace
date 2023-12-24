@@ -46,6 +46,18 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             maxYearOfRegistration: listingSubscriptionItem.maxYearOfRegistration
                 ? new Date(new Date(listingSubscriptionItem.maxYearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
                 : undefined,
+            maxPrice: {
+                currencyCode: countryCurrencyCode,
+                currencySymbol: countryCurrencySymbol,
+                amount: listingSubscriptionItem?.maxPrice?.amount || undefined,
+            },
+            minPrice: {
+                currencyCode: countryCurrencyCode,
+                currencySymbol: countryCurrencySymbol,
+                amount: listingSubscriptionItem?.minPrice?.amount || undefined,
+            },
+            minMillage: { unit: distanceUnit, distance: listingSubscriptionItem?.minMillage?.distance || undefined },
+            maxMillage: { unit: distanceUnit, distance: listingSubscriptionItem?.maxMillage?.distance || undefined },
         },
         mode: "all",
     });

@@ -60,7 +60,7 @@ export const MilageSchema = z.object({
 });
 
 export const OptionalMilageSchema = z.object({
-    distance: getNumericSchema("Milage needs to be a positive number", 0, "0"),
+    distance: z.union([getNumericSchema("Milage needs to be a positive number", 0, "0"), z.null()]),
     unit: z.string().min(1, "Milage unit is required"),
 });
 

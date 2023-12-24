@@ -26,7 +26,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
         resolver: zodResolver(ToggleSubscriptionSchema),
         defaultValues: {
             listingSubscriptionId: id,
-            subscriptionExpiryDate: active ? Dates.Days_7_from_now : Dates.Days_7_from_now,
+            subscriptionExpiryDate: Dates.Days_8_from_now,
         },
         mode: "all",
     });
@@ -65,7 +65,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
                         control={control}
                         fieldName="subscriptionExpiryDate"
                         label="Expiry date"
-                        minDate={new Date(new Date().setHours(new Date().getHours() + 24 * 7))}
+                        minDate={Dates.Days_8_from_now}
                         inline
                         required
                     />

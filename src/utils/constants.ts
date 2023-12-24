@@ -14,6 +14,7 @@ export const YearSelectMinYear = 1960;
 
 export const Dates = {
     Days_7_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 7 + 1)),
+    Days_8_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 8 + 1)),
     Months_1_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 31)),
     Months_3_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * (31 * 3))),
 };

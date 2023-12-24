@@ -12,7 +12,6 @@
 -   [] contact us email should be moved to api layer
 
 > Web app todo list
--   [] fix date format offsets
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] refer create t3 structure and eslint
 -   [] add watermark to uploaded image
@@ -27,7 +26,6 @@
 -   [] move all links to command util function
 -   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
 -   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
--   [] subscription update not working & expiry date not showing
 -   [] fix token not refreshing
 
 > After deploy

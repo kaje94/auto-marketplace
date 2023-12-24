@@ -5,7 +5,6 @@ import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3Action, getPresignedS3UrlsAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
 import { YearSelectMinYear } from "./constants";
-import { COUNTRIES } from "./countries";
 import {
     LabelValue,
     ListingItem,
@@ -29,15 +28,7 @@ export const convertYearToDateString = (year: string | number): string => {
     // Assuming January 1st of the given year
     const date = new Date(yearNumber, 0, 1);
 
-    // // Get the year, month, and day from the date object
-    const yyyy = date.getFullYear().toString().padStart(4, "0");
-    const mm = (date.getMonth() + 1).toString().padStart(2, "0");
-    const dd = date.getDate().toString().padStart(2, "0");
-
-    // Format the date as yyyy-mm-dd
-    const formattedDate = `${yyyy}-${mm}-${dd}`;
-
-    return formattedDate;
+    return date.toISOString();
 };
 
 export const formatHumanFriendlyDate = (date: Date): string => {

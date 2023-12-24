@@ -2,6 +2,7 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
+import { DatePickerController } from "@/components/FormElements/DatePicker";
 import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { SelectController } from "@/components/FormElements/Select";
@@ -66,14 +67,13 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 required
                                 selectablePlaceholder
                             />
-                            <InputController
+                            <DatePickerController
                                 control={control}
                                 fieldName="subscriptionExpiryDate"
                                 label="Subscription expiry date"
                                 loading={isLoading}
-                                min={Dates.Days_7_from_now.toISOString().split("T")[0]}
-                                placeholder="01/01/2025"
-                                type="date"
+                                minDate={Dates.Days_8_from_now}
+                                placeholderText={new Date(Dates.Days_8_from_now).toLocaleDateString("en-US")}
                                 required
                             />
                         </div>
