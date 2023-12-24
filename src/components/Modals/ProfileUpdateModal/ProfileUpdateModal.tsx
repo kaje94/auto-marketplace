@@ -6,20 +6,25 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { editProfileAction } from "@/actions/profileActions";
 import { Modal, ModalFooter } from "@/components/Common";
+import { ModalProps } from "@/components/Common/Modal";
 import { ProfileForm } from "@/components/Forms/Profile/ProfileForm";
 import { COUNTRIES } from "@/utils/countries";
 import { UpdateProfileSchema } from "@/utils/schemas";
 import { ListingUser, UpdateProfileReq } from "@/utils/types";
 
-interface Props {
+interface Props extends ModalProps {
+    /**
+     * Callback function to be called when the update is successful.
+     * @param data - The updated user data.
+     */
     onSuccess?: (data: Partial<ListingUser>) => void;
-    setVisible?: (visible: boolean) => void;
+    /** The user data to be displayed in the modal. */
     userData: ListingUser;
-    visible?: boolean;
 }
 
+/** Modal to be used in onboarding modal and listing form to update user's details */
 export const ProfileUpdateModal = (props: Props) => {
-    const { userData, visible, setVisible = () => {}, onSuccess = () => {} } = props;
+    const { userData, visible, onVisibleChange = () => {}, onSuccess = () => {} } = props;
     const params = useParams();
 
     const toastId = useRef<string>();
@@ -87,7 +92,13 @@ export const ProfileUpdateModal = (props: Props) => {
 
     return (
         <>
-            <Modal childrenClassnames="!p-0" modalClassnames="!max-w-3xl" title="Update Profile" visible={!!visible} onVisibleChange={setVisible}>
+            <Modal
+                childrenClassnames="!p-0"
+                modalClassnames="!max-w-3xl"
+                title="Update Profile"
+                visible={!!visible}
+                onVisibleChange={onVisibleChange}
+            >
                 <div className="flex max-h-[80vh] flex-col ">
                     <div className="flex-1 overflow-auto px-4 py-2 lg:px-6">
                         <ProfileForm
@@ -107,7 +118,7 @@ export const ProfileUpdateModal = (props: Props) => {
                             loading={isMutating}
                             primaryButton={{ text: "Update" }}
                             onSubmit={form.handleSubmit((values) => updateSubscriptionMutation(values))}
-                            onVisibleChange={setVisible}
+                            onVisibleChange={onVisibleChange}
                         />
                     </div>
                 </div>

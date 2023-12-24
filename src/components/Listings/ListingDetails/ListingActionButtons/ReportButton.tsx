@@ -30,9 +30,9 @@ export const ReportButton: FC<Props> = ({ loading, listingId, listingTitle, user
                     <ReportListingModal
                         listingId={listingId}
                         listingTitle={listingTitle}
-                        setVisible={setModalVisible}
                         userEmail={userEmail}
                         visible={modalVisible}
+                        onVisibleChange={setModalVisible}
                     />
                 </RecaptchaProvider>
             )}

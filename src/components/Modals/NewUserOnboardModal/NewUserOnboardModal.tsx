@@ -10,41 +10,18 @@ import { CheckCircleIcon } from "@/icons";
 import { ListingUser } from "@/utils/types";
 
 interface Props {
+    /** Specifies whether the modal is initially visible. */
     initiallyVisible?: boolean;
+    /** The claims of the user. */
     userClaims?: Claims;
+    /** The data of the user. */
     userData?: ListingUser;
 }
 
+/** Lazily loaded profile update modal */
 const ProfileUpdateModal = dynamic(() => import("../ProfileUpdateModal").then((mod) => mod.ProfileUpdateModal), { ssr: false });
 
-const SectionWrap = ({ children, isOpen, onClick }: { children: ReactNode; isOpen: boolean; onClick: () => void }) => (
-    <div className={clsx("collapse join-item border border-base-300", isOpen && "collapse-open")} onClick={onClick}>
-        {children}
-    </div>
-);
-
-const SectionTitle = ({ showSuccess, title, disabled = false }: { disabled?: boolean; showSuccess?: boolean; title: string }) => {
-    return (
-        <div className={clsx("collapse-title flex w-full items-center justify-between p-4 text-sm", disabled && "!cursor-not-allowed opacity-50")}>
-            {title}
-            {showSuccess && <CheckCircleIcon className="text-success" />}
-        </div>
-    );
-};
-
-const RedirectLinks = ({ btnTitle, desc, href, closeModal }: { btnTitle: string; closeModal: () => void; desc: string; href: string }) => {
-    return (
-        <>
-            <p className="mb-1 text-center text-sm">{desc}</p>
-            <LinkWithLocale href={href}>
-                <button className="btn btn-neutral btn-wide" onClick={closeModal}>
-                    {btnTitle}
-                </button>
-            </LinkWithLocale>
-        </>
-    );
-};
-
+/** Modal to be shown to first time users of webapp explaing them of the functionality and redirecting the to appropriate page */
 export const NewUserOnboardModal = (props: Props) => {
     const { userClaims, userData, initiallyVisible = false } = props;
     const pathname = usePathname();
@@ -216,7 +193,6 @@ export const NewUserOnboardModal = (props: Props) => {
 
             {userData && (
                 <ProfileUpdateModal
-                    setVisible={setProfileModalVisible}
                     userData={userData}
                     visible={profileModalVisible}
                     onSuccess={() => {
@@ -227,8 +203,37 @@ export const NewUserOnboardModal = (props: Props) => {
                             setModalVisible(false);
                         }
                     }}
+                    onVisibleChange={setProfileModalVisible}
                 />
             )}
+        </>
+    );
+};
+
+const SectionWrap = ({ children, isOpen, onClick }: { children: ReactNode; isOpen: boolean; onClick: () => void }) => (
+    <div className={clsx("collapse join-item border border-base-300", isOpen && "collapse-open")} onClick={onClick}>
+        {children}
+    </div>
+);
+
+const SectionTitle = ({ showSuccess, title, disabled = false }: { disabled?: boolean; showSuccess?: boolean; title: string }) => {
+    return (
+        <div className={clsx("collapse-title flex w-full items-center justify-between p-4 text-sm", disabled && "!cursor-not-allowed opacity-50")}>
+            {title}
+            {showSuccess && <CheckCircleIcon className="text-success" />}
+        </div>
+    );
+};
+
+const RedirectLinks = ({ btnTitle, desc, href, closeModal }: { btnTitle: string; closeModal: () => void; desc: string; href: string }) => {
+    return (
+        <>
+            <p className="mb-1 text-center text-sm">{desc}</p>
+            <LinkWithLocale href={href}>
+                <button className="btn btn-neutral btn-wide" onClick={closeModal}>
+                    {btnTitle}
+                </button>
+            </LinkWithLocale>
         </>
     );
 };

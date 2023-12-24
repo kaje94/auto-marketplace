@@ -15,7 +15,7 @@ export const RenewButton = ({ listingItem }: Props) => {
             <button className="btn btn-ghost btn-sm" onClick={() => setModalVisible(true)}>
                 Renew
             </button>
-            <RenewListingItemModal listingItem={listingItem} setVisible={setModalVisible} visible={modalVisible} />
+            <RenewListingItemModal listingItem={listingItem} visible={modalVisible} onVisibleChange={setModalVisible} />
         </>
     );
 };

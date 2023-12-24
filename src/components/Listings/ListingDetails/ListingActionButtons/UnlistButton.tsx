@@ -23,7 +23,7 @@ export const UnListButton: FC<Props> = ({ listingItem, loading }) => {
                 <EyeOffIcon />
                 Unlist
             </button>
-            <UnListListingModal listingItem={listingItem} setVisible={setUnListModalVisible} visible={unListModalVisible} />
+            <UnListListingModal listingItem={listingItem} visible={unListModalVisible} onVisibleChange={setUnListModalVisible} />
         </>
     );
 };

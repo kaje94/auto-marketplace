@@ -15,7 +15,7 @@ export const ReviewButton = ({ listingItem }: Props) => {
             <button className="btn btn-ghost btn-sm" onClick={() => setModalVisible(true)}>
                 Review
             </button>
-            <ReviewListingModal listingItem={listingItem} setVisible={setModalVisible} visible={modalVisible} />
+            <ReviewListingModal listingItem={listingItem} visible={modalVisible} onVisibleChange={setModalVisible} />
         </>
     );
 };

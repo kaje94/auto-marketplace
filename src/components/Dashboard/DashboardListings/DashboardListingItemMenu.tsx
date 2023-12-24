@@ -76,13 +76,13 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
             <ContextMenu menuItems={menuItems} />
             <DeleteListingItemModal
                 listingItem={listingItem as ListingItem}
-                setVisible={setDeleteModalVisible}
                 successRedirectPath={basePath || ""}
                 visible={deleteModalVisible}
+                onVisibleChange={setDeleteModalVisible}
             />
-            <RenewListingItemModal listingItem={listingItem as ListingItem} setVisible={setRenewModalVisible} visible={renewModalVisible} />
-            <ReviewListingModal listingItem={listingItem as ListingItem} setVisible={setReviewModalVisible} visible={reviewModalVisible} />
-            <UnListListingModal listingItem={listingItem as ListingItem} setVisible={setUnListModalVisible} visible={unListModalVisible} />
+            <RenewListingItemModal listingItem={listingItem as ListingItem} visible={renewModalVisible} onVisibleChange={setRenewModalVisible} />
+            <ReviewListingModal listingItem={listingItem as ListingItem} visible={reviewModalVisible} onVisibleChange={setReviewModalVisible} />
+            <UnListListingModal listingItem={listingItem as ListingItem} visible={unListModalVisible} onVisibleChange={setUnListModalVisible} />
         </>
     );
 };

@@ -15,8 +15,8 @@ export const ListingDetailsCountrySelectBtn = () => {
             </button>
             <CountrySelectModal
                 currentLocale={params.locale as string}
-                setVisible={setCountrySelectModalVisible}
                 visible={CountrySelectModalVisible}
+                onVisibleChange={setCountrySelectModalVisible}
             />
         </>
     );

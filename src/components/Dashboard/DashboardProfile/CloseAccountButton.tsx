@@ -12,7 +12,7 @@ export const CloseAccountButton = ({ userId }: { userId: string }) => {
                 <TrashIcon />
                 Close Account
             </button>
-            <CloseAccountModal setVisible={setModalVisible} userId={userId} visible={modalVisible} />
+            <CloseAccountModal userId={userId} visible={modalVisible} onVisibleChange={setModalVisible} />
         </>
     );
 };

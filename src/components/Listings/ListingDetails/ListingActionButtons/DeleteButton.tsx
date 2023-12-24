@@ -26,9 +26,9 @@ export const DeleteButton: FC<Props> = ({ listingItem, isOwner, loading }) => {
             </button>
             <DeleteListingItemModal
                 listingItem={listingItem}
-                setVisible={setDeleteModalVisible}
                 successRedirectPath={isOwner ? "/dashboard/my-listings" : "/dashboard/listings"}
                 visible={deleteModalVisible}
+                onVisibleChange={setDeleteModalVisible}
             />
         </>
     );

@@ -2,28 +2,28 @@ import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import { renewListingAction } from "@/actions/listingActions";
-import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { formatHumanFriendlyDate } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 
-interface Props {
+interface Props extends ModalProps {
+    /** The listing item to be renewed.  */
     listingItem?: ListingItem;
-    setVisible?: (visible: boolean) => void;
-    visible?: boolean;
 }
 
+/** Modal to be used to let users to renew listings */
 export const RenewListingItemModal = (props: Props) => {
-    const { listingItem = {}, visible, setVisible = () => {} } = props;
+    const { listingItem = {}, visible, onVisibleChange = () => {} } = props;
     const { id: listingId, title: listingTitle, userId, expiryDate } = listingItem as ListingItem;
     const toastId = useRef<string>();
 
     const { mutate, isLoading } = useMutation((id: string) => renewListingAction(id, userId!), {
         onMutate: () => {
-            setVisible(false);
+            onVisibleChange(false);
             toastId.current = toast.loading(`Renewing advert ${listingTitle}...`);
         },
         onSettled: (_data, err) => {
-            setVisible(false);
+            onVisibleChange(false);
             if (err) {
                 toast.error(`Failed to renew advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
             } else {
@@ -34,7 +34,7 @@ export const RenewListingItemModal = (props: Props) => {
 
     return (
         <>
-            <Modal title="Renew Advert" visible={!!visible} onVisibleChange={setVisible}>
+            <Modal title="Renew Advert" visible={!!visible} onVisibleChange={onVisibleChange}>
                 <div>
                     This listing advert will expire on {formatHumanFriendlyDate(new Date(expiryDate))}. Are you sure you want to renew the advert?
                 </div>
@@ -42,7 +42,7 @@ export const RenewListingItemModal = (props: Props) => {
                     loading={isLoading}
                     primaryButton={{ text: "Renew" }}
                     onSubmit={listingId ? () => mutate(listingId) : undefined}
-                    onVisibleChange={setVisible}
+                    onVisibleChange={onVisibleChange}
                 />
             </Modal>
         </>

@@ -24,9 +24,9 @@ export const NavBarCountryBtn = () => {
             </button>
             <CountrySelectModal
                 currentLocale={params.locale as string}
-                setVisible={setCountrySelectModalVisible}
                 visible={CountrySelectModalVisible}
                 onNewCountrySelect={(locale) => setSelectedCountry(locale)}
+                onVisibleChange={setCountrySelectModalVisible}
             />
         </>
     );

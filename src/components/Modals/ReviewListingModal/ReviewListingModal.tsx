@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { reviewListingAction } from "@/actions/listingActions";
-import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { SelectController } from "@/components/FormElements/Select";
 import { TextAreaController } from "@/components/FormElements/TextArea";
 import { ListingStatusTypes } from "@/utils/enum";
@@ -13,14 +13,14 @@ import { unCamelCase } from "@/utils/helpers";
 import { ReviewListingSchema } from "@/utils/schemas";
 import { ListingItem, ReviewListingReq } from "@/utils/types";
 
-interface Props {
+interface Props extends ModalProps {
+    /** Listing item that needs to be reviewed */
     listingItem?: ListingItem;
-    setVisible: (visible: boolean) => void;
-    visible: boolean;
 }
 
+/** Modal to be used by admins to review and approve/reject a new listing */
 export const ReviewListingModal = (props: Props) => {
-    const { listingItem = {}, setVisible, visible } = props;
+    const { listingItem = {}, onVisibleChange, visible } = props;
     const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
     const toastId = useRef<string>();
 
@@ -32,7 +32,7 @@ export const ReviewListingModal = (props: Props) => {
 
     const { mutate, isLoading } = useMutation((reqParams: ReviewListingReq) => reviewListingAction(reqParams, listingUserId!), {
         onMutate: () => {
-            setVisible(false);
+            onVisibleChange(false);
             toastId.current = toast.loading(`Submitting review for advert ${listingTitle}...`);
         },
         onSettled: (_data, err) => {
@@ -45,7 +45,7 @@ export const ReviewListingModal = (props: Props) => {
     });
 
     return (
-        <Modal title="Review Advert" visible={visible} onVisibleChange={setVisible}>
+        <Modal title="Review Advert" visible={visible} onVisibleChange={onVisibleChange}>
             <form className="grid gap-1">
                 <SelectController
                     control={control}
@@ -69,7 +69,7 @@ export const ReviewListingModal = (props: Props) => {
                     loading={isLoading}
                     primaryButton={{ text: "Submit Review" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
-                    onVisibleChange={setVisible}
+                    onVisibleChange={onVisibleChange}
                 />
             </form>
         </Modal>

@@ -19,7 +19,7 @@ export const RenewButton: FC<Props> = ({ listingItem, loading }) => {
                 <RefreshIcon />
                 Renew
             </button>
-            <RenewListingItemModal listingItem={listingItem} setVisible={setRenewModalVisible} visible={renewModalVisible} />
+            <RenewListingItemModal listingItem={listingItem} visible={renewModalVisible} onVisibleChange={setRenewModalVisible} />
         </>
     );
 };

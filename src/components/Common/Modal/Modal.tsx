@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { FC, PropsWithChildren } from "react";
 
-interface Props {
+export interface Props {
     /** Determines if the modal can be canceled or not. */
     cancelable?: boolean;
     /** Additional classnames for the children of the modal. */

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { reportListingAction } from "@/actions/listingActions";
 import { validateRecaptchaAction } from "@/actions/recaptchaActions";
-import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { InputController } from "@/components/FormElements/Input";
 import { SelectController } from "@/components/FormElements/Select";
 import { TextAreaController } from "@/components/FormElements/TextArea";
@@ -15,15 +15,17 @@ import { ListingReportReason } from "@/utils/enum";
 import { ReportListingSchema } from "@/utils/schemas";
 import { ListingIdType, ReportListingReq } from "@/utils/types";
 
-interface Props {
+interface Props extends ModalProps {
+    /** The ID of the listing that needs to be reported. */
     listingId?: ListingIdType;
+    /** The title of the listing.  */
     listingTitle?: string;
-    setVisible?: (visible: boolean) => void;
+    /** * The email of the user if he/she is logged in*/
     userEmail?: string | null;
-    visible?: boolean;
 }
 
-export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail, setVisible = () => {} }: Props) => {
+/** Modal to be used in order to report a listing */
+export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail, onVisibleChange = () => {} }: Props) => {
     const { executeRecaptcha } = useReCaptcha();
     const toastId = useRef<string>();
     const defaultForm = useMemo<ReportListingReq>(
@@ -45,11 +47,11 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
         },
         {
             onMutate: () => {
-                setVisible(false);
+                onVisibleChange(false);
                 toastId.current = toast.loading(`Reporting advert ${listingTitle}...`);
             },
             onSettled: (_data, err) => {
-                setVisible(false);
+                onVisibleChange(false);
                 if (err) {
                     toast.error(`Failed to report advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
                 } else {
@@ -66,7 +68,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
     }, [visible, reset, defaultForm]);
 
     return (
-        <Modal title="Report Advert" titleClassNames="text-error" visible={!!visible} onVisibleChange={setVisible}>
+        <Modal title="Report Advert" titleClassNames="text-error" visible={!!visible} onVisibleChange={onVisibleChange}>
             <form className="grid gap-1">
                 <SelectController
                     control={control}
@@ -88,7 +90,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
                     loading={isLoading}
                     primaryButton={{ text: "Report Advert" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
-                    onVisibleChange={setVisible}
+                    onVisibleChange={onVisibleChange}
                 />
             </form>
         </Modal>

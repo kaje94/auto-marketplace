@@ -369,10 +369,10 @@ export const ListingForm: FC<Props> = (props) => {
             </form>
             {optimisticProfile && (
                 <ProfileUpdateModal
-                    setVisible={setProfileModalVisible}
                     userData={optimisticProfile}
                     visible={profileModalVisible}
                     onSuccess={onProfileUpdate}
+                    onVisibleChange={setProfileModalVisible}
                 />
             )}
         </>

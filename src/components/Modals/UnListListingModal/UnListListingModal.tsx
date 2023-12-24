@@ -6,21 +6,21 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { unListListingAction } from "@/actions/listingActions";
-import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { SelectController } from "@/components/FormElements/Select";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
 import { UnListListingSchema } from "@/utils/schemas";
 import { LabelValue, ListingItem, UnListListingReq } from "@/utils/types";
 
-interface Props {
+interface Props extends ModalProps {
+    /** Listing item that needs to be unlisted */
     listingItem?: ListingItem;
-    setVisible: (visible: boolean) => void;
-    visible: boolean;
 }
 
+/** Modal to be used in order to unlist an advert temporarily or permanently */
 export const UnListListingModal = (props: Props) => {
-    const { listingItem = {}, setVisible, visible } = props;
+    const { listingItem = {}, onVisibleChange, visible } = props;
     const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
     const toastId = useRef<string>();
     const router = useRouter();
@@ -39,7 +39,7 @@ export const UnListListingModal = (props: Props) => {
             }
         },
         onMutate: () => {
-            setVisible(false);
+            onVisibleChange(false);
             toastId.current = toast.loading(`Unlisting advert ${listingTitle}...`);
         },
         onSettled: (_data, err) => {
@@ -61,7 +61,7 @@ export const UnListListingModal = (props: Props) => {
     );
 
     return (
-        <Modal title="Unlist Advert" titleClassNames="text-error" visible={visible} onVisibleChange={setVisible}>
+        <Modal title="Unlist Advert" titleClassNames="text-error" visible={visible} onVisibleChange={onVisibleChange}>
             <div className="mb-2 mt-4 text-sm">
                 By Unlisting or withdrawing the advert, the advertisement will no longer be visible to the public.
             </div>
@@ -78,7 +78,7 @@ export const UnListListingModal = (props: Props) => {
                     loading={isLoading}
                     primaryButton={{ text: "Submit", classNames: "btn-error" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
-                    onVisibleChange={setVisible}
+                    onVisibleChange={onVisibleChange}
                 />
             </form>
         </Modal>

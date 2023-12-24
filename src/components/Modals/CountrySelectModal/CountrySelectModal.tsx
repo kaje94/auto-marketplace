@@ -5,20 +5,24 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
-import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { COUNTRIES } from "@/utils/countries";
 import { LabelValue } from "@/utils/types";
 
-interface Props {
+interface Props extends ModalProps {
+    /** The current locale. */
     currentLocale: string;
+    /**
+     * Callback function for when a new country is selected.
+     * @param country The selected country.
+     */
     onNewCountrySelect?: (country: string) => void;
-    setVisible: (visible: boolean) => void;
-    visible: boolean;
 }
 
+/** Modal to be used when user want to change the current country from the nav bar */
 export const CountrySelectModal = (props: Props) => {
-    const { currentLocale, onNewCountrySelect, setVisible, visible } = props;
+    const { currentLocale, onNewCountrySelect, onVisibleChange, visible } = props;
     const router = useRouter();
     const currentCountry = COUNTRIES[currentLocale]?.[0];
 
@@ -44,7 +48,7 @@ export const CountrySelectModal = (props: Props) => {
 
         router.replace(`/${pathWithNewLocale}${window.location.search}`);
         toast.success(`Successfully switched to country ${country}`);
-        setVisible(false);
+        onVisibleChange(false);
         if (locale && onNewCountrySelect) {
             onNewCountrySelect(locale);
         }
@@ -57,7 +61,7 @@ export const CountrySelectModal = (props: Props) => {
     }, [currentCountry, visible, reset]);
 
     return (
-        <Modal title="Switch Country" visible={visible} onVisibleChange={setVisible}>
+        <Modal title="Switch Country" visible={visible} onVisibleChange={onVisibleChange}>
             <form className="grid gap-1">
                 <AutocompleteController
                     control={control}
@@ -74,7 +78,7 @@ export const CountrySelectModal = (props: Props) => {
                 <ModalFooter
                     primaryButton={{ text: "Apply" }}
                     onSubmit={handleSubmit((values) => handleLocaleChange(values.country))}
-                    onVisibleChange={setVisible}
+                    onVisibleChange={onVisibleChange}
                 />
             </form>
         </Modal>

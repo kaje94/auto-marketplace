@@ -43,13 +43,13 @@ export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionIt
             />
             <DeleteSubscriptionItemModal
                 listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
-                setVisible={setDeleteModalVisible}
                 visible={deleteModalVisible}
+                onVisibleChange={setDeleteModalVisible}
             />
             <ToggleSubscriptionActivationModal
                 listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
-                setVisible={setActivationModalVisible}
                 visible={activationModalVisible}
+                onVisibleChange={setActivationModalVisible}
             />
         </>
     );

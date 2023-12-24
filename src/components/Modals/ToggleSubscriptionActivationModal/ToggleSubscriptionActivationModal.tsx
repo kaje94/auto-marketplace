@@ -5,20 +5,20 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { toggleListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
-import { Modal, ModalFooter } from "@/components/Common/Modal";
+import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { DatePickerController } from "@/components/FormElements/DatePicker";
 import { Dates } from "@/utils/constants";
 import { ToggleSubscriptionSchema } from "@/utils/schemas";
 import { ListingSubscriptionItem, ToggleSubscriptionReq } from "@/utils/types";
 
-interface Props {
+interface Props extends ModalProps {
+    /** Subscription item that needs to be activated/deactivated */
     listingSubscriptionItem?: ListingSubscriptionItem;
-    setVisible: (visible: boolean) => void;
-    visible: boolean;
 }
 
+/** Modal to be used in order to activate or deactivate a listing advert */
 export const ToggleSubscriptionActivationModal = (props: Props) => {
-    const { listingSubscriptionItem = {}, setVisible, visible } = props;
+    const { listingSubscriptionItem = {}, onVisibleChange, visible } = props;
     const { id, userId, displayName, active } = listingSubscriptionItem as ListingSubscriptionItem;
     const toastId = useRef<string>();
 
@@ -37,7 +37,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
         },
         {
             onMutate: () => {
-                setVisible(false);
+                onVisibleChange(false);
                 toastId.current = toast.loading(`${active ? "Deactivating" : "Activating"} subscription ${displayName}...`);
             },
             onSettled: (_data, err, variables) => {
@@ -53,7 +53,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
     );
 
     return (
-        <Modal title={`${active ? "Deactivate" : "Activate"} Subscription`} visible={visible} onVisibleChange={setVisible}>
+        <Modal title={`${active ? "Deactivate" : "Activate"} Subscription`} visible={visible} onVisibleChange={onVisibleChange}>
             <div className="mb-2 mt-4 text-sm">
                 {active
                     ? "By deactivating the subscription, you will stop receiving notifications related to your subscription criteria"
@@ -74,7 +74,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
                     loading={isLoading}
                     primaryButton={{ text: active ? "Deactivate" : "Activate" }}
                     onSubmit={handleSubmit((values) => mutate(values))}
-                    onVisibleChange={setVisible}
+                    onVisibleChange={onVisibleChange}
                 />
             </form>
         </Modal>
