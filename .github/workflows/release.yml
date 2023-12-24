@@ -60,6 +60,3 @@ jobs:
         - name: Deploy Project Artifacts to Vercel
           run: vercel deploy --force --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
         - uses: ncipollo/release-action@v1
-          with:
-            artifacts: "release.tar.gz,foo/*.txt"
-            bodyFile: "body.md"
