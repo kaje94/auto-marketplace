@@ -41,4 +41,4 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 Thank you for contributing to a positive and inclusive community!
 
-[Email Contact of Maintainers]
+
