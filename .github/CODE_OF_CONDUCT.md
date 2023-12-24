@@ -12,20 +12,20 @@ In the interest of fostering an open and welcoming environment, we pledge to mak
 
 We expect all contributors and participants to:
 
-- Be respectful and considerate of others.
-- Refrain from any form of harassment, discrimination, or unwelcome behavior.
-- Communicate with empathy and kindness.
-- Be collaborative and inclusive.
+-   Be respectful and considerate of others.
+-   Refrain from any form of harassment, discrimination, or unwelcome behavior.
+-   Communicate with empathy and kindness.
+-   Be collaborative and inclusive.
 
 ## Unacceptable Behavior
 
 Unacceptable behaviors include, but are not limited to:
 
-- Harassment or discrimination based on personal attributes.
-- Offensive comments or jokes related to personal attributes.
-- Any form of unwelcome or inappropriate advances.
-- Intimidation or trolling.
-- Disrespectful or disruptive comments.
+-   Harassment or discrimination based on personal attributes.
+-   Offensive comments or jokes related to personal attributes.
+-   Any form of unwelcome or inappropriate advances.
+-   Intimidation or trolling.
+-   Disrespectful or disruptive comments.
 
 ## Reporting Violations
 
@@ -40,5 +40,3 @@ Violations of this Code of Conduct may result in corrective actions, including b
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/version/2/0/code_of_conduct.html).
 
 Thank you for contributing to a positive and inclusive community!
-
-

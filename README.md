@@ -11,32 +11,33 @@ Welcome to the Auto Marketplace Client project! This platform is designed to pro
 ## Features
 
 1. **Free Vehicle Listings**
-   - List your vehicle for free on our platform. Reach a wide audience of potential buyers without any cost.
+
+    - List your vehicle for free on our platform. Reach a wide audience of potential buyers without any cost.
 
 2. **Advanced Search Filters**
-   - Easily find the vehicle that suits your needs with advanced search filters. Filter by make, model, year, price range, and more.
+
+    - Easily find the vehicle that suits your needs with advanced search filters. Filter by make, model, year, price range, and more.
 
 3. **Subscription and Notifications**
-   - Subscribe to specific criteria and receive notifications whenever new listings matching your interests are added. Stay informed without constantly checking the platform.
+
+    - Subscribe to specific criteria and receive notifications whenever new listings matching your interests are added. Stay informed without constantly checking the platform.
 
 4. **Simple and Intuitive User Experience**
-   - We prioritize a clean and user-friendly design to ensure a straightforward experience for both buyers and sellers. Navigate through the platform with ease.
+    - We prioritize a clean and user-friendly design to ensure a straightforward experience for both buyers and sellers. Navigate through the platform with ease.
 
 ## Tech Stack
 
-
 This project leverages [Next.js](https://nextjs.org/) version 14, incorporating the latest enhancements such as the app router and server components. Next.js is a powerful React framework designed for web application development. The complete tech stack includes:
-- **Next.js**: A robust React framework with version 14 features, including an advanced app router for intuitive navigation and server components for optimized server-side rendering.
-- **Vercel**: The web app is deployed on the edge network using Vercel, ensuring fast and reliable hosting with global reach.
-- **Tailwind CSS**: A utility-first CSS framework for crafting modern designs efficiently.
-- **DaisyUI**: Tailwind CSS extensions that streamline development and enhance styling capabilities.
-- **Auth0**: A flexible authentication and authorization platform.
-- **AWS S3**: A secure and scalable object storage service for efficient data storage and retrieval.
-- **ImageKit**: Real-time image optimization and transformation service.
-- **TypeScript**: A typed superset of JavaScript, improving code quality and maintainability.
-- **Zod**: TypeScript-first schema declaration and validation library.
 
-
+-   **Next.js**: A robust React framework with version 14 features, including an advanced app router for intuitive navigation and server components for optimized server-side rendering.
+-   **Vercel**: The web app is deployed on the edge network using Vercel, ensuring fast and reliable hosting with global reach.
+-   **Tailwind CSS**: A utility-first CSS framework for crafting modern designs efficiently.
+-   **DaisyUI**: Tailwind CSS extensions that streamline development and enhance styling capabilities.
+-   **Auth0**: A flexible authentication and authorization platform.
+-   **AWS S3**: A secure and scalable object storage service for efficient data storage and retrieval.
+-   **ImageKit**: Real-time image optimization and transformation service.
+-   **TypeScript**: A typed superset of JavaScript, improving code quality and maintainability.
+-   **Zod**: TypeScript-first schema declaration and validation library.
 
 ## Getting Started
 

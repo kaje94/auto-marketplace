@@ -1,10 +1,10 @@
 > await new Promise((resolve) => setTimeout(resolve, 10000));
 
-
 > Setting up s3
 > https://next-s3-upload.codingvalue.com/setup
 
 > API changes
+
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
 -   [] bot detection in auth0 enabled(recaptcha)
 -   [] check max length of all strings in schema file
@@ -12,6 +12,7 @@
 -   [] contact us email should be moved to api layer
 
 > Web app todo list
+
 -   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
 -   [] implement make featured listing feature
 -   [] show view counter in listings (for owner and admins)
@@ -27,11 +28,13 @@
 -   [] fix token not refreshing
 
 > After deploy
+
 -   [] Add sentry
 -   [] Add monitors
 -   [] minify manifest after changes!
 
 > optional tod list
+
 -   [] add pwa?
 -   [] update manifest https://web.dev/articles/add-manifest
 -   [] show counter in textarea listing create
@@ -48,17 +51,14 @@
 -   [] remove async from components if not needed
 
 > SEO Todo list
+
 -   [] https://webmasters.stackexchange.com/questions/104987/how-to-change-which-image-from-website-is-shown-in-google-search-result
 
-
-
-
 > Update auth welcome text to one of the following
-Select your preferred login method to access Targabay
-Choose your login method to access Targabay
-Select how you want to log in to Targabay.
-
+> Select your preferred login method to access Targabay
+> Choose your login method to access Targabay
+> Select how you want to log in to Targabay.
 
 > Analytics
-https://posthog.com/
-https://plausible.io/#pricing
+> https://posthog.com/
+> https://plausible.io/#pricing
