@@ -26,6 +26,8 @@ jobs:
         NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{secrets.PROD_ENV_NEXT_PUBLIC_RECAPTCHA_SITE_KEY}}
         RECAPTCHA_SITE_SECRET: ${{secrets.PROD_ENV_RECAPTCHA_SITE_SECRET}}
         NODE_OPTIONS: "--max_old_space_size=4096"
+    permissions:
+      contents: write
     steps:
         - name: Checkout
           uses: actions/checkout@v3

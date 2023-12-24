@@ -12,23 +12,19 @@
 -   [] contact us email should be moved to api layer
 
 > Web app todo list
+-   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
+-   [] implement make featured listing feature
+-   [] show view counter in listings (for owner and admins)
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] refer create t3 structure and eslint
--   [] add watermark to uploaded image
 -   [] use links instead of router push ?
 -   [] fix chrome third party cookies blocked warning
 -   [] update displayname and signature in zoho mail
 -   [] fix meta tags in all pages
--   [] when selecting range, need to validate
 -   [] make sure meta tags are from layouts
--   [] update all docs about how featured adverts work
 -   [] get consent from footer above
--   [] move all links to command util function
--   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
 -   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
 -   [] fix token not refreshing
--   [] have `rm public/robots.prod.txt` and `mv public/robots.prod.txt public/robots.txt` to npm scripts
--   [] show view counter in listings (for owner and admins)
 
 > After deploy
 -   [] Add sentry
@@ -55,16 +51,6 @@
 -   [] https://webmasters.stackexchange.com/questions/104987/how-to-change-which-image-from-website-is-shown-in-google-search-result
 
 
-
-
-> Update next 14
--   https://nextjs.org/blog/next-14
--   https://nextjs.org/blog/security-nextjs-server-components-actions
--   https://www.google.com/search?q=useOptimistic+nextjs&sca_esv=577069831&sxsrf=AM9HkKl0JJWRR2DdtSSLbVHT4AmJA5u_aw%3A1698382865056&ei=EUQ7ZbyLA_XCkPIPyYSlwAI&ved=0ahUKEwj81_SauZWCAxV1IUQIHUlCCSgQ4dUDCBA&uact=5&oq=useOptimistic+nextjs&gs_lp=Egxnd3Mtd2l6LXNlcnAiFHVzZU9wdGltaXN0aWMgbmV4dGpzMgUQABiABDIIEAAYFhgeGAoyCBAAGBYYHhgKSMgNUMACWL8McAF4AZABAJgB7AKgAeQNqgEDMy01uAEDyAEA-AEBwgIKEAAYRxjWBBiwA8ICChAAGIoFGLADGEPCAgcQABiABBgKwgIGEAAYHhgKwgIIEAAYBRgeGAriAwQYACBBiAYBkAYK&sclient=gws-wiz-serp
--   https://www.google.com/search?q=useformstate+nextjs&sca_esv=577069831&sxsrf=AM9HkKlXzXTdtiS0i24ryrvOEp6sfjRWpw%3A1698382869133&ei=FUQ7ZcvkB9_AkPIP6__W6Qo&oq=useFormState+ne&gs_lp=Egxnd3Mtd2l6LXNlcnAiD3VzZUZvcm1TdGF0ZSBuZSoCCAAyBRAAGIAESOczUOoEWJEHcAF4AZABAJgB6gKgAakIqgEDMy0zuAEDyAEA-AEBwgIKEAAYRxjWBBiwA8ICChAAGIoFGLADGEPCAgoQABiABBgUGIcCwgIHEAAYigUYQ8ICBhAAGBYYHuIDBBgAIEGIBgGQBgk&sclient=gws-wiz-serp
--   https://www.google.com/search?q=useFormStatus+nextjs&sca_esv=577069831&sxsrf=AM9HkKkgd25RRusBkihkQcRbdAx9pu63Sw%3A1698382873110&ei=GUQ7ZbWwBpfvkPIP8q6OyAk&ved=0ahUKEwj1oOCeuZWCAxWXN0QIHXKXA5kQ4dUDCBA&uact=5&oq=useFormStatus+nextjs&gs_lp=Egxnd3Mtd2l6LXNlcnAiFHVzZUZvcm1TdGF0dXMgbmV4dGpzMgcQABiABBgKMggQABgWGB4YCkjAFlC0AVjHC3ABeAGQAQCYAYUDoAH6E6oBAzMtN7gBA8gBAPgBAcICChAAGEcY1gQYsAPCAgoQABiKBRiwAxhDwgIFEAAYgATiAwQYACBBiAYBkAYJ&sclient=gws-wiz-serp
--   https://nextjs.org/docs/app/api-reference/functions/generate-viewport
--   https://nextjs.org/docs/app/api-reference/functions/unstable_cache
 
 
 > Update auth welcome text to one of the following

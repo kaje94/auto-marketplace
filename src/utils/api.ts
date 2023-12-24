@@ -70,6 +70,8 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
         if (response.status === 401) {
             console.log("getting 401 for api call", endpoint);
             if (firstAttempt) {
+                // Retry after 5 seconds
+                await new Promise((resolve) => setTimeout(resolve, 5000));
                 return fetchRequest(endpoint, config, withAuth, false);
             }
             const currentPathname = nextHeaders().get("x-pathname");
