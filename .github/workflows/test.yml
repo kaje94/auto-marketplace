@@ -16,8 +16,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
     - name: Pull docker images
-      run: docker-compose pull -p "./docker/test-api-db/docker-compose.yml"
+      run: docker-compose pull -f "./docker/test-api-db/docker-compose.yml"
     - name: Run docker images
-      run: docker-compose up -d -p "./docker/test-api-db/docker-compose.yml"
+      run: docker-compose up -d -f "./docker/test-api-db/docker-compose.yml"
     - name: Down docker images
-      run: docker-compose down -p "./docker/test-api-db/docker-compose.yml"
+      run: docker-compose down -f "./docker/test-api-db/docker-compose.yml"
