@@ -1,7 +1,7 @@
 import { expect, Page, test } from "@playwright/test";
 import { formInputText, login } from "./util";
 
-test.describe.configure({ mode: "serial", retries: process.env.CI ? 2 : 0 });
+test.describe.configure({ mode: "serial", retries: 0 }); // fix retries
 
 test.describe("update profile", () => {
     let page: Page;

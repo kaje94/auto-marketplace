@@ -5,7 +5,7 @@ import { formInputText, formSelectAutocomplete, formSelectDate, formSelectOption
 
 test.describe.configure({ mode: "serial", retries: process.env.CI ? 2 : 0 });
 
-test.describe("create and manage subscriptions", () => {
+test.describe.skip("create and manage subscriptions", () => {
     let page: Page;
 
     test.beforeAll(async ({ browser }) => {

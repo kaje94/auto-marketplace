@@ -34,7 +34,7 @@ export default defineConfig({
     // Run your local dev server before starting the tests:
     // https://playwright.dev/docs/test-advanced#launching-a-development-web-server-during-the-tests
     webServer: {
-        command: "npm run dev",
+        command: "pnpm start",
         url: baseURL,
         timeout: 60 * 1000,
         reuseExistingServer: !process.env.CI,
@@ -52,4 +52,6 @@ export default defineConfig({
     },
     /* Configure projects for major browsers */
     projects: [{ name: "firefox", use: { ...devices["Desktop Firefox"] } }],
+    /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+    reporter: "list",
 });
