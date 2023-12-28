@@ -13,6 +13,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: KengoTODA/actions-setup-docker-compose@main
+      with:
+        version: '1.29.2'
       env:
         GITHUB_TOKEN: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
     - name: Pull docker images
