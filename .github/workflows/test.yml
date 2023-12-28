@@ -15,8 +15,15 @@ jobs:
     - uses: KengoTODA/actions-setup-docker-compose@main
       with:
         version: '1.29.2'
+    - name: Login to GitHub Container registry
+      uses: docker/login-action@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
+        GITHUB_USER: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        registry: ghcr.io
+        username: $GITHUB_USER
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Pull docker images
       run: docker-compose -f "./.github/workflows/test-api-db/docker-compose.yml" pull
     - name: Run docker images
