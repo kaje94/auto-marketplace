@@ -11,11 +11,6 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v3
-            # todo: remove!
-            # - name: call hello world
-            #   uses: ./.github/workflows/composite/hello-world
-            #   with:
-            #     who-to-greet: 'Kajendran'
             - name: Setup CI
               uses: ./.github/workflows/setup-ci
             - name: Run EsLint
