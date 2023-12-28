@@ -54,7 +54,7 @@ export const DeleteListingItemModal = (props: Props) => {
                 <div>Are you sure you want to delete this advert? This action is not reversible.</div>
                 <ModalFooter
                     loading={isLoading}
-                    primaryButton={{ text: "Delete", classNames: "btn-error" }}
+                    primaryButton={{ text: "Delete", classNames: "btn-error", testId: `confirm-delete-btn` }}
                     onSubmit={listingId ? () => mutate(listingId) : undefined}
                     onVisibleChange={onVisibleChange}
                 />

@@ -15,5 +15,9 @@ const config = {
         // Enable once its available in next.js stage release
         // ppr: true,
     },
+    eslint: {
+        // Will be tested separately in the CI pipeline
+        ignoreDuringBuilds: true,
+    },
 };
 export default config;

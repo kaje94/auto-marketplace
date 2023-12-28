@@ -360,6 +360,7 @@ export const ListingForm: FC<Props> = (props) => {
                 <div className="mt-5 flex justify-end">
                     <button
                         className="btn btn-neutral btn-wide"
+                        data-testid="listing-form-submit-btn"
                         disabled={isMutating || isLoading || (submitButton.disableIfCleanForm && !isDirty)}
                         type="submit"
                     >

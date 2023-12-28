@@ -5,14 +5,8 @@ import { ListingDetails, RelatedListingsCarousel } from "@/components/Listings/L
 import { ListingDetailsCountrySelectBtn } from "@/components/Listings/ListingDetails/CountrySelectButton";
 import { api } from "@/utils/api";
 import { COUNTRIES } from "@/utils/countries";
-import {
-    convertToSEOFriendlyImageURL,
-    getFormattedCurrency,
-    getLocationString,
-    toSEOFriendlyTitleUrl,
-    transformListingResponse,
-    unCamelCase,
-} from "@/utils/helpers";
+import { getFormattedCurrency, unCamelCase } from "@/utils/formatTextUtils";
+import { convertToSEOFriendlyImageURL, getLocationString, toSEOFriendlyTitleUrl, transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam, ListingItem, LocalePathParam } from "@/utils/types";
 
 const getListingDescriptionMetadata = (item: ListingItem): string => {

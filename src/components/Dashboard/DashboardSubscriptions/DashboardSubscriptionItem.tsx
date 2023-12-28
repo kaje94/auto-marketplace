@@ -2,15 +2,8 @@ import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
-import {
-    getFormattedCurrency,
-    getFormattedDistance,
-    getRandomItem,
-    getRandomNumber,
-    getYearFromDateString,
-    timeAgo,
-    unCamelCase,
-} from "@/utils/helpers";
+import { getFormattedCurrency, getFormattedDistance, unCamelCase } from "@/utils/formatTextUtils";
+import { getRandomItem, getRandomNumber, getYearFromDateString, timeAgo } from "@/utils/helpers";
 import { ListingSubscriptionItem } from "@/utils/types";
 
 /** Lazily loaded context menu */
@@ -125,7 +118,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
     const placeholderWidth = ["w-32", "w-40", "w-44", "w-28", "w-36"];
 
     const myAddItemContent = (
-        <div className="flex flex-col gap-0.5 p-3 md:p-4 ">
+        <div className="flex flex-col gap-0.5 p-3 md:p-4 " data-testid="dashboard-subscription-item">
             {loading ? (
                 <div className={clsx("h-6 bg-base-200", getRandomItem(["w-48", "w-44", "w-52", "w-60"]))} />
             ) : (

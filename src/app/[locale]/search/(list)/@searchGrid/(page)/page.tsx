@@ -4,14 +4,8 @@ import qs from "query-string";
 import { SearchGrid } from "@/components/Listings/PostedListingsSearchGrid";
 import { api } from "@/utils/api";
 import { COUNTRIES } from "@/utils/countries";
-import {
-    convertToSEOFriendlyImageURL,
-    getFormattedCurrency,
-    getLocationString,
-    toSEOFriendlyTitleUrl,
-    transformListingsListResponse,
-    unCamelCase,
-} from "@/utils/helpers";
+import { getFormattedCurrency, unCamelCase } from "@/utils/formatTextUtils";
+import { convertToSEOFriendlyImageURL, getLocationString, toSEOFriendlyTitleUrl, transformListingsListResponse } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { ListingItem, ListingItems, LocalePathParam, PaginatedResponse, PostedListingsFilterReq, SearchParams } from "@/utils/types";
 

@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -18,10 +19,13 @@ type RevalidatePostedListingsByCountryReq = z.infer<typeof RevalidatePostedListi
 
 export const RevalidatePostedListingsByCountry = () => {
     const [modalVisible, setModalVisible] = useState(false);
+    const params = useParams();
+    const currentCountry = COUNTRIES[params.locale as string]?.[0];
 
     const { handleSubmit, control } = useForm<RevalidatePostedListingsByCountryReq>({
         resolver: zodResolver(RevalidatePostedListingsByCountrySchema),
         mode: "all",
+        defaultValues: { country: currentCountry },
     });
 
     const { mutate, isLoading } = useMutation(

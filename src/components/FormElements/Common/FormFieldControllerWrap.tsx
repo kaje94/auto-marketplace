@@ -21,7 +21,10 @@ export const FormFieldControllerWrap: FC<FormFieldControllerProps> = ({
     error,
     errorAsTooltip,
 }) => (
-    <div className={clsx("form-control relative w-full", rootClassName, !error && !errorAsTooltip && "mb-4")}>
+    <div
+        className={clsx("form-control relative w-full", rootClassName, !error && !errorAsTooltip && "mb-4")}
+        data-testid={error ? `form-field-error-${label}` : `form-field-no-error-${label}`}
+    >
         {label && (
             <label className={clsx("label py-0.5", labelClassNames)}>
                 <span className="label-text opacity-70">

@@ -6,7 +6,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ListingImage } from "@/components/Common";
 import { MaximizeIcon } from "@/icons";
 import { VehicleTypes } from "@/utils/enum";
-import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyTitleUrl, unCamelCase } from "@/utils/helpers";
+import { unCamelCase } from "@/utils/formatTextUtils";
+import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyTitleUrl } from "@/utils/helpers";
 import { Location, VehicleImageType } from "@/utils/types";
 import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails";
 

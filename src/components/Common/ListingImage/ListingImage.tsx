@@ -39,7 +39,7 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
                 placeholder={(blurDataURL as `data:image/${string}`) || "empty"}
                 priority={false}
                 src={hasError && blurDataURL ? blurDataURL : image?.name!}
-                style={{ background: image?.color }}
+                style={{ backgroundColor: image?.color }}
                 width={width}
                 onError={() => setHasError(true)}
                 {...rest}

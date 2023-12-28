@@ -33,7 +33,7 @@ export const TextAreaController: FC<ControllerProps> = (props) => {
                     required={required}
                     rootClassName={rootClassName}
                 >
-                    <TextArea error={fieldState.error?.message} loading={loading} {...rest} {...field} ref={field.ref} />
+                    <TextArea error={fieldState.error?.message} loading={loading} {...rest} {...field} name={field.name} ref={field.ref} />
                 </FormFieldControllerWrap>
             )}
         />

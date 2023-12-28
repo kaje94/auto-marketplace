@@ -12,6 +12,8 @@ interface Props {
     primaryButton?: {
         /** Additional class names for the primary button */
         classNames?: string;
+        /** Id used for e2e tests */
+        testId?: string;
         /** Text to be displayed on the primary button */
         text?: string;
     };
@@ -35,7 +37,12 @@ export const ModalFooter: FC<Props> = ({ onVisibleChange, primaryButton, loading
                     Cancel
                 </button>
             )}
-            <button className={clsx("btn", primaryButton?.classNames || "!btn-neutral")} disabled={loading} onClick={onSubmit}>
+            <button
+                className={clsx("btn", primaryButton?.classNames || "!btn-neutral")}
+                data-testid={primaryButton?.testId}
+                disabled={loading}
+                onClick={onSubmit}
+            >
                 {loading && <span className="loading loading-spinner"></span>}
                 {primaryButton?.text}
             </button>

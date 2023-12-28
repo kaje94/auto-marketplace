@@ -3,7 +3,8 @@ import { FC } from "react";
 import { LinkWithLocale } from "@/components/Common";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString } from "@/utils/helpers";
+import { getFormattedCurrency } from "@/utils/formatTextUtils";
+import { formatHumanFriendlyDate, getLocationString } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 import { DeleteButton, EditButton, RenewButton, ReportButton, ShareButton, UnListButton } from "./ListingActionButtons";
 import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
@@ -32,7 +33,7 @@ export const ListingDetails: FC<Props> = ({
     showSellerDetails = true,
     basePath,
 }) => {
-    const { price, vehicle, location, user, title, description, status, id, createdOn } = itemDetails as ListingItem;
+    const { price, vehicle, location, user, title, description, status, id, createdOn, userId } = itemDetails as ListingItem;
 
     return (
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
@@ -146,7 +147,7 @@ export const ListingDetails: FC<Props> = ({
                         </>
                     )}
                     {!loading && loggedInUser?.isAdmin && (
-                        <DeleteButton isOwner={user?.userId === loggedInUser?.id} listingItem={itemDetails as ListingItem} />
+                        <DeleteButton isOwner={userId === loggedInUser?.id} listingItem={itemDetails as ListingItem} />
                     )}
                     {!loading &&
                         (user?.userId === loggedInUser?.id || loggedInUser?.isAdmin) &&

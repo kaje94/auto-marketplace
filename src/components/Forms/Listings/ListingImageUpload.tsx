@@ -87,7 +87,7 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
     return (
         <>
             <input className="h-0 w-0" ref={formRef} />
-            <div className="mt-2 " {...getRootProps({})}>
+            <div className="mt-2 " {...getRootProps({})} data-testid="image-upload-dropzone">
                 <div
                     className={clsx({
                         "rounded-box flex flex-wrap gap-2 duration-200": true,

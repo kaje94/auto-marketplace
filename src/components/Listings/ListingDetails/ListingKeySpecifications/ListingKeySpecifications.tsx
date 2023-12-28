@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { FC } from "react";
-import { getFormattedDistance, getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } from "@/utils/helpers";
+import { getFormattedDistance, numberWithCommas, unCamelCase } from "@/utils/formatTextUtils";
+import { getRandomItem, getYearFromDateString } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 
 interface Props {
@@ -13,7 +14,7 @@ export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
 
     const items: { label: string; value: string | number }[] = [];
     items.push({ label: "Brand", value: vehicle?.brand || "-" });
-    items.push({ label: "Modal", value: vehicle?.model || "-" });
+    items.push({ label: "Model", value: vehicle?.model || "-" });
     items.push({ label: "Trim / Edition", value: vehicle?.trim || "-" });
     items.push({ label: "Manufactured Year", value: vehicle?.yearOfManufacture ? getYearFromDateString(vehicle.yearOfManufacture) : "-" });
     items.push({ label: "Registered Year", value: vehicle?.yearOfRegistration ? getYearFromDateString(vehicle.yearOfRegistration) : "-" });
