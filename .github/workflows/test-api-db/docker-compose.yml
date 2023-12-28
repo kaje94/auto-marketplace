@@ -16,9 +16,6 @@ services:
     container_name: auto-store-api
     hostname: auto-store-api
     image: ghcr.io/gayankanishka/auto-store-api:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
     depends_on:
       - postgre-sql
     ports:
