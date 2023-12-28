@@ -16,8 +16,8 @@ jobs:
             #   uses: ./.github/workflows/composite/hello-world
             #   with:
             #     who-to-greet: 'Kajendran'
-            - name: setup
-              uses: ./.github/workflows/setup
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
             - name: Run EsLint
               run: pnpm run lint
             - name: Run Tsc
