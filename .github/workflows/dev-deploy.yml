@@ -10,8 +10,6 @@ jobs:
         timeout-minutes: 10
         environment: development
         env:
-            AUTH0_SCOPE: "openid profile email offline_access"
-            NEXT_PUBLIC_SUPPORT_EMAIL: "support@targabay.com"
             NODE_OPTIONS: "--max_old_space_size=4096"
         steps:
             - name: Checkout

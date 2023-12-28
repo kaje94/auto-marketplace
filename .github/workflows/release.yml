@@ -12,7 +12,6 @@ jobs:
         timeout-minutes: 10
         environment: production
         env:
-            AUTH0_SCOPE: "openid profile email offline_access"
             NODE_OPTIONS: "--max_old_space_size=4096"
         permissions:
             contents: write
