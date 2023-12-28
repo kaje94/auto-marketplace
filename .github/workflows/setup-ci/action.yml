@@ -6,13 +6,11 @@ runs:
   steps:
     - name: Install Node.js
       uses: actions/setup-node@v3
-      shell: bash
       with:
         node-version: 20.9.0
 
     - uses: pnpm/action-setup@v2
       name: Install pnpm
-      shell: bash
       with:
         version: 8
         run_install: false
@@ -24,7 +22,6 @@ runs:
 
     - uses: actions/cache@v3
       name: Setup pnpm cache
-      shell: bash
       with:
         path: ${{ env.STORE_PATH }}
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
