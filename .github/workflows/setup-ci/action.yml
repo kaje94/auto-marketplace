@@ -1,5 +1,5 @@
 name: 'Setup CI'
-description: 'Install Node, pnpm, vercel-cli and all the required dependencies'
+description: 'Install Node, pnpm, vercel-cli, and all the required dependencies'
 
 runs:
   using: "composite"
@@ -16,7 +16,6 @@ runs:
         run_install: false
 
     - name: Get pnpm store directory
-      shell: bash
       run: |
         echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
