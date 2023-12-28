@@ -18,8 +18,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
     - name: Pull docker images
-      run: docker-compose pull -f "./docker/test-api-db/docker-compose.yml"
+      run: docker-compose -f "./.github/workflows/test-api-db/docker-compose.yml" pull
     - name: Run docker images
-      run: docker-compose up -d -f "./docker/test-api-db/docker-compose.yml"
+      run: docker-compose -f "./.github/workflows/test-api-db/docker-compose.yml" up -d
+    - name: Sleep for 30 seconds
+      run: sleep 30s
+      shell: bash
     - name: Down docker images
-      run: docker-compose down -f "./docker/test-api-db/docker-compose.yml"
+      run: docker-compose -f "./.github/workflows/test-api-db/docker-compose.yml" down
