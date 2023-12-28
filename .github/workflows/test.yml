@@ -12,6 +12,7 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DEV_PROJECT_ID }}
   API_BASE_URL: "http://localhost:5002/api"
+  NODE_OPTIONS: "--max_old_space_size=4096"
 jobs:
   test:
     timeout-minutes: 10
@@ -42,7 +43,7 @@ jobs:
     - name: Pull configs into .env file
       run: vercel env pull .env --token=${{ secrets.VERCEL_TOKEN }}
     - name: Install Playwright Browsers
-      run: pnpm exec playwright install --with-deps
+      run: pnpm exec playwright install --with-deps firefox
     - name: Build webapp
       run: pnpm build
     - name: Run Playwright tests
