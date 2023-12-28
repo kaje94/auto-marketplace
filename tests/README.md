@@ -1,6 +1,4 @@
-# Project Name
-
-## End-to-End Tests Documentation
+# End-to-End Tests
 
 This directory contains end-to-end tests for the project using [Playwright](https://playwright.dev/).
 
