@@ -39,13 +39,14 @@ export const ContextMenu: FC<Props> = ({ menuItems = [] }) => {
         <>
             <MenuIcon
                 className="cursor-pointer opacity-30 transition-all duration-200 hover:opacity-75 hover:shadow"
+                data-testid="context-menu"
                 onClick={(event) => {
                     event.preventDefault();
                     setMenuVisible(true);
                 }}
             />
             <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
-                <div className={clsx("dropdown dropdown-end", menuVisible && "dropdown-open")}>
+                <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>
                     <ul
                         className="menu dropdown-content rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg"
                         onClick={() => setMenuVisible(false)}
@@ -62,7 +63,7 @@ const MenuItem: FC<ContextMenuItemProp> = ({ link, label, icon, onClick, classNa
     return (
         <li>
             {link ? (
-                <LinkWithLocale className="flex" href={link}>
+                <LinkWithLocale className="flex" data-testid={`context-menu-${label}`} href={link}>
                     <div className={clsx("flex flex-1 items-center justify-between font-medium", classNames)}>
                         {label}
                         {icon}
@@ -71,6 +72,7 @@ const MenuItem: FC<ContextMenuItemProp> = ({ link, label, icon, onClick, classNa
             ) : (
                 <div
                     className={clsx("flex flex-1 items-center justify-between font-medium", classNames)}
+                    data-testid={`context-menu-${label}`}
                     onClick={(event) => {
                         event.preventDefault();
                         if (onClick) {

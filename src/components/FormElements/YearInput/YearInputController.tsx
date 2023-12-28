@@ -62,6 +62,7 @@ export const YearInputController: FC<Omit<ControllerProps, "showSelectedTick" | 
                     <Autocomplete
                         disabled={disabled}
                         error={fieldState.error?.message}
+                        fieldName={field.name}
                         options={years}
                         placeholder={placeholder}
                         ref={field.ref}

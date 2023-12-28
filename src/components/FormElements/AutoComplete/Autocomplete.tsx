@@ -6,7 +6,7 @@ import React, { forwardRef, useState } from "react";
 import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
 import { CheckIcon } from "@/icons";
-import { unCamelCase } from "@/utils/helpers";
+import { unCamelCase } from "@/utils/formatTextUtils";
 import { LabelValue } from "@/utils/types";
 
 const Virtuoso = dynamic(() => import("react-virtuoso").then((mod) => mod.Virtuoso), {
@@ -31,7 +31,7 @@ export interface ControllerProps extends FormFieldControllerProps {
     showSelectedTick?: boolean;
 }
 
-export interface Props extends Pick<ControllerProps, "selectClassNames" | "placeholder" | "options" | "showSelectedTick" | "disabled"> {
+export interface Props extends Pick<ControllerProps, "selectClassNames" | "placeholder" | "options" | "showSelectedTick" | "disabled" | "fieldName"> {
     error?: string;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     setFieldValue?: (value: any) => void;
@@ -73,6 +73,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                                 selectClassNames,
                             )}
                             displayValue={(option: any) => (option && option !== "" ? unCamelCase(option as string) : query)}
+                            name={props.fieldName}
                             placeholder={placeholder}
                             ref={ref}
                             onBlur={(event) => {
@@ -87,7 +88,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, Props>((props, ref) => 
                     </Combobox.Button>
 
                     {open && (
-                        <div className={clsx("dropdown-end dropdown dropdown-open absolute inset-x-0 bottom-0 w-full")}>
+                        <div className={clsx("dropdown-end dropdown-open dropdown absolute inset-x-0 bottom-0 w-full")}>
                             <div className={clsx("menu dropdown-content z-20 mt-0.5 grid w-full rounded rounded-t-none bg-base-200 p-0 shadow-lg")}>
                                 {filteredOptions.length === 0 && query !== "" ? (
                                     <div className="relative cursor-default select-none px-4 py-2 text-neutral">Nothing found.</div>

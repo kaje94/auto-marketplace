@@ -11,7 +11,7 @@ interface Props {
 
 export const FilterButton: FC<Props> = ({ loading, hasSearchParams, dropdownOpen, handleFilterOpen }) => {
     return (
-        <label className="flex  flex-row items-center gap-2" onClick={handleFilterOpen}>
+        <label className="flex flex-row items-center gap-2" data-testid="dashboard-filter" onClick={handleFilterOpen}>
             {hasSearchParams && <div className={clsx("badge badge-outline badge-md w-max", !loading && "cursor-pointer")}>Filters Applied</div>}
             {loading ? (
                 <span className="loading loading-ring h-8 w-8" />

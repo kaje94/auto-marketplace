@@ -9,7 +9,7 @@ import { unListListingAction } from "@/actions/listingActions";
 import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { SelectController } from "@/components/FormElements/Select";
 import { ListingStatusTypes } from "@/utils/enum";
-import { unCamelCase } from "@/utils/helpers";
+import { unCamelCase } from "@/utils/formatTextUtils";
 import { UnListListingSchema } from "@/utils/schemas";
 import { LabelValue, ListingItem, UnListListingReq } from "@/utils/types";
 

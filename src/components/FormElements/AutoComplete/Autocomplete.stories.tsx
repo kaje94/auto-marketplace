@@ -16,12 +16,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     args: {
         options: mockLabelValue,
+        fieldName: "field-name",
     },
 };
 
 export const Disabled: Story = {
     args: {
         options: mockLabelValue,
+        fieldName: "field-name",
         disabled: true,
     },
 };

@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Script from "next/script";
 import { FC } from "react";
 import { env } from "@/env.mjs";

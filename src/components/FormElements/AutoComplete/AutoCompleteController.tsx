@@ -58,6 +58,7 @@ export const AutocompleteController: FC<ControllerProps> = (props) => {
                     <Autocomplete
                         disabled={disabled}
                         error={fieldState.error?.message}
+                        fieldName={field.name}
                         options={options}
                         placeholder={placeholder}
                         ref={field.ref}

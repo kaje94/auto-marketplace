@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { ComponentProps, forwardRef } from "react";
 import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
-import { unCamelCase } from "@/utils/helpers";
+import { unCamelCase } from "@/utils/formatTextUtils";
 import { LabelValue } from "@/utils/types";
 
 export interface ControllerProps extends FormFieldControllerProps, ComponentProps<"select"> {

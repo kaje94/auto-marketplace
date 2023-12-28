@@ -30,6 +30,7 @@ export const Avatar: FC<Props> = memo(({ url, width, name, loading }) => {
                 <Image
                     alt="profile-image"
                     className="rounded-full bg-slate-600 object-cover"
+                    data-testid="profile-image"
                     height={width}
                     referrerPolicy="no-referrer"
                     src={url}

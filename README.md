@@ -2,11 +2,9 @@
 
 Welcome to the Auto Marketplace Client project! This platform is designed to provide users with a seamless and intuitive experience for buying and selling vehicles online.
 
-<p align="center">
-    <a href="https://auto-marketplace.vercel.app">
-      <img alt="preview-image" src="public/images/banner.jpg" width="1024">
-    </a>
-</p>
+<a href="https://auto-marketplace.vercel.app/LK">
+    <img alt="preview-image" src="public/images/banner.jpg" width="1024">
+</a>
 
 ## Features
 

@@ -10,9 +10,13 @@
 -   [] check max length of all strings in schema file
 -   [] an api for contact us form (name, email, subject & message)
 -   [] contact us email should be moved to api layer
+-   [] limits within free tier
+-   [] auth0 changes for dev env testing
+-   [] after creating an advert the year displayed is 1 more than the selected year
+-   [] API randomly returns a 502 for some api calls. Out of memory: Killed process 305 (dotnet) total-vm:273620344kB, anon-rss:111048kB, file-rss:0kB, shmem-rss:63460kB, UID:0 pgtables:908kB oom_score_adj:0
 
 > Web app todo list
-
+-   [] have a seperate page for / root page and redirect from there instead of auto redirect!
 -   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
 -   [] implement make featured listing feature
 -   [] show view counter in listings (for owner and admins)
@@ -24,8 +28,17 @@
 -   [] fix meta tags in all pages
 -   [] make sure meta tags are from layouts
 -   [] get consent from footer above
--   [] remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
+-   [] LISTING IMAGE COMPONENT: remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
 -   [] fix token not refreshing
+-   [] vercel env pull already pulls all the env stuff!. 
+-   [] add date offset to all filters
+-   [] add interaction tests for storybook
+-   [] https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+
+> e2e test
+-   [] add tests for featured listings
+-   [] unlisting, and other status change
+-   [] profile update (only postal code or phone number!)
 
 > After deploy
 
@@ -62,3 +75,13 @@
 > Analytics
 > https://posthog.com/
 > https://plausible.io/#pricing
+
+
+> Playwright
+> install
+pnpm exec playwright install
+sudo pnpm exec playwright install-deps
+
+> to run
+pnpm exec playwright test
+

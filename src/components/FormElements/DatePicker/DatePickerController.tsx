@@ -52,6 +52,7 @@ export const DatePickerController: FC<ControllerProps> = ({
                         selected={field.value ? new Date(field.value) : null}
                         onBlur={field.onBlur}
                         {...rest}
+                        name={field.name}
                         ref={field.ref}
                         onChange={(date) => field.onChange(date?.toString())}
                     />

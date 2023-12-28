@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <div className="container mx-auto w-full animate-fadeIn-300 animate-delay-500 md:mb-[5%]">{children}</div>
                 </div>
                 <Image
-                    alt="cover-image"
+                    alt=""
                     className="absolute inset-x-0 bottom-0 m-auto w-full opacity-20 md:w-10/12 md:opacity-30 lg:w-11/12 xl:max-w-7xl"
                     height={450}
                     priority={false}

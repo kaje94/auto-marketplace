@@ -5,7 +5,8 @@ import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
+import { getFormattedCurrency, unCamelCase } from "@/utils/formatTextUtils";
+import { formatHumanFriendlyDate, getLocationString, getRandomItem, timeAgo } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 
 /** Lazily loaded context menu */
@@ -33,7 +34,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
     const priceStr = getFormattedCurrency(price?.amount, price?.currencyCode);
 
     const listingItemContent = (
-        <div className="grid grid-cols-12 gap-0.5 p-3 md:gap-2 md:p-4 xl:gap-4">
+        <div className="grid grid-cols-12 gap-0.5 p-3 md:gap-2 md:p-4 xl:gap-4" data-testid="dashboard-listing-item">
             {loading ? (
                 <div className="relative hidden aspect-video h-full w-full overflow-hidden rounded-xl bg-base-200 md:col-span-5 md:block xl:col-span-3" />
             ) : (

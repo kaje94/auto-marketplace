@@ -5,7 +5,7 @@ import { LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon } from "@/icons";
 import { ListingStatusDescriptions } from "@/utils/constants";
 import { ListingStatusTypes } from "@/utils/enum";
-import { unCamelCase } from "@/utils/helpers";
+import { unCamelCase } from "@/utils/formatTextUtils";
 import { ListingItem } from "@/utils/types";
 import { RenewButton } from "./RenewButton";
 import { ReviewButton } from "./ReviewButton";

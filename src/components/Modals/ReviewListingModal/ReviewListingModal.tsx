@@ -9,7 +9,7 @@ import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { SelectController } from "@/components/FormElements/Select";
 import { TextAreaController } from "@/components/FormElements/TextArea";
 import { ListingStatusTypes } from "@/utils/enum";
-import { unCamelCase } from "@/utils/helpers";
+import { unCamelCase } from "@/utils/formatTextUtils";
 import { ReviewListingSchema } from "@/utils/schemas";
 import { ListingItem, ReviewListingReq } from "@/utils/types";
 
