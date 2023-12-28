@@ -12,7 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: isbang/compose-action@v1.5.1
-      with:
-        compose-file: "./.github/workflows/test-api-db/docker-compose.yml"
-        down-flags: "--volumes"
+    - uses: KengoTODA/actions-setup-docker-compose@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_READ_PKG }}
+    - name: Pull docker images
+      run: docker-compose pull -p "./docker/test-api-db/docker-compose.yml"
+    - name: Run docker images
+      run: docker-compose up -d -p "./docker/test-api-db/docker-compose.yml"
+    - name: Down docker images
+      run: docker-compose down -p "./docker/test-api-db/docker-compose.yml"
