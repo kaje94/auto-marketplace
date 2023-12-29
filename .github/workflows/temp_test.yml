@@ -35,9 +35,9 @@ jobs:
         username: $GITHUB_USER
         password: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
     - name: Pull docker images
-      run: docker-compose -f "./.github/workflows/test-api-db/docker-compose.yml" pull
+      run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" pull
     - name: Run docker images
-      run: docker-compose -f "./.github/workflows/test-api-db/docker-compose.yml" up -d
+      run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" up -d
     - name: Sleep for 30 seconds
       run: sleep 30s
       shell: bash
@@ -56,4 +56,4 @@ jobs:
         path: test-results/
         retention-days: 1
     - name: Down docker images
-      run: docker-compose -f "./.github/workflows/test-api-db/docker-compose.yml" down
+      run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" down

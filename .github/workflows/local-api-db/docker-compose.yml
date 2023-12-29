@@ -1,3 +1,5 @@
+# This docker compose file is used to locally run the API server and DB.
+# It provides the necessary configuration for running the E2E tests against the API server.
 version: "3.9"
 services:
   postgre-sql:

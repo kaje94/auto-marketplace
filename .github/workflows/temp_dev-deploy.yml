@@ -8,7 +8,9 @@ jobs:
     deployment:
         runs-on: ubuntu-latest
         timeout-minutes: 10
-        environment: development
+        environment: 
+          name: development
+          url: https://dev.targabay.com
         env:
             NODE_OPTIONS: "--max_old_space_size=4096"
         steps:

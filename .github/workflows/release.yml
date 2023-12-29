@@ -1,4 +1,4 @@
-name: Publish Release
+name: Production Release
 env:
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -10,7 +10,9 @@ jobs:
     build:
         runs-on: ubuntu-latest
         timeout-minutes: 10
-        environment: production
+        environment: 
+          name: production
+          url: https://targabay.com
         env:
             NODE_OPTIONS: "--max_old_space_size=4096"
         permissions:
