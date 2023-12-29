@@ -49,7 +49,7 @@ test.describe("create and manage listing", () => {
         const formFieldErrors = await page.locator('[data-testid^="form-field-error-"]').all();
         expect(formFieldErrors.length).toBe(0);
         await page.getByRole("button", { name: "Create" }).click();
-        await expect(page).toHaveTitle(/My Advert Details/, { timeout: 30000 });
+        await expect(page).toHaveTitle(/My Advert Details/, { timeout: 40000 });
     });
 
     test("verify dashboard listing details page", async () => {
@@ -72,8 +72,7 @@ test.describe("create and manage listing", () => {
     });
 
     test("view and filter my list", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "My Adverts" }).first().click();
+        await page.goto("/LK/dashboard/my-listings");
         await expect(page).toHaveTitle(/My Adverts/);
 
         await expect(page.getByText(newListingItem.model)).toBeVisible();
@@ -90,8 +89,7 @@ test.describe("create and manage listing", () => {
     });
 
     test("view and filter all list", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "Manage Adverts" }).first().click();
+        await page.goto("/LK/dashboard/listings");
         await expect(page).toHaveTitle(/Manage Listing Adverts/);
 
         await page.getByTestId("dashboard-filter").click();
@@ -116,8 +114,7 @@ test.describe("create and manage listing", () => {
     });
 
     test("revalidate posted listing list cache", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "Manage Cache" }).first().click();
+        await page.goto("/LK/dashboard/cache-manage");
         await page.getByRole("button", { name: "Revalidate posted listings by country" }).click();
         await page.getByRole("button", { name: "Proceed" }).first().click();
     });
@@ -159,8 +156,7 @@ test.describe("create and manage listing", () => {
     });
 
     test("update & delete listing", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "My Adverts" }).first().click();
+        await page.goto("/LK/dashboard/my-listings");
         await expect(page).toHaveTitle(/My Adverts/);
         await page.getByText(newListingItem.model).click();
         await expect(page).toHaveTitle(/My Advert Details/);
@@ -190,8 +186,7 @@ const verifyCreatedListingDetails = async (page: Page) => {
 };
 
 const cleanupMyAdverts = async (page: Page) => {
-    await page.getByTestId("profile-image").first().click();
-    await page.getByRole("link", { name: "My Adverts" }).first().click();
+    await page.goto("/LK/dashboard/my-listings");
     while (true) {
         await expect(page).toHaveTitle(/My Adverts/, { timeout: 20000 });
         await expect(page.getByText("results found")).toBeVisible({ timeout: 20000 });

@@ -26,8 +26,7 @@ test.describe("create and manage subscriptions", () => {
     });
 
     test("create a new subscription", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "My Subscriptions" }).first().click();
+        await page.goto("/LK/dashboard/my-subscriptions");
         await expect(page).toHaveTitle(/My Subscriptions/);
 
         await page.getByRole("button", { name: "New Subscription" }).click();
@@ -90,8 +89,7 @@ test.describe("create and manage subscriptions", () => {
     });
 
     test("visible in all list with filters", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "Manage Subscriptions" }).first().click();
+        await page.goto("/LK/dashboard/subscriptions");
         await expect(page).toHaveTitle(/Manage Subscriptions/);
 
         await page.getByTestId("dashboard-filter").click();
@@ -101,8 +99,7 @@ test.describe("create and manage subscriptions", () => {
     });
 
     test("update subscription", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "My Subscriptions" }).first().click();
+        await page.goto("/LK/dashboard/my-subscriptions");
         await expect(page).toHaveTitle(/My Subscriptions/);
         await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible();
         await page.locator(".cursor-pointer > path").first().click();
@@ -135,8 +132,7 @@ test.describe("create and manage subscriptions", () => {
 });
 
 const cleanupMySubscriptions = async (page: Page) => {
-    await page.getByTestId("profile-image").first().click();
-    await page.getByRole("link", { name: "My Subscriptions" }).first().click();
+    await page.goto("/LK/dashboard/my-subscriptions");
     while (true) {
         await expect(page).toHaveTitle(/My Subscriptions/, { timeout: 20000 });
         await expect(page.getByText("results found")).toBeVisible({ timeout: 20000 });

@@ -41,7 +41,7 @@ export const formSelectDate = async (page: Page, fieldName: string) => {
 export const login = async (page: Page) => {
     expect(process.env.TEST_ADMIN_EMAIL!).toBeTruthy();
     expect(process.env.TEST_ADMIN_PASSWORD!).toBeTruthy();
-    await page.goto("/");
+    await page.goto("/LK/");
     await expect(page).toHaveTitle(/Targabay/);
     const profilePicVisible = await page.getByTestId("profile-image").isVisible();
     if (!profilePicVisible) {

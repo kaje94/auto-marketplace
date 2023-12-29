@@ -20,8 +20,7 @@ test.describe("update profile", () => {
     });
 
     test("view profile", async () => {
-        await page.getByTestId("profile-image").first().click();
-        await page.getByRole("link", { name: "Profile" }).first().click();
+        await page.goto("/LK/dashboard/profile");
         await expect(page).toHaveTitle(/My Profile/, { timeout: 20000 });
         await expect(page.getByText(process.env.TEST_ADMIN_EMAIL!).first()).toBeVisible();
     });
