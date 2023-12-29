@@ -38,3 +38,6 @@ next-env.d.ts
 /blob-report/
 /playwright/.cache/
 .env*.local
+
+# storybook
+storybook-static

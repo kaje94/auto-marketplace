@@ -1,0 +1,28 @@
+---
+name: Storybook tests
+on:
+    workflow_dispatch:
+    pull_request:
+        branches:
+            - main
+jobs:
+    test-storybook:
+        runs-on: ubuntu-latest
+        env:
+            SKIP_ENV_VALIDATION: true
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Install Playwright
+              run: pnpm exec playwright install --with-deps chromium
+            - name: Build Storybook
+              run: pnpm build-storybook --quiet
+            - name: Install global dependencies
+              run: pnpm install -g concurrently wait-on http-server
+            - name: Serve Storybook and run tests
+              run: |
+                  npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+                    "npx http-server storybook-static --port 6006 --silent" \
+                    "npx wait-on tcp:6006 && pnpm test-storybook"

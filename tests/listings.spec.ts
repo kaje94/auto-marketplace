@@ -49,7 +49,7 @@ test.describe("create and manage listing", () => {
         const formFieldErrors = await page.locator('[data-testid^="form-field-error-"]').all();
         expect(formFieldErrors.length).toBe(0);
         await page.getByRole("button", { name: "Create" }).click();
-        await expect(page).toHaveTitle(/My Advert Details/, { timeout: 40000 });
+        await expect(page).toHaveTitle(/My Advert Details/, { timeout: 30000 });
     });
 
     test("verify dashboard listing details page", async () => {

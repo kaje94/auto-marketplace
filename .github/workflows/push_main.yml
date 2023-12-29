@@ -1,4 +1,4 @@
-name: Build, Test & Deploy to Development Environment
+name: Build & Deploy to Dev
 on:
     workflow_dispatch:
     push:

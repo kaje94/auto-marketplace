@@ -12,6 +12,7 @@
     "tsc": "tsc --noEmit --incremental",
     "storybook": "storybook dev -p 6006 --disable-telemetry",
     "build-storybook": "storybook build",
+    "test-storybook": "test-storybook",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
@@ -63,6 +64,7 @@
     "@storybook/nextjs": "^7.6.5",
     "@storybook/react": "^7.6.5",
     "@storybook/test": "^7.6.5",
+    "@storybook/test-runner": "^0.16.0",
     "@types/fslightbox-react": "^1.7.4",
     "@types/react": "^18.2.38",
     "@types/react-datepicker": "^4.15.0",
