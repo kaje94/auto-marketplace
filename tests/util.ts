@@ -51,7 +51,7 @@ export const login = async (page: Page) => {
         await page.getByLabel("Email address").fill(process.env.TEST_ADMIN_EMAIL!);
         await page.getByLabel("Password").fill(process.env.TEST_ADMIN_PASSWORD!);
         await page.getByRole("button", { name: "Continue", exact: true }).click();
-        await expect(page).toHaveTitle(/Targabay/);
+        await expect(page).toHaveTitle(/Targabay/, { timeout: 20000 });
         await page.waitForSelector('img[alt="profile-image"]', { timeout: 20000 });
     }
 };

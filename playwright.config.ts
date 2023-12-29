@@ -51,10 +51,10 @@ export default defineConfig({
     //     trace: "retry-with-trace",
     // },
     use: {
-        trace: "retry-with-trace",
+        trace: "on",
         screenshot: "only-on-failure", // Capture screenshot after each test failure.
-        video: "retain-on-failure", //Record video only when retrying a test for the first time.
-        headless: true,
+        video: "on", //Record video only when retrying a test for the first time.
+        // headless: true,
         // viewport: { width: 1280, height: 720 },
         // launchOptions: {
         //     slowMo: 50,
