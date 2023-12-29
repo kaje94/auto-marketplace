@@ -5,7 +5,7 @@ import { formInputText, formSelectAutocomplete, formSelectOption, formTagSelectO
 
 test.describe.configure({ mode: "serial", retries: process.env.CI ? 2 : 0 });
 
-test.describe.skip("create and manage listing", () => {
+test.describe("create and manage listing", () => {
     let page: Page;
 
     test.beforeAll(async ({ browser }) => {

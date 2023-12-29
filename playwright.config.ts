@@ -5,11 +5,11 @@ import path from "path";
 
 dotenvConfig();
 
-// // Use process.env.PORT by default and fallback to port 3000
-// const PORT = process.env.PORT || 3000;
+// Use process.env.PORT by default and fallback to port 3000
+const PORT = process.env.PORT || 3000;
 
-// // Set webServer.url and use.baseURL with the location of the WebServer respecting the correct set port
-// const baseURL = `http://localhost:${PORT}`;
+// Set webServer.url and use.baseURL with the location of the WebServer respecting the correct set port
+const baseURL = `http://localhost:${PORT}`;
 
 // Reference: https://playwright.dev/docs/test-configuration
 export default defineConfig({
@@ -30,41 +30,21 @@ export default defineConfig({
     testDir: path.join(__dirname, "tests"),
     // Artifacts folder where screenshots, videos, and traces are stored.
     outputDir: "test-results/",
-
     // Run your local dev server before starting the tests:
     // https://playwright.dev/docs/test-advanced#launching-a-development-web-server-during-the-tests
     webServer: {
         command: "pnpm dev",
-        url: "http://localhost:3000",
+        url: baseURL,
         timeout: 60 * 1000,
         reuseExistingServer: !process.env.CI,
     },
     /* Opt out of parallel tests on CI. */
     workers: process.env.CI ? 1 : undefined,
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-    // use: {
-    //     // Use baseURL so to make navigations relative.
-    //     // More information: https://playwright.dev/docs/api/class-testoptions#test-options-base-url
-    //     baseURL,
-    //     // Retry a test if its failing with enabled tracing. This allows you to analyze the DOM, console logs, network traffic etc.
-    //     // More information: https://playwright.dev/docs/trace-viewer
-    //     trace: "retry-with-trace",
-    // },
     use: {
-        trace: "on",
+        baseURL,
+        trace: "retain-on-failure",
         screenshot: "only-on-failure", // Capture screenshot after each test failure.
-        video: "on", //Record video only when retrying a test for the first time.
-        // headless: true,
-        // viewport: { width: 1280, height: 720 },
-        // launchOptions: {
-        //     slowMo: 50,
-        //     logger: {
-        //         isEnabled: (name, severity) => name === "browser",
-        //         log: (name, severity, message, args) => console.log(`${name} ${message}`),
-        //     },
-        // },
-        // actionTimeout: 10 * 1000,
-        // navigationTimeout: 30 * 1000,
     },
     /* Configure projects for major browsers */
     projects: [{ name: "firefox", use: { ...devices["Desktop Firefox"] } }],

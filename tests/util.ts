@@ -41,7 +41,7 @@ export const formSelectDate = async (page: Page, fieldName: string) => {
 export const login = async (page: Page) => {
     expect(process.env.TEST_ADMIN_EMAIL!).toBeTruthy();
     expect(process.env.TEST_ADMIN_PASSWORD!).toBeTruthy();
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
     await expect(page).toHaveTitle(/Targabay/);
     const profilePicVisible = await page.getByTestId("profile-image").isVisible();
     if (!profilePicVisible) {
@@ -51,7 +51,7 @@ export const login = async (page: Page) => {
         await page.getByLabel("Email address").fill(process.env.TEST_ADMIN_EMAIL!);
         await page.getByLabel("Password").fill(process.env.TEST_ADMIN_PASSWORD!);
         await page.getByRole("button", { name: "Continue", exact: true }).click();
-        await expect(page).toHaveTitle(/Targabay/, { timeout: 20000 });
+        await expect(page).toHaveTitle(/Targabay/);
         await page.waitForSelector('img[alt="profile-image"]', { timeout: 20000 });
     }
 };
