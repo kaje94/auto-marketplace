@@ -1,128 +1,125 @@
 name: Build, Test & Deploy to Development Environment
 on:
-  workflow_dispatch:
-  push:
-      branches:
-        - main
+    workflow_dispatch:
+    push:
+        branches:
+            - main
 env:
-  NODE_OPTIONS: "--max_old_space_size=4096"
+    NODE_OPTIONS: "--max_old_space_size=4096"
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DEV_PROJECT_ID }}
 jobs:
-  eslint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    env:
-        SKIP_ENV_VALIDATION: true
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Setup CI
-      uses: ./.github/workflows/setup-ci
-    - name: Run EsLint
-      run: pnpm run lint
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: eslint
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup CI
-      uses: ./.github/workflows/setup-ci
-    - name: Pull Vercel Environment Information
-      run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-    - name: Build Project Artifacts
-      run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-    - name: Cache build output
-      uses: actions/cache/save@v3
-      with:
-        path: |
-          .next
-          .vercel
-        key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
-  test-e2e:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: build
-    env:
-      Auth0__ClientId: ${{ secrets.DEV_API_AUTH0_CLIENT_ID }}
-      Auth0__ClientSecret: ${{ secrets.DEV_API_CLIENT_SECRET }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.DEV_API_AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_API_AWS_SECRET_ACCESS_KEY }}
-      TEST_ADMIN_EMAIL: ${{ secrets.DEV_TEST_ADMIN_EMAIL }}
-      TEST_ADMIN_PASSWORD: ${{ secrets.DEV_TEST_ADMIN_PASSWORD }}
-      TEST_ADMIN_ID: ${{ secrets.DEV_TEST_ADMIN_ID }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DEV_PROJECT_ID }}
-      API_BASE_URL: "http://localhost:5002/api"
-      AUTH0_BASE_URL: "http://localhost:3000"
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup CI
-      uses: ./.github/workflows/setup-ci
-    - name: Restore build cache
-      uses: actions/cache/restore@v3
-      with:
-        path: |
-          .next
-          .vercel
-        key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
-    - uses: KengoTODA/actions-setup-docker-compose@main
-      with:
-        version: '1.29.2'
-    - name: Login to GitHub Container registry
-      uses: docker/login-action@v1
-      env:
-        GITHUB_USER: ${{ github.actor }}
-        GITHUB_TOKEN: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
-      with:
-        registry: ghcr.io
-        username: $GITHUB_USER
-        password: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
-    - name: Pull docker images
-      run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" pull
-    - name: Run docker images
-      run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" up -d
-    - name: Sleep for 20 seconds (wait for db migrations)
-      run: sleep 20s
-      shell: bash
-    - name: Pull configs into .env file
-      run: vercel env pull .env --token=${{ secrets.VERCEL_TOKEN }}
-    - name: Install Playwright Browsers
-      run: pnpm exec playwright install --with-deps firefox
-    - name: Run Playwright tests
-      run: pnpm exec playwright test
-    - uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: test-results
-        path: test-results/
-        retention-days: 1
-    - name: Down docker images
-      run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" down
-  deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs: [build, test-e2e]
-    environment: 
-      name: development
-      url: https://dev.targabay.com
-    env:
-        NODE_OPTIONS: "--max_old_space_size=4096"
-    steps:
-        - name: Checkout
-          uses: actions/checkout@v3
-        - name: Delete robots.prod.txt in dev env
-          run: rm public/robots.prod.txt
-        - name: Setup CI
-          uses: ./.github/workflows/setup-ci
-        - name: Restore build cache
-          uses: actions/cache/restore@v3
-          with:
-            path: |
-              .next
-              .vercel
-            key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
-        - name: Pull Vercel Environment Information
-          run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-        - name: Deploy Project Artifacts to Vercel
-          run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-
+    eslint:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        env:
+            SKIP_ENV_VALIDATION: true
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Run EsLint
+              run: pnpm run lint
+    build:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        needs: eslint
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Pull Vercel Environment Information
+              run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Build Project Artifacts
+              run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Cache build output
+              uses: actions/cache/save@v3
+              with:
+                  path: |
+                      .next
+                      .vercel
+                  key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
+    test-e2e:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        needs: build
+        env:
+            Auth0__ClientId: ${{ secrets.DEV_API_AUTH0_CLIENT_ID }}
+            Auth0__ClientSecret: ${{ secrets.DEV_API_CLIENT_SECRET }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.DEV_API_AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_API_AWS_SECRET_ACCESS_KEY }}
+            TEST_ADMIN_EMAIL: ${{ secrets.DEV_TEST_ADMIN_EMAIL }}
+            TEST_ADMIN_PASSWORD: ${{ secrets.DEV_TEST_ADMIN_PASSWORD }}
+            TEST_ADMIN_ID: ${{ secrets.DEV_TEST_ADMIN_ID }}
+            API_BASE_URL: "http://localhost:5002/api"
+            AUTH0_BASE_URL: "http://localhost:3000"
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Restore build cache
+              uses: actions/cache/restore@v3
+              with:
+                  path: |
+                      .next
+                      .vercel
+                  key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
+            - uses: KengoTODA/actions-setup-docker-compose@main
+              with:
+                  version: "1.29.2"
+            - name: Login to GitHub Container registry
+              uses: docker/login-action@v1
+              env:
+                  GITHUB_USER: ${{ github.actor }}
+                  GITHUB_TOKEN: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
+              with:
+                  registry: ghcr.io
+                  username: $GITHUB_USER
+                  password: ${{ secrets.READ_PKG_GITHUB_TOKEN }}
+            - name: Pull docker images
+              run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" pull
+            - name: Run docker images
+              run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" up -d
+            - name: Sleep for 20 seconds (wait for db migrations)
+              run: sleep 20s
+              shell: bash
+            - name: Pull configs into .env file
+              run: vercel env pull .env --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Install Playwright Browsers
+              run: pnpm exec playwright install --with-deps firefox
+            - name: Run Playwright tests
+              run: pnpm exec playwright test
+            - uses: actions/upload-artifact@v3
+              if: always()
+              with:
+                  name: test-results
+                  path: test-results/
+                  retention-days: 1
+            - name: Down docker images
+              run: docker-compose -f "./.github/workflows/local-api-db/docker-compose.yml" down
+    deploy:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        needs: [build, test-e2e]
+        environment:
+            name: development
+            url: https://dev.targabay.com
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Delete robots.prod.txt in dev env
+              run: rm public/robots.prod.txt
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Restore build cache
+              uses: actions/cache/restore@v3
+              with:
+                  path: |
+                      .next
+                      .vercel
+                  key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
+            - name: Pull Vercel Environment Information
+              run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Deploy Project Artifacts to Vercel
+              run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

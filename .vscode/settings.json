@@ -37,5 +37,8 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "cSpell.words": ["zoomable"],
     "prettier.tabWidth": 4,
-    "prettier.printWidth": 150
+    "prettier.printWidth": 150,
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

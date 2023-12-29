@@ -2,36 +2,36 @@
 # It provides the necessary configuration for running the E2E tests against the API server.
 version: "3.9"
 services:
-  postgre-sql:
-    container_name: postgre-sql
-    hostname: postgre-sql
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    expose:
-      - 5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: tempPassword123
+    postgre-sql:
+        container_name: postgre-sql
+        hostname: postgre-sql
+        image: postgres:latest
+        ports:
+            - "5432:5432"
+        expose:
+            - 5432
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: tempPassword123
 
-  auto-store-api:
-    container_name: auto-store-api
-    hostname: auto-store-api
-    image: ghcr.io/gayankanishka/auto-store-api:latest
-    depends_on:
-      - postgre-sql
-    ports:
-      - "5002:5002"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5002
-      - Persistence__ConnectionString=Host=postgre-sql;Database=AutoStore;Username=postgres;Password=tempPassword123
-      - Persistence__SeedData=true
-      - Auth0__Domain=dev-targabay.us.auth0.com
-      - Auth0__Audience=https://dev.targabay.com/api/v1
-      - Auth0__ClientId=$Auth0__ClientId
-      - Auth0__ClientSecret=$Auth0__ClientSecret
-      - AWS__Region=us-east-1
-      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-      - AWS_DEFAULT_REGION=us-east-1
+    auto-store-api:
+        container_name: auto-store-api
+        hostname: auto-store-api
+        image: ghcr.io/gayankanishka/auto-store-api:latest
+        depends_on:
+            - postgre-sql
+        ports:
+            - "5002:5002"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=http://+:5002
+            - Persistence__ConnectionString=Host=postgre-sql;Database=AutoStore;Username=postgres;Password=tempPassword123
+            - Persistence__SeedData=true
+            - Auth0__Domain=dev-targabay.us.auth0.com
+            - Auth0__Audience=https://dev.targabay.com/api/v1
+            - Auth0__ClientId=$Auth0__ClientId
+            - Auth0__ClientSecret=$Auth0__ClientSecret
+            - AWS__Region=us-east-1
+            - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+            - AWS_DEFAULT_REGION=us-east-1

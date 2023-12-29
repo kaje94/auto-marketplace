@@ -10,9 +10,9 @@ jobs:
     build:
         runs-on: ubuntu-latest
         timeout-minutes: 10
-        environment: 
-          name: production
-          url: https://targabay.com
+        environment:
+            name: production
+            url: https://targabay.com
         env:
             NODE_OPTIONS: "--max_old_space_size=4096"
         permissions:
