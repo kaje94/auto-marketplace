@@ -2,9 +2,6 @@
 name: Storybook tests
 on:
     workflow_dispatch:
-    pull_request:
-        branches:
-            - main
 jobs:
     test-storybook:
         runs-on: ubuntu-latest
@@ -17,12 +14,10 @@ jobs:
               uses: ./.github/workflows/setup-ci
             - name: Install Playwright
               run: pnpm exec playwright install --with-deps chromium
-            - name: Build Storybook
-              run: pnpm build-storybook --quiet
             - name: Install global dependencies
-              run: pnpm install -g concurrently wait-on http-server
+              run: pnpm install -g concurrently wait-on
             - name: Serve Storybook and run tests
               run: |
                   npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-                    "npx http-server storybook-static --port 6006 --silent" \
+                    "pnpm storybook --port 6006" \
                     "npx wait-on tcp:6006 && pnpm test-storybook"
