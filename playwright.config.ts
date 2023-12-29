@@ -50,6 +50,22 @@ export default defineConfig({
     //     // More information: https://playwright.dev/docs/trace-viewer
     //     trace: "retry-with-trace",
     // },
+    use: {
+        trace: "retry-with-trace",
+        screenshot: "only-on-failure", // Capture screenshot after each test failure.
+        video: "retain-on-failure", //Record video only when retrying a test for the first time.
+        headless: true,
+        // viewport: { width: 1280, height: 720 },
+        // launchOptions: {
+        //     slowMo: 50,
+        //     logger: {
+        //         isEnabled: (name, severity) => name === "browser",
+        //         log: (name, severity, message, args) => console.log(`${name} ${message}`),
+        //     },
+        // },
+        // actionTimeout: 10 * 1000,
+        // navigationTimeout: 30 * 1000,
+    },
     /* Configure projects for major browsers */
     projects: [{ name: "firefox", use: { ...devices["Desktop Firefox"] } }],
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
