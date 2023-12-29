@@ -27,5 +27,9 @@ services:
       - Persistence__SeedData=true
       - Auth0__Domain=dev-targabay.us.auth0.com
       - Auth0__Audience=https://dev.targabay.com/api/v1
+      - Auth0__ClientId=$Auth0__ClientId
+      - Auth0__ClientSecret=$Auth0__ClientSecret
       - AWS__Region=us-east-1
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
       - AWS_DEFAULT_REGION=us-east-1
