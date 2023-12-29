@@ -42,7 +42,7 @@ export const login = async (page: Page) => {
     expect(process.env.TEST_ADMIN_EMAIL!).toBeTruthy();
     expect(process.env.TEST_ADMIN_PASSWORD!).toBeTruthy();
     await page.goto("http://localhost:3000");
-    await expect(page).toHaveTitle(/Targabay/);
+    await expect(page).toHaveTitle(/Targabay/, { timeout: 30000 });
     const profilePicVisible = await page.getByTestId("profile-image").isVisible();
     if (!profilePicVisible) {
         await page.getByRole("link", { name: "Login" }).click();

@@ -24,6 +24,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5002
       - Persistence__ConnectionString=Host=postgre-sql;Database=AutoStore;Username=postgres;Password=tempPassword123
+      - Persistence__SeedData=true
       - Auth0__Domain=dev-targabay.us.auth0.com
       - Auth0__Audience=https://dev.targabay.com/api/v1
       - AWS__Region=us-east-1

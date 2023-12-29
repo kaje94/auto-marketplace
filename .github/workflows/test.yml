@@ -44,8 +44,6 @@ jobs:
       run: vercel env pull .env --token=${{ secrets.VERCEL_TOKEN }}
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps firefox
-    - name: Build webapp
-      run: pnpm build
     - name: Run Playwright tests
       run: pnpm exec playwright test
     - name: Down docker images
