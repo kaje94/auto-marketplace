@@ -6,6 +6,12 @@ Welcome to the Auto Marketplace Client project! This platform is designed to pro
     <img alt="preview-image" src="public/images/banner.jpg" width="1024">
 </a>
 
+<br>
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+
 ## Features
 
 1. **Free Vehicle Listings**

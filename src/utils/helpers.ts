@@ -345,3 +345,14 @@ export const getYearRangeList = (startYear = YearSelectMinYear, endYear = new Da
         };
     });
 };
+
+export const isRenewableListing = (expiryDate: Date): boolean => {
+    const oneWeekFromNow = new Date();
+    oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 14);
+
+    const isWithinOneWeek = expiryDate <= oneWeekFromNow;
+    if (isWithinOneWeek) {
+        return true;
+    }
+    return false;
+};

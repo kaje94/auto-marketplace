@@ -2,11 +2,13 @@
 import { FC, useState } from "react";
 import { ContextMenu, ContextMenuItemProp } from "@/components/Common";
 import { DeleteListingItemModal } from "@/components/Modals/DeleteListingItemModal";
+import { RelistListingItemModal } from "@/components/Modals/RelistListingItemModal";
 import { RenewListingItemModal } from "@/components/Modals/RenewListingItemModal";
 import { ReviewListingModal } from "@/components/Modals/ReviewListingModal";
 import { UnListListingModal } from "@/components/Modals/UnListListingModal";
 import { CheckCircleIcon, EditIcon, EyeIcon, EyeOffIcon, RefreshIcon, TrashIcon } from "@/icons";
 import { ListingStatusTypes } from "@/utils/enum";
+import { isRenewableListing } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
@@ -20,11 +22,12 @@ interface Props {
 
 /** Context menu attached to a listing item */
 export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin, basePath }) => {
-    const { id: listingId, status } = listingItem as ListingItem;
+    const { id: listingId, status, expiryDate } = listingItem as ListingItem;
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [renewModalVisible, setRenewModalVisible] = useState(false);
     const [reviewModalVisible, setReviewModalVisible] = useState(false);
     const [unListModalVisible, setUnListModalVisible] = useState(false);
+    const [relistModalVisible, setRelistModalVisible] = useState(false);
 
     const menuItems: ContextMenuItemProp[] = [];
 
@@ -40,11 +43,18 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
         link: `${basePath}/edit/${listingId}`,
         label: "Edit",
     });
-    if (status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status)) {
+    if (isRenewableListing(new Date(expiryDate)) && status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status)) {
         menuItems.push({
             icon: <RefreshIcon height={17} />,
             onClick: () => setRenewModalVisible(true),
             label: "Renew",
+        });
+    }
+    if (status && ListingStatusTypes.TemporarilyUnlisted === status) {
+        menuItems.push({
+            icon: <RefreshIcon height={17} />,
+            onClick: () => setRelistModalVisible(true),
+            label: "Relist",
         });
     }
     if (isAdmin && status === ListingStatusTypes.UnderReview) {
@@ -58,7 +68,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
         menuItems.push({
             icon: <EyeOffIcon height={17} />,
             onClick: () => setUnListModalVisible(true),
-            label: "Unlist",
+            label: ListingStatusTypes.TemporarilyUnlisted ? "Permanently Unlist" : "Unlist",
             classNames: "text-error hover:!bg-error hover:!text-error-content",
         });
     }
@@ -80,6 +90,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
                 visible={deleteModalVisible}
                 onVisibleChange={setDeleteModalVisible}
             />
+            <RelistListingItemModal listingItem={listingItem as ListingItem} visible={relistModalVisible} onVisibleChange={setRelistModalVisible} />
             <RenewListingItemModal listingItem={listingItem as ListingItem} visible={renewModalVisible} onVisibleChange={setRenewModalVisible} />
             <ReviewListingModal listingItem={listingItem as ListingItem} visible={reviewModalVisible} onVisibleChange={setReviewModalVisible} />
             <UnListListingModal listingItem={listingItem as ListingItem} visible={unListModalVisible} onVisibleChange={setUnListModalVisible} />

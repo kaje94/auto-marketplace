@@ -17,7 +17,8 @@
 
 > Web app todo list
 -   [] have a seperate page for / root page and redirect from there instead of auto redirect!
--   [] renew button should be next to 'Advert will expire on January 2, 2024' alert
+-   [] use cannonical and hreflang <link rel=“alternate” hreflang=“en-gb” href=“https://www.example.com/gb/” /> 
+https://www.weglot.com/blog/hreflang-canonical
 -   [] implement make featured listing feature
 -   [] show view counter in listings (for owner and admins)
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
@@ -77,11 +78,4 @@
 > https://plausible.io/#pricing
 
 
-> Playwright
-> install
-pnpm exec playwright install
-sudo pnpm exec playwright install-deps
-
-> to run
-pnpm exec playwright test
 
