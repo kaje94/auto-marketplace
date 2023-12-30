@@ -83,10 +83,16 @@ export type ListingUser = {
 
 export type Vehicle = z.infer<typeof VehicleSchema>;
 
+type ListingFeaturedConfig = {
+    featuredExpiryData: Date;
+    isFeatured: boolean;
+};
+
 export type ListingItem = {
     createdOn: string;
     description: string;
     expiryDate: string;
+    featured?: ListingFeaturedConfig;
     id: ListingIdType;
     location: Location;
     price: Price;

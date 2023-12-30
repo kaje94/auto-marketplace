@@ -56,3 +56,4 @@ export const UserIcon: Story = { render: (args) => <Icons.UserIcon {...args} /> 
 export const XCircleIcon: Story = { render: (args) => <Icons.XCircleIcon {...args} /> };
 export const XIcon: Story = { render: (args) => <Icons.XIcon {...args} /> };
 export const ZapIcon: Story = { render: (args) => <Icons.ZapIcon {...args} /> };
+export const StarIcon: Story = { render: (args) => <Icons.StarIcon {...args} /> };

@@ -6,7 +6,16 @@ import { ListingStatusTypes } from "@/utils/enum";
 import { getFormattedCurrency } from "@/utils/formatTextUtils";
 import { formatHumanFriendlyDate, getLocationString, isRenewableListing } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
-import { DeleteButton, EditButton, RelistButton, RenewButton, ReportButton, ShareButton, UnListButton } from "./ListingActionButtons";
+import {
+    DeleteButton,
+    EditButton,
+    MakeFeaturedButton,
+    RelistButton,
+    RenewButton,
+    ReportButton,
+    ShareButton,
+    UnListButton,
+} from "./ListingActionButtons";
 import { ListingDetailsFeatures } from "./ListingDetailsFeatures";
 import { ListingImageCarousel } from "./ListingImageCarousel";
 import { ListingKeySpecifications } from "./ListingKeySpecifications";
@@ -33,7 +42,7 @@ export const ListingDetails: FC<Props> = ({
     showSellerDetails = true,
     basePath,
 }) => {
-    const { price, vehicle, location, user, title, description, status, id, createdOn, userId } = itemDetails as ListingItem;
+    const { price, vehicle, location, user, title, description, status, id, createdOn, userId, featured } = itemDetails as ListingItem;
 
     return (
         <div className="grid grid-cols-8 gap-4 xl:gap-7 2xl:gap-8">
@@ -42,6 +51,7 @@ export const ListingDetails: FC<Props> = ({
                     <ListingImageCarousel
                         createdOn={createdOn}
                         images={vehicle?.vehicleImages}
+                        isFeatured={featured?.isFeatured}
                         loading={loading}
                         location={location}
                         title={title}
@@ -125,10 +135,6 @@ export const ListingDetails: FC<Props> = ({
                 <div className="grid grid-cols-2 gap-4">
                     {!loading && (user?.userId === loggedInUser?.id || loggedInUser?.isAdmin) && (
                         <>
-                            <EditButton
-                                basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
-                                listingItem={itemDetails as ListingItem}
-                            />
                             <div className="alert col-span-full flex items-center justify-between gap-2 rounded-lg text-sm text-opacity-80">
                                 <span>{`Advert will expire on ${formatHumanFriendlyDate(new Date((itemDetails as ListingItem)?.expiryDate))}`}</span>
                                 {isRenewableListing(new Date((itemDetails as ListingItem)?.expiryDate)) &&
@@ -136,6 +142,11 @@ export const ListingDetails: FC<Props> = ({
                                         <RenewButton listingItem={itemDetails as ListingItem} />
                                     )}
                             </div>
+                            <EditButton
+                                basePath={basePath ? basePath : loggedInUser?.isAdmin ? "/dashboard/listings" : "/dashboard/my-listings"}
+                                listingItem={itemDetails as ListingItem}
+                            />
+                            {status === ListingStatusTypes.Posted && <MakeFeaturedButton listingItem={itemDetails as ListingItem} />}
                         </>
                     )}
                     {status === ListingStatusTypes.Posted && !withinDashboard && (

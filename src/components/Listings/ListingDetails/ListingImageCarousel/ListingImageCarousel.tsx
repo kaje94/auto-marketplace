@@ -4,7 +4,7 @@ import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import FsLightbox from "fslightbox-react";
 import React, { useCallback, useEffect, useState } from "react";
 import { ListingImage } from "@/components/Common";
-import { MaximizeIcon } from "@/icons";
+import { MaximizeIcon, StarIcon } from "@/icons";
 import { VehicleTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/formatTextUtils";
 import { convertToSEOFriendlyImageURL, timeAgo, toSEOFriendlyTitleUrl } from "@/utils/helpers";
@@ -14,6 +14,7 @@ import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails
 type PropType = {
     createdOn?: string;
     images?: VehicleImageType[];
+    isFeatured?: boolean;
     loading?: boolean;
     location?: Location;
     options?: EmblaOptionsType;
@@ -22,7 +23,7 @@ type PropType = {
 };
 
 export const ListingImageCarousel: React.FC<PropType> = (props) => {
-    const { title = "", createdOn = "", images = [], options = {}, loading, vehicleType, location = {} } = props;
+    const { title = "", createdOn = "", images = [], options = {}, loading, vehicleType, location = {}, isFeatured } = props;
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isLightBoxOpen, setLightBoxOpen] = useState(false);
     const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options, [Autoplay({ delay: 5000 })]);
@@ -94,6 +95,11 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
                                 );
                             })}
                         </div>
+                        {isFeatured && (
+                            <span className="alert badge badge-secondary absolute left-5 top-5">
+                                <StarIcon /> Featured
+                            </span>
+                        )}
                         <div
                             className="absolute bottom-0 left-0 flex h-1/2 w-full cursor-pointer flex-col justify-end bg-gradient-to-t from-base-content to-transparent p-5 sm:h-2/6 "
                             onClick={onOpenLightBox}

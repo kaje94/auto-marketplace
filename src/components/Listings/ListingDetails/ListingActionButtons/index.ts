@@ -5,3 +5,4 @@ export { ShareButton } from "./ShareButton";
 export { UnListButton } from "./UnlistButton";
 export { ReportButton } from "./ReportButton";
 export { RelistButton } from "./RelistButton";
+export { MakeFeaturedButton } from "./MakeFeaturedButton";
