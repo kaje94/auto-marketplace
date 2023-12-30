@@ -20,7 +20,6 @@
 -   [] use cannonical and hreflang <link rel=“alternate” hreflang=“en-gb” href=“https://www.example.com/gb/” /> 
 https://www.weglot.com/blog/hreflang-canonical
 -   [] implement make featured listing feature
--   [] show view counter in listings (for owner and admins)
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] refer create t3 structure and eslint
 -   [] use links instead of router push ?
@@ -28,10 +27,6 @@ https://www.weglot.com/blog/hreflang-canonical
 -   [] update displayname and signature in zoho mail
 -   [] fix meta tags in all pages
 -   [] make sure meta tags are from layouts
--   [] get consent from footer above
--   [] LISTING IMAGE COMPONENT: remove warning: app-index.js:32 Warning: Removing a style property during rerender (backgroundSize) when a conflicting property is set (background) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values
--   [] fix token not refreshing
--   [] vercel env pull already pulls all the env stuff!. 
 -   [] add date offset to all filters
 -   [] add interaction tests for storybook
 -   [] https://docs.github.com/en/actions/creating-actions/creating-a-composite-action

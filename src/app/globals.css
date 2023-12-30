@@ -8,7 +8,7 @@ html {
 
 body {
     color: rgb(var(--foreground-rgb));
-    background: linear-gradient(to bottom, transparent, hsl(var(--b1))) hsl(var(--b2));
+    background: linear-gradient(to bottom, #E8E8E8, hsl(var(--b1)));
 }
 
 ::-webkit-scrollbar {
