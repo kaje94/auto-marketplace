@@ -68,7 +68,7 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
         menuItems.push({
             icon: <EyeOffIcon height={17} />,
             onClick: () => setUnListModalVisible(true),
-            label: ListingStatusTypes.TemporarilyUnlisted ? "Permanently Unlist" : "Unlist",
+            label: status === ListingStatusTypes.TemporarilyUnlisted ? "Permanently Unlist" : "Unlist",
             classNames: "text-error hover:!bg-error hover:!text-error-content",
         });
     }
