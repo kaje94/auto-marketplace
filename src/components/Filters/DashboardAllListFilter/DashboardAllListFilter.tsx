@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { getCitiesOfState, getStatesOfCountry } from "@/actions/localtionActions";
-import { FuelTypeList, ListingTypeList, VehicleTypeList } from "@/utils/constants";
+import { BOT_LOCALE, FuelTypeList, ListingTypeList, VehicleTypeList } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
 import { DashboardListFilterReq, LabelValue, VehicleBrand } from "@/utils/types";
 import { FilterAutoComplete as AutocompleteController } from "../FilterFormElements/DashboardFilterAutoComplete";
@@ -52,7 +52,7 @@ export const DashboardAllListFilter: FC<Props> = ({
 
     const { data: states = [], isFetching: isLoadingStates } = useQuery({
         queryFn: () => getStatesOfCountry(countryCode!),
-        enabled: !!countryCode,
+        enabled: !!countryCode && countryCode !== BOT_LOCALE,
         queryKey: ["country-states", { locale: countryCode }],
         onSettled: (data, _) => {
             if (!!data?.length && !data?.some((item) => item.name === state)) {

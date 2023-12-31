@@ -1,5 +1,6 @@
 "use server";
 import { getSession } from "@auth0/nextjs-auth0/edge";
+import { headers as nextHeaders } from "next/headers";
 import { Suspense } from "react";
 import { api } from "@/utils/api";
 import { NavBarClient } from "./NavBarClient";
@@ -15,6 +16,7 @@ export const NavBar = async () => {
 
 /** Navbar component with data fetched from the server side and will fallback to default navbar if user is not logged in or an error is encountered */
 const NavBarWithSession = async () => {
+    const originLocal = nextHeaders().get("x-origin-locale");
     try {
         const session = await getSession();
         if (session) {
@@ -27,13 +29,14 @@ const NavBarWithSession = async () => {
             return (
                 <NavBarClient
                     notificationCount={notificationCount}
+                    originLocale={originLocal}
                     userClaims={session?.user}
                     userData={profile.status === "fulfilled" ? profile.value : undefined}
                 />
             );
         }
-        return <NavBarClient />;
+        return <NavBarClient originLocale={originLocal} />;
     } catch {
-        return <NavBarClient />;
+        return <NavBarClient originLocale={originLocal} />;
     }
 };

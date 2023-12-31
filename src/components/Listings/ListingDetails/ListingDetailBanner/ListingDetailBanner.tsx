@@ -7,6 +7,7 @@ import { ListingStatusDescriptions } from "@/utils/constants";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/formatTextUtils";
 import { ListingItem } from "@/utils/types";
+import { RelistButton } from "./RelistButton";
 import { RenewButton } from "./RenewButton";
 import { ReviewButton } from "./ReviewButton";
 
@@ -51,6 +52,7 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
                         <ReviewButton listingItem={listingItem as ListingItem} />
                     )}
                     {userId && listingStatus === ListingStatusTypes.Expired && <RenewButton listingItem={listingItem as ListingItem} />}
+                    {userId && listingStatus === ListingStatusTypes.TemporarilyUnlisted && <RelistButton listingItem={listingItem as ListingItem} />}
                     {listingStatus === ListingStatusTypes.Declined && (
                         <Link href={`${window?.location?.pathname}/edit/${listingId}`}>
                             <button className="btn btn-ghost btn-sm">Edit</button>

@@ -3,15 +3,14 @@ import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
 import { EditListingForm } from "@/components/Forms/Listings/EditListingForm";
 import { api } from "@/utils/api";
-import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
 
-export const metadata: Metadata = { title: "Targabay - Edit Listing Item Details" };
+export const metadata: Metadata = { title: "Targabay - Edit Listing Item Details", alternates: {} };
 
 export default async function Page({ params }: ListingIdPathParam) {
     const session = await getSession();
     const [itemDetails, features, brands, profile] = await Promise.all([
-        transformListingResponse(await api.getListingsItem(params.id)),
+        api.getListingsItem(params.id),
         api.getFeaturesList(),
         api.getVehicleBrands(),
         api.getMyProfileDetails(session?.user?.sub!),

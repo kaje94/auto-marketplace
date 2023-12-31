@@ -1,17 +1,29 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
 import { NextRequest, NextResponse } from "next/server";
+import { BOT_LOCALE } from "./utils/constants";
 import { COUNTRIES } from "./utils/countries";
 
 export async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
 
+    // Check if its a search engine crawler or not
+    const userAgent = request.headers.get("user-agent");
+    const isCrawler = userAgent ? /bot|googlebot|bingbot|yandexbot|slurp|yahoo|duckduckbot/i.test(userAgent) : false;
+
     // country code should be available only after deployed
     const userCountryCode = request.geo?.country || "LK";
     const pathLocale: string = pathname.split("/").filter((item) => item !== "")[0] || "";
-    const matchingLocal = COUNTRIES[pathLocale];
-
+    let matchingLocal = COUNTRIES[pathLocale];
     if (!matchingLocal) {
-        return NextResponse.redirect(new URL(`/${userCountryCode}/${pathname}`, request.url));
+        if (isCrawler && pathLocale !== BOT_LOCALE) {
+            return NextResponse.redirect(new URL(`/${BOT_LOCALE}/${pathname}`, request.url));
+        } else if (!isCrawler) {
+            if (pathLocale === BOT_LOCALE) {
+                return NextResponse.redirect(new URL(pathname?.replace(`/${BOT_LOCALE}`, `/${userCountryCode}`), request.url));
+            } else {
+                return NextResponse.redirect(new URL(`/${userCountryCode}/${pathname}`, request.url));
+            }
+        }
     }
 
     if (new RegExp(`/${userCountryCode}/(dashboard.*)`).test(request.nextUrl.pathname)) {
@@ -24,12 +36,9 @@ export async function middleware(request: NextRequest) {
     const res = NextResponse.next();
     res.headers.set("x-pathname", request.nextUrl.pathname);
     res.headers.set("x-locale", pathLocale);
-    res.headers.set("x-country-name", matchingLocal[0]);
-
-    // Following is needed for next-international to function
-    res.headers.set("X-Next-Locale", "en");
-    if (request.cookies.get("Next-Locale")?.value !== "en") {
-        res.cookies.set("Next-Locale", "en", { sameSite: "strict" });
+    res.headers.set("x-origin-locale", userCountryCode);
+    if (matchingLocal) {
+        res.headers.set("x-country-name", matchingLocal[0]);
     }
 
     return res;

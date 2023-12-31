@@ -3,6 +3,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { displayFont } from "@/app/fonts";
 import { DropletIcon, FilterIcon, NotificationIcon, TagIcon, UserIcon, ZapIcon } from "@/icons";
+import { getAlternativeLinks } from "@/utils/countries";
 
 const FeatureItem = ({
     title,
@@ -38,6 +39,7 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
         description,
         openGraph: { ...previousOpenGraph, title, description },
         twitter: { ...previousTwitter, title, description },
+        alternates: getAlternativeLinks("/why-choose-us"),
     };
 }
 export default function Page() {

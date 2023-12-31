@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { Metadata, ResolvingMetadata } from "next";
 import { displayFont } from "@/app/fonts";
+import { getAlternativeLinks } from "@/utils/countries";
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
     const previousTwitter = (await parent).twitter || {};
@@ -15,6 +16,7 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
         description,
         openGraph: { ...previousOpenGraph, title, description },
         twitter: { ...previousTwitter, title, description },
+        alternates: getAlternativeLinks("/about-us"),
     };
 }
 

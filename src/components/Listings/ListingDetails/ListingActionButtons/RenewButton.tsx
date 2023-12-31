@@ -2,7 +2,6 @@
 import { clsx } from "clsx";
 import { FC, useState } from "react";
 import { RenewListingItemModal } from "@/components/Modals/RenewListingItemModal";
-import { RefreshIcon } from "@/icons";
 import { ListingItem } from "@/utils/types";
 
 interface Props {
@@ -15,8 +14,11 @@ export const RenewButton: FC<Props> = ({ listingItem, loading }) => {
 
     return (
         <>
-            <button className={clsx("btn btn-block gap-2", loading && "animate-pulse")} disabled={loading} onClick={() => setRenewModalVisible(true)}>
-                <RefreshIcon />
+            <button
+                className={clsx("btn btn-ghost btn-sm", loading && "animate-pulse")}
+                disabled={loading}
+                onClick={() => setRenewModalVisible(true)}
+            >
                 Renew
             </button>
             <RenewListingItemModal listingItem={listingItem} visible={renewModalVisible} onVisibleChange={setRenewModalVisible} />

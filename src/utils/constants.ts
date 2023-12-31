@@ -12,6 +12,8 @@ import { KeyValue, LabelValue } from "./types";
 export const MaxVehicleImageCount = 10;
 export const YearSelectMinYear = 1960;
 
+export const BOT_LOCALE = "CTRY";
+
 export const Dates = {
     Days_7_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 7 + 1)),
     Days_8_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 8 + 1)),

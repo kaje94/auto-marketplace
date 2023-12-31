@@ -18,17 +18,20 @@ interface Props extends ModalProps {
      * @param country The selected country.
      */
     onNewCountrySelect?: (country: string) => void;
+    /** The country code that user is making the request from */
+    originLocale?: string | null;
 }
 
 /** Modal to be used when user want to change the current country from the nav bar */
 export const CountrySelectModal = (props: Props) => {
-    const { currentLocale, onNewCountrySelect, onVisibleChange, visible } = props;
+    const { currentLocale, onNewCountrySelect, onVisibleChange, visible, cancelable, originLocale, ...rest } = props;
     const router = useRouter();
     const currentCountry = COUNTRIES[currentLocale]?.[0];
+    const originCountry = COUNTRIES[originLocale || ""]?.[0];
 
     const { handleSubmit, control, reset } = useForm<{ country: string }>({
         resolver: zodResolver(z.object({ country: z.string().min(1, "Country is required") })),
-        defaultValues: { country: currentCountry },
+        defaultValues: { country: currentCountry || originCountry },
         mode: "all",
     });
 
@@ -61,7 +64,13 @@ export const CountrySelectModal = (props: Props) => {
     }, [currentCountry, visible, reset]);
 
     return (
-        <Modal title="Switch Country" visible={visible} onVisibleChange={onVisibleChange}>
+        <Modal
+            cancelable={cancelable}
+            title={currentCountry ? "Switch Country" : "Select Country"}
+            visible={visible}
+            onVisibleChange={onVisibleChange}
+            {...rest}
+        >
             <form className="grid gap-1">
                 <AutocompleteController
                     control={control}
@@ -72,11 +81,13 @@ export const CountrySelectModal = (props: Props) => {
                     required
                 />
                 <div className="mb-24 mt-2 text-sm">
-                    Switching your country lets you see vehicle availability in diverse locations, broadening your options for finding the perfect
-                    vehicle.
+                    {currentCountry
+                        ? "Switching your country lets you see vehicle availability in diverse locations, broadening your options for finding the perfect vehicle."
+                        : "Browse and manage content within the selected country. You can always change this selection later on."}
                 </div>
                 <ModalFooter
-                    primaryButton={{ text: "Apply" }}
+                    primaryButton={{ text: currentCountry ? "Apply" : "Proceed" }}
+                    showCancel={cancelable}
                     onSubmit={handleSubmit((values) => handleLocaleChange(values.country))}
                     onVisibleChange={onVisibleChange}
                 />

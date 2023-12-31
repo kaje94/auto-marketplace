@@ -6,7 +6,6 @@ import { DashboardMyListFilterButton } from "@/components/Dashboard/DashboardLis
 import { DashboardMyListingsList } from "@/components/Dashboard/DashboardListings/DashboardListingsList";
 import { DashboardMyListingsContextProvider } from "@/providers/DashboardMyListingsContextProvider";
 import { api } from "@/utils/api";
-import { transformListingsListResponse } from "@/utils/helpers";
 import { MyListingsFilterSchema } from "@/utils/schemas";
 import { LocalePathParam, SearchParams } from "@/utils/types";
 
@@ -14,7 +13,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     const page = searchParams["PageNumber"] ?? "1";
     const parsedSearchParams = MyListingsFilterSchema.parse(searchParams);
     const session = await getSession();
-    const listings = transformListingsListResponse(await api.getMyListings(session?.user?.sub!, { PageNumber: Number(page), ...parsedSearchParams }));
+    const listings = await api.getMyListings(session?.user?.sub!, { PageNumber: Number(page), ...parsedSearchParams });
 
     if (listings.items?.length === 0 && page !== "1") {
         redirect(`/${params.locale}/dashboard/my-listings?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);

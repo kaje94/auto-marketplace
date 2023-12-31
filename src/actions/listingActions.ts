@@ -42,3 +42,9 @@ export const incrementViewsAction = async (listingId: ListingIdType) => {
 export const reportListingAction = async (reqBody: ReportListingReq) => {
     await api.reportListing(reqBody);
 };
+
+export const makeListingFeatured = async (listingId: ListingIdType, countryCode: string, userId: string) => {
+    await api.makeListingFeatured(listingId, countryCode);
+    listingItemTags(listingId, userId).forEach((tag) => revalidateTag(tag));
+    revalidateTag(apiTags.getFeatureListingsByCountry(countryCode));
+};

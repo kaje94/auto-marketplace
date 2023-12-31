@@ -12,8 +12,8 @@ interface Props {
 
 export const EditButton: FC<Props> = ({ listingItem, loading, basePath }) => {
     return (
-        <LinkWithLocale className="col-span-2" href={`${basePath}/edit/${listingItem.id}`}>
-            <button className={clsx("btn btn-neutral btn-block gap-2", loading && "animate-pulse")} disabled={loading}>
+        <LinkWithLocale href={`${basePath}/edit/${listingItem.id}`}>
+            <button className={clsx("btn btn-neutral  btn-block gap-2", loading && "animate-pulse")} disabled={loading}>
                 <EditIcon />
                 Edit
             </button>

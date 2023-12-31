@@ -38,7 +38,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
             {loading ? (
                 <div className="relative hidden aspect-video h-full w-full overflow-hidden rounded-xl bg-base-200 md:col-span-5 md:block xl:col-span-3" />
             ) : (
-                <figure className="relative h-full overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
+                <figure className="relative h-fit overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
                     <ListingImage
                         className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}

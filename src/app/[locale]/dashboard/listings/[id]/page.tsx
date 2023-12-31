@@ -3,13 +3,12 @@ import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetailBanner, ListingDetails } from "@/components/Listings/ListingDetails";
 import { api } from "@/utils/api";
-import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
 
-export const metadata: Metadata = { title: "Targabay - Manage Listing Item" };
+export const metadata: Metadata = { title: "Targabay - Manage Listing Item", alternates: {} };
 
 export default async function Page({ params }: ListingIdPathParam) {
-    const [session, itemDetails] = await Promise.all([getSession(), transformListingResponse(await api.getListingsItem(params.id))]);
+    const [session, itemDetails] = await Promise.all([getSession(), api.getListingsItem(params.id)]);
 
     return (
         <>

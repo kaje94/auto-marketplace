@@ -1,7 +1,6 @@
 import queryString from "query-string";
 import { FC, Suspense } from "react";
 import { api } from "@/utils/api";
-import { transformListingResponse } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 import { ListingsCarousel } from "../ListingsCarousel";
 
@@ -17,7 +16,7 @@ const RelatedListingsCarouselWithData: FC<{ itemDetails: ListingItem }> = async 
     const relatedListings = await api.getRelatedListings(itemDetails.id);
     return (
         <ListingsCarousel
-            items={relatedListings?.map((item) => transformListingResponse(item))}
+            items={relatedListings}
             viewMore={{
                 title: "View More",
                 subTitle: `View advertisements that are similar to ${itemDetails.title}`,
