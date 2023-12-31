@@ -8,8 +8,7 @@ export async function middleware(request: NextRequest) {
 
     // Check if its a search engine crawler or not
     const userAgent = request.headers.get("user-agent");
-    const isCrawler = true;
-    // userAgent ? /bot|googlebot|bingbot|yandexbot|slurp|yahoo|duckduckbot/i.test(userAgent); : false;
+    const isCrawler = userAgent ? /bot|googlebot|bingbot|yandexbot|slurp|yahoo|duckduckbot/i.test(userAgent) : false;
 
     // country code should be available only after deployed
     const userCountryCode = request.geo?.country || "LK";
