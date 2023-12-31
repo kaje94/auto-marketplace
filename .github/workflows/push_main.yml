@@ -39,7 +39,7 @@ jobs:
                   path: |
                       .next
                       .vercel
-                  key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
+                  key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ github.sha }}
     test-e2e:
         runs-on: ubuntu-latest
         timeout-minutes: 10
@@ -64,7 +64,7 @@ jobs:
                   path: |
                       .next
                       .vercel
-                  key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
+                  key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ github.sha }}
             - uses: KengoTODA/actions-setup-docker-compose@main
               with:
                   version: "1.29.2"
@@ -118,7 +118,7 @@ jobs:
                   path: |
                       .next
                       .vercel
-                  key: ${{ runner.os }}-build-${{ hashFiles('**/.next/**', '**/.vercel/**') }}
+                  key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ github.sha }}
             - name: Pull Vercel Environment Information
               run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
             - name: Deploy Project Artifacts to Vercel
