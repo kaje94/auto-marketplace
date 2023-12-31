@@ -6,7 +6,7 @@ import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
 
-export const metadata: Metadata = { title: "Targabay - My Advert Details" };
+export const metadata: Metadata = { title: "Targabay - My Advert Details", alternates: {} };
 
 export default async function Page({ params }: ListingIdPathParam) {
     const [session, itemDetails] = await Promise.all([getSession(), transformListingResponse(await api.getMyListingsItem(params.id))]);

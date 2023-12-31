@@ -1,3 +1,5 @@
+import { AlternateURLs } from "next/dist/lib/metadata/types/alternative-urls-types";
+import { BOT_LOCALE } from "./constants";
 import { CountryMap } from "./types";
 
 export const COUNTRIES: CountryMap = {
@@ -251,4 +253,17 @@ export const COUNTRIES: CountryMap = {
     YE: ["Yemen", "YER", "﷼", "967", "🇾🇪"],
     ZM: ["Zambia", "ZMW", "ZK", "260", "🇿🇲"],
     ZW: ["Zimbabwe", "ZWL", "$", "263", "🇿🇼"],
+};
+
+export const getAlternativeLinks = (link: string): AlternateURLs => {
+    const languages: { [key: string]: string } = {};
+    Object.keys(COUNTRIES).forEach((key) => {
+        languages[`en-${key.toLowerCase()}`] = `/${key}${link}`;
+    });
+    languages["x-default"] = `/${BOT_LOCALE}${link}`;
+
+    return {
+        canonical: `/${BOT_LOCALE}${link}`,
+        languages,
+    };
 };

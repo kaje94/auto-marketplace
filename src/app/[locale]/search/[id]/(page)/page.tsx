@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: ListingIdPathParam, parent: R
         description,
         openGraph: { ...previousOpenGraph, title: getTitleMetadata(itemDetails), description, images },
         twitter: { ...previousTwitter, images, title: getTitleMetadata(itemDetails), description },
+        alternates: {},
         keywords: [
             ...previousKeywords,
             itemDetails.title,

@@ -8,7 +8,7 @@ const title = "Targabay - Unauthorized Access";
 const description =
     "Sorry, you don't have permission to access this page on Targabay. Please ensure you are logged in and have the necessary privileges. For assistance, contact our support team. Targabay - Your trusted online marketplace for automotive enthusiasts.";
 
-export const metadata: Metadata = { title, description };
+export const metadata: Metadata = { title, description, alternates: {}, robots: { index: false, follow: false } };
 
 export default function Page({ searchParams }: SearchParams) {
     return (

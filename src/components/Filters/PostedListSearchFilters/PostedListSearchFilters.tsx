@@ -3,7 +3,7 @@ import { ReadonlyURLSearchParams } from "next/navigation";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { getCitiesOfState } from "@/actions/localtionActions";
-import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
+import { BOT_LOCALE, FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { LabelValue, PostedListingsFilterReq, State, VehicleBrand } from "@/utils/types";
 import { FilterAutoComplete as AutocompleteController } from "../FilterFormElements/DashboardFilterAutoComplete";
 import { FilterInput as InputController } from "../FilterFormElements/DashboardFilterInput";
@@ -54,7 +54,7 @@ export const PostedListSearchFilters: FC<Props> = ({
 
     const { data: cityList = [], isFetching: isLoadingCities } = useQuery({
         queryFn: () => getCitiesOfState(countryCode!, stateCode!),
-        enabled: !!countryCode && !!stateCode,
+        enabled: !!countryCode && !!stateCode && countryCode !== BOT_LOCALE,
         queryKey: ["country-state-cities", { locale: countryCode, stateCode }],
         select: (data) => data.map((item) => ({ label: item.name, value: item.name }) as LabelValue),
         onSettled: (data, _) => {

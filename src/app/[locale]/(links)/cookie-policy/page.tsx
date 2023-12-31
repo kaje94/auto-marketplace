@@ -3,6 +3,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";
 import { displayFont } from "@/app/fonts";
 import { env } from "@/env.mjs";
+import { getAlternativeLinks } from "@/utils/countries";
 
 const CookiePolicySection = ({ children, title }: { children: ReactNode; title: string }) => (
     <div>
@@ -31,6 +32,7 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
         description,
         openGraph: { ...previousOpenGraph, title, description },
         twitter: { ...previousTwitter, title, description },
+        alternates: getAlternativeLinks("/cookie-policy"),
     };
 }
 

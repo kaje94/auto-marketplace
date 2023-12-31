@@ -7,6 +7,7 @@ import { LinkWithLocale } from "@/components/Common";
 import { ContactUsForm } from "@/components/Forms/ContactUs";
 import { env } from "@/env.mjs";
 import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
+import { getAlternativeLinks } from "@/utils/countries";
 
 const ContactUsItem = ({ title, desc, subTitle }: { desc: string | ReactNode; subTitle?: string; title: string }) => {
     return (
@@ -31,6 +32,7 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
         description,
         openGraph: { ...previousOpenGraph, title, description },
         twitter: { ...previousTwitter, title, description },
+        alternates: getAlternativeLinks("/contact-us"),
     };
 }
 export default async function Page() {

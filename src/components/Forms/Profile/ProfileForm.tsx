@@ -8,6 +8,7 @@ import { Avatar } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
+import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
 import { LabelValue, ListingUser, UpdateProfileReq } from "@/utils/types";
 
@@ -53,7 +54,7 @@ export const ProfileForm: FC<Props> = (props) => {
 
     const { data: states = [], isFetching: isLoadingStates } = useQuery({
         queryFn: () => getStatesOfCountry(countryCode!),
-        enabled: !!countryCode,
+        enabled: !!countryCode && countryCode !== BOT_LOCALE,
         queryKey: ["country-states", { locale: countryCode }],
         onSettled: (data, _) => {
             if (!!data?.length && !data?.some((item) => item.name === state)) {

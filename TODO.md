@@ -16,10 +16,6 @@
 -   [] API randomly returns a 502 for some api calls. Out of memory: Killed process 305 (dotnet) total-vm:273620344kB, anon-rss:111048kB, file-rss:0kB, shmem-rss:63460kB, UID:0 pgtables:908kB oom_score_adj:0
 
 > Web app todo list
--   [] have a seperate page for / root page and redirect from there instead of auto redirect!
--   [] use cannonical and hreflang <link rel=“alternate” hreflang=“en-gb” href=“https://www.example.com/gb/” /> 
-https://www.weglot.com/blog/hreflang-canonical
--   [] implement make featured listing feature
 -   [] go through all the loading screens and make sure that the parents have animate pulse class
 -   [] refer create t3 structure and eslint
 -   [] use links instead of router push ?
@@ -38,7 +34,7 @@ https://www.weglot.com/blog/hreflang-canonical
 
 > After deploy
 
--   [] Add sentry
+-   [] Add sentry (delete project)
 -   [] Add monitors
 -   [] minify manifest after changes!
 

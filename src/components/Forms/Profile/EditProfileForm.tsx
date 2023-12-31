@@ -40,7 +40,6 @@ export const EditProfileForm: FC<Props> = (props) => {
     });
 
     const country = form.watch("address.country");
-    const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country);
 
     const { mutate: updateSubscriptionMutation, isLoading: isMutating } = useMutation(
         async (formValues: UpdateProfileReq) =>

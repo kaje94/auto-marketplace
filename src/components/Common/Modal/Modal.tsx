@@ -50,7 +50,9 @@ export const Modal: FC<PropsWithChildren<Props>> = ({
                 <label
                     className="modal-backdrop backdrop-blur-sm backdrop-brightness-75"
                     onClick={(event) => {
-                        onVisibleChange(false);
+                        if (cancelable) {
+                            onVisibleChange(false);
+                        }
                         event.preventDefault();
                     }}
                 >

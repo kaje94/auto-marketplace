@@ -8,6 +8,7 @@ import { ChildrenProps } from "@/utils/types";
 import { standardFont } from "./fonts";
 
 import "./globals.css";
+import { getAlternativeLinks } from "@/utils/countries";
 
 export const runtime = "edge";
 
@@ -63,6 +64,7 @@ export const metadata: Metadata = {
         "Vehicle Classified Ads",
         "Auto Auction Site",
     ],
+    alternates: getAlternativeLinks(""),
 };
 
 export const viewport: Viewport = { themeColor: "#18182F" };

@@ -6,7 +6,7 @@ import { api } from "@/utils/api";
 import { transformListingResponse } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
 
-export const metadata: Metadata = { title: "Targabay - Edit Listing Item Details" };
+export const metadata: Metadata = { title: "Targabay - Edit Listing Item Details", alternates: {} };
 
 export default async function Page({ params }: ListingIdPathParam) {
     const session = await getSession();
