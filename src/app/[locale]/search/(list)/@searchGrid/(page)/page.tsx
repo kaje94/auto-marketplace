@@ -88,9 +88,9 @@ export async function generateMetadata({ searchParams, params }: SearchParams & 
         const title = metadataTitle;
         return {
             title,
-            description: previousDescription,
-            openGraph: { ...previousOpenGraph, title, description: previousDescription },
-            twitter: { ...previousTwitter, title, description: previousDescription },
+            description: metadataDesc,
+            openGraph: { ...previousOpenGraph, title, description: metadataDesc },
+            twitter: { ...previousTwitter, title, description: metadataDesc },
             alternates: getAlternativeLinks("/search"),
         };
     }
