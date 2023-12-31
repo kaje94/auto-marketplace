@@ -1,7 +1,6 @@
 import { ListingsCarousel } from "@/components/Listings/ListingsCarousel";
 import { api } from "@/utils/api";
 import { BOT_LOCALE } from "@/utils/constants";
-import { transformListingResponse } from "@/utils/helpers";
 import { ListingItem, LocalePathParam } from "@/utils/types";
 
 export default async function Page({ params }: LocalePathParam) {
@@ -10,7 +9,7 @@ export default async function Page({ params }: LocalePathParam) {
     return (
         <ListingsCarousel
             bgFromColor="from-hero"
-            items={featuredListings.map((item) => transformListingResponse(item))}
+            items={featuredListings}
             viewMore={{
                 link: "/search",
                 title: "View All",

@@ -6,7 +6,7 @@ import { api } from "@/utils/api";
 import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES, getAlternativeLinks } from "@/utils/countries";
 import { getFormattedCurrency, unCamelCase } from "@/utils/formatTextUtils";
-import { convertToSEOFriendlyImageURL, getLocationString, toSEOFriendlyTitleUrl, transformListingsListResponse } from "@/utils/helpers";
+import { convertToSEOFriendlyImageURL, getLocationString, toSEOFriendlyTitleUrl } from "@/utils/helpers";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { ListingItem, ListingItems, LocalePathParam, PaginatedResponse, PostedListingsFilterReq, SearchParams } from "@/utils/types";
 
@@ -94,9 +94,7 @@ export async function generateMetadata({ searchParams, params }: SearchParams & 
             alternates: getAlternativeLinks("/search"),
         };
     }
-    const listings = transformListingsListResponse(
-        await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams }),
-    );
+    const listings = await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams });
     const title = getSearchTitleMetadata(parsedSearchParams, params.locale, listings.totalCount);
     const newDescription = getSearchDescriptionMetadata(listings);
 
@@ -134,9 +132,8 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     if (params.locale === BOT_LOCALE) {
         return <SearchGrid listings={{ items: [], hasNextPage: false, hasPreviousPage: false, pageNumber: 1, totalCount: 0, totalPages: 1 }} />;
     }
-    const listings = transformListingsListResponse(
-        await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams }),
-    );
+
+    const listings = await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams });
 
     if (listings.items?.length === 0 && page !== "1") {
         redirect(`/${params.locale}/search?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);

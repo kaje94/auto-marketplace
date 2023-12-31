@@ -165,25 +165,6 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
     return [...existingFiles, ...uploadedFiles];
 };
 
-export const transformListingsListResponse = (listings: PaginatedResponse & ListingItems): PaginatedResponse & ListingItems => {
-    return { ...listings, items: listings.items.map((item) => transformListingResponse(item)) };
-};
-
-export const transformListingResponse = (itemDetails: ListingItem): ListingItem => {
-    return {
-        ...itemDetails,
-        vehicle: {
-            ...itemDetails.vehicle,
-            vehicleImages: sortVehicleImages(
-                itemDetails.vehicle.vehicleImages.map((imageItem) => ({
-                    ...imageItem,
-                    deleted: false,
-                })),
-            ),
-        },
-    };
-};
-
 export const toSEOFriendlyTitleUrl = (originalName: string, location?: Location): string => {
     const seoName = originalName
         .toLowerCase()
@@ -198,7 +179,7 @@ export const toSEOFriendlyTitleUrl = (originalName: string, location?: Location)
     return `${seoName}-for-sale${locationStr ? `-in-${locationStr}` : ""}`;
 };
 
-export const sortVehicleImages = (images: VehicleImageType[]) =>
+export const sortVehicleImages = (images: VehicleImageType[] = []) =>
     images.sort((a, b) => {
         if (a.isThumbnail && !b.isThumbnail) {
             return -1; // a comes before b in the sorted order

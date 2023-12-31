@@ -6,7 +6,6 @@ import { DashboardAllListFilterButton } from "@/components/Dashboard/DashboardLi
 import { DashboardAllListingsList } from "@/components/Dashboard/DashboardListings/DashboardListingsList";
 import { DashboardAllListingsContextProvider } from "@/providers/DashboardAllListingsContextProvider";
 import { api } from "@/utils/api";
-import { transformListingsListResponse } from "@/utils/helpers";
 import { DashboardListingFilterSchema } from "@/utils/schemas";
 import { LocalePathParam, SearchParams } from "@/utils/types";
 
@@ -15,7 +14,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
     const parsedSearchParams = DashboardListingFilterSchema.parse(searchParams);
     const [session, listings, brands] = await Promise.all([
         getSession(),
-        transformListingsListResponse(await api.getListings({ PageNumber: Number(page), ...parsedSearchParams })),
+        api.getListings({ PageNumber: Number(page), ...parsedSearchParams }),
         api.getVehicleBrands(),
     ]);
 
