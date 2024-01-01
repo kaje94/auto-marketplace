@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockLabelValue } from "@/utils/mockData";
 import { Checkbox } from "./Checkbox";
 
 const meta = {

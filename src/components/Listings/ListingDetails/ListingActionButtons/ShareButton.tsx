@@ -21,7 +21,7 @@ export const ShareButton: FC<Props> = ({ loading, title }) => {
     };
 
     return (
-        <div className="dropdown-end dropdown-top dropdown">
+        <div className="dropdown dropdown-end dropdown-top">
             <button className={clsx("btn !btn-block gap-2", loading && "animate-pulse")} disabled={loading} tabIndex={0}>
                 <ShareIcon />
                 Share

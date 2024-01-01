@@ -40,7 +40,7 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
                 onVisibleChange(false);
                 toastId.current = toast.loading(`${active ? "Deactivating" : "Activating"} subscription ${displayName}...`);
             },
-            onSettled: (_data, err, variables) => {
+            onSettled: (_data, err, _variables) => {
                 if (err) {
                     toast.error(`Failed to update the status of the subscription ${displayName}. ${(err as Error)?.message ?? ""}`, {
                         id: toastId?.current,

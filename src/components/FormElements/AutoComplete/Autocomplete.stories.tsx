@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockLabelValue, mockProfilePic } from "@/utils/mockData";
+import { mockLabelValue } from "@/utils/mockData";
 import { Autocomplete } from "./Autocomplete";
 
 const meta = {

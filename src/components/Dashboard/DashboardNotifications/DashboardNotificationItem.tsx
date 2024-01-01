@@ -15,7 +15,7 @@ interface Props {
 /** To represent an individual notification item within the notification list */
 export const DashboardNotificationItem: FC<Props> = (props) => {
     const { notificationItem = {}, loading } = props;
-    const { title, body, createdOn, isShown, redirectUrl, id } = notificationItem as NotificationItem;
+    const { title, body, createdOn, isShown, redirectUrl } = notificationItem as NotificationItem;
 
     const notificationItemContent = (
         <div

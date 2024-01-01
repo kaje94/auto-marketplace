@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockProfilePic } from "@/utils/mockData";
 import { BreadCrumbs } from "./BreadCrumbs";
 
 const meta = {

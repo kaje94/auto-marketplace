@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockListingItem, mockProfileData, mockUserClaims } from "@/utils/mockData";
+import { mockListingItem, mockUserClaims } from "@/utils/mockData";
 import { ReportListingModal } from "./ReportListingModal";
 
 const meta = {

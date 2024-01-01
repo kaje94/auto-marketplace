@@ -27,7 +27,7 @@ export const useDashboardFilter = ({
         | PostedListingsFilterReq;
     isLoading: boolean;
     newSearchQuery: string;
-    reset: UseFormReset<{}>;
+    reset: UseFormReset<any>;
     searchParamsObj: Record<string, string>;
     setNewSearchQuery: Dispatch<SetStateAction<string>>;
 }) => {

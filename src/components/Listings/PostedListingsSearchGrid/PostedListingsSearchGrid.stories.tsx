@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockListingItem, mockListingsResponse, mockVehicleBrands } from "@/utils/mockData";
+import { mockListingsResponse } from "@/utils/mockData";
 import { PostedListingsSearchGrid } from "./PostedListingsSearchGrid";
 
 const meta = {

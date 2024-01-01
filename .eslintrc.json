@@ -1,6 +1,14 @@
 {
-    "plugins": ["prettier", "typescript-sort-keys"],
-    "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended", "prettier", "plugin:prettier/recommended", "plugin:import/recommended"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["prettier", "typescript-sort-keys", "@typescript-eslint"],
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:import/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "plugin:prettier/recommended",
+        "plugin:tailwindcss/recommended"
+    ],
     "rules": {
         "max-lines": ["warn", 300],
         "prettier/prettier": ["warn", { "tabWidth": 4, "printWidth": 150 }],
@@ -27,12 +35,10 @@
                 "noSortAlphabetically": false
             }
         ],
-        "react/require-extension": "off"
-        // todo: add airbnb
-        // https://leonardofaria.net/2023/04/30/the-best-of-eslint
-        // fix following
-        // "@typescript-eslint/no-unused-vars": [1, { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
-        // "@typescript-eslint/consistent-type-imports": "error",
+        "react/require-extension": "off",
+        "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
     },
     "settings": { "import/resolver": { "typescript": true, "node": true } }
 }

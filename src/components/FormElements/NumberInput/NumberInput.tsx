@@ -17,7 +17,7 @@ export interface ControllerProps extends FormFieldControllerProps, ComponentProp
 export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {}
 
 export const NumberInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
-    const { error, inputClassNames, loading, type, inputPrefix, inputSuffix, disabled, ...rest } = props;
+    const { error, inputClassNames, loading, type: _, inputPrefix, inputSuffix, disabled, ...rest } = props;
 
     return (
         <InputPrefixSuffixWrap disabled={disabled} inputPrefix={inputPrefix} inputSuffix={inputSuffix}>

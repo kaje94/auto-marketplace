@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
     // country code should be available only after deployed
     const userCountryCode = request.geo?.country || "LK";
     const pathLocale: string = pathname.split("/").filter((item) => item !== "")[0] || "";
-    let matchingLocal = COUNTRIES[pathLocale];
+    const matchingLocal = COUNTRIES[pathLocale];
     if (!matchingLocal) {
         if (isCrawler && pathLocale !== BOT_LOCALE) {
             return NextResponse.redirect(new URL(`/${BOT_LOCALE}/${pathname}`, request.url));

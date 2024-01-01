@@ -1,6 +1,4 @@
 > API changes
--   [] always sort images to make the preview image as the first image (specially in the detail screen)
--   [] check max length of all strings in schema file
 -   [] an api for contact us form (name, email, subject & message)
 -   [] contact us email should be moved to api layer
 -   [] limits within free tier
@@ -9,11 +7,10 @@
 -   [] API randomly returns a 502 for some api calls. Out of memory: Killed process 305 (dotnet) total-vm:273620344kB, anon-rss:111048kB, file-rss:0kB, shmem-rss:63460kB, UID:0 pgtables:908kB oom_score_adj:0
 
 > Web app todo list
--   [] first party cookies consent
--   [] update eslint rules
--   [] fix chrome third party cookies blocked warning
 -   [] update displayname and signature in zoho mail
 -   [] add date offset to all filters
+-   [] fix storybook action
+-   [] add sonar cloud
 -   [] add interaction tests for storybook
 -   [] update `Targabay may use third-party services, such as analytics tools or advertising networks, which may set their own cookies. These cookies are governed by the privacy policies of the respective third parties. We do not have control over these cookies, and they are used to provide services such as analytics and targeted advertising.`
 
@@ -21,8 +18,6 @@
 -   [] minify manifest after changes!
 
 > optional todo list
--   [] add pwa?
--   [] update manifest https://web.dev/articles/add-manifest
 -   [] show counter in textarea listing create
 -   [] lazily load calender and combobox?
 -   [] laziliy load filters?

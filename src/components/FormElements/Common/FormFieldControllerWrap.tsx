@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
-import { AlertCircleIcon, XCircleIcon } from "@/icons";
+import { AlertCircleIcon } from "@/icons";
 
 export interface FormFieldControllerProps {
     children?: ReactNode;
