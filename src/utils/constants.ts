@@ -19,6 +19,7 @@ export const Dates = {
     Days_8_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 8 + 1)),
     Months_1_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 31)),
     Months_3_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * (31 * 3))),
+    Year_from_now: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
 };
 
 export const ListingStatusDescriptions: {
