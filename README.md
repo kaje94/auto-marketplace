@@ -9,7 +9,7 @@ Welcome to the Auto Marketplace Client project! This platform is designed to pro
 <br>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+![](https://api.checklyhq.com/v1/badges/checks/d8ee5b92-7ff0-4809-9cc4-405274b5411b?style=flat&theme=default)
 
 
 ## Features
