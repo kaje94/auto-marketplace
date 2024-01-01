@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
 import { FC } from "react";
-import { getFormattedDistance, numberWithCommas, unCamelCase } from "@/utils/formatTextUtils";
-import { getRandomItem, getYearFromDateString } from "@/utils/helpers";
+import { getFormattedDistance, getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 
 interface Props {

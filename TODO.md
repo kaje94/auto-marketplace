@@ -1,8 +1,3 @@
-> await new Promise((resolve) => setTimeout(resolve, 10000));
-
-> Setting up s3
-> https://next-s3-upload.codingvalue.com/setup
-
 > API changes
 
 -   [] always sort images to make the preview image as the first image (specially in the detail screen)
@@ -26,10 +21,6 @@
 -   [] add interaction tests for storybook
 -   [] https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 
-> e2e test
--   [] add tests for featured listings
--   [] unlisting, and other status change
--   [] profile update (only postal code or phone number!)
 
 > After deploy
 
@@ -48,10 +39,6 @@
 
 > Web app performance improvements
 
--   [] separate out into different files in order to reduce the cost of imports
--   [] enable bundle size library while doing so
--   [] https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading
--   [] add react memo throughout
 -   [] remove async from components if not needed
 
 > SEO Todo list

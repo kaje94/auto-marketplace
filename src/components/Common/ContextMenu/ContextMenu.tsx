@@ -46,7 +46,7 @@ export const ContextMenu: FC<Props> = ({ menuItems = [] }) => {
                 }}
             />
             <ClickAwayListener onClickAway={() => setMenuVisible(false)}>
-                <div className={clsx("dropdown-end dropdown", menuVisible && "dropdown-open")}>
+                <div className={clsx("dropdown dropdown-end", menuVisible && "dropdown-open")}>
                     <ul
                         className="menu dropdown-content rounded-box z-[1] mr-2 mt-6 w-52 rounded-tr-none bg-base-200 p-2 shadow-lg"
                         onClick={() => setMenuVisible(false)}

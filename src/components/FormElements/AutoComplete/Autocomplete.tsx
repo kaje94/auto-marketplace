@@ -6,7 +6,7 @@ import React, { forwardRef, useState } from "react";
 import { Control } from "react-hook-form";
 import { FormFieldControllerProps } from "@/components/FormElements/Common";
 import { CheckIcon } from "@/icons";
-import { unCamelCase } from "@/utils/formatTextUtils";
+import { unCamelCase } from "@/utils/helpers";
 import { LabelValue } from "@/utils/types";
 
 const Virtuoso = dynamic(() => import("react-virtuoso").then((mod) => mod.Virtuoso), {

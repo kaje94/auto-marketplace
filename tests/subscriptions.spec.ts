@@ -1,5 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
-import { unCamelCase } from "@/utils/formatTextUtils";
+import { unCamelCase } from "@/utils/helpers";
 import { newSubscriptionItem } from "./constants";
 import { formInputText, formSelectAutocomplete, formSelectDate, formSelectOption, login } from "./util";
 

@@ -5,8 +5,7 @@ import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import { getFormattedCurrency, unCamelCase } from "@/utils/formatTextUtils";
-import { formatHumanFriendlyDate, getLocationString, getRandomItem, timeAgo } from "@/utils/helpers";
+import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 
 /** Lazily loaded context menu */

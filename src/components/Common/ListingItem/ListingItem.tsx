@@ -2,8 +2,7 @@ import { clsx } from "clsx";
 import { FC } from "react";
 import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { COUNTRIES } from "@/utils/countries";
-import { getFormattedCurrency, getFormattedDistance, unCamelCase } from "@/utils/formatTextUtils";
-import { getLocationString, getRandomItem, timeAgo } from "@/utils/helpers";
+import { getFormattedCurrency, getFormattedDistance, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
 import { ListingItem as ListingItemType } from "@/utils/types";
 
 interface Props {

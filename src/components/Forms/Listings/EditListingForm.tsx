@@ -8,7 +8,8 @@ import { toast } from "react-hot-toast";
 import { editListingAction } from "@/actions/listingActions";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
 import { COUNTRIES } from "@/utils/countries";
-import { convertYearToDateString, getDistanceUnit, getListingTitleFromVehicle, transformImagesToPost } from "@/utils/helpers";
+import { convertYearToDateString, getDistanceUnit, getListingTitleFromVehicle } from "@/utils/helpers";
+import { transformImagesToPost } from "@/utils/imageUtils";
 import { CreateListingSchema } from "@/utils/schemas";
 import { CreateListingReq, EditListingReq, ListingItem, ListingUser, VehicleBrand, VehicleFeature } from "@/utils/types";
 

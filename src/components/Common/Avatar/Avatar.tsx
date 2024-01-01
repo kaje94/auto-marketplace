@@ -3,7 +3,6 @@ import { clsx } from "clsx";
 import Image from "next/image";
 import React, { FC, memo, useState } from "react";
 import { UserIcon } from "@/icons";
-import { generateInitialsFromName } from "@/utils/helpers";
 
 interface Props {
     /** Indicates whether the data for the avatar is currently loading. */
@@ -53,3 +52,24 @@ export const Avatar: FC<Props> = memo(({ url, width, name, loading }) => {
     );
 });
 Avatar.displayName = "Avatar";
+
+const generateInitialsFromName = (name?: string): string => {
+    if (!name) {
+        return "";
+    }
+    // Split the name into words using spaces and periods as delimiters
+    const words = name.split(/[\s.]+/);
+
+    // Initialize an empty string to store the initials
+    let initials = "";
+
+    // Iterate through the words and add the first character of each word to the initials
+    for (const word of words) {
+        if (initials.length < 2 && word.length > 0 && word[0]?.toUpperCase()) {
+            initials += word[0]?.toUpperCase();
+        }
+    }
+
+    // Return the generated initials (up to 2 characters)
+    return initials;
+};

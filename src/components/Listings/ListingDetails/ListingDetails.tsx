@@ -3,8 +3,7 @@ import { FC } from "react";
 import { LinkWithLocale } from "@/components/Common";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import { getFormattedCurrency } from "@/utils/formatTextUtils";
-import { formatHumanFriendlyDate, getLocationString, isRenewableListing } from "@/utils/helpers";
+import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString, isRenewableListing } from "@/utils/helpers";
 import { ListingItem } from "@/utils/types";
 import {
     DeleteButton,

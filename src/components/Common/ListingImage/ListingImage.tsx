@@ -1,8 +1,10 @@
 "use client";
 import Image, { ImageProps } from "next/image";
 import { FC, useEffect, useState } from "react";
+import * as ThumbHash from "thumbhash";
 import { AlertCircleIcon } from "@/icons";
-import { convertToSEOFriendlyImageURL, thumbHashToDataUrl, toSEOFriendlyTitleUrl } from "@/utils/helpers";
+import { toSEOFriendlyTitleUrl } from "@/utils/helpers";
+import { convertToSEOFriendlyImageURL } from "@/utils/imageUtils";
 import { Location, VehicleImageType } from "@/utils/types";
 
 interface Props extends Omit<ImageProps, "src" | "alt"> {
@@ -54,4 +56,24 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
             )}
         </span>
     );
+};
+
+const thumbHashToDataUrl = (thumbHash?: string) => {
+    if (!thumbHash || thumbHash.length < 8) {
+        return "";
+    }
+    try {
+        const base64ToBinary = (base64: string) =>
+            new Uint8Array(
+                window
+                    .atob(base64)
+                    .split("")
+                    .map((x) => x.charCodeAt(0)),
+            );
+        const thumbHashFromBase64 = base64ToBinary(thumbHash);
+        const placeholderURL = ThumbHash.thumbHashToDataURL(thumbHashFromBase64);
+        return placeholderURL;
+    } catch {
+        console.error("Failed to generate placeholder URL for ", thumbHash);
+    }
 };

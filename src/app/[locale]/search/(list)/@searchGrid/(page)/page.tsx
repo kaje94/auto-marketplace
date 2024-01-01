@@ -5,8 +5,8 @@ import { SearchGrid } from "@/components/Listings/PostedListingsSearchGrid";
 import { api } from "@/utils/api";
 import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES, getAlternativeLinks } from "@/utils/countries";
-import { getFormattedCurrency, unCamelCase } from "@/utils/formatTextUtils";
-import { convertToSEOFriendlyImageURL, getLocationString, toSEOFriendlyTitleUrl } from "@/utils/helpers";
+import { getFormattedCurrency, getLocationString, toSEOFriendlyTitleUrl, unCamelCase } from "@/utils/helpers";
+import { convertToSEOFriendlyImageURL } from "@/utils/imageUtils";
 import { PostedListingsFilterSchema } from "@/utils/schemas";
 import { ListingItem, ListingItems, LocalePathParam, PaginatedResponse, PostedListingsFilterReq, SearchParams } from "@/utils/types";
 
