@@ -48,9 +48,9 @@ export default function Page() {
             <div className="mx-auto flex flex-col gap-3">
                 <CookiePolicySection title="1. What Are Cookies?">
                     <p>
-                        Cookies are small text files that are stored on your device (computer, tablet, smartphone) when you visit a website. They are
-                        created by the website&apos;s server and can only be read by that server. Cookies serve various purposes, such as remembering
-                        your preferences, analyzing how you interact with the site, and delivering personalized content.
+                        Cookies are small text files created by a website's server and stored on your device. They help the site remember your
+                        preferences, analyze interactions, and deliver personalized content. While accessible to both the server and client-side
+                        scripts, security measures are in place to protect your data.
                     </p>
                 </CookiePolicySection>
                 <CookiePolicySection title="2. How We Use Cookies">
@@ -73,9 +73,9 @@ export default function Page() {
                 </CookiePolicySection>
                 <CookiePolicySection title="3. Third-Party Cookies">
                     <p>
-                        Targabay may use third-party services, such as analytics tools or advertising networks, which may set their own cookies. These
-                        cookies are governed by the privacy policies of the respective third parties. We do not have control over these cookies, and
-                        they are used to provide services such as analytics and targeted advertising.
+                        As of now, Targabay does not employ any third-party services that independently set their own cookies. Consequently, we lack
+                        control over any third-party cookies, and they are not utilized by us for purposes such as analytics or targeted advertising.
+                        Our commitment is to transparency and safeguarding your privacy by limiting the use of external cookies on our platform.{" "}
                     </p>
                 </CookiePolicySection>
                 <CookiePolicySection title="4. Managing Cookies">
