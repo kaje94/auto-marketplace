@@ -1,5 +1,4 @@
 import { defineConfig, devices } from "@playwright/test";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { config as dotenvConfig } from "dotenv";
 import path from "path";
 

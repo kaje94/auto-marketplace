@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "react-hot-toast";
 import type { Metadata, Viewport } from "next";
 import { Footer, ScrollToTop } from "@/components/Common";
@@ -83,6 +83,7 @@ export default function RootLayout({ children }: ChildrenProps) {
                     <Footer />
                 </ReactQueryProvider>
                 <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );
