@@ -8,9 +8,12 @@ Welcome to the Auto Marketplace Client project! This platform is designed to pro
 
 <br>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![](https://api.checklyhq.com/v1/badges/checks/d8ee5b92-7ff0-4809-9cc4-405274b5411b?style=flat&theme=default)
-
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
 
 ## Features
 
