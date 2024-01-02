@@ -25,7 +25,7 @@ export const CookieConsent = () => {
     return (
         <div
             className={clsx(
-                "sticky bottom-0 flex w-full justify-center border-t-2 border-secondary bg-hero py-2 shadow-2xl",
+                "sticky bottom-0 z-10 flex w-full justify-center border-t-2  border-secondary bg-hero py-2",
                 isLandingPage ? "bg-hero" : "bg-neutral",
             )}
         >

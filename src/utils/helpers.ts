@@ -110,7 +110,7 @@ export const isRenewableListing = (expiryDate: Date): boolean => {
     return false;
 };
 
-/** Convert year into a date ISO string */
+/** Convert year into a yyyy-mm-dd string */
 export const convertYearToDateString = (year: string | number): string => {
     const yearNumber = typeof year === "string" ? parseInt(year, 10) : year;
 
@@ -121,7 +121,15 @@ export const convertYearToDateString = (year: string | number): string => {
     // Assuming January 1st of the given year
     const date = new Date(yearNumber, 0, 1);
 
-    return date.toISOString();
+    // // Get the year, month, and day from the date object
+    const yyyy = date.getFullYear().toString().padStart(4, "0");
+    const mm = (date.getMonth() + 1).toString().padStart(2, "0");
+    const dd = date.getDate().toString().padStart(2, "0");
+
+    // Format the date as yyyy-mm-dd
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+    return formattedDate;
 };
 
 /** Convert a camel-case string into a non-camel case string */
