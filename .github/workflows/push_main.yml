@@ -15,12 +15,32 @@ jobs:
         env:
             SKIP_ENV_VALIDATION: true
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+            - uses: actions/checkout@v3
             - name: Setup CI
               uses: ./.github/workflows/setup-ci
             - name: Run EsLint
               run: pnpm run lint
+    test-storybook:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        needs: eslint
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Install Playwright
+              run: pnpm exec playwright install --with-deps chromium
+            - name: Install global dependencies
+              run: pnpm install -g concurrently wait-on http-server
+            - name: Pull configs into .env file
+              run: vercel env pull .env --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Build Storybook
+              run: pnpm build-storybook --quiet
+            - name: Serve Storybook and run tests
+              run: |
+                  npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+                    "npx http-server storybook-static --port 6006 --silent" \
+                    "npx wait-on tcp:6006 && pnpm test-storybook"
     build:
         runs-on: ubuntu-latest
         timeout-minutes: 10
@@ -101,13 +121,12 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         timeout-minutes: 5
-        needs: [build, test-e2e]
+        needs: [build, test-e2e, test-storybook]
         environment:
             name: development
             url: https://dev.targabay.com
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+            - uses: actions/checkout@v3
             - name: Delete robots.prod.txt in dev env
               run: rm public/robots.prod.txt
             - name: Setup CI
