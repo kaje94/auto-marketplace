@@ -20,8 +20,8 @@ const CookiePolicyItem = ({ content, title }: { content?: string | ReactNode; ti
 );
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
-    const previousTwitter = (await parent).twitter || {};
     const previousOpenGraph = (await parent).openGraph || {};
+    const previousTwitter = (await parent).twitter || {};
 
     const title = "Targabay - Cookie Policy";
     const description =
@@ -48,7 +48,7 @@ export default function Page() {
             <div className="mx-auto flex flex-col gap-3">
                 <CookiePolicySection title="1. What Are Cookies?">
                     <p>
-                        Cookies are small text files created by a website's server and stored on your device. They help the site remember your
+                        Cookies are small text files created by a website&apos;s server and stored on your device. They help the site remember your
                         preferences, analyze interactions, and deliver personalized content. While accessible to both the server and client-side
                         scripts, security measures are in place to protect your data.
                     </p>
