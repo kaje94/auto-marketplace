@@ -42,6 +42,8 @@ This project leverages [Next.js](https://nextjs.org/) version 14, incorporating 
 -   **ImageKit**: Real-time image optimization and transformation service.
 -   **TypeScript**: A typed superset of JavaScript, improving code quality and maintainability.
 -   **Zod**: TypeScript-first schema declaration and validation library.
+-   **Storybook**: A development environment for UI components, allowing for isolated and interactive component development.
+-   **Playwright**: A Node.js library for automating browsers, enabling end-to-end testing and browser automation.
 
 ## Getting Started
 
