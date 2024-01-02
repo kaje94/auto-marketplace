@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { getAccessToken } from "@auth0/nextjs-auth0/edge";
 import { headers as nextHeaders } from "next/headers";
 import { redirect } from "next/navigation";
@@ -124,30 +125,39 @@ const fetchApi = {
 };
 
 export const api = {
+    /** Get list of features for listing form and filters */
     getFeaturesList: () =>
         fetchApi.get<VehicleFeature[]>("/v1/Vehicles/features", {
             next: { tags: [apiTags.getFeaturesList()], revalidate: revalidationTime.oneWeek },
         }),
+    /** Get vehicle brands for listing form and filters */
     getVehicleBrands: () =>
         fetchApi.get<VehicleBrand[]>("/v1/Vehicles/brands", { next: { tags: [apiTags.getVehicleBrands()], revalidate: revalidationTime.oneWeek } }),
+    /** Get posted publicly visible listings */
     getPostedListings: (locale: string, req?: PaginatedRequest & PostedListingsFilterReq) =>
         fetchApi.get<PaginatedResponse & ListingItems>(`/v1/Listings/posted/${locale}?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { revalidate: revalidationTime.thirtyMins, tags: [apiTags.getPostedListings(), apiTags.getPostedListingsByCountry(locale)] },
         }),
+    /** Get details of a publicly posted listing items */
     getPostedListingItem: (id: ListingIdType) =>
         fetchApi.get<ListingItem>(`/v1/Listings/posted/${id}`, {
             next: { tags: [apiTags.getPostedListingItem(id)], revalidate: revalidationTime.oneDay },
         }),
+    /** Get related listings of a publicly posted listing items */
     getRelatedListings: (id: ListingIdType) =>
         fetchApi.get<ListingItem[]>(`/v1/Listings/${id}/related-listings`, {
             next: { tags: [apiTags.getRelatedListings(id)], revalidate: revalidationTime.twelveHours },
         }),
+    /** Post a new listing items */
     postListing: (body: CreateListingReq) => fetchApi.protectedPost<BodyInit, ListingIdType>("/v1/Listings", JSON.stringify(body)),
+    /** Update a listing items. Can be performed by author or admin */
     putListing: (body: EditListingReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Listings/${body.listingId}`, JSON.stringify(body)),
+    /** Delete a listing admin. Can be performed by author or admin */
     getListings: (req?: PaginatedRequest & DashboardListFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { tags: [apiTags.getListings()], revalidate: revalidationTime.oneDay },
         }),
+    /** Get featured listings within a country */
     getFeaturedListings: (countryCode: string) =>
         fetchApi.get<ListingItem[]>(`/v1/Listings/featured-listings/${countryCode}`, {
             next: {
@@ -155,75 +165,102 @@ export const api = {
                 revalidate: revalidationTime.twelveHours,
             },
         }),
+    /** Get all listings created by the user */
     getMyListings: (listingUserId: string, req?: PaginatedRequest & MyListingsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingItems>(`/v1/Users/me/listings?${qs.stringify(req ?? {}, { skipEmptyString: true })}`, {
             next: { tags: [apiTags.getMyListings(listingUserId)], revalidate: revalidationTime.oneDay },
         }),
+    /** Get details of an individual listing item. To be used by admins */
     getListingsItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingItem>(`/v1/Listings/${id}`, {
             next: { tags: [apiTags.getListingsItem(id)], revalidate: revalidationTime.oneDay },
         }),
+    /** Get details of a listing item by author who created it */
     getMyListingsItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingItem>(`/v1/Users/me/listings/${id}`, {
             next: { tags: [apiTags.getMyListingsItem(id)], revalidate: revalidationTime.oneDay },
         }),
+    /** Delete a listing item permanently. To be performed only by admins */
     deleteListing: (listingId: ListingIdType) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Listings/${listingId}`, JSON.stringify({})),
+    /** Accept or reject a newly created listing. To be performed only by admins */
     reviewListing: (body: ReviewListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/review`, JSON.stringify(body)),
+    /** Temporarily or permanently un-list a listing items */
     unListListing: (body: UnListListingReq) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${body.listingId}/unlist`, JSON.stringify(body)),
+    /** Renew an expired advert or an advert that is about to be expired */
     renewListing: (listingId: ListingIdType) => fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/${listingId}/renew`, JSON.stringify({})),
+    /** Mark a listing advert as featured. */
     makeListingFeatured: (listingId: ListingIdType, countryCode: string) =>
         fetchApi.protectedPost<BodyInit, void>(`/v1/Listings/featured-listings/${countryCode}/${listingId}`, JSON.stringify({})),
+    /** Increment the number of times, a listing has been viewed */
     incrementViews: (listingId: ListingIdType) =>
         fetchApi.post<BodyInit, void>(`/v1/Listings/${listingId}/increment-views`, "", { next: { revalidate: revalidationTime.noCache } }),
+    /** Report a publicly posted listing */
     reportListing: (body: ReportListingReq) => fetchApi.post<BodyInit, void>(`/v1/Listings/${body.listingId}/report`, JSON.stringify(body)),
+    /** Create a new listing subscription */
     postListingSubscription: (body: CreateSubscriptionReq) =>
         fetchApi.protectedPost<BodyInit, ListingSubscriptionIdType>("/v1/ListingSubscriptions", JSON.stringify(body)),
+    /** Update an existing listing subscription */
     putListingSubscription: (body: EditSubscriptionReq) =>
         fetchApi.protectedPut<BodyInit, void>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}`, JSON.stringify(body)),
+    /** Get an individual listing subscription item */
     getListingSubscriptions: (req?: PaginatedRequest & DashboardSubscriptionFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
             `/v1/ListingSubscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
             { next: { tags: [apiTags.getListingSubscriptions()], revalidate: revalidationTime.oneDay } },
         ),
+    /** Get all the listing subscription item created by the user */
     getMyListingSubscriptions: (listingUserId: string, req?: PaginatedRequest & DashboardMySubscriptionFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & ListingSubscriptionItems>(
             `/v1/Users/me/listing-subscriptions?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
             { next: { tags: [apiTags.getMyListingSubscriptions(listingUserId)], revalidate: revalidationTime.oneDay } },
         ),
+    /** Get details of an individual subscription item. To be used by admins */
     getListingSubscriptionItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/ListingSubscriptions/${id}`, {
             next: { tags: [apiTags.getListingSubscriptionItem(id)], revalidate: revalidationTime.oneDay },
         }),
+    /** Get details of an individual subscription item. To be used by author */
     getMyListingSubscriptionItem: (id: ListingIdType) =>
         fetchApi.protectedGet<ListingSubscriptionItem>(`/v1/Users/me/listing-subscriptions/${id}`, {
             next: { tags: [apiTags.getMyListingSubscriptionItem(id)], revalidate: revalidationTime.oneDay },
         }),
+    /** Delete a listing subscription item */
     deleteListingSubscriptions: (id: ListingSubscriptionIdType) =>
         fetchApi.protectedDelete<BodyInit, void>(`/v1/ListingSubscriptions/${id}`, JSON.stringify({})),
+    /** Toggle listing subscription as active or inactive */
     toggleListingSubscription: (body: ToggleSubscriptionReq) =>
         fetchApi.protectedPost<BodyInit, string>(`/v1/ListingSubscriptions/${body.listingSubscriptionId}/toggle-activation`, JSON.stringify(body)),
+    /** Get all notifications of the logged in user */
     getMyNotifications: (listingUserId: string, req?: PaginatedRequest & DashboardNotificationsFilterReq) =>
         fetchApi.protectedGet<PaginatedResponse & NotificationItems>(
             `/v1/Users/me/notifications?${qs.stringify(req ?? {}, { skipEmptyString: true })}`,
             { next: { tags: [apiTags.getMyNotifications(listingUserId)], revalidate: revalidationTime.threeHours } },
         ),
+    /** Mark all notifications as seen */
     setAllNotificationsAsShown: () => fetchApi.protectedPost<BodyInit, void>(`/v1/Users/me/notifications/set-all-shown`, ""),
+    /** Get profile details of the logged in user */
     getMyProfileDetails: (userId: string) =>
         fetchApi.protectedGet<ListingUser>(`/v1/Users/${userId}`, {
             next: { tags: [apiTags.getMyProfileDetails(userId)], revalidate: revalidationTime.oneDay },
         }),
+    /** Update the profile details of the logged in user */
     updateMyProfileDetails: (body: UpdateProfileReq) => fetchApi.protectedPut<BodyInit, void>(`/v1/Users/${body.userId}`, JSON.stringify(body)),
+    /** Close the account of the logged in user */
     closeUserAccount: (userId: string) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Users/${userId}/close-account`, JSON.stringify({})),
+    /** Get states of a given country */
     getStates: (countryCode: string) =>
         fetchApi.get<State[]>(`/v1/Locations/countries/${countryCode}/states`, {
             next: { tags: [apiTags.getStates()], revalidate: revalidationTime.oneWeek },
         }),
+    /** Get cities within a state within a country */
     getCities: (countryCode: string, stateCode: string) =>
         fetchApi.get<City[]>(`/v1/Locations/countries/${countryCode}/states/${stateCode}/cities`, {
             next: { tags: [apiTags.getCities()], revalidate: revalidationTime.oneWeek },
         }),
+    /** Generate sign urls in order to upload listing image to S3 */
     generateS3SignedUrls: (body: GenerateS3SignedUrlReq) =>
         fetchApi.protectedPost<BodyInit, GetPresignedS3UrlsResponse>(`/v1/Images/generate-signed-urls`, JSON.stringify(body)),
+    /** Delete an image from AWS S3 */
     deleteS3Image: (body: DeleteS3ImagesReq) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Images/delete`, JSON.stringify(body)),
 };
 

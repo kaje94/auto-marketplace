@@ -9,6 +9,7 @@ export const useDashboardAllSubscriptionsContext = () => {
     return data;
 };
 
+/** Provider to be used in all-subscriptions page in the dashboard */
 export const DashboardAllSubscriptionsProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
     const hasSearchParams = Object.keys(DashboardSubscriptionFilterSchema.parse(searchParamsObj)).length > 0;

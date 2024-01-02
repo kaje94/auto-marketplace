@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { getCitiesOfState } from "@/actions/localtionActions";
+import { getCitiesOfState } from "@/actions/locationActions";
 import { BOT_LOCALE, FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { LabelValue, PostedListingsFilterReq, State, VehicleBrand } from "@/utils/types";
 import { FilterAutoComplete as AutocompleteController } from "../FilterFormElements/DashboardFilterAutoComplete";

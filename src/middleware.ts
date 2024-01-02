@@ -14,6 +14,8 @@ export async function middleware(request: NextRequest) {
     const userCountryCode = request.geo?.country || "LK";
     const pathLocale: string = pathname.split("/").filter((item) => item !== "")[0] || "";
     const matchingLocal = COUNTRIES[pathLocale];
+
+    // Redirect to the correct route by if a valid route does not exist
     if (!matchingLocal) {
         if (isCrawler && pathLocale !== BOT_LOCALE) {
             return NextResponse.redirect(new URL(`/${BOT_LOCALE}/${pathname}`, request.url));
@@ -26,6 +28,7 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    // Check if a valid user is trying to access the dashboard route
     if (new RegExp(`/${userCountryCode}/(dashboard.*)`).test(request.nextUrl.pathname)) {
         const session = await getSession();
         if (!session) {

@@ -9,6 +9,7 @@ export const useDashboardMySubscriptionsContext = () => {
     return data;
 };
 
+/** Provider to be used in my-subscriptions page in the dashboard */
 export const DashboardMySubscriptionsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
     const hasSearchParams = Object.keys(DashboardMySubscriptionFilterSchema.parse(searchParamsObj)).length > 0;

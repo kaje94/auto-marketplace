@@ -9,6 +9,7 @@ export const usePostedListingsContext = () => {
     return data;
 };
 
+/** Provider to be used in the posted listing search page */
 export const PostedListingsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
     const hasSearchParams = Object.keys(PostedListingsFilterSchema.parse(searchParamsObj)).length > 0;

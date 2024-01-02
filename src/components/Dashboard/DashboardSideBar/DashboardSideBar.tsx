@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { api } from "@/utils/api";
 import { NavBarItem } from "./DashboardSideBarItem";
 
+/** Dashboard sidebar with content loaded using react suspense */
 export const DashboardSideBar = async () => {
     return (
         <Suspense fallback={<DashboardSideBarItems />}>

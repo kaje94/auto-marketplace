@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { getCitiesOfState, getStatesOfCountry } from "@/actions/localtionActions";
+import { getCitiesOfState, getStatesOfCountry } from "@/actions/locationActions";
 import { Avatar } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";

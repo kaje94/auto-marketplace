@@ -12,6 +12,7 @@ interface Props {
     loading?: boolean;
 }
 
+/** Dashboard listing header that contains the filter, item count and create new button */
 export const DashboardListHeader: FC<Props> = ({ itemCount = 0, loading, filter, addNewButton }) => {
     return (
         <div className="mb-3 mt-1 grid items-center gap-4 md:grid-cols-2 xl:gap-7 2xl:grid-cols-3 2xl:gap-8">

@@ -9,6 +9,7 @@ export const useDashboardMyListingsContext = () => {
     return data;
 };
 
+/** Provider to be used in my-listings page in the dashboard */
 export const DashboardMyListingsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
     const hasSearchParams = Object.keys(MyListingsFilterSchema.parse(searchParamsObj)).length > 0;

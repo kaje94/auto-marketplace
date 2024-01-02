@@ -14,6 +14,7 @@ const defaultFilter: DashboardSubscriptionFilterReq = {
     UserId: "",
 };
 
+/** Filter button to be used in the all subscriptions screen within dashboard */
 export const DashboardAllSubscriptionFilterButton = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardAllSubscriptionsContext();
 

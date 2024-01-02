@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { getCitiesOfState, getStatesOfCountry } from "@/actions/localtionActions";
+import { getCitiesOfState, getStatesOfCountry } from "@/actions/locationActions";
 import { BOT_LOCALE, FuelTypeList, ListingTypeList, VehicleTypeList } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
 import { DashboardListFilterReq, LabelValue, VehicleBrand } from "@/utils/types";

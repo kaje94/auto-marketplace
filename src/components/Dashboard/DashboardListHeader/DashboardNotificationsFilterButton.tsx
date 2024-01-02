@@ -14,6 +14,7 @@ const defaultFilter: DashboardNotificationsFilterReq = {
     IsShown: "",
 };
 
+/** Filter button to be used in the my notifications screen within dashboard */
 export const DashboardNotificationsFilterButton = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useNotificationsContext();
 

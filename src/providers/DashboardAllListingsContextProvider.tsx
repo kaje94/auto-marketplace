@@ -9,6 +9,7 @@ export const useDashboardAllListingsContext = () => {
     return data;
 };
 
+/** Provider to be used in all-advert-listing page in the dashboard */
 export const DashboardAllListingsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
     const hasSearchParams = Object.keys(DashboardListingFilterSchema.parse(searchParamsObj)).length > 0;

@@ -8,6 +8,7 @@ const client = new QueryClient({
         queries: { refetchOnWindowFocus: false, retry: false, useErrorBoundary: true },
         mutations: {
             onError: (err) => {
+                // Use Sentry to capture mutation exceptions
                 if (typeof window !== undefined && (window as any).Sentry) {
                     (window as any).Sentry.captureException(err);
                 }

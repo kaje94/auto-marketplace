@@ -14,6 +14,7 @@ const defaultFilter: MyListingsFilterReq = {
     StartCreatedDate: "",
 };
 
+/** Filter button to be used in the my advert listing screen within dashboard */
 export const DashboardMyListFilterButton = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardMyListingsContext();
 

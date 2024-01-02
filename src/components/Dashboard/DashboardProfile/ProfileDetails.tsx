@@ -26,6 +26,7 @@ const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: stri
     </div>
 );
 
+/** Profile details view within user's dashboard */
 export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
     const isProfileIncomplete = profile ? isIncompleteUserProfile(profile) : false;
 

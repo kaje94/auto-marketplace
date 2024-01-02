@@ -12,6 +12,7 @@ import { KeyValue, LabelValue } from "./types";
 export const MaxVehicleImageCount = 10;
 export const YearSelectMinYear = 1960;
 
+/** Locale param to be used when visited by web crawlers */
 export const BOT_LOCALE = "CTRY";
 
 export const Dates = {

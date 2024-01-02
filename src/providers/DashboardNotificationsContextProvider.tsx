@@ -9,6 +9,7 @@ export const useNotificationsContext = () => {
     return data;
 };
 
+/** Provider to be used in my-notifications page in the dashboard */
 export const DashboardNotificationsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
     const hasSearchParams = Object.keys(DashboardNotificationsFilterSchema.parse(searchParamsObj)).length > 0;

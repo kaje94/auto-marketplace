@@ -13,6 +13,7 @@ const defaultFilter: DashboardMySubscriptionFilterReq = {
     NotificationFrequency: "",
 };
 
+/** Filter button to be used in the my subscriptions screen within dashboard */
 export const DashboardMySubscriptionFilterButton = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardMySubscriptionsContext();
 

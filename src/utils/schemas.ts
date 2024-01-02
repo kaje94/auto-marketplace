@@ -78,7 +78,7 @@ export const VehicleImageSchema = z.object({
     color: z.string().min(1).optional(),
     hash: z.string().optional(),
     isThumbnail: z.boolean().optional(),
-    // locale file properties
+    // local file properties
     file: z.any().optional(),
     preview: z.string().optional(),
     deleted: z.boolean().default(false).optional(),

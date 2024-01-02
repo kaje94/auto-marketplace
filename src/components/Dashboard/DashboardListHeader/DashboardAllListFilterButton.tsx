@@ -27,6 +27,7 @@ const defaultFilter: DashboardListFilterReq = {
     StartCreatedDate: "",
 };
 
+/** Filter button to be used in the all advert listing screen within dashboard */
 export const DashboardAllListFilterButton = ({ vehicleBrands = [] }: { vehicleBrands?: VehicleBrand[] }) => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardAllListingsContext();
 

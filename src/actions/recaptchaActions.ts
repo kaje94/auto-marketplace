@@ -1,6 +1,7 @@
 "use server";
 import { env } from "@/env.mjs";
 
+/** Validate recaptcha token with Google */
 export const validateRecaptchaAction = async (token: string) => {
     const formData = new FormData();
     formData.append("secret", env.RECAPTCHA_SITE_SECRET!);
