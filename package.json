@@ -16,6 +16,14 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --fix"
+  },
+  "engines": {
+    "node": ">=20.9.0",
+    "pnpm": ">=8"
+  },
+  "packageManager": "pnpm@8.11.0",
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.3.0",
     "@formkit/auto-animate": "^0.8.0",
@@ -87,13 +95,5 @@
     "lint-staged": "^15.2.0",
     "prettier": "^3.0.3",
     "storybook": "^7.6.5"
-  },
-  "engines": {
-    "node": ">=20.9.0",
-    "pnpm": ">=8"
-  },
-  "packageManager": "pnpm@8.11.0",
-  "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix"
   }
 }
