@@ -2,6 +2,7 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
+    "eslint.runtime": "node",
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "search.exclude": {
         "**/.git": true,
