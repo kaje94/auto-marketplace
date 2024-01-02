@@ -6,7 +6,6 @@
 -   [] API randomly returns a 502 for some api calls. Out of memory: Killed process 305 (dotnet) total-vm:273620344kB, anon-rss:111048kB, file-rss:0kB, shmem-rss:63460kB, UID:0 pgtables:908kB oom_score_adj:0
 
 > Web app todo list
--   [] update displayname and signature in zoho mail
 -   [] add date offset to all filters
 -   [] fix storybook action
 -   [] add sonar cloud
@@ -17,10 +16,6 @@
 
 > optional todo list
 -   [] use links instead of router push ?
-
-> SEO Todo list
--   [] https://webmasters.stackexchange.com/questions/104987/how-to-change-which-image-from-website-is-shown-in-google-search-result
-
 
 
 
