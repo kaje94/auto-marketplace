@@ -11,6 +11,7 @@ export interface ControllerProps extends FormFieldControllerProps, ComponentProp
     fieldName: string;
     loading?: boolean;
     options?: LabelValue[];
+    placeholder?: string;
     selectClassName?: string;
     selectablePlaceholder?: boolean;
 }

@@ -38,7 +38,8 @@
         "react/require-extension": "off",
         "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
         "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+        "tailwindcss/enforces-shorthand":"off"
     },
     "settings": { "import/resolver": { "typescript": true, "node": true } }
 }
