@@ -12,9 +12,7 @@
     "tsc": "tsc --noEmit --incremental",
     "storybook": "storybook dev -p 6006 --disable-telemetry",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "test-storybook": "test-storybook"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.3.0",
@@ -57,7 +55,6 @@
   },
   "devDependencies": {
     "@opentelemetry/api": "^1.7.0",
-    "@playwright/test": "^1.40.1",
     "@storybook/addon-essentials": "^7.6.5",
     "@storybook/addon-interactions": "^7.6.5",
     "@storybook/addon-links": "^7.6.5",
@@ -73,7 +70,6 @@
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.7.3",
-    "dotenv": "^16.3.1",
     "eslint": "8.50.0",
     "eslint-config-next": "14.0.2",
     "eslint-config-prettier": "^9.0.0",

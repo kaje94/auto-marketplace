@@ -55,3 +55,19 @@ export const login = async (page: Page) => {
         await page.waitForSelector('img[alt="profile-image"]', { timeout: 20000 });
     }
 };
+
+export const numberWithCommas = (x: number | string) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+export const unCamelCase = (str: string = "") => {
+    if (typeof str === "string") {
+        return str
+            .replace(/([A-Z])/g, " $1")
+            .replace(/^./, function (str) {
+                return str.toUpperCase();
+            })
+            ?.trim();
+    }
+    return str;
+};
