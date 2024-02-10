@@ -41,5 +41,6 @@
     "prettier.printWidth": 150,
     "[github-actions-workflow]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "eslint.workingDirectories": ["apps/webapp"]
 }
