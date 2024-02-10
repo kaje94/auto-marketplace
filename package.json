@@ -8,7 +8,9 @@
         "dev": "pnpm --stream -r dev",
         "dev:webapp": "pnpm --filter=targabay-webapp dev",
         "lint": "pnpm -r lint",
-        "lint:fix": "pnpm -r --fix"
+        "lint:fix": "pnpm -r --fix",
+        "format": "pnpm -r format && pnpm format-rest",
+        "format-rest": "npx prettier --ignore-path .gitignore --write \"**/*.{css,md,json,yml}\" \"!package-lock.json\" --print-width 150 --tab-width 4"
     },
     "engines": {
         "node": ">=20.9.0",
@@ -20,6 +22,7 @@
     },
     "devDependencies": {
         "husky": "^8.0.3",
-        "lint-staged": "^15.2.0"
+        "lint-staged": "^15.2.0",
+        "prettier": "^3.0.3"
     }
 }

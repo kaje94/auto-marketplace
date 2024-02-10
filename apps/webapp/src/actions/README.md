@@ -17,4 +17,3 @@ To use an action in your Next.js application, follow these steps:
 
 1. Import the action function from this directory.
 2. Call the action function from the client side, preferably using react-query, to perform the server-side logic.
-
