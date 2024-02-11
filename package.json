@@ -6,7 +6,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "pnpm --stream -r dev",
-        "dev:webapp": "pnpm --filter=targabay-webapp dev",
+        "dev:webapp": "pnpm --filter=webapp dev",
         "lint": "pnpm -r lint",
         "lint:fix": "pnpm -r --fix",
         "format": "pnpm -r format && pnpm format-rest",
@@ -20,9 +20,13 @@
     "lint-staged": {
         "*.{ts,tsx}": "pnpm lint:fix"
     },
+    "dependencies": {
+        "typescript": "^5.2.2"
+    },
     "devDependencies": {
         "husky": "^8.0.3",
         "lint-staged": "^15.2.0",
-        "prettier": "^3.0.3"
+        "prettier": "^3.0.3",
+        "@types/node": "20.1.3"
     }
 }

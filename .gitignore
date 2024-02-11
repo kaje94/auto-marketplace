@@ -45,3 +45,8 @@ storybook-static
 # Sentry Config File
 .sentryclirc
 
+# Ignore all generated code
+generated
+gen
+
+.react-email/
