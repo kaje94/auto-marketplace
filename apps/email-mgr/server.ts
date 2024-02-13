@@ -19,6 +19,22 @@ import fastifyCors from "@fastify/cors";
 import { readFileSync } from "fs";
 import * as esbuild from "esbuild";
 import routes from "./connect.js";
+import { CreateTemplateCommandInput, SES, UpdateTemplateCommand } from "@aws-sdk/client-ses";
+import { render } from "@react-email/render";
+import { TargabayInviteUserEmail } from "./emails/targabay-welome-user";
+import { config as dotenvConfig } from "dotenv";
+
+dotenvConfig();
+
+const ses = new SES({
+    region: "us-east-1",
+    credentials: {
+        accessKeyId: process.env.AWS_SES_KEY_ID!,
+        secretAccessKey: process.env.AWS_SES_ACCESS_KEY!,
+    },
+});
+
+const emailHtml = render(TargabayInviteUserEmail());
 
 if (process.argv[1] === new URL(import.meta.url).pathname) {
     const PORT = parseInt(process.argv[2] ?? 3000);
@@ -66,6 +82,37 @@ export async function build() {
                 reply.type("application/javascript");
                 reply.send(result.outputFiles[0].text);
             });
+    });
+
+    server.get("/email", async (_, reply) => {
+        // await ses.sendEmail({
+        //     Source: "notifications@targabay.com",
+        //     Destination: { ToAddresses: ["a.kajendran@gmail.com"] },
+        //     Message: {
+        //         Body: { Html: { Charset: "UTF-8", Data: emailHtml } },
+        //         Subject: { Charset: "UTF-8", Data: "hello world1" },
+        //     },
+        // });
+
+        const template: CreateTemplateCommandInput | UpdateTemplateCommand = {
+            Template: { TemplateName: "temp-1", HtmlPart: emailHtml, SubjectPart: "subject-1" },
+        };
+
+        // const existingTemplate = await ses.getTemplate({ TemplateName: template.Template?.TemplateName });
+        // if (existingTemplate.Template) {
+        //     await ses.updateTemplate(template);
+        // } else {
+        //     await ses.createTemplate(template);
+        // }
+
+        ses.sendTemplatedEmail({
+            Template: template.Template?.TemplateName,
+            Destination: { ToAddresses: ["a.kajendran@gmail.com"] },
+            Source: "notifications@targabay.com",
+            TemplateData: JSON.stringify({ name: "kaje", country: "in" }),
+        });
+
+        return { success: true };
     });
 
     return server;

@@ -4,7 +4,8 @@ import { EmailWrap } from "./components/EmailWrap";
 import * as React from "react";
 
 interface VercelInviteUserEmailProps {
-    username?: string;
+    // username?: string;
+    // countryCode: string
 }
 
 const points = [
@@ -26,10 +27,10 @@ const points = [
 ];
 
 // Subject: Discover Targabay - Your Hub for Buying and Selling Vehicles!
-export const TargabayInviteUserEmail = ({ username = "User name" }: VercelInviteUserEmailProps) => {
+export const TargabayInviteUserEmail = () => {
     return (
         <EmailWrap previewText="Welcome to Targabay, Your Easy Way to Explore and Sell Vehicles!">
-            <Text>Hi {username},</Text>
+            <Text>{"Hi {{name}}"},</Text>
             <Text>
                 Welcome to Targabay! Whether you're looking to buy or sell, Targabay is your one-stop destination for all things vehicles! Dive into
                 our world of verified listings and enjoy a seamless experience tailored just for you.
@@ -38,7 +39,7 @@ export const TargabayInviteUserEmail = ({ username = "User name" }: VercelInvite
                 {points.map((item) => (
                     <li>
                         <Text>
-                            <Link className="text-brand underline font-medium" href={`${baseUrl}/CTRY${item.path}`}>
+                            <Link className="text-brand underline font-medium" href={`${baseUrl}/{{country}}${item.path}`}>
                                 {item.prefix}
                             </Link>{" "}
                             {item.text}
