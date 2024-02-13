@@ -21,7 +21,7 @@ import * as esbuild from "esbuild";
 import routes from "./connect.js";
 import { CreateTemplateCommandInput, SES, UpdateTemplateCommand } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
-import { TargabayInviteUserEmail } from "./emails/targabay-welome-user";
+import { InviteUserEmail, InviteUserEmailProps, InviteUserEmailSubject, InviteUserEmailTemplateName } from "./emails/targabay-welome-user";
 import { config as dotenvConfig } from "dotenv";
 
 dotenvConfig();
@@ -33,8 +33,6 @@ const ses = new SES({
         secretAccessKey: process.env.AWS_SES_ACCESS_KEY!,
     },
 });
-
-const emailHtml = render(TargabayInviteUserEmail());
 
 if (process.argv[1] === new URL(import.meta.url).pathname) {
     const PORT = parseInt(process.argv[2] ?? 3000);
@@ -84,7 +82,30 @@ export async function build() {
             });
     });
 
-    server.get("/email", async (_, reply) => {
+    server.get("/generate-email-templates", async () => {
+        const emailHtml = render(InviteUserEmail());
+        const emailText = render(InviteUserEmail(), { plainText: true });
+
+        const template: CreateTemplateCommandInput | UpdateTemplateCommand = {
+            Template: {
+                TemplateName: InviteUserEmailTemplateName,
+                HtmlPart: emailHtml,
+                TextPart: emailText,
+                SubjectPart: InviteUserEmailSubject,
+            },
+        };
+
+        try{
+            await ses.getTemplate({ TemplateName: template.Template?.TemplateName });
+            await ses.updateTemplate(template);
+        }catch{
+            await ses.createTemplate(template);
+        }
+
+        return { success: true };
+    });
+
+    server.get("/email", async () => {
         // await ses.sendEmail({
         //     Source: "notifications@targabay.com",
         //     Destination: { ToAddresses: ["a.kajendran@gmail.com"] },
@@ -94,22 +115,11 @@ export async function build() {
         //     },
         // });
 
-        const template: CreateTemplateCommandInput | UpdateTemplateCommand = {
-            Template: { TemplateName: "temp-1", HtmlPart: emailHtml, SubjectPart: "subject-1" },
-        };
-
-        // const existingTemplate = await ses.getTemplate({ TemplateName: template.Template?.TemplateName });
-        // if (existingTemplate.Template) {
-        //     await ses.updateTemplate(template);
-        // } else {
-        //     await ses.createTemplate(template);
-        // }
-
         ses.sendTemplatedEmail({
-            Template: template.Template?.TemplateName,
+            Template: InviteUserEmailTemplateName,
             Destination: { ToAddresses: ["a.kajendran@gmail.com"] },
-            Source: "notifications@targabay.com",
-            TemplateData: JSON.stringify({ name: "kaje", country: "in" }),
+            Source: "Targabay <notifications@targabay.com>",
+            TemplateData: JSON.stringify({ name: "kaje", countryCode: "in" } as InviteUserEmailProps),
         });
 
         return { success: true };

@@ -1,12 +1,46 @@
 import { Body, Button, Column, Container, Head, Heading, Hr, Html, Img, Link, Preview, Row, Section, Tailwind, Text } from "@react-email/components";
 import { baseUrl } from "./utils/configs";
 import { EmailWrap } from "./components/EmailWrap";
-import * as React from "react";
 
-interface VercelInviteUserEmailProps {
-    // username?: string;
-    // countryCode: string
+export interface InviteUserEmailProps {
+    name: string;
+    countryCode: string
 }
+
+export const InviteUserEmailSubject = "Welcome to Targabay"
+
+export const InviteUserEmailTemplateName = "targabay-welcome-template"
+
+export const InviteUserEmail = () => {
+    return (
+        <EmailWrap previewText="Start your vehicle journey with Targabay: Explore listings, buy with ease, and sell effortlessly!">
+            <Text>{"Hi {{name}}"},</Text>
+            <Text>
+                Welcome to Targabay! Whether you're looking to buy or sell, Targabay is your one-stop destination for all things vehicles! Dive into
+                our world of verified listings and enjoy a seamless experience tailored just for you.
+            </Text>
+            <ul>
+                {points.map((item) => (
+                    <li>
+                        <Text>
+                            <Link className="text-brand underline font-medium" href={`${baseUrl}/{{countryCode}}${item.path}`}>
+                                {item.prefix}
+                            </Link>{" "}
+                            {item.text}
+                        </Text>
+                    </li>
+                ))}
+            </ul>
+            <Text>Ready to embark on your vehicle journey with Targabay? Start exploring, subscribing, and selling today!</Text>
+            <Text>
+                Best Regards,
+                <br />
+                The Targabay team
+            </Text>
+        </EmailWrap>
+    );
+};
+
 
 const points = [
     {
@@ -25,36 +59,3 @@ const points = [
         path: "/dashboard/new-subscription",
     },
 ];
-
-// Subject: Discover Targabay - Your Hub for Buying and Selling Vehicles!
-export const TargabayInviteUserEmail = () => {
-    return (
-        <EmailWrap previewText="Welcome to Targabay, Your Easy Way to Explore and Sell Vehicles!">
-            <Text>{"Hi {{name}}"},</Text>
-            <Text>
-                Welcome to Targabay! Whether you're looking to buy or sell, Targabay is your one-stop destination for all things vehicles! Dive into
-                our world of verified listings and enjoy a seamless experience tailored just for you.
-            </Text>
-            <ul>
-                {points.map((item) => (
-                    <li>
-                        <Text>
-                            <Link className="text-brand underline font-medium" href={`${baseUrl}/{{country}}${item.path}`}>
-                                {item.prefix}
-                            </Link>{" "}
-                            {item.text}
-                        </Text>
-                    </li>
-                ))}
-            </ul>
-            <Text>Ready to embark on your vehicle journey with Targabay? Start exploring, subscribing, and selling today!</Text>
-            <Text>
-                Best Regards,
-                <br />
-                The Targabay team
-            </Text>
-        </EmailWrap>
-    );
-};
-
-export default TargabayInviteUserEmail;
