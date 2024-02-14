@@ -45,5 +45,10 @@
     "[github-actions-workflow]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "eslint.workingDirectories": ["apps/webapp","apps/e2e-tests","apps/email-mgr"]
+    "eslint.workingDirectories": [
+        "apps/webapp",
+        "apps/e2e-tests",
+        "apps/email-mgr",
+        "libs/infra/pulumi"
+    ]
 }
