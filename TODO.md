@@ -5,3 +5,5 @@ validate e2e-test envs
 add renovate
 remove client stuff within email mgr
 make countries & CTRY lowercase
+move email templates to libs, dont need seperate service
+open graph image showing root level image. also check into opengraph image templates

@@ -12,7 +12,7 @@
     "ci": "npm run generate && npm run build && npm run test",
 
     "email-dev": "email dev -p 3001",
-    "email-export": "email export"
+    "email-export": "email export --dir=emails"
   },
   "dependencies": {
     "@bufbuild/protobuf": "^1.7.2",
@@ -24,9 +24,9 @@
     "fastify": "^4.26.0",
     "tsx": "^4.7.0",
     "esbuild": "0.20.0",
-    "@react-email/components": "0.0.12",
     "browserslist": "^4.22.2",
-    "react-email": "1.10.0",
+    "@react-email/components": "0.0.15-canary.1",
+    "react-email": "2.1.0-canary.1",
     "react": "18.2.0",
     "@aws-sdk/client-ses": "^3.511.0",
     "@react-email/render":"^0.0.12",
