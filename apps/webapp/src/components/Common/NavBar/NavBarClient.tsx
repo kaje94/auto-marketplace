@@ -1,16 +1,12 @@
 "use client";
-import { Claims } from "@auth0/nextjs-auth0/edge";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 import { LinkWithLocale, Logo } from "@/components/Common";
-import { ListingUser } from "@/utils/types";
 import { NavBarAuth } from "./NavBarAuth";
 import { PostAddLink, SearchLink } from "./NavBarButtons";
-
-/** Lazily loaded new user onboard modal */
-const NewUserOnboardModal = dynamic(() => import("@/components/Modals/NewUserOnboardModal").then((mod) => mod.NewUserOnboardModal), { ssr: false });
 
 /** Lazily loaded country select button */
 const NavBarCountryBtn = dynamic(() => import("./NavBarCountryBtn").then((mod) => mod.NavBarCountryBtn), {
@@ -23,27 +19,27 @@ const NavBarCountryBtn = dynamic(() => import("./NavBarCountryBtn").then((mod) =
 });
 
 interface Props {
+    /** Show admin links in navbar panel */
+    idAdmin?: boolean;
+    /** Details of logged in user */
+    kindeUser?: KindeUser;
     /** Indicate whether user details are being loaded */
     loading?: boolean;
     /** Notification count shown in the navbar */
     notificationCount?: number;
     /** The country code that user is making the request from */
     originLocale?: string | null;
-    /** User claims is needed to figure out whether its a new user or not and show the new user onboard modal. */
-    userClaims?: Claims;
-    /** Details of the logged in user */
-    userData?: ListingUser;
 }
 
 /** Nav bar component used throughout the web app */
-export const NavBarClient: FC<Props> = ({ userClaims, loading, notificationCount, userData, originLocale }) => {
+export const NavBarClient: FC<Props> = ({ kindeUser, loading, notificationCount, idAdmin, originLocale }) => {
     const params = useParams();
     const pathName = usePathname();
     const isLandingPage = pathName === `/${params.locale}`;
 
     return (
         <>
-            {userData && userClaims?.new_user && <NewUserOnboardModal userClaims={userClaims} userData={userData} />}
+            {/* {userData && userClaims?.new_user && <NewUserOnboardModal userClaims={userClaims} userData={userData} />} */}
             <div
                 className={clsx({
                     "container mx-auto p-0 sm:p-2 xl:p-7 2xl:p-8 flex items-center justify-center !pb-2": true,
@@ -63,9 +59,9 @@ export const NavBarClient: FC<Props> = ({ userClaims, loading, notificationCount
                     </LinkWithLocale>
                     <div className="flex flex-row items-center gap-0.5 pr-0 sm:gap-2 sm:pr-2 lg:gap-4">
                         <SearchLink />
-                        <PostAddLink isLoggedIn={!!userClaims} />
+                        <PostAddLink isLoggedIn={!!kindeUser} />
                         <NavBarCountryBtn originLocale={originLocale} />
-                        <NavBarAuth loading={loading} notificationCount={notificationCount} userClaims={userClaims} />
+                        <NavBarAuth isAdmin={idAdmin} kindeUser={kindeUser} loading={loading} notificationCount={notificationCount} />
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { Claims } from "@auth0/nextjs-auth0/edge";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import { usePathname } from "next/navigation";
 import { Avatar } from "@/components/Common/Avatar";
 import { AdvertIcon, ClipboardIcon, DatabaseIcon, ListIcon, NotificationIcon, RssIcon, UserIcon } from "@/icons";
@@ -9,7 +9,17 @@ import { NavBarLoginButton, NavBarLogoutButton, NavBarMenuLink } from "./NavBarB
  * Will show a login button if user is not logged in.
  * Will show a context menu with links if user is logged in.
  */
-export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading?: boolean; notificationCount?: number; userClaims?: Claims }) => {
+export const NavBarAuth = ({
+    kindeUser,
+    notificationCount,
+    loading,
+    isAdmin,
+}: {
+    isAdmin?: boolean;
+    kindeUser?: KindeUser;
+    loading?: boolean;
+    notificationCount?: number;
+}) => {
     const pathName = usePathname();
     return (
         <div className="relative flex w-12 items-center justify-center">
@@ -17,11 +27,11 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
                 <span className="loading loading-ring w-8" />
             ) : (
                 <>
-                    {userClaims ? (
-                        <div key={`navbar-menu-${pathName}`} className="dropdown dropdown-end">
+                    {kindeUser ? (
+                        <div key={`navbar-menu-${pathName}`} className="dropdown-end dropdown">
                             <label className="avatar btn btn-circle btn-ghost" tabIndex={0}>
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
-                                    <Avatar name={userClaims?.name} url={userClaims?.picture} width={40} />
+                                    <Avatar name={kindeUser?.given_name!} url={kindeUser?.picture!} width={40} />
                                     {notificationCount ? (
                                         <div className=" badge badge-primary badge-md absolute -right-1 -top-1 z-10 flex aspect-square items-center justify-center border-2 border-accent bg-gradient-to-t from-secondary to-primary p-0.5 text-neutral shadow-2xl">
                                             <NotificationIcon className="animate-pulse" strokeWidth={3} />
@@ -43,7 +53,7 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
                                 />
                                 <NavBarMenuLink icon={<AdvertIcon height={18} />} label="My Adverts" link="/dashboard/my-listings" />
                                 <NavBarMenuLink icon={<RssIcon height={18} />} label="My Subscriptions" link="/dashboard/my-subscriptions" />
-                                {userClaims?.isAdmin && (
+                                {isAdmin && (
                                     <>
                                         <div className="divider mx-3 my-1 h-0.5 rounded bg-gray-800" />
                                         <NavBarMenuLink icon={<ListIcon height={18} />} label="Manage Adverts" link="/dashboard/listings" />

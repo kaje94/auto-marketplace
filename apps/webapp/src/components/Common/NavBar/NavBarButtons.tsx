@@ -1,4 +1,5 @@
 "use client";
+import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { clsx } from "clsx";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
@@ -11,27 +12,21 @@ export const NavBarLoginButton = () => {
     const searchParams = useSearchParams();
 
     return (
-        <a
+        <LoginLink
             className="btn btn-primary btn-ghost px-2 font-semibold capitalize text-secondary hover:text-accent"
-            href={`/api/auth/login?returnTo=${pathname}${searchParams.size > 0 ? `?${searchParams.toString()}` : ""}`}
+            postLoginRedirectURL={`${pathname}${searchParams.size > 0 ? `?${searchParams.toString()}` : ""}`}
         >
             Login
-        </a>
+        </LoginLink>
     );
 };
 
 /** Logout button to be used in the nav bar */
 export const NavBarLogoutButton = () => {
     return (
-        <a
-            className={clsx({
-                "flex flex-1 items-center justify-between font-medium duration-200 hover:text-accent px-4 py-2": true,
-            })}
-            href="/api/auth/logout"
-        >
-            Logout
-            <LogoutIcon className="pl-0.5" height={17} />
-        </a>
+        <LogoutLink className="flex flex-1 items-center justify-between px-4 py-2 font-medium duration-200 hover:text-accent">
+            Log out <LogoutIcon className="pl-0.5" height={17} />
+        </LogoutLink>
     );
 };
 

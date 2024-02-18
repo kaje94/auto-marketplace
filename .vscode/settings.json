@@ -37,6 +37,7 @@
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "cSpell.words": [
+        "kinde",
         "Targabay",
         "zoomable"
     ],
