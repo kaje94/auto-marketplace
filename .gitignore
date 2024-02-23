@@ -50,3 +50,5 @@ generated
 gen
 
 .react-email/
+
+.nx/cache
