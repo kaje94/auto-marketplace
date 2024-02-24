@@ -1,4 +1,4 @@
-import { getSession } from "@auth0/nextjs-auth0/edge";
+import { getSession } from "@auth0/nextjs-auth0";
 import { Metadata, ResolvingMetadata } from "next";
 import { BreadCrumbs, ErrorComponent } from "@/components/Common";
 import { ListingDetails, RelatedListingsCarousel } from "@/components/Listings/ListingDetails";

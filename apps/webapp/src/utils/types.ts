@@ -30,7 +30,7 @@ import {
     VehicleSchema,
 } from "./schemas";
 
-declare module "@auth0/nextjs-auth0/edge" {
+declare module "@auth0/nextjs-auth0" {
     interface Claims {
         email: string;
         email_verified: boolean;

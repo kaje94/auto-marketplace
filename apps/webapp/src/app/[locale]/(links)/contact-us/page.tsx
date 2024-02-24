@@ -1,4 +1,4 @@
-import { getSession } from "@auth0/nextjs-auth0/edge";
+import { getSession } from "@auth0/nextjs-auth0";
 import { clsx } from "clsx";
 import { Metadata, ResolvingMetadata } from "next";
 import { ReactNode } from "react";

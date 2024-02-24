@@ -1,4 +1,4 @@
-import { getSession } from "@auth0/nextjs-auth0/edge";
+import { getSession } from "@auth0/nextjs-auth0";
 import { Metadata } from "next";
 import { BreadCrumbs } from "@/components/Common";
 import { ListingDetailBanner, ListingDetails } from "@/components/Listings/ListingDetails";

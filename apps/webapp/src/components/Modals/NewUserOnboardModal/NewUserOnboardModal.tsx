@@ -1,5 +1,5 @@
 "use client";
-import { Claims } from "@auth0/nextjs-auth0/edge";
+import { Claims } from "@auth0/nextjs-auth0";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { useParams, usePathname } from "next/navigation";

@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { getAccessToken } from "@auth0/nextjs-auth0/edge";
+import { getAccessToken } from "@auth0/nextjs-auth0";
 import { headers as nextHeaders } from "next/headers";
 import { redirect } from "next/navigation";
 import qs from "query-string";

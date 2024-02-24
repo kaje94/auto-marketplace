@@ -1,4 +1,4 @@
-import { getSession } from "@auth0/nextjs-auth0/edge";
+import { getSession } from "@auth0/nextjs-auth0";
 import { EditProfileForm } from "@/components/Forms/Profile/EditProfileForm";
 import { api } from "@/utils/api";
 

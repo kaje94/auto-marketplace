@@ -1,4 +1,4 @@
-import { getSession } from "@auth0/nextjs-auth0/edge";
+import { getSession } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 import { DashboardListHeader } from "@/components/Dashboard/DashboardListHeader";

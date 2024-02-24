@@ -1,6 +1,6 @@
 "use client";
 
-import { Claims } from "@auth0/nextjs-auth0/edge";
+import { Claims } from "@auth0/nextjs-auth0";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";

@@ -13,7 +13,7 @@ import { standardFont } from "./fonts";
 
 import "./globals.css";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 const title = "Targabay - Your Ultimate Vehicle Marketplace";
 const description =

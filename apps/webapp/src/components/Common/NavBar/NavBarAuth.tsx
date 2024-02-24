@@ -1,4 +1,4 @@
-import { Claims } from "@auth0/nextjs-auth0/edge";
+import { Claims } from "@auth0/nextjs-auth0";
 import { usePathname } from "next/navigation";
 import { Avatar } from "@/components/Common/Avatar";
 import { AdvertIcon, ClipboardIcon, DatabaseIcon, ListIcon, NotificationIcon, RssIcon, UserIcon } from "@/icons";

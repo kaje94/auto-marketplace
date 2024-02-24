@@ -1,4 +1,4 @@
-import { Claims, getSession } from "@auth0/nextjs-auth0/edge";
+import { Claims, getSession } from "@auth0/nextjs-auth0";
 import { Suspense } from "react";
 import { api } from "@/utils/api";
 import { NavBarItem } from "./DashboardSideBarItem";

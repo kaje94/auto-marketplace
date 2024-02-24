@@ -1,4 +1,4 @@
-import { getSession } from "@auth0/nextjs-auth0/edge";
+import { getSession } from "@auth0/nextjs-auth0";
 import { CreateListingForm } from "@/components/Forms/Listings/CreateListingForm";
 import { api } from "@/utils/api";
 
