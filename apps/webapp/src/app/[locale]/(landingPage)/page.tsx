@@ -3,6 +3,7 @@ import { ListingsCarousel } from "@/components/Listings/ListingsCarousel";
 import { api } from "@/utils/api";
 import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
+import { sayApi } from "@/utils/grpcApi";
 import { ListingItem, LocalePathParam } from "@/utils/types";
 
 export async function generateMetadata({ params }: LocalePathParam, parent: ResolvingMetadata): Promise<Metadata> {
@@ -28,6 +29,9 @@ export async function generateMetadata({ params }: LocalePathParam, parent: Reso
 
 export default async function Page({ params }: LocalePathParam) {
     const featuredListings: ListingItem[] = params.locale === BOT_LOCALE ? [] : await api.getFeaturedListings(params.locale);
+
+    //TODO: remove
+    await sayApi();
 
     return (
         <ListingsCarousel
