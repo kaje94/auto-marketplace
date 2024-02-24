@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package Targabay.Protos.Service;
+
+option go_package = "targabay/protos/service";
+
+import "types/service.proto";
+
+service Service {
+    rpc Print(PrintRequest) returns (PrintResponse);
+}

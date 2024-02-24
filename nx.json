@@ -36,6 +36,8 @@
     "@nx-go/nx-go"
   ],
   "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": ["default"],
     "sharedGlobals": ["{workspaceRoot}/go.work"]
   }
 }
