@@ -1,13 +1,13 @@
 "use server";
 
 import { createPromiseClient } from "@connectrpc/connect";
-import { createConnectTransport } from "@connectrpc/connect-node";
+import { createGrpcTransport } from "@connectrpc/connect-node";
 
 import { Service as GrpcService } from "targabay-protos/gen/ts/dist/service.v1_connect";
 
 const client = createPromiseClient(
     GrpcService,
-    createConnectTransport({
+    createGrpcTransport({
         baseUrl: "http://localhost:50051",
         httpVersion: "2",
     }),
