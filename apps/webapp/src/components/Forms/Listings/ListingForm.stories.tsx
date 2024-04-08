@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockUserLocation, mockVehicleBrands, mockVehicleFeatures } from "@/utils/mockData";
+import { mockUserLocation } from "@/utils/mockData";
 import { CreateListingSchema } from "@/utils/schemas";
 import { CreateListingReq } from "@/utils/types";
 import { ListingForm } from "./ListingForm";
@@ -18,12 +18,11 @@ const meta = {
                 defaultValues: {
                     vehicle: { vehicleImages: [], featureIds: [], millage: { unit: "km" }, trim: "" },
                     location: mockUserLocation,
-                    price: { currencyCode: "LKR", currencySymbol: "Rs." },
                 },
                 mode: "all",
             });
 
-            return <Story args={{ ...ctx.args, form: form, featureOptions: mockVehicleFeatures, vehicleBrands: mockVehicleBrands }} />;
+            return <Story args={{ ...ctx.args, form: form }} />;
         },
     ],
 } satisfies Meta<typeof ListingForm>;

@@ -1,10 +1,10 @@
 import { Metadata, ResolvingMetadata } from "next/types";
+import { GetListingsResponse } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { getFeaturedListingsAction } from "@/actions/publicListingActions";
 import { ListingsCarousel } from "@/components/Listings/ListingsCarousel";
-import { api } from "@/utils/api";
 import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
-import { sayApi } from "@/utils/grpcApi";
-import { ListingItem, LocalePathParam } from "@/utils/types";
+import { LocalePathParam } from "@/utils/types";
 
 export async function generateMetadata({ params }: LocalePathParam, parent: ResolvingMetadata): Promise<Metadata> {
     const previousKeywords = (await parent).keywords || [];
@@ -28,15 +28,12 @@ export async function generateMetadata({ params }: LocalePathParam, parent: Reso
 }
 
 export default async function Page({ params }: LocalePathParam) {
-    const featuredListings: ListingItem[] = params.locale === BOT_LOCALE ? [] : await api.getFeaturedListings(params.locale);
-
-    //TODO: remove
-    await sayApi();
+    const featuredListingsRes: Partial<GetListingsResponse> = params.locale === BOT_LOCALE ? {} : await getFeaturedListingsAction(params.locale);
 
     return (
         <ListingsCarousel
             bgFromColor="from-hero"
-            items={featuredListings}
+            items={featuredListingsRes.items}
             viewMore={{
                 link: "/search",
                 title: "View All",

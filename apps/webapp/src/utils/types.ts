@@ -1,31 +1,28 @@
+import { PartialMessage } from "@bufbuild/protobuf";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { z } from "zod";
 import { ListingStatusTypes, NotificationTypes, SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "./enum";
 import {
+    AdminListingsFilterSchema,
+    AdminSubscriptionsFilterSchema,
     ContactUsSchema,
     CreateListingSchema,
     CreateSubscriptionSchema,
-    DashboardListingFilterSchema,
-    DashboardMySubscriptionFilterSchema,
-    DashboardNotificationsFilterSchema,
-    DashboardSubscriptionFilterSchema,
     DeleteS3Images,
     EditListingSchema,
     EditSubscriptionSchema,
-    GenerateS3SignedUrl,
     ListingIdField,
     ListingSubscriptionIdField,
     LocationSchema,
     MilageSchema,
-    MyListingsFilterSchema,
-    PostedListingsFilterSchema,
     PriceSchema,
-    ReportListingSchema,
-    ReviewListingSchema,
+    PublicListingsFilterSchema,
     ToggleSubscriptionSchema,
-    UnListListingSchema,
     UpdateProfileSchema,
+    UserListingsFilterSchema,
+    UserNotificationsFilterSchema,
+    UserSubscriptionsFilterSchema,
     vehicleCreateSchema,
-    VehicleFeatureSchema,
     VehicleImageSchema,
     VehicleSchema,
 } from "./schemas";
@@ -83,52 +80,6 @@ export type ListingUser = {
 
 export type Vehicle = z.infer<typeof VehicleSchema>;
 
-type ListingFeaturedConfig = {
-    featuredExpiryData: Date;
-    isFeatured: boolean;
-};
-
-export type ListingItem = {
-    createdOn: string;
-    description: string;
-    expiryDate: string;
-    featured?: ListingFeaturedConfig;
-    id: ListingIdType;
-    location: Location;
-    price: Price;
-    reviewComment?: string;
-    status: ListingStatusTypes;
-    title: string;
-    user?: ListingUser;
-    userId?: string;
-    vehicle: Vehicle;
-    views?: number;
-};
-
-export type ListingSubscriptionItem = {
-    active: boolean;
-    brand?: string;
-    condition?: VehicleConditionTypes;
-    createdOn: string;
-    displayName: string;
-    id: ListingSubscriptionIdType;
-    maxMillage?: Milage;
-    maxPrice?: Price;
-    maxYearOfManufacture?: string;
-    maxYearOfRegistration?: string;
-    minMillage?: Milage;
-    minPrice?: Price;
-    minYearOfManufacture?: string;
-    minYearOfRegistration?: string;
-    model?: string;
-    notificationFrequency: SubscriptionFrequencies;
-    subscriptionExpiryDate: string;
-    trim?: string;
-    type?: VehicleTypes;
-    user?: ListingUser;
-    userId: string;
-};
-
 export type NotificationItem = {
     body: string;
     createdOn: string;
@@ -140,19 +91,6 @@ export type NotificationItem = {
     userId: string;
 };
 
-export type VehicleBrand = {
-    id: string;
-    name: string;
-};
-
-export type PaginatedResponse = {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    pageNumber: number;
-    totalCount: number;
-    totalPages: number;
-};
-
 export type GetPresignedS3UrlsResponse = {
     bucket: string;
     expiryTime: string;
@@ -161,11 +99,6 @@ export type GetPresignedS3UrlsResponse = {
     url: string;
 }[];
 
-export type PaginatedRequest = {
-    PageNumber?: number;
-    PageSize?: number;
-};
-
 export type Country = {
     countryCode: string;
     currency: string;
@@ -173,17 +106,6 @@ export type Country = {
     name: string;
     phoneCode: string;
     region: string;
-};
-
-export type State = {
-    id: string;
-    name: string;
-    stateCode: string;
-};
-
-export type City = {
-    id: string;
-    name: string;
 };
 
 export interface CountryMap {
@@ -204,8 +126,6 @@ export type SubscriptionIdPathParam = { params: { id: ListingSubscriptionIdType 
 
 export type VehicleImageType = z.infer<typeof VehicleImageSchema>;
 
-export type VehicleFeature = z.infer<typeof VehicleFeatureSchema>;
-
 export type VehicleCreate = z.infer<typeof vehicleCreateSchema>;
 
 export type CreateListingReq = z.infer<typeof CreateListingSchema>;
@@ -216,29 +136,17 @@ export type EditSubscriptionReq = z.infer<typeof EditSubscriptionSchema>;
 
 export type EditListingReq = z.infer<typeof EditListingSchema>;
 
-export type ListingItems = { items: ListingItem[] };
+export type AdminListingsFilterReq = z.infer<typeof AdminListingsFilterSchema>;
 
-export type ListingSubscriptionItems = { items: ListingSubscriptionItem[] };
+export type UserSubscriptionsFilterReq = z.infer<typeof UserSubscriptionsFilterSchema>;
 
-export type NotificationItems = { items: NotificationItem[] };
+export type AdminSubscriptionsFilterReq = z.infer<typeof AdminSubscriptionsFilterSchema>;
 
-export type ReviewListingReq = z.infer<typeof ReviewListingSchema>;
+export type UserListingsFilterReq = z.infer<typeof UserListingsFilterSchema>;
 
-export type UnListListingReq = z.infer<typeof UnListListingSchema>;
+export type UserNotificationsFilterReq = z.infer<typeof UserNotificationsFilterSchema>;
 
-export type ReportListingReq = z.infer<typeof ReportListingSchema>;
-
-export type DashboardListFilterReq = z.infer<typeof DashboardListingFilterSchema>;
-
-export type DashboardSubscriptionFilterReq = z.infer<typeof DashboardSubscriptionFilterSchema>;
-
-export type DashboardMySubscriptionFilterReq = z.infer<typeof DashboardMySubscriptionFilterSchema>;
-
-export type MyListingsFilterReq = z.infer<typeof MyListingsFilterSchema>;
-
-export type DashboardNotificationsFilterReq = z.infer<typeof DashboardNotificationsFilterSchema>;
-
-export type PostedListingsFilterReq = z.infer<typeof PostedListingsFilterSchema>;
+export type PublicListingsFilterReq = z.infer<typeof PublicListingsFilterSchema>;
 
 export type ListingIdType = z.infer<typeof ListingIdField>;
 
@@ -249,7 +157,5 @@ export type ToggleSubscriptionReq = z.infer<typeof ToggleSubscriptionSchema>;
 export type UpdateProfileReq = z.infer<typeof UpdateProfileSchema>;
 
 export type ContactUsSchemaReq = z.infer<typeof ContactUsSchema>;
-
-export type GenerateS3SignedUrlReq = z.infer<typeof GenerateS3SignedUrl>;
 
 export type DeleteS3ImagesReq = z.infer<typeof DeleteS3Images>;

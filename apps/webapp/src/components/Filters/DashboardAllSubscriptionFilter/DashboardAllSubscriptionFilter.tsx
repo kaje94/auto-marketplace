@@ -1,17 +1,17 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { SubscriptFrequenciesList } from "@/utils/constants";
-import { DashboardSubscriptionFilterReq } from "@/utils/types";
+import { AdminSubscriptionsFilterReq } from "@/utils/types";
 import { FilterInput as InputController } from "../FilterFormElements/DashboardFilterInput";
 import { FilterSelect as SelectController } from "../FilterFormElements/DashboardFilterSelect";
 import { FilterWrap } from "../FilterFormElements/FilterWrap";
 
 interface Props {
     dropdownOpen?: boolean;
-    form?: UseFormReturn<DashboardSubscriptionFilterReq>;
+    form?: UseFormReturn<AdminSubscriptionsFilterReq>;
     hasSearchParams?: boolean;
     isLoading?: boolean;
-    onApplyFilterClick: (val: DashboardSubscriptionFilterReq) => void;
+    onApplyFilterClick: (val: AdminSubscriptionsFilterReq) => void;
     onResetClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     setDropdownOpen: (val: boolean) => void;
 }
@@ -25,7 +25,7 @@ export const DashboardAllSubscriptionFilter: FC<Props> = ({
     setDropdownOpen,
     onApplyFilterClick,
 }) => {
-    const { handleSubmit, control } = form as UseFormReturn<DashboardSubscriptionFilterReq>;
+    const { handleSubmit, control } = form as UseFormReturn<AdminSubscriptionsFilterReq>;
 
     return (
         <FilterWrap
@@ -38,7 +38,7 @@ export const DashboardAllSubscriptionFilter: FC<Props> = ({
         >
             <SelectController
                 control={control}
-                fieldName="Active"
+                fieldName="activeStatus"
                 label="Active/Inactive"
                 options={[
                     { label: "Active", value: "true" },
@@ -48,12 +48,12 @@ export const DashboardAllSubscriptionFilter: FC<Props> = ({
             />
             <SelectController
                 control={control}
-                fieldName="NotificationFrequency"
+                fieldName="notificationFrequency"
                 label="Notification Frequency"
                 options={SubscriptFrequenciesList}
                 placeholder="All frequency types"
             />
-            <InputController control={control} fieldName="UserId" label="User ID" placeholder="ID of the user" />
+            <InputController control={control} fieldName="userEmail" label="User Email" placeholder="Email of the user" />
         </FilterWrap>
     );
 };

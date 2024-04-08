@@ -5,20 +5,19 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { createListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
+import { createSubscriptionAction } from "@/actions/userSubscriptionActions";
 import { COUNTRIES } from "@/utils/countries";
 import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
-import { CreateSubscriptionReq, VehicleBrand } from "@/utils/types";
+import { CreateSubscriptionReq } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {
-    brands: VehicleBrand[];
-    userId?: string;
+    userEmail?: string;
 }
 
 export const CreateSubscriptionForm = (props: Props) => {
-    const { userId, brands } = props;
+    const { userEmail } = props;
     const router = useRouter();
     const params = useParams();
     const countryItem = COUNTRIES[(params.locale as string) || ""];
@@ -54,32 +53,27 @@ export const CreateSubscriptionForm = (props: Props) => {
 
     const { mutate: createSubscriptionMutation, isLoading: isMutating } = useMutation(
         async (formValues: CreateSubscriptionReq) => {
-            const requestBody: CreateSubscriptionReq = {
-                ...formValues,
-                subscriptionExpiryDate: new Date(formValues.subscriptionExpiryDate).toISOString(),
-                minYearOfManufacture: formValues.minYearOfManufacture ? convertYearToDateString(formValues.minYearOfManufacture) : undefined,
-                maxYearOfManufacture: formValues.maxYearOfManufacture ? convertYearToDateString(formValues.maxYearOfManufacture) : undefined,
-                minYearOfRegistration: formValues.minYearOfRegistration ? convertYearToDateString(formValues.minYearOfRegistration) : undefined,
-                maxYearOfRegistration: formValues.maxYearOfRegistration ? convertYearToDateString(formValues.maxYearOfRegistration) : undefined,
-                maxPrice:
-                    Number(formValues.maxPrice?.amount) > 0 ? { ...formValues.maxPrice, amount: Number(formValues.maxPrice?.amount) } : undefined,
-                minPrice:
-                    Number(formValues.minPrice?.amount) > 0 ? { ...formValues.minPrice, amount: Number(formValues.minPrice?.amount) } : undefined,
-                brand: formValues?.brand || undefined,
-                model: formValues?.model || undefined,
-                trim: formValues?.trim || undefined,
-                condition: formValues?.condition || undefined,
-                maxMillage:
-                    Number(formValues?.maxMillage?.distance) > 0
-                        ? { unit: formValues.maxMillage?.unit!, distance: Number(formValues?.maxMillage?.distance) }
-                        : undefined,
-                minMillage:
-                    Number(formValues?.minMillage?.distance) > 0
-                        ? { unit: formValues.minMillage?.unit!, distance: Number(formValues?.minMillage?.distance) }
-                        : undefined,
-            };
-
-            return createListingSubscriptionAction(requestBody, userId!);
+            return createSubscriptionAction(
+                {
+                    displayName: formValues.displayName,
+                    notificationFrequency: formValues.notificationFrequency,
+                    type: formValues.type,
+                    subscriptionExpiryDate: new Date(formValues.subscriptionExpiryDate).toISOString(),
+                    minYearOfManufacture: formValues.minYearOfManufacture ? parseInt(formValues.minYearOfManufacture) : 0,
+                    maxYearOfManufacture: formValues.maxYearOfManufacture ? parseInt(formValues.maxYearOfManufacture) : 0,
+                    minYearOfRegistration: formValues.minYearOfRegistration ? parseInt(formValues.minYearOfRegistration) : 0,
+                    maxYearOfRegistration: formValues.maxYearOfRegistration ? parseInt(formValues.maxYearOfRegistration) : 0,
+                    maxPrice: Number(formValues.maxPrice?.amount),
+                    minPrice: Number(formValues.minPrice?.amount),
+                    brand: formValues?.brand!,
+                    model: formValues?.model || undefined,
+                    trim: formValues?.trim || undefined,
+                    condition: formValues?.condition || undefined,
+                    maxMillage: Number(formValues?.maxMillage?.distance),
+                    minMillage: Number(formValues?.minMillage?.distance),
+                },
+                userEmail!,
+            );
         },
         {
             onSuccess: () => {
@@ -110,7 +104,6 @@ export const CreateSubscriptionForm = (props: Props) => {
             form={form}
             isMutating={isMutating}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
-            vehicleBrands={brands}
             onMutate={createSubscriptionMutation}
         />
     );

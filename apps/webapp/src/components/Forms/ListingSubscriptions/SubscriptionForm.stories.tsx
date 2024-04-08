@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockVehicleBrands } from "@/utils/mockData";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
 import { CreateSubscriptionReq } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
@@ -24,7 +23,7 @@ const meta = {
                 mode: "all",
             });
 
-            return <Story args={{ ...ctx.args, form: form, vehicleBrands: mockVehicleBrands }} />;
+            return <Story args={{ ...ctx.args, form: form }} />;
         },
     ],
 } satisfies Meta<typeof SubscriptionForm>;

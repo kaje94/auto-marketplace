@@ -1,46 +1,41 @@
 "use client";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { createListingAction } from "@/actions/listingActions";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { createListingAction } from "@/actions/userListingActions";
 import { ListingForm } from "@/components/Forms/Listings/ListingForm";
 import { COUNTRIES } from "@/utils/countries";
-import { convertYearToDateString, getDistanceUnit, getListingTitleFromVehicle } from "@/utils/helpers";
+import { getDistanceUnit, getListingTitleFromVehicle } from "@/utils/helpers";
 import { transformImagesToPost } from "@/utils/imageUtils";
 import { CreateListingSchema } from "@/utils/schemas";
-import { CreateListingReq, ListingUser, VehicleBrand, VehicleFeature } from "@/utils/types";
+import { CreateListingReq } from "@/utils/types";
 
 interface Props {
-    brands: VehicleBrand[];
-    features: VehicleFeature[];
-    profile?: ListingUser;
-    userId?: string;
+    profile?: PartialMessage<UserProfile>;
 }
 
 export const CreateListingForm = (props: Props) => {
-    const { features, userId, profile, brands } = props;
+    const { profile } = props;
     const router = useRouter();
     const params = useParams();
     const toastId = useRef<string>();
-    const countryItem = COUNTRIES[profile?.address?.country || ""];
-    const distanceUnit = getDistanceUnit(profile?.address?.country);
-    const countryCurrencyCode = countryItem?.[1];
-    const countryCurrencySymbol = countryItem?.[2];
+    const distanceUnit = getDistanceUnit(profile?.data?.countryCode);
 
     const form = useForm<CreateListingReq>({
         resolver: zodResolver(CreateListingSchema),
         defaultValues: {
             vehicle: { vehicleImages: [], featureIds: [], millage: { unit: distanceUnit }, trim: "" },
             location: {
-                city: profile?.address?.city || "",
-                state: profile?.address?.state || "",
-                postalCode: profile?.address?.postalCode || "",
-                country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : COUNTRIES[params.locale as string]?.[0],
+                city: profile?.data?.city || "",
+                state: profile?.data?.state || "",
+                postalCode: profile?.data?.postalCode || "",
+                country: profile?.data?.countryCode ? COUNTRIES[profile?.data?.countryCode]?.[0] : COUNTRIES[params.locale as string]?.[0],
             },
-            price: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
         },
         mode: "all",
     });
@@ -49,24 +44,46 @@ export const CreateListingForm = (props: Props) => {
         async (formValues: CreateListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
 
-            const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === formValues?.location?.country);
+            // TODO: remove comments
+            // const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === formValues?.location?.country);
 
-            const requestBody: CreateListingReq = {
-                ...formValues,
-                location: {
-                    ...formValues.location,
-                    country: countryCode!,
-                },
-                vehicle: {
-                    ...formValues.vehicle,
+            // const requestBody: CreateListingReq = {
+            //     ...formValues,
+            //     location: {
+            //         ...formValues.location,
+            //         country: countryCode!,
+            //     },
+            //     vehicle: {
+            //         ...formValues.vehicle,
+            //         vehicleImages: vehicleImages,
+            //         yearOfManufacture: convertYearToDateString(formValues.vehicle.yearOfManufacture),
+            //         yearOfRegistration: formValues.vehicle.yearOfRegistration
+            //             ? convertYearToDateString(formValues.vehicle.yearOfRegistration)
+            //             : undefined,
+            //     },
+            // };
+
+            return createListingAction(
+                {
+                    type: formValues.vehicle.type,
+                    brand: formValues.vehicle.brand,
+                    trim: formValues.vehicle.trim,
+                    model: formValues.vehicle.model,
+                    yearOfManufacture: parseInt(formValues.vehicle.yearOfManufacture),
+                    yearOfRegistration: formValues.vehicle.yearOfRegistration ? parseInt(formValues.vehicle.yearOfRegistration) : 0,
+                    mileage: typeof formValues.vehicle.millage.distance == "string" ? parseInt(formValues.vehicle.millage.distance) : 0,
+                    engineCapacity: typeof formValues.vehicle.engineCapacity == "string" ? parseInt(formValues.vehicle.engineCapacity) : 0,
+                    description: formValues.description,
+                    condition: formValues.vehicle.condition,
+                    transmissionType: formValues.vehicle.transmission,
+                    fuelType: formValues.vehicle.fuelType,
+                    features: formValues.vehicle.featureIds, // todo: should be feature names
                     vehicleImages: vehicleImages,
-                    yearOfManufacture: convertYearToDateString(formValues.vehicle.yearOfManufacture),
-                    yearOfRegistration: formValues.vehicle.yearOfRegistration
-                        ? convertYearToDateString(formValues.vehicle.yearOfRegistration)
-                        : undefined,
+                    price: typeof formValues.price.amount === "string" ? parseInt(formValues.price.amount) : formValues.price.amount,
+                    priceNegotiable: formValues.price.isPriceNegotiable,
                 },
-            };
-            return createListingAction(requestBody, userId!);
+                profile?.email!,
+            );
         },
         {
             onSuccess: (id) => {
@@ -100,27 +117,24 @@ export const CreateListingForm = (props: Props) => {
             form.reset(
                 {
                     location: {
-                        city: profile?.address?.city || "",
-                        state: profile?.address?.state || "",
-                        postalCode: profile?.address?.postalCode || "",
-                        country: profile?.address?.country ? COUNTRIES[profile?.address?.country]?.[0] : "",
+                        city: profile?.data?.city || "",
+                        state: profile?.data?.state || "",
+                        postalCode: profile?.data?.postalCode || "",
+                        country: profile?.data?.countryCode ? COUNTRIES[profile?.data?.countryCode]?.[0] : "",
                     },
-                    price: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
                     vehicle: { millage: { unit: distanceUnit } },
                 },
                 { keepValues: true },
             );
         }
-    }, [profile, form, countryCurrencyCode, countryCurrencySymbol, distanceUnit]);
+    }, [profile, form, distanceUnit]);
 
     return (
         <ListingForm
-            featureOptions={features}
             form={form}
             isMutating={isMutating}
             profile={profile}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
-            vehicleBrands={brands}
             onMutate={createListingsMutation}
         />
     );

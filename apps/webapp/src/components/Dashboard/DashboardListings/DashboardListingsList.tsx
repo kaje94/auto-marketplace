@@ -5,21 +5,26 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { Dispatch, FC, SetStateAction } from "react";
+import { ListingItem, PaginatedResponse } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { Empty, Pagination } from "@/components/Common";
 import { useDashboardAllListingsContext } from "@/providers/DashboardAllListingsContextProvider";
 import { useDashboardMyListingsContext } from "@/providers/DashboardMyListingsContextProvider";
-import { ListingItems, PaginatedResponse } from "@/utils/types";
+// import { ListingItems, PaginatedResponse } from "@/utils/types";
 import { DashboardListingItem } from "./DashboardListingItem";
 
 interface Props {
     /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** Current page number */
+    currentPageNumber?: number;
     /** Boolean field to change the text to be shown within the empty component */
     hasSearchParams?: boolean;
-    /** Paginated list of listings to be shown */
-    listings?: PaginatedResponse & ListingItems;
+    /** List of listing advert items */
+    listings?: ListingItem[];
     /** To show placeholder listings during initial render without any data */
     pageLoading?: boolean;
+    /** Pagination response form the server */
+    paginatedResponse?: PaginatedResponse;
     /** User details to figure enable/disable author and admin functionalities */
     userClaims?: Claims;
 }
@@ -27,12 +32,23 @@ interface Props {
 /** List of listing items to be shown in the dashboard */
 export const DashboardListingsList: FC<
     Props & { isLoading: boolean; searchParamsObj: Record<string, string>; setNewSearchQuery: Dispatch<SetStateAction<string>> }
-> = ({ userClaims, listings, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
+> = ({
+    userClaims,
+    listings,
+    pageLoading,
+    isLoading,
+    searchParamsObj,
+    setNewSearchQuery,
+    basePath,
+    hasSearchParams,
+    paginatedResponse,
+    currentPageNumber,
+}) => {
     const [parent] = useAutoAnimate();
 
     return (
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
-            {!pageLoading && listings?.totalCount === 0 && (
+            {!pageLoading && (!paginatedResponse?.totalCount || paginatedResponse?.totalCount === 0) && (
                 <Empty
                     button={
                         hasSearchParams
@@ -48,19 +64,17 @@ export const DashboardListingsList: FC<
                 />
             )}
 
-            {listings?.items?.map((item) => (
-                <DashboardListingItem key={item.id} basePath={basePath} isAdmin={userClaims?.isAdmin} listingItem={item} />
-            ))}
+            {listings?.map((item) => <DashboardListingItem key={item.id} basePath={basePath} isAdmin={userClaims?.isAdmin} listingItem={item} />)}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardListingItem key={`loading-listing-item-${i}`} loading />)}
 
             <Pagination
                 basePath={basePath}
                 loading={pageLoading || isLoading}
-                pageNumber={listings?.pageNumber}
+                pageNumber={currentPageNumber}
                 searchParams={searchParamsObj as StringifiableRecord}
                 setNewSearchQuery={setNewSearchQuery}
-                totalPages={listings?.totalPages}
+                totalPages={paginatedResponse?.totalPages}
             />
         </div>
     );

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { getListingTitleFromListing } from "@/utils/helpers";
 import { mockListingItem, mockUserClaims } from "@/utils/mockData";
 import { ReportListingModal } from "./ReportListingModal";
 
@@ -15,5 +16,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: { listingTitle: mockListingItem.title, listingId: "", userEmail: mockUserClaims.email, visible: true },
+    args: { listingTitle: getListingTitleFromListing(mockListingItem?.data!), listingId: "", userEmail: mockUserClaims.email, visible: true },
 };

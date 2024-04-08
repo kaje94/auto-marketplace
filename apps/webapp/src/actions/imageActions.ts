@@ -1,21 +1,20 @@
 "use server";
-import { api } from "@/utils/api";
-import { GenerateS3SignedUrlReq } from "@/utils/types";
+import { PartialMessage } from "@bufbuild/protobuf";
+import { createPromiseClient } from "@connectrpc/connect";
+import { createGrpcTransport } from "@connectrpc/connect-node";
+import { ImageService } from "targabay-protos/gen/ts/dist/image.v1_connect";
+import { GenerateSignedUrlRequest_Item } from "targabay-protos/gen/ts/dist/types/image_pb";
+import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
+
+const client = createPromiseClient(ImageService, createGrpcTransport(grpcOptions));
 
 /** Get pre-signed urls needed to upload listing images */
-export const getPresignedS3UrlsAction = async (fileList: { fileSize: number; filetype: string }[]) => {
-    const req: GenerateS3SignedUrlReq = {
-        imageMetaDatas: fileList.map((item) => ({
-            fileSize: item.fileSize,
-            fileType: item.filetype,
-        })),
-    };
-    const response = await api.generateS3SignedUrls(req);
-
+export const getPresignedS3UrlsAction = async (fileList: PartialMessage<GenerateSignedUrlRequest_Item>[]) => {
+    const response = await client.generateSignedUrl({ items: fileList }, { headers: await getGrpcHeaders() });
     return response;
 };
 
 /** Delete listing images during the listing update flow */
 export const deleteObjectFromS3Action = async (imageKeys: string[]) => {
-    await api.deleteS3Image({ keys: imageKeys });
+    await client.deleteS3Images({ keys: imageKeys }, { headers: await getGrpcHeaders() });
 };

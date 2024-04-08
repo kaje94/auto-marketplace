@@ -37,7 +37,11 @@
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "cSpell.words": [
+        "Aggr",
+        "aggs",
+        "oneof",
         "Targabay",
+        "Xata",
         "zoomable"
     ],
     "prettier.tabWidth": 4,
@@ -57,5 +61,14 @@
         "options": [
             "--proto_path=${workspaceRoot}/libs/protos/definitions"
         ]
+    },
+    "[go]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "[proto3]": {
+        "editor.defaultFormatter": "zxh404.vscode-proto3"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

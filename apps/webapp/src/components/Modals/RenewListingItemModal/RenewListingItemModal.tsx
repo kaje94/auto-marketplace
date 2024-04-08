@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
-import { renewListingAction } from "@/actions/listingActions";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { renewListingAction } from "@/actions/userListingActions";
 import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
-import { formatHumanFriendlyDate } from "@/utils/helpers";
-import { ListingItem } from "@/utils/types";
+import { formatHumanFriendlyDate, getListingTitleFromListing } from "@/utils/helpers";
 
 interface Props extends ModalProps {
     /** The listing item to be renewed.  */
@@ -14,10 +14,12 @@ interface Props extends ModalProps {
 /** Modal to be used to let users to renew listings */
 export const RenewListingItemModal = (props: Props) => {
     const { listingItem = {}, visible, onVisibleChange = () => {} } = props;
-    const { id: listingId, title: listingTitle, userId, expiryDate } = listingItem as ListingItem;
+    const { id: listingId, expiryDate, data, user } = listingItem as ListingItem;
+    const listingTitle = getListingTitleFromListing(data!);
+
     const toastId = useRef<string>();
 
-    const { mutate, isLoading } = useMutation((id: string) => renewListingAction(id, userId!), {
+    const { mutate, isLoading } = useMutation((id: string) => renewListingAction(id, user?.email!), {
         onMutate: () => {
             onVisibleChange(false);
             toastId.current = toast.loading(`Renewing advert ${listingTitle}...`);

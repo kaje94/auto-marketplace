@@ -1,19 +1,21 @@
 "use client";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { editProfileAction } from "@/actions/profileActions";
 import { COUNTRIES } from "@/utils/countries";
 import { UpdateProfileSchema } from "@/utils/schemas";
-import { ListingUser, UpdateProfileReq } from "@/utils/types";
+import { UpdateProfileReq } from "@/utils/types";
 import { ProfileForm } from "./ProfileForm";
 
 interface Props {
     successRedirectPath: string;
-    userData: ListingUser;
+    userData: PartialMessage<UserProfile>;
 }
 
 export const EditProfileForm: FC<Props> = (props) => {
@@ -27,14 +29,13 @@ export const EditProfileForm: FC<Props> = (props) => {
         resolver: zodResolver(UpdateProfileSchema),
         defaultValues: {
             address: {
-                city: userData?.address?.city || "",
-                state: userData?.address?.state || "",
-                country: userData?.address?.country ? COUNTRIES[userData?.address?.country]?.[0] : COUNTRIES[params.locale as string]?.[0],
-                postalCode: userData?.address?.postalCode || "",
+                city: userData?.data?.city || "",
+                state: userData?.data?.state || "",
+                country: userData?.data?.countryCode ? COUNTRIES[userData?.data?.countryCode]?.[0] : COUNTRIES[params.locale as string]?.[0],
+                postalCode: userData?.data?.postalCode || "",
             },
-            isDealership: userData.isDealership,
-            phoneNumber: userData?.phone,
-            userId: userData.userId,
+            isDealership: userData?.data?.vehicleDealer,
+            phoneNumber: userData?.data?.phone,
         },
         mode: "all",
     });
@@ -42,14 +43,19 @@ export const EditProfileForm: FC<Props> = (props) => {
     const country = form.watch("address.country");
 
     const { mutate: updateSubscriptionMutation, isLoading: isMutating } = useMutation(
-        async (formValues: UpdateProfileReq) =>
-            editProfileAction({
-                ...formValues,
-                address: {
-                    ...formValues.address,
-                    country: Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country)!,
+        async (formValues: UpdateProfileReq) => {
+            await editProfileAction(
+                {
+                    city: formValues.address.city,
+                    state: formValues.address.state,
+                    postalCode: formValues.address.postalCode,
+                    countryCode: Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country)!,
+                    phone: formValues.phoneNumber,
+                    vehicleDealer: formValues.isDealership,
                 },
-            }),
+                userData?.email!,
+            );
+        },
         {
             onSuccess: () => {
                 if (window?.location?.pathname === `/${params.locale}/dashboard/profile/edit`) {

@@ -5,21 +5,20 @@ import { FilterButton } from "@/components/Dashboard/DashboardListHeader/FilterB
 import { useDashboardFilter } from "@/components/Dashboard/DashboardListHeader/FilterHooks";
 import { DashboardNotificationsFilter } from "@/components/Filters/DashboardNotificationsFilter";
 import { useNotificationsContext } from "@/providers/DashboardNotificationsContextProvider";
-import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
-import { DashboardNotificationsFilterReq } from "@/utils/types";
+import { UserNotificationsFilterSchema } from "@/utils/schemas";
+import { UserNotificationsFilterReq } from "@/utils/types";
 
-const defaultFilter: DashboardNotificationsFilterReq = {
-    StartDate: "",
-    EndDate: "",
-    IsShown: "",
+const defaultFilter: UserNotificationsFilterReq = {
+    startDate: "",
+    endDate: "",
 };
 
 /** Filter button to be used in the my notifications screen within dashboard */
 export const DashboardNotificationsFilterButton = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useNotificationsContext();
 
-    const form = useForm<DashboardNotificationsFilterReq>({
-        resolver: zodResolver(DashboardNotificationsFilterSchema),
+    const form = useForm<UserNotificationsFilterReq>({
+        resolver: zodResolver(UserNotificationsFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
     });

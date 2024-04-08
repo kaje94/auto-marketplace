@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockEmptyListingsResponse, mockListingsResponse, mockUserClaims } from "@/utils/mockData";
+import { mockListingItem, mockUserClaims, paginatedEmptyResp, paginatedResp } from "@/utils/mockData";
 import { DashboardListingsList } from "./DashboardListingsList";
 
 const meta = {
@@ -20,7 +20,9 @@ export const WithData: Story = {
         searchParamsObj: {},
         pageLoading: false,
         basePath: "/base-path",
-        listings: mockListingsResponse,
+        listings: [mockListingItem],
+        currentPageNumber: 1,
+        paginatedResponse: paginatedResp,
     },
 };
 
@@ -32,7 +34,9 @@ export const LoadingWithData: Story = {
         searchParamsObj: {},
         pageLoading: false,
         basePath: "/base-path",
-        listings: mockListingsResponse,
+        listings: [mockListingItem],
+        currentPageNumber: 1,
+        paginatedResponse: paginatedResp,
     },
 };
 
@@ -53,6 +57,8 @@ export const NoData: Story = {
         searchParamsObj: {},
         pageLoading: false,
         basePath: "/base-path",
-        listings: mockEmptyListingsResponse,
+        listings: [],
+        currentPageNumber: 1,
+        paginatedResponse: paginatedEmptyResp,
     },
 };

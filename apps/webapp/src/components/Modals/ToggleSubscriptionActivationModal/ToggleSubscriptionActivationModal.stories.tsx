@@ -1,3 +1,4 @@
+import { SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockSubscriptionItem } from "@/utils/mockData";
@@ -15,9 +16,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Activate: Story = {
-    args: { visible: true, listingSubscriptionItem: { ...mockSubscriptionItem, active: false } },
+    args: { visible: true, subscriptionItem: { ...mockSubscriptionItem, active: false } as SubscriptionItem },
 };
 
 export const Deactivate: Story = {
-    args: { visible: true, listingSubscriptionItem: mockSubscriptionItem },
+    args: { visible: true, subscriptionItem: mockSubscriptionItem },
 };

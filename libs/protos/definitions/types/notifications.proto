@@ -1,0 +1,44 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+
+message NotificationItem {
+    // ID of the notification item
+    string id = 1;
+    // Title of the notification
+    string title = 2;
+    // Body of the notification
+    string body = 3;
+    // Type of the notification. One of ListingApproved, ListingRejected, ListingExpired or ListingSubscriptionAlert
+    string type = 4;
+    // Where the user needs to be redirected to when clicked
+    string redirectPath = 5;
+    // Whether or not, the notification has been seen
+    bool isShown = 6;
+    // When the subscription was created
+    string createdAt = 7;
+}
+
+message NotificationFilters {
+    message UserNotificationFilters {
+        // From when the notification was created
+        string startDate = 1;
+        // Till when the notification was created
+        string endDate = 2;
+    }
+}
+
+message GetUserNotificationsRequest {
+    message Filters {
+        NotificationFilters.UserNotificationFilters userFilters = 1;
+    }
+    PaginatedRequest page = 1;
+    Filters filters = 2;
+}
+
+message GetNotificationResponse {
+    PaginatedResponse page = 1;
+    repeated NotificationItem items = 2;
+}

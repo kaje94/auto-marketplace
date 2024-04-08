@@ -1,0 +1,24 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+
+message UpdateListingRequest {
+    string id = 1;
+    ListingItem.Data data = 2;
+}
+
+message GetUserListingsRequest {
+    message Filters {
+        ListingFilters.PublicListingsFilters publicFilters = 1;
+        ListingFilters.UserListingsFilters userFilters = 2;
+    }
+    PaginatedRequest page = 1;
+    Filters filters = 2;
+}
+
+message UnListListingRequest {
+    string id = 1;
+    string status = 2;
+}

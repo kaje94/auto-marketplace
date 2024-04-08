@@ -1,3 +1,4 @@
+import { ListingItem as ListingItemType } from "targabay-protos/gen/ts/dist/types/common_pb";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockListingItem } from "@/utils/mockData";

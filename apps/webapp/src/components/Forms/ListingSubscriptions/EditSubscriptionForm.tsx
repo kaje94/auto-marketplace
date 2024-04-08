@@ -5,22 +5,23 @@ import { useParams, useRouter } from "next/navigation";
 import { FC, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { editListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
+import { SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { updateSubscriptionAction } from "@/actions/userSubscriptionActions";
 import { COUNTRIES } from "@/utils/countries";
+import { SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "@/utils/enum";
 import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
-import { CreateSubscriptionReq, EditSubscriptionReq, ListingSubscriptionItem, VehicleBrand } from "@/utils/types";
+import { CreateSubscriptionReq, EditSubscriptionReq } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {
-    brands: VehicleBrand[];
-    listingSubscriptionItem: ListingSubscriptionItem;
+    subscriptionItem: SubscriptionItem;
     successRedirectPath: string;
-    userId?: string;
+    userEmail?: string;
 }
 
 export const EditSubscriptionForm: FC<Props> = (props) => {
-    const { listingSubscriptionItem, successRedirectPath, userId, brands } = props;
+    const { subscriptionItem, successRedirectPath, userEmail } = props;
     const router = useRouter();
     const params = useParams();
     const countryItem = COUNTRIES[(params.locale as string) || ""];
@@ -33,37 +34,45 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
     const form = useForm<CreateSubscriptionReq>({
         resolver: zodResolver(CreateSubscriptionSchema),
         defaultValues: {
-            ...listingSubscriptionItem,
-            minYearOfManufacture: listingSubscriptionItem.minYearOfManufacture
-                ? new Date(new Date(listingSubscriptionItem.minYearOfManufacture).getFullYear(), 0, 1).getFullYear().toString()
+            brand: subscriptionItem.data?.brand,
+            condition: subscriptionItem.data?.condition as VehicleConditionTypes,
+            displayName: subscriptionItem.data?.displayName,
+            model: subscriptionItem.data?.model,
+            trim: subscriptionItem.data?.trim,
+            notificationFrequency: subscriptionItem.data?.notificationFrequency as SubscriptionFrequencies,
+            subscriptionExpiryDate: subscriptionItem.data?.subscriptionExpiryDate,
+            type: subscriptionItem.data?.type as VehicleTypes,
+
+            minYearOfManufacture: subscriptionItem.data?.minYearOfManufacture
+                ? new Date(new Date(subscriptionItem.data?.minYearOfManufacture).getFullYear(), 0, 1).getFullYear().toString()
                 : undefined,
-            maxYearOfManufacture: listingSubscriptionItem.maxYearOfManufacture
-                ? new Date(new Date(listingSubscriptionItem.maxYearOfManufacture).getFullYear(), 0, 1).getFullYear().toString()
+            maxYearOfManufacture: subscriptionItem.data?.maxYearOfManufacture
+                ? new Date(new Date(subscriptionItem.data?.maxYearOfManufacture).getFullYear(), 0, 1).getFullYear().toString()
                 : undefined,
-            minYearOfRegistration: listingSubscriptionItem.minYearOfRegistration
-                ? new Date(new Date(listingSubscriptionItem.minYearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
+            minYearOfRegistration: subscriptionItem.data?.minYearOfRegistration
+                ? new Date(new Date(subscriptionItem.data?.minYearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
                 : undefined,
-            maxYearOfRegistration: listingSubscriptionItem.maxYearOfRegistration
-                ? new Date(new Date(listingSubscriptionItem.maxYearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
+            maxYearOfRegistration: subscriptionItem.data?.maxYearOfRegistration
+                ? new Date(new Date(subscriptionItem.data?.maxYearOfRegistration).getFullYear(), 0, 1).getFullYear().toString()
                 : undefined,
             maxPrice: {
                 currencyCode: countryCurrencyCode,
                 currencySymbol: countryCurrencySymbol,
-                amount: listingSubscriptionItem?.maxPrice?.amount || undefined,
+                amount: subscriptionItem.data?.maxPrice || undefined,
             },
             minPrice: {
                 currencyCode: countryCurrencyCode,
                 currencySymbol: countryCurrencySymbol,
-                amount: listingSubscriptionItem?.minPrice?.amount || undefined,
+                amount: subscriptionItem.data?.minPrice || undefined,
             },
-            minMillage: { unit: distanceUnit, distance: listingSubscriptionItem?.minMillage?.distance || undefined },
-            maxMillage: { unit: distanceUnit, distance: listingSubscriptionItem?.maxMillage?.distance || undefined },
+            minMillage: { unit: distanceUnit, distance: subscriptionItem.data?.minMillage || undefined },
+            maxMillage: { unit: distanceUnit, distance: subscriptionItem.data?.maxMillage || undefined },
         },
         mode: "all",
     });
 
     useEffect(() => {
-        if (form?.reset && listingSubscriptionItem?.userId === userId) {
+        if (form?.reset && subscriptionItem?.user?.email === userEmail) {
             form.reset(
                 {
                     maxPrice: { currencyCode: countryCurrencyCode, currencySymbol: countryCurrencySymbol },
@@ -74,36 +83,34 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
                 { keepValues: true },
             );
         }
-    }, [form, countryItem, userId, listingSubscriptionItem, countryCurrencyCode, countryCurrencySymbol, distanceUnit]);
+    }, [form, countryItem, userEmail, subscriptionItem, countryCurrencyCode, countryCurrencySymbol, distanceUnit]);
 
     const { mutate: updateSubscriptionMutation, isLoading: isMutating } = useMutation(
         async (formValues: EditSubscriptionReq) => {
-            const requestBody: EditSubscriptionReq = {
-                ...formValues,
-                listingSubscriptionId: listingSubscriptionItem.id,
-                subscriptionExpiryDate: new Date(formValues.subscriptionExpiryDate).toISOString(),
-                minYearOfManufacture: formValues.minYearOfManufacture ? convertYearToDateString(formValues.minYearOfManufacture) : undefined,
-                maxYearOfManufacture: formValues.maxYearOfManufacture ? convertYearToDateString(formValues.maxYearOfManufacture) : undefined,
-                minYearOfRegistration: formValues.minYearOfRegistration ? convertYearToDateString(formValues.minYearOfRegistration) : undefined,
-                maxYearOfRegistration: formValues.maxYearOfRegistration ? convertYearToDateString(formValues.maxYearOfRegistration) : undefined,
-                maxPrice:
-                    Number(formValues.maxPrice?.amount) > 0 ? { ...formValues.maxPrice, amount: Number(formValues.maxPrice?.amount) } : undefined,
-                minPrice:
-                    Number(formValues.minPrice?.amount) > 0 ? { ...formValues.minPrice, amount: Number(formValues.minPrice?.amount) } : undefined,
-                brand: formValues?.brand || undefined,
-                model: formValues?.model || undefined,
-                trim: formValues?.trim || undefined,
-                condition: formValues?.condition || undefined,
-                maxMillage:
-                    Number(formValues?.maxMillage?.distance) > 0
-                        ? { unit: formValues.maxMillage?.unit!, distance: Number(formValues?.maxMillage?.distance) }
-                        : undefined,
-                minMillage:
-                    Number(formValues?.minMillage?.distance) > 0
-                        ? { unit: formValues.minMillage?.unit!, distance: Number(formValues?.minMillage?.distance) }
-                        : undefined,
-            };
-            return editListingSubscriptionAction(requestBody, listingSubscriptionItem?.userId!);
+            return updateSubscriptionAction(
+                {
+                    data: {
+                        displayName: formValues.displayName,
+                        notificationFrequency: formValues.notificationFrequency,
+                        type: formValues.type,
+                        subscriptionExpiryDate: new Date(formValues.subscriptionExpiryDate).toISOString(),
+                        minYearOfManufacture: formValues.minYearOfManufacture ? parseInt(formValues.minYearOfManufacture) : 0,
+                        maxYearOfManufacture: formValues.maxYearOfManufacture ? parseInt(formValues.maxYearOfManufacture) : 0,
+                        minYearOfRegistration: formValues.minYearOfRegistration ? parseInt(formValues.minYearOfRegistration) : 0,
+                        maxYearOfRegistration: formValues.maxYearOfRegistration ? parseInt(formValues.maxYearOfRegistration) : 0,
+                        maxPrice: Number(formValues.maxPrice?.amount),
+                        minPrice: Number(formValues.minPrice?.amount),
+                        brand: formValues?.brand!,
+                        model: formValues?.model || undefined,
+                        trim: formValues?.trim || undefined,
+                        condition: formValues?.condition || undefined,
+                        maxMillage: Number(formValues?.maxMillage?.distance),
+                        minMillage: Number(formValues?.minMillage?.distance),
+                    },
+                    id: subscriptionItem.id,
+                },
+                subscriptionItem?.user?.email!,
+            );
         },
         {
             onSuccess: (_, req) => {
@@ -138,8 +145,7 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             form={form}
             isMutating={isMutating}
             submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
-            vehicleBrands={brands}
-            onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: listingSubscriptionItem.id })}
+            onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: subscriptionItem.id })}
         />
     );
 };

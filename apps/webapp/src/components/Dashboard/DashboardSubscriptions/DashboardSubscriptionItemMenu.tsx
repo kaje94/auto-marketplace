@@ -1,21 +1,21 @@
 "use client";
 import { FC, useState } from "react";
+import { SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { ContextMenu } from "@/components/Common/ContextMenu";
 import { DeleteSubscriptionItemModal } from "@/components/Modals/DeleteSubscriptionItemModal";
 import { ToggleSubscriptionActivationModal } from "@/components/Modals/ToggleSubscriptionActivationModal";
 import { BellIcon, BellOffIcon, EditIcon, TrashIcon } from "@/icons";
-import { ListingSubscriptionItem } from "@/utils/types";
 
 interface Props {
     /** Base path to be used when forwarding to a subpath */
     basePath?: string;
     /** Details of a particular subscription item */
-    listingSubscriptionItem?: ListingSubscriptionItem;
+    subscriptionItem?: SubscriptionItem;
 }
 
 /** Context menu attached to a subscription item */
-export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionItem = {}, basePath }) => {
-    const { id, active } = listingSubscriptionItem as ListingSubscriptionItem;
+export const DashboardSubscriptionItemMenu: FC<Props> = ({ subscriptionItem = {}, basePath }) => {
+    const { id, active } = subscriptionItem as SubscriptionItem;
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [activationModalVisible, setActivationModalVisible] = useState(false);
 
@@ -42,12 +42,12 @@ export const DashboardSubscriptionItemMenu: FC<Props> = ({ listingSubscriptionIt
                 ]}
             />
             <DeleteSubscriptionItemModal
-                listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
+                subscriptionItem={subscriptionItem as SubscriptionItem}
                 visible={deleteModalVisible}
                 onVisibleChange={setDeleteModalVisible}
             />
             <ToggleSubscriptionActivationModal
-                listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
+                subscriptionItem={subscriptionItem as SubscriptionItem}
                 visible={activationModalVisible}
                 onVisibleChange={setActivationModalVisible}
             />

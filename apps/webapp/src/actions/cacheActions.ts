@@ -3,16 +3,6 @@ import { revalidateTag } from "next/cache";
 import { apiTags } from "@/utils/api";
 import { ListingIdType } from "@/utils/types";
 
-/** Revalidate the list of features when creating listings. */
-export const revalidateFeaturesAction = async () => {
-    revalidateTag(apiTags.getFeaturesList());
-};
-
-/** Revalidate the brands shown in the listing form and filters. */
-export const revalidateBrandsAction = async () => {
-    revalidateTag(apiTags.getVehicleBrands());
-};
-
 /** Revalidate all the posted listing results. */
 export const revalidateAllPosedListingsAction = async () => {
     revalidateTag(apiTags.getPostedListings());

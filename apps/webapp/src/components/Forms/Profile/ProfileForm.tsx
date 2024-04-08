@@ -1,8 +1,10 @@
 "use client";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
+import { UserProfile, UserProfile_ProfileData } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { getCitiesOfState, getStatesOfCountry } from "@/actions/locationActions";
 import { Avatar } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
@@ -10,7 +12,7 @@ import { CheckboxController } from "@/components/FormElements/Checkbox";
 import { InputController } from "@/components/FormElements/Input";
 import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
-import { LabelValue, ListingUser, UpdateProfileReq } from "@/utils/types";
+import { LabelValue, UpdateProfileReq } from "@/utils/types";
 
 interface Props {
     form?: UseFormReturn<UpdateProfileReq>;
@@ -21,7 +23,7 @@ interface Props {
     onMutate?: (values: UpdateProfileReq) => void;
     showFooter?: boolean;
     showHeader?: boolean;
-    userData?: ListingUser;
+    userData?: PartialMessage<UserProfile>;
     wrapClassnames?: string;
 }
 
@@ -56,23 +58,24 @@ export const ProfileForm: FC<Props> = (props) => {
         queryFn: () => getStatesOfCountry(countryCode!),
         enabled: !!countryCode && countryCode !== BOT_LOCALE,
         queryKey: ["country-states", { locale: countryCode }],
+        select: (data) => data.states,
         onSettled: (data, _) => {
-            if (!!data?.length && !data?.some((item) => item.name === state)) {
+            if (!!data?.length && !data?.some((item) => item.stateName === state)) {
                 (form as UseFormReturn<UpdateProfileReq>).setValue("address.state", "");
                 (form as UseFormReturn<UpdateProfileReq>).setValue("address.city", "");
             }
         },
     });
 
-    const stateList = states?.map((item) => ({ label: item.name, value: item.name }) as LabelValue);
+    const stateList = states?.map((item) => ({ label: item.stateName, value: item.stateName }) as LabelValue);
 
-    const stateCode = states.find((item) => item.name === state)?.stateCode;
+    const stateCode = states.find((item) => item.stateName === state)?.id;
 
     const { data: cityList = [], isFetching: isLoadingCities } = useQuery({
-        queryFn: () => getCitiesOfState(countryCode!, stateCode!),
+        queryFn: () => getCitiesOfState(stateCode!),
         enabled: !!countryCode && !!stateCode,
         queryKey: ["country-state-cities", { locale: countryCode, stateCode }],
-        select: (data) => data.map((item) => ({ label: item.name, value: item.name }) as LabelValue),
+        select: (data) => data?.cities.map((item) => ({ label: item, value: item }) as LabelValue),
         onSettled: (data, _) => {
             if (!!data?.length && !data?.some((item) => item.label === city)) {
                 (form as UseFormReturn<UpdateProfileReq>).setValue("address.city", "");
@@ -92,7 +95,7 @@ export const ProfileForm: FC<Props> = (props) => {
                             {isLoading ? (
                                 <div className="h-10 w-4/5 animate-pulse rounded bg-gray-400 bg-opacity-40 md:w-2/3 xl:w-1/2" />
                             ) : (
-                                <div className="text-xl font-bold text-neutral md:text-2xl xl:text-4xl">{userData?.fullName}</div>
+                                <div className="text-xl font-bold text-neutral md:text-2xl xl:text-4xl">{userData?.name}</div>
                             )}
                         </div>
                     </div>

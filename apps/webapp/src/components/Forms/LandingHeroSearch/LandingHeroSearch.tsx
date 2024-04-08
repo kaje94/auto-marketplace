@@ -7,12 +7,12 @@ import { InputController } from "@/components/FormElements/Input";
 import { SelectController } from "@/components/FormElements/Select";
 import { SearchIcon } from "@/icons";
 import { VehicleTypeList } from "@/utils/constants";
-import { PostedListingsFilterSchema } from "@/utils/schemas";
-import { PostedListingsFilterReq } from "@/utils/types";
+import { PublicListingsFilterSchema } from "@/utils/schemas";
+import { PublicListingsFilterReq } from "@/utils/types";
 
 export const LandingHeroSearch = () => {
-    const { control, watch } = useForm<PostedListingsFilterReq>({
-        resolver: zodResolver(PostedListingsFilterSchema),
+    const { control, watch } = useForm<PublicListingsFilterReq>({
+        resolver: zodResolver(PublicListingsFilterSchema),
         mode: "onChange",
     });
 
@@ -22,7 +22,7 @@ export const LandingHeroSearch = () => {
         <span className="rounded-box flex w-full flex-col justify-center shadow-xl sm:w-fit sm:flex-row">
             <InputController
                 control={control}
-                fieldName="Title"
+                fieldName="query"
                 inputClassNames="bg-white rounded-box rounded-b-none sm:rounded-b-box sm:rounded-r-none"
                 placeholder="Search..."
                 errorAsTooltip
@@ -30,7 +30,7 @@ export const LandingHeroSearch = () => {
             <div className="relative sm:w-36">
                 <SelectController
                     control={control}
-                    fieldName="VehicleType"
+                    fieldName="vehicleType"
                     options={VehicleTypeList}
                     placeholder="All Types"
                     selectClassName="bg-white rounded-none !outline-none sm:!w-36"

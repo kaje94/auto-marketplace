@@ -5,40 +5,33 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { GetStatesResponse_StateItem } from "targabay-protos/gen/ts/dist/types/locations_pb";
 import { LinkWithLocale } from "@/components/Common";
 import { FilterInput as InputController } from "@/components/Filters/FilterFormElements/DashboardFilterInput";
 import { PostedListSearchFilters } from "@/components/Filters/PostedListSearchFilters";
 import { FilterIcon, SearchIcon } from "@/icons";
 import { usePostedListingsContext } from "@/providers/PostedListingsContextProvider";
 import { getYearFromDateString } from "@/utils/helpers";
-import { PostedListingsFilterSchema } from "@/utils/schemas";
-import { PostedListingsFilterReq, State, VehicleBrand } from "@/utils/types";
+import { PublicListingsFilterSchema } from "@/utils/schemas";
+import { PublicListingsFilterReq } from "@/utils/types";
 
-const defaultFilter: PostedListingsFilterReq = {
-    State: "",
-    Brand: "",
-    City: "",
-    Condition: "",
-    FuelType: "",
-    MaxPrice: "",
-    MinPrice: "",
-    Model: "",
-    Title: "",
-    Transmission: "",
-    VehicleType: "",
-    YomEndDate: "",
-    YomStartDate: "",
+const defaultFilter: PublicListingsFilterReq = {
+    state: "",
+    city: "",
+    condition: "",
+    fuelType: "",
+    maxPrice: undefined,
+    minPrice: undefined,
+    startCreatedDate: "",
+    endCreatedDate: "",
+    transmissionType: "",
+    vehicleType: "",
+    yomEndDate: "",
+    yomStartDate: "",
+    query: "",
 };
 
-export const PostedListingsSearchFilters = ({
-    pageLoading,
-    vehicleBrands = [],
-    states = [],
-}: {
-    pageLoading?: boolean;
-    states?: State[];
-    vehicleBrands?: VehicleBrand[];
-}) => {
+export const PostedListingsSearchFilters = ({ pageLoading, states = [] }: { pageLoading?: boolean; states?: GetStatesResponse_StateItem[] }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [applyingSearch, setApplyingSearch] = useState(false);
     const [applyingFilters, setApplyingFilters] = useState(false);
@@ -46,29 +39,24 @@ export const PostedListingsSearchFilters = ({
     const params = useParams();
     const searchParams = useSearchParams();
     const countryCode = params.locale as string;
-    const titleSearchParam = searchParams.get("Title") || "";
+    const titleSearchParam = searchParams.get("query") || "";
 
     const { setNewSearchQuery, searchParamsObj, isLoading, newSearchQuery } = usePostedListingsContext();
 
-    const form = useForm<PostedListingsFilterReq>({
-        resolver: zodResolver(PostedListingsFilterSchema),
-        defaultValues: {
-            ...defaultFilter,
-            ...searchParamsObj,
-            YomStartDate: searchParamsObj.YomStartDate ? `${getYearFromDateString(searchParamsObj.YomStartDate as string)}` : undefined,
-            YomEndDate: searchParamsObj.YomEndDate ? `${getYearFromDateString(searchParamsObj.YomEndDate as string)}` : undefined,
-        },
+    const form = useForm<PublicListingsFilterReq>({
+        resolver: zodResolver(PublicListingsFilterSchema),
+        defaultValues: { ...defaultFilter, ...searchParamsObj },
         mode: "onChange",
     });
     const { control, watch, reset, setValue } = form;
 
     const newSearchFiltersParamsObj = { ...searchParamsObj };
-    delete newSearchFiltersParamsObj["Title"];
-    const hasFilters = Object.keys(PostedListingsFilterSchema.parse(newSearchFiltersParamsObj)).length > 0;
+    delete newSearchFiltersParamsObj["query"];
+    const hasFilters = Object.keys(PublicListingsFilterSchema.parse(newSearchFiltersParamsObj)).length > 0;
 
-    const hasNewSearchText = titleSearchParam !== watch("Title");
+    const hasNewSearchText = titleSearchParam !== watch("query");
 
-    const onApplyFilterClick = (values: PostedListingsFilterReq) => {
+    const onApplyFilterClick = (values: PublicListingsFilterReq) => {
         const searchQuery = qs.stringify({ ...searchParamsObj, ...values }, { skipEmptyString: true, skipNull: true });
         setDropdownOpen(false);
         if (newSearchQuery !== searchQuery) {
@@ -82,7 +70,7 @@ export const PostedListingsSearchFilters = ({
     const handleFilterOpen = (event: React.MouseEvent<HTMLLabelElement | HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
         if (!isLoading) {
-            reset({ ...defaultFilter, ...searchParamsObj, Title: watch("Title") });
+            reset({ ...defaultFilter, ...searchParamsObj, query: watch("query") });
             setDropdownOpen(true);
         }
     };
@@ -92,7 +80,7 @@ export const PostedListingsSearchFilters = ({
     const newSearchBtnQuery = qs.stringify(formValues, { skipEmptyString: true, skipNull: true });
 
     useEffect(() => {
-        setValue("Title", titleSearchParam);
+        setValue("query", titleSearchParam);
     }, [setValue, titleSearchParam]);
 
     useEffect(() => {
@@ -112,7 +100,7 @@ export const PostedListingsSearchFilters = ({
             >
                 <InputController
                     control={control}
-                    fieldName="Title"
+                    fieldName="query"
                     inputClassNames="bg-white !border-neutral sm:border-r-0 rounded-box rounded-b-none sm:rounded-b-box sm:rounded-r-none"
                     loading={isLoading || pageLoading}
                     placeholder="Search..."
@@ -168,7 +156,6 @@ export const PostedListingsSearchFilters = ({
                         searchParams={searchParams}
                         setDropdownOpen={setDropdownOpen}
                         states={states}
-                        vehicleBrands={vehicleBrands}
                         onApplyFilterClick={onApplyFilterClick}
                     />
                 )}

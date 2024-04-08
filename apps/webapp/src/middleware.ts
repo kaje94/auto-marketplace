@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
     const isCrawler = userAgent ? /bot|googlebot|bingbot|yandexbot|slurp|yahoo|duckduckbot/i.test(userAgent) : false;
 
     // country code should be available only after deployed
-    const userCountryCode = request.geo?.country || "LK";
+    const userCountryCode = request.geo?.country?.toLowerCase() || "lk";
     const pathLocale: string = pathname.split("/").filter((item) => item !== "")[0] || "";
     const matchingLocal = COUNTRIES[pathLocale];
 

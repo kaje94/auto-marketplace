@@ -1,8 +1,8 @@
 import { clsx } from "clsx";
 import { FC } from "react";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale } from "@/components/Common";
 import { EditIcon } from "@/icons";
-import { ListingItem } from "@/utils/types";
 
 interface Props {
     basePath?: string;

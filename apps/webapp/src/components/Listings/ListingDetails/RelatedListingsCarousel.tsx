@@ -1,7 +1,8 @@
 import queryString from "query-string";
 import { FC, Suspense } from "react";
-import { api } from "@/utils/api";
-import { ListingItem } from "@/utils/types";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { getRelatedListingsAction } from "@/actions/publicListingActions";
+import { getListingTitleFromListing } from "@/utils/helpers";
 import { ListingsCarousel } from "../ListingsCarousel";
 
 export const RelatedListingsCarousel: FC<{ itemDetails: ListingItem }> = ({ itemDetails }) => {
@@ -13,16 +14,18 @@ export const RelatedListingsCarousel: FC<{ itemDetails: ListingItem }> = ({ item
 };
 
 const RelatedListingsCarouselWithData: FC<{ itemDetails: ListingItem }> = async ({ itemDetails }) => {
-    const relatedListings = await api.getRelatedListings(itemDetails.id);
+    const relatedListingsRes = await getRelatedListingsAction(itemDetails.id);
+    const listingTitle = getListingTitleFromListing(itemDetails.data!);
+
     return (
         <ListingsCarousel
-            items={relatedListings}
+            items={relatedListingsRes.items}
             viewMore={{
                 title: "View More",
-                subTitle: `View advertisements that are similar to ${itemDetails.title}`,
+                subTitle: `View advertisements that are similar to ${listingTitle}`,
                 link: queryString.stringifyUrl({
                     url: "/search",
-                    query: { VehicleType: itemDetails.vehicle.type, Brand: itemDetails.vehicle.brand, Model: itemDetails.vehicle.model },
+                    query: { VehicleType: itemDetails.data?.type, Brand: itemDetails.data?.brand, Model: itemDetails.data?.model },
                 }),
             }}
         />

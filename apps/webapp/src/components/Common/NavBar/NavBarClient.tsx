@@ -1,11 +1,13 @@
 "use client";
 import { Claims } from "@auth0/nextjs-auth0";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale, Logo } from "@/components/Common";
-import { ListingUser } from "@/utils/types";
+
 import { NavBarAuth } from "./NavBarAuth";
 import { PostAddLink, SearchLink } from "./NavBarButtons";
 
@@ -32,7 +34,7 @@ interface Props {
     /** User claims is needed to figure out whether its a new user or not and show the new user onboard modal. */
     userClaims?: Claims;
     /** Details of the logged in user */
-    userData?: ListingUser;
+    userData?: PartialMessage<UserProfile>;
 }
 
 /** Nav bar component used throughout the web app */

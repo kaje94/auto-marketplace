@@ -1,9 +1,10 @@
 import { clsx } from "clsx";
+import Link from "next/link";
 import { FC } from "react";
+import { NotificationItem } from "targabay-protos/gen/ts/dist/types/notifications_pb";
 import { LinkWithLocale } from "@/components/Common";
 import { NotificationIcon } from "@/icons";
 import { getRandomItem, timeAgo } from "@/utils/helpers";
-import { NotificationItem } from "@/utils/types";
 
 interface Props {
     /** Whether or not to show the placeholder data */
@@ -15,7 +16,7 @@ interface Props {
 /** To represent an individual notification item within the notification list */
 export const DashboardNotificationItem: FC<Props> = (props) => {
     const { notificationItem = {}, loading } = props;
-    const { title, body, createdOn, isShown, redirectUrl } = notificationItem as NotificationItem;
+    const { title, body, createdAt, isShown, redirectPath } = notificationItem as NotificationItem;
 
     const notificationItemContent = (
         <div
@@ -59,7 +60,7 @@ export const DashboardNotificationItem: FC<Props> = (props) => {
                 {loading ? (
                     <div className="h-4 w-32 bg-base-200" />
                 ) : (
-                    <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdOn))}</div>
+                    <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdAt))}</div>
                 )}
             </div>
         </div>
@@ -69,14 +70,11 @@ export const DashboardNotificationItem: FC<Props> = (props) => {
         return <div className="card mb-3 h-fit overflow-hidden bg-base-100 shadow">{notificationItemContent}</div>;
     }
 
-    if (redirectUrl) {
+    if (redirectPath) {
         return (
-            <LinkWithLocale
-                className="card mb-3 h-fit cursor-pointer overflow-hidden bg-base-100 shadow transition-all hover:shadow-md"
-                href={redirectUrl}
-            >
+            <Link className="card mb-3 h-fit cursor-pointer overflow-hidden bg-base-100 shadow transition-all hover:shadow-md" href={redirectPath}>
                 {notificationItemContent}
-            </LinkWithLocale>
+            </Link>
         );
     }
 

@@ -1,0 +1,27 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+
+message UpdateSubscriptionRequest {
+    // ID of the created subscription item
+    string id = 1;
+    // Subscription details
+    SubscriptionItem.Data data = 2;
+}
+
+message ActivateSubscriptionRequest {
+    // ID of the created subscription item
+    string id = 1;
+    // When the notifications subscription is set to expire
+    string subscriptionExpiryDate = 2;
+}
+
+message GetUserSubscriptionsRequest {
+    message Filters {
+        SubscriptionFilters.UserSubscriptionFilters userFilters = 1;
+    }
+    PaginatedRequest page = 1;
+    Filters filters = 2;
+}

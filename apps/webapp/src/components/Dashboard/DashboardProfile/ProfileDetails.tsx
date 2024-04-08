@@ -1,16 +1,17 @@
 import { Session } from "@auth0/nextjs-auth0";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { clsx } from "clsx";
 import { FC, ReactNode } from "react";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { Avatar, LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon, EditIcon } from "@/icons";
 import { COUNTRIES } from "@/utils/countries";
 import { getRandomItem, isIncompleteUserProfile } from "@/utils/helpers";
-import { ListingUser } from "@/utils/types";
 import { CloseAccountButton } from "./CloseAccountButton";
 
 interface Props {
     loading?: boolean;
-    profile?: ListingUser;
+    profile?: PartialMessage<UserProfile>;
     session?: Session | null;
 }
 
@@ -31,13 +32,13 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
     const isProfileIncomplete = profile ? isIncompleteUserProfile(profile) : false;
 
     let userType = "User";
-    if (profile?.isDealership) {
+    if (profile?.data?.vehicleDealer) {
         userType = "Car Dealership";
     } else if (session?.user.isAdmin) {
         userType = "Admin";
     }
 
-    const countryPhoneCode = COUNTRIES[profile?.address?.country || ""]?.[3];
+    const countryPhoneCode = COUNTRIES[profile?.data?.countryCode || ""]?.[3];
 
     return (
         <>
@@ -63,7 +64,7 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                         {loading ? (
                             <div className="h-10 w-4/5 animate-pulse rounded bg-gray-400 bg-opacity-40 md:w-2/3 xl:w-1/2" />
                         ) : (
-                            <div className="text-xl font-bold text-neutral md:text-2xl xl:text-4xl">{profile?.fullName}</div>
+                            <div className="text-xl font-bold text-neutral md:text-2xl xl:text-4xl">{profile?.name}</div>
                         )}
                         {loading ? (
                             <div className="badge badge-lg w-32 animate-pulse bg-gray-400 bg-opacity-40" />
@@ -83,7 +84,7 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                                 value={
                                     <>
                                         <span className="font-light opacity-70">{countryPhoneCode ? `(${countryPhoneCode}) ` : ""}</span>
-                                        {profile?.phone ?? "-"}
+                                        {profile?.data?.phone ?? "-"}
                                     </>
                                 }
                             />
@@ -92,17 +93,17 @@ export const ProfileDetails: FC<Props> = ({ profile, session, loading }) => {
                     <div className="flex flex-col gap-1">
                         <div className="text-lg font-bold">Location Details</div>
                         <div className="flex flex-col gap-2">
-                            <DetailsItem loading={loading} title="Country" value={COUNTRIES[profile?.address?.country!]?.[0] ?? "-"} />
-                            <DetailsItem loading={loading} title="State" value={profile?.address?.state ?? "-"} />
-                            <DetailsItem loading={loading} title="City" value={profile?.address?.city ?? "-"} />
-                            <DetailsItem loading={loading} title="Postal Code" value={profile?.address?.postalCode ?? "-"} />
+                            <DetailsItem loading={loading} title="Country" value={COUNTRIES[profile?.data?.countryCode!]?.[0] ?? "-"} />
+                            <DetailsItem loading={loading} title="State" value={profile?.data?.state ?? "-"} />
+                            <DetailsItem loading={loading} title="City" value={profile?.data?.city ?? "-"} />
+                            <DetailsItem loading={loading} title="Postal Code" value={profile?.data?.postalCode ?? "-"} />
                         </div>
                     </div>
                 </div>
 
                 {!loading && profile && (
                     <div className="mt-3 flex w-full flex-wrap justify-end gap-2">
-                        <CloseAccountButton userId={profile?.userId} />
+                        <CloseAccountButton userId={profile?.email!} />
                         <LinkWithLocale href="/dashboard/profile/edit">
                             <button className="btn btn-neutral">
                                 <EditIcon />

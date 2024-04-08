@@ -5,37 +5,36 @@ import { FilterButton } from "@/components/Dashboard/DashboardListHeader/FilterB
 import { useDashboardFilter } from "@/components/Dashboard/DashboardListHeader/FilterHooks";
 import { DashboardAllListFilter } from "@/components/Filters/DashboardAllListFilter/DashboardAllListFilter";
 import { useDashboardAllListingsContext } from "@/providers/DashboardAllListingsContextProvider";
-import { COUNTRIES } from "@/utils/countries";
-import { DashboardListingFilterSchema } from "@/utils/schemas";
-import { DashboardListFilterReq, VehicleBrand } from "@/utils/types";
+import { AdminListingsFilterSchema } from "@/utils/schemas";
+import { AdminListingsFilterReq } from "@/utils/types";
 
-const defaultFilter: DashboardListFilterReq = {
-    Brand: "",
-    City: "",
-    Country: "",
-    State: "",
-    Condition: "",
-    FuelType: "",
-    ListingStatus: "",
-    MaxPrice: "",
-    MinPrice: "",
-    Model: "",
-    Title: "",
-    Transmission: "",
-    VehicleType: "",
-    EndCreatedDate: "",
-    StartCreatedDate: "",
+const defaultFilter: AdminListingsFilterReq = {
+    countryCode: "",
+    state: "",
+    city: "",
+    condition: "",
+    fuelType: "",
+    status: "",
+    maxPrice: undefined,
+    minPrice: undefined,
+    startCreatedDate: "",
+    endCreatedDate: "",
+    transmissionType: "",
+    userEmail: "",
+    vehicleType: "",
+    yomEndDate: "",
+    yomStartDate: "",
+    brand: "",
+    model: "",
 };
 
 /** Filter button to be used in the all advert listing screen within dashboard */
-export const DashboardAllListFilterButton = ({ vehicleBrands = [] }: { vehicleBrands?: VehicleBrand[] }) => {
+export const DashboardAllListFilterButton = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardAllListingsContext();
 
-    const selectedCountry = COUNTRIES[searchParamsObj["Country"] || ""];
-    const updatedSearchParamsObj = { ...searchParamsObj, Country: selectedCountry?.[0] || "" };
-    const form = useForm<DashboardListFilterReq>({
-        resolver: zodResolver(DashboardListingFilterSchema),
-        defaultValues: updatedSearchParamsObj,
+    const form = useForm<AdminListingsFilterReq>({
+        resolver: zodResolver(AdminListingsFilterSchema),
+        defaultValues: searchParamsObj,
         mode: "all",
     });
 
@@ -45,7 +44,7 @@ export const DashboardAllListFilterButton = ({ vehicleBrands = [] }: { vehicleBr
         isLoading,
         newSearchQuery,
         setNewSearchQuery,
-        searchParamsObj: updatedSearchParamsObj,
+        searchParamsObj,
     });
 
     return (
@@ -57,7 +56,6 @@ export const DashboardAllListFilterButton = ({ vehicleBrands = [] }: { vehicleBr
                 hasSearchParams={hasSearchParams}
                 isLoading={isLoading}
                 setDropdownOpen={setDropdownOpen}
-                vehicleBrands={vehicleBrands}
                 onApplyFilterClick={onApplyFilterClick}
                 onResetClick={onResetClick}
             />

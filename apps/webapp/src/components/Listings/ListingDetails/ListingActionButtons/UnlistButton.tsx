@@ -1,9 +1,9 @@
 "use client";
 import { clsx } from "clsx";
 import { FC, useState } from "react";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { UnListListingModal } from "@/components/Modals/UnListListingModal";
 import { EyeOffIcon } from "@/icons";
-import { ListingItem } from "@/utils/types";
 
 interface Props {
     listingItem: ListingItem;

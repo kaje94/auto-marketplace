@@ -2,9 +2,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
-import { deleteListingAction } from "@/actions/listingActions";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { deleteListingAction } from "@/actions/userListingActions";
 import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
-import { ListingItem } from "@/utils/types";
+import { getListingTitleFromListing } from "@/utils/helpers";
 
 interface Props extends ModalProps {
     /** The listing item to be deleted. */
@@ -16,13 +17,13 @@ interface Props extends ModalProps {
 /** Modal to be used to ask confirmation from user before deleting a listing */
 export const DeleteListingItemModal = (props: Props) => {
     const { listingItem = {}, visible, successRedirectPath, onVisibleChange = () => {} } = props;
-    const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
+    const { id: listingId, data: listingItemData, user } = listingItem as ListingItem;
 
     const toastId = useRef<string>();
     const router = useRouter();
     const params = useParams();
 
-    const { mutate, isLoading } = useMutation((id: string) => deleteListingAction(id, listingUserId!), {
+    const { mutate, isLoading } = useMutation((id: string) => deleteListingAction({ id }, user?.email!), {
         onSuccess: (_, id) => {
             if (
                 [
@@ -36,14 +37,16 @@ export const DeleteListingItemModal = (props: Props) => {
         },
         onMutate: () => {
             onVisibleChange(false);
-            toastId.current = toast.loading(`Deleting advert ${listingTitle}...`);
+            toastId.current = toast.loading(`Deleting advert ${getListingTitleFromListing(listingItemData!)}...`);
         },
         onSettled: (_data, err) => {
             onVisibleChange(false);
             if (err) {
-                toast.error(`Failed to delete advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
+                toast.error(`Failed to delete advert ${getListingTitleFromListing(listingItemData!)}}. ${(err as Error)?.message ?? ""}`, {
+                    id: toastId?.current,
+                });
             } else {
-                toast.success(`Successfully deleted the Advert ${listingTitle}`, { id: toastId?.current });
+                toast.success(`Successfully deleted the Advert ${getListingTitleFromListing(listingItemData!)}}`, { id: toastId?.current });
             }
         },
     });

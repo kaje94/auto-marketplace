@@ -42,8 +42,6 @@ const getNumericSchema = (message: string = "Invalid value", minValue: number = 
 
 export const PriceSchema = z.object({
     amount: getNumericSchema("Price amount needs to be a positive number"),
-    currencyCode: z.string().min(1, "Currency code is required"),
-    currencySymbol: z.string().min(1, "Currency symbol is required"),
     isPriceNegotiable: z.boolean().default(true),
 });
 
@@ -84,11 +82,6 @@ export const VehicleImageSchema = z.object({
     deleted: z.boolean().default(false).optional(),
 });
 
-export const VehicleFeatureSchema = z.object({
-    id: z.string(),
-    name: z.string().min(1),
-});
-
 const YearSchema = z.string().refine(
     (value) => {
         const numericValue = Number(value);
@@ -104,8 +97,8 @@ export const VehicleSchema = z.object({
     id: ListingIdField.optional(),
     type: z.nativeEnum(VehicleTypes, { invalid_type_error: "Invalid Vehicle Type" }),
     brand: z.string().min(1, "Brand is required"),
-    model: z.string().min(1, "Model is required"),
-    trim: z.string().optional(),
+    model: z.string().min(1, "Model is required").max(50, "Model cannot be more than 50 characters"),
+    trim: z.string().max(50, "Trim cannot be more than 50 characters").optional(),
     yearOfManufacture: YearSchema,
     yearOfRegistration: z.union([z.literal(""), z.null(), YearSchema]).optional(),
     millage: MilageSchema,
@@ -124,7 +117,7 @@ export const VehicleSchema = z.object({
         .refine((array) => array.some((item) => !item.deleted && item.isThumbnail), {
             message: `One of the image needs to be marked as a thumbnail`,
         }),
-    features: z.array(VehicleFeatureSchema),
+    features: z.array(z.string()),
 });
 
 export const vehicleCreateSchema = VehicleSchema.omit({ features: true, id: true }).merge(z.object({ featureIds: z.array(z.string()) }));
@@ -159,72 +152,44 @@ export const CreateSubscriptionSchema = z.object({
     subscriptionExpiryDate: z.string().min(1, "Expiration date is required"),
 });
 
-export const PostedListingsFilterSchema = z.object({
-    Title: z.string().optional(),
-    YomStartDate: z.union([z.string(), z.null()]).optional(),
-    YomEndDate: z.union([z.string(), z.null()]).optional(),
-    MinPrice: z.union([getNumericSchema(), z.literal(""), z.null()]).optional(),
-    MaxPrice: z.union([getNumericSchema(), z.literal(""), z.null()]).optional(),
-    State: z.union([z.string(), z.null()]).optional(),
-    City: z.union([z.string(), z.null()]).optional(),
-    Brand: z.union([z.string(), z.null()]).optional(),
-    Model: z.string().optional(),
-    VehicleType: z.union([z.nativeEnum(VehicleTypes), z.literal(""), z.null()]).optional(),
-    FuelType: z.union([z.nativeEnum(FuelTypes), z.literal(""), z.null()]).optional(),
-    Condition: z.union([z.nativeEnum(VehicleConditionTypes), z.literal(""), z.null()]).optional(),
-    Transmission: z.union([z.nativeEnum(TransmissionTypes), z.literal(""), z.null()]).optional(),
-});
-
 export const EditSubscriptionSchema = CreateSubscriptionSchema.extend({
     listingSubscriptionId: ListingSubscriptionIdField,
 });
 
-export const ReviewListingSchema = z.object({
-    listingId: ListingIdField,
-    status: z.nativeEnum(ListingStatusTypes),
-    reviewComment: z.string(),
+export const PublicListingsFilterSchema = z.object({
+    city: z.string().optional().nullable(),
+    state: z.string().optional().nullable(),
+    condition: z.union([z.nativeEnum(VehicleConditionTypes), z.literal("")]).optional(),
+    fuelType: z.union([z.nativeEnum(FuelTypes), z.literal("")]).optional(),
+    vehicleType: z.union([z.nativeEnum(VehicleTypes), z.literal("")]).optional(),
+    transmissionType: z.union([z.nativeEnum(TransmissionTypes), z.literal("")]).optional(),
+    maxPrice: getNumericSchema("Price amount needs to be a positive number", 0).optional(),
+    minPrice: getNumericSchema("Price amount needs to be a positive number", 0).optional(),
+    yomEndDate: z.string().optional(),
+    yomStartDate: z.string().optional(),
+    startCreatedDate: z.string().optional(),
+    endCreatedDate: z.string().optional(),
+    query: z.string().optional(),
 });
 
-export const UnListListingSchema = z.object({
-    listingId: ListingIdField,
-    listingStatus: z.nativeEnum(ListingStatusTypes),
+export const UserListingsFilterSchema = PublicListingsFilterSchema.omit({ query: true }).extend({
+    brand: z.string().optional().nullable(),
+    model: z.string().optional(),
+    status: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
 });
 
-export const MyListingsFilterSchema = z.object({
-    ListingStatus: z.union([z.nativeEnum(ListingStatusTypes), z.literal("")]).optional(),
-    StartCreatedDate: z.string().optional(),
-    EndCreatedDate: z.string().optional(),
+export const AdminListingsFilterSchema = UserListingsFilterSchema.extend({
+    countryCode: z.string().optional().nullable(),
+    userEmail: z.string().optional(),
 });
 
-export const DashboardListingFilterSchema = MyListingsFilterSchema.extend({
-    Title: z.string().optional(),
-    MinPrice: z.union([getNumericSchema("", 0), z.literal("")]).optional(),
-    MaxPrice: z.union([getNumericSchema("", 0), z.literal("")]).optional(),
-    City: z.union([z.string(), z.null()]).optional(),
-    State: z.union([z.string(), z.null()]).optional(),
-    Country: z.union([z.string(), z.null()]).optional(),
-    Brand: z.union([z.string(), z.null()]).optional(),
-    Model: z.string().optional(),
-    VehicleType: z.union([z.nativeEnum(VehicleTypes), z.literal("")]).optional(),
-    FuelType: z.union([z.nativeEnum(FuelTypes), z.literal("")]).optional(),
-    Condition: z.union([z.nativeEnum(VehicleConditionTypes), z.literal("")]).optional(),
-    Transmission: z.union([z.nativeEnum(TransmissionTypes), z.literal("")]).optional(),
+export const UserSubscriptionsFilterSchema = z.object({
+    activeStatus: z.string().optional(),
+    notificationFrequency: z.union([z.nativeEnum(SubscriptionFrequencies), z.literal("")]).optional(),
 });
 
-export const DashboardMySubscriptionFilterSchema = z.object({
-    Active: z.union([BooleanStringSchema, z.literal("")]).optional(),
-    NotificationFrequency: z.union([z.nativeEnum(SubscriptionFrequencies), z.literal("")]).optional(),
-});
-
-export const DashboardSubscriptionFilterSchema = DashboardMySubscriptionFilterSchema.extend({
-    UserId: z.string().optional(),
-});
-
-export const ReportListingSchema = z.object({
-    listingId: ListingIdField,
-    reason: z.nativeEnum(ListingReportReason),
-    emailAddress: z.string().email(),
-    message: z.string().min(1, "A message is required"),
+export const AdminSubscriptionsFilterSchema = UserSubscriptionsFilterSchema.extend({
+    userEmail: z.string().optional(),
 });
 
 export const ToggleSubscriptionSchema = z.object({
@@ -232,14 +197,12 @@ export const ToggleSubscriptionSchema = z.object({
     subscriptionExpiryDate: z.union([z.string().min(1, "Expiration date is required"), z.date()]),
 });
 
-export const DashboardNotificationsFilterSchema = z.object({
-    StartDate: z.string().optional(),
-    EndDate: z.string().optional(),
-    IsShown: z.union([z.union([z.literal("true").transform(() => true), z.literal("false").transform(() => false)]), z.literal("")]).optional(),
+export const UserNotificationsFilterSchema = z.object({
+    startDate: z.string().optional(),
+    endDate: z.string().optional(),
 });
 
 export const UpdateProfileSchema = z.object({
-    userId: z.string(),
     isDealership: z.boolean(),
     address: z.object({
         city: z.string().min(1, "City is required"),
@@ -255,15 +218,6 @@ export const ContactUsSchema = z.object({
     email: z.string().min(1, "Email is required").email(),
     subject: z.string().min(1, "Subject is required").max(300, "Subject cannot have more than 300 characters"),
     message: z.string().min(1, "Message is required").max(5000, "Message cannot have more than 5000 characters"),
-});
-
-export const GenerateS3SignedUrl = z.object({
-    imageMetaDatas: z.array(
-        z.object({
-            fileType: z.string(),
-            fileSize: z.number(),
-        }),
-    ),
 });
 
 export const DeleteS3Images = z.object({

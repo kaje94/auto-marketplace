@@ -1,16 +1,17 @@
+import { PartialMessage } from "@bufbuild/protobuf";
 import { clsx } from "clsx";
 import { FC } from "react";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { Avatar } from "@/components/Common/Avatar";
 import { COUNTRIES } from "@/utils/countries";
-import { ListingUser } from "@/utils/types";
 
 interface Props {
     loading?: boolean;
-    user?: ListingUser;
+    user?: UserProfile;
 }
 
 export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
-    const countryPhoneCode = COUNTRIES[user?.address?.country || ""]?.[3];
+    const countryPhoneCode = COUNTRIES[user?.data?.countryCode || ""]?.[3];
     return (
         <>
             <div className="avatar my-4">
@@ -32,20 +33,18 @@ export const ListingSellerDetails: FC<Props> = ({ user, loading }) => {
                 </div>
             ) : (
                 <>
-                    <div className="w-full flex-wrap !break-all text-center text-2xl font-extrabold">
-                        {user?.firstName} {user?.lastName}
-                    </div>
+                    <div className="w-full flex-wrap !break-all text-center text-2xl font-extrabold">{user?.name}</div>
                     <div className="mt-2 flex flex-col items-center gap-1">
                         <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`mailto:${user?.email}`}>
                             Email: <span className="link-hover link font-semibold text-primary-content">{user?.email}</span>
                         </a>
-                        {user?.phone && (
-                            <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`tel:${user.phone}`}>
+                        {user?.data?.phone && (
+                            <a className="w-full max-w-xs flex-wrap !break-all text-center font-light" href={`tel:${user?.data?.phone}`}>
                                 Contact Number:
                                 <span className="link-hover link font-semibold text-primary-content">
                                     <>
                                         <span className="font-light opacity-70">{countryPhoneCode ? `(${countryPhoneCode}) ` : ""}</span>
-                                        {user?.phone ?? "-"}
+                                        {user?.data?.phone ?? "-"}
                                     </>
                                 </span>
                             </a>

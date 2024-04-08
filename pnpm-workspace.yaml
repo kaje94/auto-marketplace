@@ -1,5 +1,5 @@
 packages:
   - apps/*
   - apps/email-mgr/.react-email
-  - libs/protos
+  - libs/*
   - libs/infra/*

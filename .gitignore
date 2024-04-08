@@ -52,3 +52,10 @@ gen
 .react-email/
 
 .nx/cache
+
+__debug_*
+
+
+.xata
+
+dist

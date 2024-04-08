@@ -1,16 +1,16 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { SubscriptFrequenciesList } from "@/utils/constants";
-import { DashboardMySubscriptionFilterReq } from "@/utils/types";
+import { UserSubscriptionsFilterReq } from "@/utils/types";
 import { FilterSelect as SelectController } from "../FilterFormElements/DashboardFilterSelect";
 import { FilterWrap } from "../FilterFormElements/FilterWrap";
 
 interface Props {
     dropdownOpen?: boolean;
-    form?: UseFormReturn<DashboardMySubscriptionFilterReq>;
+    form?: UseFormReturn<UserSubscriptionsFilterReq>;
     hasSearchParams?: boolean;
     isLoading?: boolean;
-    onApplyFilterClick: (val: DashboardMySubscriptionFilterReq) => void;
+    onApplyFilterClick: (val: UserSubscriptionsFilterReq) => void;
     onResetClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     setDropdownOpen: (val: boolean) => void;
 }
@@ -24,7 +24,7 @@ export const DashboardMySubscriptionFilter: FC<Props> = ({
     setDropdownOpen,
     onApplyFilterClick,
 }) => {
-    const { handleSubmit, control } = form as UseFormReturn<DashboardMySubscriptionFilterReq>;
+    const { handleSubmit, control } = form as UseFormReturn<UserSubscriptionsFilterReq>;
 
     return (
         <FilterWrap
@@ -37,7 +37,7 @@ export const DashboardMySubscriptionFilter: FC<Props> = ({
         >
             <SelectController
                 control={control}
-                fieldName="Active"
+                fieldName="activeStatus"
                 label="Active/Inactive"
                 options={[
                     { label: "Active", value: "true" },
@@ -47,7 +47,7 @@ export const DashboardMySubscriptionFilter: FC<Props> = ({
             />
             <SelectController
                 control={control}
-                fieldName="NotificationFrequency"
+                fieldName="notificationFrequency"
                 label="Notification Frequency"
                 options={SubscriptFrequenciesList}
                 placeholder="All frequency types"

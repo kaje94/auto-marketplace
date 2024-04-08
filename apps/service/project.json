@@ -8,13 +8,13 @@
       "build": {
         "executor": "@nx-go/nx-go:build",
         "options": {
-          "main": "{projectRoot}/server/main.go"
+          "main": "{projectRoot}/cmd/main.go"
         }
       },
       "serve": {
         "executor": "@nx-go/nx-go:serve",
         "options": {
-          "main": "{projectRoot}/server/main.go"
+          "main": "{projectRoot}/cmd/main.go"
         }
       },
       "test": {

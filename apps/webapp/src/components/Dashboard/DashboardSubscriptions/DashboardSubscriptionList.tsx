@@ -4,32 +4,46 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
 import { Dispatch, FC, SetStateAction } from "react";
+import { PaginatedResponse, SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { Empty, Pagination } from "@/components/Common";
 import { useDashboardAllSubscriptionsContext } from "@/providers/DashboardAllSubscriptionsProvider";
 import { useDashboardMySubscriptionsContext } from "@/providers/DashboardMySubscriptionsContextProvider";
-import { ListingSubscriptionItems, PaginatedResponse } from "@/utils/types";
 import { DashboardSubscriptionItem } from "./DashboardSubscriptionItem";
 
 interface Props {
     /** Base path to be used when forwarding to a subpath */
     basePath?: string;
+    /** Current page number */
+    currentPageNumber?: number;
     /** Boolean field to change the text to be shown within the empty component */
     hasSearchParams?: boolean;
-    /** Paginated list of subscriptions to be shown */
-    listingSubscriptions?: PaginatedResponse & ListingSubscriptionItems;
     /** To show placeholder subscriptions during initial render without any data */
     pageLoading?: boolean;
+    /** Pagination response form the server */
+    paginatedResponse?: PaginatedResponse;
+    /** Paginated list of subscriptions to be shown */
+    subscriptions?: SubscriptionItem[];
 }
 
 /** List of subscription items to be shown in the dashboard */
 export const DashboardSubscriptionList: FC<
     Props & { isLoading: boolean; searchParamsObj: Record<string, string>; setNewSearchQuery: Dispatch<SetStateAction<string>> }
-> = ({ listingSubscriptions, pageLoading, isLoading, searchParamsObj, setNewSearchQuery, basePath, hasSearchParams }) => {
+> = ({
+    subscriptions,
+    paginatedResponse,
+    currentPageNumber,
+    pageLoading,
+    isLoading,
+    searchParamsObj,
+    setNewSearchQuery,
+    basePath,
+    hasSearchParams,
+}) => {
     const [parent] = useAutoAnimate();
 
     return (
         <div className={clsx("grid gap-1 xl:gap-2", (pageLoading || isLoading) && "animate-pulse")} ref={parent}>
-            {!pageLoading && listingSubscriptions?.totalCount === 0 && (
+            {!pageLoading && (!paginatedResponse?.totalCount || paginatedResponse?.totalCount === 0) && (
                 <Empty
                     button={
                         hasSearchParams
@@ -45,19 +59,17 @@ export const DashboardSubscriptionList: FC<
                 />
             )}
 
-            {listingSubscriptions?.items?.map((item) => (
-                <DashboardSubscriptionItem key={item.id} basePath={basePath} listingSubscriptionItem={item} />
-            ))}
+            {subscriptions?.map((item) => <DashboardSubscriptionItem key={item.id} basePath={basePath} subscriptionItem={item} />)}
 
             {pageLoading && new Array(5).fill("").map((_, i) => <DashboardSubscriptionItem key={`loading-subscription-item-${i}`} loading />)}
 
             <Pagination
                 basePath={basePath}
                 loading={pageLoading || isLoading}
-                pageNumber={listingSubscriptions?.pageNumber}
+                pageNumber={currentPageNumber}
                 searchParams={searchParamsObj as StringifiableRecord}
                 setNewSearchQuery={setNewSearchQuery}
-                totalPages={listingSubscriptions?.totalPages}
+                totalPages={paginatedResponse?.totalPages}
             />
         </div>
     );

@@ -5,13 +5,14 @@ import { useParams, useRouter } from "next/navigation";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { unListListingAction } from "@/actions/listingActions";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { z } from "zod";
+import { unListListingAction } from "@/actions/userListingActions";
 import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { SelectController } from "@/components/FormElements/Select";
 import { ListingStatusTypes } from "@/utils/enum";
-import { unCamelCase } from "@/utils/helpers";
-import { UnListListingSchema } from "@/utils/schemas";
-import { LabelValue, ListingItem, UnListListingReq } from "@/utils/types";
+import { getListingTitleFromListing, unCamelCase } from "@/utils/helpers";
+import { LabelValue } from "@/utils/types";
 
 interface Props extends ModalProps {
     /** Listing item that needs to be unlisted */
@@ -21,35 +22,42 @@ interface Props extends ModalProps {
 /** Modal to be used in order to unlist an advert temporarily or permanently */
 export const UnListListingModal = (props: Props) => {
     const { listingItem = {}, onVisibleChange, visible } = props;
-    const { id: listingId, title: listingTitle, userId: listingUserId } = listingItem as ListingItem;
+    const { id: listingId, data, user } = listingItem as ListingItem;
+    const listingTitle = getListingTitleFromListing(data!);
+
     const toastId = useRef<string>();
     const router = useRouter();
     const params = useParams();
 
-    const { handleSubmit, control } = useForm<UnListListingReq>({
-        resolver: zodResolver(UnListListingSchema),
-        defaultValues: { listingId, listingStatus: ListingStatusTypes.Sold },
+    const { handleSubmit, control } = useForm({
+        resolver: zodResolver(z.object({ listingStatus: z.nativeEnum(ListingStatusTypes) })),
+        defaultValues: { listingStatus: ListingStatusTypes.Sold },
         mode: "all",
     });
 
-    const { mutate, isLoading } = useMutation((reqParams: UnListListingReq) => unListListingAction(reqParams, listingUserId!), {
-        onSuccess: (_, id) => {
-            if (window?.location?.pathname === `/${params.locale}/search/${id}`) {
-                router.replace(`/${params.locale}/dashboard/listings/${id}`);
-            }
+    const { mutate, isLoading } = useMutation(
+        (reqParams: { listingStatus: ListingStatusTypes }) => unListListingAction(listingId, reqParams.listingStatus, user?.email!),
+        {
+            onSuccess: (_, id) => {
+                if (window?.location?.pathname === `/${params.locale}/search/${id}`) {
+                    router.replace(`/${params.locale}/dashboard/listings/${id}`);
+                }
+            },
+            onMutate: () => {
+                onVisibleChange(false);
+                toastId.current = toast.loading(`Unlisting advert ${listingTitle}...`);
+            },
+            onSettled: (_data, err) => {
+                if (err) {
+                    toast.error(`Failed to update the status of the advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, {
+                        id: toastId?.current,
+                    });
+                } else {
+                    toast.success(`Successfully updated the status of the advert ${listingTitle}`, { id: toastId?.current });
+                }
+            },
         },
-        onMutate: () => {
-            onVisibleChange(false);
-            toastId.current = toast.loading(`Unlisting advert ${listingTitle}...`);
-        },
-        onSettled: (_data, err) => {
-            if (err) {
-                toast.error(`Failed to update the status of the advert ${listingTitle}. ${(err as Error)?.message ?? ""}`, { id: toastId?.current });
-            } else {
-                toast.success(`Successfully updated the status of the advert ${listingTitle}`, { id: toastId?.current });
-            }
-        },
-    });
+    );
 
     const selectOptions: LabelValue[] = [];
     if ((listingItem as ListingItem)?.status !== ListingStatusTypes.TemporarilyUnlisted) {

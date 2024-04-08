@@ -1,5 +1,6 @@
 "use client";
 import { FC, useState } from "react";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { ContextMenu, ContextMenuItemProp } from "@/components/Common";
 import { DeleteListingItemModal } from "@/components/Modals/DeleteListingItemModal";
 import { RelistListingItemModal } from "@/components/Modals/RelistListingItemModal";
@@ -9,7 +10,6 @@ import { UnListListingModal } from "@/components/Modals/UnListListingModal";
 import { CheckCircleIcon, EditIcon, EyeIcon, EyeOffIcon, RefreshIcon, TrashIcon } from "@/icons";
 import { ListingStatusTypes } from "@/utils/enum";
 import { isRenewableListing } from "@/utils/helpers";
-import { ListingItem } from "@/utils/types";
 
 interface Props {
     /** Base path to be used when forwarding to a subpath */
@@ -43,7 +43,11 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
         link: `${basePath}/edit/${listingId}`,
         label: "Edit",
     });
-    if (isRenewableListing(new Date(expiryDate)) && status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status)) {
+    if (
+        isRenewableListing(new Date(expiryDate)) &&
+        status &&
+        [ListingStatusTypes.Posted, ListingStatusTypes.Expired].includes(status as ListingStatusTypes)
+    ) {
         menuItems.push({
             icon: <RefreshIcon height={17} />,
             onClick: () => setRenewModalVisible(true),
@@ -64,7 +68,10 @@ export const DashboardListingItemMenu: FC<Props> = ({ listingItem = {}, isAdmin,
             label: "Review",
         });
     }
-    if (status && [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status)) {
+    if (
+        status &&
+        [ListingStatusTypes.Posted, ListingStatusTypes.Expired, ListingStatusTypes.TemporarilyUnlisted].includes(status as ListingStatusTypes)
+    ) {
         menuItems.push({
             icon: <EyeOffIcon height={17} />,
             onClick: () => setUnListModalVisible(true),

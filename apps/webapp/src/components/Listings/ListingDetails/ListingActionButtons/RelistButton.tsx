@@ -1,8 +1,8 @@
 "use client";
 import { clsx } from "clsx";
 import { FC, useState } from "react";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { RelistListingItemModal } from "@/components/Modals/RelistListingItemModal";
-import { ListingItem } from "@/utils/types";
 
 interface Props {
     listingItem: ListingItem;

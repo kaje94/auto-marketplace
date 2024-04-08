@@ -4,11 +4,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { UseFormReset } from "react-hook-form";
 import { COUNTRIES } from "@/utils/countries";
 import {
-    DashboardListFilterReq,
-    DashboardNotificationsFilterReq,
-    DashboardSubscriptionFilterReq,
-    MyListingsFilterReq,
-    PostedListingsFilterReq,
+    AdminListingsFilterReq,
+    AdminSubscriptionsFilterReq,
+    PublicListingsFilterReq,
+    UserListingsFilterReq,
+    UserNotificationsFilterReq,
 } from "@/utils/types";
 
 export const useDashboardFilter = ({
@@ -20,11 +20,11 @@ export const useDashboardFilter = ({
     isLoading,
 }: {
     defaultFilter:
-        | MyListingsFilterReq
-        | DashboardListFilterReq
-        | DashboardSubscriptionFilterReq
-        | DashboardNotificationsFilterReq
-        | PostedListingsFilterReq;
+        | UserListingsFilterReq
+        | AdminListingsFilterReq
+        | AdminSubscriptionsFilterReq
+        | UserNotificationsFilterReq
+        | PublicListingsFilterReq;
     isLoading: boolean;
     newSearchQuery: string;
     reset: UseFormReset<any>;
@@ -43,16 +43,11 @@ export const useDashboardFilter = ({
     };
 
     const onApplyFilterClick = (
-        values:
-            | MyListingsFilterReq
-            | DashboardListFilterReq
-            | DashboardSubscriptionFilterReq
-            | DashboardNotificationsFilterReq
-            | PostedListingsFilterReq,
+        values: UserListingsFilterReq | AdminListingsFilterReq | AdminSubscriptionsFilterReq | UserNotificationsFilterReq | PublicListingsFilterReq,
     ) => {
         let queryValObj: any = { ...searchParamsObj, ...values };
-        if ("Country" in values) {
-            const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === values.Country);
+        if ("countryCode" in values) {
+            const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === values.countryCode);
             queryValObj = { ...queryValObj, Country: countryCode };
         }
         const searchQuery = qs.stringify(queryValObj, { skipEmptyString: true, skipNull: true });

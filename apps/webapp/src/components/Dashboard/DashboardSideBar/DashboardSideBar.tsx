@@ -1,6 +1,6 @@
 import { Claims, getSession } from "@auth0/nextjs-auth0";
 import { Suspense } from "react";
-import { api } from "@/utils/api";
+import { getUserNotificationsAction } from "@/actions/notificationActions";
 import { NavBarItem } from "./DashboardSideBarItem";
 
 /** Dashboard sidebar with content loaded using react suspense */
@@ -14,7 +14,10 @@ export const DashboardSideBar = async () => {
 
 const DashboardSideBarWithSession = async () => {
     const session = await getSession();
-    const notifications = await api.getMyNotifications(session?.user?.sub!, { PageNumber: 1 });
+    const notifications = await getUserNotificationsAction(
+        { page: { pageNumber: 1, pageSize: 10 }, filters: { userFilters: {} } },
+        session?.user?.email!,
+    );
     const notificationCount = notifications.items?.filter((item) => !item.isShown)?.length;
     return <DashboardSideBarItems notificationCount={notificationCount} userClaims={session?.user} />;
 };

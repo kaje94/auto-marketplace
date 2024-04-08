@@ -2,9 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { getCitiesOfState, getStatesOfCountry } from "@/actions/locationActions";
-import { BOT_LOCALE, FuelTypeList, ListingTypeList, VehicleTypeList } from "@/utils/constants";
+import { VEHICLE_BRANDS } from "@/utils/brands";
+import {
+    BOT_LOCALE,
+    FuelTypeList,
+    ListingTypeList,
+    TransmissionTypeList,
+    VehicleConditionList,
+    VehicleTypeList,
+    YearSelectMinYear,
+} from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
-import { DashboardListFilterReq, LabelValue, VehicleBrand } from "@/utils/types";
+import { AdminListingsFilterReq, LabelValue } from "@/utils/types";
 import { FilterAutoComplete as AutocompleteController } from "../FilterFormElements/DashboardFilterAutoComplete";
 import { FilterInput as InputController } from "../FilterFormElements/DashboardFilterInput";
 import { FilterNumberInput as NumberInputController } from "../FilterFormElements/DashboardFilterNumberInput";
@@ -13,17 +22,15 @@ import { FilterWrap } from "../FilterFormElements/FilterWrap";
 
 interface Props {
     dropdownOpen?: boolean;
-    form?: UseFormReturn<DashboardListFilterReq>;
+    form?: UseFormReturn<AdminListingsFilterReq>;
     hasSearchParams?: boolean;
     isLoading?: boolean;
-    onApplyFilterClick: (val: DashboardListFilterReq) => void;
+    onApplyFilterClick: (val: AdminListingsFilterReq) => void;
     onResetClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     setDropdownOpen: (val: boolean) => void;
-    vehicleBrands?: VehicleBrand[];
 }
 
 export const DashboardAllListFilter: FC<Props> = ({
-    vehicleBrands = [],
     form,
     isLoading,
     dropdownOpen,
@@ -37,11 +44,11 @@ export const DashboardAllListFilter: FC<Props> = ({
         control,
         watch = (_: string) => "",
         setValue = (_key: string, _value: string) => null,
-    } = form as UseFormReturn<DashboardListFilterReq>;
+    } = form as UseFormReturn<AdminListingsFilterReq>;
 
-    const country = watch("Country");
-    const state = watch("State");
-    const city = watch("City");
+    const country = watch("countryCode");
+    const state = watch("state");
+    const city = watch("city");
 
     const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === country);
 
@@ -54,26 +61,27 @@ export const DashboardAllListFilter: FC<Props> = ({
         queryFn: () => getStatesOfCountry(countryCode!),
         enabled: !!countryCode && countryCode !== BOT_LOCALE,
         queryKey: ["country-states", { locale: countryCode }],
+        select: (data) => data.states,
         onSettled: (data, _) => {
-            if (!!data?.length && !data?.some((item) => item.name === state)) {
-                setValue("State", "");
-                setValue("City", "");
+            if (!!data?.length && !data?.some((item) => item.stateName === state)) {
+                setValue("state", "");
+                setValue("city", "");
             }
         },
     });
 
-    const stateList = states?.map((item) => ({ label: item.name, value: item.name }) as LabelValue);
+    const stateList = states?.map((item) => ({ label: item.stateName, value: item.stateName }) as LabelValue);
 
-    const stateCode = states.find((item) => item.name === state)?.stateCode;
+    const stateCode = states.find((item) => item.stateName === state)?.id;
 
     const { data: cityList = [], isFetching: isLoadingCities } = useQuery({
-        queryFn: () => getCitiesOfState(countryCode!, stateCode!),
+        queryFn: () => getCitiesOfState(stateCode!),
         enabled: !!countryCode && !!stateCode,
         queryKey: ["country-state-cities", { locale: countryCode, stateCode }],
-        select: (data) => data.map((item) => ({ label: item.name, value: item.name }) as LabelValue),
+        select: (data) => data?.cities.map((item) => ({ label: item, value: item }) as LabelValue),
         onSettled: (data, _) => {
             if (!!data?.length && !data?.some((item) => item.label === city)) {
-                setValue("City", "");
+                setValue("city", "");
             }
         },
     });
@@ -88,12 +96,17 @@ export const DashboardAllListFilter: FC<Props> = ({
             onResetClick={onResetClick}
         >
             <div className="col-span-full">
-                <InputController control={control} fieldName="Title" label="Title" placeholder="Advert Title" />
+                <AutocompleteController
+                    control={control}
+                    fieldName="countryCode"
+                    label="Country"
+                    options={countryList}
+                    placeholder="Select Country"
+                />
             </div>
-            <AutocompleteController control={control} fieldName="Country" label="Country" options={countryList} placeholder="Select Country" />
             <AutocompleteController
                 control={control}
-                fieldName="State"
+                fieldName="state"
                 label="State/Province"
                 loading={isLoadingStates}
                 options={stateList}
@@ -101,7 +114,7 @@ export const DashboardAllListFilter: FC<Props> = ({
             />
             <AutocompleteController
                 control={control}
-                fieldName="City"
+                fieldName="city"
                 label="City"
                 loading={isLoadingCities}
                 options={cityList}
@@ -109,19 +122,46 @@ export const DashboardAllListFilter: FC<Props> = ({
             />
             <AutocompleteController
                 control={control}
-                fieldName="Brand"
+                fieldName="brand"
                 label="Brand"
-                options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
+                options={VEHICLE_BRANDS.map((item) => ({ label: item, value: item }))}
                 placeholder="Toyota, Nissan, Honda, etc"
             />
-            <InputController control={control} fieldName="Model" label="Model" placeholder="Civic, Sunny, Swift, etc" />
-            <SelectController control={control} fieldName="ListingStatus" label="Status" options={ListingTypeList} placeholder="All status types" />
-            <NumberInputController control={control} fieldName="MinPrice" label="Minimum Price" placeholder="Minimum price" />
-            <NumberInputController control={control} fieldName="MaxPrice" label="Maximum Price" placeholder="Maximum price" />
-            <InputController control={control} fieldName="StartCreatedDate" label="Created After" placeholder="Created after date" type="date" />
-            <InputController control={control} fieldName="EndCreatedDate" label="Created Before" placeholder="Created before date" type="date" />
-            <SelectController control={control} fieldName="VehicleType" label="Vehicle Type" options={VehicleTypeList} placeholder="All Types" />
+            <InputController control={control} fieldName="model" label="Model" placeholder="Civic, Sunny, Swift, etc" />
+            <SelectController control={control} fieldName="status" label="Status" options={ListingTypeList} placeholder="All status types" />
+            <SelectController control={control} fieldName="condition" label="Condition" options={VehicleConditionList} placeholder="All conditions" />
             <SelectController control={control} fieldName="FuelType" label="Fuel Type" options={FuelTypeList} placeholder="All fuel types" />
+            <SelectController control={control} fieldName="vehicleType" label="Vehicle Type" options={VehicleTypeList} placeholder="All Types" />
+            <SelectController
+                control={control}
+                fieldName="transmissionType"
+                label="Transmission Type"
+                options={TransmissionTypeList}
+                placeholder="All Types"
+            />
+            <InputController control={control} fieldName="userEmail" label="User Email" placeholder="user@gmail.com" />
+            <NumberInputController control={control} fieldName="minPrice" label="Minimum Price" placeholder="Minimum price" />
+            <NumberInputController control={control} fieldName="maxPrice" label="Maximum Price" placeholder="Maximum price" />
+            <InputController control={control} fieldName="startCreatedDate" label="Created After" placeholder="Created after date" type="date" />
+            <InputController control={control} fieldName="endCreatedDate" label="Created Before" placeholder="Created before date" type="date" />
+            <InputController
+                control={control}
+                fieldName="yomStartDate"
+                label="Manufactured after year"
+                max={new Date().getFullYear()}
+                min={YearSelectMinYear}
+                placeholder="2000"
+                type="number"
+            />
+            <InputController
+                control={control}
+                fieldName="yomEndDate"
+                label="Manufactured before year"
+                max={new Date().getFullYear()}
+                min={YearSelectMinYear}
+                placeholder="2015"
+                type="number"
+            />
         </FilterWrap>
     );
 };

@@ -1,9 +1,11 @@
 /* eslint-disable max-lines */
 "use client";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import React, { FC, ReactNode, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
+import { UserProfile, UserProfile_ProfileData } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";
@@ -14,10 +16,12 @@ import { TagSelectController } from "@/components/FormElements/TagSelect";
 import { TextAreaController } from "@/components/FormElements/TextArea";
 import { YearInputController } from "@/components/FormElements/YearInput";
 import { AlertCircleIcon } from "@/icons";
+import { VEHICLE_BRANDS } from "@/utils/brands";
 import { FuelTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
 import { COUNTRIES } from "@/utils/countries";
+import { VEHICLE_FEATURES } from "@/utils/features";
 import { getDistanceUnit, getRandomItem, isIncompleteUserProfile } from "@/utils/helpers";
-import { CreateListingReq, ListingUser, VehicleBrand, VehicleFeature } from "@/utils/types";
+import { CreateListingReq } from "@/utils/types";
 import { ListingImageUploadLoading } from "./ListingImageUpload";
 
 const ProfileUpdateModal = dynamic(() => import("@/components/Modals/ProfileUpdateModal").then((mod) => mod.ProfileUpdateModal), { ssr: false });
@@ -28,20 +32,18 @@ const ListingImageUpload = dynamic(() => import("./ListingImageUpload").then((mo
 });
 
 interface Props {
-    featureOptions?: VehicleFeature[];
     form?: UseFormReturn<CreateListingReq>;
     isLoading?: boolean;
     isMutating?: boolean;
     isUpdateProfileEnabled?: boolean;
     onMutate?: (values: CreateListingReq) => void;
-    profile?: ListingUser;
+    profile?: PartialMessage<UserProfile>;
     submitButton?: {
         disableIfCleanForm?: boolean;
         mutatingText?: string;
         text?: string;
     };
     title?: string;
-    vehicleBrands?: VehicleBrand[];
 }
 
 const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: string; value: ReactNode }) => (
@@ -58,18 +60,7 @@ const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: stri
 
 /** Form used to create or edit listing adverts */
 export const ListingForm: FC<Props> = (props) => {
-    const {
-        featureOptions = [],
-        isMutating,
-        isLoading,
-        form = {},
-        onMutate = () => {},
-        submitButton = {},
-        title,
-        vehicleBrands = [],
-        profile,
-        isUpdateProfileEnabled = true,
-    } = props;
+    const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, title, profile, isUpdateProfileEnabled = true } = props;
 
     const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "", setValue } = form as UseFormReturn<CreateListingReq>;
     const [profileModalVisible, setProfileModalVisible] = useState(false);
@@ -83,20 +74,20 @@ export const ListingForm: FC<Props> = (props) => {
     const currencySymbol = countryItem?.[2];
     const phoneCode = countryItem?.[3];
 
-    const [optimisticProfile, addOptimisticProfile] = React.useOptimistic(profile, (state, newState: Partial<ListingUser>) =>
+    const [optimisticProfile, addOptimisticProfile] = React.useOptimistic(profile, (state, newState: PartialMessage<UserProfile>) =>
         state ? { ...state, ...newState } : undefined,
     );
 
     const isProfileIncomplete = optimisticProfile ? isIncompleteUserProfile(optimisticProfile) : false;
 
-    const onProfileUpdate = (data: Partial<ListingUser>) => {
+    const onProfileUpdate = (data: PartialMessage<UserProfile>) => {
         setProfileModalVisible(false);
         addOptimisticProfile(data);
         if (setValue) {
-            setValue("location.city", data.address?.city!);
-            setValue("location.state", data.address?.state!);
-            setValue("location.postalCode", data.address?.postalCode!);
-            setValue("location.country", data.address?.country!);
+            setValue("location.city", data?.data?.city!);
+            setValue("location.state", data?.data?.state!);
+            setValue("location.postalCode", data?.data?.postalCode!);
+            setValue("location.country", data?.data?.countryCode!);
         }
     };
 
@@ -137,7 +128,7 @@ export const ListingForm: FC<Props> = (props) => {
                                     fieldName="vehicle.brand"
                                     label="Brand"
                                     loading={isLoading}
-                                    options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
+                                    options={VEHICLE_BRANDS.map((item) => ({ label: item, value: item }))}
                                     placeholder="Toyota, Nissan, Honda, etc"
                                     required
                                 />
@@ -287,13 +278,13 @@ export const ListingForm: FC<Props> = (props) => {
                                 <DetailsItem title="City" value={(city as string) || "-"} />
                                 <DetailsItem title="Postal Code" value={(postalCode as string) || "-"} />
                                 <div className="divider col-span-full -mt-2 mb-0 opacity-50" />
-                                <DetailsItem title="Email" value={optimisticProfile?.email || "-"} />
+                                <DetailsItem title="Email" value={profile?.email || "-"} />
                                 <DetailsItem
                                     title="Phone Number"
                                     value={
                                         <>
                                             <span className="font-light opacity-70">{phoneCode ? `(${phoneCode}) ` : ""}</span>
-                                            {optimisticProfile?.phone ?? "-"}
+                                            {optimisticProfile?.data?.phone ?? "-"}
                                         </>
                                     }
                                 />
@@ -329,7 +320,7 @@ export const ListingForm: FC<Props> = (props) => {
                                     fieldName="vehicle.featureIds"
                                     loading={isLoading}
                                     loadingPlaceholderCount={20}
-                                    tags={featureOptions}
+                                    tags={VEHICLE_FEATURES}
                                 />
                             </span>
                         </div>

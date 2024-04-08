@@ -5,21 +5,21 @@ import { FilterButton } from "@/components/Dashboard/DashboardListHeader/FilterB
 import { useDashboardFilter } from "@/components/Dashboard/DashboardListHeader/FilterHooks";
 import { DashboardAllSubscriptionFilter } from "@/components/Filters/DashboardAllSubscriptionFilter";
 import { useDashboardAllSubscriptionsContext } from "@/providers/DashboardAllSubscriptionsProvider";
-import { DashboardSubscriptionFilterSchema } from "@/utils/schemas";
-import { DashboardSubscriptionFilterReq } from "@/utils/types";
+import { AdminSubscriptionsFilterSchema } from "@/utils/schemas";
+import { AdminSubscriptionsFilterReq } from "@/utils/types";
 
-const defaultFilter: DashboardSubscriptionFilterReq = {
-    Active: "",
-    NotificationFrequency: "",
-    UserId: "",
+const defaultFilter: AdminSubscriptionsFilterReq = {
+    activeStatus: "",
+    notificationFrequency: "",
+    userEmail: "",
 };
 
 /** Filter button to be used in the all subscriptions screen within dashboard */
 export const DashboardAllSubscriptionFilterButton = () => {
     const { hasSearchParams, searchParamsObj, isLoading, newSearchQuery, setNewSearchQuery } = useDashboardAllSubscriptionsContext();
 
-    const form = useForm<DashboardSubscriptionFilterReq>({
-        resolver: zodResolver(DashboardSubscriptionFilterSchema),
+    const form = useForm<AdminSubscriptionsFilterReq>({
+        resolver: zodResolver(AdminSubscriptionsFilterSchema),
         defaultValues: searchParamsObj,
         mode: "all",
     });

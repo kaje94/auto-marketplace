@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockVehicleBrands } from "@/utils/mockData";
 import { PostedListingsSearchFilters } from "./PostedListingsSearchFilters";
 
 const meta = {
@@ -15,7 +14,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: {
-        vehicleBrands: mockVehicleBrands,
-    },
+    args: {},
 };

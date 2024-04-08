@@ -1,0 +1,25 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+message GetStatesRequest {
+    string countryCode = 1;
+}
+
+message GetCitiesRequest {
+    string stateCode = 1;
+}
+
+message GetStatesResponse {
+    message StateItem {
+        // ID of the state
+        string id = 1;
+        // Name of the State
+        string stateName = 2;
+    }
+    repeated StateItem states = 1;
+}
+
+message GetCitiesResponse {
+    repeated string cities = 1;
+}

@@ -2,7 +2,7 @@
 
 import React, { ReactNode, useContext } from "react";
 import { FiltersContext, useSearchFilters } from "@/components/Filters/FiltersContext";
-import { MyListingsFilterSchema } from "@/utils/schemas";
+import { UserListingsFilterSchema } from "@/utils/schemas";
 
 export const useDashboardMyListingsContext = () => {
     const data = useContext(FiltersContext);
@@ -12,7 +12,7 @@ export const useDashboardMyListingsContext = () => {
 /** Provider to be used in my-listings page in the dashboard */
 export const DashboardMyListingsContextProvider = ({ children }: { children: ReactNode }) => {
     const { searchParamsObj, newSearchQuery, isLoading, setNewSearchQuery, searchParamStr } = useSearchFilters();
-    const hasSearchParams = Object.keys(MyListingsFilterSchema.parse(searchParamsObj)).length > 0;
+    const hasSearchParams = Object.keys(UserListingsFilterSchema.parse(searchParamsObj)).length > 0;
 
     return (
         <FiltersContext.Provider value={{ newSearchQuery, isLoading, setNewSearchQuery, searchParamsObj, hasSearchParams, searchParamStr }}>

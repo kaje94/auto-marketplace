@@ -1,66 +1,78 @@
 import { Metadata, ResolvingMetadata } from "next";
 import { redirect } from "next/navigation";
 import qs from "query-string";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { getPublicListingsAction } from "@/actions/publicListingActions";
 import { SearchGrid } from "@/components/Listings/PostedListingsSearchGrid";
-import { api } from "@/utils/api";
 import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES, getAlternativeLinks } from "@/utils/countries";
-import { getFormattedCurrency, getLocationString, toSEOFriendlyTitleUrl, unCamelCase } from "@/utils/helpers";
+import {
+    getFormattedCurrency,
+    getListingTitleFromListing,
+    getLocationString,
+    getLocationUserProfile,
+    toSEOFriendlyTitleUrl,
+    unCamelCase,
+} from "@/utils/helpers";
 import { convertToSEOFriendlyImageURL } from "@/utils/imageUtils";
-import { PostedListingsFilterSchema } from "@/utils/schemas";
-import { ListingItem, ListingItems, LocalePathParam, PaginatedResponse, PostedListingsFilterReq, SearchParams } from "@/utils/types";
+import { PublicListingsFilterSchema } from "@/utils/schemas";
+import { LocalePathParam, PublicListingsFilterReq, SearchParams } from "@/utils/types";
 
 const metadataDesc =
     "Refine your search criteria and discover the perfect automotive match. Targabay – Simplifying the search process for a seamless and personalized buying experience";
 const metadataTitle = "Targabay - Explore and Discover Listings";
 
-const getSearchTitleMetadata = (filters: PostedListingsFilterReq, locale: string, resultsCount: number, pageNumber = 1): string => {
+const getSearchTitleMetadata = (filters: PublicListingsFilterReq, locale: string, resultsCount: number, pageNumber = 1): string => {
     let title = metadataTitle;
     const items: string[] = [];
     const country = COUNTRIES[locale];
-    if (filters.Title) {
-        items.push(filters.Title);
+
+    if (filters.query) {
+        items.push(filters.query);
     }
-    if (filters.Brand) {
-        items.push(`Brand:${filters.Brand}`);
+    if (filters.condition) {
+        items.push(`Condition:${filters.condition}`);
     }
-    if (filters.Model) {
-        items.push(`Model:${filters.Model}`);
+    if (filters.fuelType) {
+        items.push(`Fuel-Type:${filters.fuelType}`);
     }
-    if (filters.VehicleType) {
-        items.push(unCamelCase(filters.Model));
+    if (filters.vehicleType) {
+        items.push(unCamelCase(filters.vehicleType));
     }
-    if (filters.Condition) {
-        items.push(unCamelCase(filters.Condition));
+    if (filters.transmissionType) {
+        items.push(unCamelCase(filters.transmissionType));
     }
-    if (filters.FuelType) {
-        items.push(unCamelCase(filters.Model));
-    }
-    if (filters.Transmission) {
-        items.push(unCamelCase(filters.Transmission));
-    }
+
     if (country) {
-        if (filters.MaxPrice && filters.MinPrice) {
+        if (filters.maxPrice && filters.minPrice) {
             items.push(
-                `Price Range:${getFormattedCurrency(filters.MinPrice, country?.[1]!)}-${getFormattedCurrency(filters.MaxPrice, country?.[1]!)}`,
+                `Price-Range:${getFormattedCurrency(filters.minPrice, country?.[1]!)}-${getFormattedCurrency(filters.maxPrice, country?.[1]!)}`,
             );
-        } else if (filters.MaxPrice) {
-            items.push(`Price Upto:${getFormattedCurrency(filters.MaxPrice, country?.[1]!)}`);
-        } else if (filters.MinPrice) {
-            items.push(`Price From:${getFormattedCurrency(filters.MinPrice, country?.[1]!)}`);
+        } else if (filters.maxPrice) {
+            items.push(`Price-Upto:${getFormattedCurrency(filters.maxPrice, country?.[1]!)}`);
+        } else if (filters.minPrice) {
+            items.push(`Price-From:${getFormattedCurrency(filters.minPrice, country?.[1]!)}`);
         }
     }
 
-    if (filters.YomStartDate && filters.YomEndDate) {
-        items.push(`Manufactured Between:${filters.YomStartDate}-${filters.YomEndDate}`);
-    } else if (filters.YomStartDate) {
-        items.push(`Manufactured From:${filters.YomStartDate}`);
-    } else if (filters.YomEndDate) {
-        items.push(`Manufactured Before:${filters.YomEndDate}`);
+    if (filters.yomStartDate && filters.yomEndDate) {
+        items.push(`Manufactured-Between:${filters.yomStartDate}-${filters.yomEndDate}`);
+    } else if (filters.yomStartDate) {
+        items.push(`Manufactured-From:${filters.yomStartDate}`);
+    } else if (filters.yomEndDate) {
+        items.push(`Manufactured-Before:${filters.yomEndDate}`);
+    }
+
+    if (filters.startCreatedDate && filters.endCreatedDate) {
+        items.push(`Created-Between:${filters.startCreatedDate}-${filters.endCreatedDate}`);
+    } else if (filters.startCreatedDate) {
+        items.push(`Created-From:${filters.startCreatedDate}`);
+    } else if (filters.endCreatedDate) {
+        items.push(`Created-Before:${filters.endCreatedDate}`);
     }
     title = `${title}${items.length > 0 ? ` for ${items.join("|")}` : ""} in ${getLocationString({
-        city: filters.City!,
-        state: filters.State!,
+        city: filters.city!,
+        state: filters.state!,
         country: country?.[0] ?? "",
     })}`;
     title = `${title} ${pageNumber > 1 ? ` Page-${pageNumber}` : ""}`;
@@ -68,17 +80,20 @@ const getSearchTitleMetadata = (filters: PostedListingsFilterReq, locale: string
     return title;
 };
 
-const getSearchDescriptionMetadata = (listings: PaginatedResponse & ListingItems): string => {
-    return listings.items.length > 0 ? `Search results: ${listings.items.map((item) => item.title).join(",")}` : "";
+const getSearchDescriptionMetadata = (listings: ListingItem[] = []): string => {
+    return listings.length > 0 ? `Search results: ${listings.map((item) => getListingTitleFromListing(item.data!)).join(",")}` : "";
 };
 
 const getTitleMetadata = (item: ListingItem): string => {
-    return `${item.title} for Sale in ${getLocationString(item.location)}`;
+    const title = getListingTitleFromListing(item.data!);
+    const location = getLocationUserProfile(item.user!);
+    return `${title} for Sale in ${getLocationString(location)}`;
 };
 
 export async function generateMetadata({ searchParams, params }: SearchParams & LocalePathParam, parent: ResolvingMetadata): Promise<Metadata> {
     const page = searchParams["PageNumber"] ?? "1";
-    const parsedSearchParams = PostedListingsFilterSchema.parse(searchParams);
+    const publicFilters = PublicListingsFilterSchema.parse(searchParams);
+
     const previousDescription = (await parent).description || metadataDesc;
     const previousKeywords = (await parent).keywords || [];
     const previousTwitter = (await parent).twitter || {};
@@ -94,16 +109,31 @@ export async function generateMetadata({ searchParams, params }: SearchParams & 
             alternates: getAlternativeLinks("/search"),
         };
     }
-    const listings = await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams });
-    const title = getSearchTitleMetadata(parsedSearchParams, params.locale, listings.totalCount);
-    const newDescription = getSearchDescriptionMetadata(listings);
+    const listings = await getPublicListingsAction({
+        page: { pageNumber: Number(page), pageSize: 12 },
+        query: publicFilters.query,
+        filters: {
+            publicFilters: {
+                ...publicFilters,
+                state: publicFilters.state!,
+                city: publicFilters.city!,
+                countryCode: params.locale,
+                maxPrice: typeof publicFilters.maxPrice == "string" ? parseFloat(publicFilters.maxPrice) : 0,
+                minPrice: typeof publicFilters.minPrice == "string" ? parseFloat(publicFilters.minPrice) : 0,
+            },
+        },
+    });
+    const title = getSearchTitleMetadata(publicFilters, params.locale, listings?.page?.totalCount!);
+    const newDescription = getSearchDescriptionMetadata(listings.items);
 
     const description = newDescription || previousDescription;
     const previousImages = (await parent).openGraph?.images || [];
     const images = listings.items.reduce((newImages, item) => {
-        const thumbnailImage = item.vehicle.vehicleImages.find((imageItem) => imageItem.isThumbnail);
+        const thumbnailImage = item.data?.vehicleImages.find((imageItem) => imageItem.isThumbnail);
         if (thumbnailImage) {
-            const seoFriendlyImageName = toSEOFriendlyTitleUrl(item.title, item.location);
+            const title = getListingTitleFromListing(item.data!);
+            const location = getLocationUserProfile(item.user!);
+            const seoFriendlyImageName = toSEOFriendlyTitleUrl(title, location);
             const imageUrl = convertToSEOFriendlyImageURL(thumbnailImage?.name!, seoFriendlyImageName);
             return [...newImages, { url: imageUrl, alt: `${getTitleMetadata(item)} image` }];
         }
@@ -118,25 +148,35 @@ export async function generateMetadata({ searchParams, params }: SearchParams & 
         openGraph: { ...previousOpenGraph, title, description, images },
         twitter: { ...previousTwitter, images, title, description },
         alternates: getAlternativeLinks("/search"),
-        keywords: [
-            ...previousKeywords,
-            getLocationString({ city: parsedSearchParams.City!, state: parsedSearchParams.State!, country: country?.[0] }),
-        ],
+        keywords: [...previousKeywords, getLocationString({ city: publicFilters.city!, state: publicFilters.state!, country: country?.[0] })],
     };
 }
 
 export default async function Page({ searchParams, params }: SearchParams & LocalePathParam) {
     const page = searchParams["PageNumber"] ?? "1";
-    const parsedSearchParams = PostedListingsFilterSchema.parse(searchParams);
+    const publicFilters = PublicListingsFilterSchema.parse(searchParams);
 
     if (params.locale === BOT_LOCALE) {
-        return <SearchGrid listings={{ items: [], hasNextPage: false, hasPreviousPage: false, pageNumber: 1, totalCount: 0, totalPages: 1 }} />;
+        return <SearchGrid listings={[]} />;
     }
 
-    const listings = await api.getPostedListings(params.locale, { PageNumber: Number(page), PageSize: 12, ...parsedSearchParams });
+    const listingsRes = await getPublicListingsAction({
+        page: { pageNumber: Number(page), pageSize: 12 },
+        query: publicFilters.query,
+        filters: {
+            publicFilters: {
+                ...publicFilters,
+                state: publicFilters.state!,
+                city: publicFilters.city!,
+                countryCode: params.locale,
+                maxPrice: typeof publicFilters.maxPrice == "string" ? parseFloat(publicFilters.maxPrice) : 0,
+                minPrice: typeof publicFilters.minPrice == "string" ? parseFloat(publicFilters.minPrice) : 0,
+            },
+        },
+    });
 
-    if (listings.items?.length === 0 && page !== "1") {
-        redirect(`/${params.locale}/search?${qs.stringify({ ...parsedSearchParams, PageNumber: 1 }, { skipEmptyString: true })}`);
+    if (listingsRes.items?.length === 0 && page !== "1") {
+        redirect(`/${params.locale}/search?${qs.stringify({ ...publicFilters, PageNumber: 1 }, { skipEmptyString: true })}`);
     }
-    return <SearchGrid listings={listings} />;
+    return <SearchGrid currentPageNumber={Number(page) || 1} listings={listingsRes.items} paginatedResponse={listingsRes.page} />;
 }

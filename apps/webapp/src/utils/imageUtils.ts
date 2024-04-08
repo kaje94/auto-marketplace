@@ -1,6 +1,9 @@
+import { PartialMessage } from "@bufbuild/protobuf";
 import imageCompression from "browser-image-compression";
 import { FastAverageColor } from "fast-average-color";
+import { nanoid } from "nanoid/non-secure";
 import qs from "query-string";
+import { GenerateSignedUrlRequest_Item } from "targabay-protos/gen/ts/dist/types/image_pb";
 import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3Action, getPresignedS3UrlsAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
@@ -27,7 +30,7 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
             filesToUpload.push(item);
         } else if (item.deleted && item.name && item.url) {
             filesToDelete.push(item);
-        } else {
+        } else if (item.name && item.url) {
             existingFiles.push({ color: item.color, hash: item.hash, isThumbnail: item.isThumbnail, name: item.name, url: item.url });
         }
     });
@@ -40,30 +43,37 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
         const imageHashesAndColors = await Promise.all(
             filesToUpload.map((item) => Promise.all([previewUrlToHash(item.preview!), fac.getColorAsync(item.preview!)])),
         );
-        const compressedFiles: File[] = await Promise.all(
-            filesToUpload.map((item) =>
-                imageCompression(item.file as File, {
+        const compressedFiles: { file: File; key: string }[] = await Promise.all(
+            filesToUpload.map(async (item) => ({
+                file: await imageCompression(item.file as File, {
                     fileType: "image/webp",
                     initialQuality: 0.7,
                     maxWidthOrHeight: 1920,
                     maxSizeMB: 0.5,
                 }),
-            ),
+                key: nanoid(),
+            })),
         );
-        const presignedUrlRes = await getPresignedS3UrlsAction(compressedFiles.map((item) => ({ fileSize: item.length, filetype: item.type })));
+
+        const reqItems: PartialMessage<GenerateSignedUrlRequest_Item>[] = compressedFiles.map((item) => ({
+            fileSize: `${item.file.size}`,
+            fileType: item.file.type,
+            fileKey: item.key,
+        }));
+        const presignedUrlRes = await getPresignedS3UrlsAction(reqItems);
         const uploadedUrls = await Promise.all(
-            compressedFiles.map((item, index) => {
-                const presignedRes = presignedUrlRes[index];
+            compressedFiles.map((item) => {
+                const presignedRes = presignedUrlRes.items?.find((resItem) => item.key == resItem.key);
                 if (!presignedRes) {
                     throw new Error("Failed to find presigned url for image");
                 }
-                return uploadToS3(item, presignedRes.url!, presignedRes.key, presignedRes?.bucket!, presignedRes?.region!);
+                return uploadToS3(item.file, presignedRes.url!, presignedRes.name, presignedRes?.bucket!, presignedRes?.region!);
             }),
         );
 
-        compressedFiles.forEach((_item, index) => {
+        compressedFiles.forEach((item, index) => {
             const fileToUpload = filesToUpload[index];
-            const presignedRes = presignedUrlRes[index];
+            const presignedRes = presignedUrlRes.items?.find((resItem) => item.key == resItem.key);
             const uploadedUrl = uploadedUrls[index];
             const colorAndHash = imageHashesAndColors[index];
             if (!colorAndHash || !uploadedUrl || !presignedRes || !fileToUpload) {
@@ -73,7 +83,7 @@ export const transformImagesToPost = async (files: VehicleImageType[]): Promise<
                 color: colorAndHash[1].hex,
                 hash: colorAndHash[0],
                 isThumbnail: fileToUpload.isThumbnail,
-                name: presignedRes.key,
+                name: presignedRes.name,
                 url: uploadedUrl.url,
             });
         });

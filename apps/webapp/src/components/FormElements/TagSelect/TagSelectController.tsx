@@ -10,7 +10,7 @@ interface Props {
     fieldName: string;
     loading?: boolean;
     loadingPlaceholderCount?: number;
-    tags?: { id: string; name: string }[];
+    tags?: string[];
 }
 
 export const TagSelectController: FC<Props> = ({ tags = [], fieldName, loading, loadingPlaceholderCount = 10, control, disabled }) => {

@@ -1,0 +1,10 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/locations.proto";
+
+service LocationsService {
+    rpc GetStates(GetStatesRequest) returns (GetStatesResponse);
+    rpc GetCities(GetCitiesRequest) returns (GetCitiesResponse);
+}

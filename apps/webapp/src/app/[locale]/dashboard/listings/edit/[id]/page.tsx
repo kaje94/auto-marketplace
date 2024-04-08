@@ -1,20 +1,17 @@
 import { getSession } from "@auth0/nextjs-auth0";
 import { Metadata } from "next";
+import { getMyProfileAction } from "@/actions/profileActions";
+import { getUserListingsItemAction } from "@/actions/userListingActions";
 import { BreadCrumbs } from "@/components/Common";
 import { EditListingForm } from "@/components/Forms/Listings/EditListingForm";
-import { api } from "@/utils/api";
+import { getListingTitleFromListing } from "@/utils/helpers";
 import { ListingIdPathParam } from "@/utils/types";
 
 export const metadata: Metadata = { title: "Targabay - Edit Listing Item Details", alternates: {} };
 
 export default async function Page({ params }: ListingIdPathParam) {
     const session = await getSession();
-    const [itemDetails, features, brands, profile] = await Promise.all([
-        api.getListingsItem(params.id),
-        api.getFeaturesList(),
-        api.getVehicleBrands(),
-        api.getMyProfileDetails(session?.user?.sub!),
-    ]);
+    const [itemDetails, profile] = await Promise.all([getUserListingsItemAction(params.id), getMyProfileAction(session?.user?.email!)]);
 
     return (
         <>
@@ -24,17 +21,10 @@ export default async function Page({ params }: ListingIdPathParam) {
                     { href: "/", title: "Home" },
                     { title: "Dashboard" },
                     { title: "All Advert", href: "/dashboard/listings" },
-                    { title: itemDetails.title, href: `/dashboard/listings/${params.id}` },
+                    { title: getListingTitleFromListing(itemDetails.data!), href: `/dashboard/listings/${params.id}` },
                 ]}
             />
-            <EditListingForm
-                brands={brands}
-                features={features}
-                listingItem={itemDetails}
-                profile={profile}
-                successRedirectPath="/dashboard/listings"
-                userId={session?.user?.sub}
-            />
+            <EditListingForm listingItem={itemDetails} profile={profile} successRedirectPath="/dashboard/listings" />
         </>
     );
 }

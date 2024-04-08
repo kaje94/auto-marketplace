@@ -1,4 +1,6 @@
-import { ListingUser, Location, Vehicle, VehicleCreate } from "./types";
+import { PartialMessage } from "@bufbuild/protobuf";
+import { ListingItem_Data, UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { Location, Vehicle, VehicleCreate } from "./types";
 
 /** Convert date object into a human friendly date string */
 export const formatHumanFriendlyDate = (date: Date): string => {
@@ -17,6 +19,34 @@ export const getListingTitleFromVehicle = (vehicle: Vehicle | VehicleCreate) => 
         return `${vehicle.brand} ${vehicle.model} ${vehicle.trim} ${vehicle.yearOfManufacture}`;
     }
     return `${vehicle.brand} ${vehicle.model} ${vehicle.yearOfManufacture}`;
+};
+// todo: remove above
+
+/** Convert vehicle object into a title similar to how the backend title is generated */
+export const getListingTitleFromListing = (listingItemData: ListingItem_Data) => {
+    const items: string[] = [];
+    if (listingItemData?.brand && listingItemData?.brand?.toLowerCase() !== "other") {
+        items.push(listingItemData?.brand);
+    }
+    if (listingItemData?.model) {
+        items.push(listingItemData.model);
+    }
+    if (listingItemData?.trim) {
+        items.push(listingItemData.trim);
+    }
+    if (listingItemData?.yearOfManufacture) {
+        items.push(`${listingItemData.yearOfManufacture}`);
+    }
+    return items.join(" ");
+};
+
+export const getLocationUserProfile = (listingUser: UserProfile): Location => {
+    return {
+        city: listingUser?.data?.city!,
+        state: listingUser?.data?.state!,
+        postalCode: listingUser?.data?.postalCode!,
+        country: listingUser?.data?.countryCode!,
+    };
 };
 
 /** Extract year value from string */
@@ -93,11 +123,11 @@ export const timeAgo = (date: Date): string => {
 export const getRandomNumber = (min: number, max: number) => Math.round(Math.random() * (max - min) + min);
 
 /** Check whether profile details exist in-order to decide whether the profile is complete or not */
-export const isIncompleteUserProfile = (profile: ListingUser) =>
-    !profile.phone || !profile.address?.city || !profile.address?.state || !profile.address?.country || !profile.address?.postalCode;
+export const isIncompleteUserProfile = (profile: PartialMessage<UserProfile>) =>
+    !profile.data?.phone || !profile.data?.city || !profile.data?.state || !profile.data?.countryCode || !profile.data?.postalCode; // todo: update
 
 /** Get the distance unit for given country. `mi` for US and `km for all other countries` */
-export const getDistanceUnit = (countryCode: string | undefined) => (countryCode === "US" ? "mi" : "km");
+export const getDistanceUnit = (countryCode: string | undefined) => (countryCode?.toLowerCase() === "us" ? "mi" : "km");
 
 export const isRenewableListing = (expiryDate: Date): boolean => {
     const oneWeekFromNow = new Date();
@@ -155,3 +185,21 @@ export const getFormattedDistance = (distance: number | string, unit: string = "
 
 /** Format currency values with thousands separator and currency unit */
 export const getFormattedCurrency = (amount: number | string = 0, currency: string) => `${currency} ${numberWithCommas(amount)}`;
+
+export const getCacheKeyForFilter = (filters: any) => {
+    const cacheKeys: string[] = [];
+    if (filters) {
+        const keys = Object.keys(filters).sort();
+        for (const keyItem of keys) {
+            if (filters[keyItem]) {
+                cacheKeys.push(`${keyItem}:${filters[keyItem]}`);
+            }
+        }
+    }
+    return cacheKeys;
+};
+
+/** A promise reterned after given milliseconds */
+export const delay = async (ms: number) => {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+};

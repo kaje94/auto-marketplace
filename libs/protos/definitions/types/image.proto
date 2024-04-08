@@ -1,0 +1,27 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+message GenerateSignedUrlRequest {
+    message Item {
+        string fileType = 1;
+        string fileSize = 2;
+        string fileKey =  3;
+    }
+    repeated Item items = 1;
+}
+
+message GenerateSignedUrlResponse {
+    message Item {
+        string bucket = 1;
+        string key = 2;
+        string name = 3;
+        string region = 4;
+        string url = 5;
+    }
+    repeated Item items = 1;
+}
+
+message DeleteS3ImagesRequest {
+    repeated string keys = 1;
+}

@@ -1,13 +1,14 @@
 "use client";
 import { Claims } from "@auth0/nextjs-auth0";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { useParams, usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { displayFont } from "@/app/fonts";
 import { LinkWithLocale, Modal } from "@/components/Common";
 import { CheckCircleIcon } from "@/icons";
-import { ListingUser } from "@/utils/types";
 
 interface Props {
     /** Specifies whether the modal is initially visible. */
@@ -15,7 +16,7 @@ interface Props {
     /** The claims of the user. */
     userClaims?: Claims;
     /** The data of the user. */
-    userData?: ListingUser;
+    userData?: PartialMessage<UserProfile>;
 }
 
 /** Lazily loaded profile update modal */
@@ -48,7 +49,7 @@ export const NewUserOnboardModal = (props: Props) => {
         <>
             <Modal modalClassnames="!max-w-4xl" visible={!!modalVisible} onVisibleChange={setModalVisible}>
                 <div className="flex flex-col gap-1">
-                    <div className={clsx("text-3xl xl:text-4xl", displayFont.className)}>Welcome {userData?.firstName}!</div>
+                    <div className={clsx("text-3xl xl:text-4xl", displayFont.className)}>Welcome {userData?.name}!</div>
                     <div className="opacity-90">
                         We&#39;re thrilled to have you on board and excited to help you find the perfect vehicle or connect with buyers if you&#39;re
                         selling.

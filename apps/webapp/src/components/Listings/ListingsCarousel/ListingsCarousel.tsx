@@ -3,8 +3,8 @@ import { clsx } from "clsx";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
 import React, { useCallback } from "react";
+import { ListingItem as ListingItemType } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale, ListingItem } from "@/components/Common";
-import { ListingItem as ListingItemType } from "@/utils/types";
 import { NextButton, PrevButton, usePrevNextButtons } from "./ListingsCarouselButtons";
 
 type Props = {

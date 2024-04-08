@@ -1,0 +1,14 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+
+message GetAdminSubscriptionsRequest {
+    message Filters {
+        SubscriptionFilters.UserSubscriptionFilters userFilters = 1;
+        SubscriptionFilters.AdminSubscriptionFilters adminFilters = 2;
+    }
+    PaginatedRequest page = 1;
+    Filters filters = 2;
+}

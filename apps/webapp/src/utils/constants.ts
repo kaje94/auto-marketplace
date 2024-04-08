@@ -13,7 +13,7 @@ export const MaxVehicleImageCount = 10;
 export const YearSelectMinYear = 1960;
 
 /** Locale param to be used when visited by web crawlers */
-export const BOT_LOCALE = "CTRY";
+export const BOT_LOCALE = "ctry";
 
 export const Dates = {
     Days_7_from_now: new Date(new Date().setHours(new Date().getHours() + 24 * 7 + 1)),

@@ -15,5 +15,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: { listingSubscriptionItem: mockSubscriptionItem, visible: true },
+    args: { subscriptionItem: mockSubscriptionItem, visible: true },
 };

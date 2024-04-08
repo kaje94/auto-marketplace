@@ -2,8 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { DashboardNotificationsFilterSchema } from "@/utils/schemas";
-import { DashboardNotificationsFilterReq } from "@/utils/types";
+import { UserNotificationsFilterSchema } from "@/utils/schemas";
+import { UserNotificationsFilterReq } from "@/utils/types";
 import { DashboardNotificationsFilter } from "./DashboardNotificationsFilter";
 
 const meta = {
@@ -12,7 +12,7 @@ const meta = {
     tags: ["autodocs"],
     decorators: [
         (Story, ctx) => {
-            const form = useForm<DashboardNotificationsFilterReq>({ resolver: zodResolver(DashboardNotificationsFilterSchema), mode: "all" });
+            const form = useForm<UserNotificationsFilterReq>({ resolver: zodResolver(UserNotificationsFilterSchema), mode: "all" });
             return (
                 <div className="relative m-10 flex h-[50vh] justify-end">
                     <Story args={{ ...ctx.args, form: form }} />

@@ -7,8 +7,9 @@ import { InputController } from "@/components/FormElements/Input";
 import { NumberInputController } from "@/components/FormElements/NumberInput";
 import { SelectController } from "@/components/FormElements/Select";
 import { YearInputController } from "@/components/FormElements/YearInput";
+import { VEHICLE_BRANDS } from "@/utils/brands";
 import { Dates, SubscriptFrequenciesList, VehicleConditionList, VehicleTypeList } from "@/utils/constants";
-import { CreateSubscriptionReq, VehicleBrand } from "@/utils/types";
+import { CreateSubscriptionReq } from "@/utils/types";
 
 interface Props {
     countryCurrencySymbol?: string;
@@ -22,20 +23,10 @@ interface Props {
         mutatingText?: string;
         text?: string;
     };
-    vehicleBrands?: VehicleBrand[];
 }
 
 export const SubscriptionForm: FC<Props> = (props) => {
-    const {
-        isMutating,
-        isLoading,
-        form = {},
-        onMutate = () => {},
-        submitButton = {},
-        countryCurrencySymbol,
-        distanceUnit,
-        vehicleBrands = [],
-    } = props;
+    const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, countryCurrencySymbol, distanceUnit } = props;
     const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "" } = form as UseFormReturn<CreateSubscriptionReq>;
     const maxYearOfManufacture = watch("maxYearOfManufacture");
     const minYearOfManufacture = watch("minYearOfManufacture");
@@ -96,7 +87,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 fieldName="brand"
                                 label="Brand"
                                 loading={isLoading}
-                                options={vehicleBrands.map((item) => ({ label: item.name, value: item.name }))}
+                                options={VEHICLE_BRANDS.map((item) => ({ label: item, value: item }))}
                                 placeholder="Toyota, Nissan, Honda, etc"
                             />
                             <InputController

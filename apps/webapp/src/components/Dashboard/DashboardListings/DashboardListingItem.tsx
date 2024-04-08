@@ -1,12 +1,22 @@
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { FC } from "react";
+import { ListingItem, ListingItem_Data } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale, ListingImage } from "@/components/Common";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import { formatHumanFriendlyDate, getFormattedCurrency, getLocationString, getRandomItem, timeAgo, unCamelCase } from "@/utils/helpers";
-import { ListingItem } from "@/utils/types";
+import {
+    formatHumanFriendlyDate,
+    getFormattedCurrency,
+    getListingTitleFromListing,
+    getLocationString,
+    getLocationUserProfile,
+    getRandomItem,
+    timeAgo,
+    unCamelCase,
+} from "@/utils/helpers";
+import { Location } from "@/utils/types";
 
 /** Lazily loaded context menu */
 const DashboardListingItemMenu = dynamic(() => import("./DashboardListingItemMenu").then((mod) => mod.DashboardListingItemMenu), {
@@ -28,9 +38,13 @@ interface Props {
 /** To represent an individual listing item within the listing list */
 export const DashboardListingItem: FC<Props> = (props) => {
     const { basePath, listingItem = {}, loading, isAdmin } = props;
-    const { title, price, description, status, id, vehicle, location, createdOn, expiryDate } = listingItem as ListingItem;
-    const locationStr = getLocationString(location, COUNTRIES[location?.country ?? ""]?.[0]);
-    const priceStr = getFormattedCurrency(price?.amount, price?.currencyCode);
+    const { status, id, expiryDate, data = {}, user, createdAt } = listingItem as ListingItem;
+    const { price, description, vehicleImages } = data as ListingItem_Data;
+    const listingTitle = getListingTitleFromListing(data as ListingItem_Data);
+    const location = getLocationUserProfile(user!);
+    const country = COUNTRIES[location?.country ?? ""];
+    const locationStr = getLocationString(location, country?.[0]);
+    const priceStr = getFormattedCurrency(price, country?.[1]!);
 
     const listingItemContent = (
         <div className="grid grid-cols-12 gap-0.5 p-3 md:gap-2 md:p-4 xl:gap-4" data-testid="dashboard-listing-item">
@@ -39,16 +53,16 @@ export const DashboardListingItem: FC<Props> = (props) => {
             ) : (
                 <figure className="relative h-fit overflow-hidden rounded-xl md:col-span-5 md:block xl:col-span-3">
                     <ListingImage
-                        className="hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear zoomable-image md:block"
+                        className="zoomable-image hidden aspect-video h-full w-full bg-base-200 object-cover transition-transform duration-300 ease-linear md:block"
                         height={300}
-                        image={vehicle?.vehicleImages[0]}
+                        image={vehicleImages?.[0]}
                         location={location}
-                        title={title}
+                        title={listingTitle}
                         width={450}
                     />
 
                     <div className="absolute bottom-0 left-0 flex h-2/6 w-full flex-col items-center justify-center bg-gradient-to-t from-base-content to-transparent p-5 ">
-                        <div className="badge badge-secondary badge-lg absolute scale-110 duration-300 badge-hover-translucent">{priceStr}</div>
+                        <div className="badge-hover-translucent badge badge-secondary badge-lg absolute scale-110 duration-300">{priceStr}</div>
                     </div>
                 </figure>
             )}
@@ -59,7 +73,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                 ) : (
                     <div className="flex gap-2">
                         <div className="flex flex-1 flex-wrap items-center gap-0.5 md:gap-2 xl:gap-4">
-                            <span className="text-xl font-semibold text-base-content">{title}</span>
+                            <span className="text-xl font-semibold text-base-content">{listingTitle}</span>
                             <span
                                 className={clsx({
                                     "badge badge-lg": true,
@@ -110,7 +124,7 @@ export const DashboardListingItem: FC<Props> = (props) => {
                     {loading ? (
                         <div className="h-4 w-32 bg-base-200" />
                     ) : (
-                        <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdOn))}</div>
+                        <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdAt))}</div>
                     )}
                 </div>
             </div>

@@ -2,27 +2,37 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { clsx } from "clsx";
 import { StringifiableRecord } from "query-string";
+import { ListingItem as ListingItemType, PaginatedResponse } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { Empty, ListingItem, Pagination } from "@/components/Common";
 import { usePostedListingsContext } from "@/providers/PostedListingsContextProvider";
-import { PostedListingsFilterSchema } from "@/utils/schemas";
-import { ListingItems, PaginatedResponse } from "@/utils/types";
+import { PublicListingsFilterSchema } from "@/utils/schemas";
 
-export const PostedListingsSearchGrid = ({ listings, pageLoading }: { listings?: PaginatedResponse & ListingItems; pageLoading?: boolean }) => {
+export const PostedListingsSearchGrid = ({
+    listings,
+    paginatedResponse,
+    pageLoading,
+    currentPageNumber,
+}: {
+    /** Current page number */
+    currentPageNumber?: number;
+    /** List of listing advert items */
+    listings?: ListingItemType[];
+    /** To show placeholder listings during initial render without any data */
+    pageLoading?: boolean;
+    /** Pagination response form the server */
+    paginatedResponse?: PaginatedResponse;
+}) => {
     const { setNewSearchQuery, isLoading, searchParamsObj, hasSearchParams } = usePostedListingsContext();
     const [parent] = useAutoAnimate();
 
     const newSearchFiltersParamsObj = { ...searchParamsObj };
-    delete newSearchFiltersParamsObj["Title"];
-    const hasFilters = Object.keys(PostedListingsFilterSchema.parse(newSearchFiltersParamsObj)).length > 0;
-    const hasTitleFilter = Object.prototype.hasOwnProperty.call(searchParamsObj, "Title");
+    delete newSearchFiltersParamsObj["query"];
+    const hasFilters = Object.keys(PublicListingsFilterSchema.parse(newSearchFiltersParamsObj)).length > 0;
+    const hasTitleFilter = Object.prototype.hasOwnProperty.call(searchParamsObj, "query");
 
     let filterText = "";
-    if (hasTitleFilter && hasFilters) {
-        filterText = "Filtered by Title & Advanced filters";
-    } else if (hasFilters) {
+    if (hasTitleFilter || hasFilters) {
         filterText = "Filtered results";
-    } else if (hasTitleFilter) {
-        filterText = "Filtered by Title";
     }
 
     return (
@@ -37,7 +47,7 @@ export const PostedListingsSearchGrid = ({ listings, pageLoading }: { listings?:
                     <div className="h-5 w-28 animate-pulse rounded bg-base-300" />
                 ) : (
                     <>
-                        {listings?.totalCount} results found
+                        {paginatedResponse?.totalCount} results found
                         {filterText && <div className="badge badge-outline badge-md ml-2 w-max">{filterText}</div>}
                     </>
                 )}
@@ -49,11 +59,11 @@ export const PostedListingsSearchGrid = ({ listings, pageLoading }: { listings?:
                 )}
                 ref={parent}
             >
-                {listings?.items?.map((item) => <ListingItem key={item.id} item={item} detailed />)}
+                {listings?.map((item) => <ListingItem key={item.id} item={item} detailed />)}
 
                 {pageLoading && new Array(12).fill("").map((_, i) => <ListingItem key={`loading-listing-item-${i}`} loading />)}
 
-                {!pageLoading && listings?.items?.length === 0 && (
+                {!pageLoading && listings?.length === 0 && (
                     <div className="col-span-full">
                         <Empty
                             button={
@@ -71,10 +81,10 @@ export const PostedListingsSearchGrid = ({ listings, pageLoading }: { listings?:
                     <Pagination
                         basePath="/search"
                         loading={pageLoading || isLoading}
-                        pageNumber={listings?.pageNumber}
+                        pageNumber={currentPageNumber}
                         searchParams={searchParamsObj as StringifiableRecord}
                         setNewSearchQuery={setNewSearchQuery}
-                        totalPages={listings?.totalPages}
+                        totalPages={paginatedResponse?.totalPages}
                     />
                 </div>
             </div>

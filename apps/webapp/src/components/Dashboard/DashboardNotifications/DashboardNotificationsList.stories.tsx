@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockEmptyNotificationResponse, mockNotificationsResponse, mockUserClaims } from "@/utils/mockData";
+import { mockNotificationItem, mockUserClaims, paginatedEmptyResp, paginatedResp } from "@/utils/mockData";
 import { DashboardNotificationsList } from "./DashboardNotificationsList";
 
 const meta = {
@@ -15,10 +15,12 @@ type Story = StoryObj<typeof meta>;
 /** Dashboard notification items with data to be shown in my notifications page */
 export const WithData: Story = {
     args: {
-        notifications: mockNotificationsResponse,
+        notifications: [mockNotificationItem],
         basePath: "/base-path",
         pageLoading: false,
         userClaims: mockUserClaims,
+        currentPageNumber: 1,
+        paginatedResponse: paginatedResp,
     },
 };
 
@@ -33,9 +35,11 @@ export const LoadingWithoutData: Story = {
 /** UI to be shown when there aren't any notification items after loading */
 export const NoData: Story = {
     args: {
-        notifications: mockEmptyNotificationResponse,
+        notifications: [],
         basePath: "/base-path",
         pageLoading: false,
         userClaims: mockUserClaims,
+        currentPageNumber: 1,
+        paginatedResponse: paginatedEmptyResp,
     },
 };

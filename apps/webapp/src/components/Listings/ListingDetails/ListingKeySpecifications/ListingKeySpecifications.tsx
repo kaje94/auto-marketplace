@@ -1,30 +1,34 @@
 import { clsx } from "clsx";
 import { FC } from "react";
-import { getFormattedDistance, getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } from "@/utils/helpers";
+import { ListingItem_Data } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { getDistanceUnit, getFormattedDistance, getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } from "@/utils/helpers";
 import { Vehicle } from "@/utils/types";
 
 interface Props {
+    countryCode?: string;
     loading?: boolean;
-    vehicle?: Vehicle;
+    vehicle?: ListingItem_Data;
 }
 
-export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading }) => {
+export const ListingKeySpecifications: FC<Props> = ({ vehicle, loading, countryCode }) => {
     const placeholderWidth = ["w-28", "w-32", "w-28", "w-16", "w-24", "w-36", "w-14"];
+    const millageUnit = getDistanceUnit(countryCode);
 
     const items: { label: string; value: string | number }[] = [];
     items.push({ label: "Brand", value: vehicle?.brand || "-" });
     items.push({ label: "Model", value: vehicle?.model || "-" });
     items.push({ label: "Trim / Edition", value: vehicle?.trim || "-" });
-    items.push({ label: "Manufactured Year", value: vehicle?.yearOfManufacture ? getYearFromDateString(vehicle.yearOfManufacture) : "-" });
-    items.push({ label: "Registered Year", value: vehicle?.yearOfRegistration ? getYearFromDateString(vehicle.yearOfRegistration) : "-" });
+    items.push({ label: "Manufactured Year", value: vehicle?.yearOfManufacture ?? "-" });
+    items.push({ label: "Registered Year", value: vehicle?.yearOfRegistration ? vehicle?.yearOfRegistration : "-" });
     items.push({ label: "Condition", value: vehicle?.condition ? unCamelCase(vehicle?.condition) : "-" });
     items.push({
         label: "Mileage",
-        value: vehicle?.millage?.distance ? getFormattedDistance(vehicle?.millage?.distance, vehicle?.millage?.unit) : "-",
+        value: vehicle?.mileage ? getFormattedDistance(vehicle?.mileage, millageUnit) : "-",
     });
-    items.push({ label: "Transmission", value: vehicle?.transmission ? unCamelCase(vehicle?.transmission) : "-" });
+    items.push({ label: "Transmission", value: vehicle?.transmissionType ? unCamelCase(vehicle?.transmissionType) : "-" });
     items.push({ label: "Fuel Type", value: vehicle?.fuelType ? unCamelCase(vehicle?.fuelType) : "-" });
     items.push({ label: "Engine Capacity", value: vehicle?.engineCapacity ? `${numberWithCommas(vehicle?.engineCapacity)} CC` : "-" });
+
     return (
         <div className="mt-2 grid w-full gap-1 lg:grid-cols-2">
             {loading ? (

@@ -4,22 +4,23 @@ import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { toggleListingSubscriptionAction } from "@/actions/listingSubscriptionActions";
+import { SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { activateSubscriptionAction, deactivateSubscriptionAction } from "@/actions/userSubscriptionActions";
 import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { DatePickerController } from "@/components/FormElements/DatePicker";
 import { Dates } from "@/utils/constants";
 import { ToggleSubscriptionSchema } from "@/utils/schemas";
-import { ListingSubscriptionItem, ToggleSubscriptionReq } from "@/utils/types";
+import { ToggleSubscriptionReq } from "@/utils/types";
 
 interface Props extends ModalProps {
     /** Subscription item that needs to be activated/deactivated */
-    listingSubscriptionItem?: ListingSubscriptionItem;
+    subscriptionItem?: SubscriptionItem;
 }
 
 /** Modal to be used in order to activate or deactivate a listing advert */
 export const ToggleSubscriptionActivationModal = (props: Props) => {
-    const { listingSubscriptionItem = {}, onVisibleChange, visible } = props;
-    const { id, userId, displayName, active } = listingSubscriptionItem as ListingSubscriptionItem;
+    const { subscriptionItem = {}, onVisibleChange, visible } = props;
+    const { id, active, data, user } = subscriptionItem as SubscriptionItem;
     const toastId = useRef<string>();
 
     const { handleSubmit, control } = useForm<ToggleSubscriptionReq>({
@@ -33,20 +34,24 @@ export const ToggleSubscriptionActivationModal = (props: Props) => {
 
     const { mutate, isLoading } = useMutation(
         (reqParams: ToggleSubscriptionReq) => {
-            return toggleListingSubscriptionAction({ ...reqParams, subscriptionExpiryDate: new Date(reqParams.subscriptionExpiryDate) }, userId!);
+            if (active) {
+                return deactivateSubscriptionAction(id, user?.email!);
+            } else {
+                return activateSubscriptionAction(id, new Date(reqParams.subscriptionExpiryDate).toISOString(), user?.email!);
+            }
         },
         {
             onMutate: () => {
                 onVisibleChange(false);
-                toastId.current = toast.loading(`${active ? "Deactivating" : "Activating"} subscription ${displayName}...`);
+                toastId.current = toast.loading(`${active ? "Deactivating" : "Activating"} subscription ${data?.displayName}...`);
             },
             onSettled: (_data, err, _variables) => {
                 if (err) {
-                    toast.error(`Failed to update the status of the subscription ${displayName}. ${(err as Error)?.message ?? ""}`, {
+                    toast.error(`Failed to update the status of the subscription ${data?.displayName}. ${(err as Error)?.message ?? ""}`, {
                         id: toastId?.current,
                     });
                 } else {
-                    toast.success(`Successfully updated the subscription ${displayName}`, { id: toastId?.current });
+                    toast.success(`Successfully updated the subscription ${data?.displayName}`, { id: toastId?.current });
                 }
             },
         },

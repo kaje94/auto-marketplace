@@ -1,12 +1,13 @@
 import { clsx } from "clsx";
 import Link from "next/link";
 import { FC } from "react";
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale } from "@/components/Common";
 import { AlertCircleIcon } from "@/icons";
 import { ListingStatusDescriptions } from "@/utils/constants";
 import { ListingStatusTypes } from "@/utils/enum";
 import { unCamelCase } from "@/utils/helpers";
-import { ListingItem } from "@/utils/types";
+import { EditButton } from "./EditButton";
 import { RelistButton } from "./RelistButton";
 import { RenewButton } from "./RenewButton";
 import { ReviewButton } from "./ReviewButton";
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAdmin }) => {
-    const { status: listingStatus, id: listingId, userId, reviewComment } = listingItem as ListingItem;
+    const { status: listingStatus, id: listingId, reviewComment } = listingItem as ListingItem;
     return (
         <div
             className={clsx({
@@ -48,16 +49,10 @@ export const ListingDetailBanner: FC<Props> = ({ loading, listingItem = {}, isAd
                             <button className="btn btn-ghost btn-sm">View</button>
                         </LinkWithLocale>
                     )}
-                    {userId && isAdmin && listingStatus === ListingStatusTypes.UnderReview && (
-                        <ReviewButton listingItem={listingItem as ListingItem} />
-                    )}
-                    {userId && listingStatus === ListingStatusTypes.Expired && <RenewButton listingItem={listingItem as ListingItem} />}
-                    {userId && listingStatus === ListingStatusTypes.TemporarilyUnlisted && <RelistButton listingItem={listingItem as ListingItem} />}
-                    {listingStatus === ListingStatusTypes.Declined && (
-                        <Link href={`${window?.location?.pathname}/edit/${listingId}`}>
-                            <button className="btn btn-ghost btn-sm">Edit</button>
-                        </Link>
-                    )}
+                    {isAdmin && listingStatus === ListingStatusTypes.UnderReview && <ReviewButton listingItem={listingItem as ListingItem} />}
+                    {listingStatus === ListingStatusTypes.Expired && <RenewButton listingItem={listingItem as ListingItem} />}
+                    {listingStatus === ListingStatusTypes.TemporarilyUnlisted && <RelistButton listingItem={listingItem as ListingItem} />}
+                    {listingStatus === ListingStatusTypes.Declined && <EditButton listingId={listingId} />}
                 </>
             )}
         </div>

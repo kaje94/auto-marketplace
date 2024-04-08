@@ -14,21 +14,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        tags: [
-            { id: "1", name: "Item 1" },
-            { id: "2", name: "Item 2" },
-            { id: "3", name: "Item 3" },
-        ],
+        tags: ["Item 1", "Item 2", "Item 3"],
     },
 };
 
 export const Disabled: Story = {
     args: {
-        tags: [
-            { id: "1", name: "Item 1" },
-            { id: "2", name: "Item 2" },
-            { id: "3", name: "Item 3" },
-        ],
+        tags: ["Item 1", "Item 2", "Item 3"],
         disabled: true,
     },
 };

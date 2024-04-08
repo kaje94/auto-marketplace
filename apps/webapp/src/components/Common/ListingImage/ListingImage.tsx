@@ -2,6 +2,7 @@
 import Image, { ImageProps } from "next/image";
 import { FC, useEffect, useState } from "react";
 import * as ThumbHash from "thumbhash";
+import { env } from "@/env.mjs";
 import { AlertCircleIcon } from "@/icons";
 import { toSEOFriendlyTitleUrl } from "@/utils/helpers";
 import { convertToSEOFriendlyImageURL } from "@/utils/imageUtils";
@@ -37,10 +38,12 @@ export const ListingImage: FC<Props> = ({ image, width, title, location, ...rest
         <span className="relative flex h-full w-full items-center justify-center">
             <Image
                 alt={seoFriendlyName}
-                loader={({ src, width, quality }) => convertToSEOFriendlyImageURL(src, seoFriendlyName, quality, width)}
+                loader={({ src, width, quality }) =>
+                    env.NEXT_PUBLIC_IMAGE_CDN_BASE ? convertToSEOFriendlyImageURL(src, seoFriendlyName, quality, width) : src
+                }
                 placeholder={(blurDataURL as `data:image/${string}`) || "empty"}
                 priority={false}
-                src={hasError && blurDataURL ? blurDataURL : image?.name!}
+                src={hasError && blurDataURL ? blurDataURL : env.NEXT_PUBLIC_IMAGE_CDN_BASE ? image?.name! : image?.url!}
                 style={{ backgroundColor: image?.color }}
                 width={width}
                 onError={() => setHasError(true)}

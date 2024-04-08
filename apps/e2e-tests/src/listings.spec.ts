@@ -93,12 +93,12 @@ test.describe("create and manage listing", () => {
         await expect(page).toHaveTitle(/Manage Listing Adverts/);
 
         await page.getByTestId("dashboard-filter").click();
-        await formInputText(page, "Title", "some random value");
+        await formInputText(page, "query", "some random value");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newListingItem.model)).not.toBeVisible();
 
         await page.getByTestId("dashboard-filter").click();
-        await formInputText(page, "Title", newListingItem.model);
+        await formInputText(page, "query", newListingItem.model);
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newListingItem.model)).toBeVisible();
 
@@ -121,13 +121,13 @@ test.describe("create and manage listing", () => {
 
     test("search & view newly posted listing", async () => {
         await page.getByRole("button", { name: "Targabay." }).click();
-        await formInputText(page, "Title", newListingItem.brand);
+        await formInputText(page, "query", newListingItem.brand);
         await formSelectOption(page, "VehicleType", "Van");
         await page.getByRole("link", { name: "Search" }).click();
 
         await expect(page.getByRole("button", { name: "Filters" })).toBeVisible();
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
-        await formInputText(page, "Title", `${newListingItem.brand} ${newListingItem.model}`);
+        await formInputText(page, "query", `${newListingItem.brand} ${newListingItem.model}`);
         await page.getByRole("link", { name: "Search" }).click();
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
         await page.getByRole("button", { name: "Filters" }).click();

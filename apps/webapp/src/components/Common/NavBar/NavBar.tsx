@@ -2,7 +2,8 @@
 import { getSession } from "@auth0/nextjs-auth0";
 import { headers as nextHeaders } from "next/headers";
 import { Suspense } from "react";
-import { api } from "@/utils/api";
+import { getUserNotificationsAction } from "@/actions/notificationActions";
+import { getMyProfileAction } from "@/actions/profileActions";
 import { NavBarClient } from "./NavBarClient";
 
 /** Navbar component with data fetched within a suspense wrapper */
@@ -21,8 +22,8 @@ const NavBarWithSession = async () => {
         const session = await getSession();
         if (session) {
             const [notifications, profile] = await Promise.allSettled([
-                api.getMyNotifications(session?.user?.sub!, { PageNumber: 1 }),
-                api.getMyProfileDetails(session?.user?.sub!),
+                getUserNotificationsAction({ page: { pageNumber: 1, pageSize: 10 }, filters: { userFilters: {} } }, session?.user?.email!),
+                getMyProfileAction(session?.user?.email),
             ]);
             const notificationCount = notifications.status === "fulfilled" ? notifications.value.items?.filter((item) => !item.isShown)?.length : 0;
 

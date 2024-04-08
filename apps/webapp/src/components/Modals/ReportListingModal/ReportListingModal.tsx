@@ -4,7 +4,8 @@ import { useReCaptcha } from "next-recaptcha-v3";
 import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { reportListingAction } from "@/actions/listingActions";
+import { z } from "zod";
+import { reportListingAction } from "@/actions/publicListingActions";
 import { validateRecaptchaAction } from "@/actions/recaptchaActions";
 import { Modal, ModalFooter, ModalProps } from "@/components/Common/Modal";
 import { InputController } from "@/components/FormElements/Input";
@@ -12,8 +13,7 @@ import { SelectController } from "@/components/FormElements/Select";
 import { TextAreaController } from "@/components/FormElements/TextArea";
 import { ListingReportReasonList } from "@/utils/constants";
 import { ListingReportReason } from "@/utils/enum";
-import { ReportListingSchema } from "@/utils/schemas";
-import { ListingIdType, ReportListingReq } from "@/utils/types";
+import { ListingIdType } from "@/utils/types";
 
 interface Props extends ModalProps {
     /** The ID of the listing that needs to be reported. */
@@ -24,6 +24,14 @@ interface Props extends ModalProps {
     userEmail?: string | null;
 }
 
+const ReportListingSchema = z.object({
+    reason: z.nativeEnum(ListingReportReason),
+    emailAddress: z.string().email(),
+    message: z.string().min(1, "A message is required"),
+});
+
+type ReportListingReq = z.infer<typeof ReportListingSchema>;
+
 /** Modal to be used in order to report a listing */
 export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail, onVisibleChange = () => {} }: Props) => {
     const { executeRecaptcha } = useReCaptcha();
@@ -33,7 +41,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
         [userEmail, listingId],
     );
 
-    const { handleSubmit, reset, control } = useForm<ReportListingReq>({
+    const { handleSubmit, reset, control } = useForm({
         resolver: zodResolver(ReportListingSchema),
         defaultValues: defaultForm,
         mode: "all",
@@ -43,7 +51,7 @@ export const ReportListingModal = ({ listingId, listingTitle, visible, userEmail
         async (req: ReportListingReq) => {
             const token = await executeRecaptcha("report_listing_form_submit");
             await validateRecaptchaAction(token);
-            return reportListingAction(req);
+            return reportListingAction(req.emailAddress, listingId!, req.message, req.reason);
         },
         {
             onMutate: () => {

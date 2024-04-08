@@ -1,8 +1,11 @@
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { FC } from "react";
+import { SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
+import { COUNTRIES } from "@/utils/countries";
 import {
+    getDistanceUnit,
     getFormattedCurrency,
     getFormattedDistance,
     getRandomItem,
@@ -11,7 +14,6 @@ import {
     timeAgo,
     unCamelCase,
 } from "@/utils/helpers";
-import { ListingSubscriptionItem } from "@/utils/types";
 
 /** Lazily loaded context menu */
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {
@@ -22,104 +24,84 @@ const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscript
 interface Props {
     /** Base path to be used when forwarding to a subpath */
     basePath?: string;
-    /** Details of a particular subscription item */
-    listingSubscriptionItem?: ListingSubscriptionItem;
     /** Whether or not to show the placeholder data */
     loading?: boolean;
+    /** Details of a particular subscription item */
+    subscriptionItem?: SubscriptionItem;
 }
 
 /** To represent an individual subscription item within the subscription list */
 export const DashboardSubscriptionItem: FC<Props> = (props) => {
-    const { listingSubscriptionItem = {}, loading, basePath } = props;
-    const {
-        id,
-        displayName,
-        active,
-        notificationFrequency,
-        createdOn,
-        subscriptionExpiryDate,
-        brand,
-        condition,
-        type,
-        model,
-        trim,
-        minPrice,
-        maxPrice,
-        minMillage,
-        maxMillage,
-        minYearOfManufacture,
-        maxYearOfManufacture,
-        minYearOfRegistration,
-        maxYearOfRegistration,
-    } = listingSubscriptionItem as ListingSubscriptionItem;
+    const { subscriptionItem: listingSubscriptionItem = {}, loading, basePath } = props;
+    const { id, data, user, active, createdAt } = listingSubscriptionItem as SubscriptionItem;
+
+    const distanceUnit = getDistanceUnit(user?.data?.countryCode);
+    const countryItem = COUNTRIES[user?.data?.countryCode || ""];
 
     const subscriptionDetails: { label: string; value: string | number }[] = [];
 
-    if (type) {
-        subscriptionDetails.push({ label: "Type", value: unCamelCase(type) });
+    if (data?.type) {
+        subscriptionDetails.push({ label: "Type", value: unCamelCase(data?.type) });
     }
 
-    if (condition) {
-        subscriptionDetails.push({ label: "Condition", value: unCamelCase(condition) });
+    if (data?.condition) {
+        subscriptionDetails.push({ label: "Condition", value: unCamelCase(data?.condition) });
     }
 
-    if (brand) {
-        subscriptionDetails.push({ label: "Brand", value: brand });
+    if (data?.brand) {
+        subscriptionDetails.push({ label: "Brand", value: data?.brand });
     }
 
-    if (model) {
-        subscriptionDetails.push({ label: "Model", value: model });
+    if (data?.model) {
+        subscriptionDetails.push({ label: "Model", value: data?.model });
     }
 
-    if (trim) {
-        subscriptionDetails.push({ label: "Trim", value: trim });
+    if (data?.trim) {
+        subscriptionDetails.push({ label: "Trim", value: data?.trim });
     }
 
-    if (minPrice && maxPrice) {
+    if (data?.minPrice && data?.maxPrice) {
         subscriptionDetails.push({
             label: "Price Range",
-            value: `${getFormattedCurrency(minPrice.amount, minPrice.currencySymbol)}-${getFormattedCurrency(
-                maxPrice.amount,
-                maxPrice.currencySymbol,
-            )}`,
+            value: `${getFormattedCurrency(data?.minPrice, countryItem?.[2]!)}-${getFormattedCurrency(data?.maxPrice, countryItem?.[2]!)}`,
         });
-    } else if (minPrice) {
-        subscriptionDetails.push({ label: "Minimum Price", value: getFormattedCurrency(minPrice.amount, minPrice.currencySymbol) });
-    } else if (maxPrice) {
-        subscriptionDetails.push({ label: "Maximum Price", value: getFormattedCurrency(maxPrice.amount, maxPrice.currencySymbol) });
+    } else if (data?.minPrice) {
+        subscriptionDetails.push({ label: "Minimum Price", value: getFormattedCurrency(data?.minPrice, countryItem?.[2]!) });
+    } else if (data?.maxPrice) {
+        subscriptionDetails.push({ label: "Maximum Price", value: getFormattedCurrency(data?.maxPrice, countryItem?.[2]!) });
     }
 
-    if (minMillage?.distance && maxMillage?.distance) {
+    if (data?.minMillage && data?.maxMillage) {
         subscriptionDetails.push({
             label: "Mileage Range",
-            value: `${getFormattedDistance(minMillage.distance, minMillage.unit)}-${getFormattedDistance(maxMillage.distance, maxMillage.unit)}`,
+            value: `${getFormattedDistance(data?.minMillage, distanceUnit)}-${getFormattedDistance(data?.maxMillage, distanceUnit)}`,
         });
-    } else if (minMillage?.distance) {
-        subscriptionDetails.push({ label: "Minimum Mileage", value: getFormattedDistance(minMillage.distance, minMillage.unit) });
-    } else if (maxMillage?.distance) {
-        subscriptionDetails.push({ label: "Maximum Mileage", value: getFormattedDistance(maxMillage.distance, maxMillage.unit) });
+    } else if (data?.minMillage) {
+        subscriptionDetails.push({ label: "Minimum Mileage", value: getFormattedDistance(data?.minMillage, distanceUnit) });
+    } else if (data?.maxMillage) {
+        subscriptionDetails.push({ label: "Maximum Mileage", value: getFormattedDistance(data?.maxMillage, distanceUnit) });
     }
 
-    if (minYearOfManufacture && maxYearOfManufacture) {
+    if (data?.minYearOfManufacture && data?.maxYearOfManufacture) {
         subscriptionDetails.push({
             label: "Manufactured between",
-            value: `${getYearFromDateString(minYearOfManufacture)}-${getYearFromDateString(maxYearOfManufacture)}`,
+            value: `${data?.minYearOfManufacture}-${data?.maxYearOfManufacture}`,
         });
-    } else if (minYearOfManufacture) {
-        subscriptionDetails.push({ label: "Manufactured after", value: getYearFromDateString(minYearOfManufacture) });
-    } else if (maxYearOfManufacture) {
-        subscriptionDetails.push({ label: "Manufactured before", value: getYearFromDateString(maxYearOfManufacture) });
+    } else if (data?.minYearOfManufacture) {
+        subscriptionDetails.push({ label: "Manufactured after", value: data?.minYearOfManufacture });
+    } else if (data?.maxYearOfManufacture) {
+        subscriptionDetails.push({ label: "Manufactured before", value: data?.maxYearOfManufacture });
     }
 
-    if (minYearOfRegistration && maxYearOfRegistration) {
+    if (data?.minYearOfRegistration && data?.maxYearOfRegistration) {
         subscriptionDetails.push({
             label: "Registered between",
-            value: `${getYearFromDateString(minYearOfRegistration)}-${getYearFromDateString(maxYearOfRegistration)}`,
+            value: `${data?.minYearOfRegistration}-${data?.maxYearOfRegistration}`,
         });
-    } else if (minYearOfRegistration) {
-        subscriptionDetails.push({ label: "Registered after", value: getYearFromDateString(minYearOfRegistration) });
-    } else if (maxYearOfRegistration) {
-        subscriptionDetails.push({ label: "Registered before", value: getYearFromDateString(maxYearOfRegistration) });
+    } else if (data?.minYearOfRegistration) {
+        subscriptionDetails.push({ label: "Registered after", value: data?.minYearOfRegistration });
+    } else if (data?.maxYearOfRegistration) {
+        subscriptionDetails.push({ label: "Registered before", value: data?.maxYearOfRegistration });
     }
 
     const placeholderWidth = ["w-32", "w-40", "w-44", "w-28", "w-36"];
@@ -131,7 +113,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
             ) : (
                 <div className="flex gap-2">
                     <div className="flex flex-1 flex-wrap items-center gap-0.5 md:gap-2 xl:gap-4">
-                        <span className="text-xl font-semibold text-base-content">{displayName}</span>
+                        <span className="text-xl font-semibold text-base-content">{data?.displayName}</span>
                         <span
                             className={clsx({
                                 "badge badge-lg": true,
@@ -142,11 +124,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
                             {active ? "Active" : "Inactive"}
                         </span>
                     </div>
-                    <DashboardSubscriptionItemMenu
-                        key={id}
-                        basePath={basePath}
-                        listingSubscriptionItem={listingSubscriptionItem as ListingSubscriptionItem}
-                    />
+                    <DashboardSubscriptionItemMenu key={id} basePath={basePath} subscriptionItem={listingSubscriptionItem as SubscriptionItem} />
                 </div>
             )}
 
@@ -155,7 +133,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
             ) : (
                 <div className="text-sm ">
                     <span className="text-neutral opacity-50">Notification Frequency:</span>&nbsp;
-                    <span className="font-light">{unCamelCase(notificationFrequency)}</span>
+                    <span className="font-light">{unCamelCase(data?.notificationFrequency)}</span>
                 </div>
             )}
 
@@ -164,7 +142,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
             ) : (
                 <div className="text-sm ">
                     <span className="text-neutral opacity-50">Expires on:</span>&nbsp;
-                    <span className="font-light">{active ? new Date(subscriptionExpiryDate).toDateString() : "N/A"}</span>
+                    <span className="font-light">{active ? new Date(data?.subscriptionExpiryDate!).toDateString() : "N/A"}</span>
                 </div>
             )}
 
@@ -194,7 +172,7 @@ export const DashboardSubscriptionItem: FC<Props> = (props) => {
                 {loading ? (
                     <div className="h-4 w-32 bg-base-200" />
                 ) : (
-                    <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdOn))}</div>
+                    <div className="text-xs text-neutral-400">Created {timeAgo(new Date(createdAt))}</div>
                 )}
             </div>
         </div>

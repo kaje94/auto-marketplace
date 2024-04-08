@@ -1,6 +1,7 @@
+import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockListingsResponse } from "@/utils/mockData";
+import { mockListingItem } from "@/utils/mockData";
 import { PostedListingsSearchGrid } from "./PostedListingsSearchGrid";
 
 const meta = {
@@ -16,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        listings: mockListingsResponse,
+        listings: [mockListingItem],
     },
 };
 
