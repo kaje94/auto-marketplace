@@ -8,7 +8,8 @@
       "build": {
         "executor": "@nx-go/nx-go:build",
         "options": {
-          "main": "{projectRoot}/cmd/main.go"
+          "main": "{projectRoot}/cmd/main.go",
+          "outputPath": "{projectRoot}/bin/service"
         }
       },
       "serve": {

@@ -70,5 +70,8 @@
     },
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "files.watcherInclude": [
+        "${workspaceRoot}/libs/protos/gen/**"        
+    ]
 }

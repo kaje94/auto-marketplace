@@ -2,6 +2,7 @@ import { getAccessToken } from "@auth0/nextjs-auth0";
 import { GrpcTransportOptions } from "@connectrpc/connect-node";
 import { headers as nextHeaders } from "next/headers";
 import { redirect } from "next/navigation";
+import { env } from "@/env.mjs";
 
 const getConfigWithAuth = async (): Promise<string> => {
     try {
@@ -16,6 +17,6 @@ const getConfigWithAuth = async (): Promise<string> => {
     }
 };
 
-export const grpcOptions: GrpcTransportOptions = { baseUrl: "http://localhost:50051", httpVersion: "2" };
+export const grpcOptions: GrpcTransportOptions = { baseUrl: env.GRPC_API_BASE_URL, httpVersion: "2" };
 
 export const getGrpcHeaders = async () => ({ Authorization: await getConfigWithAuth() });

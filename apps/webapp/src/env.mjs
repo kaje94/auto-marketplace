@@ -7,7 +7,7 @@ export const env = createEnv({
      * isn't built with invalid env vars.
      */
     server: {
-        API_BASE_URL: z.string().min(1),
+        GRPC_API_BASE_URL: z.string().min(1),
         AUTH0_SECRET: z.string().min(1),
         AUTH0_BASE_URL: z.string().min(1),
         AUTH0_ISSUER_BASE_URL: z.string().min(1),

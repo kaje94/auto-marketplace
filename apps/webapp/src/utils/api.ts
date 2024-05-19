@@ -22,9 +22,9 @@ const fetchRequest = async <TResponse>(endpoint: string, config: RequestInit, wi
     let response: Response;
     if (withAuth) {
         const configWithAuth = await getConfigWithAuth(config);
-        response = await fetch(`${env.API_BASE_URL}${endpoint}`, configWithAuth);
+        response = await fetch(`${env.GRPC_API_BASE_URL}${endpoint}`, configWithAuth);
     } else {
-        response = await fetch(`${env.API_BASE_URL}${endpoint}`, { ...config, headers: { ...config.headers, ...defaultReqHeaders } });
+        response = await fetch(`${env.GRPC_API_BASE_URL}${endpoint}`, { ...config, headers: { ...config.headers, ...defaultReqHeaders } });
     }
     if (response.ok) {
         try {
