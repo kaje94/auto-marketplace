@@ -63,12 +63,12 @@ export const ListingImageUpload = forwardRef<HTMLInputElement, Props>((props, fo
 
     const removeImage = (indexToRemove: number) => {
         if (indexToRemove >= 0 && indexToRemove < files.length) {
-            let newFileList = files.map((item, index) => (index === indexToRemove ? { ...item, deleted: true, isThumbnail: false } : item));
+            let newFileList = files?.map((item, index) => (index === indexToRemove ? { ...item, deleted: true, isThumbnail: false } : item));
             let thumbnailIndex = newFileList.findIndex((item) => !item.deleted && item.isThumbnail);
             if (thumbnailIndex < 0) {
                 thumbnailIndex = newFileList.findIndex((item) => !item.deleted);
             }
-            newFileList = newFileList.map((item, index) => (index === thumbnailIndex ? { ...item, isThumbnail: true } : item));
+            newFileList = newFileList?.map((item, index) => (index === thumbnailIndex ? { ...item, isThumbnail: true } : item));
             setFiles(newFileList);
         }
     };

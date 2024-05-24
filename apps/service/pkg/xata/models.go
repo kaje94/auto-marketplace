@@ -128,19 +128,19 @@ type ListingSearchRequest struct {
 	Target    []SearchTarget         `json:"target,omitempty"`
 	Fuzziness int                    `json:"fuzziness,omitempty"`
 	Boosters  []SearchNumericBooster `json:"boosters,omitempty"`
-	Sort      CreatedAtSort          `json:"sort,omitempty"`
+	Sort      *CreatedAtSort         `json:"sort,omitempty"`
 }
 
 type SubscriptionFilterRequest struct {
 	Filter SubscriptionSearchFilter `json:"filter,omitempty"`
 	Page   SearchPage               `json:"page"`
-	Sort   CreatedAtSort            `json:"sort,omitempty"`
+	Sort   *CreatedAtSort           `json:"sort,omitempty"`
 }
 
 type NotificationsFilterRequest struct {
 	Filter NotificationsFilter `json:"filter,omitempty"`
 	Page   SearchPage          `json:"page"`
-	Sort   CreatedAtSort       `json:"sort,omitempty"`
+	Sort   *CreatedAtSort      `json:"sort,omitempty"`
 }
 
 type LocationsFilterRequest struct {

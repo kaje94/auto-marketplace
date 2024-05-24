@@ -155,7 +155,7 @@ func GetInitialListingQueryFilterReq(pageNumber int, pageSize int) xata.ListingS
 			Size:   pageSize,
 		},
 		Filter: xata.ListingSearchFilter{},
-		Sort: xata.CreatedAtSort{
+		Sort: &xata.CreatedAtSort{
 			CreatedAt: "desc",
 		},
 	}

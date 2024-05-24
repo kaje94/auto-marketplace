@@ -4,6 +4,7 @@ go 1.21.0
 
 require (
 	github.com/auth0/go-auth0 v1.4.1
+	github.com/aws/aws-sdk-go v1.51.5
 	github.com/go-playground/validator/v10 v10.18.0
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1
 	google.golang.org/grpc v1.62.0
@@ -11,7 +12,6 @@ require (
 
 require (
 	github.com/PuerkitoBio/rehttp v1.3.0 // indirect
-	github.com/aws/aws-sdk-go v1.51.5 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.2.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -19,6 +19,7 @@ require (
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/lestrrat-go/blackmagic v1.0.2 // indirect
 	github.com/lestrrat-go/httpcc v1.0.1 // indirect

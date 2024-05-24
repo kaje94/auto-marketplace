@@ -75,7 +75,7 @@ export const ProfileForm: FC<Props> = (props) => {
         queryFn: () => getCitiesOfState(stateCode!),
         enabled: !!countryCode && !!stateCode,
         queryKey: ["country-state-cities", { locale: countryCode, stateCode }],
-        select: (data) => data?.cities.map((item) => ({ label: item, value: item }) as LabelValue),
+        select: (data) => data?.cities?.map((item) => ({ label: item, value: item }) as LabelValue),
         onSettled: (data, _) => {
             if (!!data?.length && !data?.some((item) => item.label === city)) {
                 (form as UseFormReturn<UpdateProfileReq>).setValue("address.city", "");

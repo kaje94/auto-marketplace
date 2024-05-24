@@ -42,12 +42,14 @@ test-results
 # storybook
 storybook-static
 
+# Ignore generated protos
+libs/protos/gen/go/*
+!libs/protos/gen/go/go.mod
+libs/protos/gen/ts/*
+!libs/protos/gen/ts/.gitkeep
+
 # Sentry Config File
 .sentryclirc
-
-# Ignore all generated code
-generated
-gen
 
 .react-email/
 
@@ -60,3 +62,6 @@ __debug_*
 
 # service
 bin
+
+# Devbox
+.devbox

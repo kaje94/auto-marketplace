@@ -203,7 +203,7 @@ export const UserNotificationsFilterSchema = z.object({
 });
 
 export const UpdateProfileSchema = z.object({
-    isDealership: z.boolean(),
+    isDealership: z.boolean().optional(),
     address: z.object({
         city: z.string().min(1, "City is required"),
         state: z.string().min(1, "State is required"),

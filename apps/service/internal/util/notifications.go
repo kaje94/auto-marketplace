@@ -21,7 +21,7 @@ func GetInitialNotificationQueryFilterReq(pageNumber int, pageSize int, userEmai
 				Is: userEmail,
 			},
 		},
-		Sort: xata.CreatedAtSort{
+		Sort: &xata.CreatedAtSort{
 			CreatedAt: "desc",
 		},
 	}

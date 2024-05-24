@@ -50,7 +50,7 @@ func GetInitialSubscriptionQueryFilterReq(pageNumber int, pageSize int) xata.Sub
 			Size:   pageSize,
 		},
 		Filter: xata.SubscriptionSearchFilter{},
-		Sort: xata.CreatedAtSort{
+		Sort: &xata.CreatedAtSort{
 			CreatedAt: "desc",
 		}}
 }
