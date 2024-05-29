@@ -11,8 +11,9 @@ RUN mkdir -p /code && chown ${DEVBOX_USER}:${DEVBOX_USER} /code
 USER ${DEVBOX_USER}:${DEVBOX_USER}
 COPY --chown=${DEVBOX_USER}:${DEVBOX_USER} devbox.json devbox.json
 COPY --chown=${DEVBOX_USER}:${DEVBOX_USER} devbox.lock devbox.lock
-RUN devbox run -- echo "Installed Packages."
-
+# Remove packages that will not be needed
+RUN devbox rm minikube kubectl tilt envsubst
+RUN devbox install
 USER root:root
 
 # Copy core files
@@ -39,6 +40,6 @@ RUN devbox run go build -o apps/service/bin/service apps/service/cmd/main.go
 ###############
 
 # Deploy the application binary into a lean image
-FROM gcr.io/distroless/base-debian11 AS run-stage
+FROM cgr.dev/chainguard/static:latest AS run-stage
 COPY --from=build-stage /code/apps/service/bin/service .
 ENTRYPOINT ["./service"]
