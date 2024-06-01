@@ -128,17 +128,18 @@ export async function generateMetadata({ searchParams, params }: SearchParams & 
 
     const description = newDescription || previousDescription;
     const previousImages = (await parent).openGraph?.images || [];
-    const images = listings.items.reduce((newImages, item) => {
-        const thumbnailImage = item.data?.vehicleImages.find((imageItem) => imageItem.isThumbnail);
-        if (thumbnailImage) {
-            const title = getListingTitleFromListing(item.data!);
-            const location = getLocationUserProfile(item.user!);
-            const seoFriendlyImageName = toSEOFriendlyTitleUrl(title, location);
-            const imageUrl = convertToSEOFriendlyImageURL(thumbnailImage?.name!, seoFriendlyImageName);
-            return [...newImages, { url: imageUrl, alt: `${getTitleMetadata(item)} image` }];
-        }
-        return newImages;
-    }, previousImages);
+    const images =
+        listings?.items?.reduce((newImages, item) => {
+            const thumbnailImage = item.data?.vehicleImages.find((imageItem) => imageItem.isThumbnail);
+            if (thumbnailImage) {
+                const title = getListingTitleFromListing(item.data!);
+                const location = getLocationUserProfile(item.user!);
+                const seoFriendlyImageName = toSEOFriendlyTitleUrl(title, location);
+                const imageUrl = convertToSEOFriendlyImageURL(thumbnailImage?.name!, seoFriendlyImageName);
+                return [...newImages, { url: imageUrl, alt: `${getTitleMetadata(item)} image` }];
+            }
+            return newImages;
+        }, previousImages) ?? [];
 
     const country = COUNTRIES[params.locale];
 

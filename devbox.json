@@ -7,9 +7,6 @@
     "protobuf@24.4",
     "protoc-gen-go@1.32.0",
     "protoc-gen-go-grpc@1.2.0",
-    "minikube@1.32.0",
-    "kubectl@1.29.3",
-    "tilt@latest",
     "envsubst@latest"
   ],
   "env": {
@@ -18,9 +15,7 @@
   "shell": {
     "init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
     "scripts": {
-      "test":           ["echo \"Error: no test specified\" && exit 1"],
-      "start-minikube": "minikube start",
-      "enable-ingress": "minikube addons enable ingress"
+      "test":           ["echo \"Error: no test specified\" && exit 1"]
     }
   }
 }

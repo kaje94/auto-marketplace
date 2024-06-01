@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  namespace: targabay
+  labels:
+    app: webapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-service
+  template:
+    metadata:
+      labels:
+        app: webapp-service
+    spec:
+      containers:
+        - name: webapp-container
+          image: webapp-image
+          ports:
+            - containerPort: 50051
+          envFrom:
+          - configMapRef:
+              name: config-map
+          # readinessProbe:
+          #   httpGet:
+          #     port: 50051
+          #     path: '/ready'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app-service
+  namespace: targabay
+spec:
+  selector:
+    app: webapp-service
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

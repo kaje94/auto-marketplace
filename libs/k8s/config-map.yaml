@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: config-map
+  namespace: targabay
 data:
   # Auth0
   # Auth0 - Common
@@ -27,7 +28,7 @@ data:
   S3_BUCKET: "${S3_BUCKET}"
   S3_REGION: "${S3_REGION}"
   # Other configs needed for webapp
-  GRPC_API_BASE_URL: "${GRPC_API_BASE_URL}"
+  GRPC_API_BASE_URL: http://go-api-service:50051
   RECAPTCHA_SITE_SECRET: "${RECAPTCHA_SITE_SECRET}"
   NEXT_CONTACT_US_FORM_KEY: "${NEXT_CONTACT_US_FORM_KEY}"
   NEXT_PUBLIC_IMAGE_CDN_BASE: "${NEXT_PUBLIC_IMAGE_CDN_BASE}"

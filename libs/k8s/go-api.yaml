@@ -1,9 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-service
+  name: go-deployment
+  namespace: targabay
   labels:
-    app: go-service
+    app: go-deployment
 spec:
   replicas: 1
   selector:
@@ -15,8 +16,8 @@ spec:
         app: go-service
     spec:
       containers:
-        - name: go-service
-          image: go-service
+        - name: go-service-container
+          image: go-service-image
           ports:
             - containerPort: 50051
           envFrom:
@@ -30,13 +31,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-service
+  name: go-api-service
+  namespace: targabay
 spec:
-  type: NodePort
   selector:
     app: go-service
   ports:
     - protocol: TCP
       port: 50051
       targetPort: 50051
-      nodePort: 30001

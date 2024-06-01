@@ -5,14 +5,18 @@
   "author": "a.kajendran@gmail.com",
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm --stream -r dev",
-    "dev:webapp": "pnpm --filter=webapp dev",
+    "reset": "nx reset",
+    "dev": "nx run-many --parallel --target=dev --projects=service,targabay-webapp",
+    "dev:service": "nx serve service",
+    "dev:webapp": "nx dev targabay-webapp",
+    "start:webapp": "nx start targabay-webapp",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r --fix",
     "format": "pnpm -r format && pnpm format-rest",
     "format-rest": "npx prettier --ignore-path .gitignore --write \"**/*.{css,md,json,yml}\" \"!package-lock.json\" --print-width 150 --tab-width 4",
     "build:protos": "nx build protos",
-    "build:service": "nx build service"
+    "build:service": "nx build service",
+    "build:webapp": "nx build targabay-webapp"
   },
   "engines": {
     "node": ">=20.9.0",

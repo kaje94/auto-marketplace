@@ -42,7 +42,7 @@ export default async function Page({ searchParams, params }: SearchParams & Loca
         params.locale === BOT_LOCALE ? {} : getStatesOfCountry(params.locale),
     ]);
 
-    if (listingsRes.items.length === 0 && page !== "1") {
+    if (listingsRes.items?.length === 0 && page !== "1") {
         redirect(
             `/${params.locale}/dashboard/my-listings?${qs.stringify({ ...publicFilters, ...userFilters, PageNumber: 1 }, { skipEmptyString: true })}`,
         );
