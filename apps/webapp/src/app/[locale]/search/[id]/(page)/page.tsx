@@ -7,15 +7,7 @@ import { ListingDetails, RelatedListingsCarousel } from "@/components/Listings/L
 import { ListingDetailsCountrySelectBtn } from "@/components/Listings/ListingDetails/CountrySelectButton";
 import { COUNTRIES } from "@/utils/countries";
 import { ListingStatusTypes } from "@/utils/enum";
-import {
-    getFormattedCurrency,
-    getListingTitleFromListing,
-    getLocationString,
-    getLocationUserProfile,
-    toSEOFriendlyTitleUrl,
-    unCamelCase,
-} from "@/utils/helpers";
-import { convertToSEOFriendlyImageURL } from "@/utils/imageUtils";
+import { getFormattedCurrency, getListingTitleFromListing, getLocationString, getLocationUserProfile, unCamelCase } from "@/utils/helpers";
 import { ListingIdPathParam, LocalePathParam } from "@/utils/types";
 
 const getListingDescriptionMetadata = (item: ListingItem): string => {
@@ -48,18 +40,15 @@ const getTitleMetadata = (item: ListingItem): string => {
 export async function generateMetadata({ params }: ListingIdPathParam, parent: ResolvingMetadata): Promise<Metadata> {
     const itemDetails = await getPublicListingItemAction(params.id);
     if (itemDetails.status == ListingStatusTypes.Posted) {
-        const image = itemDetails?.data?.vehicleImages?.find((item) => item.isThumbnail === true);
+        const image = itemDetails?.data?.vehicleImages?.find((item) => item.isThumbnail === true) ?? itemDetails?.data?.vehicleImages[0];
         const listingTitle = getListingTitleFromListing(itemDetails.data!);
         const location = getLocationUserProfile(itemDetails.user!);
-        const seoFriendlyImageName = toSEOFriendlyTitleUrl(listingTitle, location);
-        const imageUrl = convertToSEOFriendlyImageURL(image?.name!, seoFriendlyImageName);
         const title = `Targabay - ${getTitleMetadata(itemDetails)}`;
         const description = getListingDescriptionMetadata(itemDetails);
         const previousKeywords = (await parent).keywords || [];
-        const previousImages = (await parent).openGraph?.images || [];
         const previousTwitter = (await parent).twitter || {};
         const previousOpenGraph = (await parent).openGraph || {};
-        const images = [...previousImages, { url: imageUrl, alt: `${getTitleMetadata(itemDetails)} image` }];
+        const images = [{ url: image?.url ?? "", alt: `${getTitleMetadata(itemDetails)} image` }];
         return {
             title,
             description,

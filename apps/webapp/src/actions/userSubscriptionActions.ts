@@ -3,12 +3,10 @@ import { PartialMessage } from "@bufbuild/protobuf";
 import { createPromiseClient } from "@connectrpc/connect";
 import { createGrpcTransport } from "@connectrpc/connect-node";
 import { revalidateTag, unstable_cache } from "next/cache";
-import { GetAdminListingsRequest } from "targabay-protos/gen/ts/dist/types/admin_listings_pb";
-import { GetListingsResponse, GetSubscriptionsResponse, SubscriptionItem, SubscriptionItem_Data } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { GetSubscriptionsResponse, SubscriptionItem, SubscriptionItem_Data } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { GetUserSubscriptionsRequest, UpdateSubscriptionRequest } from "targabay-protos/gen/ts/dist/types/user_subscriptions_pb";
 import { UserSubscriptionsService } from "targabay-protos/gen/ts/dist/user_subscriptions.v1_connect";
-import { apiTags, listingItemTags, revalidationTime, subscriptionApiTags } from "@/utils/api";
-import { ListingStatusTypes } from "@/utils/enum";
+import { apiTags, revalidationTime, subscriptionApiTags } from "@/utils/api";
 import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
 

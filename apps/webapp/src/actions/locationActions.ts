@@ -9,9 +9,6 @@ import { grpcOptions } from "@/utils/grpc";
 
 const client = createPromiseClient(LocationsService, createGrpcTransport(grpcOptions));
 
-/** Get cities of a state within a country */
-// export const getCitiesOfState = async (countryCode: string, stateCode: string) => api.getCities(countryCode, stateCode);
-
 /** Get states for a given country code */
 export const getStatesOfCountry = async (countryCode: string) => {
     const getStates = unstable_cache(

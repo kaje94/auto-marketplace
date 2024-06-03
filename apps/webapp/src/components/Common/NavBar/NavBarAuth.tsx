@@ -23,8 +23,8 @@ export const NavBarAuth = ({ userClaims, notificationCount, loading }: { loading
                                 <div className="w-10 rounded-full ring ring-gray-600 ring-offset-base-100 duration-200 hover:ring-gray-400">
                                     <Avatar name={userClaims?.name} url={userClaims?.picture} width={40} />
                                     {notificationCount ? (
-                                        <div className=" badge badge-primary badge-md absolute -right-1 -top-1 z-10 flex aspect-square items-center justify-center border-2 border-accent bg-gradient-to-t from-secondary to-primary p-0.5 text-neutral shadow-2xl">
-                                            <NotificationIcon className="animate-pulse" strokeWidth={3} />
+                                        <div className="badge badge-primary badge-md absolute -right-1 -top-1 z-10 flex aspect-square h-4 w-4 items-center justify-center rounded-full border-2 border-accent bg-gradient-to-t from-secondary to-primary p-0.5 text-neutral shadow-2xl">
+                                            <NotificationIcon className="h-3 w-3 animate-pulse" strokeWidth={3} />
                                         </div>
                                     ) : null}
                                 </div>

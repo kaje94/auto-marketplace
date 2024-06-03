@@ -2,12 +2,12 @@
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import FsLightbox from "fslightbox-react";
+import qs from "query-string";
 import React, { useCallback, useEffect, useState } from "react";
 import { ListingImage } from "@/components/Common";
 import { MaximizeIcon, StarIcon } from "@/icons";
 import { VehicleTypes } from "@/utils/enum";
-import { timeAgo, toSEOFriendlyTitleUrl, unCamelCase } from "@/utils/helpers";
-import { convertToSEOFriendlyImageURL } from "@/utils/imageUtils";
+import { timeAgo, unCamelCase } from "@/utils/helpers";
 import { Location, VehicleImageType } from "@/utils/types";
 import { ListingImageCarouselThumbnails } from "./ListingImageCarouselThumbnails";
 
@@ -135,7 +135,7 @@ export const ListingImageCarousel: React.FC<PropType> = (props) => {
             {isLightBoxOpen && (
                 <FsLightbox
                     sourceIndex={selectedIndex}
-                    sources={images.map((item) => convertToSEOFriendlyImageURL(item?.name!, toSEOFriendlyTitleUrl(title, location as Location), 100))}
+                    sources={images.map((item) => qs.stringifyUrl({ url: item.url!, query: { tr: "w-full" } }))}
                     toggler={isLightBoxOpen}
                     type="image"
                     disableSlideSwiping

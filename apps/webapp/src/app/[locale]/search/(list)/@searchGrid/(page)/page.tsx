@@ -6,15 +6,7 @@ import { getPublicListingsAction } from "@/actions/publicListingActions";
 import { SearchGrid } from "@/components/Listings/PostedListingsSearchGrid";
 import { BOT_LOCALE } from "@/utils/constants";
 import { COUNTRIES, getAlternativeLinks } from "@/utils/countries";
-import {
-    getFormattedCurrency,
-    getListingTitleFromListing,
-    getLocationString,
-    getLocationUserProfile,
-    toSEOFriendlyTitleUrl,
-    unCamelCase,
-} from "@/utils/helpers";
-import { convertToSEOFriendlyImageURL } from "@/utils/imageUtils";
+import { getFormattedCurrency, getListingTitleFromListing, getLocationString, getLocationUserProfile, unCamelCase } from "@/utils/helpers";
 import { PublicListingsFilterSchema } from "@/utils/schemas";
 import { LocalePathParam, PublicListingsFilterReq, SearchParams } from "@/utils/types";
 
@@ -131,12 +123,8 @@ export async function generateMetadata({ searchParams, params }: SearchParams & 
     const images =
         listings?.items?.reduce((newImages, item) => {
             const thumbnailImage = item.data?.vehicleImages.find((imageItem) => imageItem.isThumbnail);
-            if (thumbnailImage) {
-                const title = getListingTitleFromListing(item.data!);
-                const location = getLocationUserProfile(item.user!);
-                const seoFriendlyImageName = toSEOFriendlyTitleUrl(title, location);
-                const imageUrl = convertToSEOFriendlyImageURL(thumbnailImage?.name!, seoFriendlyImageName);
-                return [...newImages, { url: imageUrl, alt: `${getTitleMetadata(item)} image` }];
+            if (thumbnailImage?.url) {
+                return [...newImages, { url: thumbnailImage.url, alt: `${getTitleMetadata(item)} image` }];
             }
             return newImages;
         }, previousImages) ?? [];

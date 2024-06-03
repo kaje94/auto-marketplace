@@ -11,22 +11,7 @@ dev_mode = 'dev' in config.parse()
 common_only = ['devbox.json','devbox.lock','package.json','nx.json','pnpm-lock.yaml','pnpm-workspace.yaml','./libs/protos','./apps/service/']
 common_ignore = ['node_modules']
 webapp_build_args = {
-    # Public env variables
-    'NEXT_PUBLIC_RECAPTCHA_SITE_KEY': os.getenv('NEXT_PUBLIC_RECAPTCHA_SITE_KEY', ''),
     'NEXT_PUBLIC_SUPPORT_EMAIL': os.getenv('NEXT_PUBLIC_SUPPORT_EMAIL', 'support@taragabay.com'),
-    'NEXT_PUBLIC_IMAGE_CDN_BASE': os.getenv('NEXT_PUBLIC_IMAGE_CDN_BASE', ''),
-    'NEXT_PUBLIC_SENTRY_KEY': os.getenv('NEXT_PUBLIC_SENTRY_KEY', ''),
-    # Private env variables
-    'GRPC_API_BASE_URL': os.getenv('GRPC_API_BASE_URL', ''),
-    'AUTH0_SECRET': os.getenv('AUTH0_SECRET', ''),
-    'AUTH0_BASE_URL': os.getenv('AUTH0_BASE_URL', ''),
-    'AUTH0_ISSUER_BASE_URL': os.getenv('AUTH0_ISSUER_BASE_URL', ''),
-    'AUTH0_CLIENT_ID': os.getenv('AUTH0_CLIENT_ID', ''),
-    'AUTH0_CLIENT_SECRET': os.getenv('AUTH0_CLIENT_SECRET', ''),
-    'AUTH0_AUDIENCE': os.getenv('AUTH0_AUDIENCE', ''),
-    'AUTH0_SCOPE': os.getenv('AUTH0_SCOPE', ''),
-    'NEXT_CONTACT_US_FORM_KEY': os.getenv('NEXT_CONTACT_US_FORM_KEY', ''),
-    'RECAPTCHA_SITE_SECRET': os.getenv('RECAPTCHA_SITE_SECRET', ''),
 }
 
 # Define docker builds

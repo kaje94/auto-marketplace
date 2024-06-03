@@ -2,7 +2,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "react-hot-toast";
 import type { Metadata, Viewport } from "next";
 import { Footer, ScrollToTop } from "@/components/Common";
-import { ErrorMonitor } from "@/components/Common/ErrorMonitor";
 import { NavBar } from "@/components/Common/NavBar";
 import { env } from "@/env.mjs";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
@@ -83,7 +82,6 @@ export default function RootLayout({ children }: ChildrenProps) {
                     <Footer />
                 </ReactQueryProvider>
                 <SpeedInsights />
-                <ErrorMonitor />
             </body>
         </html>
     );

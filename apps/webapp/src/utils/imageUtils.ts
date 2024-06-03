@@ -3,10 +3,12 @@ import imageCompression from "browser-image-compression";
 import { FastAverageColor } from "fast-average-color";
 import { nanoid } from "nanoid/non-secure";
 import qs from "query-string";
+import { ListingItem, ListingItem_Data, ListingItem_Data_Image } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { GenerateSignedUrlRequest_Item } from "targabay-protos/gen/ts/dist/types/image_pb";
 import * as ThumbHash from "thumbhash";
 import { deleteObjectFromS3Action, getPresignedS3UrlsAction } from "@/actions/imageActions";
 import { env } from "@/env.mjs";
+import { getListingTitleFromListing, getLocationUserProfile, toSEOFriendlyTitleUrl } from "./helpers";
 import { VehicleImageType } from "./types";
 
 /**
@@ -143,15 +145,6 @@ const previewUrlToHash = async (previewUrl: string) => {
     return thumbHash;
 };
 
-/** Generate SEO friendly listing image URL */
-export const convertToSEOFriendlyImageURL = (src: string, seoFriendlyName: string, quality: number = 75, width: number = 640): string => {
-    const fileExtension = getFileExtension(src);
-    return `${env.NEXT_PUBLIC_IMAGE_CDN_BASE}/ik-seo/${src?.replace(fileExtension, "")}/${seoFriendlyName}${fileExtension}?${qs.stringify({
-        tr: width ? `w-${width}` : undefined,
-        q: quality,
-    })}`;
-};
-
 /** Get file extension of the image file */
 const getFileExtension = (filePath: string): string => {
     // Use the split method to separate the path into segments
@@ -172,4 +165,34 @@ const getFileExtension = (filePath: string): string => {
     }
     // If there's no valid file extension, return null or an appropriate default value
     return "";
+};
+
+/** Replace the s3 URL of list of listings with CDN url */
+export const transformListingsImages = (items: ListingItem[]) => items?.map((item) => replaceImageUrlWithCdn(item));
+
+/** Replace the s3 URL with CDN url */
+export const replaceImageUrlWithCdn = (item: ListingItem): ListingItem => {
+    if (!env.IMAGE_CDN_BASE) {
+        return item;
+    }
+
+    return {
+        ...item,
+        data: {
+            ...item.data,
+            vehicleImages: (item.data?.vehicleImages.map((imageItem) => {
+                const fileExtension = getFileExtension(imageItem.name);
+                const location = getLocationUserProfile(item?.user!);
+                const title = getListingTitleFromListing(item?.data!);
+                const seoFriendlyName = toSEOFriendlyTitleUrl(title, location);
+                return {
+                    ...imageItem,
+                    url: qs.stringifyUrl({
+                        url: `${env.IMAGE_CDN_BASE}/ik-seo/${imageItem.name?.replace(fileExtension, "")}/${seoFriendlyName}${fileExtension}`,
+                        query: { tr: "w-640", q: 75 },
+                    }),
+                };
+            }) ?? []) as ListingItem_Data_Image[],
+        } as ListingItem_Data,
+    } as ListingItem;
 };

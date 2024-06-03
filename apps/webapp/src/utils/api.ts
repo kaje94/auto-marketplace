@@ -231,23 +231,25 @@ export const api = {
     // deleteS3Image: (body: DeleteS3ImagesReq) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Images/delete`, JSON.stringify(body)),
 };
 
+const tagVersion = "v1";
+
 export const apiTags = {
-    getFeaturedListings: () => "get-featured-listings",
-    getFeatureListingsByCountry: (countryCode: string) => `get-featured-listings-country-${countryCode}`,
-    getPostedListings: () => "get-posted-listings",
-    getPostedListingsByCountry: (countryCode: string) => `get-posted-listings-country-${countryCode}`,
-    getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}`,
-    getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}`,
-    getListings: () => `get-admin-listings-v2`,
-    getMyListings: (userEmail: string) => `get-my-listings-${userEmail}`,
-    getListingsItem: (id: ListingIdType) => `get-listing-item-v1-${id}`,
-    getAdminSubscriptions: () => `get-admin-subscriptions`,
-    getUserSubscriptions: (userEmail: string) => `get-user-subscriptions-v9-${userEmail}`,
-    getSubscriptionItem: (id: ListingSubscriptionIdType) => `get-subscription-item-${id}`,
-    getMyNotifications: (userEmail: string) => `get-my-notifications-v4-${userEmail}`,
-    getMyProfileDetails: (userEmail: string) => `get-my-profile-${userEmail}`,
-    getStates: () => `get-states`,
-    getCities: () => `get-cities`,
+    getFeaturedListings: () => `get-featured-listings-${tagVersion}`,
+    getFeatureListingsByCountry: (countryCode: string) => `get-featured-listings-country-${countryCode}-${tagVersion}`,
+    getPostedListings: () => `get-posted-listings-${tagVersion}`,
+    getPostedListingsByCountry: (countryCode: string) => `get-posted-listings-country-${countryCode}-${tagVersion}`,
+    getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}-${tagVersion}`,
+    getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}-${tagVersion}`,
+    getListings: () => `get-admin-listings-${tagVersion}`,
+    getMyListings: (userEmail: string) => `get-my-listings-${userEmail}=${tagVersion}`,
+    getListingsItem: (id: ListingIdType) => `get-listing-item-${id}-${tagVersion}`,
+    getAdminSubscriptions: () => `get-admin-subscriptions-${tagVersion}`,
+    getUserSubscriptions: (userEmail: string) => `get-user-subscriptions-v9-${userEmail}-${tagVersion}`,
+    getSubscriptionItem: (id: ListingSubscriptionIdType) => `get-subscription-item-${id}-${tagVersion}`,
+    getMyNotifications: (userEmail: string) => `get-my-notifications-${userEmail}-${tagVersion}`,
+    getMyProfileDetails: (userEmail: string) => `get-my-profile-${userEmail}-${tagVersion}`,
+    getStates: () => `get-states-${tagVersion}`,
+    getCities: () => `get-cities-${tagVersion}`,
 };
 
 export const listingItemTags = (id: ListingIdType, userEmail: string) => [

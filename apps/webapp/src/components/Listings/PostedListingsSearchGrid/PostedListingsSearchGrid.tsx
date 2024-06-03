@@ -8,7 +8,7 @@ import { usePostedListingsContext } from "@/providers/PostedListingsContextProvi
 import { PublicListingsFilterSchema } from "@/utils/schemas";
 
 export const PostedListingsSearchGrid = ({
-    listings,
+    listings = [],
     paginatedResponse,
     pageLoading,
     currentPageNumber,
@@ -47,7 +47,7 @@ export const PostedListingsSearchGrid = ({
                     <div className="h-5 w-28 animate-pulse rounded bg-base-300" />
                 ) : (
                     <>
-                        {paginatedResponse?.totalCount} results found
+                        {paginatedResponse?.totalCount ?? 0} results found
                         {filterText && <div className="badge badge-outline badge-md ml-2 w-max">{filterText}</div>}
                     </>
                 )}

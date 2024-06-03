@@ -9,7 +9,7 @@ make countries & ctry lowercase
 move email templates to libs, dont need seperate service
 open graph image showing root level image. also check into opengraph image templates
 Add back sitemap.ts
-fix sentry error by loading it using webworker
+fix sentry error by loading it using webworker & add it back
 show a warning if user is in a different country specially in the my listings page
 use handles instead of id for listing details
 when viewing posted listing details, if not posted, show meaningful error

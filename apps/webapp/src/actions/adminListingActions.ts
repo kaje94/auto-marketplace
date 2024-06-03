@@ -10,6 +10,7 @@ import { apiTags, listingItemTags, revalidationTime } from "@/utils/api";
 import { ListingStatusTypes } from "@/utils/enum";
 import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
+import { transformListingsImages } from "@/utils/imageUtils";
 
 const client = createPromiseClient(AdminListingsService, createGrpcTransport(grpcOptions));
 
@@ -19,10 +20,9 @@ export const getAllListingsAction = async (reqBody: PartialMessage<GetAdminListi
     const getAllListings = unstable_cache(
         async (reqBody: PartialMessage<GetAdminListingsRequest>, headers: HeadersInit) => {
             const response = await client.getAllListings(reqBody, { headers });
-            return response.toJson() as any as GetListingsResponse;
+            return { ...response, items: transformListingsImages((response.toJson() as any as GetListingsResponse).items) };
         },
         [apiTags.getListings()],
-        // getUserListingCacheKey(reqBody, userEmail), // todo: remove if not needed
         { tags: [apiTags.getListings()], revalidate: revalidationTime.oneHour },
     );
     const response = await getAllListings(reqBody, headers);
