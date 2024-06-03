@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.apiService.appName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.apiService.appName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.apiService.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apiService.appName }}
+    spec:
+      containers:
+        - name: go-service-container
+          image: {{ .Values.apiService.imageName }}
+          ports:
+            - containerPort: {{ .Values.apiService.port }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.configmapName }}
+          # readinessProbe:
+          #   httpGet:
+          #     port: 50051
+          #     path: '/ready'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.apiService.appName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.apiService.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.apiService.port }}
+      targetPort: 50051

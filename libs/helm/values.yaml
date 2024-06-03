@@ -1,0 +1,37 @@
+# Default values for targabay.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+namespace: targabay
+configmapName: tb-config-map
+apiService:
+  appName: api-service
+  imageName: kajendranalagaratnam/targabay-api-service
+  port: 50051
+webApp:
+  appName: webapp
+  imageName: kajendranalagaratnam/targabay-webapp
+  port: 3000
+configMap:
+  name: tb-config-map
+  values:
+    AUTH0_ISSUER_BASE_URL: ''
+    AUTH0_AUDIENCE: ''
+    AUTH0_DOMAIN: ''
+    AUTH0_API_CLIENT_ID: ''
+    AUTH0_API_CLIENT_SECRET: ''
+    AUTH0_SECRET: ''
+    AUTH0_BASE_URL: ''
+    AUTH0_CLIENT_ID: ''
+    AUTH0_CLIENT_SECRET: ''
+    AUTH0_SCOPE: ''
+    XATA_DATABASE_URL: ''
+    XATA_API_KEY: ''
+    XATA_BRANCH: ''
+    S3_KEY: ''
+    S3_SECRET: ''
+    S3_BUCKET: ''
+    S3_REGION: ''
+    # Optionals
+    IMAGE_CDN_BASE: ''
+    RECAPTCHA_SITE_SECRET: ''
+    NEXT_CONTACT_US_FORM_KEY: ''

@@ -31,3 +31,20 @@ To deploy Targabay in your local kubernates cluster (in dev mode)
 /// Using NX
 //
 install packages `pnpm i`
+help 
+/// docker push steps
+docker login 
+
+// service
+docker build -f apps/service/Dockerfile -t kajendranalagaratnam/targabay-api-service .
+docker push kajendranalagaratnam/targabay-api-service:latest
+
+// webapp
+docker build -f apps/webapp/Dockerfile -t kajendranalagaratnam/targabay-webapp .
+docker push kajendranalagaratnam/webapp:latest
+
+////
+
+
+// HELM
+

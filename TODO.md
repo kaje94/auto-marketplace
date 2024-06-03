@@ -14,23 +14,8 @@ show a warning if user is in a different country specially in the my listings pa
 use handles instead of id for listing details
 when viewing posted listing details, if not posted, show meaningful error
 avoid complex metadata generation
-
+add readiness/liveness probes and set max memory requests and limits
 Check for incomplete profile even in subscription form
-
-getting started
-1. install protoc
-
-
-service structure
-- internal
-- - config
-- - api
-- - middleware
-- - auth
-- - handlers
-- - core common models of the org
-- - grpc
-- - - server server config
 
 
 IMPORTAANT!
@@ -40,8 +25,3 @@ paths:{
 }
 
 
-Components. Objects with toJSON methods are not supported. Convert it manually to a simple value before passing it to props.
-  {: {items: [...]}}
-
-  Warning: Only plain objects can be passed to Client Components from Server Components. Objects with toJSON methods are not supported. Convert it manually to a simple value before passing it to props.
-  <... isOwner={true} listingItem={{id: ..., status: ..., expiryDate: ..., createdAt: ..., reviewComment: ..., data: ..., user: ...}}>

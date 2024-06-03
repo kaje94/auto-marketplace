@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.webApp.appName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.webApp.appName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.webApp.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.webApp.appName }}
+    spec:
+      containers:
+        - name: webapp-container
+          image: {{ .Values.webApp.imageName }}
+          ports:
+            - containerPort: {{ .Values.webApp.port }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.configmapName }}
+          # readinessProbe:
+          #   httpGet:
+          #     port: 50051
+          #     path: '/ready'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.webApp.appName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.webApp.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.webApp.port }}
+      targetPort: 3000
