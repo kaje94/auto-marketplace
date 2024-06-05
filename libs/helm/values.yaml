@@ -7,7 +7,7 @@ apiService:
   appName: api-service
   image:
     name: kajendranalagaratnam/targabay-api-service
-    version: latest
+    version: 0.0.5
   port: 50051
 webApp:
   appName: webapp
