@@ -17,6 +17,7 @@ api_resource_name = 'api-service'
 api_resource_image_name = 'kajendranalagaratnam/targabay-api-service'
 webapp_resource_name = 'webapp'
 webapp_resource_image_name = 'kajendranalagaratnam/targabay-webapp'
+webapp_resource_port = '3000'
 
 # Define docker builds
 docker_build(
@@ -62,9 +63,10 @@ env_keys = [
 # Initialize an empty list to hold the --set arguments as key, value turple
 arg_keys_values = []
 arg_keys_values.append(["apiService.appName", api_resource_name])
-arg_keys_values.append(["apiService.imageName", api_resource_image_name])
+arg_keys_values.append(["apiService.image.name", api_resource_image_name])
 arg_keys_values.append(["webApp.appName", webapp_resource_name])
-arg_keys_values.append(["webApp.imageName", webapp_resource_image_name])
+arg_keys_values.append(["webApp.image.name", webapp_resource_image_name])
+arg_keys_values.append(["webApp.port", webapp_resource_port])
 
 # Loop through the environment keys and get env values
 for key in env_keys:
@@ -82,5 +84,5 @@ k8s_yaml(local(helm_command))
 watch_file('libs/helm')
 
 # k8s_resource allows customization where necessary such as adding port forwards and labels
-k8s_resource(webapp_resource_name, port_forwards=3000, labels=[webapp_resource_name])
+k8s_resource(webapp_resource_name, port_forwards=webapp_resource_port, labels=[webapp_resource_name])
 k8s_resource(api_resource_name, labels=['go-api'])

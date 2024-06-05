@@ -5,11 +5,15 @@ namespace: targabay
 configmapName: tb-config-map
 apiService:
   appName: api-service
-  imageName: kajendranalagaratnam/targabay-api-service
+  image:
+    name: kajendranalagaratnam/targabay-api-service
+    version: latest
   port: 50051
 webApp:
   appName: webapp
-  imageName: kajendranalagaratnam/targabay-webapp
+  image:
+    name: kajendranalagaratnam/targabay-webapp
+    version: latest
   port: 3000
 configMap:
   name: tb-config-map

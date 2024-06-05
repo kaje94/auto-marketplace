@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
         - name: webapp-container
-          image: {{ .Values.webApp.imageName }}
+          image: "{{ .Values.webApp.image.name }}:{{ .Values.webApp.image.version }}"
           ports:
-            - containerPort: {{ .Values.webApp.port }}
+            - containerPort: 3000
           envFrom:
           - configMapRef:
               name: {{ .Values.configmapName }}

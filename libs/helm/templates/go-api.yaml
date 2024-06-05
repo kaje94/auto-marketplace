@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
         - name: go-service-container
-          image: {{ .Values.apiService.imageName }}
+          image: "{{ .Values.apiService.image.name }}:{{ .Values.apiService.image.version }}"
           ports:
-            - containerPort: {{ .Values.apiService.port }}
+            - containerPort: 50051
           envFrom:
           - configMapRef:
               name: {{ .Values.configmapName }}
