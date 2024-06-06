@@ -6,27 +6,27 @@ metadata:
 data:
   # Auth0
   # Auth0 - Common
-  AUTH0_ISSUER_BASE_URL: {{ .Values.configMap.values.AUTH0_ISSUER_BASE_URL }}
-  AUTH0_AUDIENCE: {{ .Values.configMap.values.AUTH0_AUDIENCE }}
+  AUTH0_ISSUER_BASE_URL: {{ required ".Values.configMap.values.AUTH0_ISSUER_BASE_URL required!" .Values.configMap.values.AUTH0_ISSUER_BASE_URL }}
+  AUTH0_AUDIENCE: {{ required ".Values.configMap.values.AUTH0_AUDIENCE required!" .Values.configMap.values.AUTH0_AUDIENCE }}
   # Auth0 - Service
-  AUTH0_DOMAIN: {{ .Values.configMap.values.AUTH0_DOMAIN }}
-  AUTH0_API_CLIENT_ID: {{ .Values.configMap.values.AUTH0_API_CLIENT_ID }}
-  AUTH0_API_CLIENT_SECRET: {{ .Values.configMap.values.AUTH0_API_CLIENT_SECRET }}
+  AUTH0_DOMAIN: {{ required ".Values.configMap.values.AUTH0_DOMAIN required!" .Values.configMap.values.AUTH0_DOMAIN }}
+  AUTH0_API_CLIENT_ID: {{ required ".Values.configMap.values.AUTH0_API_CLIENT_ID required!" .Values.configMap.values.AUTH0_API_CLIENT_ID }}
+  AUTH0_API_CLIENT_SECRET: {{ required ".Values.configMap.values.AUTH0_API_CLIENT_SECRET required!" .Values.configMap.values.AUTH0_API_CLIENT_SECRET }}
   # Auth0 - Client
-  AUTH0_SECRET: {{ .Values.configMap.values.AUTH0_SECRET }}
-  AUTH0_BASE_URL: {{ .Values.configMap.values.AUTH0_BASE_URL }}
-  AUTH0_CLIENT_ID: {{ .Values.configMap.values.AUTH0_CLIENT_ID }}
-  AUTH0_CLIENT_SECRET: {{ .Values.configMap.values.AUTH0_CLIENT_SECRET }}
-  AUTH0_SCOPE: {{ .Values.configMap.values.AUTH0_SCOPE }}
+  AUTH0_SECRET: {{ required ".Values.configMap.values.AUTH0_SECRET required!" .Values.configMap.values.AUTH0_SECRET }}
+  AUTH0_BASE_URL: {{ required ".Values.configMap.values.AUTH0_BASE_URL required!" .Values.configMap.values.AUTH0_BASE_URL }}
+  AUTH0_CLIENT_ID: {{ required ".Values.configMap.values.AUTH0_CLIENT_ID required!" .Values.configMap.values.AUTH0_CLIENT_ID }}
+  AUTH0_CLIENT_SECRET: {{ required ".Values.configMap.values.AUTH0_CLIENT_SECRET required!" .Values.configMap.values.AUTH0_CLIENT_SECRET }}
+  AUTH0_SCOPE: {{ required ".Values.configMap.values.AUTH0_SCOPE required!" .Values.configMap.values.AUTH0_SCOPE }}
   # Xata
-  XATA_DATABASE_URL: {{ .Values.configMap.values.XATA_DATABASE_URL }}
-  XATA_API_KEY: {{ .Values.configMap.values.XATA_API_KEY }}
-  XATA_BRANCH: {{ .Values.configMap.values.XATA_BRANCH }}
+  XATA_DATABASE_URL: {{ required ".Values.configMap.values.XATA_DATABASE_URL required!" .Values.configMap.values.XATA_DATABASE_URL }}
+  XATA_API_KEY: {{ required ".Values.configMap.values.XATA_API_KEY required!" .Values.configMap.values.XATA_API_KEY }}
+  XATA_BRANCH: {{ required ".Values.configMap.values.XATA_BRANCH required!" .Values.configMap.values.XATA_BRANCH }}
   # S3
-  S3_KEY: {{ .Values.configMap.values.S3_KEY }}
-  S3_SECRET: {{ .Values.configMap.values.S3_SECRET }}
-  S3_BUCKET: {{ .Values.configMap.values.S3_BUCKET }}
-  S3_REGION: {{ .Values.configMap.values.S3_REGION }}
+  S3_KEY: {{ required ".Values.configMap.values.S3_KEY required!" .Values.configMap.values.S3_KEY }}
+  S3_SECRET: {{ required ".Values.configMap.values.S3_SECRET required!" .Values.configMap.values.S3_SECRET }}
+  S3_BUCKET: {{ required ".Values.configMap.values.S3_BUCKET required!" .Values.configMap.values.S3_BUCKET }}
+  S3_REGION: {{ required ".Values.configMap.values.S3_REGION required!" .Values.configMap.values.S3_REGION }}
   # Other configs needed for webapp
   GRPC_API_BASE_URL: "http://{{ .Values.apiService.appName }}:{{ .Values.apiService.port | toString }}"
   IMAGE_CDN_BASE: {{ .Values.configMap.values.IMAGE_CDN_BASE }}
