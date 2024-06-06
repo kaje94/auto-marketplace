@@ -72,7 +72,7 @@ arg_keys_values.append(["webApp.port", webapp_resource_port])
 for key in env_keys:
     value = os.getenv(key, '')
     if value:
-        arg_keys_values.append(["configMap." + key, value])
+        arg_keys_values.append(["configMap.values." + key, value])
 
 helm_args = []
 for arg in arg_keys_values:
