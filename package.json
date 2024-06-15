@@ -16,7 +16,8 @@
     "format-rest": "npx prettier --ignore-path .gitignore --write \"**/*.{css,md,json,yml}\" \"!package-lock.json\" --print-width 150 --tab-width 4",
     "build:protos": "nx build protos",
     "build:service": "nx build service",
-    "build:webapp": "nx build targabay-webapp"
+    "build:webapp": "nx build targabay-webapp",
+    "pulumi-up": "nx deploy targabay-pulumi"
   },
   "engines": {
     "node": ">=20.9.0",

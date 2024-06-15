@@ -2,4 +2,3 @@ packages:
   - apps/*
   - apps/email-mgr/.react-email
   - libs/*
-  - libs/infra/*

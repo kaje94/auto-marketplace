@@ -10,9 +10,9 @@
         "pretty": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "react-jsx"
     },
-    "files": [
-        "index.ts"
-    ]
+    "exclude": ["node_modules"],
+    "include": ["**/*.ts", "**/*.tsx"],
 }

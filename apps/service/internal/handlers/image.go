@@ -33,8 +33,8 @@ func (s *ImageService) GenerateSignedUrl(ctx context.Context, req *service_pb.Ge
 	// Initialize a session in us-west-2 that the SDK will use to load
 	// credentials from the shared credentials file ~/.aws/credentials.
 	sess, err := session.NewSession(&aws.Config{
-		Region:      &config.Config.S3.Region,
-		Credentials: credentials.NewStaticCredentials(config.Config.S3.Key, config.Config.S3.Secret, ""),
+		Region:      &config.Config.AWS.S3Region,
+		Credentials: credentials.NewStaticCredentials(config.Config.AWS.AccessKey, config.Config.AWS.AccessSecret, ""),
 	})
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func (s *ImageService) GenerateSignedUrl(ctx context.Context, req *service_pb.Ge
 			imageName := fmt.Sprintf("images/%s/%s.webp", user.Email, item.FileKey)
 
 			req, _ := svc.PutObjectRequest(&s3.PutObjectInput{
-				Bucket:        &config.Config.S3.Bucket,
+				Bucket:        &config.Config.AWS.S3BucketName,
 				Key:           &imageName,
 				ContentType:   &item.FileType,
 				ContentLength: &contentLength,
@@ -71,9 +71,9 @@ func (s *ImageService) GenerateSignedUrl(ctx context.Context, req *service_pb.Ge
 			}
 
 			itemCh <- &service_pb.GenerateSignedUrlResponse_Item{
-				Bucket: config.Config.S3.Bucket,
+				Bucket: config.Config.AWS.S3BucketName,
 				Key:    item.FileKey,
-				Region: config.Config.S3.Region,
+				Region: config.Config.AWS.S3Region,
 				Url:    str,
 				Name:   imageName,
 			}
@@ -111,8 +111,8 @@ func (s *ImageService) DeleteS3Images(ctx context.Context, req *service_pb.Delet
 
 func deleteS3Images(imageNames []string) error {
 	sess, err := session.NewSession(&aws.Config{
-		Region:      &config.Config.S3.Region,
-		Credentials: credentials.NewStaticCredentials(config.Config.S3.Key, config.Config.S3.Secret, ""),
+		Region:      &config.Config.AWS.S3Region,
+		Credentials: credentials.NewStaticCredentials(config.Config.AWS.AccessKey, config.Config.AWS.AccessSecret, ""),
 	})
 	if err != nil {
 		return err
@@ -126,7 +126,7 @@ func deleteS3Images(imageNames []string) error {
 	}
 
 	_, err = svc.DeleteObjects(&s3.DeleteObjectsInput{
-		Bucket: &config.Config.S3.Bucket,
+		Bucket: &config.Config.AWS.S3BucketName,
 		Delete: &s3.Delete{
 			Objects: objects,
 		},

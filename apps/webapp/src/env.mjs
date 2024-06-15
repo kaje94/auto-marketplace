@@ -13,7 +13,6 @@ export const env = createEnv({
         AUTH0_ISSUER_BASE_URL: z.string().min(1),
         AUTH0_CLIENT_ID: z.string().min(1),
         AUTH0_CLIENT_SECRET: z.string().min(1),
-        AUTH0_AUDIENCE: z.string().min(1),
         AUTH0_SCOPE: z.string().min(1),
         NEXT_CONTACT_US_FORM_KEY: z.string().optional(),
         RECAPTCHA_SITE_SECRET: z.string().optional(),
@@ -41,4 +40,8 @@ export const env = createEnv({
      * This is especially useful for Docker builds.
      */
     skipValidation: !!process.env.SKIP_ENV_VALIDATION,
+    onValidationError: (error) => {
+        console.error("❌ Invalid environment variables:", error.flatten().fieldErrors);
+        throw new Error("Invalid environment variables");
+    },
 });

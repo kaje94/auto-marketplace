@@ -8,22 +8,21 @@ type xataConfig struct {
 
 type auth0Config struct {
 	IssuerUrl    string
-	Audience     string
 	ClientId     string
 	ClientSecret string
 	Domain       string
 }
 
-type s3Config struct {
-	Key    string
-	Secret string
-	Bucket string
-	Region string
+type awsConfig struct {
+	AccessKey    string
+	AccessSecret string
+	S3BucketName string
+	S3Region     string
 }
 
 type rootConfig struct {
 	Port  int32
 	Xata  xataConfig
 	Auth0 auth0Config
-	S3    s3Config
+	AWS   awsConfig
 }

@@ -38,7 +38,6 @@ docker_build(
 
 env_keys = [
     'AUTH0_ISSUER_BASE_URL',
-    'AUTH0_AUDIENCE',
     'AUTH0_DOMAIN',
     'AUTH0_API_CLIENT_ID',
     'AUTH0_API_CLIENT_SECRET',
@@ -50,10 +49,10 @@ env_keys = [
     'XATA_DATABASE_URL',
     'XATA_API_KEY',
     'XATA_BRANCH',
-    'S3_KEY',
-    'S3_SECRET',
-    'S3_BUCKET',
-    'S3_REGION',
+    'AWS_ACCESS_KEY',
+    'AWS_ACCESS_SECRET',
+    'AWS_S3_BUCKET',
+    'AWS_S3_REGION',
     # Optional configs
     'IMAGE_CDN_BASE',
     'RECAPTCHA_SITE_SECRET',

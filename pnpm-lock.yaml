@@ -122,7 +122,7 @@ importers:
         version: 18.2.0
       react-email:
         specifier: 2.1.0-canary.1
-        version: 2.1.0-canary.1(@babel/core@7.23.9)(eslint@8.48.0)(ts-node@10.9.2)
+        version: 2.1.0-canary.1(@babel/core@7.23.9)(@opentelemetry/api@1.7.0)(eslint@8.48.0)(ts-node@10.9.2)
       tsx:
         specifier: ^4.7.0
         version: 4.7.1
@@ -333,16 +333,38 @@ importers:
         specifier: ^7.6.5
         version: 7.6.13
 
-  libs/infra/pulumi:
+  libs/protos: {}
+
+  libs/pulumi:
     dependencies:
       '@pulumi/auth0':
         specifier: ^2.3.2
         version: 2.24.3
+      '@pulumi/aws':
+        specifier: ^6.39.0
+        version: 6.39.0
       '@pulumi/pulumi':
         specifier: ^3.20.0
         version: 3.105.0
-
-  libs/protos: {}
+      '@react-email/components':
+        specifier: 0.0.15-canary.1
+        version: 0.0.15-canary.1(@types/react@18.2.55)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-email:
+        specifier: 2.1.0-canary.1
+        version: 2.1.0-canary.1(@babel/core@7.23.9)(@opentelemetry/api@1.7.0)(eslint@8.48.0)(ts-node@10.9.2)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.38
+        version: 18.2.55
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.1.3)(typescript@5.4.5)
 
   libs/xata:
     dependencies:
@@ -5053,6 +5075,17 @@ packages:
     resolution: {integrity: sha512-5ZnBgG/7/IdFe51QvnWiKrk3Fzc0vwz2TXIB7ljtRNb5hasRh3dheQ+0F4Yyipcd9AsUOZ2YSmNncNdGyVoOTw==}
     dependencies:
       '@pulumi/pulumi': 3.105.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@pulumi/aws@6.39.0:
+    resolution: {integrity: sha512-gCtxAj+C1TEZxHP/cIePG3j36Y4MAPZssik07MIyXh/GFrmCkjlPa5e3q2vRUZVylQXBQINUc8a81FlmRCW1Hw==}
+    dependencies:
+      '@pulumi/pulumi': 3.105.0
+      builtin-modules: 3.0.0
+      mime: 2.6.0
+      resolve: 1.22.8
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10256,6 +10289,11 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  /builtin-modules@3.0.0:
+    resolution: {integrity: sha512-hMIeU4K2ilbXV6Uv93ZZ0Avg/M91RaKXucQ+4me2Do1txxBDyDZWCBa5bJSLqoNTRpXTLwEzIk1KmloenDDjhg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /builtin-status-codes@3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==}
@@ -15863,7 +15901,6 @@ packages:
     resolution: {integrity: sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==}
     engines: {node: '>=4.0.0'}
     hasBin: true
-    dev: true
 
   /mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
@@ -16126,7 +16163,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0):
+  /next@14.1.0(@babel/core@7.23.9)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==}
     engines: {node: '>=18.17.0'}
     hasBin: true
@@ -16142,6 +16179,7 @@ packages:
         optional: true
     dependencies:
       '@next/env': 14.1.0
+      '@opentelemetry/api': 1.7.0
       '@swc/helpers': 0.5.2
       busboy: 1.6.0
       caniuse-lite: 1.0.30001585
@@ -18114,7 +18152,7 @@ packages:
       react-is: 18.1.0
     dev: true
 
-  /react-email@2.1.0-canary.1(@babel/core@7.23.9)(eslint@8.48.0)(ts-node@10.9.2):
+  /react-email@2.1.0-canary.1(@babel/core@7.23.9)(@opentelemetry/api@1.7.0)(eslint@8.48.0)(ts-node@10.9.2):
     resolution: {integrity: sha512-AIuQGWJsSSrOLmSJYHYBsg0nBB4Bh/LWSXtXwwqDGiQRle0DIQuYy/qC3NRgoYBabA/pdfJKWK+IUgH0cDdVuw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
@@ -18144,7 +18182,7 @@ packages:
       glob: 10.3.4
       log-symbols: 4.1.0
       mime-types: 2.1.35
-      next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.0(@babel/core@7.23.9)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       normalize-path: 3.0.0
       ora: 5.4.1
       postcss: 8.4.32
@@ -18348,6 +18386,7 @@ packages:
 
   /read-package-json@2.1.2:
     resolution: {integrity: sha512-D1KmuLQr6ZSJS0tW8hf3WGpRlwszJOXZ3E8Yd/DNRaM5d+1wVRZdHlpGBLAuovjr28LbWvjpWkBHMxpRGGjzNA==}
+    deprecated: This package is no longer supported. Please use @npmcli/package-json instead.
     dependencies:
       glob: 7.2.3
       json-parse-even-better-errors: 2.3.1
@@ -21541,4 +21580,8 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: false
+
+  /zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
     dev: false

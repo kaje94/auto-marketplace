@@ -14,16 +14,15 @@ var Config = rootConfig{
 	},
 	Auth0: auth0Config{
 		IssuerUrl:    getEnvVariable("AUTH0_ISSUER_BASE_URL"),
-		Audience:     getEnvVariable("AUTH0_AUDIENCE"),
 		ClientId:     getEnvVariable("AUTH0_API_CLIENT_ID"),
 		ClientSecret: getEnvVariable("AUTH0_API_CLIENT_SECRET"),
 		Domain:       getEnvVariable("AUTH0_DOMAIN"),
 	},
-	S3: s3Config{
-		Key:    getEnvVariable("S3_KEY"),
-		Secret: getEnvVariable("S3_SECRET"),
-		Bucket: getEnvVariable("S3_BUCKET"),
-		Region: getEnvVariable("S3_REGION"),
+	AWS: awsConfig{
+		AccessKey:    getEnvVariable("AWS_ACCESS_KEY"),
+		AccessSecret: getEnvVariable("AWS_ACCESS_SECRET"),
+		S3BucketName: getEnvVariable("AWS_S3_BUCKET"),
+		S3Region:     getEnvVariable("AWS_S3_REGION"),
 	},
 }
 
