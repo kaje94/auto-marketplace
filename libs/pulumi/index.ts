@@ -235,7 +235,7 @@ new aws.iam.UserPolicy(`targabay-user-policy`, {
     ),
 });
 
-const imageKitUser = new aws.iam.User(`imagekit-user`, { name: `imagekit-user-${env.ENV_NAME}` });
+const imageKitUser = new aws.iam.User(`imagekit-user`, { name: `imagekit-targabay-user-${env.ENV_NAME}` });
 
 new aws.iam.UserPolicy(`imagekit-user-policy`, {
     user: imageKitUser.name,

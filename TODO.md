@@ -10,6 +10,11 @@ add readiness/liveness probes and set max memory requests and limits
 Check for incomplete profile even in subscription form
 
 
+crons
+subscription check
+delete old one
+scrap and create
+
 IMPORTAANT!
 have a tsconfig.base.json and add 
 paths:{
@@ -17,3 +22,5 @@ paths:{
 }
 
 
+//
+Update readme and go through all code

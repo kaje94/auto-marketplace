@@ -74,5 +74,8 @@
     "files.watcherInclude": [
         "${workspaceRoot}/libs/protos/gen/**"        
     ],
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "conventionalCommits.scopes": [
+        "pulumi"
+    ]
 }

@@ -4,9 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "create:dev":"pnpm -s dlx @xata.io/cli@latest branch create dev",
-    "init-schema:dev":"pnpm -s dlx @xata.io/cli@latest schema upload xata-schema.json --branch dev",
-    "init-schema:main":"pnpm -s dlx @xata.io/cli@latest schema upload xata-schema.json --branch main",
     "seed-locations:dev": "node scripts/seed-locations.mjs dev",
     "seed-locations:main": "node scripts/seed-locations.mjs main"
   },

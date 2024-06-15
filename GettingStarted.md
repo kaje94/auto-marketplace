@@ -9,6 +9,10 @@ start devbox shell (not needed if you have installed the recommended vscode exte
 `devbox shell`
 
 
+// Create the infrastructure resources needed for Targabay
+1. Pulumi - For Auth0 & AWS resources(S3, SES and IAM)
+2. Xata
+
 // TO run in local kubernates cluester
 prerequisutes
 docker
