@@ -1,27 +1,29 @@
 "use client";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { FC, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { SubscriptionItem, UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { updateSubscriptionAction } from "@/actions/userSubscriptionActions";
 import { COUNTRIES } from "@/utils/countries";
 import { SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "@/utils/enum";
-import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
+import { getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
 import { CreateSubscriptionReq, EditSubscriptionReq } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {
+    profile?: PartialMessage<UserProfile>;
     subscriptionItem: SubscriptionItem;
     successRedirectPath: string;
     userEmail?: string;
 }
 
 export const EditSubscriptionForm: FC<Props> = (props) => {
-    const { subscriptionItem, successRedirectPath, userEmail } = props;
+    const { subscriptionItem, successRedirectPath, userEmail, profile } = props;
     const router = useRouter();
     const params = useParams();
     const countryItem = COUNTRIES[(params.locale as string) || ""];
@@ -144,6 +146,7 @@ export const EditSubscriptionForm: FC<Props> = (props) => {
             distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
+            profile={profile}
             submitButton={{ text: "Update", mutatingText: "Updating...", disableIfCleanForm: true }}
             onMutate={(values) => updateSubscriptionMutation({ ...values, listingSubscriptionId: subscriptionItem.id })}
         />

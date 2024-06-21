@@ -20,7 +20,6 @@ export const getListingTitleFromVehicle = (vehicle: Vehicle | VehicleCreate) => 
     }
     return `${vehicle.brand} ${vehicle.model} ${vehicle.yearOfManufacture}`;
 };
-// todo: remove above
 
 /** Convert vehicle object into a title similar to how the backend title is generated */
 export const getListingTitleFromListing = (listingItemData: ListingItem_Data) => {

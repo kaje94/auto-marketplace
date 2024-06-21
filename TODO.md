@@ -7,7 +7,6 @@ fix sentry error by loading it using webworker & add it back
 show a warning if user is in a different country specially in the my listings page
 when viewing posted listing details, if not posted, show meaningful error
 add readiness/liveness probes and set max memory requests and limits
-Check for incomplete profile even in subscription form
 
 
 crons

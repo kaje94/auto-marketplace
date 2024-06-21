@@ -73,25 +73,6 @@ export const EditListingForm: FC<Props> = (props) => {
     const { mutate: updateListingsMutation, isLoading: isMutating } = useMutation(
         async (formValues: EditListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
-            // todo: remove comment
-            // const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === formValues?.location?.country);
-
-            // const requestBody: EditListingReq = {
-            //     ...formValues,
-            //     listingId: listingItem.id,
-            //     location: {
-            //         ...formValues.location,
-            //         country: countryCode!,
-            //     },
-            //     vehicle: {
-            //         ...formValues.vehicle,
-            //         vehicleImages: vehicleImages,
-            //         yearOfManufacture: convertYearToDateString(formValues.vehicle.yearOfManufacture),
-            //         yearOfRegistration: formValues.vehicle.yearOfRegistration
-            //             ? convertYearToDateString(formValues.vehicle.yearOfRegistration)
-            //             : undefined,
-            //     },
-            // };
             return editListingAction(
                 {
                     id: listingItem.id,

@@ -76,6 +76,8 @@
     ],
     "editor.formatOnSave": false,
     "conventionalCommits.scopes": [
-        "pulumi"
+        "pulumi",
+        "webapp",
+        "service"
     ]
 }

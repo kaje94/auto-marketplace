@@ -1,23 +1,26 @@
 "use client";
+import { PartialMessage } from "@bufbuild/protobuf";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { createSubscriptionAction } from "@/actions/userSubscriptionActions";
 import { COUNTRIES } from "@/utils/countries";
-import { convertYearToDateString, getDistanceUnit } from "@/utils/helpers";
+import { getDistanceUnit } from "@/utils/helpers";
 import { CreateSubscriptionSchema } from "@/utils/schemas";
 import { CreateSubscriptionReq } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {
+    profile?: PartialMessage<UserProfile>;
     userEmail?: string;
 }
 
 export const CreateSubscriptionForm = (props: Props) => {
-    const { userEmail } = props;
+    const { userEmail, profile } = props;
     const router = useRouter();
     const params = useParams();
     const countryItem = COUNTRIES[(params.locale as string) || ""];
@@ -103,6 +106,7 @@ export const CreateSubscriptionForm = (props: Props) => {
             distanceUnit={distanceUnit}
             form={form}
             isMutating={isMutating}
+            profile={profile}
             submitButton={{ text: "Create", mutatingText: "Creating..." }}
             onMutate={createSubscriptionMutation}
         />

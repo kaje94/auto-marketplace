@@ -44,25 +44,6 @@ export const CreateListingForm = (props: Props) => {
         async (formValues: CreateListingReq) => {
             const vehicleImages = await transformImagesToPost(formValues.vehicle.vehicleImages);
 
-            // TODO: remove comments
-            // const countryCode = Object.keys(COUNTRIES).find((item) => COUNTRIES[item]?.[0] === formValues?.location?.country);
-
-            // const requestBody: CreateListingReq = {
-            //     ...formValues,
-            //     location: {
-            //         ...formValues.location,
-            //         country: countryCode!,
-            //     },
-            //     vehicle: {
-            //         ...formValues.vehicle,
-            //         vehicleImages: vehicleImages,
-            //         yearOfManufacture: convertYearToDateString(formValues.vehicle.yearOfManufacture),
-            //         yearOfRegistration: formValues.vehicle.yearOfRegistration
-            //             ? convertYearToDateString(formValues.vehicle.yearOfRegistration)
-            //             : undefined,
-            //     },
-            // };
-
             return createListingAction(
                 {
                     type: formValues.vehicle.type,
