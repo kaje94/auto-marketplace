@@ -143,6 +143,7 @@ func TransformXataToListingItemResp(xataDaa xata.ListingRecord, userRecord *xata
 			VehicleImages:      listingImages,
 			Price:              float32(xataDaa.Price),
 			PriceNegotiable:    xataDaa.PriceNegotiable,
+			Embeddings:         xataDaa.Ada002,
 		},
 		ReviewComment: reviewComment,
 	}, nil
@@ -158,6 +159,34 @@ func GetInitialListingQueryFilterReq(pageNumber int, pageSize int) xata.ListingS
 		Sort: &xata.CreatedAtSort{
 			CreatedAt: "desc",
 		},
+	}
+}
+
+func GetFeaturedQueryFilterReq(countryCode string) xata.ListingFeaturedRequest {
+	return xata.ListingFeaturedRequest{
+		Page: xata.SearchPage{
+			Offset: 0,
+			Size:   12,
+		},
+		Filter: xata.ListingSearchFilter{
+			CountryCode: &xata.FilterEqualsItem{Is: countryCode},
+			Status:      "Posted",
+		},
+		Sort: &xata.ViewsSort{
+			Views: "desc",
+		},
+	}
+}
+
+func GetRelatedQueryFilterReq(queryVector []float32, countryCode string) xata.ListingRelatedRequest {
+	return xata.ListingRelatedRequest{
+		QueryVector: queryVector,
+		Size:        13,
+		Filter: xata.ListingSearchFilter{
+			CountryCode: &xata.FilterEqualsItem{Is: countryCode},
+			Status:      "Posted",
+		},
+		Column: "ada002",
 	}
 }
 

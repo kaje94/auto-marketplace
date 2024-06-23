@@ -103,11 +103,41 @@ func (s *UserListings) ReportListing(ctx context.Context, req *service_pb.Report
 }
 
 func (s *PublicListings) GetFeaturedListings(ctx context.Context, req *service_pb.CountryCodeRequest) (*service_pb.GetListingsResponse, error) {
-	// TODO: implement
-	return &service_pb.GetListingsResponse{Items: []*service_pb.ListingItem{}}, nil
+	jsonData := util.GetFeaturedQueryFilterReq(req.CountryCode)
+
+	postBody, err := json.Marshal(jsonData)
+	if err != nil {
+		return nil, err
+	}
+
+	listingResp := xata.FetchListingsResponse{}
+	if err := util.Xata.Call("POST", xata.ListingQuery, bytes.NewBuffer(postBody), &listingResp); err != nil {
+		return nil, err
+	}
+
+	return util.TransformXataToListingsResp(listingResp, listingResp.TotalCount, 1)
 }
 
-func (s *PublicListings) GetRelatedListings(ctx context.Context, req *service_pb.IdRequest) (*service_pb.GetListingsResponse, error) {
-	// TODO: implement
-	return &service_pb.GetListingsResponse{Items: []*service_pb.ListingItem{}}, nil
+func (s *PublicListings) GetRelatedListings(ctx context.Context, req *service_pb.GetRelatedListingsRequest) (*service_pb.GetListingsResponse, error) {
+	jsonData := util.GetRelatedQueryFilterReq(req.Embeddings, req.CountryCode)
+
+	postBody, err := json.Marshal(jsonData)
+	if err != nil {
+		return nil, err
+	}
+
+	listingResp := xata.FetchListingsResponse{}
+	if err := util.Xata.Call("POST", xata.ListingVectorSearch, bytes.NewBuffer(postBody), &listingResp); err != nil {
+		return nil, err
+	}
+
+	var filteredRecs []xata.ListingRecord
+	for _, item := range listingResp.Records {
+		if item.ID != req.Id {
+			filteredRecs = append(filteredRecs, item)
+		}
+	}
+	listingResp.Records = filteredRecs
+
+	return util.TransformXataToListingsResp(listingResp, listingResp.TotalCount, 1)
 }

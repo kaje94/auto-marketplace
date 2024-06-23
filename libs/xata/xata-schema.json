@@ -93,10 +93,10 @@
           "defaultValue": "0"
         },
         {
-          "name": "vectorColumn",
+          "name": "ada002",
           "type": "vector",
           "vector": {
-            "dimension": 10
+            "dimension": 11
           }
         },
         {

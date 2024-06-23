@@ -63,7 +63,7 @@ export const CreateListingForm = (props: Props) => {
                     price: typeof formValues.price.amount === "string" ? parseInt(formValues.price.amount) : formValues.price.amount,
                     priceNegotiable: formValues.price.isPriceNegotiable,
                 },
-                profile?.email!,
+                profile!,
             );
         },
         {

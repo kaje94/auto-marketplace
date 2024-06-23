@@ -53,6 +53,7 @@ func (s *UserListings) CreateListing(ctx context.Context, req *service_pb.Listin
 		City:               &userRecord.City,
 		State:              &userRecord.State,
 		CountryCode:        &userRecord.CountryCode,
+		Ada002:             req.Embeddings,
 	}
 
 	validate := validator.New()
@@ -188,6 +189,7 @@ func (s *UserListings) UpdateListing(ctx context.Context, req *service_pb.Update
 		Price:              int(req.Data.Price),
 		PriceNegotiable:    req.Data.PriceNegotiable,
 		AdminReview:        nil,
+		Ada002:             req.Data.Embeddings,
 	}
 
 	validate := validator.New()

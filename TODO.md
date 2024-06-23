@@ -8,11 +8,18 @@ show a warning if user is in a different country specially in the my listings pa
 when viewing posted listing details, if not posted, show meaningful error
 add readiness/liveness probes and set max memory requests and limits
 
+emails
+send email on listing approval or rejection,
+listing taken down - not necessary
+listing expire
+subscriptions
 
 crons
 subscription check
 delete old one
-scrap and create
+
+separate repo
+crawl/scrap and create
 
 IMPORTAANT!
 have a tsconfig.base.json and add 

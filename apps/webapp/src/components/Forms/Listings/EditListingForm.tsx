@@ -101,6 +101,7 @@ export const EditListingForm: FC<Props> = (props) => {
                         priceNegotiable: formValues.price.isPriceNegotiable,
                     },
                 },
+                listingItem.user!,
                 profile?.email!,
             );
         },

@@ -41,7 +41,7 @@ type ServiceAuthFuncOverride interface {
 // NOTE(bwplotka): For more complex auth interceptor see https://github.com/grpc/grpc-go/blob/master/authz/grpc_authz_server_interceptors.go.
 func UnaryServerInterceptor(authFunc AuthFunc) grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
-		if shouldSkip(info.FullMethod) {
+		if shouldAuthCheckSkip(info.FullMethod) {
 			return handler(ctx, req)
 		}
 
@@ -52,9 +52,16 @@ func UnaryServerInterceptor(authFunc AuthFunc) grpc.UnaryServerInterceptor {
 		} else {
 			newCtx, err = authFunc(ctx)
 		}
+
 		if err != nil {
 			return nil, err
 		}
+
+		user := newCtx.Value(CtxUser).(User)
+		if strings.Contains(strings.ToLower(info.FullMethod), "admin") && !user.IsAdmin {
+			return nil, status.Error(codes.PermissionDenied, "Admin role is required")
+		}
+
 		return handler(newCtx, req)
 	}
 }
@@ -88,7 +95,7 @@ func ValidateUser(ctx context.Context) (context.Context, error) {
 
 	user, err := ValidateAuth0Token(ctx, token)
 	if err != nil {
-		return nil, status.Error(codes.Unauthenticated, "invalid auth token") // TODO: use this approach for other errors
+		return nil, status.Error(codes.Unauthenticated, "invalid auth token")
 	}
 
 	ctx = context.WithValue(ctx, CtxUser, user)
@@ -97,18 +104,8 @@ func ValidateUser(ctx context.Context) (context.Context, error) {
 }
 
 // Skip auth checks for publicly accessible services
-func shouldSkip(method string) bool {
+func shouldAuthCheckSkip(method string) bool {
 	publicListingsPattern := regexp.MustCompile(`protos\.service\.PublicListingsService`)
 	locationsPattern := regexp.MustCompile(`protos\.service\.LocationsService`)
 	return publicListingsPattern.MatchString(method) || locationsPattern.MatchString(method)
 }
-
-// TODO: verify if its admin
-// func verifyAdmin(method string, user User) bool {
-// 	isAdminListing:=regexp.MustCompile(`protos\.service\.AdminListingsService`).MatchString(method)
-// 	isAdminSubscription:= regexp.MustCompile(`protos\.service\.AdminSubscriptionService`).MatchString(method)
-
-// 	if (isAdminListing || isAdminSubscription) && user.IsAdmin == false{
-
-// 	}
-// }

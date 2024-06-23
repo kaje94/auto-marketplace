@@ -231,7 +231,7 @@ export const api = {
     // deleteS3Image: (body: DeleteS3ImagesReq) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Images/delete`, JSON.stringify(body)),
 };
 
-const tagVersion = "v1";
+const tagVersion = "v1_3";
 
 export const apiTags = {
     getFeaturedListings: () => `get-featured-listings-${tagVersion}`,

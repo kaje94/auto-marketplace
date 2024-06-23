@@ -79,5 +79,8 @@
         "pulumi",
         "webapp",
         "service"
-    ]
+    ],
+    "go.delveConfig":{
+        "debugAdapter":"legacy"
+    }
 }

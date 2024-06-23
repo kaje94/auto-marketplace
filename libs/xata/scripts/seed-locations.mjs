@@ -32,8 +32,6 @@ class XataClient extends buildClient() {
     }
 }
 
-console.log("process.argv[2]process.argv[2]: ", process.argv[2]);
-
 const xata = new XataClient({
     databaseURL: process.env.XATA_DATABASE_URL,
     apiKey: process.env.XATA_API_KEY,

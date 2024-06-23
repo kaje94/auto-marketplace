@@ -11,13 +11,11 @@ export enum ListingStatusTypes {
 export enum VehicleTypes {
     Car = "Car",
     Van = "Van",
-    Suv = "Suv",
+    SUV = "SUV",
     Jeep = "Jeep",
-    CrewCab = "CrewCab",
-    DoubleCab = "DoubleCab",
     Bus = "Bus",
-    Lorry = "Lorry",
-    ThreeWheel = "ThreeWheel",
+    Truck = "Truck",
+    ThreeWheeler = "ThreeWheeler",
     Motorcycle = "Motorcycle",
     Other = "Other",
 }

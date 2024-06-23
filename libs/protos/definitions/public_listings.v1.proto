@@ -10,6 +10,6 @@ service PublicListingsService {
     rpc GetPublicListings(GetPublicListingsRequest) returns (GetListingsResponse);
     rpc GetPublicListingItem(IdRequest) returns (ListingItem);
     rpc GetFeaturedListings(CountryCodeRequest) returns (GetListingsResponse);
-    rpc GetRelatedListings(IdRequest) returns (GetListingsResponse);
+    rpc GetRelatedListings(GetRelatedListingsRequest) returns (GetListingsResponse);
     rpc ReportListing(ReportListingRequest) returns (EmptyResponse);
 }

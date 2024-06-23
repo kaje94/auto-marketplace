@@ -23,6 +23,10 @@ type CreatedAtSort struct {
 	CreatedAt string `json:"xata.createdAt,omitempty"`
 }
 
+type ViewsSort struct {
+	Views string `json:"views,omitempty"`
+}
+
 type FilterIgnoreCaseItem struct {
 	Contains string `json:"$iContains,omitempty"`
 }
@@ -131,6 +135,19 @@ type ListingSearchRequest struct {
 	Sort      *CreatedAtSort         `json:"sort,omitempty"`
 }
 
+type ListingFeaturedRequest struct {
+	Filter ListingSearchFilter `json:"filter,omitempty"`
+	Page   SearchPage          `json:"page"`
+	Sort   *ViewsSort          `json:"sort,omitempty"`
+}
+
+type ListingRelatedRequest struct {
+	QueryVector []float32           `json:"queryVector"`
+	Column      string              `json:"column"`
+	Size        int                 `json:"size,omitempty"`
+	Filter      ListingSearchFilter `json:"filter,omitempty"`
+}
+
 type SubscriptionFilterRequest struct {
 	Filter SubscriptionSearchFilter `json:"filter,omitempty"`
 	Page   SearchPage               `json:"page"`
@@ -202,7 +219,7 @@ type DeleteTransactionData struct {
 
 type ListingRecord struct {
 	ID                 string                `json:"id,omitempty"`
-	Type               string                `json:"type,omitempty" validate:"oneof=Car Van Suv Jeep CrewCab DoubleCab Bus Lorry ThreeWheel Motorcycle Other"`
+	Type               string                `json:"type,omitempty" validate:"oneof=Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other"`
 	Brand              string                `json:"brand,omitempty" validate:"min=1,max=50"`
 	Trim               string                `json:"trim,omitempty" validate:"min=0,max=50"`
 	Model              string                `json:"model,omitempty" validate:"min=1,max=50"`
@@ -225,6 +242,7 @@ type ListingRecord struct {
 	State              *string               `json:"state,omitempty"`
 	CountryCode        *string               `json:"countryCode,omitempty"`
 	Views              *int                  `json:"views,omitempty"`
+	Ada002             []float32             `json:"ada002,omitempty"`
 	AdminReview        *string               `json:"adminReview,omitempty"`
 	Xata               *XataResponseMetadata `json:"xata,omitempty"`
 }
@@ -258,7 +276,7 @@ type ReportRecord struct {
 type SubscriptionRecord struct {
 	ID                     string                `json:"id,omitempty"`
 	DisplayName            string                `json:"displayName,omitempty" validate:"min=1,max=100"`
-	Type                   string                `json:"type,omitempty" validate:"omitempty,oneof=Car Van Suv Jeep CrewCab DoubleCab Bus Lorry ThreeWheel Motorcycle Other"`
+	Type                   string                `json:"type,omitempty" validate:"omitempty,oneof=Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other"`
 	Brand                  string                `json:"brand,omitempty" validate:"omitempty,min=1,max=50"`
 	Trim                   string                `json:"trim,omitempty" validate:"omitempty,min=0,max=50"`
 	Model                  string                `json:"model,omitempty" validate:"omitempty,min=1,max=50"`

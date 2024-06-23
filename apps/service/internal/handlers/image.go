@@ -32,7 +32,7 @@ func (s *ImageService) GenerateSignedUrl(ctx context.Context, req *service_pb.Ge
 
 	// Initialize a session in us-west-2 that the SDK will use to load
 	// credentials from the shared credentials file ~/.aws/credentials.
-	sess, err := session.NewSession(&aws.Config{
+	sessionInstance, err := session.NewSession(&aws.Config{
 		Region:      &config.Config.AWS.S3Region,
 		Credentials: credentials.NewStaticCredentials(config.Config.AWS.AccessKey, config.Config.AWS.AccessSecret, ""),
 	})
@@ -41,7 +41,7 @@ func (s *ImageService) GenerateSignedUrl(ctx context.Context, req *service_pb.Ge
 	}
 
 	// Create S3 service client
-	svc := s3.New(sess)
+	svc := s3.New(sessionInstance)
 
 	items := []*service_pb.GenerateSignedUrlResponse_Item{}
 	itemCh := make(chan *service_pb.GenerateSignedUrlResponse_Item)

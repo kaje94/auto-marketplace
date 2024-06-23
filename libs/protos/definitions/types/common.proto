@@ -84,7 +84,7 @@ message ListingItem {
             // The image to be shown as thumbnail
             bool isThumbnail = 5;
         }    
-        // Type of the vehicle. One of Car Van Suv Jeep CrewCab DoubleCab Bus Lorry ThreeWheel Motorcycle Other
+        // Type of the vehicle. One of Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other
         string type = 1;
         // Brand of the vehicle. Eg: Toyotal, Nissan, etc.
         string brand = 2;
@@ -116,6 +116,8 @@ message ListingItem {
         float price = 15;
         // Is price negiatiable or not
         bool priceNegotiable = 16;
+        // Ada 002 vector ebeddings
+        repeated float embeddings = 17;
     }
     // ID of the created listing item
     string id = 1;
@@ -135,7 +137,7 @@ message ListingItem {
 
 message ListingFilters {
     message PublicListingsFilters {
-        // Type of the vehicle. One of Car Van Suv Jeep CrewCab DoubleCab Bus Lorry ThreeWheel Motorcycle Other
+        // Type of the vehicle. One of Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other
         string vehicleType = 1;    
         // Condition of the vehicle. One of BrandNew Registered Reconditioned
         string condition = 2;
@@ -201,7 +203,7 @@ message SubscriptionItem {
     message Data {
         // Name of the subscription
         string displayName = 1;
-        // Type of the vehicle. One of Car Van Suv Jeep CrewCab DoubleCab Bus Lorry ThreeWheel Motorcycle Other
+        // Type of the vehicle. One of Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other
         string type = 2;
         // Brand of the vehicle. Eg: Toyotal, Nissan, etc.
         string brand = 3;

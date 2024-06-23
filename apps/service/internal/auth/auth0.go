@@ -4,9 +4,14 @@ import (
 	"context"
 	"fmt"
 	"targabay/service/internal/config"
+	"time"
+
+	"github.com/patrickmn/go-cache"
 
 	"github.com/auth0/go-auth0/authentication"
 )
+
+var c = cache.New(15*time.Minute, 30*time.Minute)
 
 func ValidateAuth0Token(ctx context.Context, token string) (user User, err error) {
 	authAPI, err := authentication.New(
@@ -18,9 +23,16 @@ func ValidateAuth0Token(ctx context.Context, token string) (user User, err error
 		return User{}, fmt.Errorf("failed to generate auth0 client")
 	}
 
-	userInfo, err := authAPI.UserInfo(ctx, token) // TODO: Cache the response for 5 minutes
-	if err != nil {
-		return User{}, fmt.Errorf("failed to get user information")
+	var userInfo *authentication.UserInfoResponse
+
+	if x, found := c.Get(token); found {
+		userInfo = x.(*authentication.UserInfoResponse)
+	} else {
+		userInfo, err = authAPI.UserInfo(ctx, token)
+		if err != nil {
+			return User{}, fmt.Errorf("failed to get user information")
+		}
+		c.Set(token, userInfo, cache.DefaultExpiration)
 	}
 
 	user = User{

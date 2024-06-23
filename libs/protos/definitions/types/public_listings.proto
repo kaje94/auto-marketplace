@@ -30,3 +30,12 @@ message ReportListingRequest {
     // Listing item ID
     string listingId = 4;
 }
+
+message GetRelatedListingsRequest {
+    // ID of the record
+    string id = 1;
+    // Country code of the listing. Eg: us, in, lk, etc.
+    string countryCode = 2;
+    // Ada 002 vector ebeddings
+    repeated float embeddings = 3;
+}

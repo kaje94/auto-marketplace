@@ -17,9 +17,6 @@ type AdminListings struct {
 }
 
 func (s *AdminListings) GetAllListings(ctx context.Context, req *service_pb.GetAdminListingsRequest) (*service_pb.GetListingsResponse, error) {
-	// user := util.GetUserContext(ctx)
-	// todo: verify if its admin
-
 	jsonData := util.GetInitialListingQueryFilterReq(int(req.Page.PageNumber), int(req.Page.PageSize))
 
 	util.AddPublicFilter(&jsonData, req.Filters.PublicFilters)
@@ -37,9 +34,6 @@ func (s *AdminListings) GetAllListings(ctx context.Context, req *service_pb.GetA
 }
 
 func (s *AdminListings) ReviewListing(ctx context.Context, req *service_pb.ReviewListingRequest) (*service_pb.EmptyResponse, error) {
-	// user := util.GetUserContext(ctx)
-	// todo: verify if its admin
-
 	listingRecord, err := util.GetListingRecord(req.Id)
 	if err != nil {
 		return nil, err

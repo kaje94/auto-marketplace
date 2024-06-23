@@ -11,8 +11,6 @@ type AdminSubscription struct {
 }
 
 func (s *AdminSubscription) GetAllSubscriptions(ctx context.Context, req *service_pb.GetAdminSubscriptionsRequest) (*service_pb.GetSubscriptionsResponse, error) {
-	// TODO: verify whether its admin
-
 	jsonData := util.GetInitialSubscriptionQueryFilterReq(int(req.Page.PageNumber), int(req.Page.PageSize))
 
 	util.AddSubscriptionUserFilter(&jsonData, req.Filters.UserFilters)

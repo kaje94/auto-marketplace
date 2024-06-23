@@ -20,10 +20,10 @@ export const incrementViewsAction = async (listingId: ListingIdType) => {
 };
 
 /** Get details of a listing item by author who created it */
-export const getRelatedListingsAction = async (id: string) => {
+export const getRelatedListingsAction = async (id: string, countryCode: string, embeddings: number[]) => {
     const getRelatedListings = unstable_cache(
         async (id: string) => {
-            const response = await client.getRelatedListings({ id });
+            const response = await client.getRelatedListings({ id, countryCode, embeddings });
             return { ...response, items: transformListingsImages((response.toJson() as any as GetListingsResponse).items) };
         },
         [apiTags.getRelatedListings(id)],

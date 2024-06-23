@@ -140,7 +140,6 @@ func (s *UserProfile) CloseAccount(ctx context.Context, req *service_pb.EmptyReq
 		if err != nil {
 			return &service_pb.EmptyResponse{}, err
 		}
-		// todo: store this in memory
 
 		accessTokenExpiresAt = time.Now().Add(time.Duration(accessTokenResp.ExpiresIn) * time.Second)
 
@@ -205,8 +204,6 @@ func (s *UserProfile) CloseAccount(ctx context.Context, req *service_pb.EmptyReq
 			Delete: xata.DeleteTransactionData{Table: xata.SubscriptionsTableName, ID: record.ID},
 		})
 	}
-
-	// TODO: delete notifications
 
 	// Delete user record
 	transactions.Operations = append(transactions.Operations, xata.DeleteTransaction{

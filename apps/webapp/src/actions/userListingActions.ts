@@ -3,10 +3,11 @@ import { PartialMessage } from "@bufbuild/protobuf";
 import { createPromiseClient } from "@connectrpc/connect";
 import { createGrpcTransport } from "@connectrpc/connect-node";
 import { revalidateTag, unstable_cache } from "next/cache";
-import { GetListingsResponse, IdRequest, ListingItem, ListingItem_Data } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { GetListingsResponse, IdRequest, ListingItem, ListingItem_Data, UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { GetUserListingsRequest, UpdateListingRequest } from "targabay-protos/gen/ts/dist/types/user_listings_pb";
 import { UserListingsService } from "targabay-protos/gen/ts/dist/user_listings.v1_connect";
 import { apiTags, listingItemTags, revalidationTime } from "@/utils/api";
+import { getTextEmbeddings } from "@/utils/embeddings";
 import { ListingStatusTypes } from "@/utils/enum";
 import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
@@ -15,15 +16,23 @@ import { replaceImageUrlWithCdn, transformListingsImages } from "@/utils/imageUt
 const client = createPromiseClient(UserListingsService, createGrpcTransport(grpcOptions));
 
 /** Create a new listing advert */
-export const createListingAction = async (reqBody: PartialMessage<ListingItem_Data>, email: string) => {
-    const response = await client.createListing(reqBody, { headers: await getGrpcHeaders() });
-    listingItemTags(response.id, email).forEach((tag) => revalidateTag(tag));
+export const createListingAction = async (reqBody: PartialMessage<ListingItem_Data>, userProfile: PartialMessage<UserProfile>) => {
+    const embeddings = getTextEmbeddings(reqBody, userProfile);
+    const response = await client.createListing({ ...reqBody, embeddings }, { headers: await getGrpcHeaders() });
+    listingItemTags(response.id, userProfile.email!).forEach((tag) => revalidateTag(tag));
     return response.id;
 };
 
 /** Edit a listing advert */
-export const editListingAction = async (reqBody: PartialMessage<UpdateListingRequest>, email: string) => {
-    await client.updateListing(reqBody, { headers: await getGrpcHeaders() });
+export const editListingAction = async (
+    reqBody: PartialMessage<UpdateListingRequest>,
+    createdUserProfile: PartialMessage<UserProfile>,
+    email: string,
+) => {
+    await client.updateListing(
+        { ...reqBody, data: { ...reqBody.data, embeddings: getTextEmbeddings(reqBody.data!, createdUserProfile) } },
+        { headers: await getGrpcHeaders() },
+    );
     listingItemTags(reqBody.id!, email).forEach((tag) => revalidateTag(tag));
 };
 

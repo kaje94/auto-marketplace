@@ -14,7 +14,11 @@ export const RelatedListingsCarousel: FC<{ itemDetails: ListingItem }> = ({ item
 };
 
 const RelatedListingsCarouselWithData: FC<{ itemDetails: ListingItem }> = async ({ itemDetails }) => {
-    const relatedListingsRes = await getRelatedListingsAction(itemDetails.id);
+    const relatedListingsRes = await getRelatedListingsAction(
+        itemDetails.id,
+        itemDetails.user?.data?.countryCode!,
+        itemDetails.data?.embeddings ?? [],
+    );
     const listingTitle = getListingTitleFromListing(itemDetails.data!);
 
     return (

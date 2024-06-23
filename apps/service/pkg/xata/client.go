@@ -51,7 +51,7 @@ func (c *XataClient) Call(method, path string, bodyData *bytes.Buffer, target in
 		return err
 	}
 
-	fmt.Printf("Xata \nReq: %s %s %s, \nResp:%s\n", method, path, reqStr, string(body)) // todo: improve logs
+	fmt.Printf("Xata \nReq: %s %s %s, \nResp:%s\n", method, path, reqStr, string(body))
 
 	if resp.StatusCode == 404 {
 		return status.Error(codes.NotFound, codes.NotFound.String())
