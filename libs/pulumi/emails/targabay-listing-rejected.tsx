@@ -14,7 +14,7 @@ export const TemplateName = "targabay-listing-rejected-template";
 
 export default () => {
     return (
-        <EmailWrap previewText="The status of your listing advert {{listingTitle}} has been updated as {{statusText}}">
+        <EmailWrap previewText="Targabay listing advert for {{listingTitle}} has been rejected">
             <Text>{"Hi {{userName}}"},</Text>
             <Text>
                 {

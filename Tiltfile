@@ -37,6 +37,7 @@ docker_build(
 )
 
 env_keys = [
+    'ENV_NAME',
     'AUTH0_ISSUER_BASE_URL',
     'AUTH0_DOMAIN',
     'AUTH0_API_CLIENT_ID',

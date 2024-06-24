@@ -2,8 +2,8 @@ github.com/PuerkitoBio/rehttp v1.3.0 h1:w54Pb72MQn2eJrSdPsvGqXlAfiK1+NMTGDrOJJ4Y
 github.com/PuerkitoBio/rehttp v1.3.0/go.mod h1:LUwKPoDbDIA2RL5wYZCNsQ90cx4OJ4AWBmq6KzWZL1s=
 github.com/auth0/go-auth0 v1.4.1 h1:0AWqPCzw4Su38qx5jSxAwwuEBROdrpjsq4t9/GshZE0=
 github.com/auth0/go-auth0 v1.4.1/go.mod h1:5EO0p8vRuUgY4a0VPTCDzXbIVMxWn8Jon3aEGQQFOoQ=
-github.com/aws/aws-sdk-go v1.51.5 h1:tUHg/ZJgS2Hog4Wl4xpbBqCrmFg6AYv7gPVaCs4v0+s=
-github.com/aws/aws-sdk-go v1.51.5/go.mod h1:LF8svs817+Nz+DmiMQKTO3ubZ/6IaTpq3TjupRn3Eqk=
+github.com/aws/aws-sdk-go v1.54.6 h1:HEYUib3yTt8E6vxjMWM3yAq5b+qjj/6aKA62mkgux9g=
+github.com/aws/aws-sdk-go v1.54.6/go.mod h1:eRwEWoyTWFMVYVQzKMNHWP5/RV4xIUGMQfXQHfHkpNU=
 github.com/aybabtme/iocontrol v0.0.0-20150809002002-ad15bcfc95a0 h1:0NmehRCgyk5rljDQLKUO+cRJCnduDyn11+zGZIc9Z48=
 github.com/aybabtme/iocontrol v0.0.0-20150809002002-ad15bcfc95a0/go.mod h1:6L7zgvqo0idzI7IO8de6ZC051AfXb5ipkIJ7bIA2tGA=
 github.com/benbjohnson/clock v1.1.0 h1:Q92kusRqC1XV2MjkWETPvjJVqKetz1OzxZB7mHJLju8=

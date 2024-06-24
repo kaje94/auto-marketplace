@@ -18,6 +18,7 @@ webApp:
 configMap:
   name: tb-config-map
   values:
+    ENV_NAME: ''
     AUTH0_ISSUER_BASE_URL: ''
     AUTH0_DOMAIN: ''
     AUTH0_API_CLIENT_ID: ''

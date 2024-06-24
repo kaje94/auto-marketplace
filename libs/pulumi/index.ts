@@ -3,6 +3,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as fs from "fs";
 import { z } from "zod";
+import { Template } from "@pulumi/aws/ses";
 
 const envSchema = z.object({
     ENV_NAME: z.string().optional().default("dev"),
@@ -209,30 +210,86 @@ new aws.s3.BucketPolicy("bucket-policy", {
     ),
 });
 
+// SES
+const emailTemplates: Template[] = [];
+
+const listingApprovedTemplate = new aws.ses.Template("targabay-listing-approved-template", {
+    name: `targabay-listing-approved-template-${env.ENV_NAME}`,
+    subject: "Listing advert for {{listingTitle}} has been approved",
+    html: fs.readFileSync("./out/html/targabay-listing-approved.html", "utf8"),
+    text: fs.readFileSync("./out/text/targabay-listing-approved.txt", "utf8"),
+});
+emailTemplates.push(listingApprovedTemplate);
+
+const listingExpiredTemplate = new aws.ses.Template("targabay-listing-expired-template", {
+    name: `targabay-listing-expired-template-${env.ENV_NAME}`,
+    subject: "Listing advert for {{listingTitle}} has been expired",
+    html: fs.readFileSync("./out/html/targabay-listing-expired.html", "utf8"),
+    text: fs.readFileSync("./out/text/targabay-listing-expired.txt", "utf8"),
+});
+emailTemplates.push(listingExpiredTemplate);
+
+const listingRejectTemplate = new aws.ses.Template("targabay-listing-rejected-template", {
+    name: `targabay-listing-rejected-template-${env.ENV_NAME}`,
+    subject: "Listing advert for {{listingTitle}} has been rejected",
+    html: fs.readFileSync("./out/html/targabay-listing-rejected.html", "utf8"),
+    text: fs.readFileSync("./out/text/targabay-listing-rejected.txt", "utf8"),
+});
+emailTemplates.push(listingRejectTemplate);
+
+const listingTakenDownTemplate = new aws.ses.Template("targabay-listing-taken-down-template", {
+    name: `targabay-listing-taken-down-${env.ENV_NAME}`,
+    subject: "Listing advert for {{listingTitle}} has been taken down",
+    html: fs.readFileSync("./out/html/targabay-listing-taken-down.html", "utf8"),
+    text: fs.readFileSync("./out/text/targabay-listing-taken-down.txt", "utf8"),
+});
+emailTemplates.push(listingTakenDownTemplate);
+
+const subscriptionTemplate = new aws.ses.Template("targabay-subscription-template", {
+    name: `targabay-subscription-template-${env.ENV_NAME}`,
+    subject: "New Listings Matching Your Subscription Preferences for '{{subscriptionName}}'",
+    html: fs.readFileSync("./out/html/targabay-subscription-notification.html", "utf8"),
+    text: fs.readFileSync("./out/text/targabay-subscription-notification.txt", "utf8"),
+});
+emailTemplates.push(subscriptionTemplate);
+
 // IAM
 const user = new aws.iam.User(`targabay-user`, { name: `targabay-user-${env.ENV_NAME}` });
 
 new aws.iam.UserPolicy(`targabay-user-policy`, {
     user: user.name,
-    policy: pulumi.all([bucket.bucket, pulumi.output(aws.getCallerIdentity({})).accountId]).apply(([bucketName, accountId]) =>
-        JSON.stringify({
-            Version: "2012-10-17",
-            Statement: [
-                {
-                    Sid: "STSToken",
-                    Effect: "Allow",
-                    Action: "sts:GetFederationToken",
-                    Resource: [`arn:aws:sts::${accountId}:federated-user/S3UploadWebToken`],
-                },
-                {
-                    Sid: "S3UploadAssets",
-                    Effect: "Allow",
-                    Action: "s3:*",
-                    Resource: [`arn:aws:s3:::${bucketName}`, `arn:aws:s3:::${bucketName}/*.webp`],
-                },
-            ],
-        }),
-    ),
+    policy: pulumi
+        .all([bucket.bucket, pulumi.output(aws.getCallerIdentity({})).accountId, emailTemplates.map((item) => item.arn)])
+        .apply(([bucketName, accountId, templates]) =>
+            JSON.stringify({
+                Version: "2012-10-17",
+                Statement: [
+                    {
+                        Sid: "STSToken",
+                        Effect: "Allow",
+                        Action: "sts:GetFederationToken",
+                        Resource: [`arn:aws:sts::${accountId}:federated-user/S3UploadWebToken`],
+                    },
+                    {
+                        Sid: "S3UploadAssets",
+                        Effect: "Allow",
+                        Action: "s3:*",
+                        Resource: [`arn:aws:s3:::${bucketName}`, `arn:aws:s3:::${bucketName}/*.webp`],
+                    },
+                    {
+                        Sid: "SesSendMail",
+                        Effect: "Allow",
+                        Action: ["ses:SendBulkTemplatedEmail", "ses:SendTemplatedEmail"],
+                        Resource: [...templates, `arn:aws:ses:${env.AWS_REGION}:${accountId}:identity/targabay.com`],
+                        Condition: {
+                            StringEquals: {
+                                "ses:FromAddress": "notifications@targabay.com",
+                            },
+                        },
+                    },
+                ],
+            }),
+        ),
 });
 
 const imageKitUser = new aws.iam.User(`imagekit-user`, { name: `imagekit-targabay-user-${env.ENV_NAME}` });
@@ -244,7 +301,7 @@ new aws.iam.UserPolicy(`imagekit-user-policy`, {
             Version: "2012-10-17",
             Statement: [
                 {
-                    Sid: "VisualEditor0",
+                    Sid: "ImagekitReadTargabayS3",
                     Effect: "Allow",
                     Action: "s3:GetObject",
                     Resource: [`arn:aws:s3:::${bucketName}`, `arn:aws:s3:::${bucketName}/*`],
@@ -252,53 +309,6 @@ new aws.iam.UserPolicy(`imagekit-user-policy`, {
             ],
         }),
     ),
-});
-
-// SES
-
-const listingApprovedHtml = fs.readFileSync("./out/html/targabay-listing-approved.html", "utf8");
-const listingApprovedText = fs.readFileSync("./out/text/targabay-listing-approved.txt", "utf8");
-const listingApproved = new aws.ses.Template("targabay-listing-approved-template", {
-    name: `targabay-listing-approved-template-${env.ENV_NAME}`,
-    subject: "Listing advert for {{listingTitle}} has been approved",
-    html: listingApprovedHtml,
-    text: listingApprovedText,
-});
-
-const listingExpiredHtml = fs.readFileSync("./out/html/targabay-listing-expired.html", "utf8");
-const listingExpiredText = fs.readFileSync("./out/text/targabay-listing-expired.txt", "utf8");
-const listingExpired = new aws.ses.Template("targabay-listing-expired-template", {
-    name: `targabay-listing-expired-template-${env.ENV_NAME}`,
-    subject: "Listing advert for {{listingTitle}} has been expired",
-    html: listingExpiredHtml,
-    text: listingExpiredText,
-});
-
-const listingRejectedHtml = fs.readFileSync("./out/html/targabay-listing-rejected.html", "utf8");
-const listingRejectedText = fs.readFileSync("./out/text/targabay-listing-rejected.txt", "utf8");
-const listingRejected = new aws.ses.Template("targabay-listing-rejected-template", {
-    name: `targabay-listing-rejected-template-${env.ENV_NAME}`,
-    subject: "Listing advert for {{listingTitle}} has been rejected",
-    html: listingRejectedHtml,
-    text: listingRejectedText,
-});
-
-const listingTakenDownHtml = fs.readFileSync("./out/html/targabay-listing-taken-down.html", "utf8");
-const listingTakenDownText = fs.readFileSync("./out/text/targabay-listing-taken-down.txt", "utf8");
-const listingTakenDown = new aws.ses.Template("targabay-listing-taken-down-template", {
-    name: `targabay-listing-taken-down-${env.ENV_NAME}`,
-    subject: "Listing advert for {{listingTitle}} has been taken down",
-    html: listingTakenDownHtml,
-    text: listingTakenDownText,
-});
-
-const subscriptionNotificationHtml = fs.readFileSync("./out/html/targabay-subscription-notification.html", "utf8");
-const subscriptionNotificationText = fs.readFileSync("./out/text/targabay-subscription-notification.txt", "utf8");
-const subscriptionNotification = new aws.ses.Template("targabay-subscription-template", {
-    name: `targabay-subscription-template-${env.ENV_NAME}`,
-    subject: "New Listings Matching Your Subscription Preferences for '{{subscriptionName}}'",
-    html: subscriptionNotificationHtml,
-    text: subscriptionNotificationText,
 });
 
 // Auth0 export
@@ -315,14 +325,8 @@ export const AUTH0_SCOPE = "openid profile email offline_access";
 export const AWS_S3_BUCKET = bucket.bucket;
 export const AWS_S3_REGION = bucket.region;
 // IAM exports
-export const AWS_ACCESS_USER_NAME = pulumi.interpolate`Generate key for user ${user.name} in AWS console`
+export const AWS_ACCESS_USER_NAME = pulumi.interpolate`Generate key for user ${user.name} in AWS console`;
 export const AWS_ACCESS_SECRET = pulumi.interpolate`Generate secret for user ${user.name} in AWS console`;
 export const IMAGE_KIT_USER = pulumi.interpolate`Generate credentials for user ${imageKitUser.name} in AWS console`;
 // SES exports
-export const EMAIL_TEMPLATES = [
-    listingApproved.name,
-    listingExpired.name,
-    listingRejected.name,
-    listingTakenDown.name,
-    subscriptionNotification.name,
-];
+export const EMAIL_TEMPLATES = emailTemplates.map((item) => item.arn);

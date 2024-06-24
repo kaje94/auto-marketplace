@@ -6,9 +6,14 @@ import (
 	"encoding/json"
 	"fmt"
 	service_pb "targabay/protos"
+	"targabay/service/internal/config"
 	"targabay/service/internal/util"
 	"targabay/service/pkg/xata"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/ses"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -35,6 +40,11 @@ func (s *AdminListings) GetAllListings(ctx context.Context, req *service_pb.GetA
 
 func (s *AdminListings) ReviewListing(ctx context.Context, req *service_pb.ReviewListingRequest) (*service_pb.EmptyResponse, error) {
 	listingRecord, err := util.GetListingRecord(req.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	userRecord, err := util.GetUserRecord(util.GetUserEmailFromListingRec(listingRecord))
 	if err != nil {
 		return nil, err
 	}
@@ -93,5 +103,58 @@ func (s *AdminListings) ReviewListing(ctx context.Context, req *service_pb.Revie
 		return nil, err
 	}
 
+	err = sendEmail(userRecord, listingRecord, req.Status == "Declined", req.AdminReview)
+	if err != nil {
+		return nil, err
+	}
+
 	return &service_pb.EmptyResponse{}, nil
+}
+
+func sendEmail(userRecord xata.UserRecord, listingRecord xata.ListingRecord, rejected bool, reviewComment string) error {
+	sessionInstance, err := session.NewSession(&aws.Config{
+		Region:      &config.Config.AWS.S3Region,
+		Credentials: credentials.NewStaticCredentials(config.Config.AWS.AccessKey, config.Config.AWS.AccessSecret, ""),
+	})
+	if err != nil {
+		return err
+	}
+
+	sesSession := ses.New(sessionInstance)
+
+	emailContent := struct {
+		UserName       string `json:"userName"`
+		ListingTitle   string `json:"listingTitle,omitempty"`
+		ListingUrl     string `json:"listingUrl,omitempty"`
+		RejectionCause string `json:"rejectionCause,omitempty"`
+	}{
+		UserName:     userRecord.Name,
+		ListingTitle: util.GetListingTitleFromRec(listingRecord),
+		ListingUrl:   fmt.Sprintf(`%s/%s/dashboard/my-listings/%s`, config.Config.WebAppUrl, userRecord.CountryCode, listingRecord.ID),
+	}
+
+	templateName := fmt.Sprintf(`targabay-listing-approved-template-%s`, config.Config.EnvName)
+	if rejected {
+		emailContent.RejectionCause = reviewComment
+		templateName = fmt.Sprintf(`targabay-listing-rejected-template-%s`, config.Config.EnvName)
+	}
+	userEmail := util.DeSanitizeEmail(util.GetUserEmailFromListingRec(listingRecord))
+	emailSource := "Targabay <notifications@targabay.com>"
+	emailRejectContentMarshalled, err := json.Marshal(emailContent)
+	if err != nil {
+		return err
+	}
+	emailRejectContentStr := string(emailRejectContentMarshalled)
+
+	_, err = sesSession.SendTemplatedEmail(&ses.SendTemplatedEmailInput{
+		Template:     &templateName,
+		Destination:  &ses.Destination{ToAddresses: []*string{&userEmail}},
+		Source:       &emailSource,
+		TemplateData: &emailRejectContentStr,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

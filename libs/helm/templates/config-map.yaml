@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.configmapName }}
   namespace: {{ .Values.namespace }}
 data:
+  ENV_NAME: {{ required ".Values.configMap.values.ENV_NAME required!" .Values.configMap.values.ENV_NAME }}
   # Auth0
   # Auth0 - Common
   AUTH0_ISSUER_BASE_URL: {{ required ".Values.configMap.values.AUTH0_ISSUER_BASE_URL required!" .Values.configMap.values.AUTH0_ISSUER_BASE_URL }}
