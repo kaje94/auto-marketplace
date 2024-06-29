@@ -2,6 +2,8 @@ package util
 
 import (
 	"bytes"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -9,7 +11,6 @@ import (
 	"strings"
 	service_pb "targabay/protos"
 	"targabay/service/internal/auth"
-	"targabay/service/pkg/xata"
 	"time"
 
 	"google.golang.org/grpc/codes"
@@ -17,7 +18,7 @@ import (
 )
 
 func VerifySubscriptionAccessible(user auth.User, subscriptionRecord xata.SubscriptionRecord) error {
-	if !user.IsAdmin && subscriptionRecord.User != SanitizeEmail(user.Email) {
+	if !user.IsAdmin && subscriptionRecord.User != commonUtil.SanitizeEmail(user.Email) {
 		return status.Error(codes.PermissionDenied, "Only authors and admins are allowed to access this record")
 	}
 	return nil
@@ -57,7 +58,7 @@ func GetInitialSubscriptionQueryFilterReq(pageNumber int, pageSize int) xata.Sub
 
 func AddSubscriptionAdminFilter(request *xata.SubscriptionFilterRequest, filters *service_pb.SubscriptionFilters_AdminSubscriptionFilters) {
 	if filters.UserEmail != "" {
-		request.Filter.User = &xata.FilterEqualsItem{Is: SanitizeEmail(filters.UserEmail)}
+		request.Filter.User = &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(filters.UserEmail)}
 	}
 }
 
@@ -176,7 +177,7 @@ func TransformXataToSubscriptionResp(xataDaa xata.FetchSubscriptionsResponse, to
 				Data: &service_pb.UserProfile_ProfileData{
 					CountryCode: *record.CountryCode,
 				},
-				Email: DeSanitizeEmail(GetUserEmailFromSubscriptionRec(record)),
+				Email: commonUtil.DeSanitizeEmail(GetUserEmailFromSubscriptionRec(record)),
 			},
 		})
 	}
@@ -185,5 +186,5 @@ func TransformXataToSubscriptionResp(xataDaa xata.FetchSubscriptionsResponse, to
 }
 
 func GetUserEmailFromSubscriptionRec(subscriptionRecord xata.SubscriptionRecord) string {
-	return DeSanitizeEmail(subscriptionRecord.User.(map[string]interface{})["id"].(string))
+	return commonUtil.DeSanitizeEmail(subscriptionRecord.User.(map[string]interface{})["id"].(string))
 }

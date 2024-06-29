@@ -7,16 +7,16 @@ import (
 
 	service_pb "targabay/protos"
 	"targabay/service/internal/auth"
-	"targabay/service/internal/config"
 	"targabay/service/internal/handlers"
 
 	"google.golang.org/grpc"
 )
 
 func main() {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Config.Port))
+	port := 50051
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
-		log.Fatalf("failed to listen on port %d: %v", config.Config.Port, err)
+		log.Fatalf("failed to listen on port %d: %v", port, err)
 	}
 
 	s := grpc.NewServer(grpc.ChainUnaryInterceptor(

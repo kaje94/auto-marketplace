@@ -2,6 +2,8 @@ package util
 
 import (
 	"bytes"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -10,21 +12,12 @@ import (
 	"strings"
 	service_pb "targabay/protos"
 	"targabay/service/internal/auth"
-	"targabay/service/pkg/xata"
 	"time"
 
 	"github.com/go-playground/validator/v10"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
-
-func GetListingTitleFromRec(listingRec xata.ListingRecord) string {
-	if listingRec.Trim != "" {
-		return fmt.Sprintf("%s %s %s %s", listingRec.Brand, listingRec.Model, listingRec.Trim, strconv.Itoa(listingRec.YearOfManufacture))
-	} else {
-		return fmt.Sprintf("%s %s %s", listingRec.Brand, listingRec.Model, strconv.Itoa(listingRec.YearOfManufacture))
-	}
-}
 
 func TransformXataToListingsResp(xataDaa xata.FetchListingsResponse, totalCount int, pageSize int) (*service_pb.GetListingsResponse, error) {
 	page := &service_pb.PaginatedResponse{TotalCount: int32(totalCount), TotalPages: int32(math.Ceil(float64(totalCount) / float64(pageSize)))}
@@ -75,7 +68,7 @@ func TransformXataToListingsResp(xataDaa xata.FetchListingsResponse, totalCount 
 					State:       *record.State,
 					CountryCode: *record.CountryCode,
 				},
-				Email: DeSanitizeEmail(GetUserEmailFromListingRec(record)),
+				Email: commonUtil.DeSanitizeEmail(commonUtil.GetUserEmailFromListingRec(record)),
 			},
 		})
 	}
@@ -97,7 +90,7 @@ func TransformXataToListingItemResp(xataDaa xata.ListingRecord, userRecord *xata
 				State:       *xataDaa.State,
 				CountryCode: *xataDaa.CountryCode,
 			},
-			Email: DeSanitizeEmail(GetUserEmailFromListingRec(xataDaa)),
+			Email: commonUtil.DeSanitizeEmail(commonUtil.GetUserEmailFromListingRec(xataDaa)),
 		}
 	} else {
 		user = &service_pb.UserProfile{
@@ -110,7 +103,7 @@ func TransformXataToListingItemResp(xataDaa xata.ListingRecord, userRecord *xata
 				VehicleDealer: userRecord.VehicleDealer,
 			},
 			Name:    userRecord.Name,
-			Email:   DeSanitizeEmail(GetUserEmailFromListingRec(xataDaa)),
+			Email:   commonUtil.DeSanitizeEmail(commonUtil.GetUserEmailFromListingRec(xataDaa)),
 			Picture: userRecord.Picture,
 		}
 	}
@@ -217,7 +210,7 @@ func GetInitialQuerySearchReq(search string, pageNumber int, pageSize int) xata.
 
 func AddAdminFilter(request *xata.ListingSearchRequest, userFilters *service_pb.ListingFilters_AdminListingsFilters) {
 	if userFilters.UserEmail != "" {
-		request.Filter.User = &xata.FilterEqualsItem{Is: SanitizeEmail(userFilters.UserEmail)}
+		request.Filter.User = &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(userFilters.UserEmail)}
 	}
 }
 
@@ -360,23 +353,11 @@ func GetListingRecord(listingId string) (xata.ListingRecord, error) {
 	return listingRecord, nil
 }
 
-// func GetListingRecordWithUser(listingId string) (xata.ListingRecord, error) {
-// 	listingRecord := xata.ListingRecord{}
-// 	if err := Xata.Call("GET", fmt.Sprintf("%s/%s?columns=user.*", xata.ListingData, listingId), nil, &listingRecord); err != nil {
-// 		return xata.ListingRecord{}, err
-// 	}
-// 	return listingRecord, nil
-// }
-
 func VerifyListingAccessible(user auth.User, listingRecord xata.ListingRecord) error {
-	if !user.IsAdmin && GetUserEmailFromListingRec(listingRecord) != user.Email {
+	if !user.IsAdmin && commonUtil.GetUserEmailFromListingRec(listingRecord) != user.Email {
 		return status.Error(codes.PermissionDenied, "Only authors and admins are allowed to access this record")
 	}
 	return nil
-}
-
-func GetUserEmailFromListingRec(listingRecord xata.ListingRecord) string {
-	return DeSanitizeEmail(listingRecord.User.(map[string]interface{})["id"].(string))
 }
 
 func GetListingsQueryResp(listingFilterReq xata.ListingSearchRequest, fetchListResp *xata.FetchListingsResponse, xataClient *xata.XataClient) error {

@@ -1,13 +1,13 @@
 package handlers
 
 import (
+	"common/pkg/config"
 	"context"
 	"crypto/md5"
 	"fmt"
 	"strconv"
 	"strings"
 	service_pb "targabay/protos"
-	"targabay/service/internal/config"
 	"targabay/service/internal/util"
 	"time"
 

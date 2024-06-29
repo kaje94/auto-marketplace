@@ -2,12 +2,13 @@ package handlers
 
 import (
 	"bytes"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"context"
 	"encoding/json"
 	"fmt"
 	service_pb "targabay/protos"
 	"targabay/service/internal/util"
-	"targabay/service/pkg/xata"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -47,7 +48,7 @@ func (s *UserListings) CreateListing(ctx context.Context, req *service_pb.Listin
 		Description:        req.Description,
 		ExpiryDate:         time.Now().AddDate(0, 1, 0), // 1 month to the current date
 		Status:             "UnderReview",
-		User:               util.SanitizeEmail(user.Email),
+		User:               commonUtil.SanitizeEmail(user.Email),
 		Price:              int(req.Price),
 		PriceNegotiable:    req.PriceNegotiable,
 		City:               &userRecord.City,
@@ -83,7 +84,7 @@ func (s *UserListings) GetUserListings(ctx context.Context, req *service_pb.GetU
 
 	util.AddUserFilter(&jsonData, req.Filters.UserFilters)
 
-	jsonData.Filter.User = &xata.FilterEqualsItem{Is: util.SanitizeEmail(user.Email)}
+	jsonData.Filter.User = &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(user.Email)}
 
 	listingResp, listingAggrResp, err := util.GetListingsWithTotal(jsonData, util.Xata)
 	if err != nil {
@@ -143,7 +144,7 @@ func (s *UserListings) GetUserListingItem(ctx context.Context, req *service_pb.I
 		return nil, err
 	}
 
-	userRecord, err := util.GetUserRecord(util.GetUserEmailFromListingRec(listingRecord))
+	userRecord, err := util.GetUserRecord(commonUtil.GetUserEmailFromListingRec(listingRecord))
 	if err != nil {
 		return nil, err
 	}

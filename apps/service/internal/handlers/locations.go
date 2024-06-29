@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"bytes"
+	"common/pkg/xata"
 	"context"
 	"encoding/json"
 	"fmt"
 	service_pb "targabay/protos"
 	"targabay/service/internal/util"
-	"targabay/service/pkg/xata"
 )
 
 type Locations struct {

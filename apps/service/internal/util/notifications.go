@@ -2,11 +2,11 @@ package util
 
 import (
 	"bytes"
+	"common/pkg/xata"
 	"encoding/json"
 	"math"
 	"strings"
 	service_pb "targabay/protos"
-	"targabay/service/pkg/xata"
 	"time"
 )
 

@@ -82,6 +82,7 @@ type ListingSearchFilter struct {
 	Price              any                   `json:"price,omitempty"`
 	YearOfRegistration any                   `json:"yearOfRegistration,omitempty"`
 	CreatedAt          any                   `json:"xata.createdAt,omitempty"`
+	ExpiryDate         *FilterLe             `json:"expiryDate,omitempty"`
 }
 
 type SubscriptionSearchFilter struct {
@@ -215,6 +216,21 @@ type DeleteTransaction struct {
 type DeleteTransactionData struct {
 	Table string `json:"table"`
 	ID    string `json:"id"`
+}
+
+type GetTransaction struct {
+	Get GetTransactionData `json:"get"`
+}
+
+type GetTransactionData struct {
+	Table   string   `json:"table"`
+	ID      string   `json:"id"`
+	Columns []string `json:"columns"`
+}
+
+type TransactionRespItem struct {
+	Operation string            `json:"operation"`
+	Columns   map[string]string `json:"columns"`
 }
 
 type ListingRecord struct {

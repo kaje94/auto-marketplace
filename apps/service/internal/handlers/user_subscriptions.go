@@ -2,12 +2,13 @@ package handlers
 
 import (
 	"bytes"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"context"
 	"encoding/json"
 	"fmt"
 	service_pb "targabay/protos"
 	"targabay/service/internal/util"
-	"targabay/service/pkg/xata"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -34,7 +35,7 @@ func (s *UserSubscription) CreateSubscription(ctx context.Context, req *service_
 		Brand:                  req.Brand,
 		Trim:                   req.Trim,
 		Model:                  req.Model,
-		User:                   util.SanitizeEmail(user.Email),
+		User:                   commonUtil.SanitizeEmail(user.Email),
 		DisplayName:            req.DisplayName,
 		MinYearOfManufacture:   int(req.MinYearOfManufacture),
 		MaxYearOfManufacture:   int(req.MaxYearOfManufacture),
@@ -159,7 +160,7 @@ func (s *UserSubscription) GetSubscriptionItem(ctx context.Context, req *service
 			SubscriptionExpiryDate: subscriptionRecord.SubscriptionExpiryDate.String(),
 		},
 		User: &service_pb.UserProfile{
-			Email: util.DeSanitizeEmail(util.GetUserEmailFromSubscriptionRec(subscriptionRecord)),
+			Email: commonUtil.DeSanitizeEmail(util.GetUserEmailFromSubscriptionRec(subscriptionRecord)),
 			Data: &service_pb.UserProfile_ProfileData{
 				CountryCode: *subscriptionRecord.CountryCode,
 			},
@@ -260,7 +261,7 @@ func (s *UserSubscription) GetUserSubscriptions(ctx context.Context, req *servic
 
 	util.AddSubscriptionUserFilter(&jsonData, req.Filters.UserFilters)
 
-	jsonData.Filter.User = &xata.FilterEqualsItem{Is: util.SanitizeEmail(user.Email)}
+	jsonData.Filter.User = &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(user.Email)}
 
 	subscriptionResp, subscriptionAggrResp, err := util.GetSubscriptionsWithTotal(jsonData, util.Xata)
 	if err != nil {

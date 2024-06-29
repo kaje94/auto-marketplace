@@ -2,11 +2,12 @@ package handlers
 
 import (
 	"bytes"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"context"
 	"encoding/json"
 	service_pb "targabay/protos"
 	"targabay/service/internal/util"
-	"targabay/service/pkg/xata"
 )
 
 type Notifications struct {
@@ -16,7 +17,7 @@ type Notifications struct {
 func (s *Notifications) GetUserNotifications(ctx context.Context, req *service_pb.GetUserNotificationsRequest) (*service_pb.GetNotificationResponse, error) {
 	user := util.GetUserContext(ctx)
 
-	jsonData := util.GetInitialNotificationQueryFilterReq(int(req.Page.PageNumber), int(req.Page.PageSize), util.SanitizeEmail(user.Email))
+	jsonData := util.GetInitialNotificationQueryFilterReq(int(req.Page.PageNumber), int(req.Page.PageSize), commonUtil.SanitizeEmail(user.Email))
 
 	util.AddUserNotificationsFilter(&jsonData, req.Filters.UserFilters)
 
@@ -34,7 +35,7 @@ func (s *Notifications) MarkAllNotificationsShown(ctx context.Context, req *serv
 	allUserNotificationReq := xata.NotificationsFilterRequest{
 		Filter: xata.NotificationsFilter{
 			User: &xata.FilterEqualsItem{
-				Is: util.SanitizeEmail(user.Email),
+				Is: commonUtil.SanitizeEmail(user.Email),
 			},
 		},
 	}

@@ -6,7 +6,6 @@ import (
 )
 
 var Config = rootConfig{
-	Port:      50051,
 	EnvName:   getEnvVariable("ENV_NAME"),
 	WebAppUrl: getEnvVariable("AUTH0_BASE_URL"),
 	Xata: xataConfig{

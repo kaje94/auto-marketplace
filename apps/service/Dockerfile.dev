@@ -17,6 +17,8 @@ USER root:root
 # Copy core files
 COPY package.json nx.json pnpm-* go.* ./
 COPY apps/service/go.* apps/service/
+COPY apps/handle-expired-job/go.* apps/handle-expired-job/
+COPY libs/go-utils libs/go-utils
 COPY libs/protos libs/protos
 
 # Install dependencies

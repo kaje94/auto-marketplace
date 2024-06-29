@@ -1,14 +1,13 @@
 package auth
 
 import (
+	"common/pkg/config"
 	"context"
 	"fmt"
-	"targabay/service/internal/config"
 	"time"
 
-	"github.com/patrickmn/go-cache"
-
 	"github.com/auth0/go-auth0/authentication"
+	"github.com/patrickmn/go-cache"
 )
 
 var c = cache.New(15*time.Minute, 30*time.Minute)

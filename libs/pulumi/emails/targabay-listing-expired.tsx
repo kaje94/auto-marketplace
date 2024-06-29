@@ -13,7 +13,7 @@ export const TemplateName = "targabay-listing-expired-template";
 
 export default () => {
     return (
-        <EmailWrap previewText="Renew your listing by visiting Tarabay">
+        <EmailWrap previewText="Renew your listing by visiting Targabay">
             <Text>{"Hi {{userName}}"},</Text>
             <Text>
                 {

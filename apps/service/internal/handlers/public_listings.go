@@ -2,12 +2,13 @@ package handlers
 
 import (
 	"bytes"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"context"
 	"encoding/json"
 	"fmt"
 	service_pb "targabay/protos"
 	"targabay/service/internal/util"
-	"targabay/service/pkg/xata"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -46,7 +47,7 @@ func (s *PublicListings) GetPublicListingItem(ctx context.Context, req *service_
 	}
 
 	if listingRecord.Status == "Posted" {
-		userRecord, err := util.GetUserRecord(util.GetUserEmailFromListingRec(listingRecord))
+		userRecord, err := util.GetUserRecord(commonUtil.GetUserEmailFromListingRec(listingRecord))
 		if err != nil {
 			return nil, err
 		}

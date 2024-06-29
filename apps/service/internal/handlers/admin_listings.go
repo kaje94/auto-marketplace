@@ -2,13 +2,14 @@ package handlers
 
 import (
 	"bytes"
+	"common/pkg/config"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"context"
 	"encoding/json"
 	"fmt"
 	service_pb "targabay/protos"
-	"targabay/service/internal/config"
 	"targabay/service/internal/util"
-	"targabay/service/pkg/xata"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -44,7 +45,7 @@ func (s *AdminListings) ReviewListing(ctx context.Context, req *service_pb.Revie
 		return nil, err
 	}
 
-	userRecord, err := util.GetUserRecord(util.GetUserEmailFromListingRec(listingRecord))
+	userRecord, err := util.GetUserRecord(commonUtil.GetUserEmailFromListingRec(listingRecord))
 	if err != nil {
 		return nil, err
 	}
@@ -65,11 +66,12 @@ func (s *AdminListings) ReviewListing(ctx context.Context, req *service_pb.Revie
 			Fields: xata.ListingRecord{
 				Status:      req.Status,
 				AdminReview: &req.AdminReview,
+				ExpiryDate:  listingRecord.ExpiryDate,
 			},
 		},
 	})
 
-	listingTitle := util.GetListingTitleFromRec(listingRecord)
+	listingTitle := commonUtil.GetListingTitleFromRec(listingRecord)
 	notificationType := "ListingApproved"
 	notificationTitle := fmt.Sprintf(`Your Vehicle Listing '%s' Has Been Approved`, listingTitle)
 	notificationBody := fmt.Sprintf(`Exciting news! Your listing for '%s' has been approved and is now live on our marketplace. Thank you for choosing our platform. If you have any questions, feel free to reach out. Happy selling!`, listingTitle)
@@ -86,7 +88,7 @@ func (s *AdminListings) ReviewListing(ctx context.Context, req *service_pb.Revie
 			Record: xata.NotificationRecord{
 				Title:        notificationTitle,
 				IsShown:      false,
-				User:         util.SanitizeEmail(util.GetUserEmailFromListingRec(listingRecord)),
+				User:         commonUtil.SanitizeEmail(commonUtil.GetUserEmailFromListingRec(listingRecord)),
 				RedirectPath: fmt.Sprintf("/%s/dashboard/listings/%s", *listingRecord.CountryCode, listingRecord.ID),
 				Type:         notificationType,
 				Body:         notificationBody,
@@ -129,7 +131,7 @@ func sendEmail(userRecord xata.UserRecord, listingRecord xata.ListingRecord, rej
 		RejectionCause string `json:"rejectionCause,omitempty"`
 	}{
 		UserName:     userRecord.Name,
-		ListingTitle: util.GetListingTitleFromRec(listingRecord),
+		ListingTitle: commonUtil.GetListingTitleFromRec(listingRecord),
 		ListingUrl:   fmt.Sprintf(`%s/%s/dashboard/my-listings/%s`, config.Config.WebAppUrl, userRecord.CountryCode, listingRecord.ID),
 	}
 
@@ -138,19 +140,20 @@ func sendEmail(userRecord xata.UserRecord, listingRecord xata.ListingRecord, rej
 		emailContent.RejectionCause = reviewComment
 		templateName = fmt.Sprintf(`targabay-listing-rejected-template-%s`, config.Config.EnvName)
 	}
-	userEmail := util.DeSanitizeEmail(util.GetUserEmailFromListingRec(listingRecord))
+	// todo: check if we need to call commonUtil.DeSanitizeEmail again?
+	userEmail := commonUtil.DeSanitizeEmail(commonUtil.GetUserEmailFromListingRec(listingRecord))
 	emailSource := "Targabay <notifications@targabay.com>"
-	emailRejectContentMarshalled, err := json.Marshal(emailContent)
+	emailContentMarshalled, err := json.Marshal(emailContent)
 	if err != nil {
 		return err
 	}
-	emailRejectContentStr := string(emailRejectContentMarshalled)
+	emailContentStr := string(emailContentMarshalled)
 
 	_, err = sesSession.SendTemplatedEmail(&ses.SendTemplatedEmailInput{
 		Template:     &templateName,
 		Destination:  &ses.Destination{ToAddresses: []*string{&userEmail}},
 		Source:       &emailSource,
-		TemplateData: &emailRejectContentStr,
+		TemplateData: &emailContentStr,
 	})
 	if err != nil {
 		return err

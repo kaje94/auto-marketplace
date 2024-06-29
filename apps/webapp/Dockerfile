@@ -18,7 +18,6 @@ USER root:root
 COPY package.json nx.json pnpm-* go.* ./
 COPY apps/webapp/package.json apps/webapp/pnpm-* apps/webapp/
 COPY libs/protos libs/protos
-COPY apps/service/go.* apps/service/
 
 # Install dependencies
 RUN devbox run pnpm install --frozen-lockfile

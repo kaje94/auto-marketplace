@@ -8,13 +8,15 @@ config.define_bool("dev")
 dev_mode = 'dev' in config.parse()
 
 # Common properties for docker_build
-common_only = ['devbox.json','devbox.lock','package.json','nx.json','pnpm-lock.yaml','pnpm-workspace.yaml','./libs/protos','./apps/service/']
+common_only = ['devbox.json','devbox.lock','package.json','nx.json','pnpm-lock.yaml','pnpm-workspace.yaml','./libs/protos']
 common_ignore = ['node_modules']
 webapp_build_args = {
     'NEXT_PUBLIC_SUPPORT_EMAIL': os.getenv('NEXT_PUBLIC_SUPPORT_EMAIL', 'support@taragabay.com'),
 }
 api_resource_name = 'api-service'
 api_resource_image_name = 'kajendranalagaratnam/targabay-api-service'
+handle_expired_resource_name = 'handle-expired-job'
+handle_expired_resource_image_name = 'kajendranalagaratnam/targabay-handle-expired-job'
 webapp_resource_name = 'webapp'
 webapp_resource_image_name = 'kajendranalagaratnam/targabay-webapp'
 webapp_resource_port = '3000'
@@ -24,7 +26,14 @@ docker_build(
     api_resource_image_name,
     context='.',
     dockerfile='apps/service/Dockerfile.dev' if dev_mode else 'apps/service/Dockerfile',
-    only=common_only + ['go.work','go.work.sum'],
+    only=common_only + ['./apps/service/','./libs/go-utils/','./apps/handle-expired-job/','go.work','go.work.sum'],
+    ignore=common_ignore,
+)
+docker_build(
+    handle_expired_resource_image_name,
+    context='.',
+    dockerfile='apps/handle-expired-job/Dockerfile.dev' if dev_mode else 'apps/handle-expired-job/Dockerfile',
+    only=common_only + ['./apps/service/','./libs/go-utils/','./apps/handle-expired-job/','go.work','go.work.sum'],
     ignore=common_ignore,
 )
 docker_build(
@@ -64,6 +73,8 @@ env_keys = [
 arg_keys_values = []
 arg_keys_values.append(["apiService.appName", api_resource_name])
 arg_keys_values.append(["apiService.image.name", api_resource_image_name])
+arg_keys_values.append(["handleExpiredJob.appName", handle_expired_resource_name])
+arg_keys_values.append(["handleExpiredJob.image.name", handle_expired_resource_image_name])
 arg_keys_values.append(["webApp.appName", webapp_resource_name])
 arg_keys_values.append(["webApp.image.name", webapp_resource_image_name])
 arg_keys_values.append(["webApp.port", webapp_resource_port])
@@ -86,3 +97,4 @@ watch_file('libs/helm')
 # k8s_resource allows customization where necessary such as adding port forwards and labels
 k8s_resource(webapp_resource_name, port_forwards=webapp_resource_port, labels=[webapp_resource_name])
 k8s_resource(api_resource_name, labels=['go-api'])
+k8s_resource(handle_expired_resource_name, labels=['handle-expired'])

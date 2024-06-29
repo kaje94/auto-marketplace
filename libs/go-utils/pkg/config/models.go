@@ -21,7 +21,6 @@ type awsConfig struct {
 }
 
 type rootConfig struct {
-	Port      int32
 	EnvName   string
 	WebAppUrl string
 	Xata      xataConfig

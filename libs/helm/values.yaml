@@ -15,6 +15,12 @@ webApp:
     name: kajendranalagaratnam/targabay-webapp
     version: 0.0.5
   port: 3000
+handleExpiredJob:
+  appName: handle-expired-job
+  cronExpression: '0 0 * * *'
+  image:
+    name: kajendranalagaratnam/targabay-handle-expired-job
+    version: 0.0.1
 configMap:
   name: tb-config-map
   values:

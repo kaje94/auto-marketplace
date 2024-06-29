@@ -2,18 +2,21 @@
 import { PartialMessage } from "@bufbuild/protobuf";
 import { createPromiseClient } from "@connectrpc/connect";
 import { createGrpcTransport } from "@connectrpc/connect-node";
+import { fromPreTrained } from "@lenml/tokenizer-text_embedding_ada002";
 import { revalidateTag, unstable_cache } from "next/cache";
 import { GetListingsResponse, IdRequest, ListingItem, ListingItem_Data, UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { GetUserListingsRequest, UpdateListingRequest } from "targabay-protos/gen/ts/dist/types/user_listings_pb";
 import { UserListingsService } from "targabay-protos/gen/ts/dist/user_listings.v1_connect";
 import { apiTags, listingItemTags, revalidationTime } from "@/utils/api";
-import { getTextEmbeddings } from "@/utils/embeddings";
-import { ListingStatusTypes } from "@/utils/enum";
+import { VEHICLE_BRANDS } from "@/utils/brands";
+import { ListingStatusTypes, VehicleConditionTypes, VehicleTypes } from "@/utils/enum";
 import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
 import { replaceImageUrlWithCdn, transformListingsImages } from "@/utils/imageUtils";
 
 const client = createPromiseClient(UserListingsService, createGrpcTransport(grpcOptions));
+
+const tokenizer = fromPreTrained();
 
 /** Create a new listing advert */
 export const createListingAction = async (reqBody: PartialMessage<ListingItem_Data>, userProfile: PartialMessage<UserProfile>) => {
@@ -82,4 +85,33 @@ export const renewListingAction = async (listingId: string, email: string) => {
 export const unListListingAction = async (listingId: string, status: ListingStatusTypes, userId: string) => {
     await client.unListListing({ id: listingId, status }, { headers: await getGrpcHeaders() });
     listingItemTags(listingId, userId).forEach((tag) => revalidateTag(tag));
+};
+
+const getTextEmbeddings = (listingItemData: PartialMessage<ListingItem_Data>, listingUser: PartialMessage<UserProfile>): number[] => {
+    const getVehicleTypeEmbed = (type: string) => {
+        if (type === VehicleTypes.ThreeWheeler) {
+            return "Auto";
+        } else if (type === VehicleTypes.Motorcycle) {
+            return "Cycle";
+        } else if (type === VehicleTypes.SUV) {
+            return "Utility";
+        } else {
+            return type;
+        }
+    };
+    const embeddings: number[] = [
+        tokenizer.encode(VEHICLE_BRANDS.findIndex((item) => item === listingItemData?.brand).toString()).shift() ?? 0,
+        parseInt(tokenizer.encode(listingItemData?.model?.replaceAll(" ", "") || "model").join()),
+        parseInt(tokenizer.encode(listingItemData?.trim?.replaceAll(" ", "") || "trim").join()),
+        tokenizer.encode(listingItemData?.yearOfManufacture?.toString()!).shift() ?? 0,
+        tokenizer.encode(listingItemData?.condition === VehicleConditionTypes.BrandNew ? "New" : listingItemData?.condition!).shift() ?? 0,
+        tokenizer.encode(getVehicleTypeEmbed(listingItemData?.type!)).shift() ?? 0,
+        tokenizer.encode(listingItemData?.transmissionType!).shift() ?? 0,
+        tokenizer.encode(listingItemData?.fuelType!).shift() ?? 0,
+        parseInt(tokenizer.encode(listingUser?.data?.city?.replaceAll(" ", "") || "city").join()),
+        parseInt(tokenizer.encode(listingUser?.data?.state?.replaceAll(" ", "") || "state").join()),
+        tokenizer.encode(listingUser?.data?.countryCode!).shift() ?? 0,
+    ];
+
+    return embeddings;
 };

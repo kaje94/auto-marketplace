@@ -9,8 +9,7 @@ when viewing posted listing details, if not posted, show meaningful error
 add readiness/liveness probes and set max memory requests and limits
 
 emails
-send email on listing approval or rejection,
-listing taken down - not necessary
+listing taken down - maybe
 listing expire
 subscriptions
 
@@ -30,3 +29,6 @@ paths:{
 
 //
 Update readme and go through all code
+
+//
+add limits to listing create and subscriptions

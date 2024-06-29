@@ -2,6 +2,9 @@ package handlers
 
 import (
 	"bytes"
+	"common/pkg/config"
+	commonUtil "common/pkg/util"
+	"common/pkg/xata"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -10,9 +13,7 @@ import (
 	"net/url"
 	"strings"
 	service_pb "targabay/protos"
-	"targabay/service/internal/config"
 	"targabay/service/internal/util"
-	"targabay/service/pkg/xata"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -55,7 +56,7 @@ func (s *UserProfile) UpdateUserProfile(ctx context.Context, req *service_pb.Use
 	transactions.Operations = append(transactions.Operations, xata.UpdateTransaction{
 		Update: xata.UpdateTransactionData{
 			Table:  xata.UsersTableName,
-			ID:     util.SanitizeEmail(user.Email),
+			ID:     commonUtil.SanitizeEmail(user.Email),
 			Upsert: true,
 			Fields: userRecord,
 		},
@@ -63,7 +64,7 @@ func (s *UserProfile) UpdateUserProfile(ctx context.Context, req *service_pb.Use
 
 	listingResp := xata.FetchListingsResponse{}
 	err := util.GetListingsQueryResp(xata.ListingSearchRequest{
-		Filter: xata.ListingSearchFilter{User: &xata.FilterEqualsItem{Is: util.SanitizeEmail(user.Email)}},
+		Filter: xata.ListingSearchFilter{User: &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(user.Email)}},
 	}, &listingResp, util.Xata)
 
 	if err != nil {
@@ -169,7 +170,7 @@ func (s *UserProfile) CloseAccount(ctx context.Context, req *service_pb.EmptyReq
 	// delete listings
 	listingReqFilter := xata.ListingSearchRequest{
 		Filter: xata.ListingSearchFilter{
-			User: &xata.FilterEqualsItem{Is: util.SanitizeEmail(user.Email)},
+			User: &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(user.Email)},
 		},
 	}
 	listingResp := xata.FetchListingsResponse{}
@@ -193,7 +194,7 @@ func (s *UserProfile) CloseAccount(ctx context.Context, req *service_pb.EmptyReq
 	// Delete subscriptions
 	subscriptionsReqFilter := xata.SubscriptionFilterRequest{
 		Filter: xata.SubscriptionSearchFilter{
-			User: &xata.FilterEqualsItem{Is: util.SanitizeEmail(user.Email)},
+			User: &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(user.Email)},
 		},
 	}
 	subscriptionsResp := xata.FetchSubscriptionsResponse{}
@@ -207,7 +208,7 @@ func (s *UserProfile) CloseAccount(ctx context.Context, req *service_pb.EmptyReq
 
 	// Delete user record
 	transactions.Operations = append(transactions.Operations, xata.DeleteTransaction{
-		Delete: xata.DeleteTransactionData{Table: xata.UsersTableName, ID: util.SanitizeEmail(user.Email)},
+		Delete: xata.DeleteTransactionData{Table: xata.UsersTableName, ID: commonUtil.SanitizeEmail(user.Email)},
 	})
 
 	postBody, err := json.Marshal(transactions)

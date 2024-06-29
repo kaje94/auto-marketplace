@@ -8,6 +8,7 @@
     "reset": "nx reset",
     "dev": "nx run-many --parallel --target=dev --projects=service,targabay-webapp",
     "dev:service": "nx serve service",
+    "dev:handle-expired-job": "nx dev handle-expired-job",
     "dev:webapp": "nx dev targabay-webapp",
     "start:webapp": "nx start targabay-webapp",
     "lint": "pnpm -r lint",
@@ -16,6 +17,7 @@
     "format-rest": "npx prettier --ignore-path .gitignore --write \"**/*.{css,md,json,yml}\" \"!package-lock.json\" --print-width 150 --tab-width 4",
     "build:protos": "nx build protos",
     "build:service": "nx build service",
+    "build:handle-expired-jon": "nx build handle-expired-job",
     "build:webapp": "nx build targabay-webapp",
     "pulumi-up": "nx deploy targabay-pulumi"
   },
