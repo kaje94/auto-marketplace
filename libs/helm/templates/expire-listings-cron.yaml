@@ -1,20 +1,20 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ .Values.handleExpiredJob.appName }}
+  name: {{ .Values.expireListingsJob.appName }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Values.handleExpiredJob.appName }}
+    app: {{ .Values.expireListingsJob.appName }}
 spec:
-  schedule: "{{ .Values.handleExpiredJob.cronExpression }}"
+  schedule: "{{ .Values.expireListingsJob.cronExpression }}"
   concurrencyPolicy: Forbid  # Optional, prevents concurrent executions (recommended)
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: {{ .Values.handleExpiredJob.appName }}
-            image: "{{ .Values.handleExpiredJob.image.name }}:{{ .Values.handleExpiredJob.image.version }}"
+          - name: {{ .Values.expireListingsJob.appName }}
+            image: "{{ .Values.expireListingsJob.image.name }}:{{ .Values.expireListingsJob.image.version }}"
             envFrom:
             - configMapRef:
                 name: {{ .Values.configmapName }}

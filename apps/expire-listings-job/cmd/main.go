@@ -1,7 +1,7 @@
 package main
 
 import (
-	"handle-expired/internal"
+	"expire-listings/internal"
 )
 
 func main() {

@@ -16,8 +16,9 @@ USER root:root
 
 # Copy core files
 COPY package.json nx.json pnpm-* go.* ./
-COPY apps/service/go.* apps/service/
-COPY apps/handle-expired-job/go.* apps/handle-expired-job/
+COPY apps/expire-listings-job/go.* apps/expire-listings-job/
+COPY apps/api-service/go.* apps/api-service/
+COPY apps/subscriptions-job apps/subscriptions-job
 COPY libs/go-utils libs/go-utils
 COPY libs/protos libs/protos
 
@@ -25,12 +26,12 @@ COPY libs/protos libs/protos
 RUN devbox run pnpm install --frozen-lockfile
 RUN devbox run go mod download
 
-# Copy the go service source directory
-COPY apps/service apps/service
+# Copy the go expire-listings-job source directory
+COPY apps/expire-listings-job apps/expire-listings-job
 
-# Build go service
+# Build go expire-listings-job
 ENV CGO_ENABLED 0
 ENV GOOS linux
 
-# Run service in dev mode
-CMD ["devbox", "run", "pnpm", "dev:service"]
+# Run expire-listings-job in dev mode
+CMD ["devbox", "run", "pnpm", "dev:expire-listings-job"]

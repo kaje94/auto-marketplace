@@ -16,8 +16,9 @@ USER root:root
 
 # Copy core files
 COPY package.json nx.json pnpm-* go.* ./
-COPY apps/handle-expired-job/go.* apps/handle-expired-job/
-COPY apps/service apps/service
+COPY apps/subscriptions-job/go.* apps/subscriptions-job/
+COPY apps/api-service apps/api-service
+COPY apps/expire-listings-job apps/expire-listings-job
 COPY libs/go-utils libs/go-utils
 COPY libs/protos libs/protos
 
@@ -25,13 +26,13 @@ COPY libs/protos libs/protos
 RUN devbox run pnpm install --frozen-lockfile
 RUN devbox run go mod download
 
-# Copy the go handle-expired-job source directory
-COPY apps/handle-expired-job apps/handle-expired-job
+# Copy the go subscriptions-job source directory
+COPY apps/subscriptions-job apps/subscriptions-job
 
-# Build go handle-expired-job
+# Build go subscriptions-job
 ENV CGO_ENABLED 0
 ENV GOOS linux
-RUN devbox run go build -o apps/handle-expired-job/bin/handle-expired-job apps/handle-expired-job/cmd/main.go
+RUN devbox run go build -o apps/subscriptions-job/bin/subscriptions-job apps/subscriptions-job/cmd/main.go
 
 ###############
 ## Run stage ##
@@ -39,5 +40,5 @@ RUN devbox run go build -o apps/handle-expired-job/bin/handle-expired-job apps/h
 
 # Deploy the application binary into a lean image
 FROM cgr.dev/chainguard/static:latest AS run-stage
-COPY --from=build-stage /code/apps/handle-expired-job/bin/handle-expired-job .
-ENTRYPOINT ["./handle-expired-job"]
+COPY --from=build-stage /code/apps/subscriptions-job/bin/subscriptions-job .
+ENTRYPOINT ["./subscriptions-job"]

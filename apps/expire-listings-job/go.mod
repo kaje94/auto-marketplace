@@ -1,4 +1,4 @@
-module handle-expired
+module expire-listings
 
 go 1.21.0
 

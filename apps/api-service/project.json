@@ -1,15 +1,15 @@
 {
-    "name": "handle-expired-job",
+    "name": "api-service",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "sourceRoot": "apps/handle-expired-job",
+    "sourceRoot": "apps/api-service",
     "tags": [],
     "targets": {
       "build": {
         "executor": "@nx-go/nx-go:build",
         "options": {
           "main": "{projectRoot}/cmd/main.go",
-          "outputPath": "{projectRoot}/bin/handle-expired-job"
+          "outputPath": "{projectRoot}/bin/api-service"
         }
       },
       "serve": {

@@ -9,14 +9,20 @@ dev_mode = 'dev' in config.parse()
 
 # Common properties for docker_build
 common_only = ['devbox.json','devbox.lock','package.json','nx.json','pnpm-lock.yaml','pnpm-workspace.yaml','./libs/protos']
+go_common_only = ['./apps/api-service/','./libs/go-utils/','./apps/expire-listings-job/','./apps/subscriptions-job/','go.work','go.work.sum']
 common_ignore = ['node_modules']
 webapp_build_args = {
     'NEXT_PUBLIC_SUPPORT_EMAIL': os.getenv('NEXT_PUBLIC_SUPPORT_EMAIL', 'support@taragabay.com'),
 }
 api_resource_name = 'api-service'
 api_resource_image_name = 'kajendranalagaratnam/targabay-api-service'
-handle_expired_resource_name = 'handle-expired-job'
-handle_expired_resource_image_name = 'kajendranalagaratnam/targabay-handle-expired-job'
+expire_listings_job_resource_name = 'expire-listings-job'
+expire_listings_job_resource_image_name = 'kajendranalagaratnam/targabay-expire-listings-job'
+subscriptions_job_daily_resource_name = 'subscriptions-daily-job'
+subscriptions_job_weekly_resource_name = 'subscriptions-weekly-job'
+subscriptions_job_every_2_weeks_resource_name = 'subscriptions-every-2-weeks-job'
+subscriptions_job_monthly_resource_name = 'subscriptions-monthly-job'
+subscriptions_job_resource_image_name = 'kajendranalagaratnam/targabay-subscriptions-job'
 webapp_resource_name = 'webapp'
 webapp_resource_image_name = 'kajendranalagaratnam/targabay-webapp'
 webapp_resource_port = '3000'
@@ -25,15 +31,22 @@ webapp_resource_port = '3000'
 docker_build(
     api_resource_image_name,
     context='.',
-    dockerfile='apps/service/Dockerfile.dev' if dev_mode else 'apps/service/Dockerfile',
-    only=common_only + ['./apps/service/','./libs/go-utils/','./apps/handle-expired-job/','go.work','go.work.sum'],
+    dockerfile='apps/api-service/Dockerfile.dev' if dev_mode else 'apps/api-service/Dockerfile',
+    only=common_only + go_common_only,
     ignore=common_ignore,
 )
 docker_build(
-    handle_expired_resource_image_name,
+    expire_listings_job_resource_image_name,
     context='.',
-    dockerfile='apps/handle-expired-job/Dockerfile.dev' if dev_mode else 'apps/handle-expired-job/Dockerfile',
-    only=common_only + ['./apps/service/','./libs/go-utils/','./apps/handle-expired-job/','go.work','go.work.sum'],
+    dockerfile='apps/expire-listings-job/Dockerfile.dev' if dev_mode else 'apps/expire-listings-job/Dockerfile',
+    only=common_only + go_common_only,
+    ignore=common_ignore,
+)
+docker_build(
+    subscriptions_job_resource_image_name,
+    context='.',
+    dockerfile='apps/subscriptions-job/Dockerfile.dev' if dev_mode else 'apps/subscriptions-job/Dockerfile',
+    only=common_only + go_common_only,
     ignore=common_ignore,
 )
 docker_build(
@@ -73,8 +86,13 @@ env_keys = [
 arg_keys_values = []
 arg_keys_values.append(["apiService.appName", api_resource_name])
 arg_keys_values.append(["apiService.image.name", api_resource_image_name])
-arg_keys_values.append(["handleExpiredJob.appName", handle_expired_resource_name])
-arg_keys_values.append(["handleExpiredJob.image.name", handle_expired_resource_image_name])
+arg_keys_values.append(["expireListingsJob.appName", expire_listings_job_resource_name])
+arg_keys_values.append(["expireListingsJob.image.name", expire_listings_job_resource_image_name])
+arg_keys_values.append(["subscriptionsJob.daily.appName", subscriptions_job_daily_resource_name])
+arg_keys_values.append(["subscriptionsJob.weekly.appName", subscriptions_job_weekly_resource_name])
+arg_keys_values.append(["subscriptionsJob.every2weeks.appName", subscriptions_job_every_2_weeks_resource_name])
+arg_keys_values.append(["subscriptionsJob.monthly.appName", subscriptions_job_monthly_resource_name])
+arg_keys_values.append(["subscriptionsJob.image.name", subscriptions_job_resource_image_name])
 arg_keys_values.append(["webApp.appName", webapp_resource_name])
 arg_keys_values.append(["webApp.image.name", webapp_resource_image_name])
 arg_keys_values.append(["webApp.port", webapp_resource_port])
@@ -96,5 +114,9 @@ watch_file('libs/helm')
 
 # k8s_resource allows customization where necessary such as adding port forwards and labels
 k8s_resource(webapp_resource_name, port_forwards=webapp_resource_port, labels=[webapp_resource_name])
-k8s_resource(api_resource_name, labels=['go-api'])
-k8s_resource(handle_expired_resource_name, labels=['handle-expired'])
+k8s_resource(api_resource_name, labels=['api-service'])
+k8s_resource(expire_listings_job_resource_name, labels=['expire-listings-job'])
+k8s_resource(subscriptions_job_daily_resource_name, labels=['subscription-jobs'])
+k8s_resource(subscriptions_job_weekly_resource_name, labels=['subscription-jobs'])
+k8s_resource(subscriptions_job_every_2_weeks_resource_name, labels=['subscription-jobs'])
+k8s_resource(subscriptions_job_monthly_resource_name, labels=['subscription-jobs'])

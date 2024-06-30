@@ -16,8 +16,9 @@ USER root:root
 
 # Copy core files
 COPY package.json nx.json pnpm-* go.* ./
-COPY apps/service/go.* apps/service/
-COPY apps/handle-expired-job apps/handle-expired-job
+COPY apps/api-service/go.* apps/api-service/
+COPY apps/expire-listings-job apps/expire-listings-job
+COPY apps/subscriptions-job apps/subscriptions-job
 COPY libs/go-utils libs/go-utils
 COPY libs/protos libs/protos
 
@@ -26,12 +27,12 @@ RUN devbox run pnpm install --frozen-lockfile
 RUN devbox run go mod download
 
 # Copy the go service source directory
-COPY apps/service apps/service
+COPY apps/api-service apps/api-service
 
 # Build go service
 ENV CGO_ENABLED 0
 ENV GOOS linux
-RUN devbox run go build -o apps/service/bin/service apps/service/cmd/main.go
+RUN devbox run go build -o apps/api-service/bin/api-service apps/api-service/cmd/main.go
 
 ###############
 ## Run stage ##
@@ -39,5 +40,5 @@ RUN devbox run go build -o apps/service/bin/service apps/service/cmd/main.go
 
 # Deploy the application binary into a lean image
 FROM cgr.dev/chainguard/static:latest AS run-stage
-COPY --from=build-stage /code/apps/service/bin/service .
-ENTRYPOINT ["./service"]
+COPY --from=build-stage /code/apps/api-service/bin/api-service .
+ENTRYPOINT ["./api-service"]

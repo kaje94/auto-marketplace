@@ -40,7 +40,7 @@ help
 docker login 
 
 // service
-docker build -f apps/service/Dockerfile -t kajendranalagaratnam/targabay-api-service .
+docker build -f apps/api-service/Dockerfile -t kajendranalagaratnam/targabay-api-service .
 docker push kajendranalagaratnam/targabay-api-service:latest
 
 // webapp

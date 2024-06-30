@@ -1,15 +1,15 @@
 {
-    "name": "service",
+    "name": "expire-listings-job",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "sourceRoot": "apps/service",
+    "sourceRoot": "apps/expire-listings-job",
     "tags": [],
     "targets": {
       "build": {
         "executor": "@nx-go/nx-go:build",
         "options": {
           "main": "{projectRoot}/cmd/main.go",
-          "outputPath": "{projectRoot}/bin/service"
+          "outputPath": "{projectRoot}/bin/expire-listings-job"
         }
       },
       "serve": {

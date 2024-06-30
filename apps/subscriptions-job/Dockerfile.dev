@@ -16,8 +16,9 @@ USER root:root
 
 # Copy core files
 COPY package.json nx.json pnpm-* go.* ./
-COPY apps/handle-expired-job/go.* apps/handle-expired-job/
-COPY apps/service/go.* apps/service/
+COPY apps/subscriptions-job/go.* apps/subscriptions-job/
+COPY apps/api-service/go.* apps/api-service/
+COPY apps/expire-listings-job/go.* apps/expire-listings-job/
 COPY libs/go-utils libs/go-utils
 COPY libs/protos libs/protos
 
@@ -25,12 +26,12 @@ COPY libs/protos libs/protos
 RUN devbox run pnpm install --frozen-lockfile
 RUN devbox run go mod download
 
-# Copy the go handle-expired-job source directory
-COPY apps/handle-expired-job apps/handle-expired-job
+# Copy the go subscriptions-job source directory
+COPY apps/subscriptions-job apps/subscriptions-job
 
-# Build go handle-expired-job
+# Build go subscriptions-job
 ENV CGO_ENABLED 0
 ENV GOOS linux
 
-# Run handle-expired-job in dev mode
-CMD ["devbox", "run", "pnpm", "dev:handle-expired-job"]
+# Run subscriptions-job in dev mode
+CMD ["devbox", "run", "pnpm", "dev:subscriptions-job"]
