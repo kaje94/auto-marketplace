@@ -20,7 +20,7 @@ expireListingsJob:
   cronExpression: '0 0 * * *'
   image:
     name: kajendranalagaratnam/targabay-expire-listings-job
-    version: 0.0.1
+    version: 0.0.7
 subscriptionsJob:
   appName: subscriptions-job
   daily:
