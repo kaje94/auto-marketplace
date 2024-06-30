@@ -1,7 +1,5 @@
-import { PartialMessage } from "@bufbuild/protobuf";
-import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { z } from "zod";
-import { ListingStatusTypes, NotificationTypes, SubscriptionFrequencies, VehicleConditionTypes, VehicleTypes } from "./enum";
+import { NotificationTypes } from "./enum";
 import {
     AdminListingsFilterSchema,
     AdminSubscriptionsFilterSchema,

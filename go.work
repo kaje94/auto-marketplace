@@ -3,6 +3,7 @@ go 1.21.0
 use (
 	./apps/service
     ./apps/handle-expired-job
+    ./apps/subscriptions-job
     ./libs/go-utils
     ./libs/protos/gen/go
 )

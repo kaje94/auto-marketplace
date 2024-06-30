@@ -102,7 +102,7 @@ func (s *UserListings) DeleteListing(ctx context.Context, req *service_pb.IdRequ
 		return nil, err
 	}
 
-	images, err := util.TransformStrToListingImages(listingRecord.VehicleImages)
+	images, err := commonUtil.TransformStrToListingImages(listingRecord.VehicleImages)
 	if err != nil {
 		return nil, err
 	}

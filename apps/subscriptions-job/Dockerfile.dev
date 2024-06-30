@@ -1,0 +1,36 @@
+###############
+# Run in Dev  #
+###############
+
+# Using devbox as base build image
+FROM jetpackio/devbox:latest AS build-stage
+
+# Installing your devbox project
+WORKDIR /code
+RUN mkdir -p /code && chown ${DEVBOX_USER}:${DEVBOX_USER} /code
+USER ${DEVBOX_USER}:${DEVBOX_USER}
+COPY --chown=${DEVBOX_USER}:${DEVBOX_USER} devbox.json devbox.json
+COPY --chown=${DEVBOX_USER}:${DEVBOX_USER} devbox.lock devbox.lock
+RUN devbox install
+USER root:root
+
+# Copy core files
+COPY package.json nx.json pnpm-* go.* ./
+COPY apps/handle-expired-job/go.* apps/handle-expired-job/
+COPY apps/service/go.* apps/service/
+COPY libs/go-utils libs/go-utils
+COPY libs/protos libs/protos
+
+# Install dependencies
+RUN devbox run pnpm install --frozen-lockfile
+RUN devbox run go mod download
+
+# Copy the go handle-expired-job source directory
+COPY apps/handle-expired-job apps/handle-expired-job
+
+# Build go handle-expired-job
+ENV CGO_ENABLED 0
+ENV GOOS linux
+
+# Run handle-expired-job in dev mode
+CMD ["devbox", "run", "pnpm", "dev:handle-expired-job"]

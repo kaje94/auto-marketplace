@@ -21,6 +21,16 @@
             "program": "${workspaceFolder}/apps/handle-expired-job/cmd/main.go",
             "console": "integratedTerminal",
             "envFile": "${workspaceFolder}/.env",
+        },
+        {
+            "name": "Go subscriptions job debug",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/apps/subscriptions-job/cmd/main.go",
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env",
+            "args": ["Daily"]
         }
     ]
 }

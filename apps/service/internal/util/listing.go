@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
-	"sort"
 	"strconv"
 	"strings"
 	service_pb "targabay/protos"
@@ -24,7 +23,7 @@ func TransformXataToListingsResp(xataDaa xata.FetchListingsResponse, totalCount 
 	items := []*service_pb.ListingItem{}
 
 	for _, record := range xataDaa.Records {
-		images, err := TransformStrToListingImages(record.VehicleImages)
+		images, err := commonUtil.TransformStrToListingImages(record.VehicleImages)
 		if err != nil {
 			return nil, err
 		}
@@ -77,7 +76,7 @@ func TransformXataToListingsResp(xataDaa xata.FetchListingsResponse, totalCount 
 }
 
 func TransformXataToListingItemResp(xataDaa xata.ListingRecord, userRecord *xata.UserRecord) (*service_pb.ListingItem, error) {
-	listingImages, err := TransformStrToListingImages(xataDaa.VehicleImages)
+	listingImages, err := commonUtil.TransformStrToListingImages(xataDaa.VehicleImages)
 	if err != nil {
 		return nil, err
 	}
@@ -330,19 +329,6 @@ func TransformListingImagesToStr(VehicleImages []*service_pb.ListingItem_Data_Im
 	}
 
 	return string(listingImagesJSON), nil
-}
-
-func TransformStrToListingImages(imgStr string) ([]*service_pb.ListingItem_Data_Image, error) {
-	listingImages := make([]*service_pb.ListingItem_Data_Image, 0)
-	if err := json.Unmarshal([]byte(imgStr), &listingImages); err != nil {
-		return nil, err
-	}
-
-	sort.SliceStable(listingImages, func(i, j int) bool {
-		return listingImages[i].IsThumbnail
-	})
-
-	return listingImages, nil
 }
 
 func GetListingRecord(listingId string) (xata.ListingRecord, error) {

@@ -183,7 +183,7 @@ message SubscriptionFilters {
     message UserSubscriptionFilters {
         // Active status of the subscriptions. One of active, inactive or empty
         string activeStatus = 1;
-        // Frequency of the notification. One of EveryThreeHours EverySixHours OnceADay OnceAWeek
+        // Frequency of the notification. One of Daily Weekly OnceEveryTwoWeeks Monthly
         string notificationFrequency = 2;
     }
     message AdminSubscriptionFilters {
@@ -229,7 +229,7 @@ message SubscriptionItem {
         float minPrice = 13;
         // Optional min price of the listing. Currency will be associated with user's location
         float maxPrice = 14;
-        // Frequency of the notification. One of EveryThreeHours EverySixHours OnceADay OnceAWeek
+        // Frequency of the notification. One of Daily Weekly OnceEveryTwoWeeks Monthly
         string notificationFrequency = 15;
         // When the notifications subscription is set to expire
         string subscriptionExpiryDate = 16;

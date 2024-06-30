@@ -305,7 +305,7 @@ type SubscriptionRecord struct {
 	Condition              string                `json:"condition,omitempty" validate:"omitempty,oneof=BrandNew Registered Reconditioned"`
 	MinPrice               int                   `json:"minPrice,omitempty" validate:"omitempty,gt=0"`
 	MaxPrice               int                   `json:"maxPrice,omitempty" validate:"omitempty,gt=0"`
-	NotificationFrequency  string                `json:"notificationFrequency,omitempty" validate:"oneof=EveryThreeHours EverySixHours OnceADay OnceAWeek"`
+	NotificationFrequency  string                `json:"notificationFrequency,omitempty" validate:"oneof=Daily Weekly OnceEveryTwoWeeks Monthly"`
 	SubscriptionExpiryDate time.Time             `json:"subscriptionExpiryDate,omitempty"`
 	Active                 bool                  `json:"active,omitempty"`
 	User                   any                   `json:"user,omitempty"`

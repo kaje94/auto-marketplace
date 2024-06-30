@@ -2,7 +2,7 @@ import { Link, Text } from "@react-email/components";
 import { baseUrl } from "./utils/configs";
 import { EmailWrap } from "./components/EmailWrap";
 
-export interface InviteUserEmailProps {
+export interface WelcomeEmailProps {
     userName: string;
     countryCode: string
 }

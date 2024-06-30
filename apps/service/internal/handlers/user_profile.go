@@ -177,7 +177,7 @@ func (s *UserProfile) CloseAccount(ctx context.Context, req *service_pb.EmptyReq
 	util.GetListingsQueryResp(listingReqFilter, &listingResp, util.Xata)
 
 	for _, record := range listingResp.Records {
-		images, err := util.TransformStrToListingImages(record.VehicleImages)
+		images, err := commonUtil.TransformStrToListingImages(record.VehicleImages)
 		if err != nil {
 			return nil, err
 		}

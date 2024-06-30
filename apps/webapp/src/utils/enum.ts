@@ -47,10 +47,10 @@ export enum ListingReportReason {
 }
 
 export enum SubscriptionFrequencies {
-    EveryThreeHours = "EveryThreeHours",
-    EverySixHours = "EverySixHours",
-    OnceADay = "OnceADay",
-    OnceAWeek = "OnceAWeek",
+    Daily = "Daily",
+    Weekly = "Weekly",
+    OnceEveryTwoWeeks = "OnceEveryTwoWeeks",
+    Monthly = "Monthly",
 }
 
 export enum NotificationTypes {

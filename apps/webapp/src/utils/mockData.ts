@@ -145,7 +145,7 @@ export const mockSubscriptionItem: SubscriptionItem = {
         condition: VehicleConditionTypes.BrandNew,
         minPrice: 50000,
         maxPrice: 150000,
-        notificationFrequency: SubscriptionFrequencies.OnceADay,
+        notificationFrequency: SubscriptionFrequencies.Daily,
         subscriptionExpiryDate: "2023-12-30T00:00:00+00:00",
     },
     user: mockProfileData2,
