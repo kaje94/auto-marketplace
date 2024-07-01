@@ -45,7 +45,7 @@ subscriptionsJob:
   # onceAMonthCronExpression: 0 0 1 * *
   image:
     name: kajendranalagaratnam/targabay-subscriptions-job
-    version: 0.0.1
+    version: 0.0.7
 configMap:
   name: tb-config-map
   values:
