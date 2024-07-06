@@ -11,7 +11,6 @@ import { FilterInput as InputController } from "@/components/Filters/FilterFormE
 import { PostedListSearchFilters } from "@/components/Filters/PostedListSearchFilters";
 import { FilterIcon, SearchIcon } from "@/icons";
 import { usePostedListingsContext } from "@/providers/PostedListingsContextProvider";
-import { getYearFromDateString } from "@/utils/helpers";
 import { PublicListingsFilterSchema } from "@/utils/schemas";
 import { PublicListingsFilterReq } from "@/utils/types";
 

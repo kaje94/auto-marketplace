@@ -2,6 +2,7 @@ package xata
 
 import (
 	"bytes"
+	"common/pkg/config"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -51,7 +52,9 @@ func (c *XataClient) Call(method, path string, bodyData *bytes.Buffer, target in
 		return err
 	}
 
-	fmt.Printf("Xata \nReq: %s %s %s, \nResp:%s\n", method, path, reqStr, string(body))
+	if config.Config.EnvName != "prod" {
+		fmt.Printf("Xata \nReq: %s %s %s, \nResp:%s\n", method, path, reqStr, string(body))
+	}
 
 	if resp.StatusCode == 404 {
 		return status.Error(codes.NotFound, codes.NotFound.String())

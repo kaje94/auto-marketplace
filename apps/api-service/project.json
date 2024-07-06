@@ -18,6 +18,12 @@
           "main": "{projectRoot}/cmd/main.go"
         }
       },
+      "start": {
+        "executor": "@nx-go/nx-go:serve",
+        "options": {
+          "main": "{projectRoot}/cmd/main.go"
+        }
+      },
       "dev": {
         "executor": "@nx-go/nx-go:serve",
         "options": {

@@ -8,15 +8,6 @@ show a warning if user is in a different country specially in the my listings pa
 when viewing posted listing details, if not posted, show meaningful error
 add readiness/liveness probes and set max memory requests and limits
 
-emails
-listing taken down - maybe
-listing expire
-subscriptions
-
-crons
-subscription check
-delete old one
-
 separate repo
 crawl/scrap and create
 

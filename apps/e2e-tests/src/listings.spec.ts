@@ -1,5 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
-import { numberWithCommas, unCamelCase } from "./util";
+import { numberWithCommas, unCamelCase, updateIncompleteProfile } from "./util";
 import { newListingItem } from "./constants";
 import { formInputText, formSelectAutocomplete, formSelectOption, formTagSelectOptions, formTextareaText, formUploadImage, login } from "./util";
 
@@ -28,9 +28,9 @@ test.describe("create and manage listing", () => {
     test("create a new listing", async () => {
         await page.getByRole("button", { name: "Post your Advert" }).click();
         await expect(page).toHaveTitle(/Create a New Listing/);
+        await updateIncompleteProfile(page);
         await expect(page.locator(`select[name="vehicle.type"]`)).toBeEnabled();
         await formUploadImage(page, newListingItem.image);
-        await page.waitForTimeout(5000);
         await formSelectOption(page, "vehicle.type", newListingItem.type);
         await formSelectAutocomplete(page, "vehicle.brand", newListingItem.brand);
         await formInputText(page, "vehicle.model", newListingItem.model);
@@ -72,14 +72,12 @@ test.describe("create and manage listing", () => {
     });
 
     test("view and filter my list", async () => {
-        await page.goto("/LK/dashboard/my-listings");
+        await page.goto("/lk/dashboard/my-listings", { waitUntil: "domcontentloaded" });
         await expect(page).toHaveTitle(/My Adverts/);
-
         await expect(page.getByText(newListingItem.model)).toBeVisible();
-
         await page.getByTestId("dashboard-filter").click();
-        await formSelectOption(page, "ListingStatus", "Declined");
-        await page.getByRole("button", { name: "Apply Filters" }).click();
+        await formSelectOption(page, "status", "Declined");
+        await page.getByRole("button", { name: "Apply Filters" }).click({timeout: 15000});
         await expect(page.getByText(newListingItem.model)).not.toBeVisible({ timeout: 15000 });
 
         await page.getByLabel("Filters Applied").click();
@@ -89,24 +87,21 @@ test.describe("create and manage listing", () => {
     });
 
     test("view and filter all list", async () => {
-        await page.goto("/LK/dashboard/listings");
+        await page.goto("/lk/dashboard/listings", { waitUntil: "domcontentloaded" });
         await expect(page).toHaveTitle(/Manage Listing Adverts/);
-
         await page.getByTestId("dashboard-filter").click();
-        await formInputText(page, "query", "some random value");
+        await formInputText(page, "model", "some random value");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newListingItem.model)).not.toBeVisible();
-
+        await page.waitForTimeout(3000);
         await page.getByTestId("dashboard-filter").click();
-        await formInputText(page, "query", newListingItem.model);
+        await formInputText(page, "model", newListingItem.model);
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newListingItem.model)).toBeVisible();
-
         await page.getByTestId("dashboard-filter").click();
-        await formSelectOption(page, "FuelType", "Diesel");
+        await formSelectOption(page, "fuelType", "Diesel");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newListingItem.model)).not.toBeVisible();
-
         await page.getByLabel("Filters Applied").click();
         await page.getByRole("button", { name: "Reset Applied Filters" }).click();
         await expect(page.getByLabel("Filters Applied")).not.toBeVisible();
@@ -114,31 +109,32 @@ test.describe("create and manage listing", () => {
     });
 
     test("revalidate posted listing list cache", async () => {
-        await page.goto("/LK/dashboard/cache-manage");
+        await page.goto("/lk/dashboard/cache-manage");
         await page.getByRole("button", { name: "Revalidate posted listings by country" }).click();
         await page.getByRole("button", { name: "Proceed" }).first().click();
     });
 
     test("search & view newly posted listing", async () => {
-        await page.getByRole("button", { name: "Targabay." }).click();
+        await page.goto("/lk");
         await formInputText(page, "query", newListingItem.brand);
-        await formSelectOption(page, "VehicleType", "Van");
+        await formSelectOption(page, "vehicleType", "Van");
         await page.getByRole("link", { name: "Search" }).click();
-
-        await expect(page.getByRole("button", { name: "Filters" })).toBeVisible();
+        await expect(page.getByRole("button", { name: "Filters Applied" })).toBeVisible();
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
-        await formInputText(page, "query", `${newListingItem.brand} ${newListingItem.model}`);
+        await page.getByRole("button", { name: "Filters Applied" }).click();
+        await formSelectOption(page, "condition", "Registered");
         await page.getByRole("link", { name: "Search" }).click();
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
         await page.getByRole("button", { name: "Filters" }).click();
         await page.getByRole("button", { name: "Reset Applied Filters" }).click();
-        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeVisible();
+        await page.waitForTimeout(3000);
+        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeVisible({ timeout: 20000 });
         await page.getByRole("button", { name: "Filters" }).click();
-        await formSelectOption(page, "FuelType", "Diesel");
+        await formSelectOption(page, "fuelType", "Diesel");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
         await page.getByRole("button", { name: "Filters" }).click();
-        await formSelectOption(page, "FuelType", "Petrol");
+        await formSelectOption(page, "fuelType", "Petrol");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeVisible();
         await page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`).click();
@@ -156,7 +152,7 @@ test.describe("create and manage listing", () => {
     });
 
     test("update & delete listing", async () => {
-        await page.goto("/LK/dashboard/my-listings");
+        await page.goto("/lk/dashboard/my-listings");
         await expect(page).toHaveTitle(/My Adverts/);
         await page.getByText(newListingItem.model).click();
         await expect(page).toHaveTitle(/My Advert Details/);
@@ -186,7 +182,7 @@ const verifyCreatedListingDetails = async (page: Page) => {
 };
 
 const cleanupMyAdverts = async (page: Page) => {
-    await page.goto("/LK/dashboard/my-listings");
+    await page.goto("/lk/dashboard/my-listings", { waitUntil: "domcontentloaded" });
     while (true) {
         await expect(page).toHaveTitle(/My Adverts/, { timeout: 20000 });
         await expect(page.getByText("results found")).toBeVisible({ timeout: 20000 });

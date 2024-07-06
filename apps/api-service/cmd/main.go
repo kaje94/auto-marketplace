@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	port := 50051
+	port := 3001
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		log.Fatalf("failed to listen on port %d: %v", port, err)

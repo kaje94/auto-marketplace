@@ -1,5 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
-import {  unCamelCase } from "./util";
+import { unCamelCase, updateIncompleteProfile } from "./util";
 import { newSubscriptionItem } from "./constants";
 import { formInputText, formSelectAutocomplete, formSelectDate, formSelectOption, login } from "./util";
 
@@ -26,12 +26,12 @@ test.describe("create and manage subscriptions", () => {
     });
 
     test("create a new subscription", async () => {
-        await page.goto("/LK/dashboard/my-subscriptions");
+        await page.goto("/lk/dashboard/my-subscriptions", { waitUntil: "domcontentloaded" });
         await expect(page).toHaveTitle(/My Subscriptions/);
-
         await page.getByRole("button", { name: "New Subscription" }).click();
         await expect(page).toHaveTitle(/Create a Subscription/);
-
+        await updateIncompleteProfile(page);
+        await expect(page.locator(`input[name="displayName"]`)).toBeEnabled();
         await formInputText(page, "displayName", newSubscriptionItem.displayName);
         await formSelectOption(page, "notificationFrequency", newSubscriptionItem.notificationFrequency);
         await formSelectDate(page, "subscriptionExpiryDate");
@@ -54,8 +54,8 @@ test.describe("create and manage subscriptions", () => {
 
     test("verify created subscription", async () => {
         await expect(page).toHaveTitle(/My Subscriptions/);
-        await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible();
-        await expect(page.getByText(`Type: ${newSubscriptionItem.type}`)).toBeVisible();
+        await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible({timeout: 20000});
+        await expect(page.getByText(`Type: ${newSubscriptionItem.type}`).first()).toBeVisible();
         await expect(page.getByText(`Condition: ${unCamelCase(newSubscriptionItem.condition)}`)).toBeVisible();
         await expect(page.getByText(`Model: ${newSubscriptionItem.model}`)).toBeVisible();
         await expect(page.getByText(`Trim: ${newSubscriptionItem.trim}`)).toBeVisible();
@@ -71,14 +71,14 @@ test.describe("create and manage subscriptions", () => {
         await expect(page).toHaveTitle(/My Subscriptions/);
 
         await page.getByTestId("dashboard-filter").click();
-        await formSelectOption(page, "Active", "Inactive");
-        await formSelectOption(page, "NotificationFrequency", "OnceAWeek");
+        await formSelectOption(page, "activeStatus", "Inactive");
+        await formSelectOption(page, "notificationFrequency", "Monthly");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).not.toBeVisible();
 
         await page.getByTestId("dashboard-filter").click();
-        await formSelectOption(page, "Active", "Active");
-        await formSelectOption(page, "NotificationFrequency", "OnceADay");
+        await formSelectOption(page, "activeStatus", "Active");
+        await formSelectOption(page, "notificationFrequency", "Daily");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible();
 
@@ -89,24 +89,24 @@ test.describe("create and manage subscriptions", () => {
     });
 
     test("visible in all list with filters", async () => {
-        await page.goto("/LK/dashboard/subscriptions");
+        await page.goto("/lk/dashboard/subscriptions");
         await expect(page).toHaveTitle(/Manage Subscriptions/);
 
         await page.getByTestId("dashboard-filter").click();
-        await formInputText(page, "UserId", process.env.TEST_ADMIN_ID!);
+        await formInputText(page, "userEmail", process.env.TEST_ADMIN_EMAIL!);
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible();
     });
 
     test("update subscription", async () => {
-        await page.goto("/LK/dashboard/my-subscriptions");
+        await page.goto("/lk/dashboard/my-subscriptions");
         await expect(page).toHaveTitle(/My Subscriptions/);
         await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible();
         await page.locator(".cursor-pointer > path").first().click();
         await page.getByRole("link", { name: "Edit" }).click();
         await expect(page).toHaveTitle(/Edit Subscription/);
         await formInputText(page, "displayName", `${newSubscriptionItem.displayName} updated`);
-        await page.getByRole("button", { name: "Update" }).click();
+        await page.getByRole("button", { name: "Update" }).first().click();
         await expect(page).toHaveTitle(/My Subscriptions/);
         await expect(page.getByText(`${newSubscriptionItem.displayName} updated`, { exact: true })).toBeVisible();
     });
@@ -127,12 +127,12 @@ test.describe("create and manage subscriptions", () => {
         await page.getByTestId("context-menu").first().click();
         await page.getByTestId("context-menu-Delete").first().click();
         await page.getByRole("button", { name: "Delete" }).first().click();
-        await expect(page.getByText(`${newSubscriptionItem.displayName} updated`, { exact: true })).not.toBeVisible();
+        await expect(page.getByText(`${newSubscriptionItem.displayName} updated`, { exact: true })).not.toBeVisible({ timeout: 15000 });
     });
 });
 
 const cleanupMySubscriptions = async (page: Page) => {
-    await page.goto("/LK/dashboard/my-subscriptions");
+    await page.goto("/lk/dashboard/my-subscriptions", { waitUntil: "domcontentloaded" });
     while (true) {
         await expect(page).toHaveTitle(/My Subscriptions/, { timeout: 20000 });
         await expect(page.getByText("results found")).toBeVisible({ timeout: 20000 });

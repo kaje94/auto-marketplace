@@ -87,7 +87,7 @@ export const mockListingItem: ListingItem = {
         fuelType: FuelTypes.Petrol,
         engineCapacity: 3222,
         vehicleImages: [mockVehicleImage1, mockVehicleImage2],
-        features: ["BREAK ASSIST", "AIR CONDITIONING", "ADAPTIVE CRUISE CONTROL", "4-WAY CAMERA"],
+        features: ["Heated Seats", "Park Assist", "Power Mirror"],
         mileage: 2323,
         priceNegotiable: true,
         yearOfManufacture: 2010,

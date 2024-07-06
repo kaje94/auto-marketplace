@@ -130,7 +130,7 @@ export const DashboardAllListFilter: FC<Props> = ({
             <InputController control={control} fieldName="model" label="Model" placeholder="Civic, Sunny, Swift, etc" />
             <SelectController control={control} fieldName="status" label="Status" options={ListingTypeList} placeholder="All status types" />
             <SelectController control={control} fieldName="condition" label="Condition" options={VehicleConditionList} placeholder="All conditions" />
-            <SelectController control={control} fieldName="FuelType" label="Fuel Type" options={FuelTypeList} placeholder="All fuel types" />
+            <SelectController control={control} fieldName="fuelType" label="Fuel Type" options={FuelTypeList} placeholder="All fuel types" />
             <SelectController control={control} fieldName="vehicleType" label="Vehicle Type" options={VehicleTypeList} placeholder="All Types" />
             <SelectController
                 control={control}

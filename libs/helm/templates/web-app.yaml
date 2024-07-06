@@ -25,7 +25,7 @@ spec:
               name: {{ .Values.configmapName }}
           # readinessProbe:
           #   httpGet:
-          #     port: 50051
+          #     port: 3001
           #     path: '/ready'
 ---
 apiVersion: v1

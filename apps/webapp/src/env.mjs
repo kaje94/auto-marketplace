@@ -7,7 +7,7 @@ export const env = createEnv({
      * isn't built with invalid env vars.
      */
     server: {
-        GRPC_API_BASE_URL: z.string().optional().default("http://localhost:50051"),
+        GRPC_API_BASE_URL: z.string().optional().default("http://localhost:3001"),
         AUTH0_SECRET: z.string().min(1),
         AUTH0_BASE_URL: z.string().min(1),
         AUTH0_ISSUER_BASE_URL: z.string().min(1),

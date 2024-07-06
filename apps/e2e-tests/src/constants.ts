@@ -9,7 +9,7 @@ export const userLocationDetails = {
 export const newListingItem = {
     type: "Car",
     image: "sample-vehicle-1.jpg",
-    brand: "Audi",
+    brand: "Acura",
     model: `A8 ${Date.now()}`,
     trim: "Test",
     yearOfManufacture: "2020",
@@ -21,14 +21,14 @@ export const newListingItem = {
     engineCapacity: "1500",
     description: "Listing description",
     price: "1000000",
-    features: ["ADAPTIVE CRUISE CONTROL", "AIR CONDITIONING", "BREAK ASSIST"],
+    features: ["Air Conditioning", "Park Assist", "Reverse Camera"],
 };
 
 export const newSubscriptionItem = {
     displayName: `Subscription ${Date.now()}`,
-    notificationFrequency: "OnceADay",
+    notificationFrequency: "Daily",
     type: "Car",
-    brand: "Audi",
+    brand: "Acura",
     model: "Civic",
     trim: "Sport",
     condition: "BrandNew",

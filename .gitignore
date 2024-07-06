@@ -38,6 +38,7 @@ test-results
 /blob-report/
 /playwright/.cache/
 .env*.local
+dist
 
 # storybook
 storybook-static
@@ -65,3 +66,4 @@ bin
 
 # Devbox
 .devbox
+

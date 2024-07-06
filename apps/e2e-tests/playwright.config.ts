@@ -1,52 +1,47 @@
 import { defineConfig, devices } from "@playwright/test";
-import { config as dotenvConfig } from "dotenv";
-import path from "path";
+import { nxE2EPreset } from "@nx/playwright/preset";
 
-dotenvConfig();
+import { workspaceRoot } from "@nx/devkit";
 
-// Use process.env.PORT by default and fallback to port 3000
-const PORT = process.env.PORT ?? 3000;
+// For CI, you may want to set BASE_URL to the deployed application.
+const baseURL = process.env["BASE_URL"] || "http://localhost:3000";
 
-// Set webServer.url and use.baseURL with the location of the WebServer respecting the correct set port
-const baseURL = `http://localhost:${PORT}`;
+/**
+ * Read environment variables from file.
+ * https://github.com/motdotla/dotenv
+ */
 
-// Reference: https://playwright.dev/docs/test-configuration
+/**
+ * See https://playwright.dev/docs/test-configuration.
+ */
 export default defineConfig({
+    ...nxE2EPreset(__filename, { testDir: "src" }),
     expect: {
-        /**
-         * Maximum time expect() should wait for the condition to be met.
-         * For example in `await expect(locator).toHaveText();`
-         */
-        timeout: 10000,
-    },
-    /* Fail the build on CI if you accidentally left test.only in the source code. */
-    forbidOnly: !!process.env.CI,
-    /* Run tests in files in parallel */
-    fullyParallel: false,
-    // Timeout per test
-    timeout: 30 * 1000,
-    // Test directory
-    testDir: path.join(__dirname, "src"),
-    // Artifacts folder where screenshots, videos, and traces are stored.
-    outputDir: "test-results/",
-    // Run your local dev server before starting the tests:
-    // https://playwright.dev/docs/test-advanced#launching-a-development-web-server-during-the-tests
-    webServer: {
-        command: "cd ../webapp && pnpm start",
-        url: baseURL,
-        timeout: 60 * 1000,
-        reuseExistingServer: !process.env.CI,
-    },
-    /* Opt out of parallel tests on CI. */
-    workers: process.env.CI ? 1 : undefined,
+      /**
+       * Maximum time expect() should wait for the condition to be met.
+       * For example in `await expect(locator).toHaveText();`
+       */
+      timeout: 10000,
+  },
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         baseURL,
-        trace: "retain-on-failure",
+        /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+        trace: "on-first-retry",
         screenshot: "only-on-failure", // Capture screenshot after each test failure.
     },
-    /* Configure projects for major browsers */
+    fullyParallel: false,
+    /* Run your local dev server before starting the tests */
+    webServer: {
+        command: "pnpm run dev",
+        url: "http://localhost:3000",
+        timeout: 60 * 1000,
+        reuseExistingServer: !process.env.CI,
+        cwd: workspaceRoot,
+    },
+    /* Opt out of parallel tests on CI. */
+    workers: 1,
+    timeout: 30 * 1000,
     projects: [{ name: "firefox", use: { ...devices["Desktop Firefox"] } }],
-    /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: "list",
 });

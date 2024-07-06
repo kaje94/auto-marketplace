@@ -32,7 +32,7 @@ ARG NEXT_PUBLIC_SUPPORT_EMAIL
 # Set args as public env variables
 ENV NEXT_PUBLIC_SUPPORT_EMAIL=$NEXT_PUBLIC_SUPPORT_EMAIL
 # Private temporary env variables (Will be overriden during runtime via runtime variables)
-ENV GRPC_API_BASE_URL 'http://localhost:50051'
+ENV GRPC_API_BASE_URL 'http://localhost:3001'
 ENV AUTH0_BASE_URL 'http://localhost:3000'
 # Skip rest of the env validations
 ENV SKIP_ENV_VALIDATION true

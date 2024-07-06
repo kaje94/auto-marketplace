@@ -41,7 +41,7 @@ export const formSelectDate = async (page: Page, fieldName: string) => {
 export const login = async (page: Page) => {
     expect(process.env.TEST_ADMIN_EMAIL!).toBeTruthy();
     expect(process.env.TEST_ADMIN_PASSWORD!).toBeTruthy();
-    await page.goto("/LK/");
+    await page.goto("/lk/");
     await expect(page).toHaveTitle(/Targabay/);
     const profilePicVisible = await page.getByTestId("profile-image").isVisible();
     if (!profilePicVisible) {
@@ -51,6 +51,12 @@ export const login = async (page: Page) => {
         await page.getByLabel("Email address").fill(process.env.TEST_ADMIN_EMAIL!);
         await page.getByLabel("Password").fill(process.env.TEST_ADMIN_PASSWORD!);
         await page.getByRole("button", { name: "Continue", exact: true }).click();
+
+        const acceptButtonVisible = await page.getByRole("button", { name: "Accept" }).isVisible();
+        if (acceptButtonVisible) {
+            await page.getByRole("button", { name: "Accept" }).click();
+        }
+
         await expect(page).toHaveTitle(/Targabay/);
         await page.waitForSelector('img[alt="profile-image"]', { timeout: 20000 });
     }
@@ -70,4 +76,21 @@ export const unCamelCase = (str: string = "") => {
             ?.trim();
     }
     return str;
+};
+
+export const updateIncompleteProfile = async (page: Page) => {
+    const isIncompleteProfile = await page.getByText("Incomplete Profile").isVisible();
+    if (isIncompleteProfile) {
+        await page.getByRole("button", { name: "Update Profile" }).first().click();
+        await updateProfileForm(page);
+        await expect(page.getByText("Incomplete Profile")).toHaveCount(0);
+    }
+};
+
+export const updateProfileForm = async (page: Page, newPostalCode = Math.round(Math.random() * (5000 - 1000) + 1000).toString()) => {
+    await formSelectAutocomplete(page, "address.state", "Jaffna District");
+    await formInputText(page, "address.city", "Jaffna City");
+    await formInputText(page, "phoneNumber", "1234567");
+    await formInputText(page, "address.postalCode", newPostalCode);
+    await page.getByRole("button", { name: "Update" }).last().click();
 };

@@ -19,13 +19,13 @@ spec:
         - name: go-service-container
           image: "{{ .Values.apiService.image.name }}:{{ .Values.apiService.image.version }}"
           ports:
-            - containerPort: 50051
+            - containerPort: 3001
           envFrom:
           - configMapRef:
               name: {{ .Values.configmapName }}
           # readinessProbe:
           #   httpGet:
-          #     port: 50051
+          #     port: 3001
           #     path: '/ready'
 ---
 apiVersion: v1
@@ -39,4 +39,4 @@ spec:
   ports:
     - protocol: TCP
       port: {{ .Values.apiService.port }}
-      targetPort: 50051
+      targetPort: 3001

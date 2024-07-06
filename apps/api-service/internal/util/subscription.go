@@ -18,7 +18,7 @@ import (
 )
 
 func VerifySubscriptionAccessible(user auth.User, subscriptionRecord xata.SubscriptionRecord) error {
-	if !user.IsAdmin && subscriptionRecord.User != commonUtil.SanitizeEmail(user.Email) {
+	if !user.IsAdmin && subscriptionRecord.User.(map[string]interface{})["id"].(string) != commonUtil.SanitizeEmail(user.Email) {
 		return status.Error(codes.PermissionDenied, "Only authors and admins are allowed to access this record")
 	}
 	return nil
