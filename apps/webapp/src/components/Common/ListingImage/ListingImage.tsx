@@ -12,6 +12,8 @@ interface Props extends Omit<ImageProps, "src" | "alt"> {
     image?: VehicleImageType;
     /** Location details of the listing will be used for SEO */
     location: Location;
+    /** Show error if unable to load image */
+    showHasError?: boolean;
     /** Title of the listing will also be used for SEO */
     title: string;
 }
@@ -21,7 +23,7 @@ interface Props extends Omit<ImageProps, "src" | "alt"> {
  * This component will also handle image load failures and show an error icon.
  * A placeholder image will also be displayed while the actual image is loaded.
  */
-export const ListingImage: FC<Props> = ({ image, width = 640, quality = 75, title, location, ...rest }) => {
+export const ListingImage: FC<Props> = ({ image, width = 640, quality = 75, title, onError, location, showHasError = true, ...rest }) => {
     const [blurDataURL, setBlurDataURL] = useState<string | undefined>("");
     const [hasError, setHasError] = useState(false);
 
@@ -47,7 +49,7 @@ export const ListingImage: FC<Props> = ({ image, width = 640, quality = 75, titl
                 onError={() => setHasError(true)}
                 {...rest}
             />
-            {hasError && (
+            {hasError && showHasError && (
                 <div className="absolute flex flex-col items-center justify-center gap-2 opacity-75">
                     <AlertCircleIcon height={(width as number) * 0.2} width={(width as number) * 0.2} />
                     <span className="font-semibold" style={{ fontSize: (width as number) * 0.05 }}>

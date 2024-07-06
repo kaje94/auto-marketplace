@@ -72,7 +72,7 @@ export const getPublicListingsAction = async (reqBody: PartialMessage<GetPublicL
         [apiTags.getPostedListings()],
         {
             tags: [apiTags.getPostedListings(), apiTags.getPostedListingsByCountry(reqBody.filters?.publicFilters?.countryCode!)],
-            revalidate: revalidationTime.oneDay,
+            revalidate: revalidationTime.fifteenMins,
         },
     );
     const response = await getPublicListings(reqBody);

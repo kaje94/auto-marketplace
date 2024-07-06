@@ -26,7 +26,7 @@ const RelatedListingsCarouselWithData: FC<{ itemDetails: ListingItem }> = async 
             items={relatedListingsRes.items}
             viewMore={{
                 title: "View More",
-                subTitle: `View advertisements that are similar to ${listingTitle}`,
+                subTitle: listingTitle ? `View advertisements that are similar to ${listingTitle}` : "View similar advertisements",
                 link: queryString.stringifyUrl({
                     url: "/search",
                     query: { VehicleType: itemDetails.data?.type, Brand: itemDetails.data?.brand, Model: itemDetails.data?.model },

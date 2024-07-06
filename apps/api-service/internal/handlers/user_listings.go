@@ -96,6 +96,8 @@ func (s *UserListings) GetUserListings(ctx context.Context, req *service_pb.GetU
 
 	util.AddUserFilter(&jsonData, req.Filters.UserFilters)
 
+	jsonData.Filter.CountryCode = nil
+
 	jsonData.Filter.User = &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(user.Email)}
 
 	listingResp, listingAggrResp, err := util.GetListingsWithTotal(jsonData, util.Xata)

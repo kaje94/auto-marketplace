@@ -14,7 +14,6 @@ import {
     timeAgo,
     unCamelCase,
 } from "@/utils/helpers";
-import { Location } from "@/utils/types";
 
 interface Props {
     /** Whether or not to show the created time in the component */
@@ -41,12 +40,13 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                 {item ? (
                     <ListingImage
                         className={clsx(
-                            "zoomable-image aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear",
+                            "aspect-video w-full bg-base-300 object-cover transition-transform duration-300 ease-linear zoomable-image",
                             loading && "opacity-50",
                         )}
                         height={300}
                         image={image}
                         location={location}
+                        showHasError={false}
                         title={title}
                         width={450}
                     />
@@ -54,7 +54,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     <div className={clsx("aspect-video w-full bg-hero bg-opacity-50", tinted ? "bg-hero" : "bg-base-200")} />
                 )}
 
-                {tinted && <div className="image-hover-tint absolute h-full w-full bg-hero bg-opacity-20 duration-300" />}
+                {tinted && <div className="absolute h-full w-full bg-hero bg-opacity-20 duration-300 image-hover-tint" />}
 
                 <div
                     className={clsx(
@@ -63,7 +63,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     )}
                 >
                     {item ? (
-                        <div className="badge-hover-translucent badge badge-secondary badge-lg font-bold duration-300 image-text-shadow ">
+                        <div className="badge badge-secondary badge-lg font-bold duration-300 badge-hover-translucent image-text-shadow ">
                             {getFormattedCurrency(item?.data?.price, country?.[2]!)}
                         </div>
                     ) : (
@@ -73,7 +73,7 @@ export const ListingItem: FC<Props> = ({ item, detailed = false, loading, tinted
                     {item ? (
                         <div
                             className={clsx(
-                                "badge-hover-translucent line-clamp-2 font-bold text-base-100 duration-300 image-text-shadow",
+                                "line-clamp-2 font-bold text-base-100 duration-300 badge-hover-translucent image-text-shadow",
                                 detailed ? "text-2xl" : "text-xl",
                             )}
                         >

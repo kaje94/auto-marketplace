@@ -60,6 +60,7 @@ func TransformXataToListingsResp(xataDaa xata.FetchListingsResponse, totalCount 
 				Price:              float32(record.Price),
 				PriceNegotiable:    record.PriceNegotiable,
 				VehicleImages:      []*service_pb.ListingItem_Data_Image{thumbnailImage},
+				Embeddings:         record.Ada002,
 			},
 			User: &service_pb.UserProfile{
 				Data: &service_pb.UserProfile_ProfileData{

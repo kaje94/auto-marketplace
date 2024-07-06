@@ -54,7 +54,9 @@ func (s *PublicListings) GetPublicListingItem(ctx context.Context, req *service_
 		return util.TransformXataToListingItemResp(listingRecord, &userRecord)
 	}
 
-	return &service_pb.ListingItem{Id: listingRecord.ID, Status: listingRecord.Status}, nil
+	return &service_pb.ListingItem{Id: listingRecord.ID, Status: listingRecord.Status,
+		User: &service_pb.UserProfile{Data: &service_pb.UserProfile_ProfileData{CountryCode: *listingRecord.CountryCode}},
+		Data: &service_pb.ListingItem_Data{Embeddings: listingRecord.Ada002}}, nil
 }
 
 func (s *PublicListings) GetPublicListings(ctx context.Context, req *service_pb.GetPublicListingsRequest) (*service_pb.GetListingsResponse, error) {

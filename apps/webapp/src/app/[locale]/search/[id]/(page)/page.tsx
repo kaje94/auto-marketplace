@@ -74,10 +74,14 @@ export default async function Page({ params }: ListingIdPathParam & LocalePathPa
         content = (
             <ErrorComponent
                 subTitle={`This advert is only available in ${listingCountry?.[0]}. Please switch to country ${listingCountry?.[0]} in order to view this listing advert`}
-                title={`Item unavailable in ${userCountry?.[0]}`}
+                title={`Listing unavailable in ${userCountry?.[0]}`}
             >
                 <ListingDetailsCountrySelectBtn />
             </ErrorComponent>
+        );
+    } else if (itemDetails.status !== ListingStatusTypes.Posted) {
+        content = (
+            <ErrorComponent subTitle={`This listing advert has been marked as '${unCamelCase(itemDetails.status)}'`} title={`Listing Unavailable`} />
         );
     } else {
         content = <ListingDetails itemDetails={itemDetails} loggedInUser={{ email: session?.user?.email, isAdmin: session?.user?.isAdmin }} />;
@@ -86,7 +90,7 @@ export default async function Page({ params }: ListingIdPathParam & LocalePathPa
     return (
         <>
             <BreadCrumbs
-                currentPageTitle={listingTitle}
+                currentPageTitle={itemDetails.status === ListingStatusTypes.Posted ? listingTitle : "Listing Unavailable"}
                 links={[
                     { href: "/", title: "Home" },
                     { href: "/search", title: "Search" },

@@ -238,7 +238,7 @@ export const apiTags = {
     getFeatureListingsByCountry: (countryCode: string) => `get-featured-listings-country-${countryCode}-${tagVersion}`,
     getPostedListings: () => `get-posted-listings-${tagVersion}`,
     getPostedListingsByCountry: (countryCode: string) => `get-posted-listings-country-${countryCode}-${tagVersion}`,
-    getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}-${tagVersion}`,
+    getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-v11-${id}-${tagVersion}`,
     getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}-${tagVersion}`,
     getListings: () => `get-admin-listings-${tagVersion}`,
     getMyListings: (userEmail: string) => `get-my-listings-${userEmail}-${tagVersion}`,
@@ -272,6 +272,8 @@ export const subscriptionApiTags = (id: ListingSubscriptionIdType, userEmail: st
 
 export const revalidationTime = {
     noCache: false,
+    fiveMins: 60 * 5,
+    temMins: 60 * 10,
     fifteenMins: 60 * 15,
     thirtyMins: 60 * 30,
     oneHour: 60 * 60,

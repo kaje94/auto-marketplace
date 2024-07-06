@@ -180,7 +180,7 @@ export const replaceImageUrlWithCdn = (item: ListingItem): ListingItem => {
         ...item,
         data: {
             ...item.data,
-            vehicleImages: (item.data?.vehicleImages.map((imageItem) => {
+            vehicleImages: (item.data?.vehicleImages?.map((imageItem) => {
                 const fileExtension = getFileExtension(imageItem.name);
                 const location = getLocationUserProfile(item?.user!);
                 const title = getListingTitleFromListing(item?.data!);
