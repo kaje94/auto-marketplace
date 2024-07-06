@@ -1,91 +1,31 @@
+{{- range .Values.subscriptionsJob.crons }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ .Values.subscriptionsJob.daily.appName }}
-  namespace: {{ .Values.namespace }}
+  name: {{ .appName }}
+  namespace: {{ $.Values.namespace }}
   labels:
-    app: {{ .Values.subscriptionsJob.daily.appName }}
+    app: {{ .appName }}
 spec:
-  schedule: "{{ .Values.subscriptionsJob.daily.cronExpression }}"
+  schedule: "{{ .cronExpression }}"
   concurrencyPolicy: Forbid  # Optional, prevents concurrent executions (recommended)
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: {{ .Values.subscriptionsJob.daily.appName }}
-            image: "{{ .Values.subscriptionsJob.image.name }}:{{ .Values.subscriptionsJob.image.version }}"
-            args: {{ .Values.subscriptionsJob.daily.args }}
+          - name: {{ .appName }}
+            image: "{{ $.Values.subscriptionsJob.image.name }}:{{ $.Values.subscriptionsJob.image.version }}"
+            args:
+              {{- toYaml .args | nindent 12 }}
             envFrom:
             - configMapRef:
-                name: {{ .Values.configmapName }}
+                name: {{ $.Values.configmapName }}
+            resources:
+              requests:
+                memory: "64Mi"
+              limits:
+                memory: "128Mi"
           restartPolicy: OnFailure
 ---
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: {{ .Values.subscriptionsJob.weekly.appName }}
-  namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Values.subscriptionsJob.weekly.appName }}
-spec:
-  schedule: "{{ .Values.subscriptionsJob.weekly.cronExpression }}"
-  concurrencyPolicy: Forbid  # Optional, prevents concurrent executions (recommended)
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: {{ .Values.subscriptionsJob.weekly.appName }}
-            image: "{{ .Values.subscriptionsJob.image.name }}:{{ .Values.subscriptionsJob.image.version }}"
-            args: {{ .Values.subscriptionsJob.weekly.args }}
-            envFrom:
-            - configMapRef:
-                name: {{ .Values.configmapName }}
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: {{ .Values.subscriptionsJob.every2weeks.appName }}
-  namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Values.subscriptionsJob.every2weeks.appName }}
-spec:
-  schedule: "{{ .Values.subscriptionsJob.every2weeks.cronExpression }}"
-  concurrencyPolicy: Forbid  # Optional, prevents concurrent executions (recommended)
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: {{ .Values.subscriptionsJob.every2weeks.appName }}
-            image: "{{ .Values.subscriptionsJob.image.name }}:{{ .Values.subscriptionsJob.image.version }}"
-            args: {{ .Values.subscriptionsJob.every2weeks.args }}
-            envFrom:
-            - configMapRef:
-                name: {{ .Values.configmapName }}
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: {{ .Values.subscriptionsJob.monthly.appName }}
-  namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Values.subscriptionsJob.monthly.appName }}
-spec:
-  schedule: "{{ .Values.subscriptionsJob.monthly.cronExpression }}"
-  concurrencyPolicy: Forbid  # Optional, prevents concurrent executions (recommended)
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: {{ .Values.subscriptionsJob.monthly.appName }}
-            image: "{{ .Values.subscriptionsJob.image.name }}:{{ .Values.subscriptionsJob.image.version }}"
-            args: {{ .Values.subscriptionsJob.monthly.args }}
-            envFrom:
-            - configMapRef:
-                name: {{ .Values.configmapName }}
-          restartPolicy: OnFailure
+{{- end }}

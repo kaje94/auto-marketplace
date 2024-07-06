@@ -14,16 +14,9 @@ common_ignore = ['node_modules']
 webapp_build_args = {
     'NEXT_PUBLIC_SUPPORT_EMAIL': os.getenv('NEXT_PUBLIC_SUPPORT_EMAIL', 'support@taragabay.com'),
 }
-api_resource_name = 'api-service'
 api_resource_image_name = 'kajendranalagaratnam/targabay-api-service'
-expire_listings_job_resource_name = 'expire-listings-job'
 expire_listings_job_resource_image_name = 'kajendranalagaratnam/targabay-expire-listings-job'
-subscriptions_job_daily_resource_name = 'subscriptions-daily-job'
-subscriptions_job_weekly_resource_name = 'subscriptions-weekly-job'
-subscriptions_job_every_2_weeks_resource_name = 'subscriptions-every-2-weeks-job'
-subscriptions_job_monthly_resource_name = 'subscriptions-monthly-job'
 subscriptions_job_resource_image_name = 'kajendranalagaratnam/targabay-subscriptions-job'
-webapp_resource_name = 'webapp'
 webapp_resource_image_name = 'kajendranalagaratnam/targabay-webapp'
 webapp_resource_port = '3000'
 
@@ -84,16 +77,9 @@ env_keys = [
 
 # Initialize an empty list to hold the --set arguments as key, value turple
 arg_keys_values = []
-arg_keys_values.append(["apiService.appName", api_resource_name])
 arg_keys_values.append(["apiService.image.name", api_resource_image_name])
-arg_keys_values.append(["expireListingsJob.appName", expire_listings_job_resource_name])
 arg_keys_values.append(["expireListingsJob.image.name", expire_listings_job_resource_image_name])
-arg_keys_values.append(["subscriptionsJob.daily.appName", subscriptions_job_daily_resource_name])
-arg_keys_values.append(["subscriptionsJob.weekly.appName", subscriptions_job_weekly_resource_name])
-arg_keys_values.append(["subscriptionsJob.every2weeks.appName", subscriptions_job_every_2_weeks_resource_name])
-arg_keys_values.append(["subscriptionsJob.monthly.appName", subscriptions_job_monthly_resource_name])
 arg_keys_values.append(["subscriptionsJob.image.name", subscriptions_job_resource_image_name])
-arg_keys_values.append(["webApp.appName", webapp_resource_name])
 arg_keys_values.append(["webApp.image.name", webapp_resource_image_name])
 arg_keys_values.append(["webApp.port", webapp_resource_port])
 
@@ -113,10 +99,10 @@ k8s_yaml(local(helm_command))
 watch_file('libs/helm')
 
 # k8s_resource allows customization where necessary such as adding port forwards and labels
-k8s_resource(webapp_resource_name, port_forwards=webapp_resource_port, labels=[webapp_resource_name])
-k8s_resource(api_resource_name, labels=['api-service'])
-k8s_resource(expire_listings_job_resource_name, labels=['expire-listings-job'])
-k8s_resource(subscriptions_job_daily_resource_name, labels=['subscription-jobs'])
-k8s_resource(subscriptions_job_weekly_resource_name, labels=['subscription-jobs'])
-k8s_resource(subscriptions_job_every_2_weeks_resource_name, labels=['subscription-jobs'])
-k8s_resource(subscriptions_job_monthly_resource_name, labels=['subscription-jobs'])
+k8s_resource('webapp', port_forwards=webapp_resource_port, labels=['webapp'])
+k8s_resource('api-service', labels=['api-service'])
+k8s_resource('expire-listings-job', labels=['expire-listings-job'])
+k8s_resource('subscriptions-daily-job', labels=['subscription-jobs'])
+k8s_resource('subscriptions-weekly-job', labels=['subscription-jobs'])
+k8s_resource('subscriptions-every-2-weeks-job', labels=['subscription-jobs'])
+k8s_resource('subscriptions-monthly-job', labels=['subscription-jobs'])

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"net/http"
+	"sync"
 
 	service_pb "targabay/protos"
 	"targabay/service/internal/auth"
@@ -13,6 +15,17 @@ import (
 )
 
 func main() {
+	var wg sync.WaitGroup
+
+	wg.Add(2)
+	go startHealthCheckServer(&wg)
+	go startGRPCServer(&wg)
+
+	wg.Wait()
+}
+
+func startGRPCServer(wg *sync.WaitGroup) {
+	defer wg.Done()
 	port := 3001
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
@@ -35,5 +48,18 @@ func main() {
 	log.Printf("gRPC server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
+	}
+}
+
+func startHealthCheckServer(wg *sync.WaitGroup) {
+	defer wg.Done()
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "Ready")
+	})
+	port := ":3002"
+	log.Printf("Health check server listening at %s", port)
+	if err := http.ListenAndServe(port, nil); err != nil {
+		log.Fatalf("failed to start Health Check server: %v", err)
 	}
 }

@@ -18,4 +18,9 @@ spec:
             envFrom:
             - configMapRef:
                 name: {{ .Values.configmapName }}
+            resources:
+              requests:
+                memory: "64Mi"
+              limits:
+                memory: "128Mi"
           restartPolicy: OnFailure

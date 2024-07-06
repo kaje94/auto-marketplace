@@ -22,30 +22,22 @@ expireListingsJob:
     name: kajendranalagaratnam/targabay-expire-listings-job
     version: 0.0.7
 subscriptionsJob:
-  appName: subscriptions-job
-  daily:
-    appName: subscriptions-daily-job
-    cronExpression: '0 1 * * *'
-    args: ["Daily"]
-  weekly:
-    appName: subscriptions-weekly-job
-    cronExpression: '0 2 * * 0'
-    args: ["Weekly"]
-  every2weeks:
-    appName: subscriptions-every-2-weeks-job
-    cronExpression: '0 3 1,15 * *'
-    args: ["OnceEveryTwoWeeks"]
-  monthly:
-    appName: subscriptions-monthly-job
-    cronExpression: '0 0 1 * *'
-    args: ["Monthly"]
-  # dailyCronExpression: '0 1 * * *'
-  # weeklyCronExpression: '0 2 * * 0'
-  # onceEvery2WeeksCronExpression: '0 3 1,15 * *'
-  # onceAMonthCronExpression: 0 0 1 * *
   image:
     name: kajendranalagaratnam/targabay-subscriptions-job
     version: 0.0.7
+  crons:
+    - appName: subscriptions-daily-job
+      cronExpression: '0 1 * * *'
+      args: ["Daily"]
+    - appName: subscriptions-weekly-job
+      cronExpression: '0 2 * * 0'
+      args: ["Weekly"]
+    - appName: subscriptions-every-2-weeks-job
+      cronExpression: '0 3 1,15 * *'
+      args: ["OnceEveryTwoWeeks"]
+    - appName: subscriptions-monthly-job
+      cronExpression: '0 0 1 * *'
+      args: ["Monthly"]
 configMap:
   name: tb-config-map
   values:
