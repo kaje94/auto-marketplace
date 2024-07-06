@@ -32,6 +32,7 @@ const ListingImageUpload = dynamic(() => import("./ListingImageUpload").then((mo
 });
 
 interface Props {
+    canCreate?: boolean;
     form?: UseFormReturn<CreateListingReq>;
     isLoading?: boolean;
     isMutating?: boolean;
@@ -60,7 +61,17 @@ const DetailsItem = ({ title, value, loading }: { loading?: boolean; title: stri
 
 /** Form used to create or edit listing adverts */
 export const ListingForm: FC<Props> = (props) => {
-    const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, title, profile, isUpdateProfileEnabled = true } = props;
+    const {
+        isMutating,
+        isLoading,
+        form = {},
+        onMutate = () => {},
+        submitButton = {},
+        title,
+        profile,
+        isUpdateProfileEnabled = true,
+        canCreate = true,
+    } = props;
 
     const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "", setValue } = form as UseFormReturn<CreateListingReq>;
     const [profileModalVisible, setProfileModalVisible] = useState(false);
@@ -91,6 +102,8 @@ export const ListingForm: FC<Props> = (props) => {
         }
     };
 
+    const formDisabled = isProfileIncomplete || !canCreate;
+
     return (
         <>
             {!isLoading && isProfileIncomplete && (
@@ -105,6 +118,17 @@ export const ListingForm: FC<Props> = (props) => {
                     </button>
                 </div>
             )}
+            {!isLoading && !canCreate && (
+                <div className="alert alert-warning mb-6 mt-4 shadow-lg md:mt-1">
+                    <AlertCircleIcon />
+                    <div>
+                        <h3 className="font-bold">Maximum number of listings reached</h3>
+                        <div className="text-xs">
+                            You have reached the maximum number of listings allowed to create. Please delete existing listings and try again.
+                        </div>
+                    </div>
+                </div>
+            )}
             <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
                 <div className="grid gap-4 xl:grid-cols-2 xl:gap-7 2xl:gap-8">
                     <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
@@ -112,7 +136,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <div className="stat-title">Key Specifications</div>
                             <SelectController
                                 control={control}
-                                disabled={isProfileIncomplete}
+                                disabled={formDisabled}
                                 fieldName="vehicle.type"
                                 label="Type"
                                 loading={isLoading}
@@ -124,7 +148,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <AutocompleteController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.brand"
                                     label="Brand"
                                     loading={isLoading}
@@ -134,7 +158,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <InputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.model"
                                     label="Model"
                                     loading={isLoading}
@@ -143,7 +167,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <InputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.trim"
                                     label="Trim"
                                     loading={isLoading}
@@ -151,7 +175,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <YearInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.yearOfManufacture"
                                     label="Year of Manufacture"
                                     loading={isLoading}
@@ -160,7 +184,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <YearInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.yearOfRegistration"
                                     label="Year of Registration"
                                     loading={isLoading}
@@ -168,7 +192,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <NumberInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.millage.distance"
                                     inputSuffix={distanceUnit}
                                     label="Mileage"
@@ -178,7 +202,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <SelectController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.condition"
                                     label="Condition"
                                     loading={isLoading}
@@ -189,7 +213,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <SelectController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.transmission"
                                     label="Transmission Type"
                                     loading={isLoading}
@@ -200,7 +224,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <SelectController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.fuelType"
                                     label="Fuel Type"
                                     loading={isLoading}
@@ -211,7 +235,7 @@ export const ListingForm: FC<Props> = (props) => {
                                 />
                                 <NumberInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.engineCapacity"
                                     inputSuffix="CC"
                                     label="Engine Capacity"
@@ -225,7 +249,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <div className="stat-title">Other details</div>
                             <TextAreaController
                                 control={control}
-                                disabled={isProfileIncomplete}
+                                disabled={formDisabled}
                                 fieldName="description"
                                 label="Description"
                                 loading={isLoading}
@@ -247,7 +271,7 @@ export const ListingForm: FC<Props> = (props) => {
                                     name="vehicle.vehicleImages"
                                     render={({ field, fieldState }) => (
                                         <ListingImageUpload
-                                            disabled={isProfileIncomplete}
+                                            disabled={formDisabled}
                                             error={fieldState.error?.message}
                                             files={field.value}
                                             ref={field.ref}
@@ -295,7 +319,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <div className="stat-title">Price Details</div>
                             <NumberInputController
                                 control={control}
-                                disabled={isProfileIncomplete}
+                                disabled={formDisabled}
                                 fieldName="price.amount"
                                 inputPrefix={currencySymbol}
                                 label="Price"
@@ -305,7 +329,7 @@ export const ListingForm: FC<Props> = (props) => {
                             />
                             <CheckboxController
                                 control={control}
-                                disabled={isProfileIncomplete}
+                                disabled={formDisabled}
                                 fieldName="price.isPriceNegotiable"
                                 label="Is the price negotiable?"
                                 loading={isLoading}
@@ -316,7 +340,7 @@ export const ListingForm: FC<Props> = (props) => {
                             <span className="mt-2">
                                 <TagSelectController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="vehicle.featureIds"
                                     loading={isLoading}
                                     loadingPlaceholderCount={20}

@@ -52,7 +52,11 @@ export const getUserListingsAction = async (reqBody: PartialMessage<GetUserListi
     const getUserListings = unstable_cache(
         async (reqBody: PartialMessage<GetUserListingsRequest>, headers: HeadersInit) => {
             const response = await client.getUserListings(reqBody, { headers });
-            return { ...response, items: transformListingsImages((response.toJson() as any as GetListingsResponse).items) };
+            const responseJson = response.toJson();
+            return {
+                ...(responseJson as object),
+                items: transformListingsImages((responseJson as any as GetListingsResponse).items),
+            } as GetListingsResponse;
         },
         [apiTags.getMyListings(userEmail)],
         { tags: [apiTags.getMyListings(userEmail)], revalidate: revalidationTime.oneHour },
@@ -73,6 +77,20 @@ export const getUserListingsItemAction = async (id: string) => {
     );
     const response = await getUserListingItem(id, headers);
     return response;
+};
+
+/** Check whether user is eligible to create a new listing */
+export const getCanCreateListingAction = async (userEmail: string) => {
+    const headers = await getGrpcHeaders();
+    const getCanCreateListing = unstable_cache(
+        async (headers: HeadersInit) => {
+            const response = await client.canCreateListing({}, { headers });
+            return response.value;
+        },
+        [apiTags.getCanCreateListing(userEmail)],
+        { tags: [apiTags.getCanCreateListing(userEmail)], revalidate: revalidationTime.oneHour },
+    );
+    return getCanCreateListing(headers);
 };
 
 /** Renew an expired advert or an advert that is about to be expired */

@@ -126,6 +126,25 @@ type AggregationRequest struct {
 	Aggs Aggr `json:"aggs"`
 }
 
+type SummarizeRequest struct {
+	Summaries CountSummarizeReq   `json:"summaries,omitempty"`
+	Filter    ListingSearchFilter `json:"filter,omitempty"`
+}
+
+type CountSummarizeReq struct {
+	Count struct {
+		Count string `json:"count,omitempty"`
+	} `json:"count,omitempty"`
+}
+
+type CountSummaries struct {
+	Count int `json:"count"`
+}
+
+type CountSummarizeResponse struct {
+	Summaries []CountSummaries `json:"summaries"`
+}
+
 type ListingSearchRequest struct {
 	Query     string                 `json:"query,omitempty"`
 	Filter    ListingSearchFilter    `json:"filter,omitempty"`

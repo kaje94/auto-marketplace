@@ -15,12 +15,13 @@ import { CreateSubscriptionReq } from "@/utils/types";
 import { SubscriptionForm } from "./SubscriptionForm";
 
 interface Props {
+    canCreate?: boolean;
     profile?: PartialMessage<UserProfile>;
     userEmail?: string;
 }
 
 export const CreateSubscriptionForm = (props: Props) => {
-    const { userEmail, profile } = props;
+    const { userEmail, profile, canCreate = true } = props;
     const router = useRouter();
     const params = useParams();
     const countryItem = COUNTRIES[(params.locale as string) || ""];
@@ -102,6 +103,7 @@ export const CreateSubscriptionForm = (props: Props) => {
 
     return (
         <SubscriptionForm
+            canCreate={canCreate}
             countryCurrencySymbol={countryCurrencySymbol}
             distanceUnit={distanceUnit}
             form={form}

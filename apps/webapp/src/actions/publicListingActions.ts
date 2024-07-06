@@ -24,7 +24,11 @@ export const getRelatedListingsAction = async (id: string, countryCode: string, 
     const getRelatedListings = unstable_cache(
         async (id: string) => {
             const response = await client.getRelatedListings({ id, countryCode, embeddings });
-            return { ...response, items: transformListingsImages((response.toJson() as any as GetListingsResponse).items) };
+            const responseJson = response.toJson();
+            return {
+                ...(responseJson as object),
+                items: transformListingsImages((responseJson as any as GetListingsResponse).items),
+            } as GetListingsResponse;
         },
         [apiTags.getRelatedListings(id)],
         { tags: [apiTags.getRelatedListings(id)], revalidate: revalidationTime.threeHours },

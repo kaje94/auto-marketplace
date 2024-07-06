@@ -21,9 +21,11 @@ type awsConfig struct {
 }
 
 type rootConfig struct {
-	EnvName   string
-	WebAppUrl string
-	Xata      xataConfig
-	Auth0     auth0Config
-	AWS       awsConfig
+	EnvName              string
+	MaxUserListings      int
+	MaxUserSubscriptions int
+	WebAppUrl            string
+	Xata                 xataConfig
+	Auth0                auth0Config
+	AWS                  awsConfig
 }

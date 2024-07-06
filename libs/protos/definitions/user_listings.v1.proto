@@ -13,4 +13,5 @@ service UserListingsService {
     rpc DeleteListing(IdRequest) returns (EmptyResponse);
     rpc RenewListing(IdRequest) returns (EmptyResponse);
     rpc UnListListing(UnListListingRequest) returns (EmptyResponse);
+    rpc CanCreateListing(EmptyRequest) returns (BooleanResponse);
 }

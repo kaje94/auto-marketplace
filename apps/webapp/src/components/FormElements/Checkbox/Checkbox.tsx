@@ -21,12 +21,13 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
                 "label rounded-lg border-2 border-opacity-50 py-3 duration-200 hover:bg-base-200 hover:bg-opacity-50",
                 !loading && !disabled && "cursor-pointer",
                 disabled && "cursor-not-allowed opacity-50",
+                loading && "animate-pulse !bg-base-300",
             )}
             onClick={(event) => event.stopPropagation()}
         >
             <span className="label-text mr-1">{label}</span>
             <input
-                className={clsx("checkbox checkbox-md border-2", loading && "animate-pulse !bg-base-300", checkboxClassNames)}
+                className={clsx("checkbox checkbox-md border-2", checkboxClassNames)}
                 disabled={loading || disabled}
                 ref={ref}
                 type="checkbox"

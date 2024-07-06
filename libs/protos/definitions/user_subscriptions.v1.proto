@@ -13,4 +13,5 @@ service UserSubscriptionsService {
     rpc ActivateSubscription(ActivateSubscriptionRequest) returns (EmptyResponse);
     rpc DeactivateSubscription(IdRequest) returns (EmptyResponse);
     rpc GetUserSubscriptions(GetUserSubscriptionsRequest) returns (GetSubscriptionsResponse);
+    rpc CanCreateSubscription(EmptyRequest) returns (BooleanResponse);
 }

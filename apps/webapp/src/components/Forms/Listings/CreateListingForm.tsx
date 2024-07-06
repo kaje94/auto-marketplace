@@ -16,11 +16,12 @@ import { CreateListingSchema } from "@/utils/schemas";
 import { CreateListingReq } from "@/utils/types";
 
 interface Props {
+    canCreate?: boolean;
     profile?: PartialMessage<UserProfile>;
 }
 
 export const CreateListingForm = (props: Props) => {
-    const { profile } = props;
+    const { profile, canCreate = true } = props;
     const router = useRouter();
     const params = useParams();
     const toastId = useRef<string>();
@@ -112,6 +113,7 @@ export const CreateListingForm = (props: Props) => {
 
     return (
         <ListingForm
+            canCreate={canCreate}
             form={form}
             isMutating={isMutating}
             profile={profile}

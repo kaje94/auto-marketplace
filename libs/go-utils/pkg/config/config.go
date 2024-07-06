@@ -3,11 +3,14 @@ package config
 import (
 	"log"
 	"os"
+	"strconv"
 )
 
 var Config = rootConfig{
-	EnvName:   getEnvVariable("ENV_NAME"),
-	WebAppUrl: getEnvVariable("AUTH0_BASE_URL"),
+	EnvName:              getEnvVariable("ENV_NAME"),
+	WebAppUrl:            getEnvVariable("AUTH0_BASE_URL"),
+	MaxUserListings:      getEnvIntVariable("MAX_USER_LISTINGS"),
+	MaxUserSubscriptions: getEnvIntVariable("MAX_USER_SUBSCRIPTIONS"),
 	Xata: xataConfig{
 		ApiKey: getEnvVariable("XATA_API_KEY"),
 		DbUrl:  getEnvVariable("XATA_DATABASE_URL"),
@@ -33,4 +36,17 @@ func getEnvVariable(key string) string {
 		log.Fatalf("env for %s is required", key)
 	}
 	return envVal
+}
+
+func getEnvIntVariable(key string) int {
+	envVal := os.Getenv(key)
+	if envVal == "" {
+		log.Fatalf("env for %s is required", key)
+	}
+	envValInt, err := strconv.Atoi((envVal))
+	if err != nil {
+		log.Fatalf("failed to parse %s into an int", key)
+
+	}
+	return envValInt
 }

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bytes"
+	"common/pkg/config"
 	commonUtil "common/pkg/util"
 	"common/pkg/xata"
 	"context"
@@ -12,6 +13,8 @@ import (
 	"time"
 
 	"github.com/go-playground/validator/v10"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type UserListings struct {
@@ -20,6 +23,15 @@ type UserListings struct {
 
 func (s *UserListings) CreateListing(ctx context.Context, req *service_pb.ListingItem_Data) (*service_pb.CreatedIdResponse, error) {
 	user := util.GetUserContext(ctx)
+
+	canCreate, err := s.CanCreateListing(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if !canCreate.Value {
+		return nil, status.Error(codes.PermissionDenied, "Maximum number of listings reached")
+	}
 
 	userRecord, err := util.GetUserRecord(user.Email)
 	if err != nil {
@@ -272,4 +284,31 @@ func (s *UserListings) UnListListing(ctx context.Context, req *service_pb.UnList
 	}
 
 	return &service_pb.EmptyResponse{}, nil
+}
+
+func (s *UserListings) CanCreateListing(ctx context.Context, req *service_pb.EmptyRequest) (*service_pb.BooleanResponse, error) {
+	user := util.GetUserContext(ctx)
+
+	summarizeCountReq := xata.SummarizeRequest{
+		Filter: xata.ListingSearchFilter{User: &xata.FilterEqualsItem{Is: commonUtil.SanitizeEmail(user.Email)}},
+		Summaries: xata.CountSummarizeReq{
+			Count: struct {
+				Count string "json:\"count,omitempty\""
+			}{Count: "*"},
+		},
+	}
+
+	postBodyList, err := json.Marshal(summarizeCountReq)
+	if err != nil {
+		return nil, err
+	}
+
+	fetchListResp := xata.CountSummarizeResponse{}
+	if err := util.Xata.Call("POST", xata.ListingSummarize, bytes.NewBuffer(postBodyList), &fetchListResp); err != nil {
+		return nil, err
+	}
+
+	canCreate := fetchListResp.Summaries[0].Count < config.Config.MaxUserListings
+
+	return &service_pb.BooleanResponse{Value: canCreate}, nil
 }

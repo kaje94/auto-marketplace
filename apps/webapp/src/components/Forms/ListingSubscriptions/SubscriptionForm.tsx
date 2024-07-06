@@ -17,6 +17,7 @@ import { isIncompleteUserProfile } from "@/utils/helpers";
 import { CreateSubscriptionReq } from "@/utils/types";
 
 interface Props {
+    canCreate?: boolean;
     countryCurrencySymbol?: string;
     distanceUnit?: string;
     form?: UseFormReturn<CreateSubscriptionReq>;
@@ -32,7 +33,17 @@ interface Props {
 }
 
 export const SubscriptionForm: FC<Props> = (props) => {
-    const { isMutating, isLoading, form = {}, onMutate = () => {}, submitButton = {}, countryCurrencySymbol, distanceUnit, profile } = props;
+    const {
+        isMutating,
+        isLoading,
+        form = {},
+        onMutate = () => {},
+        submitButton = {},
+        countryCurrencySymbol,
+        distanceUnit,
+        profile,
+        canCreate = true,
+    } = props;
     const { handleSubmit, formState: { isDirty } = {}, control, watch = (_: string) => "" } = form as UseFormReturn<CreateSubscriptionReq>;
     const [profileModalVisible, setProfileModalVisible] = useState(false);
     const maxYearOfManufacture = watch("maxYearOfManufacture");
@@ -51,6 +62,8 @@ export const SubscriptionForm: FC<Props> = (props) => {
         addOptimisticProfile(data);
     };
 
+    const formDisabled = isProfileIncomplete || !canCreate;
+
     return (
         <>
             {!isLoading && isProfileIncomplete && (
@@ -65,6 +78,18 @@ export const SubscriptionForm: FC<Props> = (props) => {
                     </button>
                 </div>
             )}
+            {!isLoading && !canCreate && (
+                <div className="alert alert-warning mb-6 mt-4 shadow-lg md:mt-1">
+                    <AlertCircleIcon />
+                    <div>
+                        <h3 className="font-bold">Maximum number of subscriptions reached</h3>
+                        <div className="text-xs">
+                            You have reached the maximum number of subscriptions allowed to create. Please delete existing subscriptions and try
+                            again.
+                        </div>
+                    </div>
+                </div>
+            )}
             <form onSubmit={handleSubmit ? handleSubmit((values) => onMutate(values)) : undefined}>
                 <div className="grid gap-4 xl:grid-cols-2 xl:gap-7 2xl:gap-8">
                     <div className="flex flex-col gap-4 xl:gap-7 2xl:gap-8">
@@ -72,7 +97,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="stat-title">Subscription Configurations</div>
                             <InputController
                                 control={control}
-                                disabled={isProfileIncomplete}
+                                disabled={formDisabled}
                                 fieldName="displayName"
                                 label="Display Name"
                                 loading={isLoading}
@@ -82,7 +107,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <SelectController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="notificationFrequency"
                                     label="Subscription Frequency"
                                     loading={isLoading}
@@ -93,7 +118,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <DatePickerController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="subscriptionExpiryDate"
                                     label="Subscription expiry date"
                                     loading={isLoading}
@@ -107,7 +132,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="stat-title">Key Specifications</div>
                             <SelectController
                                 control={control}
-                                disabled={isProfileIncomplete}
+                                disabled={formDisabled}
                                 fieldName="type"
                                 label="Type"
                                 loading={isLoading}
@@ -119,7 +144,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <AutocompleteController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="brand"
                                     label="Brand"
                                     loading={isLoading}
@@ -128,7 +153,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <InputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="model"
                                     label="Model"
                                     loading={isLoading}
@@ -136,7 +161,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <InputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="trim"
                                     label="Trim"
                                     loading={isLoading}
@@ -144,7 +169,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <SelectController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="condition"
                                     label="Condition"
                                     loading={isLoading}
@@ -161,7 +186,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <YearInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="minYearOfManufacture"
                                     label="Manufactured after"
                                     loading={isLoading}
@@ -170,7 +195,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <YearInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="maxYearOfManufacture"
                                     label="Manufactured before"
                                     loading={isLoading}
@@ -184,7 +209,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <YearInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="minYearOfRegistration"
                                     label="Registered after"
                                     loading={isLoading}
@@ -193,7 +218,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <YearInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="maxYearOfRegistration"
                                     label="Registered before"
                                     loading={isLoading}
@@ -207,7 +232,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <NumberInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="minPrice.amount"
                                     inputPrefix={countryCurrencySymbol}
                                     label="Minimum Price"
@@ -216,7 +241,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <NumberInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="maxPrice.amount"
                                     inputPrefix={countryCurrencySymbol}
                                     label="Maximum Price"
@@ -230,7 +255,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                             <div className="grid gap-1 sm:grid-cols-2">
                                 <NumberInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="minMillage.distance"
                                     inputSuffix={distanceUnit}
                                     label="Minimum Mileage"
@@ -239,7 +264,7 @@ export const SubscriptionForm: FC<Props> = (props) => {
                                 />
                                 <NumberInputController
                                     control={control}
-                                    disabled={isProfileIncomplete}
+                                    disabled={formDisabled}
                                     fieldName="maxMillage.distance"
                                     inputSuffix={distanceUnit}
                                     label="Maximum Mileage"

@@ -8,6 +8,10 @@ message EmptyResponse {}
 
 message EmptyRequest {}
 
+message BooleanResponse {
+    bool value = 1;
+}
+
 message IdRequest {
     // ID of the record
     string id = 1;

@@ -19,7 +19,7 @@ export interface ControllerProps extends FormFieldControllerProps, ComponentProp
 export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {}
 
 export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
-    const { error, selectClassName, selectablePlaceholder, placeholder, options = [], loading, ...rest } = props;
+    const { error, selectClassName, selectablePlaceholder, placeholder, options = [], loading, disabled, ...rest } = props;
     return (
         <select
             className={clsx(
@@ -28,7 +28,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>((props, ref) => {
                 loading && "animate-pulse",
                 selectClassName,
             )}
-            disabled={loading}
+            disabled={loading || disabled}
             ref={ref}
             {...rest}
         >

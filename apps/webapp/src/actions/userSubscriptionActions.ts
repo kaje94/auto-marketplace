@@ -40,6 +40,20 @@ export const getUserSubscriptionsAction = async (reqBody: PartialMessage<GetUser
     return getUserSubscriptions(reqBody, headers);
 };
 
+/** Check whether user is eligible to create a new subscription */
+export const canCreateSubscriptionAction = async (userEmail: string) => {
+    const headers = await getGrpcHeaders();
+    const canCreateSubscription = unstable_cache(
+        async (headers: HeadersInit) => {
+            const response = await client.canCreateSubscription({}, { headers });
+            return response.value;
+        },
+        [apiTags.getCanCreateSubscriptions(userEmail)],
+        { tags: [apiTags.getCanCreateSubscriptions(userEmail)], revalidate: revalidationTime.oneHour },
+    );
+    return canCreateSubscription(headers);
+};
+
 /** Get details of an individual subscription item. */
 export const getSubscriptionItemAction = async (id: string) => {
     const headers = await getGrpcHeaders();

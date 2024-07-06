@@ -14,7 +14,7 @@ export interface ControllerProps extends FormFieldControllerProps, ComponentProp
 export interface Props extends Omit<ControllerProps, "label" | "labelClassNames" | "rootClassName" | "required" | "fieldName" | "control"> {}
 
 export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
-    const { error, loading, textAreaClassNames, ...rest } = props;
+    const { error, loading, textAreaClassNames, disabled, ...rest } = props;
     return (
         <textarea
             className={clsx(
@@ -23,6 +23,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
                 loading && "animate-pulse",
                 textAreaClassNames,
             )}
+            disabled={loading || disabled}
             ref={ref}
             {...rest}
         />
