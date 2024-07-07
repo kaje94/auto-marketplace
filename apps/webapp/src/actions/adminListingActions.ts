@@ -20,10 +20,10 @@ export const getAllListingsAction = async (reqBody: PartialMessage<GetAdminListi
     const getAllListings = unstable_cache(
         async (reqBody: PartialMessage<GetAdminListingsRequest>, headers: HeadersInit) => {
             const response = await client.getAllListings(reqBody, { headers });
-            const responseJson = response.toJson();
+            const responseJson: any = response.toJson();
             return {
-                ...(responseJson as object),
-                items: transformListingsImages((responseJson as any as GetListingsResponse).items),
+                ...responseJson,
+                items: transformListingsImages((responseJson as GetListingsResponse).items),
             } as GetListingsResponse;
         },
         [apiTags.getListings()],

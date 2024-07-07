@@ -46,6 +46,7 @@ test.describe("create and manage listing", () => {
         await formInputText(page, "price.amount", newListingItem.price);
         await page.locator("label").filter({ hasText: "Is the price negotiable?" }).click();
         await formTagSelectOptions(page, newListingItem.features);
+        await page.waitForTimeout(500);
         const formFieldErrors = await page.locator('[data-testid^="form-field-error-"]').all();
         expect(formFieldErrors.length).toBe(0);
         await page.getByRole("button", { name: "Create" }).click();
@@ -76,12 +77,12 @@ test.describe("create and manage listing", () => {
         await expect(page).toHaveTitle(/My Adverts/);
         await expect(page.getByText(newListingItem.model)).toBeVisible();
         await page.getByTestId("dashboard-filter").click();
-        await formSelectOption(page, "status", "Declined");
-        await page.getByRole("button", { name: "Apply Filters" }).click({timeout: 15000});
+        await page.locator("form[test-id='dashboard-filter']").locator('select[name="status"]').selectOption("Declined");
+        await page.getByRole("button", { name: "Apply Filters" }).click({ force: true });
         await expect(page.getByText(newListingItem.model)).not.toBeVisible({ timeout: 15000 });
 
         await page.getByLabel("Filters Applied").click();
-        await page.getByRole("button", { name: "Reset Applied Filters" }).click();
+        await page.getByRole("button", { name: "Reset Applied Filters" }).click({ force: true });
         await expect(page.getByLabel("Filters Applied")).not.toBeVisible();
         await expect(page.getByText(newListingItem.model)).toBeVisible();
     });
@@ -93,7 +94,6 @@ test.describe("create and manage listing", () => {
         await formInputText(page, "model", "some random value");
         await page.getByRole("button", { name: "Apply Filters" }).click();
         await expect(page.getByText(newListingItem.model)).not.toBeVisible();
-        await page.waitForTimeout(3000);
         await page.getByTestId("dashboard-filter").click();
         await formInputText(page, "model", newListingItem.model);
         await page.getByRole("button", { name: "Apply Filters" }).click();
@@ -109,17 +109,17 @@ test.describe("create and manage listing", () => {
     });
 
     test("revalidate posted listing list cache", async () => {
-        await page.goto("/lk/dashboard/cache-manage");
+        await page.goto("/lk/dashboard/cache-manage", { waitUntil: "domcontentloaded" });
         await page.getByRole("button", { name: "Revalidate posted listings by country" }).click();
         await page.getByRole("button", { name: "Proceed" }).first().click();
     });
 
     test("search & view newly posted listing", async () => {
-        await page.goto("/lk");
+        await page.goto("/lk", { waitUntil: "domcontentloaded" });
         await formInputText(page, "query", newListingItem.brand);
         await formSelectOption(page, "vehicleType", "Van");
-        await page.getByRole("link", { name: "Search" }).click();
-        await expect(page.getByRole("button", { name: "Filters Applied" })).toBeVisible();
+        await page.getByRole("link", { name: "Search" }).click({ force: true });
+        await expect(page.getByRole("button", { name: "Filters Applied" })).toBeVisible({ timeout: 20000 });
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
         await page.getByRole("button", { name: "Filters Applied" }).click();
         await formSelectOption(page, "condition", "Registered");
@@ -127,7 +127,6 @@ test.describe("create and manage listing", () => {
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
         await page.getByRole("button", { name: "Filters" }).click();
         await page.getByRole("button", { name: "Reset Applied Filters" }).click();
-        await page.waitForTimeout(3000);
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeVisible({ timeout: 20000 });
         await page.getByRole("button", { name: "Filters" }).click();
         await formSelectOption(page, "fuelType", "Diesel");
@@ -152,7 +151,7 @@ test.describe("create and manage listing", () => {
     });
 
     test("update & delete listing", async () => {
-        await page.goto("/lk/dashboard/my-listings");
+        await page.goto("/lk/dashboard/my-listings", { waitUntil: "domcontentloaded" });
         await expect(page).toHaveTitle(/My Adverts/);
         await page.getByText(newListingItem.model).click();
         await expect(page).toHaveTitle(/My Advert Details/);

@@ -231,14 +231,14 @@ export const api = {
     // deleteS3Image: (body: DeleteS3ImagesReq) => fetchApi.protectedDelete<BodyInit, void>(`/v1/Images/delete`, JSON.stringify(body)),
 };
 
-const tagVersion = "v1_8";
+const tagVersion = "v1_9";
 
 export const apiTags = {
     getFeaturedListings: () => `get-featured-listings-${tagVersion}`,
     getFeatureListingsByCountry: (countryCode: string) => `get-featured-listings-country-${countryCode}-${tagVersion}`,
     getPostedListings: () => `get-posted-listings-${tagVersion}`,
     getPostedListingsByCountry: (countryCode: string) => `get-posted-listings-country-${countryCode}-${tagVersion}`,
-    getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-v11-${id}-${tagVersion}`,
+    getPostedListingItem: (id: ListingIdType) => `get-posted-listing-item-${id}-${tagVersion}`,
     getRelatedListings: (id: ListingIdType) => `get-related-listing-item-${id}-${tagVersion}`,
     getListings: () => `get-admin-listings-${tagVersion}`,
     getMyListings: (userEmail: string) => `get-my-listings-${userEmail}-${tagVersion}`,

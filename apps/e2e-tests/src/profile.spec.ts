@@ -20,7 +20,7 @@ test.describe("update profile", () => {
     });
 
     test("view profile", async () => {
-        await page.goto("/lk/dashboard/profile");
+        await page.goto("/lk/dashboard/profile", { waitUntil: "domcontentloaded" });
         await expect(page).toHaveTitle(/My Profile/, { timeout: 20000 });
         await expect(page.getByText(process.env.TEST_ADMIN_EMAIL!).first()).toBeVisible();
     });

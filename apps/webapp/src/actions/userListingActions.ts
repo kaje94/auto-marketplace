@@ -52,10 +52,10 @@ export const getUserListingsAction = async (reqBody: PartialMessage<GetUserListi
     const getUserListings = unstable_cache(
         async (reqBody: PartialMessage<GetUserListingsRequest>, headers: HeadersInit) => {
             const response = await client.getUserListings(reqBody, { headers });
-            const responseJson = response.toJson();
+            const responseJson: any = response.toJson();
             return {
-                ...(responseJson as object),
-                items: transformListingsImages((responseJson as any as GetListingsResponse).items),
+                ...responseJson,
+                items: transformListingsImages((responseJson as GetListingsResponse).items),
             } as GetListingsResponse;
         },
         [apiTags.getMyListings(userEmail)],

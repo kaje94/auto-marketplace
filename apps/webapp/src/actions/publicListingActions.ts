@@ -24,10 +24,10 @@ export const getRelatedListingsAction = async (id: string, countryCode: string, 
     const getRelatedListings = unstable_cache(
         async (id: string) => {
             const response = await client.getRelatedListings({ id, countryCode, embeddings });
-            const responseJson = response.toJson();
+            const responseJson: any = response.toJson();
             return {
-                ...(responseJson as object),
-                items: transformListingsImages((responseJson as any as GetListingsResponse).items),
+                ...responseJson,
+                items: transformListingsImages((responseJson as GetListingsResponse).items),
             } as GetListingsResponse;
         },
         [apiTags.getRelatedListings(id)],
@@ -41,7 +41,8 @@ export const getFeaturedListingsAction = async (countryCode: string) => {
     const getFeaturedListings = unstable_cache(
         async (countryCode: string) => {
             const response = await client.getFeaturedListings({ countryCode });
-            return { ...response, items: transformListingsImages((response.toJson() as any as GetListingsResponse).items) };
+            const responseJson: any = response.toJson();
+            return { ...responseJson, items: transformListingsImages((responseJson as GetListingsResponse).items) } as GetListingsResponse;
         },
         [apiTags.getFeatureListingsByCountry(countryCode)],
         { tags: [apiTags.getFeaturedListings(), apiTags.getFeatureListingsByCountry(countryCode)], revalidate: revalidationTime.twelveHours },
@@ -67,7 +68,8 @@ export const getPublicListingsAction = async (reqBody: PartialMessage<GetPublicL
     const getPublicListings = unstable_cache(
         async (reqBody: PartialMessage<GetPublicListingsRequest>) => {
             const response = await client.getPublicListings(reqBody);
-            return { ...response, items: transformListingsImages((response.toJson() as any as GetListingsResponse).items) };
+            const responseJson: any = response.toJson();
+            return { ...responseJson, items: transformListingsImages((responseJson as GetListingsResponse).items) } as GetListingsResponse;
         },
         [apiTags.getPostedListings()],
         {

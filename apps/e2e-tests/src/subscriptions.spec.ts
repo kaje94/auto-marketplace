@@ -47,6 +47,7 @@ test.describe("create and manage subscriptions", () => {
         await formInputText(page, "minPrice.amount", newSubscriptionItem.minPrice);
         await formInputText(page, "minMillage.distance", newSubscriptionItem.minMillage);
         await formInputText(page, "maxMillage.distance", newSubscriptionItem.maxMillage);
+        await page.waitForTimeout(500);
         const formFieldErrors = await page.locator('[data-testid^="form-field-error-"]').all();
         expect(formFieldErrors.length).toBe(0);
         await page.getByRole("button", { name: "Create" }).click();
@@ -89,7 +90,7 @@ test.describe("create and manage subscriptions", () => {
     });
 
     test("visible in all list with filters", async () => {
-        await page.goto("/lk/dashboard/subscriptions");
+        await page.goto("/lk/dashboard/subscriptions", { waitUntil: "domcontentloaded" });
         await expect(page).toHaveTitle(/Manage Subscriptions/);
 
         await page.getByTestId("dashboard-filter").click();
@@ -99,7 +100,7 @@ test.describe("create and manage subscriptions", () => {
     });
 
     test("update subscription", async () => {
-        await page.goto("/lk/dashboard/my-subscriptions");
+        await page.goto("/lk/dashboard/my-subscriptions", { waitUntil: "domcontentloaded" });
         await expect(page).toHaveTitle(/My Subscriptions/);
         await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible();
         await page.locator(".cursor-pointer > path").first().click();
