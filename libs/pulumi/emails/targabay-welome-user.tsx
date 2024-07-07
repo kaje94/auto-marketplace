@@ -4,12 +4,12 @@ import { EmailWrap } from "./components/EmailWrap";
 
 export interface WelcomeEmailProps {
     userName: string;
-    countryCode: string
+    countryCode: string;
 }
 
-export const Subject = "Welcome to Targabay"
+export const Subject = "Welcome to Targabay";
 
-export const TemplateName = "targabay-welcome-template"
+export const TemplateName = "targabay-welcome-template";
 
 export default () => {
     return (
@@ -35,7 +35,6 @@ export default () => {
         </EmailWrap>
     );
 };
-
 
 const points = [
     {

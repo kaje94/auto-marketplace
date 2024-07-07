@@ -1,21 +1,21 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.10.7/.schema/devbox.schema.json",
-  "packages": [
-    "nodejs@20.9.0",
-    "nodePackages.pnpm@8.15.5",
-    "go@1.21.0",
-    "protobuf@24.4",
-    "protoc-gen-go@1.32.0",
-    "protoc-gen-go-grpc@1.2.0",
-    "envsubst@latest"
-  ],
-  "env": {
-    "NIX_HARDENING_ENABLE": ""
-  },
-  "shell": {
-    "init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
-    "scripts": {
-      "test":           ["echo \"Error: no test specified\" && exit 1"]
+    "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.10.7/.schema/devbox.schema.json",
+    "packages": [
+        "nodejs@20.9.0",
+        "nodePackages.pnpm@8.15.5",
+        "go@1.21.0",
+        "protobuf@24.4",
+        "protoc-gen-go@1.32.0",
+        "protoc-gen-go-grpc@1.2.0",
+        "envsubst@latest"
+    ],
+    "env": {
+        "NIX_HARDENING_ENABLE": ""
+    },
+    "shell": {
+        "init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
+        "scripts": {
+            "test": ["echo \"Error: no test specified\" && exit 1"]
+        }
     }
-  }
 }

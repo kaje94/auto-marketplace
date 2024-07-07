@@ -55,7 +55,7 @@ test.describe("create and manage subscriptions", () => {
 
     test("verify created subscription", async () => {
         await expect(page).toHaveTitle(/My Subscriptions/);
-        await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible({timeout: 20000});
+        await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible({ timeout: 20000 });
         await expect(page.getByText(`Type: ${newSubscriptionItem.type}`).first()).toBeVisible();
         await expect(page.getByText(`Condition: ${unCamelCase(newSubscriptionItem.condition)}`)).toBeVisible();
         await expect(page.getByText(`Model: ${newSubscriptionItem.model}`)).toBeVisible();

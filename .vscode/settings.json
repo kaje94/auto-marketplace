@@ -36,31 +36,15 @@
         "enable": true
     },
     "typescript.tsdk": "node_modules/typescript/lib",
-    "cSpell.words": [
-        "Aggr",
-        "aggs",
-        "oneof",
-        "Targabay",
-        "Xata",
-        "zoomable"
-    ],
+    "cSpell.words": ["Aggr", "aggs", "oneof", "Targabay", "Xata", "zoomable"],
     "prettier.tabWidth": 4,
     "prettier.printWidth": 150,
     "[github-actions-workflow]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "eslint.workingDirectories": [
-        "apps/webapp",
-        "apps/e2e-tests",
-        "apps/email-mgr",
-        "apps/sesrvice",
-        "libs/infra/pulumi",
-        "libs/protos"
-    ],
+    "eslint.workingDirectories": ["apps/webapp", "apps/e2e-tests", "apps/email-mgr", "apps/sesrvice", "libs/infra/pulumi", "libs/protos"],
     "protoc": {
-        "options": [
-            "--proto_path=${workspaceRoot}/libs/protos/definitions"
-        ]
+        "options": ["--proto_path=${workspaceRoot}/libs/protos/definitions"]
     },
     "[go]": {
         "editor.defaultFormatter": "golang.go"
@@ -71,16 +55,10 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "files.watcherInclude": [
-        "${workspaceRoot}/libs/protos/gen/**"        
-    ],
+    "files.watcherInclude": ["${workspaceRoot}/libs/protos/gen/**"],
     "editor.formatOnSave": false,
-    "conventionalCommits.scopes": [
-        "pulumi",
-        "webapp",
-        "service"
-    ],
-    "go.delveConfig":{
-        "debugAdapter":"legacy"
+    "conventionalCommits.scopes": ["pulumi", "webapp", "service"],
+    "go.delveConfig": {
+        "debugAdapter": "legacy"
     }
 }

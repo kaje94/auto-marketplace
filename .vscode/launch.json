@@ -11,7 +11,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/apps/api-service/cmd/main.go",
             "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/.env"
         },
         {
             "name": "Go handle expired job debug",
@@ -20,7 +20,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/apps/expire-listings-job/cmd/main.go",
             "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/.env"
         },
         {
             "name": "Go subscriptions job debug",

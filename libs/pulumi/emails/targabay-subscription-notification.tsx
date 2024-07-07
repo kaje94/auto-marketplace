@@ -44,7 +44,14 @@ export default () => {
                     <Section className="rounded-lg p-2 border-[1px] border-gray-200 border-solid mt-1 shadow flex flex-row gap-2">
                         {"{{#if imageUrl}}"}
                         <Column>
-                        <Img src="{{imageUrl}}" className="rounded-lg object-cover" style={{backgroundColor: "{{imageColor}}"}} alt="{{title}}" width="105" height="70" />
+                            <Img
+                                src="{{imageUrl}}"
+                                className="rounded-lg object-cover"
+                                style={{ backgroundColor: "{{imageColor}}" }}
+                                alt="{{title}}"
+                                width="105"
+                                height="70"
+                            />
                         </Column>
                         {"{{/if}}"}
                         <Column className="align-middle pl-2 text-black flex-1">

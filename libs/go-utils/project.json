@@ -5,8 +5,8 @@
     "sourceRoot": "libs/common/go",
     "tags": [],
     "targets": {
-      "lint": {
-        "executor": "@nx-go/nx-go:lint"
-      }
+        "lint": {
+            "executor": "@nx-go/nx-go:lint"
+        }
     }
-  }
+}

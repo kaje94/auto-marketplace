@@ -25,7 +25,10 @@ export default () => {
                     View Listing
                 </Link>
             </Section>
-            <Text>Should you have any questions or need assistance with the renewal process, don't hesitate to reach out to our support team. Thank you for choosing Targabay!</Text>
+            <Text>
+                Should you have any questions or need assistance with the renewal process, don't hesitate to reach out to our support team. Thank you
+                for choosing Targabay!
+            </Text>
         </EmailWrap>
     );
 };

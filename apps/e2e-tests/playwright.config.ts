@@ -17,12 +17,12 @@ const baseURL = process.env["BASE_URL"] || "http://localhost:3000";
 export default defineConfig({
     ...nxE2EPreset(__filename, { testDir: "src" }),
     expect: {
-      /**
-       * Maximum time expect() should wait for the condition to be met.
-       * For example in `await expect(locator).toHaveText();`
-       */
-      timeout: 10000,
-  },
+        /**
+         * Maximum time expect() should wait for the condition to be met.
+         * For example in `await expect(locator).toHaveText();`
+         */
+        timeout: 10000,
+    },
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         baseURL,

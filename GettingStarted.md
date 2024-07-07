@@ -8,8 +8,8 @@ curl -fsSL https://get.jetify.com/devbox | bash
 start devbox shell (not needed if you have installed the recommended vscode extensions)
 `devbox shell`
 
-
 // Create the infrastructure resources needed for Targabay
+
 1. Pulumi - For Auth0 & AWS resources(S3, SES and IAM)
 2. Xata
 
@@ -30,14 +30,13 @@ To deploy Targabay in your local kubernates cluster (in prod mode)
 To deploy Targabay in your local kubernates cluster (in dev mode)
 `tilt up -- --dev`
 
-
 ///
 /// Using NX
 //
 install packages `pnpm i`
-help 
+help
 /// docker push steps
-docker login 
+docker login
 
 // service
 docker build -f apps/api-service/Dockerfile -t kajendranalagaratnam/targabay-api-service .
@@ -49,6 +48,4 @@ docker push kajendranalagaratnam/webapp:latest
 
 ////
 
-
 // HELM
-

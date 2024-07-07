@@ -4,37 +4,39 @@
     "projectType": "application",
     "sourceRoot": "apps/api-service",
     "tags": [],
+    "implicitDependencies": ["protos"],
     "targets": {
-      "build": {
-        "executor": "@nx-go/nx-go:build",
-        "options": {
-          "main": "{projectRoot}/cmd/main.go",
-          "outputPath": "{projectRoot}/bin/api-service"
+        "build": {
+            "executor": "@nx-go/nx-go:build",
+            "dependsOn": [{ "dependencies": true, "target": "build" }],
+            "options": {
+                "main": "{projectRoot}/cmd/main.go",
+                "outputPath": "{projectRoot}/bin/api-service"
+            }
+        },
+        "serve": {
+            "executor": "@nx-go/nx-go:serve",
+            "options": {
+                "main": "{projectRoot}/cmd/main.go"
+            }
+        },
+        "start": {
+            "executor": "@nx-go/nx-go:serve",
+            "options": {
+                "main": "{projectRoot}/cmd/main.go"
+            }
+        },
+        "dev": {
+            "executor": "@nx-go/nx-go:serve",
+            "options": {
+                "main": "{projectRoot}/cmd/main.go"
+            }
+        },
+        "test": {
+            "executor": "@nx-go/nx-go:test"
+        },
+        "lint": {
+            "executor": "@nx-go/nx-go:lint"
         }
-      },
-      "serve": {
-        "executor": "@nx-go/nx-go:serve",
-        "options": {
-          "main": "{projectRoot}/cmd/main.go"
-        }
-      },
-      "start": {
-        "executor": "@nx-go/nx-go:serve",
-        "options": {
-          "main": "{projectRoot}/cmd/main.go"
-        }
-      },
-      "dev": {
-        "executor": "@nx-go/nx-go:serve",
-        "options": {
-          "main": "{projectRoot}/cmd/main.go"
-        }
-      },
-      "test": {
-        "executor": "@nx-go/nx-go:test"
-      },
-      "lint": {
-        "executor": "@nx-go/nx-go:lint"
-      }
     }
-  }
+}
