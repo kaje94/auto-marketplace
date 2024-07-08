@@ -7,6 +7,7 @@
         "protobuf@24.4",
         "protoc-gen-go@1.32.0",
         "protoc-gen-go-grpc@1.2.0",
+        "playwright@latest",
         "playwright-driver@latest"
     ],
     "env": {
