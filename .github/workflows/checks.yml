@@ -38,7 +38,9 @@ jobs:
             - name: Setup CI
               uses: ./.github/workflows/setup-ci
             - name: Linting
-              run: pnpm lint
+              run: devbox run -- pnpm lint
+              env:
+                  SKIP_ENV_VALIDATION: true
     build:
         runs-on: ubuntu-latest
         steps:
@@ -46,7 +48,7 @@ jobs:
             - name: Setup CI
               uses: ./.github/workflows/setup-ci
             - name: Building
-              run: pnpm build
+              run: devbox run -- pnpm build
             - name: Cache build output
               uses: actions/cache/save@v3
               with:
@@ -69,4 +71,4 @@ jobs:
                       .apps/api-service/bin
                   key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ github.sha }}
             - name: Running E2E tests
-              run: pnpm test:e2e
+              run: devbox run -- pnpm test:e2e
