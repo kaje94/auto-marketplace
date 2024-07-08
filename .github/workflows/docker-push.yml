@@ -22,60 +22,31 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
+            - name: Set environment variable based on input
+              run: |
+                  if [ "${{ github.event.inputs.app }}" == "apiService" ]; then
+                    echo "imageName=api-service" >> $GITHUB_ENV
+                  elif [ "${{ github.event.inputs.app }}" == "expireListingsJob" ]; then
+                    echo "imageName=expire-listings-job" >> $GITHUB_ENV
+                  elif [ "${{ github.event.inputs.app }}" == "subscriptionsJob" ]; then
+                    echo "imageName=subscriptions-job" >> $GITHUB_ENV
+                  elif [ "${{ github.event.inputs.app }}" == "webApp" ]; then
+                    echo "imageName=webapp" >> $GITHUB_ENV
+                  fi
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v3
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
-              # with:
-              #     platforms: linux/amd64,linux/arm64
             - name: Login to Docker Hub
               uses: docker/login-action@v3
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
-            - name: Build and Push Docker Image - webApp
-              if: ${{ github.event.inputs.app == 'webApp' }}
+            - name: Build and Push Docker Image - ${{github.event.inputs.app}}
               uses: docker/build-push-action@v5
               with:
                   context: .
-                  file: apps/webapp/Dockerfile
+                  file: apps/${{ env.imageName }}/Dockerfile
                   push: true
-                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/targabay-webapp:${{ github.event.inputs.version }}
+                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/targabay-${{ env.imageName }}:${{ github.event.inputs.version }}
                   platforms: linux/amd64,linux/arm64
-            - name: Build and Push Docker Image - API Service
-              if: ${{ github.event.inputs.app == 'apiService' }}
-              uses: docker/build-push-action@v5
-              with:
-                  context: .
-                  file: apps/api-service/Dockerfile
-                  push: true
-                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/targabay-api-service:${{ github.event.inputs.version }}
-                  platforms: linux/amd64,linux/arm64
-            - name: Build and Push Docker Image - Expire Listings Job
-              if: ${{ github.event.inputs.app == 'expireListingsJob' }}
-              uses: docker/build-push-action@v5
-              with:
-                  context: .
-                  file: apps/expire-listings-job/Dockerfile
-                  push: true
-                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/targabay-expire-listings-job:${{ github.event.inputs.version }}
-                  platforms: linux/amd64,linux/arm64
-            - name: Build and Push Docker Image - Subscriptions Job
-              if: ${{ github.event.inputs.app == 'subscriptionsJob' }}
-              uses: docker/build-push-action@v5
-              with:
-                  context: .
-                  file: apps/subscriptions-job/Dockerfile
-                  push: true
-                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/targabay-subscriptions-job:${{ github.event.inputs.version }}
-                  platforms: linux/amd64,linux/arm64
-            - name: Update the version in values.yaml
-              uses: mikefarah/yq@master
-              with:
-                  cmd: yq -i '.${{ github.event.inputs.app }}.image.version = "${{ github.event.inputs.version }}"' 'libs/helm/values.yaml'
-            - name: Commit & Push changes
-              uses: actions-js/push@master
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  message: "Update ${{ github.event.inputs.app }} docker image version to ${{ github.event.inputs.version }}"
-                  branch: ${{ github.ref_name }}

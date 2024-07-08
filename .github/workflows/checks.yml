@@ -1,0 +1,72 @@
+name: Checks
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+env:
+    NODE_OPTIONS: "--max_old_space_size=4096"
+    ENV_NAME: "dev"
+    MAX_USER_LISTINGS: "5"
+    MAX_USER_SUBSCRIPTIONS: "2"
+    AUTH0_ISSUER_BASE_URL: ${{ secrets.DEV_AUTH0_ISSUER_BASE_URL }}
+    AUTH0_DOMAIN: ${{ secrets.DEV_AUTH0_DOMAIN }}
+    AUTH0_API_CLIENT_ID: ${{ secrets.DEV_AUTH0_API_CLIENT_ID }}
+    AUTH0_API_CLIENT_SECRET: ${{ secrets.DEV_AUTH0_API_CLIENT_SECRET }}
+    AUTH0_SECRET: ${{ secrets.DEV_AUTH0_SECRET }}
+    AUTH0_BASE_URL: "http://localhost:3000"
+    AUTH0_CLIENT_ID: ${{ secrets.DEV_AUTH0_CLIENT_ID }}
+    AUTH0_CLIENT_SECRET: ${{ secrets.DEV_AUTH0_CLIENT_SECRET }}
+    AUTH0_SCOPE: "openid profile email offline_access"
+    XATA_BRANCH: "dev"
+    XATA_API_KEY: ${{ secrets.DEV_XATA_API_KEY }}
+    XATA_DATABASE_URL: ${{ secrets.DEV_XATA_DATABASE_URL }}
+    AWS_ACCESS_KEY: ${{ secrets.DEV_AWS_ACCESS_KEY }}
+    AWS_ACCESS_SECRET: ${{ secrets.DEV_AWS_ACCESS_SECRET }}
+    AWS_S3_BUCKET: ${{ secrets.DEV_AWS_S3_BUCKET }}
+    AWS_S3_REGION: ${{ secrets.DEV_AWS_S3_REGION }}
+    GRPC_API_BASE_URL: "http://localhost:3001"
+    IMAGE_CDN_BASE: ${{ secrets.DEV_IMAGE_CDN_BASE }}
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Linting
+              run: pnpm lint
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Building
+              run: pnpm build
+            - name: Cache build output
+              uses: actions/cache/save@v3
+              with:
+                  path: |
+                      .apps/webapp/.next
+                      .apps/api-service/bin
+                  key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ github.sha }}
+    e2e-tests:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup CI
+              uses: ./.github/workflows/setup-ci
+            - name: Restore build cache
+              uses: actions/cache/restore@v3
+              with:
+                  path: |
+                      .apps/webapp/.next
+                      .apps/api-service/bin
+                  key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ github.sha }}
+            - name: Running E2E tests
+              run: pnpm test:e2e

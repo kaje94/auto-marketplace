@@ -5,7 +5,6 @@ import { Footer, ScrollToTop } from "@/components/Common";
 import { NavBar } from "@/components/Common/NavBar";
 import { env } from "@/env.mjs";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
-import { getAlternativeLinks } from "@/utils/countries";
 import { ChildrenProps } from "@/utils/types";
 import { standardFont } from "./fonts";
 
@@ -63,7 +62,6 @@ export const metadata: Metadata = {
         "Vehicle Classified Ads",
         "Auto Auction Site",
     ],
-    alternates: getAlternativeLinks(""),
 };
 
 export const viewport: Viewport = { themeColor: "#18182F" };
