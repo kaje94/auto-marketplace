@@ -9,9 +9,8 @@
         "lint": "next lint",
         "lint:fix": "next lint --fix",
         "tsc": "tsc --noEmit --incremental",
-        "storybook": "nx storybook -p 6006 --disable-telemetry",
-        "build-storybook": "nx build-storybook",
-        "test-storybook": "nx test-storybook"
+        "storybook": "storybook dev -p 6006 --disable-telemetry",
+        "build-storybook": "storybook build"
     },
     "dependencies": {
         "targabay-protos": "*",

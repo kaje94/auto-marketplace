@@ -55,6 +55,7 @@ libs/protos/gen/ts/*
 .react-email/
 
 .nx/cache
+.nx/workspace-data
 
 __debug_*
 
