@@ -43,4 +43,5 @@ export default defineConfig({
     timeout: 30 * 1000,
     projects: [{ name: "firefox", use: { ...devices["Desktop Firefox"] } }],
     reporter: "list",
+    outputDir: "test-results/",
 });
