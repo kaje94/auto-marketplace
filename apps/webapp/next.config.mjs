@@ -26,13 +26,13 @@ const config = {
         // Enable once its available in next.js stage release
         // ppr: true,
         // this includes files from the monorepo base two directories up
-        // outputFileTracingRoot: join(__dirname, "../../"),
+        outputFileTracingRoot: join(__dirname, "../../"),
     },
     eslint: {
         // Will be tested separately in the CI pipeline
         ignoreDuringBuilds: true,
     },
-    output: "export",
+    output: "standalone",
     // cleanDistDir: true,
 };
 export default config;
