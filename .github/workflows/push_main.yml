@@ -1,9 +1,9 @@
 name: Build & Deploy to Dev
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - main
+    # push:
+    #     branches:
+    #         - main
 env:
     NODE_OPTIONS: "--max_old_space_size=4096"
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
