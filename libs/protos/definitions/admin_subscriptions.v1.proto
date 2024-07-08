@@ -1,0 +1,10 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+import "types/admin_subscriptions.proto";
+
+service AdminSubscriptionsService {
+    rpc GetAllSubscriptions(GetAdminSubscriptionsRequest) returns (GetSubscriptionsResponse);
+}

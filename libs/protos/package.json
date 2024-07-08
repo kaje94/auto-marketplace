@@ -1,0 +1,12 @@
+{
+    "name": "targabay-protos",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "gen-proto-go": "protoc --proto_path=definitions --go_out=gen/go --go_opt=module=targabay/protos/service_pb --go-grpc_out=gen/go --go-grpc_opt=module=targabay/protos/service_pb -Iprotos definitions/*.proto -Iprotos definitions/types/*.proto",
+        "gen-proto-ts": "protoc --proto_path=definitions --es_out gen/ts  --es_opt target=ts  --connect-es_out gen/ts --connect-es_opt target=ts -Iprotos definitions/*.proto -Iprotos definitions/types/*.proto",
+        "build": "npm run gen-proto-go && npm run gen-proto-ts && tsc -d --declarationMap",
+        "postinstall": "npm run build"
+    }
+}

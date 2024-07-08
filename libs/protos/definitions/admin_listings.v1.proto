@@ -1,0 +1,11 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+import "types/admin_listings.proto";
+
+service AdminListingsService {
+    rpc GetAllListings(GetAdminListingsRequest) returns (GetListingsResponse);
+    rpc ReviewListing(ReviewListingRequest) returns (EmptyResponse);
+}

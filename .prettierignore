@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+libs/helm/templates
+/.nx/cache
+.next
+.storybook
+node_modules

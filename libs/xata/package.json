@@ -1,0 +1,16 @@
+{
+    "name": "xata",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "seed-locations:dev": "node scripts/seed-locations.mjs dev",
+        "seed-locations:main": "node scripts/seed-locations.mjs main"
+    },
+    "dependencies": {
+        "@xata.io/client": "^0.29.3",
+        "csv-parse": "^5.5.5"
+    },
+    "author": "",
+    "license": "ISC"
+}

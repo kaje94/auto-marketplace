@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.expireListingsJob.appName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.expireListingsJob.appName }}
+spec:
+  schedule: "{{ .Values.expireListingsJob.cronExpression }}"
+  concurrencyPolicy: Forbid  # Optional, prevents concurrent executions (recommended)
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ .Values.expireListingsJob.appName }}
+            image: "{{ .Values.expireListingsJob.image.name }}:{{ .Values.expireListingsJob.image.version }}"
+            envFrom:
+            - configMapRef:
+                name: {{ .Values.configmapName }}
+            resources:
+              requests:
+                memory: "64Mi"
+              limits:
+                memory: "128Mi"
+          restartPolicy: OnFailure

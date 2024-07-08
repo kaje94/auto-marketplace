@@ -1,0 +1,66 @@
+# Default values for targabay.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+namespace: targabay
+configmapName: tb-config-map
+apiService:
+    appName: api-service
+    image:
+        name: kajendranalagaratnam/targabay-api-service
+        version: 0.0.6
+    port: 3001
+webApp:
+    appName: webapp
+    image:
+        name: kajendranalagaratnam/targabay-webapp
+        version: 0.0.5
+    port: 3000
+expireListingsJob:
+    appName: expire-listings-job
+    cronExpression: "0 0 * * *"
+    image:
+        name: kajendranalagaratnam/targabay-expire-listings-job
+        version: 0.0.7
+subscriptionsJob:
+    image:
+        name: kajendranalagaratnam/targabay-subscriptions-job
+        version: 0.0.7
+    crons:
+        - appName: subscriptions-daily-job
+          cronExpression: "0 1 * * *"
+          args: ["Daily"]
+        - appName: subscriptions-weekly-job
+          cronExpression: "0 2 * * 0"
+          args: ["Weekly"]
+        - appName: subscriptions-every-2-weeks-job
+          cronExpression: "0 3 1,15 * *"
+          args: ["OnceEveryTwoWeeks"]
+        - appName: subscriptions-monthly-job
+          cronExpression: "0 0 1 * *"
+          args: ["Monthly"]
+configMap:
+    name: tb-config-map
+    values:
+        ENV_NAME: ""
+        MAX_USER_LISTINGS: ""
+        MAX_USER_SUBSCRIPTIONS: ""
+        AUTH0_ISSUER_BASE_URL: ""
+        AUTH0_DOMAIN: ""
+        AUTH0_API_CLIENT_ID: ""
+        AUTH0_API_CLIENT_SECRET: ""
+        AUTH0_SECRET: ""
+        AUTH0_BASE_URL: ""
+        AUTH0_CLIENT_ID: ""
+        AUTH0_CLIENT_SECRET: ""
+        AUTH0_SCOPE: ""
+        XATA_DATABASE_URL: ""
+        XATA_API_KEY: ""
+        XATA_BRANCH: ""
+        AWS_ACCESS_KEY: ""
+        AWS_ACCESS_SECRET: ""
+        AWS_S3_BUCKET: ""
+        AWS_S3_REGION: ""
+        # Optionals
+        IMAGE_CDN_BASE: ""
+        RECAPTCHA_SITE_SECRET: ""
+        NEXT_CONTACT_US_FORM_KEY: ""

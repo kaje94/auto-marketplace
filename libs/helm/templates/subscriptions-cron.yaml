@@ -1,0 +1,31 @@
+{{- range .Values.subscriptionsJob.crons }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .appName }}
+  namespace: {{ $.Values.namespace }}
+  labels:
+    app: {{ .appName }}
+spec:
+  schedule: "{{ .cronExpression }}"
+  concurrencyPolicy: Forbid  # Optional, prevents concurrent executions (recommended)
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ .appName }}
+            image: "{{ $.Values.subscriptionsJob.image.name }}:{{ $.Values.subscriptionsJob.image.version }}"
+            args:
+              {{- toYaml .args | nindent 12 }}
+            envFrom:
+            - configMapRef:
+                name: {{ $.Values.configmapName }}
+            resources:
+              requests:
+                memory: "64Mi"
+              limits:
+                memory: "128Mi"
+          restartPolicy: OnFailure
+---
+{{- end }}

@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -9,8 +9,8 @@
 /coverage
 
 # next.js
-/.next/
-/out/
+.next
+out
 
 # production
 /build
@@ -33,14 +33,38 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/test-results/
+test-results
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 .env*.local
+dist
 
 # storybook
 storybook-static
 
+# Ignore generated protos
+libs/protos/gen/go/*
+!libs/protos/gen/go/go.mod
+libs/protos/gen/ts/*
+!libs/protos/gen/ts/.gitkeep
+
 # Sentry Config File
 .sentryclirc
+
+.react-email/
+
+.nx/cache
+
+__debug_*
+
+
+.xata
+
+# service
+bin
+
+# Devbox
+.devbox
+
+TODO.md

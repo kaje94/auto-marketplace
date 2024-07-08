@@ -1,0 +1,36 @@
+{
+    "name": "expire-listings-job",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/expire-listings-job",
+    "tags": [],
+    "implicitDependencies": ["protos"],
+    "targets": {
+        "build": {
+            "executor": "@nx-go/nx-go:build",
+            "dependsOn": [{ "dependencies": true, "target": "build" }],
+            "options": {
+                "main": "{projectRoot}/cmd/main.go",
+                "outputPath": "{projectRoot}/bin/expire-listings-job"
+            }
+        },
+        "serve": {
+            "executor": "@nx-go/nx-go:serve",
+            "options": {
+                "main": "{projectRoot}/cmd/main.go"
+            }
+        },
+        "dev": {
+            "executor": "@nx-go/nx-go:serve",
+            "options": {
+                "main": "{projectRoot}/cmd/main.go"
+            }
+        },
+        "test": {
+            "executor": "@nx-go/nx-go:test"
+        },
+        "lint": {
+            "executor": "@nx-go/nx-go:lint"
+        }
+    }
+}

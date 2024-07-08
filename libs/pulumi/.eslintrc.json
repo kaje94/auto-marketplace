@@ -1,0 +1,5 @@
+{
+    "extends": ["../../.eslintrc.json"],
+    "ignorePatterns": ["!**/*", "node_modules"],
+    "settings": { "import/resolver": { "typescript": true, "node": true } }
+}

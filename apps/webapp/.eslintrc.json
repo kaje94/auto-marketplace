@@ -1,0 +1,22 @@
+{
+    "extends": ["../../.eslintrc.json", "next", "plugin:tailwindcss/recommended", "plugin:storybook/recommended"],
+    "ignorePatterns": ["!**/*", "node_modules", ".next", ".storybook"],
+    "rules": {
+        "tailwindcss/migration-from-tailwind-2": "off",
+        "tailwindcss/enforces-shorthand": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "react/require-extension": "off",
+        "react/jsx-sort-props": [
+            "warn",
+            {
+                "reservedFirst": ["key"],
+                "callbacksLast": true,
+                "shorthandFirst": false,
+                "shorthandLast": true,
+                "ignoreCase": true,
+                "noSortAlphabetically": false
+            }
+        ]
+    },
+    "settings": { "import/resolver": { "typescript": true, "node": true } }
+}

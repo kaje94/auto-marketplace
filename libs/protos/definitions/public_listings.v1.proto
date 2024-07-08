@@ -1,0 +1,15 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+import "types/public_listings.proto";
+
+service PublicListingsService {
+    rpc IncrementListingViews(IdRequest) returns (EmptyResponse);
+    rpc GetPublicListings(GetPublicListingsRequest) returns (GetListingsResponse);
+    rpc GetPublicListingItem(IdRequest) returns (ListingItem);
+    rpc GetFeaturedListings(CountryCodeRequest) returns (GetListingsResponse);
+    rpc GetRelatedListings(GetRelatedListingsRequest) returns (GetListingsResponse);
+    rpc ReportListing(ReportListingRequest) returns (EmptyResponse);
+}

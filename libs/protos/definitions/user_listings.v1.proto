@@ -1,0 +1,17 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+import "types/user_listings.proto";
+
+service UserListingsService {
+    rpc CreateListing(ListingItem.Data) returns (CreatedIdResponse);
+    rpc UpdateListing(UpdateListingRequest) returns (EmptyResponse);
+    rpc GetUserListings(GetUserListingsRequest) returns (GetListingsResponse);
+    rpc GetUserListingItem(IdRequest) returns (ListingItem);
+    rpc DeleteListing(IdRequest) returns (EmptyResponse);
+    rpc RenewListing(IdRequest) returns (EmptyResponse);
+    rpc UnListListing(UnListListingRequest) returns (EmptyResponse);
+    rpc CanCreateListing(EmptyRequest) returns (BooleanResponse);
+}

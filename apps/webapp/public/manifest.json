@@ -1,0 +1,12 @@
+{
+    "name": "Targabay - Your Ultimate Vehicle Marketplace",
+    "short_name": "Targabay",
+    "description": "Discover, buy, and sell vehicles on Targabay - Your ultimate automotive marketplace for cars, bikes, and more.",
+    "icons": [
+        { "src": "/favicons/favicon-192x192.png", "sizes": "192x192", "type": "image/png" },
+        { "src": "/favicons/favicon-512x512.png", "sizes": "512x512", "type": "image/png" }
+    ],
+    "theme_color": "#000033",
+    "background_color": "#18182F",
+    "display": "minimal-ui"
+}

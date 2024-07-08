@@ -1,0 +1,12 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+import "types/user_profile.proto";
+
+service UserProfileService {
+    rpc GetUserProfile(EmptyRequest) returns (UserProfile);
+    rpc UpdateUserProfile(UserProfile.ProfileData) returns (UpdateUserProfileResponse);
+    rpc CloseAccount(EmptyRequest) returns (EmptyResponse);
+}

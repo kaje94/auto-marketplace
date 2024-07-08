@@ -1,0 +1,13 @@
+node_modules
+coverage
+build
+bin
+.DS_Store
+*.pem
+apps/webapp/.next
+.env
+.react-email
+.xata
+.nx/cache
+.devbox
+.vercel

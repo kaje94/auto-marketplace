@@ -1,0 +1,24 @@
+{
+    "name": "pulumi",
+    "main": "index.ts",
+    "scripts": {
+        "deploy": "pulumi up",
+        "email-dev": "email dev -p 3001 --dir=emails",
+        "email-export-html": "email export --dir=emails --outDir=out/html",
+        "email-export-text": "email export --dir=emails --outDir=out/text --plainText",
+        "postinstall": "npm run email-export-html && npm run email-export-text"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.20.0",
+        "@pulumi/auth0": "^2.3.2",
+        "@pulumi/aws": "^6.39.0",
+        "zod": "^3.23.8",
+        "@react-email/components": "0.0.15-canary.1",
+        "react-email": "2.1.0-canary.1",
+        "react": "18.2.0"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "@types/react": "^18.2.38"
+    }
+}

@@ -1,0 +1,251 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "google/protobuf/any.proto";
+
+message EmptyResponse {}
+
+message EmptyRequest {}
+
+message BooleanResponse {
+    bool value = 1;
+}
+
+message IdRequest {
+    // ID of the record
+    string id = 1;
+}
+
+message CreatedIdResponse {
+    // ID of the newly created record
+    string id = 1;
+}
+
+message ErrorResponse {
+    // Error message
+    string message = 1;
+    // Any additional details
+    google.protobuf.Any details = 2;
+}
+
+message PaginatedRequest {
+    // Current page number
+    int32 pageNumber = 1;
+    // Number of items in the page
+    int32 pageSize = 2;
+}
+
+message PaginatedResponse {
+    // Total records available
+    int32 totalCount = 1;
+    // Total number of pages available
+    int32 totalPages = 2;
+}
+
+message UserProfile {
+    message ProfileData {
+        // Contact phone number of the user
+        string phone = 1;
+        // City of the user
+        string city = 2;
+        // State of the user
+        string state = 3;
+        // Postal code of the user
+        string postalCode = 4;
+        // Country code of the user. Eg: us, in, lk, etc.
+        string countryCode = 5;
+        // Is user a vehicle dealer or not
+        bool vehicleDealer = 6;
+    }
+    // Location and contact details of the user
+    ProfileData data = 1;
+    // Full name of the user
+    string name = 2;
+    // Email of the user
+    string email = 3;
+    // Profile picture URL of the user
+    string picture = 4;
+}
+
+
+message GetListingsResponse {
+    PaginatedResponse page = 1;
+    repeated ListingItem items = 2;
+}
+
+message ListingItem {
+    message Data {
+        message Image {
+            // Path of the image in the bucket
+            string name = 1;
+            // Full url of the image
+            string url = 2;
+            // Average color of the image, used for image placeholder before hydration
+            string color = 3;
+            // Thumbhash of the image, used for image placeholder after hydration
+            string hash = 4;
+            // The image to be shown as thumbnail
+            bool isThumbnail = 5;
+        }    
+        // Type of the vehicle. One of Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other
+        string type = 1;
+        // Brand of the vehicle. Eg: Toyotal, Nissan, etc.
+        string brand = 2;
+        // Model of the vehicle. Eg: Swift, Corrola, etc.
+        string model = 3;
+        // Optional Trim of the vehicle. Eg: Sport, LX, etc.
+        string trim = 4;
+        // Numeric year. Eg: 2010
+        int32 yearOfManufacture = 5;
+        // Optional numeric year. Eg: 2015
+        int32 yearOfRegistration = 6;
+        // Optional numberic distance
+        int32 mileage = 7;
+        // Capacity of the engine. Eg: 1000
+        int32 engineCapacity = 8;
+        // Long description for the listing
+        string description = 9;
+        // Condition of the vehicle. One of BrandNew Registered Reconditioned
+        string condition = 10;
+        // Transmission type of the vehicle. Automatic or Manual
+        string transmissionType = 11;
+        // Type of the fuel. One of Petrol Diesel Hybrid Electric
+        string fuelType = 12;
+        // List of features. Eg: Power Stearing, Air Bags, etc.
+        repeated string features = 13;
+        // List of vehicle images
+        repeated Image vehicleImages = 14;
+        // Price of the listing. Currency will be associated with user's location
+        float price = 15;
+        // Is price negiatiable or not
+        bool priceNegotiable = 16;
+        // Ada 002 vector ebeddings
+        repeated float embeddings = 17;
+    }
+    // ID of the created listing item
+    string id = 1;
+    // Details related to the listing vehicle
+    Data data = 2;
+    // Status of the listing. One of UnderReview Posted Declined Expired Sold TemporarilyUnlisted PermanentlyRemoved
+    string status = 3;
+    // Details of the user and his/her location 
+    UserProfile user = 4;
+    // When the listing would expire
+    string expiryDate = 5;
+    // When the item was created
+    string createdAt = 6;
+    // Review comment to be shown if listing is rejected
+    string reviewComment = 7;
+}
+
+message ListingFilters {
+    message PublicListingsFilters {
+        // Type of the vehicle. One of Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other
+        string vehicleType = 1;    
+        // Condition of the vehicle. One of BrandNew Registered Reconditioned
+        string condition = 2;
+        // Transmission type of the vehicle. Automatic or Manual
+        string transmissionType = 3;
+        // Type of the fuel. One of Petrol Diesel Hybrid Electric
+        string fuelType = 4;
+        // Minimum price of the listing. Currency will be associated with user's location
+        float minPrice = 5;
+        // Maximum price of the listing. Currency will be associated with user's location
+        float maxPrice = 6;
+        // City of the user who created the listing
+        string city = 7;
+        // State of the user who created the listing
+        string state = 8;
+        // Country code of the user who created the listing. Eg: us, in, lk, etc. Mandatory field.
+        string countryCode = 9;
+        // Year of manufacture start date
+        string yomStartDate = 10;
+        // Year of manufacture end date
+        string yomEndDate = 11;
+        // Listings created after this date
+        string startCreatedDate = 12;
+        // Listings created before this date
+        string endCreatedDate = 13;
+    }
+    message UserListingsFilters {
+        // Status of the listing. One of UnderReview Posted Declined Expired Sold TemporarilyUnlisted PermanentlyRemoved
+        string status = 1;
+        // Brand of the listing vehicle
+        string brand = 2;
+        // Model of the listing vehicle
+        string model = 3;
+    }
+    message AdminListingsFilters {
+        // Email address of the user who created the listing
+        string userEmail = 1;
+    }
+}
+
+
+message SubscriptionFilters {
+    message UserSubscriptionFilters {
+        // Active status of the subscriptions. One of active, inactive or empty
+        string activeStatus = 1;
+        // Frequency of the notification. One of Daily Weekly OnceEveryTwoWeeks Monthly
+        string notificationFrequency = 2;
+    }
+    message AdminSubscriptionFilters {
+        // Email address of the user who created the subscription
+        string userEmail = 1;
+    }
+}
+
+
+message GetSubscriptionsResponse {
+    PaginatedResponse page = 1;
+    repeated SubscriptionItem items = 2;
+}
+
+
+message SubscriptionItem {
+    message Data {
+        // Name of the subscription
+        string displayName = 1;
+        // Type of the vehicle. One of Car Van SUV Jeep Bus Truck ThreeWheeler Motorcycle Other
+        string type = 2;
+        // Brand of the vehicle. Eg: Toyotal, Nissan, etc.
+        string brand = 3;
+        // Model of the vehicle. Eg: Swift, Corrola, etc.
+        string model = 4;
+        // Optional Trim of the vehicle. Eg: Sport, LX, etc.
+        string trim = 5;
+        // Optional numeric year. Eg: 2015
+        int32 minYearOfManufacture = 6;
+        // Optional numeric year. Eg: 2015
+        int32 maxYearOfManufacture = 7;
+        // Optional numeric year. Eg: 2015
+        int32 minYearOfRegistration = 8;
+        // Optional numeric year. Eg: 2015
+        int32 maxYearOfRegistration = 9;
+        // Optional numberic distance
+        int32 minMillage = 10;
+        // Optional numberic distance
+        int32 maxMillage = 11;
+        // Optional condition of the vehicle. One of BrandNew Registered Reconditioned
+        string condition = 12;
+        // Optional min price of the listing. Currency will be associated with user's location
+        float minPrice = 13;
+        // Optional min price of the listing. Currency will be associated with user's location
+        float maxPrice = 14;
+        // Frequency of the notification. One of Daily Weekly OnceEveryTwoWeeks Monthly
+        string notificationFrequency = 15;
+        // When the notifications subscription is set to expire
+        string subscriptionExpiryDate = 16;
+    }
+    // ID of the created subscription item
+    string id = 1;
+    // Whether subscription is active or not
+    bool active = 2;
+    // Details related to the subscription
+    Data data = 3;
+    // Details of the user and his/her location 
+    UserProfile user = 4;
+    // When the subscription was created
+    string createdAt = 5;
+}

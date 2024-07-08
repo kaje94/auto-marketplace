@@ -1,3 +1,11 @@
 {
-    "recommendations": ["dbaeumer.vscode-eslint"]
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "jetpack-io.devbox",
+        "tilt-dev.tiltfile",
+        "golang.go",
+        "bradlc.vscode-tailwindcss",
+        "mkhl.direnv",
+        "ms-playwright.playwright"
+    ]
 }

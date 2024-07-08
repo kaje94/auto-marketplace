@@ -1,0 +1,9 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+
+message UpdateUserProfileResponse {
+    // Listings belonging to the user
+    repeated string listingIds = 1;
+}

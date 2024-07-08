@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    background-color: hsl(var(--n)) !important;
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(to bottom, #e8e8e8, hsl(var(--b1)));
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+    width: 10px;
+    background-color: hsl(var(--nc));
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--nf));
+}
+
+.grecaptcha-badge {
+    visibility: hidden !important;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,9 @@
+go 1.21.0
+
+use (
+	./apps/api-service
+    ./apps/expire-listings-job
+    ./apps/subscriptions-job
+    ./libs/go-utils
+    ./libs/protos/gen/go
+)

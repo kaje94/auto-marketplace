@@ -1,8 +1,8 @@
-# Auto Marketplace Client
+# Auto Marketplace
 
-Welcome to the Auto Marketplace Client project! This platform is designed to provide users with a seamless and intuitive experience for buying and selling vehicles online.
+Welcome to the Auto Marketplace project! This platform offers a seamless and intuitive experience for buying and selling vehicles online.
 
-<a href="https://auto-marketplace.vercel.app/LK">
+<a href="https://targabay.com/lk">
     <img alt="preview-image" src="public/images/banner.jpg" width="1024">
 </a>
 
@@ -17,51 +17,55 @@ Welcome to the Auto Marketplace Client project! This platform is designed to pro
 
 ## Features
 
-1. **Free Vehicle Listings**
+1. **Free Vehicle Listings**: List your vehicle for free on our platform. Reach a wide audience of potential buyers without any cost.
 
-    - List your vehicle for free on our platform. Reach a wide audience of potential buyers without any cost.
+2. **Advanced Search Filters**: Easily find the vehicle that suits your needs with advanced search filters. Filter by make, model, year, price range, and more.
 
-2. **Advanced Search Filters**
+3. **Subscription and Notifications**: Subscribe to specific criteria and receive notifications whenever new listings matching your interests are added. Stay informed without constantly checking the platform.
 
-    - Easily find the vehicle that suits your needs with advanced search filters. Filter by make, model, year, price range, and more.
+4. **Simple and Intuitive User Experience**: We prioritize a clean and user-friendly design to ensure a straightforward experience for both buyers and sellers. Navigate through the platform with ease.
 
-3. **Subscription and Notifications**
+## Tools and Technologies
 
-    - Subscribe to specific criteria and receive notifications whenever new listings matching your interests are added. Stay informed without constantly checking the platform.
+- **Web Application**: [Next.js (App Router)](https://nextjs.org/docs/app/building-your-application/routing), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/) & [DaisyUI](https://daisyui.com/), [Storybook](https://storybook.js.org/)
+- **Backend (API service & cron jobs)**: [Go](https://golang.org/)
+- **API**: [gRPC](https://grpc.io/)
+- **Data Store**: [Xata](https://xata.io/)
+- **Authentication**: [Auth0](https://auth0.com/)
+- **Deployment**: [Kubernetes](https://kubernetes.io/), [Helm](https://helm.sh/), [ArgoCD](https://argoproj.github.io/argo-cd/), [Dockerhub](https://hub.docker.com/)
+- **E2E Testing**: [Playwright](https://playwright.dev/)
+- **Infrastructure**: [AWS SES](https://aws.amazon.com/ses/), [AWS S3](https://aws.amazon.com/s3/)
+- **Other Tools**: [Pulumi](https://www.pulumi.com/), [React-email](https://www.npmjs.com/package/react-email), [ImageKit](https://imagekit.io/), [NX](https://nx.dev/), [Tilt](https://tilt.dev/), [Devbox](https://www.jetify.com/devbox), [Thumbhash](https://github.com/evanw/thumbhash)
 
-4. **Simple and Intuitive User Experience**
-    - We prioritize a clean and user-friendly design to ensure a straightforward experience for both buyers and sellers. Navigate through the platform with ease.
+## Running Locally
 
-## Tech Stack
+You can run the application locally either using Kubernetes or by running commands directly. Follow these steps:
 
-This project leverages [Next.js](https://nextjs.org/) version 14, incorporating the latest enhancements such as the app router and server components. Next.js is a powerful React framework designed for web application development. The complete tech stack includes:
+### Prerequisites
 
--   **Next.js**: A robust React framework with version 14 features, including an advanced app router for intuitive navigation and server components for optimized server-side rendering.
--   **Vercel**: The web app is deployed on the edge network using Vercel, ensuring fast and reliable hosting with global reach.
--   **Tailwind CSS**: A utility-first CSS framework for crafting modern designs efficiently.
--   **DaisyUI**: Tailwind CSS extensions that streamline development and enhance styling capabilities.
--   **Auth0**: A flexible authentication and authorization platform.
--   **AWS S3**: A secure and scalable object storage service for efficient data storage and retrieval.
--   **ImageKit**: Real-time image optimization and transformation service.
--   **TypeScript**: A typed superset of JavaScript, improving code quality and maintainability.
--   **Zod**: TypeScript-first schema declaration and validation library.
--   **Storybook**: A development environment for UI components, allowing for isolated and interactive component development.
--   **Playwright**: A Node.js library for automating browsers, enabling end-to-end testing and browser automation.
+1. **Set Up Infrastructure**: Follow the [Pulumi guide](/libs/pulumi/README.md) to create the necessary infrastructure.
+2. **Initialize Xata**: Follow the [Xata guide](/libs/xata/README.md) to set up Xata.
+3. **Create .env File**: Use the values from the previous steps to create a `.env` file based on the [.env.example](.env.example) file in the root of the repository.
+4. **Load Environment Variables**: Install [direnv](https://direnv.net/) and run `direnv allow` to load the `.envrc` or `.env` file.
+5. **Install Devbox**: Install [Devbox](https://www.jetpack.io/devbox/) and run `devbox shell` to install the required packages and tools. (Optionally, install the [Devbox VSCode extension](https://marketplace.visualstudio.com/items?itemName=jetpack-io.devbox) if you use VSCode).
 
-## Getting Started
+#### Running with Kubernetes
 
-**Note:**
-This repository contains the client-side code for the Auto Marketplace project. However, the backend code is currently private and not included in this repository. As a result, you won't be able to run the project locally without the backend.
+1. **Set Up Docker and Kubernetes**: Make sure your Docker daemon and a local Kubernetes node (e.g., [Minikube](https://minikube.sigs.k8s.io/docs/), [Rancher](https://rancher.com/)) are running.
+2. **Install Tilt**: Install [Tilt](https://tilt.dev/).
+3. **Deploy Application**:
+    - Run `tilt up` to deploy Targabay in production mode.
+    - Run `tilt up -- --dev` to deploy Targabay in development mode.
 
-If you are interested in exploring the client-side code or contributing to the project, feel free to do so. Keep in mind that a fully functional local setup requires the backend, which is not publicly available at the moment.
+#### Running with Commands
 
-## Prerequisites
-
-To run the project locally, you need to have the backend set up separately. For access to the backend code and further details, please contact the project maintainers.
+1. **Install Dependencies**: Run `pnpm i` to install the dependencies.
+2. **Start Application**: Run `pnpm dev` to start the API server and web app in development mode.
+3. **More Scripts**: Check the [package.json](package.json) for other available scripts.
 
 ## Contributing
 
-We welcome contributions! If you'd like to contribute to the client-side code or have questions about the project, please follow our [contribution guidelines](.github/CONTRIBUTING.md).
+We welcome contributions! If you'd like to contribute to the code or have questions about the project, please follow our [contribution guidelines](.github/CONTRIBUTING.md).
 
 ## License
 

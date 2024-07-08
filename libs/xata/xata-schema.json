@@ -1,0 +1,333 @@
+{
+    "tables": [
+        {
+            "name": "listings",
+            "columns": [
+                {
+                    "name": "type",
+                    "type": "string"
+                },
+                {
+                    "name": "model",
+                    "type": "string"
+                },
+                {
+                    "name": "trim",
+                    "type": "string"
+                },
+                {
+                    "name": "yearOfManufacture",
+                    "type": "int"
+                },
+                {
+                    "name": "mileage",
+                    "type": "int"
+                },
+                {
+                    "name": "condition",
+                    "type": "string"
+                },
+                {
+                    "name": "transmissionType",
+                    "type": "string"
+                },
+                {
+                    "name": "engineCapacity",
+                    "type": "int"
+                },
+                {
+                    "name": "vehicleImages",
+                    "type": "json"
+                },
+                {
+                    "name": "features",
+                    "type": "multiple"
+                },
+                {
+                    "name": "description",
+                    "type": "text"
+                },
+                {
+                    "name": "expiryDate",
+                    "type": "datetime"
+                },
+                {
+                    "name": "status",
+                    "type": "string"
+                },
+                {
+                    "name": "yearOfRegistration",
+                    "type": "int"
+                },
+                {
+                    "name": "user",
+                    "type": "link",
+                    "link": {
+                        "table": "users"
+                    }
+                },
+                {
+                    "name": "price",
+                    "type": "int"
+                },
+                {
+                    "name": "priceNegotiable",
+                    "type": "bool",
+                    "defaultValue": "false"
+                },
+                {
+                    "name": "city",
+                    "type": "string"
+                },
+                {
+                    "name": "state",
+                    "type": "string"
+                },
+                {
+                    "name": "countryCode",
+                    "type": "string"
+                },
+                {
+                    "name": "views",
+                    "type": "int",
+                    "defaultValue": "0"
+                },
+                {
+                    "name": "ada002",
+                    "type": "vector",
+                    "vector": {
+                        "dimension": 11
+                    }
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "fuelType",
+                    "type": "string"
+                },
+                {
+                    "name": "adminReview",
+                    "type": "text"
+                }
+            ],
+            "revLinks": [
+                {
+                    "column": "listing",
+                    "table": "reports"
+                }
+            ]
+        },
+        {
+            "name": "users",
+            "columns": [
+                {
+                    "name": "phone",
+                    "type": "string"
+                },
+                {
+                    "name": "city",
+                    "type": "string"
+                },
+                {
+                    "name": "state",
+                    "type": "string"
+                },
+                {
+                    "name": "postalCode",
+                    "type": "string"
+                },
+                {
+                    "name": "countryCode",
+                    "type": "string"
+                },
+                {
+                    "name": "picture",
+                    "type": "string"
+                },
+                {
+                    "name": "vehicleDealer",
+                    "type": "bool",
+                    "defaultValue": "false"
+                },
+                {
+                    "name": "name",
+                    "type": "string"
+                }
+            ],
+            "revLinks": [
+                {
+                    "column": "user",
+                    "table": "listings"
+                },
+                {
+                    "column": "user",
+                    "table": "subscriptions"
+                },
+                {
+                    "column": "user",
+                    "table": "notifications"
+                }
+            ]
+        },
+        {
+            "name": "reports",
+            "columns": [
+                {
+                    "name": "listing",
+                    "type": "link",
+                    "link": {
+                        "table": "listings"
+                    }
+                },
+                {
+                    "name": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "message",
+                    "type": "text"
+                },
+                {
+                    "name": "reason",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "subscriptions",
+            "columns": [
+                {
+                    "name": "displayName",
+                    "type": "string"
+                },
+                {
+                    "name": "type",
+                    "type": "string"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "model",
+                    "type": "string"
+                },
+                {
+                    "name": "trim",
+                    "type": "string"
+                },
+                {
+                    "name": "minYearOfManufacture",
+                    "type": "int"
+                },
+                {
+                    "name": "maxYearOfManufacture",
+                    "type": "int"
+                },
+                {
+                    "name": "minYearOfRegistration",
+                    "type": "int"
+                },
+                {
+                    "name": "maxYearOfRegistration",
+                    "type": "int"
+                },
+                {
+                    "name": "maxMillage",
+                    "type": "int"
+                },
+                {
+                    "name": "minMillage",
+                    "type": "int"
+                },
+                {
+                    "name": "condition",
+                    "type": "string"
+                },
+                {
+                    "name": "minPrice",
+                    "type": "int"
+                },
+                {
+                    "name": "notificationFrequency",
+                    "type": "string"
+                },
+                {
+                    "name": "subscriptionExpiryDate",
+                    "type": "datetime"
+                },
+                {
+                    "name": "user",
+                    "type": "link",
+                    "link": {
+                        "table": "users"
+                    }
+                },
+                {
+                    "name": "countryCode",
+                    "type": "string"
+                },
+                {
+                    "name": "maxPrice",
+                    "type": "int"
+                },
+                {
+                    "name": "active",
+                    "type": "bool",
+                    "defaultValue": "false"
+                }
+            ]
+        },
+        {
+            "name": "notifications",
+            "columns": [
+                {
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "body",
+                    "type": "text"
+                },
+                {
+                    "name": "isShown",
+                    "type": "bool"
+                },
+                {
+                    "name": "redirectPath",
+                    "type": "string"
+                },
+                {
+                    "name": "type",
+                    "type": "string"
+                },
+                {
+                    "name": "user",
+                    "type": "link",
+                    "link": {
+                        "table": "users"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "locations",
+            "columns": [
+                {
+                    "name": "stateName",
+                    "type": "string"
+                },
+                {
+                    "name": "countryCode",
+                    "type": "string"
+                },
+                {
+                    "name": "cities",
+                    "type": "multiple"
+                }
+            ]
+        }
+    ]
+}

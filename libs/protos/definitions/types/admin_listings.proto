@@ -1,0 +1,25 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+
+message GetAdminListingsRequest {
+    message Filters {
+        ListingFilters.PublicListingsFilters publicFilters = 1;
+        ListingFilters.UserListingsFilters userFilters = 2;
+        ListingFilters.AdminListingsFilters adminFilters = 3;
+    }
+    PaginatedRequest page = 1;
+    Filters filters = 2;
+}
+
+
+message ReviewListingRequest {
+    // ID of the record
+    string id = 1;
+    // New status of the listing. One of `Posted`` or `Declined``
+    string status = 2;
+    // Optional review message from Admin
+    string adminReview = 3;
+}

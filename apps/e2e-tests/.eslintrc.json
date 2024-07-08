@@ -1,0 +1,9 @@
+{
+    "extends": ["../../.eslintrc.json", "plugin:playwright/recommended"],
+    "ignorePatterns": ["!**/*", "node_modules"],
+    "rules": {
+        "playwright/no-force-option": "off",
+        "playwright/no-wait-for-timeout": "off"
+    },
+    "settings": { "import/resolver": { "typescript": true, "node": true } }
+}

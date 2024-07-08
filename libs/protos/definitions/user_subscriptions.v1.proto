@@ -1,0 +1,17 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+import "types/user_subscriptions.proto";
+
+service UserSubscriptionsService {
+    rpc CreateSubscription(SubscriptionItem.Data) returns (CreatedIdResponse);
+    rpc UpdateSubscription(UpdateSubscriptionRequest) returns (EmptyResponse);
+    rpc GetSubscriptionItem(IdRequest) returns (SubscriptionItem);
+    rpc DeleteSubscription(IdRequest) returns (EmptyResponse);
+    rpc ActivateSubscription(ActivateSubscriptionRequest) returns (EmptyResponse);
+    rpc DeactivateSubscription(IdRequest) returns (EmptyResponse);
+    rpc GetUserSubscriptions(GetUserSubscriptionsRequest) returns (GetSubscriptionsResponse);
+    rpc CanCreateSubscription(EmptyRequest) returns (BooleanResponse);
+}

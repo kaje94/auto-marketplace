@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "lib": ["es2020"],
+        "module": "es2020",
+        "target": "es2020",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "outDir": "gen/ts/dist"
+    },
+    "include": ["gen/ts/*.ts", "gen/ts/**/*.ts"],
+    "exclude": ["node_modules", "gen/ts/dist"]
+}

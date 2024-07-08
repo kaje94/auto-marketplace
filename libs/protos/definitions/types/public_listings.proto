@@ -1,0 +1,41 @@
+syntax = "proto3";
+package targabay.protos.service;
+option go_package = "targabay/protos/service_pb";
+
+import "types/common.proto";
+
+message GetPublicListingsRequest {
+    message Filters {
+        ListingFilters.PublicListingsFilters publicFilters = 1;
+    }
+    PaginatedRequest page = 1;
+    // Search query that will search the title(Brand, model, trim and year of manuafacture) as well as other fields
+    string query = 2;
+    Filters filters = 3;
+}
+
+
+message CountryCodeRequest {
+    // Country code of the user. Eg: us, in, lk, etc.
+    string countryCode = 1;
+}
+
+message ReportListingRequest {
+    // Email of the user who is reporting
+    string email = 1;
+    // Reason for reporting. Has to be one of (AlreadySold Fraud Duplicate Spam WrongCategory)
+    string reason = 2;
+    // Details related to report
+    string message = 3;
+    // Listing item ID
+    string listingId = 4;
+}
+
+message GetRelatedListingsRequest {
+    // ID of the record
+    string id = 1;
+    // Country code of the listing. Eg: us, in, lk, etc.
+    string countryCode = 2;
+    // Ada 002 vector ebeddings
+    repeated float embeddings = 3;
+}
