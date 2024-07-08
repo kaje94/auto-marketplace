@@ -1,6 +1,6 @@
 # Contributing to Auto Marketplace Client
 
-Thank you for considering contributing to the Auto Marketplace Client project! Your contributions are highly valued. Please take a moment to review the following guidelines.
+Thank you for considering contributing to the Auto Marketplace project! Your contributions are highly valued. Please take a moment to review the following guidelines.
 
 ## Code of Conduct
 
@@ -8,7 +8,7 @@ Please note that this project follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Reporting Issues
 
-If you encounter a bug, have a suggestion for improvement, or any other issue, please [open an issue](https://github.com/kaje94/auto-marketplace-client/issues) on GitHub. Provide detailed information about the problem, including steps to reproduce it.
+If you encounter a bug, have a suggestion for improvement, or any other issue, please [open an issue](https://github.com/kaje94/auto-marketplace/issues) on GitHub. Provide detailed information about the problem, including steps to reproduce it.
 
 ## Feature Requests
 
@@ -32,13 +32,13 @@ To set up the project locally for development, follow the steps outlined in the 
 
 ### Testing
 
-Before opening a PR, ensure that your changes are covered by tests, if applicable. Run the tests locally.
+Before opening a PR, ensure that your changes are covered by tests, if applicable. Update the end-to-end test suite if neccessary.
 
 Fix any issues that arise during testing and linting.
 
 ## Deployment
 
-The Auto Marketplace web app is deployed on Vercel. The build and deployment process is manually triggered by maintainers. Please be patient after your contributions are merged, as deployment updates may not be immediate.
+The build and deployment process is manually triggered by maintainers. Please be patient after your contributions are merged, as deployment updates may not be immediate.
 
 ## Code Style
 

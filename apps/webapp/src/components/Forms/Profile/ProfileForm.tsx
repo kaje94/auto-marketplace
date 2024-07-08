@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { UserProfile, UserProfile_ProfileData } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { getCitiesOfState, getStatesOfCountry } from "@/actions/locationActions";
 import { Avatar } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";

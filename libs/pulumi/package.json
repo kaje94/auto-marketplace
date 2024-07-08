@@ -1,5 +1,5 @@
 {
-    "name": "targabay-pulumi",
+    "name": "pulumi",
     "main": "index.ts",
     "scripts": {
         "deploy": "pulumi up",

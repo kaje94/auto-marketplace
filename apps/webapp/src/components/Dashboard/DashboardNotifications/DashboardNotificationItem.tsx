@@ -2,7 +2,6 @@ import { clsx } from "clsx";
 import Link from "next/link";
 import { FC } from "react";
 import { NotificationItem } from "targabay-protos/gen/ts/dist/types/notifications_pb";
-import { LinkWithLocale } from "@/components/Common";
 import { NotificationIcon } from "@/icons";
 import { getRandomItem, timeAgo } from "@/utils/helpers";
 

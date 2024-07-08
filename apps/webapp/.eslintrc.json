@@ -1,29 +1,11 @@
 {
-    "parser": "@typescript-eslint/parser",
-    "plugins": ["prettier", "typescript-sort-keys", "@typescript-eslint"],
-    "extends": [
-        "next/core-web-vitals",
-        "plugin:import/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier",
-        "plugin:prettier/recommended",
-        "plugin:tailwindcss/recommended"
-    ],
+    "extends": ["../../.eslintrc.json", "next", "plugin:tailwindcss/recommended", "plugin:storybook/recommended"],
+    "ignorePatterns": ["!**/*", "node_modules", ".next", ".storybook"],
     "rules": {
-        "max-lines": ["warn", 300],
-        "prettier/prettier": ["warn", { "tabWidth": 4, "printWidth": 150 }],
-        "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }],
-        "import/order": [
-            "warn",
-            {
-                "groups": [["external", "builtin", "object"], "type", "internal", ["parent", "sibling", "index"]],
-                "pathGroups": [{ "pattern": "@/**", "group": "internal" }],
-                "alphabetize": { "order": "asc", "caseInsensitive": true }
-            }
-        ],
         "tailwindcss/migration-from-tailwind-2": "off",
-        "typescript-sort-keys/interface": "warn",
-        "import/prefer-default-export": "off",
+        "tailwindcss/enforces-shorthand": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "react/require-extension": "off",
         "react/jsx-sort-props": [
             "warn",
             {
@@ -34,12 +16,7 @@
                 "ignoreCase": true,
                 "noSortAlphabetically": false
             }
-        ],
-        "react/require-extension": "off",
-        "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
-        "tailwindcss/enforces-shorthand": "off"
+        ]
     },
     "settings": { "import/resolver": { "typescript": true, "node": true } }
 }

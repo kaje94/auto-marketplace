@@ -5,8 +5,7 @@ import { createGrpcTransport } from "@connectrpc/connect-node";
 import { revalidateTag, unstable_cache } from "next/cache";
 import { NotificationsService } from "targabay-protos/gen/ts/dist/notifications.v1_connect";
 import { GetNotificationResponse, GetUserNotificationsRequest } from "targabay-protos/gen/ts/dist/types/notifications_pb";
-import { apiTags, revalidationTime } from "@/utils/api";
-import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
+import { apiTags, getGrpcHeaders, grpcOptions, revalidationTime } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
 
 const client = createPromiseClient(NotificationsService, createGrpcTransport(grpcOptions));

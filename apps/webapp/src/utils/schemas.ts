@@ -1,24 +1,6 @@
 import { z } from "zod";
 import { MaxVehicleImageCount, YearSelectMinYear } from "./constants";
-import {
-    FuelTypes,
-    ListingReportReason,
-    ListingStatusTypes,
-    SubscriptionFrequencies,
-    TransmissionTypes,
-    VehicleConditionTypes,
-    VehicleTypes,
-} from "./enum";
-
-const BooleanStringSchema = z.union([
-    z.boolean(),
-    z
-        .string()
-        .refine((value) => value === "true" || value === "false", {
-            message: "Value must be 'true' or 'false'",
-        })
-        .transform((value) => value === "true"),
-]);
+import { FuelTypes, ListingStatusTypes, SubscriptionFrequencies, TransmissionTypes, VehicleConditionTypes, VehicleTypes } from "./enum";
 
 const phoneRegex = new RegExp(/^[0-9]{7,14}$/);
 

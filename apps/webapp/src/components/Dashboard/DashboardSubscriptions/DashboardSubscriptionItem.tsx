@@ -4,16 +4,7 @@ import { FC } from "react";
 import { SubscriptionItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { ContextMenuLoading } from "@/components/Common/ContextMenu";
 import { COUNTRIES } from "@/utils/countries";
-import {
-    getDistanceUnit,
-    getFormattedCurrency,
-    getFormattedDistance,
-    getRandomItem,
-    getRandomNumber,
-    getYearFromDateString,
-    timeAgo,
-    unCamelCase,
-} from "@/utils/helpers";
+import { getDistanceUnit, getFormattedCurrency, getFormattedDistance, getRandomItem, getRandomNumber, timeAgo, unCamelCase } from "@/utils/helpers";
 
 /** Lazily loaded context menu */
 const DashboardSubscriptionItemMenu = dynamic(() => import("./DashboardSubscriptionItemMenu").then((mod) => mod.DashboardSubscriptionItemMenu), {

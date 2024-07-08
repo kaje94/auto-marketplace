@@ -1,5 +1,4 @@
 import { clsx } from "clsx";
-import Link from "next/link";
 import { FC } from "react";
 import { ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale } from "@/components/Common";

@@ -2,9 +2,9 @@ import { Text } from "@react-email/components";
 import { EmailWrap } from "./components/EmailWrap";
 
 export interface ListingStatusEmailProps {
-    userName: string;
     listingTitle: string;
     listingUrl: string;
+    userName: string;
 }
 
 export const Subject = "Listing advert for {{listingTitle}} has been taken down";

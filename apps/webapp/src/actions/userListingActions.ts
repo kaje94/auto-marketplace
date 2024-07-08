@@ -7,10 +7,9 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { GetListingsResponse, IdRequest, ListingItem, ListingItem_Data, UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { GetUserListingsRequest, UpdateListingRequest } from "targabay-protos/gen/ts/dist/types/user_listings_pb";
 import { UserListingsService } from "targabay-protos/gen/ts/dist/user_listings.v1_connect";
-import { apiTags, listingItemTags, revalidationTime } from "@/utils/api";
 import { VEHICLE_BRANDS } from "@/utils/brands";
 import { ListingStatusTypes, VehicleConditionTypes, VehicleTypes } from "@/utils/enum";
-import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
+import { apiTags, getGrpcHeaders, grpcOptions, listingItemTags, revalidationTime } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
 import { replaceImageUrlWithCdn, transformListingsImages } from "@/utils/imageUtils";
 

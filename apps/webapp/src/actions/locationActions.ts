@@ -4,8 +4,7 @@ import { createGrpcTransport } from "@connectrpc/connect-node";
 import { unstable_cache } from "next/cache";
 import { LocationsService } from "targabay-protos/gen/ts/dist/locations.v1_connect";
 import { GetCitiesResponse, GetStatesResponse } from "targabay-protos/gen/ts/dist/types/locations_pb";
-import { apiTags, revalidationTime } from "@/utils/api";
-import { grpcOptions } from "@/utils/grpc";
+import { apiTags, grpcOptions, revalidationTime } from "@/utils/grpc";
 
 const client = createPromiseClient(LocationsService, createGrpcTransport(grpcOptions));
 

@@ -1,5 +1,5 @@
 {
-    "name": "targabay-e2e-tests",
+    "name": "e2e-tests",
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
@@ -9,10 +9,7 @@
     "private": true,
     "devDependencies": {
         "@playwright/test": "^1.40.1",
-        "@typescript-eslint/eslint-plugin": "^5.60.1",
-        "@typescript-eslint/parser": "^5.60.1",
-        "eslint": "~8.46.0",
-        "eslint-config-prettier": "8.1.0"
+        "eslint-plugin-playwright": "^1.6.2"
     },
     "nx": {
         "includedScripts": []

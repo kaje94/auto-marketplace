@@ -1,7 +1,7 @@
 // @ts-check
 import { buildClient } from "@xata.io/client";
-import fs from "fs";
 import * as csv from "csv-parse/sync";
+import fs from "fs";
 
 const countryFileData = fs.readFileSync("scripts/csvs/countries.csv", "utf8");
 const stateFileData = fs.readFileSync("scripts/csvs/states.csv", "utf8");

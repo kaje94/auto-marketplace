@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import React, { FC, ReactNode, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
-import { UserProfile, UserProfile_ProfileData } from "targabay-protos/gen/ts/dist/types/common_pb";
+import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { LinkWithLocale } from "@/components/Common";
 import { AutocompleteController } from "@/components/FormElements/AutoComplete";
 import { CheckboxController } from "@/components/FormElements/Checkbox";

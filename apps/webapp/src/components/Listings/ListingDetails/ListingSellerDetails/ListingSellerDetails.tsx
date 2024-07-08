@@ -1,4 +1,3 @@
-import { PartialMessage } from "@bufbuild/protobuf";
 import { clsx } from "clsx";
 import { FC } from "react";
 import { UserProfile } from "targabay-protos/gen/ts/dist/types/common_pb";

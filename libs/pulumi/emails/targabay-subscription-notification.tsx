@@ -1,19 +1,19 @@
-import { Column, Link, Section, Text, Img } from "@react-email/components";
-import { baseUrl } from "./utils/configs";
+import { Column, Img, Link, Section, Text } from "@react-email/components";
 import { EmailWrap } from "./components/EmailWrap";
+import { baseUrl } from "./utils/configs";
 
 export interface InviteUserEmailProps {
-    userName: string;
-    subscriptionName: string;
     listings_Items: {
-        title: string;
+        daysAgo: string;
+        imageColor: string;
+        imageUrl: string;
         listingUrl: string;
         location: string;
-        daysAgo: string;
-        imageUrl: string;
-        imageColor: string;
+        title: string;
     }[];
     moreListingLink: string;
+    subscriptionName: string;
+    userName: string;
 }
 
 export const Subject = "New Listings Matching Your Subscription Preferences for '{{subscriptionName}}'";

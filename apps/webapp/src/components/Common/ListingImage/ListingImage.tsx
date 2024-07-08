@@ -23,7 +23,7 @@ interface Props extends Omit<ImageProps, "src" | "alt"> {
  * This component will also handle image load failures and show an error icon.
  * A placeholder image will also be displayed while the actual image is loaded.
  */
-export const ListingImage: FC<Props> = ({ image, width = 640, quality = 75, title, onError, location, showHasError = true, ...rest }) => {
+export const ListingImage: FC<Props> = ({ image, width = 640, quality = 75, title, location, showHasError = true, ...rest }) => {
     const [blurDataURL, setBlurDataURL] = useState<string | undefined>("");
     const [hasError, setHasError] = useState(false);
 

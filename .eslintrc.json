@@ -1,0 +1,27 @@
+{
+    "root": true,
+    "ignorePatterns": ["**/*"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@nx", "prettier", "typescript-sort-keys", "@typescript-eslint"],
+    "extends": ["plugin:import/recommended", "plugin:@typescript-eslint/recommended", "prettier", "plugin:prettier/recommended"],
+    "rules": {
+        "prettier/prettier": ["warn", { "tabWidth": 4, "printWidth": 150 }],
+        "max-lines": ["warn", 300],
+        "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }],
+        "import/prefer-default-export": "off",
+        "import/order": [
+            "warn",
+            {
+                "groups": [["external", "builtin", "object"], "type", "internal", ["parent", "sibling", "index"]],
+                "pathGroups": [{ "pattern": "@/**", "group": "internal" }],
+                "alphabetize": { "order": "asc", "caseInsensitive": true }
+            }
+        ],
+        "typescript-sort-keys/interface": "warn",
+        "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-inferrable-types": "off"
+    }
+}

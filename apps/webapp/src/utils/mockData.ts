@@ -1,5 +1,4 @@
 import { Claims } from "@auth0/nextjs-auth0";
-import { PartialMessage } from "@bufbuild/protobuf";
 import {
     ListingItem,
     PaginatedResponse as PaginatedGrpcResponse,

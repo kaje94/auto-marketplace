@@ -6,8 +6,7 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import { UserProfile, UserProfile_ProfileData } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { UserProfileService } from "targabay-protos/gen/ts/dist/user_profile.v1_connect";
-import { apiTags, revalidationTime } from "@/utils/api";
-import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
+import { apiTags, getGrpcHeaders, grpcOptions, revalidationTime } from "@/utils/grpc";
 
 const client = createPromiseClient(UserProfileService, createGrpcTransport(grpcOptions));
 

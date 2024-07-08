@@ -1,11 +1,11 @@
-import { Link, Text, Section } from "@react-email/components";
+import { Link, Section, Text } from "@react-email/components";
 import { EmailWrap } from "./components/EmailWrap";
 
 export interface ListingStatusEmailProps {
-    userName: string;
     listingTitle: string;
     listingUrl: string;
     rejectionCause: string;
+    userName: string;
 }
 
 export const Subject = "Listing advert for {{listingTitle}} has been rejected";

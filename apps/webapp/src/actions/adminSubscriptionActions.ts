@@ -6,8 +6,7 @@ import { unstable_cache } from "next/cache";
 import { AdminSubscriptionsService } from "targabay-protos/gen/ts/dist/admin_subscriptions.v1_connect";
 import { GetAdminSubscriptionsRequest } from "targabay-protos/gen/ts/dist/types/admin_subscriptions_pb";
 import { GetSubscriptionsResponse } from "targabay-protos/gen/ts/dist/types/common_pb";
-import { apiTags, revalidationTime } from "@/utils/api";
-import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
+import { apiTags, getGrpcHeaders, grpcOptions, revalidationTime } from "@/utils/grpc";
 
 const client = createPromiseClient(AdminSubscriptionsService, createGrpcTransport(grpcOptions));
 

@@ -1,8 +1,8 @@
-import { Body, Container, Head, Html, Img, Link, Preview, Tailwind, Text, Font } from "@react-email/components";
-import { tailwindConfig, baseUrl } from "../utils/configs";
+import { Body, Container, Font, Head, Html, Img, Link, Preview, Tailwind, Text } from "@react-email/components";
 import * as React from "react";
+import { baseUrl, tailwindConfig } from "../utils/configs";
 
-export const EmailWrap = ({ children, previewText, footNote }: React.PropsWithChildren & { previewText: string; footNote?: React.ReactNode }) => {
+export const EmailWrap = ({ children, previewText, footNote }: React.PropsWithChildren & { footNote?: React.ReactNode; previewText: string }) => {
     return (
         <Html>
             <Tailwind config={tailwindConfig}>

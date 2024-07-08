@@ -6,9 +6,8 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { AdminListingsService } from "targabay-protos/gen/ts/dist/admin_listings.v1_connect";
 import { GetAdminListingsRequest } from "targabay-protos/gen/ts/dist/types/admin_listings_pb";
 import { GetListingsResponse } from "targabay-protos/gen/ts/dist/types/common_pb";
-import { apiTags, listingItemTags, revalidationTime } from "@/utils/api";
 import { ListingStatusTypes } from "@/utils/enum";
-import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
+import { apiTags, getGrpcHeaders, grpcOptions, listingItemTags, revalidationTime } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
 import { transformListingsImages } from "@/utils/imageUtils";
 

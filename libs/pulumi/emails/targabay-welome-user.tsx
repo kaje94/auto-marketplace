@@ -1,10 +1,10 @@
 import { Link, Text } from "@react-email/components";
-import { baseUrl } from "./utils/configs";
 import { EmailWrap } from "./components/EmailWrap";
+import { baseUrl } from "./utils/configs";
 
 export interface WelcomeEmailProps {
-    userName: string;
     countryCode: string;
+    userName: string;
 }
 
 export const Subject = "Welcome to Targabay";

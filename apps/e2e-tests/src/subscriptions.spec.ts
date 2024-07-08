@@ -1,7 +1,6 @@
 import { expect, Page, test } from "@playwright/test";
-import { unCamelCase, updateIncompleteProfile } from "./util";
 import { newSubscriptionItem } from "./constants";
-import { formInputText, formSelectAutocomplete, formSelectDate, formSelectOption, login } from "./util";
+import { formInputText, formSelectAutocomplete, formSelectDate, formSelectOption, login, unCamelCase, updateIncompleteProfile } from "./util";
 
 test.describe.configure({ mode: "serial", retries: process.env.CI ? 2 : 0 });
 
@@ -17,10 +16,12 @@ test.describe("create and manage subscriptions", () => {
         await page.close();
     });
 
+    // eslint-disable-next-line playwright/expect-expect
     test("login", async () => {
         await login(page);
     });
 
+    // eslint-disable-next-line playwright/expect-expect
     test("cleanup my existing subscriptions", async () => {
         await cleanupMySubscriptions(page);
     });
@@ -75,7 +76,7 @@ test.describe("create and manage subscriptions", () => {
         await formSelectOption(page, "activeStatus", "Inactive");
         await formSelectOption(page, "notificationFrequency", "Monthly");
         await page.getByRole("button", { name: "Apply Filters" }).click();
-        await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).not.toBeVisible();
+        await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeHidden();
 
         await page.getByTestId("dashboard-filter").click();
         await formSelectOption(page, "activeStatus", "Active");
@@ -85,7 +86,7 @@ test.describe("create and manage subscriptions", () => {
 
         await page.getByLabel("Filters Applied").click();
         await page.getByRole("button", { name: "Reset Applied Filters" }).click();
-        await expect(page.getByLabel("Filters Applied")).not.toBeVisible();
+        await expect(page.getByLabel("Filters Applied")).toBeHidden();
         await expect(page.getByText(newSubscriptionItem.displayName, { exact: true })).toBeVisible();
     });
 

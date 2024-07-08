@@ -56,8 +56,8 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "files.watcherInclude": ["${workspaceRoot}/libs/protos/gen/**"],
-    "editor.formatOnSave": false,
-    "conventionalCommits.scopes": ["pulumi", "webapp", "service"],
+    "editor.formatOnSave": true,
+    "conventionalCommits.scopes": ["pulumi", "webapp", "api-service", "e2e-tests", "cron-job", "helm"],
     "go.delveConfig": {
         "debugAdapter": "legacy"
     }

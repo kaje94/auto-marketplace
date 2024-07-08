@@ -1,9 +1,10 @@
+/* eslint-disable max-lines */
 import * as auth0 from "@pulumi/auth0";
-import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
+import { Template } from "@pulumi/aws/ses";
+import * as pulumi from "@pulumi/pulumi";
 import * as fs from "fs";
 import { z } from "zod";
-import { Template } from "@pulumi/aws/ses";
 
 const envSchema = z.object({
     ENV_NAME: z.string().optional().default("dev"),

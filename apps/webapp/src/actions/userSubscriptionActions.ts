@@ -6,8 +6,7 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { GetSubscriptionsResponse, SubscriptionItem, SubscriptionItem_Data } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { GetUserSubscriptionsRequest, UpdateSubscriptionRequest } from "targabay-protos/gen/ts/dist/types/user_subscriptions_pb";
 import { UserSubscriptionsService } from "targabay-protos/gen/ts/dist/user_subscriptions.v1_connect";
-import { apiTags, revalidationTime, subscriptionApiTags } from "@/utils/api";
-import { getGrpcHeaders, grpcOptions } from "@/utils/grpc";
+import { apiTags, getGrpcHeaders, grpcOptions, revalidationTime, subscriptionApiTags } from "@/utils/grpc";
 import { delay } from "@/utils/helpers";
 
 const client = createPromiseClient(UserSubscriptionsService, createGrpcTransport(grpcOptions));

@@ -12,8 +12,6 @@ import {
     ListingIdField,
     ListingSubscriptionIdField,
     LocationSchema,
-    MilageSchema,
-    PriceSchema,
     PublicListingsFilterSchema,
     ToggleSubscriptionSchema,
     UpdateProfileSchema,
@@ -49,10 +47,6 @@ export type LabelValue = {
     label: string;
     value: string | number;
 };
-
-type Price = z.infer<typeof PriceSchema>;
-
-type Milage = z.infer<typeof MilageSchema>;
 
 export type Location = z.infer<typeof LocationSchema>;
 

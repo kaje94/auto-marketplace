@@ -1,7 +1,17 @@
 import { expect, Page, test } from "@playwright/test";
-import { numberWithCommas, unCamelCase, updateIncompleteProfile } from "./util";
 import { newListingItem } from "./constants";
-import { formInputText, formSelectAutocomplete, formSelectOption, formTagSelectOptions, formTextareaText, formUploadImage, login } from "./util";
+import {
+    formInputText,
+    formSelectAutocomplete,
+    formSelectOption,
+    formTagSelectOptions,
+    formTextareaText,
+    formUploadImage,
+    login,
+    numberWithCommas,
+    unCamelCase,
+    updateIncompleteProfile,
+} from "./util";
 
 test.describe.configure({ mode: "serial", retries: process.env.CI ? 2 : 0 });
 
@@ -17,10 +27,12 @@ test.describe("create and manage listing", () => {
         await page.close();
     });
 
+    // eslint-disable-next-line playwright/expect-expect
     test("login", async () => {
         await login(page);
     });
 
+    // eslint-disable-next-line playwright/expect-expect
     test("cleanup my existing listings", async () => {
         await cleanupMyAdverts(page);
     });
@@ -83,7 +95,7 @@ test.describe("create and manage listing", () => {
 
         await page.getByLabel("Filters Applied").click();
         await page.getByRole("button", { name: "Reset Applied Filters" }).click({ force: true });
-        await expect(page.getByLabel("Filters Applied")).not.toBeVisible();
+        await expect(page.getByLabel("Filters Applied")).toBeHidden();
         await expect(page.getByText(newListingItem.model)).toBeVisible();
     });
 
@@ -93,7 +105,7 @@ test.describe("create and manage listing", () => {
         await page.getByTestId("dashboard-filter").click();
         await formInputText(page, "model", "some random value");
         await page.getByRole("button", { name: "Apply Filters" }).click();
-        await expect(page.getByText(newListingItem.model)).not.toBeVisible();
+        await expect(page.getByText(newListingItem.model)).toBeHidden();
         await page.getByTestId("dashboard-filter").click();
         await formInputText(page, "model", newListingItem.model);
         await page.getByRole("button", { name: "Apply Filters" }).click();
@@ -101,13 +113,14 @@ test.describe("create and manage listing", () => {
         await page.getByTestId("dashboard-filter").click();
         await formSelectOption(page, "fuelType", "Diesel");
         await page.getByRole("button", { name: "Apply Filters" }).click();
-        await expect(page.getByText(newListingItem.model)).not.toBeVisible();
+        await expect(page.getByText(newListingItem.model)).toBeHidden();
         await page.getByLabel("Filters Applied").click();
         await page.getByRole("button", { name: "Reset Applied Filters" }).click();
-        await expect(page.getByLabel("Filters Applied")).not.toBeVisible();
+        await expect(page.getByLabel("Filters Applied")).toBeHidden();
         await expect(page.getByText(newListingItem.model)).toBeVisible();
     });
 
+    // eslint-disable-next-line playwright/expect-expect
     test("revalidate posted listing list cache", async () => {
         await page.goto("/lk/dashboard/cache-manage", { waitUntil: "domcontentloaded" });
         await page.getByRole("button", { name: "Revalidate posted listings by country" }).click();
@@ -120,18 +133,18 @@ test.describe("create and manage listing", () => {
         await formSelectOption(page, "vehicleType", "Van");
         await page.getByRole("link", { name: "Search" }).click({ force: true });
         await expect(page.getByRole("button", { name: "Filters Applied" })).toBeVisible({ timeout: 20000 });
-        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
+        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeHidden();
         await page.getByRole("button", { name: "Filters Applied" }).click();
         await formSelectOption(page, "condition", "Registered");
         await page.getByRole("link", { name: "Search" }).click();
-        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
+        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeHidden();
         await page.getByRole("button", { name: "Filters" }).click();
         await page.getByRole("button", { name: "Reset Applied Filters" }).click();
         await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeVisible({ timeout: 20000 });
         await page.getByRole("button", { name: "Filters" }).click();
         await formSelectOption(page, "fuelType", "Diesel");
         await page.getByRole("button", { name: "Apply Filters" }).click();
-        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).not.toBeVisible();
+        await expect(page.getByText(`${newListingItem.brand} ${newListingItem.model} ${newListingItem.trim}`)).toBeHidden();
         await page.getByRole("button", { name: "Filters" }).click();
         await formSelectOption(page, "fuelType", "Petrol");
         await page.getByRole("button", { name: "Apply Filters" }).click();

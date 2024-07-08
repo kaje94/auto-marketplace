@@ -1,5 +1,5 @@
 {
-    "name": "targabay-webapp",
+    "name": "webapp",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -68,17 +68,9 @@
         "@types/react": "^18.2.38",
         "@types/react-datepicker": "^4.15.0",
         "@types/react-dom": "^18.2.14",
-        "@typescript-eslint/eslint-plugin": "^6.16.0",
-        "@typescript-eslint/parser": "^6.7.3",
-        "eslint": "8.50.0",
         "eslint-config-next": "14.1.4",
-        "eslint-config-prettier": "^9.0.0",
-        "eslint-import-resolver-typescript": "^3.6.1",
-        "eslint-plugin-import": "^2.28.1",
-        "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-storybook": "^0.6.15",
         "eslint-plugin-tailwindcss": "^3.13.0",
-        "eslint-plugin-typescript-sort-keys": "^3.0.0",
         "storybook": "^7.6.5"
     },
     "nx": {

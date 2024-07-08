@@ -15,6 +15,7 @@ test.describe("update profile", () => {
         await page.close();
     });
 
+    // eslint-disable-next-line playwright/expect-expect
     test("login", async () => {
         await login(page);
     });

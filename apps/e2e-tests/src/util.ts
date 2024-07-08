@@ -58,6 +58,7 @@ export const login = async (page: Page) => {
         }
 
         await expect(page).toHaveTitle(/Targabay/);
+        // eslint-disable-next-line playwright/no-wait-for-selector
         await page.waitForSelector('img[alt="profile-image"]', { timeout: 30000 });
     }
 };

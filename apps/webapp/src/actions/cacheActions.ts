@@ -1,6 +1,6 @@
 "use server";
 import { revalidateTag } from "next/cache";
-import { apiTags } from "@/utils/api";
+import { apiTags } from "@/utils/grpc";
 import { ListingIdType } from "@/utils/types";
 
 /** Revalidate all the posted listing results. */

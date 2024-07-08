@@ -1,8 +1,3 @@
-Certainly! Here's a basic template for a SECURITY.md file:
-
-markdown
-Copy code
-
 # Security Policy
 
 ## Reporting a Vulnerability

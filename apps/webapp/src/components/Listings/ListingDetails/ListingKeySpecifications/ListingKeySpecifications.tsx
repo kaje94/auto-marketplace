@@ -1,8 +1,7 @@
 import { clsx } from "clsx";
 import { FC } from "react";
 import { ListingItem_Data } from "targabay-protos/gen/ts/dist/types/common_pb";
-import { getDistanceUnit, getFormattedDistance, getRandomItem, getYearFromDateString, numberWithCommas, unCamelCase } from "@/utils/helpers";
-import { Vehicle } from "@/utils/types";
+import { getDistanceUnit, getFormattedDistance, getRandomItem, numberWithCommas, unCamelCase } from "@/utils/helpers";
 
 interface Props {
     countryCode?: string;

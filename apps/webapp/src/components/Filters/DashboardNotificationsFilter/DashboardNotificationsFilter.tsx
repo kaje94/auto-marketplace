@@ -2,7 +2,6 @@ import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { UserNotificationsFilterReq } from "@/utils/types";
 import { FilterInput as InputController } from "../FilterFormElements/DashboardFilterInput";
-import { FilterSelect as SelectController } from "../FilterFormElements/DashboardFilterSelect";
 import { FilterWrap } from "../FilterFormElements/FilterWrap";
 
 interface Props {

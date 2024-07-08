@@ -1,10 +1,10 @@
-import { Link, Text, Section } from "@react-email/components";
+import { Link, Section, Text } from "@react-email/components";
 import { EmailWrap } from "./components/EmailWrap";
 
 export interface ListingStatusEmailProps {
-    userName: string;
     listingTitle: string;
     listingUrl: string;
+    userName: string;
 }
 
 export const Subject = "Listing advert for {{listingTitle}} has been approved";
@@ -13,11 +13,11 @@ export const TemplateName = "targabay-listing-approved-template";
 
 export default () => {
     return (
-        <EmailWrap previewText="Congratulations! Your listing for {{listingTitle}} has been approved">
+        <EmailWrap previewText="Your listing for {{listingTitle}} has been approved">
             <Text>{"Hi {{userName}}"},</Text>
             <Text>
                 {
-                    "Congratulations! Your listing for {{listingTitle}} is now live on Targabay. Users can explore and discover your vehicle. Best of luck with your sale! For assistance, contact our support team."
+                    "Your listing for {{listingTitle}} is now live on Targabay. Users can explore and discover your vehicle. Best of luck with your sale! For assistance, contact our support team."
                 }
             </Text>
             <Section className="flex my-8">

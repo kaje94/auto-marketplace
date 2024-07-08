@@ -6,9 +6,8 @@ import { unstable_cache } from "next/cache";
 import { PublicListingsService } from "targabay-protos/gen/ts/dist/public_listings.v1_connect";
 import { GetListingsResponse, ListingItem } from "targabay-protos/gen/ts/dist/types/common_pb";
 import { GetPublicListingsRequest } from "targabay-protos/gen/ts/dist/types/public_listings_pb";
-import { apiTags, revalidationTime } from "@/utils/api";
 import { ListingReportReason } from "@/utils/enum";
-import { grpcOptions } from "@/utils/grpc";
+import { apiTags, grpcOptions, revalidationTime } from "@/utils/grpc";
 import { replaceImageUrlWithCdn, transformListingsImages } from "@/utils/imageUtils";
 import { ListingIdType } from "@/utils/types";
 
