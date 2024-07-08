@@ -14,7 +14,7 @@ jobs:
             - name: Install devbox
               uses: jetify-com/devbox-install-action@v0.11.0
             - name: Install node modules
-              run: devbox run -- pnpm i
+              run: devbox run -- pnpm install --frozen-lockfile
     lint:
         runs-on: ubuntu-latest
         needs: install-devbox
