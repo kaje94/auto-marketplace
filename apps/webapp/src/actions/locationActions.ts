@@ -21,6 +21,7 @@ export const getStatesOfCountry = async (countryCode: string) => {
     return getStates(countryCode);
 };
 
+/** Get list of cities for a given country */
 export const getCitiesOfState = async (stateCode: string) => {
     const getCities = unstable_cache(
         async (stateCode: string) => {

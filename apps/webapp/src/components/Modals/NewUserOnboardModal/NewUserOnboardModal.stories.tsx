@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockProfileData2, mockUserClaims } from "@/utils/mockData";
+import { mockProfileData, mockUserClaims } from "@/utils/mockData";
 import { NewUserOnboardModal } from "./NewUserOnboardModal";
 
 const meta = {
@@ -15,5 +15,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: { userData: mockProfileData2, userClaims: mockUserClaims, initiallyVisible: true },
+    args: { userData: mockProfileData, userClaims: mockUserClaims, initiallyVisible: true },
 };

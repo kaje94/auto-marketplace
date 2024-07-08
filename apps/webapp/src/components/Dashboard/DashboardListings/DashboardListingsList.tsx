@@ -9,7 +9,6 @@ import { ListingItem, PaginatedResponse } from "targabay-protos/gen/ts/dist/type
 import { Empty, Pagination } from "@/components/Common";
 import { useDashboardAllListingsContext } from "@/providers/DashboardAllListingsContextProvider";
 import { useDashboardMyListingsContext } from "@/providers/DashboardMyListingsContextProvider";
-// import { ListingItems, PaginatedResponse } from "@/utils/types";
 import { DashboardListingItem } from "./DashboardListingItem";
 
 interface Props {

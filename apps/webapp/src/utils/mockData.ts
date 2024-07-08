@@ -16,29 +16,13 @@ import {
     VehicleConditionTypes,
     VehicleTypes,
 } from "./enum";
-import { LabelValue, ListingUser, Location, VehicleImageType } from "./types";
+import { LabelValue, Location, VehicleImageType } from "./types";
 
 export const mockProfilePic = "https://picsum.photos/id/64/200/200";
 
 export const mockUserLocation: Location = { city: "Colombo", state: "Western Province", postalCode: "00001", country: "LK" };
 
-// TODO: remove
-export const mockProfileData: ListingUser = {
-    userId: "abc",
-    firstName: "UserFirstName",
-    lastName: "UserLastName",
-    fullName: "FirstName LastName",
-    picture: mockProfilePic,
-    isDealership: false,
-    address: mockUserLocation,
-    userName: null,
-    email: "user@gmail.com",
-    phone: "0123456789",
-    emailConfirmed: true,
-    phoneConfirmed: true,
-};
-
-export const mockProfileData2: UserProfile = {
+export const mockProfileData: UserProfile = {
     email: "user@gmail.com",
     name: "FirstName LastName",
     picture: mockProfilePic,
@@ -96,7 +80,7 @@ export const mockListingItem: ListingItem = {
     expiryDate: "2024-01-17T12:37:40.268715+00:00",
     reviewComment: "",
     createdAt: "2023-12-17T12:37:40.502928+00:00",
-    user: mockProfileData2,
+    user: mockProfileData,
 } as ListingItem;
 
 export const paginatedResp: PaginatedGrpcResponse = {
@@ -147,7 +131,7 @@ export const mockSubscriptionItem: SubscriptionItem = {
         notificationFrequency: SubscriptionFrequencies.Daily,
         subscriptionExpiryDate: "2023-12-30T00:00:00+00:00",
     },
-    user: mockProfileData2,
+    user: mockProfileData,
 } as SubscriptionItem;
 
 export const mockNotificationItem: NotificationItem = {

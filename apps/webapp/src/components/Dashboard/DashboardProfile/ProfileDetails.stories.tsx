@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockProfileData2 } from "@/utils/mockData";
+import { mockProfileData } from "@/utils/mockData";
 import { ProfileDetails } from "./ProfileDetails";
 
 const meta = {
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 /** Once profile details are loaded */
 export const Loaded: Story = {
     args: {
-        profile: mockProfileData2,
+        profile: mockProfileData,
     },
 };
 

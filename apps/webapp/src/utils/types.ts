@@ -50,55 +50,7 @@ export type LabelValue = {
 
 export type Location = z.infer<typeof LocationSchema>;
 
-export type ListingUser = {
-    address: null | {
-        city?: string;
-        country?: string;
-        postalCode?: string;
-        state?: string;
-    };
-    email: string;
-    emailConfirmed: boolean;
-    firstName: string;
-    fullName: string;
-    isDealership: boolean;
-    lastName: string;
-    phone: string;
-    phoneConfirmed: boolean;
-    picture: string;
-    userId: string;
-    userName: null | string;
-};
-
 export type Vehicle = z.infer<typeof VehicleSchema>;
-
-export type NotificationItem = {
-    body: string;
-    createdOn: string;
-    id: string;
-    isShown: boolean;
-    redirectUrl: string;
-    title: string;
-    type: NotificationTypes;
-    userId: string;
-};
-
-export type GetPresignedS3UrlsResponse = {
-    bucket: string;
-    expiryTime: string;
-    key: string;
-    region: string;
-    url: string;
-}[];
-
-export type Country = {
-    countryCode: string;
-    currency: string;
-    emojiU: string;
-    name: string;
-    phoneCode: string;
-    region: string;
-};
 
 export interface CountryMap {
     [key: string]: [name: string, currency: string, currencySymbol: string, phoneCode: string, flag: string];

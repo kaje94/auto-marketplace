@@ -2,6 +2,20 @@
 
 This directory contains end-to-end tests for the project using [Playwright](https://playwright.dev/).
 
+### Requirements
+- Generate a test admin user credentials in Auth0 and provide following as env variables
+```
+TEST_ADMIN_EMAIL=
+TEST_ADMIN_PASSWORD=
+```
+
+### How to run
+```
+pnpm test:e2e
+or
+pnpm test:e2e:ui
+```
+
 ## Listings
 
 ### 1.1 Login

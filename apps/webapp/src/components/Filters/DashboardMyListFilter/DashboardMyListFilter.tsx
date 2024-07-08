@@ -3,11 +3,9 @@ import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { GetStatesResponse_StateItem } from "targabay-protos/gen/ts/dist/types/locations_pb";
 import { getCitiesOfState } from "@/actions/locationActions";
-
 import { VEHICLE_BRANDS } from "@/utils/brands";
 import { FuelTypeList, ListingTypeList, TransmissionTypeList, VehicleConditionList, VehicleTypeList, YearSelectMinYear } from "@/utils/constants";
 import { LabelValue, UserListingsFilterReq } from "@/utils/types";
-
 import { FilterAutoComplete as AutocompleteController } from "../FilterFormElements/DashboardFilterAutoComplete";
 import { FilterInput as InputController } from "../FilterFormElements/DashboardFilterInput";
 import { FilterNumberInput as NumberInputController } from "../FilterFormElements/DashboardFilterNumberInput";

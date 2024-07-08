@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockProfileData2, mockUserClaims } from "@/utils/mockData";
+import { mockProfileData, mockUserClaims } from "@/utils/mockData";
 import { NavBarClient } from "./NavBarClient";
 
 const meta = {
@@ -27,7 +27,7 @@ export const Loading: Story = {
 export const LoggedIn: Story = {
     args: {
         userClaims: mockUserClaims,
-        userData: mockProfileData2,
+        userData: mockProfileData,
     },
 };
 
@@ -35,7 +35,7 @@ export const LoggedIn: Story = {
 export const WithNotifications: Story = {
     args: {
         userClaims: mockUserClaims,
-        userData: mockProfileData2,
+        userData: mockProfileData,
         notificationCount: 2,
     },
 };

@@ -11,8 +11,6 @@ import { standardFont } from "./fonts";
 
 import "./globals.css";
 
-// export const runtime = "edge";
-
 const title = "Targabay - Your Ultimate Vehicle Marketplace";
 const description =
     "Welcome to Targabay, the ultimate hub for automotive enthusiasts exploring a journey of discovery, buying, and selling. Explore a diverse range of vehicles, from sleek cars to thrilling bikes. As your premier destination for automotive engagement, Targabay provides a seamless platform connecting buyers and sellers, ensuring a personalized and secure experience for every automotive adventure.";
