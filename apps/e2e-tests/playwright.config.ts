@@ -34,7 +34,7 @@ export default defineConfig({
     webServer: {
         command: "pnpm run start",
         url: "http://localhost:3000",
-        timeout: 240 * 1000,
+        timeout: 300 * 1000,
         reuseExistingServer: !process.env.CI,
         cwd: workspaceRoot,
     },

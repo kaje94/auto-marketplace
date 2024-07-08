@@ -32,7 +32,7 @@ const config = {
         // Will be tested separately in the CI pipeline
         ignoreDuringBuilds: true,
     },
-    output: "standalone",
+    output: "export",
     // cleanDistDir: true,
 };
 export default config;
