@@ -6,7 +6,8 @@
         "go@1.21.0",
         "protobuf@24.4",
         "protoc-gen-go@1.32.0",
-        "protoc-gen-go-grpc@1.2.0"
+        "protoc-gen-go-grpc@1.2.0",
+        "playwright-driver@latest"
     ],
     "env": {
         "NIX_HARDENING_ENABLE": ""
