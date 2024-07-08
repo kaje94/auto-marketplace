@@ -20,10 +20,12 @@ spec:
           image: "{{ .Values.apiService.image.name }}:{{ .Values.apiService.image.version }}"
           ports:
             - containerPort: 3001
+            - containerPort: 3002
           envFrom:
           - configMapRef:
               name: {{ .Values.configmapName }}
           readinessProbe:
+            initialDelaySeconds: 10
             httpGet:
               port: 3002
               path: '/health'

@@ -5,8 +5,8 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   ENV_NAME: {{ required ".Values.configMap.values.ENV_NAME required!" .Values.configMap.values.ENV_NAME }}
-  MAX_USER_LISTINGS: {{ required ".Values.configMap.values.MAX_USER_LISTINGS required!" .Values.configMap.values.MAX_USER_LISTINGS }}
-  MAX_USER_SUBSCRIPTIONS: {{ required ".Values.configMap.values.MAX_USER_SUBSCRIPTIONS required!" .Values.configMap.values.MAX_USER_SUBSCRIPTIONS }}
+  MAX_USER_LISTINGS: "{{ required ".Values.configMap.values.MAX_USER_LISTINGS required!" ( .Values.configMap.values.MAX_USER_LISTINGS ) }}"
+  MAX_USER_SUBSCRIPTIONS: "{{ required ".Values.configMap.values.MAX_USER_SUBSCRIPTIONS required!" ( .Values.configMap.values.MAX_USER_SUBSCRIPTIONS ) }}"
   # Auth0
   # Auth0 - Common
   AUTH0_ISSUER_BASE_URL: {{ required ".Values.configMap.values.AUTH0_ISSUER_BASE_URL required!" .Values.configMap.values.AUTH0_ISSUER_BASE_URL }}

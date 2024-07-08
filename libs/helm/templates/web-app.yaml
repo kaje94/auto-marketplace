@@ -24,6 +24,7 @@ spec:
           - configMapRef:
               name: {{ .Values.configmapName }}
           readinessProbe:
+            initialDelaySeconds: 10
             httpGet:
               port: 3000
               path: '/health'

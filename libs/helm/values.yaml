@@ -41,9 +41,9 @@ subscriptionsJob:
 configMap:
     name: tb-config-map
     values:
-        ENV_NAME: ""
-        MAX_USER_LISTINGS: ""
-        MAX_USER_SUBSCRIPTIONS: ""
+        ENV_NAME: "dev"
+        MAX_USER_LISTINGS: "15"
+        MAX_USER_SUBSCRIPTIONS: "3"
         AUTH0_ISSUER_BASE_URL: ""
         AUTH0_DOMAIN: ""
         AUTH0_API_CLIENT_ID: ""

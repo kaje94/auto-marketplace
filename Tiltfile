@@ -2,11 +2,6 @@
 # https://docs.tilt.dev/api.html#api.version_settings
 version_settings(constraint='>=0.22.2')
 
-# additional argument to run in dev mode
-# `tilt up -- --dev` will run in dev mode, else prod mode
-config.define_bool("dev")
-dev_mode = 'dev' in config.parse()
-
 # Common properties for docker_build
 common_only = ['devbox.json','devbox.lock','package.json','nx.json','pnpm-lock.yaml','pnpm-workspace.yaml','./libs/protos']
 go_common_only = ['./apps/api-service/','./libs/go-utils/','./apps/expire-listings-job/','./apps/subscriptions-job/','go.work','go.work.sum']
@@ -24,28 +19,28 @@ webapp_resource_port = '3000'
 docker_build(
     api_resource_image_name,
     context='.',
-    dockerfile='apps/api-service/Dockerfile.dev' if dev_mode else 'apps/api-service/Dockerfile',
+    dockerfile='apps/api-service/Dockerfile',
     only=common_only + go_common_only,
     ignore=common_ignore,
 )
 docker_build(
     expire_listings_job_resource_image_name,
     context='.',
-    dockerfile='apps/expire-listings-job/Dockerfile.dev' if dev_mode else 'apps/expire-listings-job/Dockerfile',
+    dockerfile='apps/expire-listings-job/Dockerfile',
     only=common_only + go_common_only,
     ignore=common_ignore,
 )
 docker_build(
     subscriptions_job_resource_image_name,
     context='.',
-    dockerfile='apps/subscriptions-job/Dockerfile.dev' if dev_mode else 'apps/subscriptions-job/Dockerfile',
+    dockerfile='apps/subscriptions-job/Dockerfile',
     only=common_only + go_common_only,
     ignore=common_ignore,
 )
 docker_build(
     webapp_resource_image_name,
     context='.',
-    dockerfile='apps/webapp/Dockerfile.dev' if dev_mode else 'apps/webapp/Dockerfile',
+    dockerfile='apps/webapp/Dockerfile',
     only=common_only + ['./apps/webapp/'],
     ignore=common_ignore + ['.next'],
     build_args=webapp_build_args,
