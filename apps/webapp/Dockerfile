@@ -14,11 +14,21 @@ COPY --chown=${DEVBOX_USER}:${DEVBOX_USER} devbox.lock devbox.lock
 RUN devbox install
 USER root:root
 
-# Copy all files
-COPY . .
+# Copy core files
+COPY package.json nx.json pnpm-* go.* ./
+COPY apps/webapp/package.json apps/webapp/pnpm-* apps/webapp/
+COPY apps/api-service/go.* apps/api-service/
+COPY apps/expire-listings-job apps/expire-listings-job
+COPY apps/subscriptions-job apps/subscriptions-job
+COPY libs/go-utils libs/go-utils
+COPY libs/protos libs/protos
+
 
 # Install dependencies
 RUN devbox run pnpm install --frozen-lockfile
+
+# Copy the apps/webapp directories
+COPY apps/webapp apps/webapp
 
 # Set necessary build-time variables as args
 # Public env as args
