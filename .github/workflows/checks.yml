@@ -3,6 +3,7 @@ on: [workflow_dispatch, push, pull_request]
 env:
     NODE_OPTIONS: "--max_old_space_size=4096"
     SKIP_ENV_VALIDATION: true
+    GRPC_API_BASE_URL: "http://localhost:3001"
 jobs:
     lint-and-build:
         runs-on: ubuntu-latest
