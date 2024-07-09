@@ -50,3 +50,13 @@ jobs:
                   push: true
                   tags: ${{ secrets.DOCKERHUB_USERNAME }}/targabay-${{ env.imageName }}:${{ github.event.inputs.version }}
                   platforms: linux/amd64,linux/arm64
+            - name: Update the version in values.yaml
+              uses: mikefarah/yq@master
+              with:
+                  cmd: yq -i '.${{ github.event.inputs.app }}.image.version = "${{ github.event.inputs.version }}"' 'libs/helm/values.yaml'
+            - name: Commit & Push changes
+              uses: actions-js/push@master
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  message: "Update ${{ github.event.inputs.app }} docker image version to ${{ github.event.inputs.version }}"
+                  branch: ${{ github.ref_name }}

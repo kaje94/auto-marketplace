@@ -3,7 +3,7 @@
 Welcome to the Auto Marketplace project! This platform offers a seamless and intuitive experience for buying and selling vehicles online.
 
 <a href="https://targabay.com/lk">
-    <img alt="preview-image" src="public/images/banner.jpg" width="1024">
+    <img alt="preview-image" src="apps/webapp/public/images/banner.jpg" width="1024">
 </a>
 
 <br>
