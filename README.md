@@ -9,11 +9,11 @@ Welcome to the Auto Marketplace project! This platform offers a seamless and int
 <br>
 
 ![](https://api.checklyhq.com/v1/badges/checks/d8ee5b92-7ff0-4809-9cc4-405274b5411b?style=flat&theme=default)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplace-client&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplace-client)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplacet&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplacet)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplacet&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplacet)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplacet&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplacet)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplacet&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplacet)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=kaje94_auto-marketplacet&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=kaje94_auto-marketplacet)
 
 ## Features
 
