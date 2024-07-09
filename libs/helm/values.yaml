@@ -13,18 +13,18 @@ webApp:
     appName: webapp
     image:
         name: kajendranalagaratnam/targabay-webapp
-        version: 0.0.5
+        version: 1.0.0
     port: 3000
 expireListingsJob:
     appName: expire-listings-job
     cronExpression: "0 0 * * *"
     image:
         name: kajendranalagaratnam/targabay-expire-listings-job
-        version: 0.0.7
+        version: 1.0.0
 subscriptionsJob:
     image:
         name: kajendranalagaratnam/targabay-subscriptions-job
-        version: 0.0.7
+        version: 1.0.0
     crons:
         - appName: subscriptions-daily-job
           cronExpression: "0 1 * * *"
