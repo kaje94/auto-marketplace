@@ -140,7 +140,6 @@ func sendEmail(userRecord xata.UserRecord, listingRecord xata.ListingRecord, rej
 		emailContent.RejectionCause = reviewComment
 		templateName = fmt.Sprintf(`targabay-listing-rejected-template-%s`, config.Config.EnvName)
 	}
-	// todo: check if we need to call commonUtil.DeSanitizeEmail again?
 	userEmail := commonUtil.DeSanitizeEmail(commonUtil.GetUserEmailFromListingRec(listingRecord))
 	emailSource := "Targabay <notifications@targabay.com>"
 	emailContentMarshalled, err := json.Marshal(emailContent)

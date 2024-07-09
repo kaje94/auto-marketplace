@@ -15,7 +15,7 @@ jobs:
               with:
                   enable-cache: "true"
             - name: Install dependencies
-              run: devbox run -- pnpm install --frozen-lockfile
+              run: devbox run -- pnpm install
             - name: Lint
               run: devbox run -- pnpm lint
             - name: Build
