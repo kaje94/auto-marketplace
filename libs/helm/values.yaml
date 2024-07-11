@@ -38,6 +38,12 @@ subscriptionsJob:
         - appName: subscriptions-monthly-job
           cronExpression: "0 0 1 * *"
           args: ["Monthly"]
+notifyReviewJob:
+    appName: notify-review-job
+    cronExpression: "0 0 * * *"
+    image:
+        name: kajendranalagaratnam/targabay-notify-review-job
+        version: 1.0.0
 configMap:
     name: tb-config-map
     values:
@@ -64,3 +70,4 @@ configMap:
         IMAGE_CDN_BASE: ""
         RECAPTCHA_SITE_SECRET: ""
         NEXT_CONTACT_US_FORM_KEY: ""
+        ADMIN_EMAILS: ""

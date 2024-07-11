@@ -246,6 +246,14 @@ const listingTakenDownTemplate = new aws.ses.Template("targabay-listing-taken-do
 });
 emailTemplates.push(listingTakenDownTemplate);
 
+const listingToReviewTemplate = new aws.ses.Template("targabay-listing-to-review", {
+    name: `targabay-listing-to-review-${env.ENV_NAME}`,
+    subject: "{{ count }} new listings needs to be reviewed'",
+    html: fs.readFileSync("./out/html/targabay-listing-to-review.html", "utf8"),
+    text: fs.readFileSync("./out/text/targabay-listing-to-review.txt", "utf8"),
+});
+emailTemplates.push(listingToReviewTemplate);
+
 const subscriptionTemplate = new aws.ses.Template("targabay-subscription-template", {
     name: `targabay-subscription-template-${env.ENV_NAME}`,
     subject: "New Listings Matching Your Subscription Preferences for '{{subscriptionName}}'",

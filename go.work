@@ -4,6 +4,7 @@ use (
 	./apps/api-service
     ./apps/expire-listings-job
     ./apps/subscriptions-job
+    ./apps/notify-review-job
     ./libs/go-utils
     ./libs/protos/gen/go
 )

@@ -4,13 +4,14 @@ version_settings(constraint='>=0.22.2')
 
 # Common properties for docker_build
 common_only = ['devbox.json','devbox.lock','package.json','nx.json','pnpm-lock.yaml','pnpm-workspace.yaml','./libs/protos']
-go_common_only = ['./apps/api-service/','./libs/go-utils/','./apps/expire-listings-job/','./apps/subscriptions-job/','go.work','go.work.sum']
+go_common_only = ['./apps/api-service/','./libs/go-utils/','./apps/expire-listings-job/','./apps/subscriptions-job/','./apps/notify-review-job/','go.work','go.work.sum']
 common_ignore = ['node_modules']
 webapp_build_args = {
     'NEXT_PUBLIC_SUPPORT_EMAIL': os.getenv('NEXT_PUBLIC_SUPPORT_EMAIL', 'support@taragabay.com'),
 }
 api_resource_image_name = 'kajendranalagaratnam/targabay-api-service'
 expire_listings_job_resource_image_name = 'kajendranalagaratnam/targabay-expire-listings-job'
+review_notification_job_resource_image_name = 'kajendranalagaratnam/targabay-notify-review-job'
 subscriptions_job_resource_image_name = 'kajendranalagaratnam/targabay-subscriptions-job'
 webapp_resource_image_name = 'kajendranalagaratnam/targabay-webapp'
 webapp_resource_port = '3000'
@@ -34,6 +35,13 @@ docker_build(
     subscriptions_job_resource_image_name,
     context='.',
     dockerfile='apps/subscriptions-job/Dockerfile',
+    only=common_only + go_common_only,
+    ignore=common_ignore,
+)
+docker_build(
+    review_notification_job_resource_image_name,
+    context='.',
+    dockerfile='apps/notify-review-job/Dockerfile',
     only=common_only + go_common_only,
     ignore=common_ignore,
 )
@@ -69,7 +77,8 @@ env_keys = [
     # Optional configs
     'IMAGE_CDN_BASE',
     'RECAPTCHA_SITE_SECRET',
-    'NEXT_CONTACT_US_FORM_KEY'
+    'NEXT_CONTACT_US_FORM_KEY',
+    'ADMIN_EMAILS'
 ]
 
 # Initialize an empty list to hold the --set arguments as key, value turple
@@ -77,6 +86,7 @@ arg_keys_values = []
 arg_keys_values.append(["apiService.image.name", api_resource_image_name])
 arg_keys_values.append(["expireListingsJob.image.name", expire_listings_job_resource_image_name])
 arg_keys_values.append(["subscriptionsJob.image.name", subscriptions_job_resource_image_name])
+arg_keys_values.append(["notifyReviewJob.image.name", review_notification_job_resource_image_name])
 arg_keys_values.append(["webApp.image.name", webapp_resource_image_name])
 arg_keys_values.append(["webApp.port", webapp_resource_port])
 
@@ -99,6 +109,7 @@ watch_file('libs/helm')
 k8s_resource('webapp', port_forwards=webapp_resource_port, labels=['webapp'])
 k8s_resource('api-service', labels=['api-service'])
 k8s_resource('expire-listings-job', labels=['expire-listings-job'])
+k8s_resource('notify-review-job', labels=['notify-review-job'])
 k8s_resource('subscriptions-daily-job', labels=['subscription-jobs'])
 k8s_resource('subscriptions-weekly-job', labels=['subscription-jobs'])
 k8s_resource('subscriptions-every-2-weeks-job', labels=['subscription-jobs'])

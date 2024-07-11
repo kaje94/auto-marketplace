@@ -34,4 +34,5 @@ data:
   IMAGE_CDN_BASE: {{ .Values.configMap.values.IMAGE_CDN_BASE }}
   RECAPTCHA_SITE_SECRET: {{ .Values.configMap.values.RECAPTCHA_SITE_SECRET }}
   NEXT_CONTACT_US_FORM_KEY: {{ .Values.configMap.values.NEXT_CONTACT_US_FORM_KEY }}
+  ADMIN_EMAILS: {{ .Values.configMap.values.ADMIN_EMAILS }}
 

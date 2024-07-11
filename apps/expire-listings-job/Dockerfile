@@ -19,6 +19,7 @@ COPY package.json nx.json pnpm-* go.* ./
 COPY apps/expire-listings-job/go.* apps/expire-listings-job/
 COPY apps/api-service apps/api-service
 COPY apps/subscriptions-job apps/subscriptions-job
+COPY apps/notify-review-job apps/notify-review-job
 COPY libs/go-utils libs/go-utils
 COPY libs/protos libs/protos
 

@@ -24,6 +24,7 @@ type rootConfig struct {
 	EnvName              string
 	MaxUserListings      int
 	MaxUserSubscriptions int
+	AdminEmails          []string
 	WebAppUrl            string
 	Xata                 xataConfig
 	Auth0                auth0Config

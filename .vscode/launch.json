@@ -31,6 +31,16 @@
             "console": "integratedTerminal",
             "envFile": "${workspaceFolder}/.env",
             "args": ["Daily"]
+        },
+        {
+            "name": "Go notify review job debug",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/apps/notify-review-job/cmd/main.go",
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env",
+            "args": ["Daily"]
         }
     ]
 }

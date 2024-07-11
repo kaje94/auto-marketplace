@@ -2,10 +2,6 @@ name: Build and Push Docker Image
 on:
     workflow_dispatch:
         inputs:
-            version:
-                description: "Docker image version"
-                required: true
-                default: "latest"
             app:
                 description: "Application to build"
                 required: true
@@ -16,6 +12,15 @@ on:
                     - apiService
                     - expireListingsJob
                     - subscriptionsJob
+                    - notifyReviewJob
+            version:
+                description: "Docker image version"
+                required: true
+                default: "latest"
+            updateCode:
+                type: boolean
+                default: false
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -30,6 +35,8 @@ jobs:
                     echo "imageName=expire-listings-job" >> $GITHUB_ENV
                   elif [ "${{ github.event.inputs.app }}" == "subscriptionsJob" ]; then
                     echo "imageName=subscriptions-job" >> $GITHUB_ENV
+                  elif [ "${{ github.event.inputs.app }}" == "notifyReviewJob" ]; then
+                    echo "imageName=notify-review-job" >> $GITHUB_ENV
                   elif [ "${{ github.event.inputs.app }}" == "webApp" ]; then
                     echo "imageName=webapp" >> $GITHUB_ENV
                   fi
@@ -52,10 +59,12 @@ jobs:
                   platforms: linux/amd64,linux/arm64
             - name: Update the version in values.yaml
               uses: mikefarah/yq@master
+              if: ${{ github.event.inputs.updateCode }} == true
               with:
                   cmd: yq -i '.${{ github.event.inputs.app }}.image.version = "${{ github.event.inputs.version }}"' 'libs/helm/values.yaml'
             - name: Commit & Push changes
               uses: actions-js/push@master
+              if: ${{ github.event.inputs.updateCode }} == true
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   message: "Update ${{ github.event.inputs.app }} docker image version to ${{ github.event.inputs.version }}"

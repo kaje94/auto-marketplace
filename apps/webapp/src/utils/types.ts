@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { NotificationTypes } from "./enum";
 import {
     AdminListingsFilterSchema,
     AdminSubscriptionsFilterSchema,

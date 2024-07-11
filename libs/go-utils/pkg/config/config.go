@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 var Config = rootConfig{
@@ -11,6 +12,7 @@ var Config = rootConfig{
 	WebAppUrl:            getEnvVariable("AUTH0_BASE_URL"),
 	MaxUserListings:      getEnvIntVariable("MAX_USER_LISTINGS"),
 	MaxUserSubscriptions: getEnvIntVariable("MAX_USER_SUBSCRIPTIONS"),
+	AdminEmails:          getStrSliceEnvVariables("ADMIN_EMAILS"),
 	Xata: xataConfig{
 		ApiKey: getEnvVariable("XATA_API_KEY"),
 		DbUrl:  getEnvVariable("XATA_DATABASE_URL"),
@@ -36,6 +38,18 @@ func getEnvVariable(key string) string {
 		log.Fatalf("env for %s is required", key)
 	}
 	return envVal
+}
+
+func getOptionalEnvVariable(key string) string {
+	return os.Getenv(key)
+}
+
+func getStrSliceEnvVariables(key string) []string {
+	val := os.Getenv(key)
+	if val == "" {
+		return []string{}
+	}
+	return strings.Split(val, ",")
 }
 
 func getEnvIntVariable(key string) int {

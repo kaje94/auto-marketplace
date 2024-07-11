@@ -27,7 +27,7 @@ spec:
             initialDelaySeconds: 10
             httpGet:
               port: 3000
-              path: '/health'
+              path: '/api/health'
           resources:
             requests:
               memory: "128Mi"

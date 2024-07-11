@@ -15,13 +15,9 @@ RUN devbox install
 USER root:root
 
 # Copy core files
-COPY package.json nx.json pnpm-* go.* ./
-COPY apps/webapp/package.json apps/webapp/pnpm-* apps/webapp/
-COPY apps/api-service/go.* apps/api-service/
-COPY apps/expire-listings-job apps/expire-listings-job
-COPY apps/subscriptions-job apps/subscriptions-job
-COPY libs/go-utils libs/go-utils
-COPY libs/protos libs/protos
+COPY . .
+
+ENV SKIP_ENV_VALIDATION true
 
 
 # Install dependencies
@@ -40,7 +36,6 @@ ENV NEXT_PUBLIC_SUPPORT_EMAIL=$NEXT_PUBLIC_SUPPORT_EMAIL
 ENV GRPC_API_BASE_URL 'http://localhost:3001'
 ENV AUTH0_BASE_URL 'http://localhost:3000'
 # Skip rest of the env validations
-ENV SKIP_ENV_VALIDATION true
 # Other env variables
 ENV PORT 3000
 ENV HOSTNAME 0.0.0.0
