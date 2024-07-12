@@ -58,7 +58,7 @@ func (s *UserListings) CreateListing(ctx context.Context, req *service_pb.Listin
 		VehicleImages:      string(vehicleImageStr),
 		Features:           req.Features,
 		Description:        req.Description,
-		ExpiryDate:         time.Now().AddDate(0, 1, 0), // 1 month to the current date
+		ExpiryDate:         time.Now().AddDate(0, 3, 0), // 3 month to the current date
 		Status:             "UnderReview",
 		User:               commonUtil.SanitizeEmail(user.Email),
 		Price:              int(req.Price),
@@ -199,7 +199,7 @@ func (s *UserListings) UpdateListing(ctx context.Context, req *service_pb.Update
 		VehicleImages:      string(vehicleImageStr),
 		Features:           req.Data.Features,
 		Description:        req.Data.Description,
-		ExpiryDate:         time.Now().AddDate(0, 1, 0), // 1 month to the current date
+		ExpiryDate:         time.Now().AddDate(0, 3, 0), // 3 month to the current date
 		Status:             "UnderReview",
 		Price:              int(req.Data.Price),
 		PriceNegotiable:    req.Data.PriceNegotiable,
@@ -238,7 +238,7 @@ func (s *UserListings) RenewListing(ctx context.Context, req *service_pb.IdReque
 	}
 
 	jsonData := xata.ListingRecord{
-		ExpiryDate: time.Now().AddDate(0, 1, 0), // 1 month to the current date
+		ExpiryDate: time.Now().AddDate(0, 3, 0), // 3 month to the current date
 	}
 
 	postBody, err := json.Marshal(jsonData)

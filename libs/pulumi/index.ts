@@ -334,7 +334,7 @@ export const AUTH0_SCOPE = "openid profile email offline_access";
 export const AWS_S3_BUCKET = bucket.bucket;
 export const AWS_S3_REGION = bucket.region;
 // IAM exports
-export const AWS_ACCESS_USER_NAME = pulumi.interpolate`Generate key for user ${user.name} in AWS console`;
+export const AWS_ACCESS_KEY = pulumi.interpolate`Generate key for user ${user.name} in AWS console`;
 export const AWS_ACCESS_SECRET = pulumi.interpolate`Generate secret for user ${user.name} in AWS console`;
 export const IMAGE_KIT_USER = pulumi.interpolate`Generate credentials for user ${imageKitUser.name} in AWS console`;
 // SES exports

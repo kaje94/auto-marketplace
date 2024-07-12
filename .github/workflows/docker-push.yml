@@ -59,12 +59,12 @@ jobs:
                   platforms: linux/amd64,linux/arm64
             - name: Update the version in values.yaml
               uses: mikefarah/yq@master
-              if: ${{ github.event.inputs.updateCode }} == true
+              if: ${{ github.event.inputs.updateCode == 'true' }}
               with:
                   cmd: yq -i '.${{ github.event.inputs.app }}.image.version = "${{ github.event.inputs.version }}"' 'libs/helm/values.yaml'
             - name: Commit & Push changes
               uses: actions-js/push@master
-              if: ${{ github.event.inputs.updateCode }} == true
+              if: ${{ github.event.inputs.updateCode == 'true' }}
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   message: "Update ${{ github.event.inputs.app }} docker image version to ${{ github.event.inputs.version }}"
