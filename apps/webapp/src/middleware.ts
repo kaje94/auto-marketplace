@@ -12,24 +12,25 @@ export async function middleware(request: NextRequest) {
 
     // country code should be available only after deployed
     const userCountryCode = request.geo?.country?.toLowerCase() || "lk";
-    const pathLocale: string =
-        pathname
-            .split("/")
-            .filter((item) => item !== "")[0]
-            ?.toLowerCase() || "";
-    const matchingLocal = COUNTRIES[pathLocale];
+    const pathLocale: string = pathname.split("/").filter((item) => item !== "")[0] || "";
+    const pathLocaleLowerCase: string = pathLocale?.toLowerCase();
+    const matchingLocal = COUNTRIES[pathLocaleLowerCase];
 
     // Redirect to the correct route by if a valid route does not exist
     if (!matchingLocal) {
-        if (isCrawler && pathLocale !== BOT_LOCALE) {
+        if (isCrawler && pathLocaleLowerCase !== BOT_LOCALE) {
             return NextResponse.redirect(new URL(`/${BOT_LOCALE}/${pathname}`, request.url));
         } else if (!isCrawler) {
-            if (pathLocale === BOT_LOCALE) {
+            if (pathLocaleLowerCase === BOT_LOCALE) {
                 return NextResponse.redirect(new URL(pathname?.replace(`/${BOT_LOCALE}`, `/${userCountryCode}`), request.url));
             } else {
                 return NextResponse.redirect(new URL(`/${userCountryCode}/${pathname}`, request.url));
             }
         }
+    }
+
+    if (matchingLocal && pathLocale !== pathLocaleLowerCase) {
+        return NextResponse.redirect(new URL(`/${userCountryCode}/${pathname}`, request.url));
     }
 
     // Check if a valid user is trying to access the dashboard route
