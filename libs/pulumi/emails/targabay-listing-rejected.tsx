@@ -21,7 +21,9 @@ export default () => {
                     "We regret to inform you that your listing for {{listingTitle}} did not meet our quality standards and has been rejected due to the following reason."
                 }
             </Text>
+            {"{{#if rejectionCause}}"}
             <Text className="text-error">{"Reason: {{rejectionCause}}"}</Text>
+            {"{{/if}}"}
             <Section className="flex my-8">
                 <Link href={"{{listingUrl}}"} className="px-12 py-3  rounded-lg border-[1px] border-solid">
                     View Rejected Listing
