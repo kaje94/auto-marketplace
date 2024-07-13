@@ -12,7 +12,11 @@ export async function middleware(request: NextRequest) {
 
     // country code should be available only after deployed
     const userCountryCode = request.geo?.country?.toLowerCase() || "lk";
-    const pathLocale: string = pathname.split("/").filter((item) => item !== "")[0] || "";
+    const pathLocale: string =
+        pathname
+            .split("/")
+            .filter((item) => item !== "")[0]
+            ?.toLowerCase() || "";
     const matchingLocal = COUNTRIES[pathLocale];
 
     // Redirect to the correct route by if a valid route does not exist
