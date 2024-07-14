@@ -52,8 +52,7 @@ You can run the application locally either using Kubernetes or by running comman
 #### Running with Kubernetes
 
 1. **Set Up Docker and Kubernetes**: Make sure your Docker daemon and a local Kubernetes node (e.g., [Minikube](https://minikube.sigs.k8s.io/docs/), [Rancher](https://rancher.com/)) are running.
-2. **Install Tilt**: Install [Tilt](https://tilt.dev/).
-3. **Start Application**: Run `tilt up` to deploy Targabay within local Kubernetes.
+2. **Start Application**: Install [Tilt](https://tilt.dev/) and Run `tilt up` to deploy Targabay within local Kubernetes.
 
 #### Running with Commands
 
