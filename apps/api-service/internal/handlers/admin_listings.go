@@ -74,7 +74,7 @@ func (s *AdminListings) ReviewListing(ctx context.Context, req *service_pb.Revie
 	listingTitle := commonUtil.GetListingTitleFromRec(listingRecord)
 	notificationType := "ListingApproved"
 	notificationTitle := fmt.Sprintf(`Your Vehicle Listing '%s' Has Been Approved`, listingTitle)
-	notificationBody := fmt.Sprintf(`Exciting news! Your listing for '%s' has been approved and is now live on our marketplace. Thank you for choosing our platform. If you have any questions, feel free to reach out. Happy selling!`, listingTitle)
+	notificationBody := fmt.Sprintf(`Your listing for '%s' has been approved and is now live on our marketplace. Thank you for choosing our platform. If you have any questions, feel free to reach out. Happy selling!`, listingTitle)
 
 	if req.Status == "Declined" {
 		notificationType = "ListingRejected"

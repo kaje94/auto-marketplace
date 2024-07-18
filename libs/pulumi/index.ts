@@ -130,7 +130,7 @@ new auth0.BrandingTheme("brandingThemeResource", {
         headerTextAlignment: "center",
         logoHeight: 80,
         logoPosition: "center",
-        logoUrl: "https://ik.imagekit.io/ecwtbyhbr/targabay/logo-transparent-bg-500x150.png",
+        logoUrl: "https://ik.imagekit.io/ecwtbyhbr/targabay-images/logo-transparent-bg-500x150.png",
         socialButtonsLayout: "bottom",
     },
     displayName: "targabay-theme",

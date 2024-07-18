@@ -21,7 +21,7 @@ export const EmailWrap = ({ children, previewText, footNote }: React.PropsWithCh
                     <Container className="bg-white p-8 shadow rounded-lg text-black">
                         <Link href={baseUrl}>
                             <Img
-                                src="https://ik.imagekit.io/ecwtbyhbr/targabay/logo-transparent-bg-500x150.png"
+                                src="https://ik.imagekit.io/ecwtbyhbr/targabay-images/logo-transparent-bg-500x150.png"
                                 width="250"
                                 alt="Targabay"
                                 className="mx-auto mb-6 !bg-white"
