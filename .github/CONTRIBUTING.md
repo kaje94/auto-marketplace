@@ -1,4 +1,4 @@
-# Contributing to Auto Marketplace Client
+# Contributing to Auto Marketplace
 
 Thank you for considering contributing to the Auto Marketplace project! Your contributions are highly valued. Please take a moment to review the following guidelines.
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the Auto Marketplace Client project! We are committed to creating a friendly and inclusive community. This Code of Conduct outlines our expectations for all contributors and participants in our community.
+Welcome to the Auto Marketplace project! We are committed to creating a friendly and inclusive community. This Code of Conduct outlines our expectations for all contributors and participants in our community.
 
 ## Our Pledge
 
