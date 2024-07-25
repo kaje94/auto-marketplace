@@ -27,7 +27,7 @@ Welcome to the Auto Marketplace project! This platform offers a seamless and int
 
 ## Tools and Technologies
 
-- **Web Application**: [Next.js (App Router)](https://nextjs.org/docs/app/building-your-application/routing), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/) & [DaisyUI](https://daisyui.com/), [Storybook](https://storybook.js.org/)
+- **Web Application**: [Next.js (App Router)](https://nextjs.org/docs/app/building-your-application/routing), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/) & [DaisyUI](https://daisyui.com/)
 - **Backend (API service & cron jobs)**: [Go](https://golang.org/)
 - **API**: [gRPC](https://grpc.io/)
 - **Data Store**: [Xata](https://xata.io/)
@@ -35,7 +35,7 @@ Welcome to the Auto Marketplace project! This platform offers a seamless and int
 - **Deployment**: [Kubernetes](https://kubernetes.io/), [Helm](https://helm.sh/), [ArgoCD](https://argoproj.github.io/argo-cd/), [Dockerhub](https://hub.docker.com/)
 - **E2E Testing**: [Playwright](https://playwright.dev/)
 - **Infrastructure**: [AWS SES](https://aws.amazon.com/ses/), [AWS S3](https://aws.amazon.com/s3/)
-- **Other Tools**: [Pulumi](https://www.pulumi.com/), [React-email](https://www.npmjs.com/package/react-email), [ImageKit](https://imagekit.io/), [NX](https://nx.dev/), [Tilt](https://tilt.dev/), [Devbox](https://www.jetify.com/devbox), [Thumbhash](https://github.com/evanw/thumbhash)
+- **Other Tools**: [Pulumi](https://www.pulumi.com/), [React-email](https://www.npmjs.com/package/react-email), [ImageKit](https://imagekit.io/), [NX](https://nx.dev/), [Tilt](https://tilt.dev/), [Devbox](https://www.jetify.com/devbox), [Storybook](https://storybook.js.org/), [Thumbhash](https://github.com/evanw/thumbhash)
 
 ## Running Locally
 
