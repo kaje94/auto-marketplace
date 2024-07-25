@@ -1,6 +1,6 @@
 # Auto Marketplace
 
-Welcome to the Auto Marketplace project! This platform offers a seamless and intuitive experience for buying and selling vehicles online.
+This repository contains the source code for the Auto Marketplace project, a seamless and intuitive platform for buying and selling vehicles online. 
 
 <a href="https://targabay.com/lk">
     <img alt="preview-image" src="apps/webapp/public/images/banner.jpg" width="1024">
