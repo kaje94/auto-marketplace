@@ -4,7 +4,7 @@ go 1.21.0
 
 require (
 	github.com/auth0/go-auth0 v1.4.1
-	github.com/aws/aws-sdk-go v1.54.6
+	github.com/aws/aws-sdk-go v1.55.5
 	github.com/go-playground/validator/v10 v10.18.0
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
