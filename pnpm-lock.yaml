@@ -125,7 +125,7 @@ importers:
         version: 1.0.4
       '@t3-oss/env-nextjs':
         specifier: ^0.7.1
-        version: 0.7.3(typescript@5.4.5)(zod@3.23.8)
+        version: 0.7.3(typescript@5.4.5)(zod@4.6.7)
       '@tanstack/react-query':
         specifier: ^4.35.3
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -217,8 +217,8 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       zod:
-        specifier: ^3.23.8
-        version: 3.23.8
+        specifier: ^4.0.0
+        version: 4.6.7
     devDependencies:
       '@opentelemetry/api':
         specifier: ^1.7.0
@@ -298,8 +298,8 @@ importers:
         specifier: 2.1.0-canary.1
         version: 2.1.0-canary.1(@babel/core@7.23.9)(@opentelemetry/api@1.7.0)(eslint@8.57.0)(ts-node@10.9.2)
       zod:
-        specifier: ^3.23.8
-        version: 3.23.8
+        specifier: ^4.0.0
+        version: 4.6.7
     devDependencies:
       '@types/react':
         specifier: ^18.2.38
@@ -6575,7 +6575,7 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@t3-oss/env-core@0.7.3(typescript@5.4.5)(zod@3.23.8):
+  /@t3-oss/env-core@0.7.3(typescript@5.4.5)(zod@4.6.7):
     resolution: {integrity: sha512-hhtj59TKC6TKVdwJ0CcbKsvkr9R8Pc/SNKd4IgGUIC9T9X6moB8EZZ3FTJdABA/h9UABCK4J+KsF8gzmvMvHPg==}
     peerDependencies:
       typescript: '>=4.7.2'
@@ -6585,10 +6585,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.4.5
-      zod: 3.23.8
+      zod: 4.6.7
     dev: false
 
-  /@t3-oss/env-nextjs@0.7.3(typescript@5.4.5)(zod@3.23.8):
+  /@t3-oss/env-nextjs@0.7.3(typescript@5.4.5)(zod@4.6.7):
     resolution: {integrity: sha512-90TNffS17vjkQwfYyMUb4Zw9yqHwFV40f78qFug4JiQa5+N6DydTdlLOpzOcj8Cna/qpAVDwMSypofF/TVQDuA==}
     peerDependencies:
       typescript: '>=4.7.2'
@@ -6597,9 +6597,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.7.3(typescript@5.4.5)(zod@3.23.8)
+      '@t3-oss/env-core': 0.7.3(typescript@5.4.5)(zod@4.6.7)
       typescript: 5.4.5
-      zod: 3.23.8
+      zod: 4.6.7
     dev: false
 
   /@tanstack/query-core@4.36.1:
@@ -13354,6 +13354,8 @@ packages:
     peerDependenciesMeta:
       webpack:
         optional: true
+      webpack-sources:
+        optional: true
     dependencies:
       webpack: 5.90.3(@swc/core@1.3.101)(esbuild@0.19.11)
       webpack-sources: 3.2.3
@@ -18884,6 +18886,6 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
-  /zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  /zod@4.6.7:
+    resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
     dev: false
